@@ -45,6 +45,7 @@ ressalvas honestas sobre o que ainda não está pronto.
 | `liber_product_bonus` | Exemplares de cortesia com cota, histórico e devolução |
 | `liber_budget` | Orçamentos sobre a contabilidade analítica, sem Enterprise |
 | `liber_site` | Site de apresentação servido em `/liber` |
+| `liber_roles` | Perfis por função da casa, e a conta `visitante` que vê tudo sem gravar |
 
 ## Instalação
 
