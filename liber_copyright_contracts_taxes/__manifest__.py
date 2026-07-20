@@ -37,5 +37,5 @@ so the accountant can maintain it when the law changes.
     ],
     'installable': True,
     'application': False,
-    'license': 'LGPL-3',
+    'license': 'AGPL-3',
 }

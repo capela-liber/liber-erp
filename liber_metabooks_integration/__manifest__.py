@@ -16,7 +16,7 @@ Module Info.
 
     'author': 'EdLab Press',
     'website': "https://capela.press",
-    'license': 'LGPL-3',
+    'license': 'AGPL-3',
     'category': 'Uncategorized',
     'version': '19.0.0.1',
     # Original v15 deps (kept for reference):

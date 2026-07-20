@@ -26,5 +26,5 @@ documents -- those live in soc_moves / soc_settlement / soc_fiscal_br.
     ],
     'installable': True,
     'application': True,
-    'license': 'LGPL-3',
+    'license': 'AGPL-3',
 }

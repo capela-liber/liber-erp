@@ -58,5 +58,5 @@ sold.
     'post_init_hook': 'post_init_backfill_campaign_codes',
     'installable': True,
     'application': False,
-    'license': 'LGPL-3',
+    'license': 'AGPL-3',
 }

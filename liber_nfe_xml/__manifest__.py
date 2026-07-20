@@ -1,13 +1,14 @@
 # -*- coding: utf-8 -*-
 
 {
-    'name': "NFe XML (lab fork)",
-    'summary': 'NFe XML panel - lab fork without the edoo/l10n_br stack.',
+    'name': "NFe XML",
+    'summary': 'NFe XML panel - imports NFe XML, standalone (no l10n_br stack).',
     'description': """
-LAB FORK of edoo.me's nfe_xml (originally 15.0.1.1.2) for the odoo_lab
-environment, migrated to Odoo 19.
+NFe XML panel: imports NFe XML documents and links them to invoices.
+It does NOT emit documents to SEFAZ - import only.
 
-Removed the production-only dependencies and everything tied to them:
+Migrated to Odoo 19 and made standalone. Dropped the production-only
+dependencies and everything tied to them:
 
 - l10n_br_eletronic_document (a minimal local nfe.cfop model stands in
   for the localization's CFOP table)
@@ -24,10 +25,13 @@ Odoo 19 migration notes:
   rebuilt from the documents themselves.
 - The SSOC/RSO/SO/PO order flows and the vendor-bill comparison cron were
   dropped: they depended on models (soc.type, nfe.xml.wizard) that never
-  existed in this fork and were dead code since v15.
+  existed here and were dead code since v15.
+
+The DANFE rendering in report/ builds on pytrustnfe (Danimar Ribeiro,
+Trustcode) and keeps its original attribution.
 """,
-    'author': "edoo.me (lab fork by EdLab)",
-    'website': "www.edoo.me",
+    'author': "EdLab Press",
+    'website': "https://capela.press",
     'category': 'Accounting',
     'version': '19.0.2.5.0',
     'license': 'AGPL-3',

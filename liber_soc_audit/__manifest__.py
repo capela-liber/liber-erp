@@ -45,5 +45,5 @@ records -- it never re-parses the XML.
     ],
     'installable': True,
     'application': False,
-    'license': 'LGPL-3',
+    'license': 'AGPL-3',
 }

@@ -36,5 +36,5 @@ on the author's chatter and noted on each contract involved.
     ],
     'installable': True,
     'application': False,
-    'license': 'LGPL-3',
+    'license': 'AGPL-3',
 }

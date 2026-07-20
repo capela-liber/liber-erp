@@ -90,5 +90,5 @@ O banco ``bonus_demo`` tem o módulo instalado e o seed carregado::
     },
     'installable': True,
     'application': True,
-    'license': 'LGPL-3',
+    'license': 'AGPL-3',
 }

@@ -69,5 +69,5 @@ de uma porta HTTP livre.
     },
     'installable': True,
     'application': True,
-    'license': 'LGPL-3',
+    'license': 'AGPL-3',
 }

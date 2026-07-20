@@ -57,17 +57,11 @@ Os módulos declaram suas dependências entre si; instalar o de cima puxa os de 
 
 ## Licença
 
-A maior parte do repositório é **LGPL-3** (veja `LICENSE`, e `COPYING.GPL-3` para os
-termos da GPL-3 que a LGPL incorpora). Duas exceções, cada uma com seu próprio
-`LICENSE`:
+Todo o repositório é **AGPL-3** — veja `LICENSE`. Copyright © EdLab Press.
 
-- `liber_budget` — **AGPL-3**
-- `liber_nfe_xml` — **AGPL-3**. É fork do `nfe_xml` do edoo.me e carrega código com
-  copyright de B.H.C. sprl (<http://www.bhc.be>). Os arquivos originais trazem
-  cabeçalhos LGPL e AGPL; o módulo inteiro é distribuído sob AGPL-3, a licença mais
-  restritiva do conjunto, para não enfraquecer o copyleft de nenhuma das partes.
-
-A licença declarada no `__manifest__.py` de cada módulo é a que vale para ele.
+Uma atribuição de terceiro é preservada: a geração do DANFE em
+`liber_nfe_xml/report/` se apoia na biblioteca `pytrustnfe`, de Danimar Ribeiro
+(Trustcode), e mantém o cabeçalho de crédito original — também AGPL-3.
 
 ## Contribuindo
 

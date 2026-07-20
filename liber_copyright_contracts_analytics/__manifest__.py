@@ -29,5 +29,5 @@ The last payment date can only be edited by a Contracts Administrator.
     ],
     'installable': True,
     'application': False,
-    'license': 'LGPL-3',
+    'license': 'AGPL-3',
 }
