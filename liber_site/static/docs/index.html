@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Manuais — Liber</title>
+<meta name="description" content="Manuais de uso dos módulos do Liber: consignação, direitos autorais, notas fiscais, Metabooks, bonificação e mais.">
+<link rel="icon" type="image/png" href="../logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;600;700&display=swap">
+<link rel="stylesheet" href="docs.css">
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="../index.html"><img src="../logo.png" alt="">liber<span>.</span></a>
+    <span class="doc-tag">Manuais</span>
+    <nav>
+      <a href="../index.html">Site</a>
+      <a href="https://github.com/capela-liber/liber-erp" rel="noopener">GitHub</a>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="doc-hero">
+    <h1>Manuais do Liber</h1>
+    <p>Manuais de uso dos módulos editoriais do Liber, no espírito da documentação do Odoo:
+    o que cada módulo faz, como configurá-lo e os fluxos do dia a dia, passo a passo.
+    Para os aplicativos padrão do Odoo (Vendas, Estoque, Contabilidade…), vale a
+    <a href="https://www.odoo.com/documentation" rel="noopener">documentação oficial do Odoo</a>.</p>
+  </div>
+
+  <div id="toc"></div>
+
+  <footer style="border:0; margin-top: 60px;">
+    <div style="padding:0;" class="wrap-inner">
+      <strong>liber.</strong> — ERP open source para editoras brasileiras ·
+      <a href="../index.html">voltar ao site</a>
+    </div>
+  </footer>
+</div>
+
+<script src="docs.js"></script>
+<script>
+  // O índice monta os grupos de cartões a partir do mesmo catálogo da sidebar.
+  var toc = document.getElementById("toc");
+  DOCS.forEach(function (g) {
+    var sec = document.createElement("section");
+    sec.className = "area";
+    sec.innerHTML = "<h2>" + g.area + "</h2><p>" + g.desc + "</p>";
+    var grid = document.createElement("div");
+    grid.className = "cards";
+    g.items.forEach(function (d) {
+      var a = document.createElement("a");
+      a.className = "card";
+      a.href = d.slug + ".html";
+      a.innerHTML = "<h3>" + d.title + "</h3><p>" + d.desc + "</p><span class='mod'>" + d.slug + "</span>";
+      grid.appendChild(a);
+    });
+    sec.appendChild(grid);
+    toc.appendChild(sec);
+  });
+</script>
+
+</body>
+</html>

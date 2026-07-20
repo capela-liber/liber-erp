@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bonificação — Manuais do Liber</title>
+<link rel="icon" type="image/png" href="../logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;600;700&display=swap">
+<link rel="stylesheet" href="docs.css">
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="../index.html"><img src="../logo.png" alt="">liber<span>.</span></a>
+    <span class="doc-tag">Manuais</span>
+    <nav><a href="index.html">Índice</a><a href="../index.html">Site</a></nav>
+  </div>
+</header>
+<div class="wrap">
+  <div class="layout">
+    <aside class="sidebar" id="sidebar"></aside>
+    <article class="doc">
+      <div class="breadcrumb"><a href="index.html">Manuais</a><span class="sep">›</span>Divulgação<span class="sep">›</span>Bonificação</div>
+      <h1>Bonificação</h1>
+      <p class="lead">Exemplares de cortesia para autores, imprensa e influenciadores — cada envio com dono, motivo, custo e retorno, dentro de uma meta que a casa mesma define.</p>
+
+      <h2 id="visao-geral">Visão geral</h2>
+      <p>Dar um livro não é "toma aí um livro". O mesmo jornalista recebe todo lançamento, o autor tem direito aos exemplares do contrato, e mandar 40 livros para a imprensa pode render mais do que um anúncio — mas só dá para afirmar isso com número. O módulo de Bonificação registra as duas metades dessa conta: o <strong>custo</strong> de cada envio e o <strong>retorno</strong> que ele trouxe.</p>
+      <p>Os conceitos que aparecem nas telas:</p>
+      <ul>
+        <li><strong>Disparo</strong> (numerado <code>BO/2026/00007</code>) — a decisão de marketing: "mandar este título para esta gente". É aprovado <em>uma vez</em> e é a unidade que se compara com mídia paga ("47 livros, R$ 580" contra "um anúncio, R$ 4.000").</li>
+        <li><strong>Bonificação</strong> (a ficha, numerada <code>B00231</code>) — um envio para <em>uma</em> pessoa. Cada ficha tem endereço, pacote no depósito e nota própria. Um disparo para 47 pessoas gera 47 fichas.</li>
+        <li><strong>Motivo</strong> — por que o livro está saindo (Imprensa, Influencer, Lançamento, Exemplares de autor…). Cada motivo aponta para um dos três <strong>investimentos</strong>: Autor/Editorial, Marketing ou Comercial. É o investimento que diz qual verba paga e em qual meta o envio conta.</li>
+        <li><strong>Meta de doação</strong> — o percentual da tiragem que cada investimento pode doar. A tiragem não se cadastra: é a soma do que entrou em estoque do título.</li>
+        <li><strong>Lista VIP</strong> — um cadastro de destinatários com dono, história e gasto acumulado. Não é uma etiqueta em contatos: a lista sabe quem entrou, quando, por quem, e quanto já custou.</li>
+      </ul>
+      <p>O módulo conversa com o resto do sistema: a expedição sai pelo aplicativo <strong>Estoque</strong> (operação própria <code>BON/</code>), a nota é uma <a href="liber_nfe_remessa.html">nota de remessa</a> no diário <code>REM/</code> (com valor, sem cobrança), e a NF-e emitida volta pela <a href="liber_nfe_xml.html">importação de XML</a>, casada pela chave de acesso.</p>
+
+      <div class="callout note"><span class="title">Nota</span><p>Este módulo não emite NF-e. Ele prepara e coordena: gera a nota interna de remessa e aguarda o XML da NF-e emitida fora do sistema, que é conciliado pela chave de 44 dígitos.</p></div>
+
+      <h2 id="configuracao">Configuração</h2>
+      <p>As definições do módulo ficam em <span class="menupath">Bonificações<i>‣</i>Configuração<i>‣</i>Definições</span> (visível para administradores; a mesma página aparece no Definições geral do Odoo, seção Bonificações). Lá se configura:</p>
+      <ul>
+        <li><span class="field">Quanto da tiragem pode ser doado</span> — um percentual por investimento (<span class="field">Autor / Editorial</span>, <span class="field">Marketing</span>, <span class="field">Comercial</span>), com o <span class="field">Total</span> calculado ao lado. Vale para todos os títulos; a exceção por título fica em <span class="menupath">Bonificações<i>‣</i>Metas</span>.</li>
+        <li><span class="field">Quando ligar para confirmar chegada</span> — dias após a expedição para a bonificação aparecer na lista de Retorno.</li>
+        <li><span class="field">Score do parceiro</span> — quantos pontos vale cada resultado (Silêncio, Meia-boca, Divulgou, Arrasou), quantas avaliações a pessoa precisa ter para sair do "em teste" e em quantos meses uma avaliação antiga passa a valer metade.</li>
+        <li><span class="field">Configuração fiscal</span> — a <span class="field">Posição fiscal da nota de remessa</span> (precisa ter a baixa automática configurada: a nota de bonificação nunca gera pagamento) e o <span class="field">CFOP</span> de bonificação (5910/6910). Sem esses dois campos o botão <em>Gerar nota</em> recusa, dizendo exatamente o que falta.</li>
+      </ul>
+      <p>Também em Configuração:</p>
+      <ul>
+        <li><span class="menupath">Bonificações<i>‣</i>Configuração<i>‣</i>Motivos</span> — o cadastro de motivos. Cada motivo tem o investimento, a <span class="field">janela de retorno em dias</span> (Influencer 21, Imprensa 120…), se <span class="field">exige aprovação</span> e se <span class="field">consome exemplares do contrato</span>. O módulo já vem com Exemplares de autor, Imprensa, Influencer, Lançamento e Amostra para livraria.</li>
+        <li><span class="menupath">Bonificações<i>‣</i>Configuração<i>‣</i>Etiquetas de lista</span> — etiquetas coloridas para organizar as listas (imprensa, poesia, SP…).</li>
+      </ul>
+      <p><strong>Grupos de acesso</strong> (na ficha do usuário, seção "Bonus Copies"): <em>User</em> opera o dia a dia; <em>Administrator</em> pode, além disso, liberar envios que estouram a meta — e a liberação fica registrada no documento.</p>
+
+      <div class="callout tip"><span class="title">Dica</span><p>Os percentuais padrão já valem para todo título desde o primeiro dia. Só crie uma linha em <span class="menupath">Bonificações<i>‣</i>Metas</span> quando um livro específico merecer uma meta diferente da casa.</p></div>
+
+      <h2 id="listas">Montar e cuidar das listas VIP</h2>
+      <p>As listas moram em <span class="menupath">Bonificações<i>‣</i>Listas<i>‣</i>Listas</span>. Cada lista tem um <span class="field">Dono</span> (quem responde por ela), <span class="field">Etiquetas</span>, uma <span class="field">Meta</span> própria, o <span class="field">Gasto</span> acumulado, a <span class="field">Avaliação</span> ("19 de 58" — quantos envios renderam) e o <span class="field">Último envio</span> — a coluna que diz quais listas esfriaram.</p>
+      <p>Há três portas para colocar gente numa lista:</p>
+      <ol class="steps">
+        <li>Na aba <span class="field">Membros</span> da lista, acrescente contatos um a um na própria tabela — ou use o botão <span class="field">Adicionar vários contatos</span>.</li>
+        <li>A partir de <strong>Contatos</strong>: filtre como quiser (etiquetas, cidade, busca), selecione vários e use <span class="menupath">Ação<i>‣</i>Adicionar à lista VIP</span>. É a porta com os melhores filtros. Rodar duas vezes com a mesma seleção não duplica ninguém — quem já estava é ignorado, quem tinha saído volta.</li>
+        <li>Importando uma planilha (abaixo).</li>
+      </ol>
+      <p>Tirar alguém da lista é desligar o botão <span class="field">Ativo</span> na linha do membro. A pessoa não é apagada: a data de saída fica registrada em <span class="field">Saiu em</span>, porque a lista é história, não só o estado de hoje.</p>
+
+      <h3 id="importar">Importar uma planilha</h3>
+      <ol class="steps">
+        <li>Abra <span class="menupath">Bonificações<i>‣</i>Listas<i>‣</i>Importar contatos</span> (ou o botão <span class="field">Importar planilha</span> na aba Membros de uma lista).</li>
+        <li>Baixe a <span class="field">Planilha de exemplo</span> que aparece na própria tela — ela traz os cabeçalhos certos e uma aba "Como usar".</li>
+        <li>Suba o arquivo (<code>.xlsx</code> ou <code>.csv</code>). A ordem das colunas não importa e o importador reconhece variações comuns de cabeçalho (Contato, Celular, Veículo…). Só <span class="field">Nome</span> ou <span class="field">E-mail</span> é obrigatório.</li>
+        <li>Escolha a <span class="field">Lista</span> de destino — ou deixe vazio, se a planilha tiver uma coluna <span class="field">Lista</span>: nesse caso um arquivo só alimenta quantas listas quiser, e a lista que não existir é criada.</li>
+        <li>Clique em <span class="field">Conferir</span>. A prévia diz o que vai acontecer — quantos contatos já existem na base, quantos serão criados, repetidos, sem endereço — <em>antes</em> de gravar qualquer coisa.</li>
+        <li>Clique em <span class="field">Importar</span>.</li>
+      </ol>
+      <p>O importador casa as pessoas pelo e-mail (e pelo nome exato, se você deixar <span class="field">Casar por nome quando não houver e-mail</span> ligado), justamente para não criar duzentos cadastros duplicados — uma lista de imprensa quase sempre é gente que já está na base. O que já foi digitado no contato não é sobrescrito pela planilha. Desligando <span class="field">Criar quem não existe</span>, a importação só vincula quem já está na base e relata os demais.</p>
+
+      <figure class="shot"><img src="img/doc-liber_product_bonus-import.png?v=2" alt="Assistente de importação com a prévia: contatos existentes, novos, repetidos e sem endereço, antes de gravar."><figcaption>A prévia da importação: nada é gravado antes do "Importar".</figcaption></figure>
+
+      <h3 id="combinar">Combinar listas</h3>
+      <ol class="steps">
+        <li>Em <span class="menupath">Bonificações<i>‣</i>Listas<i>‣</i>Listas</span>, marque duas ou mais listas.</li>
+        <li>Use <span class="menupath">Ação<i>‣</i>Combinar em nova lista</span>.</li>
+        <li>Escolha o modo — <span class="field">União</span> (todo mundo), <span class="field">Interseção</span> (só quem está em todas) ou <span class="field">Diferença</span> (a primeira, menos as outras) — e veja a prévia com a sobreposição ("37 pessoas estão em mais de uma lista").</li>
+        <li>Decida o destino das originárias: <span class="field">Manter</span>, <span class="field">Arquivar</span> (somem do seletor, o histórico fica) ou <span class="field">Apagar</span>.</li>
+      </ol>
+      <div class="callout warn"><span class="title">Atenção</span><p>Apagar as listas de origem só é aceito quando elas nunca bonificaram ninguém. Uma lista que já mandou livro é registro, não lixo — o sistema recusa e sugere arquivar. E a nova lista guarda a procedência: de quais listas veio e por qual modo.</p></div>
+      <div class="callout tip"><span class="title">Dica</span><p>Para <em>enviar</em> uma campanha a três listas não é preciso combiná-las: o disparo aceita várias listas de uma vez e não duplica ninguém. Combine apenas quando o cruzamento vai se repetir ("Imprensa de poesia" = imprensa literária ∩ etiqueta poesia).</p></div>
+
+      <h2 id="disparo">Disparar uma campanha (a triagem)</h2>
+      <p>O coração do módulo é a tela de triagem, em <span class="menupath">Bonificações<i>‣</i>Disparos</span>:</p>
+      <ol class="steps">
+        <li>Crie um disparo e preencha <span class="field">Título</span>, <span class="field">Exemplares por pessoa</span>, <span class="field">Motivo</span> e, se quiser, <span class="field">Campanha</span> (o lançamento, a feira).</li>
+        <li>Escolha de onde vem a gente. As quatro fontes <strong>somam</strong> — não são alternativas: <span class="field">Listas</span> (uma ou várias), <span class="field">BO</span> (quem recebeu num disparo anterior — "mande para quem ganhou o último livro"), <span class="field">Etiquetas</span> de contato e <span class="field">Contatos</span> a dedo ("o autor pediu mais um"). Quem aparece em duas fontes recebe <em>um livro só</em>, e um resumo mostra a conta: "22 nomes, 7 repetidos, 15 candidatos".</li>
+        <li>Faça a triagem na tabela: cada linha é um candidato com as colunas que respondem "vai ou não vai?" — <span class="field">Notas</span> (quem a pessoa é), <span class="field">Origem</span> (de qual fonte veio), <span class="field">Duplicado</span> (já recebeu <em>este</em> título — essas linhas já vêm desmarcadas), <span class="field">Envios</span>, <span class="field">Score</span>, <span class="field">Último</span> e <span class="field">End.</span> (tem endereço utilizável). Os botões <span class="field">Marcar todos</span> / <span class="field">Desmarcar</span> ajudam nos extremos.</li>
+        <li>Acompanhe o <strong>contador de meta</strong>, que se move enquanto você marca: quantos selecionados, se cabe na meta, quanto sobra. Se estourar, ele diz em quantos exemplares — e que um gestor pode liberar.</li>
+        <li>Clique em <span class="field">Conferir</span>: sai um relatório do que está torto e do conserto — quem está sem endereço (sem CEP não sai etiqueta), quem já recebeu o título, a meta, o estoque disponível e o custo total ("quanto custaria o anúncio equivalente?").</li>
+        <li>Clique em <span class="field">Aprovar</span>. A aprovação é <em>uma</em>, do disparo — não 47, uma por pessoa. Nesse momento nasce uma bonificação (ficha B) para cada selecionado com endereço.</li>
+        <li>Clique em <span class="field">Enviar tudo</span> para liberar todas as fichas para a logística de uma vez.</li>
+      </ol>
+      <p>Uma boa triagem pode virar patrimônio: o botão <span class="field">Salvar seleção como lista</span> transforma os marcados numa lista VIP nova. E o próprio disparo já serve de fonte para o próximo — raramente é preciso congelar campanha em lista permanente.</p>
+
+      <figure class="shot"><img src="img/doc-liber_product_bonus-triage.png" alt="Tela de triagem do disparo: fontes que somam, tabela de candidatos com Score e endereço, e o contador de meta se movendo."><figcaption>A triagem: o freio é o contador vivo, não um "não" na hora de salvar.</figcaption></figure>
+
+      <h2 id="ficha">A bonificação, passo a passo</h2>
+      <p>Cada envio individual vive em <span class="menupath">Bonificações<i>‣</i>Bonificações</span> e percorre a escada <em>Rascunho → Aprovado → Enviado → Chegou → Encerrado</em> (com o desvio <em>Não chegou</em>). Uma bonificação também pode ser criada avulsa, sem disparo — o caso típico dos exemplares de contrato do autor.</p>
+      <ol class="steps">
+        <li><span class="field">Aprovar</span> — dispensável para motivos que não exigem aprovação (Exemplares de autor: o contrato já aprovou quando foi assinado; o sistema registra isso no histórico).</li>
+        <li><span class="field">Enviar para logística</span> — verifica a meta, congela o custo unitário e cria a expedição <code>BON/</code> no Estoque, já confirmada e reservada. <strong>O livro ainda não saiu</strong>: o depósito precisa separar, embalar e validar a expedição no aplicativo Estoque, como qualquer entrega. O botão <span class="field">MOV</span> na ficha mostra o estado do pacote.</li>
+        <li><span class="field">Gerar nota</span> — cria a nota de remessa no diário <code>REM/</code>: uma nota com valor comercial que é baixada automaticamente ao ser lançada — nunca gera cobrança. Exige a posição fiscal e o CFOP configurados nas Definições. O botão <span class="field">Nota</span> mostra o número (ou "A emitir").</li>
+        <li>Quando a NF-e for emitida (fora do sistema) e importada, cole a <span class="field">Chave da NF-e</span> (44 dígitos) na aba <span class="field">Nota e logística</span> — o painel do XML é encontrado sozinho pela chave — e clique em <span class="field">Confirmar nota</span> para conciliar. O <span class="field">Estado da nota</span> percorre <em>A emitir → Emitida → Conciliada</em>.</li>
+        <li><span class="field">Chegou</span> / <span class="field">Não chegou</span> — o fecho do ciclo físico (ver Acompanhamento, abaixo).</li>
+      </ol>
+      <div class="callout example"><span class="title">Exemplo</span><p>Dois números convivem no mesmo envio, de propósito: a <em>nota</em> sai a valor comercial (é o que o fisco quer ver) e o <em>custo</em> das linhas da bonificação é o caixa que saiu (impressão, papel) — congelado no envio, para que o histórico de 2026 não mude quando a próxima tiragem mudar o custo. Um não vira o outro.</p></div>
+
+      <h2 id="acompanhamento">Acompanhamento: chegou? rendeu?</h2>
+      <p>Custo é metade da conta; o retorno é a outra metade. Duas telas de trabalho, em <span class="menupath">Bonificações<i>‣</i>Acompanhamento</span>:</p>
+      <h3>Retorno — confirmar a chegada</h3>
+      <ol class="steps">
+        <li>Abra <span class="menupath">Bonificações<i>‣</i>Acompanhamento<i>‣</i>Retorno</span>. Passados os dias configurados nas Definições, quem foi expedido e não confirmou chegada aparece aqui — <em>com o telefone na linha</em>, porque a tarefa desta tela é ligar e perguntar se o livro chegou.</li>
+        <li>Na própria linha, clique em <span class="field">Chegou</span> ou <span class="field">Não</span>.</li>
+        <li>Depois de uma leva de ligações, dá para selecionar várias linhas e usar <span class="menupath">Ação<i>‣</i>Confirmar chegada</span> — só as enviadas mudam de estado.</li>
+      </ol>
+      <p>Se o livro <strong>não chegou</strong>, a falha é do correio, não da pessoa — o registro diz isso explicitamente e o extravio não conta contra o destinatário. O botão <span class="field">Reenviar</span> cria uma bonificação nova, mesma pessoa, mesmo título; a perdida fica perdida.</p>
+      <h3>Avaliações — registrar o que rendeu</h3>
+      <ol class="steps">
+        <li>Abra <span class="menupath">Bonificações<i>‣</i>Acompanhamento<i>‣</i>Avaliações</span>: os envios que chegaram e ainda não foram julgados.</li>
+        <li>Um clique na linha: <span class="field">Silêncio</span>, <span class="field">Meia-boca</span>, <span class="field">Divulgou</span> ou <span class="field">Arrasou</span>. A data e o autor da avaliação são carimbados sozinhos e a bonificação encerra.</li>
+        <li>Cole o <span class="field">Link</span> do post, resenha ou vídeo: "divulgou" sem link é opinião; com link é fato — e daqui a dois anos alguém clica em vez de confiar na memória de quem já saiu da empresa.</li>
+      </ol>
+      <div class="callout note"><span class="title">Nota</span><p><strong>Aguardando não é silêncio.</strong> Cada motivo tem sua janela de retorno (um influencer posta em uma semana ou nunca; um crítico de jornal leva meses). Enquanto a janela não fecha, o envio aparece como "aguardando" — ninguém é julgado antes da hora.</p></div>
+
+      <h3 id="score">O Score do contato</h3>
+      <p>Na ficha do contato (aba <span class="field">Bonificações</span>) e nas telas de triagem e listas, cada pessoa carrega um <span class="field">Score</span> de 0 a 13 com uma seta de direção (↑ → ↓): a média dos resultados, pesando mais o recente. Dois símbolos dizem "ainda não há nota": ⚘ nunca recebeu (um convite, não um demérito — é assim que a casa descobre gente) e ⚗ em teste (recebeu pouco; amostra de 1 não é avaliação, é sorte). A <span class="field">Situação</span> resume em palavras: Novo, Em teste, Sem retorno, Esfriando, Constante, Rendendo. Os pontos e cortes são os das Definições, e um serviço noturno mantém os scores atualizados com o passar do tempo.</p>
+
+      <h2 id="metas">Metas de doação</h2>
+      <p>Em <span class="menupath">Bonificações<i>‣</i>Metas</span> ficam as exceções por título: para cada título × investimento, o <span class="field">% da tiragem</span> permitido, e as colunas calculadas — tiragem, exemplares permitidos, já doados, restantes, % já doado. A tiragem é a soma das <em>entradas</em> em estoque (não o saldo, que cai conforme vende): uma reimpressão alarga a meta sozinha.</p>
+      <p>O que o sistema garante:</p>
+      <ul>
+        <li>O envio que estoura a meta <strong>é bloqueado com explicação</strong>: quanto era permitido, quanto já foi dado, quanto sobra, quanto o envio pede — e quem pode liberar.</li>
+        <li>Um administrador de Bonificações <strong>pode liberar</strong> o estouro, e a liberação fica registrada no histórico do documento. O desbloqueio é informação, não exceção escondida.</li>
+        <li>Título <strong>sem tiragem em estoque não trava nada</strong>: a meta é uma porcentagem da tiragem, e antes de o livro entrar não existe número para travar. O mailing de imprensa do lançamento não pode ser bloqueado por uma meta que ainda não é calculável.</li>
+        <li>O número do contador da triagem e o número que bloqueia o envio saem da mesma conta — nunca discordam.</li>
+      </ul>
+
+      <h2 id="relatorios">Relatórios</h2>
+      <ul>
+        <li><span class="menupath">Bonificações<i>‣</i>Relatórios<i>‣</i>Análise</span> — a tabela dinâmica que cruza <span class="field">Investimento</span> × <span class="field">Tipo de parceiro</span> × <span class="field">Resultado</span> × <span class="field">Lista</span> (e campanha, título, mês…), com exemplares e custo como medidas. É aqui que "pra que mandar?" vira número. A dimensão <span class="field">Situação no envio</span> é congelada na hora do envio — dá para perguntar "quanto apostamos em quem já estava frio?" sem que o presente reescreva o passado.</li>
+        <li><span class="menupath">Bonificações<i>‣</i>Relatórios<i>‣</i>Sobreposição de listas</span> — cada lista numa linha; expanda por contato para ver quem está nela, ou as colunas por lista para ver quem se repete entre duas.</li>
+        <li><span class="menupath">Bonificações<i>‣</i>Relatórios<i>‣</i>Contatos por lista</span> — cada contato e em quantas listas está, ordenado por isso. Serve para achar quem recebe tudo (e talvez não devesse) e para denunciar listas redundantes — quando as mesmas trinta pessoas aparecem juntas em oito listas, as oito são a mesma lista com nomes diferentes.</li>
+      </ul>
+      <figure class="shot"><img src="img/doc-liber_product_bonus-analysis.png" alt="Tabela dinâmica de análise cruzando investimento, resultado e custo."><figcaption>Análise: o que cada verba gastou e o que voltou.</figcaption></figure>
+
+      <h2 id="faq">Perguntas frequentes</h2>
+      <p><strong>Marquei uma pessoa e ela apareceu desmarcada na triagem. Por quê?</strong><br>
+      Ela já recebeu <em>este</em> título antes (coluna <span class="field">Duplicado</span>). A triagem desmarca por padrão para evitar livro repetido, mas você pode marcar de novo — é aviso, não proibição.</p>
+      <p><strong>Aprovei o disparo e uma pessoa da lista ficou de fora.</strong><br>
+      Provavelmente sem endereço completo (rua, cidade e CEP). Sem os três o pacote não sai do depósito, então a ficha não é gerada. Complete o cadastro e use <span class="field">Recarregar</span> na triagem.</p>
+      <p><strong>Enviei para a logística, mas o estoque não baixou.</strong><br>
+      Certo: enviar <em>libera</em> a expedição — reserva o livro. A baixa acontece quando o depósito valida a operação <code>BON/</code> no aplicativo Estoque. O botão <span class="field">MOV</span> da ficha mostra em que pé está.</p>
+      <p><strong>O botão "Gerar nota" reclama de mapeamento fiscal.</strong><br>
+      Falta a <span class="field">Posição fiscal da nota de remessa</span> (com a baixa automática e sua conta) ou o <span class="field">CFOP</span> em <span class="menupath">Bonificações<i>‣</i>Configuração<i>‣</i>Definições</span>. O aviso diz qual dos dois.</p>
+      <p><strong>Onde vejo as notas de bonificação?</strong><br>
+      No menu de Remessas do Faturamento, junto com as demais notas de movimentação — há um filtro "Bonificações". Da própria nota, o botão <span class="field">Bonificação</span> volta para a ficha que a gerou.</p>
+      <p><strong>A tela Retorno está vazia.</strong><br>
+      Ela só mostra quem foi expedido há mais dias do que o configurado em <span class="field">Quando ligar para confirmar chegada</span> e ainda não confirmou. Vazia significa: ninguém para ligar hoje.</p>
+      <p><strong>Posso marcar "não mandar mais" para alguém?</strong><br>
+      Não por aqui — de propósito. O histórico (22 livros, zero retorno) está na ficha do contato para <em>informar</em> essa decisão, mas riscar alguém da lista para sempre é uma decisão editorial e de relacionamento, não um lançamento de bonificação.</p>
+
+      <div class="seealso">
+        <strong>Ver também</strong>
+        <ul>
+          <li><a href="liber_nfe_remessa.html">Notas de remessa</a> — o diário REM/ e a baixa automática que a nota de bonificação usa.</li>
+          <li><a href="liber_nfe_xml.html">Importação de XML de NF-e</a> — por onde a NF-e emitida volta ao sistema e é casada pela chave.</li>
+          <li><a href="liber_budget.html">Orçamento</a> — para acompanhar a verba de marketing que as bonificações consomem.</li>
+        </ul>
+      </div>
+
+      <nav class="pager" id="pager"></nav>
+    </article>
+  </div>
+</div>
+<script src="docs.js"></script>
+</body>
+</html>

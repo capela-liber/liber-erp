@@ -15,7 +15,7 @@ Module Info.
     """,
 
     'author': 'EdLab Press',
-    'website': "https://capela.press",
+    'website': "http://www.yourcompany.com",
     'license': 'AGPL-3',
     'category': 'Uncategorized',
     'version': '19.0.0.1',

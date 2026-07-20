@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Acerto de consignação — Manuais do Liber</title>
+<link rel="icon" type="image/png" href="../logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;600;700&display=swap">
+<link rel="stylesheet" href="docs.css">
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="../index.html"><img src="../logo.png" alt="">liber<span>.</span></a>
+    <span class="doc-tag">Manuais</span>
+    <nav><a href="index.html">Índice</a><a href="../index.html">Site</a></nav>
+  </div>
+</header>
+<div class="wrap">
+  <div class="layout">
+    <aside class="sidebar" id="sidebar"></aside>
+    <article class="doc">
+      <div class="breadcrumb"><a href="index.html">Manuais</a><span class="sep">›</span>Consignação<span class="sep">›</span>Acerto de consignação</div>
+      <h1>Acerto de consignação</h1>
+      <p class="lead">Uma tela por cliente: o mapa da prateleira, o que o cliente informou que vendeu, o que repor e o que volta — e um clique que despacha os documentos certos, cada um do tipo certo.</p>
+
+      <h2 id="visao-geral">Visão geral</h2>
+      <p>O <strong>acerto</strong> é o único momento em que a consignação vira venda. A rotina gira em torno da <strong>operação de consignação (CO)</strong> — um documento de trabalho, numerado na série <strong>CO/</strong>, um por cliente por rodada. Nele o operador carrega o mapa da prateleira, digita o que o cliente reportou como vendido, decide reposição e devolução, e clica em <span class="field">Executar</span>. A operação então se desdobra nos documentos:</p>
+      <div class="tablewrap"><table>
+        <thead><tr><th>Coluna preenchida</th><th>Documento gerado</th><th>O que é</th></tr></thead>
+        <tbody>
+          <tr><td><span class="field">Acerto</span> &gt; 0</td><td><strong>Venda S</strong> + baixa <strong>ACERTO/</strong></td><td>Um pedido de venda de verdade (este sim é receita) e a transferência que tira o vendido da prateleira rumo ao cliente.</td></tr>
+          <tr><td><span class="field">Reposição</span> &gt; 0</td><td><strong>Pedido C</strong> de reposição</td><td>Um pedido de consignação, em rascunho, para o comercial revisar e confirmar. Nunca fatura.</td></tr>
+          <tr><td><span class="field">Devolução</span> &gt; 0</td><td><strong>CR</strong> (devolução)</td><td>O pedido de devolução: puro estoque de volta, nunca uma venda.</td></tr>
+        </tbody>
+      </table></div>
+      <p>Qualquer combinação é válida — uma operação só de reposição é uma remessa pura (nada vendido ainda). Além do dia a dia, o módulo traz o quadro kanban da equipe, o mapa em PDF para o cliente, a régua de cobrança das devoluções ("puxadas"), o indicador de saúde por título e os relatórios de ruptura e cobertura de campanhas.</p>
+      <figure class="shot"><img src="img/doc-liber_soc_settlement-kanban.png" alt="Quadro kanban das operações de consignação com colunas A Fazer, Fazendo e Feito, cartões por cliente com valor e responsável"><figcaption>O quadro de operações: cada cartão é a rodada de acerto de um cliente, andando pelas colunas A Fazer → Fazendo → Feito.</figcaption></figure>
+
+      <h2 id="configuracao">Configuração</h2>
+      <p>Tudo fica em <span class="menupath">Consignação<i>‣</i>Configuração<i>‣</i>Configurações</span> (o mesmo painel aparece em <span class="menupath">Definições</span>, seção <strong>Consignação</strong>; o menu de Configuração é visível só para administradores do sistema):</p>
+      <div class="tablewrap"><table>
+        <thead><tr><th>Bloco / campo</th><th>O que controla</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Análise do Acerto</strong> — <span class="field">Janela de vendas recentes</span> (padrão 3 meses)</td><td>Quantos meses a coluna <span class="field">Vendas</span> da operação soma ao mostrar o histórico recente de cada título naquele cliente.</td></tr>
+          <tr><td><strong>Situação dos títulos consignados</strong> — <span class="field">Ok até</span> (45), <span class="field">Atenção até</span> (60), <span class="field">Crítico até</span> (120) dias</td><td>Os limiares da etiqueta de saúde por título: Ok → Atenção → Crítico → Sem retorno, contando os dias desde o último acerto do título naquele cliente.</td></tr>
+          <tr><td><strong>Ruptura</strong> — <span class="field">Alvo de campanha vencido após</span> (30 dias)</td><td>Cliente de campanha em curso sem acerto há mais que isso entra no relatório Ruptura como <em>Tempo</em> (alvo que ninguém está perseguindo). Verificado toda noite.</td></tr>
+          <tr><td><strong>Mapa de Consignação (PDF)</strong> — <span class="field">Texto padrão do mapa</span></td><td>O texto que abre o mapa impresso ou enviado por e-mail ao cliente.</td></tr>
+          <tr><td><strong>Movimento do Acerto</strong> — <span class="field">Operação da baixa do acerto</span></td><td>O tipo de operação (série <strong>ACERTO/</strong>) da baixa que tira o vendido da prateleira. Criado sozinho no primeiro acerto; separado das entregas do armazém de propósito.</td></tr>
+          <tr><td><strong>Cobrança de Devolução (CR)</strong> — <span class="field">Cobrar devoluções pendentes</span>, <span class="field">Prazo tolerável de devolução</span> (30 dias), <span class="field">Lembrete em</span> (25%), <span class="field">Ligação em</span> (40%), <span class="field">Aviso geral em</span> (65%), <span class="field">Gerente de escalonamento</span>, <span class="field">Texto do e-mail de pedido de devolução</span></td><td>A régua das "puxadas" — detalhada <a href="#puxadas">abaixo</a>. Desligar a chave-mestra silencia tudo.</td></tr>
+        </tbody>
+      </table></div>
+      <ul>
+        <li><strong>Etapas do quadro</strong> — em <span class="menupath">Consignação<i>‣</i>Configuração<i>‣</i>Etapas</span> a equipe renomeia, reordena e recolhe as colunas do kanban (as padrão são <em>A Fazer</em>, <em>Fazendo</em> e <em>Feito</em>). Uma etapa <span class="field">Recolhida no Kanban</span> conta como "concluída" para as rotinas em lote.</li>
+        <li><strong>Canais de conversa</strong> — o módulo cria dois canais no aplicativo Conversas: <strong>Consignação / Operações</strong> (respostas de clientes nas operações) e <strong>Consignação / Devoluções</strong> (toda a conversa e os alertas da cobrança de devoluções).</li>
+        <li><strong>Automações</strong> — três rotinas rodam sozinhas: finalização das operações concluídas (a cada 30 min), cobrança de devoluções (diária) e atualização da idade de prateleira, alvos e cobertura (diária, de manhã).</li>
+      </ul>
+
+      <h2 id="gerar">Gerar as operações do mês</h2>
+      <ol class="steps">
+        <li>Acesse <span class="menupath">Consignação<i>‣</i>Consignações<i>‣</i>⚙️ Gerar Operações</span>.</li>
+        <li>O assistente mostra o alcance antes de fazer qualquer coisa: <span class="field">Consignações abertas</span> (contratos ativos com saldo em prateleira), <span class="field">Já com rascunho (serão puladas)</span> e <span class="field">A criar</span>.</li>
+        <li>Clique em <span class="field">Confirmar</span>. Nasce uma CO em rascunho por consignação aberta, atribuída ao responsável (o líder da equipe do contrato, editável), e todas aparecem na coluna <em>A Fazer</em> do quadro.</li>
+      </ol>
+      <div class="callout note"><span class="title">Nota</span><p>Um cliente cujo rascunho ainda está no quadro <strong>nunca ganha uma segunda operação</strong> — a rotina o pula para não duplicar. Um rascunho estacionado numa coluna recolhida (como <em>Feito</em>) não bloqueia: para o sistema, coluna recolhida é assunto encerrado. Se não houver nada a criar, o assistente diz isso com todas as letras e oferece o botão <span class="field">Abrir os rascunhos</span> — as operações já existem, esperando serem executadas.</p></div>
+
+      <h2 id="executar">Executar um acerto, passo a passo</h2>
+      <ol class="steps">
+        <li>Abra a operação do cliente em <span class="menupath">Consignação<i>‣</i>Consignações<i>‣</i>Operações</span> (ou crie uma: só o <span class="field">Cliente</span> basta — o contrato, a prateleira e o responsável se resolvem sozinhos).</li>
+        <li>Clique em <span class="field">Mapa</span>. As linhas se preenchem com tudo que está na prateleira do cliente, com preço da lista do contrato e o desconto padrão herdado.</li>
+        <li>Leia as colunas de contexto de cada título:
+          <ul>
+            <li><span class="field">Em mãos</span> — seu estoque no armazém (o limite físico de qualquer reposição);</li>
+            <li><span class="field">Vendas</span> — o que este cliente vendeu deste título na janela recente (acertos feitos no sistema ou, para título nunca acertado aqui, o que as notas fiscais importadas dizem). O ícone ao lado abre os pedidos de venda que compõem o número;</li>
+            <li><span class="field">Mapa</span> — o saldo na prateleira (vivo enquanto rascunho; congelado quando a operação roda);</li>
+            <li><span class="field">Dias</span> e <span class="field">Situação</span> — há quanto tempo o título não acerta, com a etiqueta Ok / Atenção / Crítico / Sem retorno.</li>
+          </ul>
+        </li>
+        <li>Digite na coluna <span class="field">Acerto</span> o que o cliente informou como <strong>vendido</strong>, título a título. A <span class="field">Reposição</span> se sugere sozinha (igual ao vendido, para a prateleira voltar ao que era) e continua editável.</li>
+        <li>Se quiser recolher algum título, digite a quantidade na coluna <span class="field">Devolução</span>.</li>
+        <li>Opcional: clique em <span class="field">Aplicar Campanhas</span> para sobrepor as metas das campanhas em curso do canal deste cliente (veja <a href="#campanhas">Campanhas</a>).</li>
+        <li>Clique em <span class="field">Executar</span>. A operação congela o mapa, registra as rupturas e despacha os documentos: a venda S com a baixa ACERTO/, o Pedido C de reposição (em rascunho, para o comercial confirmar) e o CR de devolução — cada um só se a coluna correspondente tiver valor.</li>
+        <li>Os botões inteligentes <span class="field">Acerto</span>, <span class="field">Pedido</span> e <span class="field">Devolução</span> abrem cada documento gerado. A operação fica <em>Confirmado</em>.</li>
+      </ol>
+      <figure class="shot"><img src="img/doc-liber_soc_settlement-linhas.png" alt="Linhas da operação de consignação com as colunas Em mãos, Vendas, Mapa, Acerto, Alvo, Reposição, Devolução e a etiqueta de Situação"><figcaption>A tela do acerto: contexto à esquerda (Em mãos, Vendas, Mapa), decisão à direita (Acerto, Reposição, Devolução) e a saúde de cada título na ponta.</figcaption></figure>
+      <div class="callout warn"><span class="title">Atenção</span><p>Se alguma reposição pedir mais do que existe <span class="field">Em mãos</span> (a célula fica vermelha), o Executar para e abre o diálogo <strong>Estoque insuficiente</strong>, listando as linhas excedentes. Você pode <span class="field">Remover e Executar</span> — zera a reposição dessas linhas e roda o resto — ou cancelar e ajustar à mão. Nenhum plano impossível chega ao armazém.</p></div>
+      <div class="callout example"><span class="title">Exemplo</span><p>Mapa 10, cliente vendeu 4 e quer devolver 2: digite Acerto 4 e Devolução 2. O Executar gera a venda S de 4 (com baixa ACERTO/ de 4), o Pedido C repondo 4 e o CR trazendo 2. A prateleira termina com 4 + 4 repostos = 8.</p></div>
+      <h3>Depois do Executar: finalização automática</h3>
+      <p>Não há botão de finalizar. Uma rotina de meia em meia hora verifica cada operação confirmada e, quando <em>todos</em> os documentos dela terminaram — a venda entregue e faturada, o Pedido C confirmado e entregue, a devolução validada no armazém —, muda o status para <strong>Finalizado</strong> e registra no histórico: <em>"Consignação finalizada: toda a logística e faturamento encerrados."</em></p>
+      <h3>Cancelar e recomeçar</h3>
+      <p><span class="field">Cancelar</span> funciona em rascunho (operação aberta por engano ou adiada pelo cliente) e em confirmado — neste caso <strong>cancela em cascata</strong> os documentos que a operação gerou e registra quais. Uma operação cancelada que <em>nunca</em> gerou documentos pode voltar com <span class="field">Redefinir para Provisório</span>; uma que gerou, não — a tela explica: executá-la de novo não criaria nada, porque ela ainda aponta para os documentos antigos. <strong>Abra uma operação nova</strong>; a cancelada é história.</p>
+
+      <h2 id="mapa-pdf">O mapa em PDF: imprimir e enviar</h2>
+      <ul>
+        <li><span class="field">Imprimir Mapa</span> — no formulário da operação, gera o PDF do mapa (com o texto padrão das Definições no topo) para levar ou conferir com o cliente.</li>
+        <li><span class="field">Enviar Mapa</span> — abre o e-mail já endereçado ao cliente e aos <span class="field">Destinatários dos Relatórios</span> do contrato, com o PDF anexo.</li>
+        <li><strong>Em lote, pela seleção</strong> — na lista ou no kanban, selecione operações e use <span class="menupath">Ações<i>‣</i>Enviar Mapa</span>: envia direto (sem janela), cada uma aos próprios destinatários, e avisa quantos foram enfileirados e quem foi pulado por não ter e-mail.</li>
+        <li><strong>Em lote, fechado</strong> — <span class="menupath">Consignação<i>‣</i>Consignações<i>‣</i>⚙️ Mapa de Consignação</span> é a rotina do mês: ela mesma calcula as operações elegíveis (rascunhos fora das etapas concluídas), mostra o total e pede confirmação antes de enviar. Não há como selecionar errado.</li>
+      </ul>
+      <p>Quando um cliente <strong>responde</strong> ao e-mail, a resposta cai no histórico da operação, o responsável (que é seguidor automático) a recebe na caixa de entrada, e um aviso aparece no canal <strong>Consignação / Operações</strong>. O filtro <span class="field">Resposta</span> da lista mostra as operações com mensagem de cliente ainda não lida.</p>
+
+      <h2 id="campanhas">Campanhas: o sortimento-alvo por canal</h2>
+      <p>Uma campanha (série <strong>CP/</strong>) define <em>quantos exemplares de cada título</em> as prateleiras de um canal devem ter. Em <span class="menupath">Consignação<i>‣</i>Campanhas</span>:</p>
+      <ol class="steps">
+        <li>Crie a campanha com nome, <span class="field">Canal de Vendas</span> (o público: os clientes cujo contrato ativo está nesse canal — o contador <span class="field">Clientes</span> mostra quantos são) e a janela <span class="field">De</span> / <span class="field">Até</span>. Só campanhas <em>ativas e dentro da janela</em> ficam <span class="field">Em curso</span> e valem como meta.</li>
+        <li>Monte a lista de títulos pelo <span class="field">Catálogo</span> — o mesmo navegador de produtos de Vendas e Compras: navegue, ajuste quantidades, e cada título vira uma linha com seu <span class="field">Alvo</span>. As colunas ISBN, publicação, disponibilidade e categoria ajudam a separar lançamento de catálogo.</li>
+        <li>Acompanhe na própria linha a <strong>cobertura</strong>: <span class="field">Prateleiras</span> (quantos clientes o alvo precisa alcançar), <span class="field">Precisa</span> (alvo × prateleiras), <span class="field">Estoque</span>, <span class="field">A caminho</span>, <span class="field">Atende prat.</span>, <span class="field">Cobre %</span> e <span class="field">Faltará</span> — o que a campanha não consegue cobrir sem imprimir ou comprar mais. Atualizado toda manhã.</li>
+      </ol>
+      <p>Na operação, <span class="field">Aplicar Campanhas</span> aplica <em>todas</em> as campanhas em curso do canal do cliente — não há o que escolher: o gestor define, a operação executa. Cada título ganha seu <span class="field">Alvo</span>; título que o cliente não tem entra como linha nova (em azul); título que nem você tem em estoque é pulado e listado no histórico. Quando duas campanhas pedem o mesmo título com alvos diferentes, <strong>vence o alvo maior</strong> — a única regra que nunca encolhe um sortimento. A reposição passa a mirar o alvo: <em>repor = alvo − (mapa − vendido)</em>, limitado ao <span class="field">Em mãos</span>; o que não dá para mandar aparece em <span class="field">Faltou</span>. E o resultado real de cada aplicação (quanto colocou, quanto faltou, o que nem foi) fica registrado no histórico <em>da campanha</em> — onde o gestor lê.</p>
+
+      <h2 id="puxadas">Cobrança de devoluções (as "puxadas")</h2>
+      <p>Toda devolução (CR) nasce com um relógio: o <span class="field">Prazo da Devolução</span> = data de criação + o prazo tolerável das Definições. A partir daí, uma rotina noturna sobe uma escada de cobrança — cada degrau numa porcentagem do prazo, então mudar os dias reflui o calendário inteiro:</p>
+      <div class="tablewrap"><table>
+        <thead><tr><th>Momento (padrão)</th><th>O que acontece</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Criação</strong> (dia 0)</td><td>O relógio começa. O CR pode ser enviado ao cliente a qualquer momento com <span class="field">Enviar Pedido de Devolução</span> (e impresso com <span class="field">Imprimir Devolução</span>).</td></tr>
+          <tr><td><strong>Lembrete</strong> — 25% (~dia 7)</td><td>O pedido de devolução é reenviado por e-mail e uma atividade de <em>ligação</em> é agendada para o responsável, com vencimento no checkpoint seguinte (40%, ~dia 12). Etiqueta: <em>Lembrete enviado</em>.</td></tr>
+          <tr><td><strong>Aviso geral</strong> — 65% (~dia 20)</td><td>Um alerta vermelho cai no canal <strong>Consignação / Devoluções</strong>: a equipe inteira vê que o prazo está fechando sem devolução. Etiqueta: <em>Equipe avisada</em>.</td></tr>
+          <tr><td><strong>Escalonamento</strong> — 100% (vencido)</td><td>O CR está vencido: alerta no canal e uma atividade para o <span class="field">Gerente de escalonamento</span> assumir. Etiqueta: <em>Escalado</em>.</td></tr>
+        </tbody>
+      </table></div>
+      <p>Cada degrau dispara <strong>uma única vez</strong> (rodar a rotina de novo, ou recuperar um dia perdido, não duplica cobrança), e tudo para no momento em que a mercadoria volta (transferência validada) ou o CR é cancelado. Na lista de <span class="menupath">Consignação<i>‣</i>Devoluções</span>, os filtros <span class="field">Vencidos</span> e <span class="field">Em cobrança</span> e a etiqueta colorida de <span class="field">Estágio da Cobrança</span> mostram a fila de puxadas de relance. Ao liberar o CR para a logística, o prazo combinado vira a data programada da transferência RET/ — o armazém também enxerga o prazo.</p>
+      <div class="callout tip"><span class="title">Dica</span><p>Anote no CR tudo que acontecer ("ligamos, prometeram sexta") — cada nota interna e cada resposta do cliente é replicada no canal <strong>Consignação / Devoluções</strong>, então a conversa inteira de cada puxada fica num lugar só.</p></div>
+
+      <h2 id="saude">A saúde de cada título (Ok / Atenção / Crítico / Sem retorno)</h2>
+      <p>Cada título consignado carrega uma etiqueta de saúde, pelos <strong>dias desde o último acerto</strong> daquele título naquele cliente (título nunca acertado conta desde que chegou à prateleira — senão o encalhe pareceria novidade). Os limiares são os das Definições. A etiqueta aparece em dois lugares, sempre com a mesma régua:</p>
+      <ul>
+        <li>nas <strong>linhas da operação</strong> (colunas <span class="field">Dias</span> e <span class="field">Situação</span>) — para decidir na hora do acerto o que insistir e o que puxar de volta;</li>
+        <li>no relatório <span class="menupath">Consignação<i>‣</i>Relatórios<i>‣</i>Na Prateleira</span> — com filtros <span class="field">Crítico</span>, <span class="field">Sem retorno</span> e <span class="field">Vencidos</span>, e ordenável por <span class="field">Dias</span> para pôr o mais parado no topo. Atualizado toda manhã.</li>
+      </ul>
+
+      <h2 id="relatorios">Relatórios</h2>
+      <div class="tablewrap"><table>
+        <thead><tr><th>Relatório (em <span class="menupath">Consignação<i>‣</i>Relatórios</span>)</th><th>Pergunta que responde</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Na Prateleira</strong></td><td>O que está consignado agora, por cliente e canal — com a idade e a etiqueta de saúde de cada título.</td></tr>
+          <tr><td><strong>Inventário</strong></td><td>A contagem das prateleiras, agora também com a coluna <span class="field">Alvo</span> das campanhas ao lado do contado — dá para medir prateleira contra meta no pivô.</td></tr>
+          <tr><td><strong>Razão da Prateleira</strong></td><td>Cada unidade que entrou e saiu de cada prateleira, vinda de <em>duas fontes lado a lado</em>: <span class="field">Estoque Odoo</span> (as transferências reais) e <span class="field">Fiscal (NFe)</span> (as notas importadas da migração). Agrupe por <span class="field">Fonte</span> para ver onde as duas discordam — a diferença encolhe sozinha conforme os acertos passam a rodar no sistema.</td></tr>
+          <tr><td><strong>Cobertura</strong></td><td>O planejamento das campanhas em curso, título a título: alvo, prateleiras, o que precisa, o que tem, o que está a caminho e o que <em>Faltará</em>. Filtro <span class="field">Vai faltar</span> para a lista de reimpressão/compra.</td></tr>
+          <tr><td><strong>Ruptura</strong></td><td>Toda meta de campanha não cumprida, <em>com causa</em>: <span class="field">Estoque</span> (não tinha e não há chegando), <span class="field">Manual</span> (tinha, mas o operador mandou menos), <span class="field">Falta</span> (a campanha do canal nem foi aplicada na operação) e <span class="field">Tempo</span> (cliente de campanha sem acerto há mais que o tolerado — detectado pela rotina noturna). Pivô por natureza, cliente, título, campanha, canal e mês.</td></tr>
+          <tr><td><strong>Campanhas</strong> (cobertura por cliente)</td><td>O alvo de cada campanha contra o que <em>de fato chegou</em> a cada cliente — inclusive o universo invisível: o filtro <span class="field">Nunca recebeu</span> lista os títulos que a campanha quer e o cliente nunca teve.</td></tr>
+        </tbody>
+      </table></div>
+      <p>Além dos relatórios, o menu <span class="menupath">Consignação<i>‣</i>Acertos</span> lista todas as vendas S nascidas de acertos — só leitura, criadas apenas pela operação, nunca à mão. No aplicativo Vendas, os filtros <span class="field">Acertos de Consignação</span> e <span class="field">Vendas Normais</span> e o agrupamento por <span class="field">Contrato</span> separam os dois mundos.</p>
+      <figure class="shot"><img src="img/doc-liber_soc_settlement-ruptura.png" alt="Relatório Ruptura em pivô, agrupado por natureza (Estoque, Manual, Falta, Tempo) e cliente, com a soma de exemplares faltantes"><figcaption>Ruptura com causa: quantos exemplares faltaram, onde, e — o que importa para agir — por quê.</figcaption></figure>
+
+      <h2 id="regras">Regras que o sistema garante</h2>
+      <div class="tablewrap"><table>
+        <thead><tr><th>Regra</th><th>Por quê</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Só se acerta cliente com contrato ativo.</strong> Sem contrato (ou suspenso), a tela avisa em amarelo e o Executar bloqueia.</td><td>O acerto vende da prateleira; sem contrato ativo não há prateleira válida.</td></tr>
+          <tr><td><strong>Executar exige o mapa carregado</strong> e pelo menos uma decisão (vendido, reposição ou devolução).</td><td>Uma operação vazia não tem o que despachar.</td></tr>
+          <tr><td><strong>O mapa congela no Executar.</strong> Enquanto rascunho, a coluna Mapa é viva (lê a prateleira agora); executada, ela vira o retrato que foi acertado — e é esse retrato que o PDF e o histórico mostram para sempre.</td><td>A baixa muda a prateleira logo em seguida; sem congelar, as operações antigas mentiriam.</td></tr>
+          <tr><td><strong>Devolução nunca excede o que sobra na prateleira</strong> (mapa − vendido). Digitou a mais? O sistema ajusta na hora e explica.</td><td>Não dá para devolver livro que acabou de ser vendido.</td></tr>
+          <tr><td><strong>Devolver e repor o mesmo título se compensam.</strong> Digitou 3 para devolver e 2 para repor? Vira 1 a devolver e 0 a repor.</td><td>Mandar e trazer o mesmo livro na mesma rodada é frete pago para nada.</td></tr>
+          <tr><td><strong>Reposição acima do Em mãos não passa</strong> — célula vermelha na digitação, diálogo "Estoque insuficiente" no Executar.</td><td>Não se promete ao cliente livro que não existe no armazém.</td></tr>
+          <tr><td><strong>Um rascunho no quadro bloqueia gerar outro para o mesmo cliente.</strong></td><td>Duas operações abertas acertariam a mesma prateleira duas vezes.</td></tr>
+          <tr><td><strong>Operação cancelada com documentos não volta a rascunho.</strong></td><td>Ela ainda aponta para os documentos cancelados; reexecutá-la criaria nada, silenciosamente. Operação nova, história limpa.</td></tr>
+          <tr><td><strong>A venda S nasce carimbada</strong> com a operação e as campanhas aplicadas.</td><td>Receita rastreável até a campanha que a causou — nenhum cálculo posterior consegue reconstituir isso.</td></tr>
+        </tbody>
+      </table></div>
+
+      <h2 id="faq">Solução de problemas</h2>
+      <p><strong>O "⚙️ Gerar Operações" diz "Nada a criar".</strong><br>
+      Todas as consignações abertas já têm rascunho no quadro. Use <span class="field">Abrir os rascunhos</span> e execute-os. Se o aviso for "Nenhuma consignação aberta", nenhum contrato ativo tem saldo em prateleira — remeta primeiro.</p>
+      <p><strong>A coluna Vendas mostra número, mas nunca acertei este título aqui.</strong><br>
+      É o histórico fiscal: para títulos ainda sem acerto no sistema, a coluna lê as notas importadas (XML). Assim que o primeiro acerto rodar aqui, a fonte passa a ser o próprio sistema — nunca as duas somadas, para não contar a mesma venda duas vezes.</p>
+      <p><strong>Digitei a reposição à mão e ela voltou ao valor sugerido.</strong><br>
+      Isso só acontece em rascunho, quando algo que alimenta a sugestão muda (o vendido, o alvo). Depois do Executar o valor digitado é definitivo — decisão não é sugestão.</p>
+      <p><strong>Uma operação está Confirmada há dias e não finaliza.</strong><br>
+      Algum documento dela está aberto: venda sem fatura, Pedido C sem confirmar/entregar, ou devolução sem validar no armazém. Os botões inteligentes da operação mostram qual.</p>
+      <p><strong>O cliente respondeu o e-mail do mapa e ninguém viu.</strong><br>
+      A resposta está no histórico da operação e no canal <strong>Consignação / Operações</strong>. Confira se o responsável está definido — é ele o seguidor automático que recebe na caixa de entrada. O filtro <span class="field">Resposta</span> lista as operações com mensagem não lida.</p>
+
+      <div class="seealso">
+        <span class="title">Ver também</span>
+        <ul>
+          <li><a href="liber_soc_agreements.html">Acordos de consignação</a> — o contrato, a lista de preços e o desconto que o acerto herda.</li>
+          <li><a href="liber_soc_moves.html">Remessas e retornos</a> — os documentos COM/, RET/ e o fluxo do CR depois do acerto.</li>
+          <li><a href="liber_soc_fiscal_br.html">Fiscal da consignação</a> — a posição fiscal da venda S e a nota do Pedido C.</li>
+          <li><a href="liber_soc_audit.html">Auditoria pelo XML</a> — conferir o mapa contra as notas fiscais importadas.</li>
+        </ul>
+      </div>
+
+      <nav class="pager" id="pager"></nav>
+    </article>
+  </div>
+</div>
+<script src="docs.js"></script>
+</body>
+</html>

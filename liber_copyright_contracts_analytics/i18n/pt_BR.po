@@ -52,6 +52,7 @@ msgstr "Conta Analítica"
 #. module: liber_copyright_contracts_analytics
 #: model:ir.actions.act_window,name:liber_copyright_contracts_analytics.action_edlab_analytic_accounts
 #: model:ir.ui.menu,name:liber_copyright_contracts_analytics.menu_edlab_analytic_accounts
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_analytics.view_edlab_contract_form_analytics
 msgid "Analytic Accounts"
 msgstr "Contas Analíticas"
 

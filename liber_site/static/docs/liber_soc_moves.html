@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Remessas e retornos — Manuais do Liber</title>
+<link rel="icon" type="image/png" href="../logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;600;700&display=swap">
+<link rel="stylesheet" href="docs.css">
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="../index.html"><img src="../logo.png" alt="">liber<span>.</span></a>
+    <span class="doc-tag">Manuais</span>
+    <nav><a href="index.html">Índice</a><a href="../index.html">Site</a></nav>
+  </div>
+</header>
+<div class="wrap">
+  <div class="layout">
+    <aside class="sidebar" id="sidebar"></aside>
+    <article class="doc">
+      <div class="breadcrumb"><a href="index.html">Manuais</a><span class="sep">›</span>Consignação<span class="sep">›</span>Remessas e retornos</div>
+      <h1>Remessas e retornos</h1>
+      <p class="lead">Todo livro que vai para a prateleira de uma livraria — e todo livro que volta — passa por aqui, com documento próprio, número próprio e sem nunca virar venda antes da hora.</p>
+
+      <h2 id="visao-geral">Visão geral</h2>
+      <p>Este módulo cuida da <strong>logística</strong> da consignação: o caminho físico dos livros entre o armazém e as prateleiras dos clientes. Ele trabalha com dois documentos e dá a cada fluxo do armazém uma numeração própria, para ninguém confundir consignação com venda:</p>
+      <div class="tablewrap"><table>
+        <thead><tr><th>Documento / série</th><th>O que é</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Pedido C</strong> (C00001, C00002…)</td><td>O <em>pedido de consignação</em>: um pedido comercial com o mesmo fluxo de um pedido de venda, mas que <strong>não é uma venda</strong> — recebe o código C em vez do S, fica fora do aplicativo Vendas e dos relatórios de vendas, e <strong>nunca fatura</strong>. É por ele que os livros saem do armazém rumo à prateleira (abertura de consignação ou reposição).</td></tr>
+          <tr><td><strong>CR/</strong> (CR/2026/00001…)</td><td>O documento comercial de <em>devolução</em> (também chamado de "puxada"): o pedido para a livraria devolver livros. É pré-logístico — confirmar não mexe em estoque; a mercadoria só se move quando o documento é liberado para a logística.</td></tr>
+          <tr><td><strong>COM/</strong></td><td>As transferências do armazém ligadas à consignação: a saída do Pedido C e as remessas para a prateleira. "COM" = consignação em logística.</td></tr>
+          <tr><td><strong>RET/</strong></td><td>As transferências de <em>retorno</em>: prateleira → armazém. Um retorno de consignação é um retorno de mercadoria, não uma transferência interna qualquer — por isso tem tipo de operação e numeração próprios.</td></tr>
+        </tbody>
+      </table></div>
+      <div class="callout note"><span class="title">Nota</span><p>A baixa da venda no acerto tem série própria, <strong>ACERTO/</strong>, e é documentada no manual do <a href="liber_soc_settlement.html">acerto</a>. A série <strong>REM/</strong> pertence ao documento <em>fiscal</em> de remessa (a nota), tratada no manual <a href="liber_soc_fiscal_br.html">fiscal</a>.</p></div>
+      <p>Uma regra vale para tudo: <strong>nenhum movimento escreve no estoque diretamente</strong>. Cada operação gera uma transferência de verdade, que o armazém confirma e valida — então o histórico do estoque conta a história completa.</p>
+
+      <h2 id="configuracao">Configuração</h2>
+      <ul>
+        <li><strong>Tipos de operação do armazém</strong> — os tipos COM/ (remessa e entrega de consignação) e RET/ (retorno) são <strong>criados automaticamente no primeiro uso</strong>. Dá para conferi-los (ou trocá-los) em <span class="menupath">Consignação<i>‣</i>Configuração<i>‣</i>Configurações</span>, bloco <strong>Operações de Estoque de Consignação</strong>, campos <span class="field">Operação de Remessa de Consignação</span> e <span class="field">Operação de Retorno de Consignação</span>.</li>
+        <li><strong>Grupos de acesso</strong> — os mesmos do módulo de contratos: <em>Consignação / Usuário</em> opera; <em>Administrador</em> também exclui.</li>
+        <li><strong>Pré-requisito</strong> — o cliente precisa ter um <a href="liber_soc_agreements.html">contrato de consignação ativo</a>. Sem contrato ativo, nenhum movimento é aceito.</li>
+      </ul>
+
+      <h2 id="pedido-c">Abrir uma consignação: o Pedido C</h2>
+      <p>A primeira leva de livros para uma livraria nova (ou uma remessa avulsa decidida pelo comercial) é um Pedido C de <em>abertura</em>:</p>
+      <ol class="steps">
+        <li>Acesse <span class="menupath">Consignação<i>‣</i>Pedidos<i>‣</i>Novo</span>.</li>
+        <li>Escolha o <span class="field">Cliente</span>. O campo <span class="field">Contrato de Consignação</span> é preenchido sozinho a partir do cliente; o <span class="field">Tipo de Consignação</span> vem como <em>Abertura de Consignação</em> (um pedido criado à mão é sempre uma abertura — as <em>reposições</em> nascem do acerto).</li>
+        <li>Adicione os títulos e quantidades nas linhas, como num pedido de venda comum.</li>
+        <li>Clique em <span class="field">Confirmar</span>. A entrega é criada com número <strong>COM/</strong> — no tipo de operação de consignação, nunca no "Pedidos de entrega" genérico do armazém.</li>
+        <li>O armazém separa e valida a transferência. Os livros saem do estoque e entram na prateleira do cliente.</li>
+      </ol>
+      <figure class="shot"><img src="img/doc-liber_soc_moves-pedido-c.png?v=2" alt="Pedido C confirmado, mostrando o campo Tipo de Consignação, o contrato resolvido e a entrega COM/ no botão inteligente"><figcaption>O Pedido C: mesmo formulário do pedido de venda, mas com código C, contrato resolvido automaticamente e entrega na série COM/.</figcaption></figure>
+      <div class="callout warn"><span class="title">Atenção</span><p>Um Pedido C <strong>nunca fatura</strong>. O botão de criar fatura não aparece, o status de faturamento fica sempre em "Nada a faturar", e qualquer tentativa por outro caminho é barrada com a explicação: <em>os livros ainda são nossos, na prateleira do cliente; eles viram receita no acerto — que é quem emite a nota e a fatura, pelo que de fato vendeu</em>. Faturar aqui registraria receita por livros que ninguém comprou, e registraria duas vezes (aqui e no acerto).</p></div>
+      <div class="callout note"><span class="title">Nota</span><p>Os Pedidos C também ficam <strong>fora do aplicativo Vendas</strong>: não aparecem nas cotações, nos pedidos, na lista "a faturar" nem no relatório Análise de Vendas. O único lugar onde você os vê é <span class="menupath">Consignação<i>‣</i>Pedidos</span> — de propósito, para os números de venda nunca contarem consignação como receita.</p></div>
+
+      <h2 id="devolucao">Pedir uma devolução: o CR</h2>
+      <p>O CR é o documento que a equipe usa para <em>cobrar</em> a volta de livros. Ele nasce de uma operação de acerto (coluna <span class="field">Devolução</span> — veja o <a href="liber_soc_settlement.html#executar">manual do acerto</a>) ou do botão <span class="field">Recolher Tudo</span> do contrato; a lista em <span class="menupath">Consignação<i>‣</i>Devoluções</span> não cria documentos, só acompanha os que existem.</p>
+      <p>O fluxo de um CR tem dois momentos, de propósito:</p>
+      <ol class="steps">
+        <li><strong>Confirmar</strong> — valida o documento comercialmente e o deixa <em>Aguardando</em>. Nada se move ainda: é a fase de combinar com a livraria (o CR pode ser <a href="liber_soc_settlement.html#puxadas">enviado por e-mail e cobrado pela régua</a>).</li>
+        <li><strong>Liberar para Logística</strong> — quando a devolução está combinada, este botão entrega o trabalho ao armazém: cria a transferência <strong>RET/</strong> (prateleira → armazém), já reservada, e o CR passa a <em>Confirmado</em>.</li>
+        <li>O armazém valida a transferência quando os livros chegam. O botão inteligente <span class="field">Transferência</span> abre o documento do estoque a qualquer momento.</li>
+      </ol>
+      <figure class="shot"><img src="img/doc-liber_soc_moves-cr.png" alt="Documento CR em estado Aguardando, com os botões Confirmar e Liberar para Logística e a aba Produtos com linhas de devolução"><figcaption>O CR: confirmado, ele espera o combinado com a livraria; liberado, vira uma transferência RET/ para o armazém processar.</figcaption></figure>
+      <div class="callout tip"><span class="title">Dica</span><p>Errou ou o cliente desistiu? <span class="field">Cancelar</span> desfaz o CR (e cancela a transferência, se ainda não foi validada). Um CR <em>Aguardando</em> ou cancelado pode voltar com <span class="field">Redefinir para Provisório</span>.</p></div>
+
+      <h2 id="recolher-tudo">Recolher tudo (encerramento)</h2>
+      <p>Para trazer de volta a prateleira inteira — o passo obrigatório antes de <a href="liber_soc_agreements.html#ciclo">encerrar um contrato</a>:</p>
+      <ol class="steps">
+        <li>Abra o contrato em <span class="menupath">Consignação<i>‣</i>Contratos</span>.</li>
+        <li>Clique em <span class="field">Recolher Tudo</span>. O sistema monta um CR com todos os títulos e quantidades que estão na prateleira.</li>
+        <li>Siga o fluxo normal do CR: <span class="field">Confirmar</span>, depois <span class="field">Liberar para Logística</span>, e o armazém valida a RET/.</li>
+        <li>Com a prateleira zerada, o contrato pode ser encerrado.</li>
+      </ol>
+      <p>Se a prateleira já estiver vazia, o botão avisa: <em>"A prateleira já está vazia; nada a recolher."</em></p>
+
+      <h2 id="renovacao">Renovação simbólica</h2>
+      <p>A legislação limita quanto tempo uma remessa de consignação pode ficar em aberto. Quando o prazo aperta e os livros vão continuar na livraria, faz-se uma <strong>renovação simbólica</strong>: um documento que renova o "relógio fiscal" da prateleira <em>sem mover nenhum livro</em>.</p>
+      <ol class="steps">
+        <li>No contrato ativo, clique em <span class="field">Renovação Simbólica</span>.</li>
+        <li>O documento é criado e concluído na hora (não há logística), e o registro fica no histórico do contrato: <em>"Renovação simbólica CR/… registrada (sem movimento físico)."</em></li>
+      </ol>
+      <div class="callout note"><span class="title">Nota</span><p>As duas notas fiscais que se compensam na renovação (retorno simbólico + nova remessa) são assunto do módulo <a href="liber_soc_fiscal_br.html">fiscal</a>; aqui fica só o registro da operação.</p></div>
+
+      <h2 id="campanhas">Campanhas (listas de títulos prontas)</h2>
+      <p>Uma <strong>campanha</strong> é uma lista pré-montada de títulos e quantidades — o kit que o comercial repete em vários clientes. Em <span class="menupath">Consignação<i>‣</i>Campanhas</span> você cria e mantém as listas; num CR em rascunho, escolha a <span class="field">Campanha</span> e clique em <span class="field">Carregar da Campanha</span> para preencher as linhas de uma vez.</p>
+      <p>As campanhas ganham muito mais poder no módulo de acerto — canal de vendas, período de vigência, alvo por prateleira e relatórios de cobertura. Veja <a href="liber_soc_settlement.html#campanhas">Campanhas no manual do acerto</a>.</p>
+
+      <h2 id="relatorios">Relatórios: onde estão os meus livros?</h2>
+      <h3>Na Prateleira</h3>
+      <p><span class="menupath">Consignação<i>‣</i>Relatórios<i>‣</i>Na Prateleira</span> mostra tudo que está consignado agora, agrupado por cliente — com visões de lista, pivô e gráfico, e o eixo <span class="field">Canal de Vendas</span> para ler por equipe.</p>
+      <h3>Inventário</h3>
+      <p><span class="menupath">Consignação<i>‣</i>Relatórios<i>‣</i>Inventário</span> é a contagem das prateleiras: digite (ou importe de planilha) a quantidade contada por título em cada cliente. Nada se move até você clicar em <em>Aplicar</em> — a contagem fica como ajuste em rascunho.</p>
+      <h3>Razão</h3>
+      <p><span class="menupath">Consignação<i>‣</i>Relatórios<i>‣</i>Razão</span> é o extrato da consignação: cada entrada (+) e saída (−) que tocou uma prateleira, com o <span class="field">Saldo Corrente</span> por cliente e livro. Filtre por <em>Entrada na prateleira (+)</em> / <em>Saída da prateleira (−)</em>, agrupe por cliente, livro ou mês.</p>
+      <h3>No cadastro do produto</h3>
+      <p>No formulário de cada livro, ao lado do "Em mãos" nativo, dois botões respondem "onde está este título?": <span class="field">Estoque</span> (o que está no armazém) e <span class="field">Consignado</span> (o que está nas prateleiras, agrupado por cliente).</p>
+      <figure class="shot"><img src="img/doc-liber_soc_moves-razao.png" alt="Relatório Razão em pivô, clientes nas linhas e meses nas colunas, com a quantidade consignada líquida"><figcaption>O Razão: a evolução da consignação de cada cliente, mês a mês, somando remessas e subtraindo retornos e vendas acertadas.</figcaption></figure>
+
+      <h2 id="regras">Regras que o sistema garante</h2>
+      <div class="tablewrap"><table>
+        <thead><tr><th>Regra</th><th>Por quê</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Movimento exige contrato ativo.</strong> Cliente sem contrato: <em>"O cliente … não possui contrato de consignação."</em> Contrato suspenso: <em>"O contrato … precisa estar ativo para registrar movimentos."</em></td><td>A prateleira pertence ao contrato; sem ele não há onde pôr (nem de onde tirar) os livros.</td></tr>
+          <tr><td><strong>Não se confirma documento sem linhas</strong> (<em>"Adicione ao menos uma linha de produto antes de confirmar."</em>).</td><td>Um movimento vazio não movimenta nada.</td></tr>
+          <tr><td><strong>Remessas saem em COM/ e retornos em RET/ — nunca em WH/OUT.</strong></td><td>Para o armazém, uma remessa de consignação na fila de entregas de venda parece uma venda que esqueceram de faturar. Séries separadas deixam cada fila dizer a verdade — e permitem priorizar vendas sobre consignação.</td></tr>
+          <tr><td><strong>Pedido C nunca fatura</strong> e fica fora de todos os relatórios de vendas.</td><td>Consignação não é receita. A receita nasce no acerto, pelo que de fato vendeu.</td></tr>
+          <tr><td><strong>Renovação simbólica não gera transferência.</strong></td><td>É um ato fiscal, não físico: os livros não saem do lugar.</td></tr>
+          <tr><td><strong>Valor das linhas não é preço de venda.</strong> O campo <span class="field">Valor Unitário</span> (e o <span class="field">Valor das Mercadorias</span> do documento) é o valor de mercadoria para a nota da remessa — vem da lista de preços do contrato, mas não é receita.</td><td>O documento carrega valor para fins fiscais; a venda, com preço e desconto de verdade, acontece só no acerto.</td></tr>
+        </tbody>
+      </table></div>
+
+      <h2 id="faq">Perguntas frequentes</h2>
+      <p><strong>Por que não consigo criar um documento na lista de Devoluções?</strong><br>
+      Porque devoluções nascem de uma operação de acerto ou do Recolher Tudo do contrato — a lista existe para acompanhar e processar, não para criar. Assim toda devolução fica amarrada à operação que a motivou.</p>
+      <p><strong>Confirmei o CR e o estoque não mudou. Está quebrado?</strong><br>
+      Não — está no desenho. Confirmar é o passo <em>comercial</em> (o documento fica Aguardando enquanto se combina com a livraria). O estoque só reserva quando você clica em <span class="field">Liberar para Logística</span>, e só muda quando o armazém valida a transferência RET/.</p>
+      <p><strong>Como reponho a prateleira de um cliente?</strong><br>
+      Pelo acerto: a coluna <span class="field">Reposição</span> da operação gera um Pedido C de reposição automaticamente. Criar um Pedido C à mão serve para a abertura (primeira remessa) ou remessas avulsas.</p>
+      <p><strong>O valor do Pedido C entra no meu faturamento?</strong><br>
+      Não. Ele fica fora da Análise de Vendas por construção — nenhum relatório de vendas conta consignação. O que entra no faturamento é a venda S gerada no acerto.</p>
+
+      <div class="seealso">
+        <span class="title">Ver também</span>
+        <ul>
+          <li><a href="liber_soc_agreements.html">Acordos de consignação</a> — o contrato e a prateleira que estes movimentos alimentam.</li>
+          <li><a href="liber_soc_settlement.html">Acerto de consignação</a> — onde a reposição e a devolução são decididas, e a cobrança das devoluções.</li>
+          <li><a href="liber_soc_fiscal_br.html">Fiscal da consignação</a> — a nota de remessa do Pedido C e os CFOPs de cada operação.</li>
+        </ul>
+      </div>
+
+      <nav class="pager" id="pager"></nav>
+    </article>
+  </div>
+</div>
+<script src="docs.js"></script>
+</body>
+</html>

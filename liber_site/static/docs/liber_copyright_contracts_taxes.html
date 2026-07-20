@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>IRRF sobre direitos — Manuais do Liber</title>
+<link rel="icon" type="image/png" href="../logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;600;700&display=swap">
+<link rel="stylesheet" href="docs.css">
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="../index.html"><img src="../logo.png" alt="">liber<span>.</span></a>
+    <span class="doc-tag">Manuais</span>
+    <nav><a href="index.html">Índice</a><a href="../index.html">Site</a></nav>
+  </div>
+</header>
+<div class="wrap">
+  <div class="layout">
+    <aside class="sidebar" id="sidebar"></aside>
+    <article class="doc">
+      <div class="breadcrumb"><a href="index.html">Manuais</a><span class="sep">›</span>Direitos autorais<span class="sep">›</span>IRRF sobre direitos</div>
+      <h1>IRRF sobre direitos</h1>
+      <p class="lead">Retenha o imposto de renda na fonte de cada pagamento de direitos autorais — pela tabela progressiva oficial, com o redutor da Lei 15.270/2025 — e acumule tudo numa única fatura ao órgão arrecadador, pronta para o DARF.</p>
+
+      <h2 id="visao-geral">Visão geral</h2>
+      <p>Quando a editora paga direitos autorais a uma pessoa física, precisa reter o IRRF. Este módulo faz isso em cima das faturas geradas pelo <a href="liber_copyright_contracts_payments.html">Pagamento de royalties</a>:</p>
+      <ul>
+        <li>No momento em que a fatura do autor é gerada, o imposto é calculado e entra como uma <strong>linha negativa</strong> ("IRRF retido - …") — o autor recebe o <strong>líquido</strong>.</li>
+        <li>O valor retido de todos os autores vai se <strong>acumulando numa única fatura em rascunho</strong>, endereçada ao órgão arrecadador (por exemplo, a Receita Federal), com uma linha por obra e a numeração de lote "Impostos de Direitos Autorais/NNN".</li>
+        <li>A tabela do imposto é um <strong>cadastro editável</strong>: quando a lei mudar, o contador cria a tabela nova com a data de início de vigência, sem depender de atualização do sistema.</li>
+      </ul>
+      <p>A <a href="liber_copyright_contracts_reports.html">Prestação de contas</a> usa o mesmo motor: o extrato do autor mostra a dedução de IRRF calculada pela tabela vigente (ou pelo modo escolhido no cadastro do favorecido).</p>
+
+      <h2 id="configuracao">Configuração</h2>
+      <p>A retenção é <strong>opcional e desligada por padrão</strong>: ela só acontece quando o órgão arrecadador <em>e</em> a conta de passivo estão configurados.</p>
+      <ol class="steps">
+        <li>Acesse <span class="menupath">Configurações<i>‣</i>Direitos Autorais</span>, seção <strong>Retenção (IRRF)</strong>.</li>
+        <li>Em <span class="field">Órgão arrecadador</span>, escolha o contato do governo que receberá a fatura acumulada do imposto (crie um contato "Receita Federal do Brasil", se ainda não houver).</li>
+        <li>Em <span class="field">Conta de passivo do IRRF</span>, escolha a conta "IRRF a Recolher": ela recebe o valor no momento da retenção e é baixada quando o imposto é pago ao governo.</li>
+        <li>Se quiser, defina o <span class="field">Diário da fatura de imposto</span> (um diário de compras; vazio usa o diário de compras padrão da empresa).</li>
+        <li>Em <span class="field">Dia de vencimento do imposto</span>, informe o dia <em>do mês seguinte</em> em que o IRRF retido vence (o DARF) — padrão <strong>20</strong>.</li>
+        <li>Salve. As opções são por empresa.</li>
+      </ol>
+
+      <h2 id="tabela">Manter a tabela do IRRF</h2>
+      <p>O módulo já vem com a tabela de 2026. Quando a legislação mudar, cadastre a nova:</p>
+      <ol class="steps">
+        <li>Acesse <span class="menupath">Direitos Autorais<i>‣</i>Configurações<i>‣</i>Tabelas de IRRF</span> e clique em <strong>Novo</strong>.</li>
+        <li>Dê um <span class="field">Nome</span> (ex.: "IRRF 2027") e informe <span class="field">Vigente a Partir de</span> — a tabela vale para as faturas datadas desse dia em diante, até começar uma tabela mais recente.</li>
+        <li>Preencha <span class="field">Sem Retenção Até</span> (renda mensal até a qual não há retenção nenhuma) e o <span class="field">Desconto Simplificado</span> (valor fixo abatido da renda para formar a base de cálculo).</li>
+        <li>Na seção <strong>Redutor (Lei 15.270/2025)</strong>, informe a <span class="field">Constante do Redutor (A)</span>, o <span class="field">Fator do Redutor (B)</span> e <span class="field">Redutor Até</span> — o redutor vale <em>A − B × renda</em> e se aplica às rendas até esse teto.</li>
+        <li>Em <strong>Faixas Progressivas</strong>, cadastre cada faixa com <span class="field">Base Até</span> (0 = sem limite, a última faixa), <span class="field">Alíquota (%)</span> e <span class="field">Parcela a Deduzir</span>.</li>
+        <li>Salve. A tabela antiga permanece no histórico — o sistema sempre escolhe a mais recente já vigente na data da fatura.</li>
+      </ol>
+      <p>Os valores de 2026 que acompanham o módulo:</p>
+      <div class="tablewrap"><table>
+        <tr><th colspan="3">Tabela IRRF 2026 (Lei 15.270/2025)</th></tr>
+        <tr><th>Base de cálculo até</th><th>Alíquota</th><th>Parcela a deduzir</th></tr>
+        <tr><td>R$ 2.428,80</td><td>0%</td><td>—</td></tr>
+        <tr><td>R$ 2.826,65</td><td>7,5%</td><td>R$ 182,16</td></tr>
+        <tr><td>R$ 3.751,05</td><td>15%</td><td>R$ 394,16</td></tr>
+        <tr><td>R$ 4.664,68</td><td>22,5%</td><td>R$ 675,49</td></tr>
+        <tr><td>Acima (sem limite)</td><td>27,5%</td><td>R$ 908,73</td></tr>
+      </table></div>
+      <div class="tablewrap"><table>
+        <tr><th>Parâmetro</th><th>Valor 2026</th></tr>
+        <tr><td>Sem retenção até (renda mensal)</td><td>R$ 5.000,00</td></tr>
+        <tr><td>Desconto simplificado</td><td>R$ 607,20</td></tr>
+        <tr><td>Redutor</td><td>978,62 − 0,133145 × renda (nunca negativo)</td></tr>
+        <tr><td>Redutor aplicado até</td><td>renda de R$ 7.350,00</td></tr>
+      </table></div>
+      <div class="callout example"><span class="title">Exemplo</span>
+        <p>Pagamento de <strong>R$ 6.000,00</strong> de direitos a um autor pessoa física em 2026:</p>
+        <ol>
+          <li>Acima de R$ 5.000,00 → há retenção.</li>
+          <li>Base de cálculo: 6.000,00 − 607,20 (desconto simplificado) = <strong>5.392,80</strong>.</li>
+          <li>Tabela: 5.392,80 × 27,5% − 908,73 = <strong>574,29</strong>.</li>
+          <li>Redutor (renda ≤ 7.350,00): 978,62 − 0,133145 × 6.000,00 = <strong>179,75</strong>.</li>
+          <li>IRRF retido: 574,29 − 179,75 = <strong>R$ 394,54</strong>. O autor recebe R$ 5.605,46.</li>
+        </ol>
+        <p>Já um pagamento de R$ 10.000,00 fica em 9.392,80 × 27,5% − 908,73 = <strong>R$ 1.674,29</strong>, sem redutor (acima do teto de R$ 7.350,00). E um de R$ 4.000,00 não retém nada.</p>
+      </div>
+      <div class="callout note"><span class="title">Nota</span>
+        <p>O resultado nunca é negativo: se a conta der abaixo de zero (acontece logo acima do limite de isenção), a retenção é simplesmente <strong>zero</strong>.</p>
+      </div>
+
+      <h2 id="modo">Escolher o modo de retenção de cada favorecido</h2>
+      <p>Nem todo favorecido é tributado igual — uma pessoa jurídica, por exemplo, não sofre essa retenção. No cadastro do contato, aba <strong>Favorecido</strong>:</p>
+      <ol class="steps">
+        <li>Abra o favorecido em <span class="menupath">Direitos Autorais<i>‣</i>Favorecidos</span>.</li>
+        <li>Na aba <strong>Favorecido</strong>, escolha o <span class="field">Modo de IRRF</span>:
+          <ul>
+            <li><strong>Tabela Progressiva</strong> (padrão) — usa a tabela vigente, com desconto simplificado e redutor.</li>
+            <li><strong>Percentual Manual</strong> — aplica o percentual fixo do campo <span class="field">IRRF (%)</span>, que aparece quando este modo é escolhido.</li>
+            <li><strong>Isento</strong> — não retém nada (o caso típico das empresas).</li>
+          </ul>
+        </li>
+        <li>Salve. O modo vale tanto para a retenção na fatura quanto para a dedução mostrada na prestação de contas.</li>
+      </ol>
+      <figure class="shot"><img src="img/doc-liber_copyright_contracts_taxes-mode.png" alt="Aba Favorecido do contato com o Modo de IRRF em botões de opção: Tabela Progressiva, Percentual Manual e Isento"><figcaption>O modo de IRRF no cadastro do favorecido: tabela, percentual fixo ou isenção.</figcaption></figure>
+
+      <h2 id="fluxo">O que acontece a cada pagamento</h2>
+      <ol class="steps">
+        <li>Gere as faturas dos autores normalmente (<strong>Ação ‣ Gerar Faturas de Royalties</strong> no contrato — veja o manual de <a href="liber_copyright_contracts_payments.html">Pagamento de royalties</a>). Se a retenção estiver configurada e houver imposto a reter, a fatura já nasce com a linha negativa <strong>"IRRF retido - <em>autor</em>"</strong>, lançada na conta "IRRF a Recolher": a despesa fica pelo valor bruto e o total a pagar, pelo líquido.</li>
+        <li>Em paralelo, o valor retido entra na <strong>fatura acumuladora do imposto</strong>: uma fatura de fornecedor em rascunho, endereçada ao <span class="field">Órgão arrecadador</span>, com uma linha por obra ("IRRF - <em>obra</em> - <em>fatura do autor</em>"). Se ainda não existe uma acumuladora em rascunho, o sistema cria uma, com o número de lote na referência ("Impostos de Direitos Autorais/001") e vencimento no <span class="field">Dia de vencimento do imposto</span> do mês seguinte.</li>
+        <li>O campo de referência de pagamento da acumuladora lista os contratos e as faturas de origem, e é atualizado sozinho conforme faturas entram e saem do lote.</li>
+        <li>Ao confirmar a fatura do autor, os rótulos das linhas do lote são atualizados com o número definitivo dela.</li>
+        <li>No vencimento, confirme e pague a fatura acumuladora — isso baixa o passivo "IRRF a Recolher". A partir daí, as próximas retenções abrem um lote novo.</li>
+      </ol>
+      <p>Dois botões inteligentes ligam as pontas: na fatura do autor, <strong>IRRF – Fatura de Imposto</strong> abre o lote que carrega a retenção dela; na fatura do imposto, <strong>Faturas de Autores</strong> abre as faturas de origem.</p>
+      <figure class="shot"><img src="img/doc-liber_copyright_contracts_taxes-batch.png" alt="Fatura acumuladora do IRRF com uma linha por obra e a referência Impostos de Direitos Autorais/001"><figcaption>O lote do imposto: uma linha por obra, referência com o número do lote e as origens listadas na referência de pagamento.</figcaption></figure>
+
+      <h2 id="regras">Regras e guardas</h2>
+      <ul>
+        <li><strong>Sem configuração, sem retenção.</strong> Enquanto o órgão arrecadador ou a conta de passivo não estiverem definidos, as faturas dos autores saem pelo valor bruto, sem linha de IRRF.</li>
+        <li><strong>Cancelou ou excluiu a fatura do autor?</strong> A parcela dela é removida automaticamente do lote <em>em rascunho</em>. Se o lote já foi confirmado, o sistema não mexe nele — registra um aviso no histórico do lote pedindo ajuste manual do contador.</li>
+        <li><strong>Nada de duplicar no lote:</strong> regenerar ou reconfirmar uma fatura de autor substitui as linhas dela no lote em vez de somar de novo.</li>
+        <li><strong>Rateio por obra:</strong> quando a fatura do autor tem várias obras, o imposto é dividido proporcionalmente ao valor de cada uma (a última linha absorve a sobra de arredondamento), para o lote fechar no centavo.</li>
+        <li><strong>Valor a pagar zero ou negativo nunca retém</strong>, seja qual for o modo.</li>
+      </ul>
+
+      <h2 id="faq">Perguntas frequentes</h2>
+      <p><strong>A fatura do autor saiu sem a linha de IRRF.</strong> Ou a retenção não está configurada (órgão + conta), ou o valor ficou abaixo do limite de isenção da tabela, ou o favorecido está no modo <strong>Isento</strong>.</p>
+      <p><strong>O IRRF do extrato bate com o da fatura?</strong> Sim — os dois usam o mesmo cálculo e o mesmo modo do favorecido. No modo <strong>Percentual Manual</strong>, ambos aplicam o percentual fixo do cadastro.</p>
+      <p><strong>Posso corrigir a tabela vigente?</strong> Pode editá-la em <span class="menupath">Direitos Autorais<i>‣</i>Configurações<i>‣</i>Tabelas de IRRF</span>, mas a correção só afeta cálculos futuros — retenções já lançadas não são refeitas.</p>
+      <p><strong>De onde vem o "mês seguinte" do vencimento?</strong> O IRRF retido num mês é recolhido no mês seguinte; o lote já nasce com o vencimento no dia configurado (se o mês não tiver esse dia, usa o último dia do mês).</p>
+
+      <div class="seealso">
+        <span class="title">Veja também</span>
+        <ul>
+          <li><a href="liber_copyright_contracts_payments.html">Pagamento de royalties</a> — as faturas dos autores em que a retenção acontece.</li>
+          <li><a href="liber_copyright_contracts_reports.html">Prestação de contas</a> — o extrato que mostra a dedução ao autor.</li>
+          <li><a href="liber_copyright_contracts.html">Contratos de direitos autorais</a> — o módulo base da suíte.</li>
+        </ul>
+      </div>
+
+      <nav class="pager" id="pager"></nav>
+    </article>
+  </div>
+</div>
+<script src="docs.js"></script>
+</body>
+</html>

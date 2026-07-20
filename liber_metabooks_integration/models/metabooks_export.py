@@ -19,8 +19,11 @@ import base64
 import logging
 from datetime import date
 
+import re
+
 from odoo import _, api, fields, models
 from odoo.exceptions import UserError
+from odoo.tools import html2plaintext
 
 from ..services import metabooks_mapping as mapping
 from ..services import metabooks_sheet as sheet
@@ -43,6 +46,22 @@ _TRACKING_COLUMN = {
     'text': 'text',
     'html': 'text',
 }
+
+
+_HTML = re.compile(r'<[a-zA-Z/][^>]*>')
+
+
+def _plain(value):
+    """Text as Metabooks wants it: no markup.
+
+    Synopses in particular pick up HTML -- the website editor writes into the
+    same field -- and their spreadsheet column is plain text, so a <div> would
+    reach readers as literal markup. Only touched when the value really does
+    carry a tag, so ordinary text containing a "<" survives intact.
+    """
+    if not isinstance(value, str) or not _HTML.search(value):
+        return value
+    return html2plaintext(value).strip()
 
 
 class ProductTemplate(models.Model):
@@ -95,6 +114,18 @@ class ProductTemplate(models.Model):
     #  Reading one book as Metabooks columns
     # ---------------------------------------------------------------- #
 
+    def _metabooks_is_known(self):
+        """Does Metabooks already have this title?
+
+        Not "have we sent it before". Every book imported from them is already
+        registered there, and none of them was ever sent from here -- so basing
+        the new/update split on our own send history made the first update
+        batch come up empty for the entire catalogue. Carrying their publisher
+        id is the evidence that the title came from them.
+        """
+        self.ensure_one()
+        return bool(self.metabooks_export_last or self.metabooks_vendor_id)
+
     def _metabooks_gtin(self):
         """Their dedup key. Digits only -- the guide says 'Somente números'."""
         self.ensure_one()
@@ -125,7 +156,7 @@ class ProductTemplate(models.Model):
             return value or False
         if kind == mapping.DATE:
             return value or False
-        return value or False
+        return _plain(value) or False
 
     def _metabooks_contributors(self, role_code):
         """"Silva, Augusto da; Araújo, Michele" -- surname first, "; " between."""
@@ -199,12 +230,13 @@ class MetabooksExportBatch(models.Model):
                     'metabooks.export.batch') or _('New')
         return super().create(vals_list)
 
-    @api.depends('line_ids.selected', 'line_ids.change_ids')
+    @api.depends('line_ids.selected', 'line_ids.change_ids',
+                 'line_ids.change_ids.selected')
     def _compute_counts(self):
         for batch in self:
             chosen = batch.line_ids.filtered('selected')
             batch.selected_count = len(chosen)
-            batch.change_count = len(chosen.change_ids)
+            batch.change_count = len(chosen.change_ids.filtered('selected'))
 
     # ---------------------------------------------------------------- #
     #  Gathering
@@ -224,9 +256,9 @@ class MetabooksExportBatch(models.Model):
         products = self.env['product.template'].search(
             [('metabooks_export_pending', '=', True)])
         if self.task == sheet.TASK_NEW:
-            products = products.filtered(lambda p: not p.metabooks_export_last)
+            products = products.filtered(lambda p: not p._metabooks_is_known())
         elif self.task == sheet.TASK_UPDATE:
-            products = products.filtered('metabooks_export_last')
+            products = products.filtered(lambda p: p._metabooks_is_known())
 
         if not products:
             raise UserError(_(
@@ -261,6 +293,10 @@ class MetabooksExportBatch(models.Model):
             new = product._metabooks_cell(column)
             old = history.get(field, {}).get('old')
             if new is False and old is None:
+                continue
+            # Edited and put back: the chatter remembers the round trip, but
+            # Metabooks has nothing to learn from it.
+            if old is not None and self._as_text(old) == self._as_text(new):
                 continue
             changes.append((0, 0, {
                 'column': column,
@@ -394,8 +430,11 @@ class MetabooksExportBatch(models.Model):
 
             if self.task in sheet.KEY_ONLY_TASKS:
                 continue
-            if not line.change_ids:
-                problems.append(_("%s: nothing to send.", label))
+            picked = line.change_ids.filtered('selected')
+            if not picked:
+                problems.append(_(
+                    "%s: no change is ticked, so the row would be empty.",
+                    label))
 
             # A cleared field cannot ride in the sheet: Metabooks reads a blank
             # cell as "leave this alone", and wiping one needs an explicit
@@ -403,7 +442,7 @@ class MetabooksExportBatch(models.Model):
             # their documentation does not say every column accepts. Sending the
             # row anyway would look like the change went through when it did
             # not, so say so instead of guessing.
-            cleared = [c.column for c in line.change_ids
+            cleared = [c.column for c in picked
                        if not c.new_value and c.old_value]
             if cleared:
                 problems.append(_(
@@ -413,7 +452,7 @@ class MetabooksExportBatch(models.Model):
                     "out of the batch and clear it in their panel.",
                     book=label, cols=', '.join(cleared)))
             if self.task == sheet.TASK_NEW:
-                filled = {c.column for c in line.change_ids if c.new_value}
+                filled = {c.column for c in picked if c.new_value}
                 missing = [c for c in sheet.MANDATORY
                            if c != sheet.KEY_COLUMN and c not in filled]
                 if missing:
@@ -555,10 +594,10 @@ class MetabooksExportLine(models.Model):
         help="No chatter history was found for this book, so every mapped "
              "field is being sent rather than just what changed.")
 
-    @api.depends('change_ids')
+    @api.depends('change_ids', 'change_ids.selected')
     def _compute_change_count(self):
         for line in self:
-            line.change_count = len(line.change_ids)
+            line.change_count = len(line.change_ids.filtered('selected'))
 
     def _as_row(self, task):
         """One spreadsheet row: the key, an anchor, and what changed."""
@@ -575,7 +614,7 @@ class MetabooksExportLine(models.Model):
         if title:
             values['Título'] = title
 
-        for change in self.change_ids:
+        for change in self.change_ids.filtered('selected'):
             value = self.product_id._metabooks_cell(change.column)
             if value is False:
                 continue
@@ -594,6 +633,11 @@ class MetabooksExportChange(models.Model):
     batch_id = fields.Many2one(
         related='line_id.batch_id', store=True, index=True)
     product_id = fields.Many2one(related='line_id.product_id', store=True)
+    selected = fields.Boolean(
+        default=True,
+        help="Untick to leave this one field out. The book still goes; the "
+             "column simply is not written, and a column Metabooks does not "
+             "receive is a column it leaves alone.")
     column = fields.Char('Metabooks Column', readonly=True)
     field_name = fields.Char('Odoo Field', readonly=True)
     old_value = fields.Char('Before', readonly=True)

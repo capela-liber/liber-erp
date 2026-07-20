@@ -70,6 +70,8 @@
   .cta.ghost { background: transparent; color: var(--accent); border: 1.5px solid var(--accent); margin-left: 12px; }
   .cta:hover { background: var(--accent-soft); }
   .cta.ghost:hover { background: var(--paper-2); }
+  .creds { margin-top: 18px; font-size: 15px; opacity: .8; }
+  .creds code { background: var(--paper-2); border-radius: 4px; padding: 2px 6px; font-size: 14px; }
 
   /* faixa de argumentos */
   .pitch { border-block: 1px solid var(--line); background: var(--paper-2); padding: 40px 0; }
@@ -169,6 +171,7 @@
       <a href="#metadados">Metadados</a>
       <a href="#fiscal">Fiscal</a>
       <a href="#odoo">Odoo</a>
+      <a href="docs/index.html">Manuais</a>
       <a href="#roadmap">Em breve</a>
     </nav>
   </div>
@@ -257,15 +260,15 @@
     </figure>
     <div class="gallery">
       <figure class="shot">
-        <img src="img/copyright-1.png" alt="Lista de contratos de direitos autorais" loading="lazy">
+        <img src="img/copyright-1.png?v=2" alt="Lista de contratos de direitos autorais" loading="lazy">
         <figcaption>Todos os contratos, com situação e royalties em aberto.</figcaption>
       </figure>
       <figure class="shot">
-        <img src="img/copyright-2.png" alt="Formulário de contrato de direitos autorais" loading="lazy">
+        <img src="img/copyright-2.png?v=2" alt="Formulário de contrato de direitos autorais" loading="lazy">
         <figcaption>O contrato: vigência, renovação automática e obras vinculadas.</figcaption>
       </figure>
       <figure class="shot">
-        <img src="img/copyright-3.png" alt="Faixas de exemplares e adiantamentos de um direito autoral" loading="lazy">
+        <img src="img/copyright-3.png?v=2" alt="Faixas de exemplares e adiantamentos de um direito autoral" loading="lazy">
         <figcaption>Percentual por faixa de exemplares, com adiantamentos descontáveis.</figcaption>
       </figure>
     </div>
@@ -405,13 +408,18 @@
     <p>O Liber é software de código aberto de ponta a ponta: sem licença por usuário, sem aluguel do
     seu próprio dado, sem fornecedor indispensável. Você pode auditar, hospedar, adaptar — ou
     contratar quem faça por você. O conhecimento fica com o mercado editorial, não trancado num contrato.</p>
-    <a class="cta" href="https://github.com/" rel="noopener">Ver o código no GitHub</a>
+    <a class="cta" href="https://github.com/capela-liber/liber-erp" rel="noopener">Ver o código no GitHub</a>
+    <a class="cta ghost" href="/web/login">Testar</a>
+    <a class="cta ghost" href="docs/index.html">Ler os manuais</a>
+    <p class="creds">Ambiente de demonstração aberto — entre com
+      <code>demo</code> / <code>liber</code>. A conta navega pelo sistema inteiro
+      e não grava nada; os dados são de teste e podem ser reiniciados a qualquer momento.</p>
   </div>
 </section>
 
 <footer>
   <div class="wrap">
-    <div><strong>liber.</strong> — ERP open source para editoras brasileiras.</div>
+    <div><strong>liber.</strong> — ERP open source para editoras brasileiras · <a href="docs/index.html">Manuais</a></div>
     <div>Construído sobre <a href="https://www.odoo.com" rel="noopener">Odoo Community</a> · Fotos: <a href="https://www.pexels.com" rel="noopener">Pexels</a> · Ícones: <a href="https://fontawesome.com" rel="noopener">Font Awesome</a>.</div>
   </div>
 </footer>

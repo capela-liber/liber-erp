@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Auditoria pelo XML — Manuais do Liber</title>
+<link rel="icon" type="image/png" href="../logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;600;700&display=swap">
+<link rel="stylesheet" href="docs.css">
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="../index.html"><img src="../logo.png" alt="">liber<span>.</span></a>
+    <span class="doc-tag">Manuais</span>
+    <nav><a href="index.html">Índice</a><a href="../index.html">Site</a></nav>
+  </div>
+</header>
+<div class="wrap">
+  <div class="layout">
+    <aside class="sidebar" id="sidebar"></aside>
+    <article class="doc">
+      <div class="breadcrumb"><a href="index.html">Manuais</a><span class="sep">›</span>Consignação<span class="sep">›</span>Auditoria pelo XML</div>
+      <h1>Auditoria pelo XML</h1>
+      <p class="lead">Reconstrua o saldo que a prateleira de um cliente <em>deveria</em> ter a partir das próprias notas fiscais — remessas, vendas e devoluções — e acerte o mapa com um ajuste registrado no estoque e na contabilidade.</p>
+
+      <h2 id="visao-geral">Visão geral</h2>
+      <p>O dia a dia da consignação mantém o mapa <em>incrementalmente</em>: cada remessa soma, cada acerto e devolução subtrai. A auditoria faz o caminho inverso: pega <strong>todas as notas fiscais de consignação importadas</strong> (veja <a href="liber_nfe_xml.html">Importação de XML de NF-e</a>) de um cliente e refaz a conta do zero, por título:</p>
+      <div class="callout example"><span class="title">Exemplo</span><p><strong>Esperado</strong> = abertura + remessas (CFOP 5917/6917) − vendas efetivadas (5113/5114/6113/6114) − devoluções (5918/5919/6918/6919). Notas canceladas ficam de fora. <strong>Diferença</strong> = esperado (fiscal) − mapa (prateleira atual). Positiva: o fiscal diz que há mais na prateleira do que o mapa mostra; negativa: o contrário (perda/quebra).</p></div>
+      <p>Serve para dois momentos:</p>
+      <ul>
+        <li><strong>Inaugurar o mapa</strong> de um cliente que vem da migração — a prateleira nasce do histórico fiscal, e não de um chute;</li>
+        <li><strong>Conferir periodicamente</strong> um mapa vivo contra a verdade fiscal, e corrigir as diferenças com rastro completo.</li>
+      </ul>
+      <p>Cada auditoria é um documento numerado (série <strong>CA</strong>), preso ao cliente e a um período. Aceitar as diferenças gera um movimento de <strong>Ajuste</strong> — um movimento de consignação de tipo próprio, que corrige a prateleira por um movimento de inventário de verdade (a correção fica no histórico do estoque) e lança a diferença de <em>valor</em> na contabilidade.</p>
+      <div class="callout note"><span class="title">Nota</span><p>O motor lê as notas <strong>já importadas e interpretadas</strong> — ele nunca reprocessa arquivos XML. Se falta nota, o problema (e a solução) está na importação, e a auditoria aponta isso em vez de esconder.</p></div>
+
+      <h2 id="configuracao">Configuração</h2>
+      <h3>Efeitos de CFOP</h3>
+      <p>Cada CFOP diz à auditoria como um item de nota mexe na prateleira. A tabela vem pré-classificada com os CFOPs clássicos da consignação e é <strong>editável</strong> em <span class="menupath">Consignação<i>‣</i>Configuração<i>‣</i>Efeitos de CFOP</span> (menu de administrador):</p>
+      <div class="tablewrap"><table>
+        <thead><tr><th>Efeito</th><th>Significado</th><th>CFOPs pré-classificados</th></tr></thead>
+        <tbody>
+          <tr><td><span class="field">Remessa (+ prateleira)</span></td><td>Livros indo para o cliente.</td><td>5917/6917 — e também 5914 (feira) e 5949/6949 ("outra saída"), porque na prática essas notas põem livro na prateleira do cliente e muitas vezes ele não volta.</td></tr>
+          <tr><td><span class="field">Venda efetivada (− prateleira)</span></td><td>O acerto fiscal: o que vendeu.</td><td>5113/6113 (produção própria) e 5114/6114 (mercadoria de terceiros).</td></tr>
+          <tr><td><span class="field">Devolução / retorno (− prateleira)</span></td><td>Livros voltando (física ou simbolicamente).</td><td>5918/6918 e 5919/6919.</td></tr>
+          <tr><td><span class="field">Ignorar</span></td><td>Nota que não mexe na prateleira, de propósito.</td><td>—</td></tr>
+        </tbody>
+      </table></div>
+      <div class="callout tip"><span class="title">Dica</span><p>Clientes erram CFOP com frequência — por isso a classificação é <em>dado</em>, não código. Use o filtro <span class="field">Não mapeados</span> para revisar CFOPs recém-aparecidos nas notas.</p></div>
+      <h3>Contas e local do ajuste</h3>
+      <p>Em <span class="menupath">Consignação<i>‣</i>Configuração<i>‣</i>Configurações</span>, bloco <strong>Auditoria de Consignação</strong>:</p>
+      <ul>
+        <li><span class="field">Conta de ajuste</span> — a conta de resultado que absorve a diferença de valor quando um ajuste corrige a prateleira: perda (débito) ou sobra (crédito), sempre em contrapartida à <a href="liber_soc_fiscal_br.html#configuracao">conta de estoque de consignação</a>.</li>
+        <li><span class="field">Local de ajuste</span> — a localização de inventário por onde passam as correções de quantidade. É criada sozinha no primeiro uso; o campo é apenas informativo.</li>
+      </ul>
+      <p>Sem as contas configuradas, o ajuste <em>de quantidade</em> acontece do mesmo jeito — e o documento avisa que o lançamento de valor foi pulado, para ser feito à mão.</p>
+
+      <h2 id="fluxo">Auditar um cliente, passo a passo</h2>
+      <ol class="steps">
+        <li>Acesse <span class="menupath">Consignação<i>‣</i>Auditorias<i>‣</i>Novo</span>.</li>
+        <li>Escolha o <span class="field">Cliente</span>. O <span class="field">Contrato</span> e a <span class="field">Prateleira do Cliente</span> se resolvem sozinhos.</li>
+        <li>Defina o período: deixe <span class="field">De</span> vazio para voltar até a primeira nota do cliente (o caso normal — a série fiscal precisa estar completa para a conta fechar), e <span class="field">Até</span> em hoje.</li>
+        <li>Clique em <span class="field">Calcular</span>. A auditoria varre as notas do período, monta uma linha por título e fica <em>Calculada</em>. O histórico registra o resumo: quantas NFes, quantos produtos, quantas divergências.</li>
+        <li>Leia cada linha: <span class="field">Abertura</span> (saldo conhecido antes da série — editável), <span class="field">Remetido</span>, <span class="field">Vendido</span>, <span class="field">Devolvido</span>, <span class="field">Esperado</span>, <span class="field">Mapa</span> e <span class="field">Diferença</span>. As linhas divergentes vêm destacadas e primeiro; a coluna <span class="field">NFes</span> abre as notas exatas que alimentaram a linha — a trilha de auditoria. As colunas <span class="field">Último Acerto</span> e <span class="field">Situação</span> mostram a saúde de cada título reconstituída do próprio XML, na mesma régua Ok / Atenção / Crítico / Sem retorno do acerto.</li>
+      </ol>
+      <figure class="shot"><img src="img/doc-liber_soc_audit-linhas.png" alt="Auditoria calculada com linhas divergentes destacadas, colunas Esperado, Mapa e Diferença, e a coluna Resolução por linha"><figcaption>A reconciliação: o que o fiscal diz (Esperado) contra o que a prateleira mostra (Mapa), com a Diferença destacada e a Resolução a decidir por linha.</figcaption></figure>
+
+      <h3 id="qualidade">Antes de aceitar: os avisos de qualidade</h3>
+      <p>Uma auditoria só é confiável se a série fiscal está completa e legível. Por isso, tudo que <em>não</em> pôde ser contado aparece em avisos no topo do formulário — nada é descartado em silêncio:</p>
+      <div class="tablewrap"><table>
+        <thead><tr><th>Aviso</th><th>O que significa</th><th>O que fazer</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Itens fiscais sem produto</strong></td><td>Itens de nota cujo código de barras não bateu com nenhum produto do catálogo. Não entram em nenhuma linha.</td><td>Corrija o catálogo (ou o apelido do produto) e clique em <span class="field">Calcular</span> de novo.</td></tr>
+          <tr><td><strong>CFOPs não mapeados</strong></td><td>Notas do cliente com CFOP sem efeito configurado.</td><td>Se algum for movimento de consignação, mapeie em <span class="menupath">Configuração<i>‣</i>Efeitos de CFOP</span> e recalcule.</td></tr>
+          <tr><td><strong>Notas sem CFOP</strong></td><td>Notas cujo CFOP não foi lido na importação ou não existe na tabela. Também ficam de fora.</td><td>Cadastre o CFOP, revincule as notas e recalcule.</td></tr>
+        </tbody>
+      </table></div>
+      <p>O campo <span class="field">Cobertura da Série</span> (<em>Desconhecida / Parcial / Completa</em>) é a sua anotação de confiança: marque <em>Completa</em> só depois de revisar os avisos — a auditoria não adivinha se todas as notas do cliente foram importadas.</p>
+
+      <h3 id="resolver">Resolver as divergências</h3>
+      <p>Cada linha divergente pede uma <span class="field">Resolução</span>:</p>
+      <ul>
+        <li><span class="field">Aceitar XML</span> — o saldo fiscal é a verdade; a prateleira será corrigida para o <span class="field">Esperado</span>;</li>
+        <li><span class="field">Aceitar Mapa</span> — a prateleira está certa (a diferença tem outra explicação); nada muda neste título;</li>
+        <li><span class="field">Manual</span> — você digita o saldo <span class="field">Aceito</span> (uma contagem física, por exemplo).</li>
+      </ul>
+      <p>A coluna <span class="field">Ajuste</span> mostra, em tempo real, o que o movimento vai aplicar (aceito − mapa, com sinal). Para resolver tudo de uma vez, os botões do topo <span class="field">Aceitar XML</span> e <span class="field">Aceitar Mapa</span> aplicam a mesma resolução a todas as linhas — com confirmação antes.</p>
+
+      <h3 id="aceitar">Aceitar e ajustar</h3>
+      <ol class="steps">
+        <li>Com todas as divergências resolvidas, clique em <span class="field">Aceitar e Ajustar</span> e confirme — <em>este passo move estoque</em>.</li>
+        <li>O sistema cria <strong>um movimento de Ajuste</strong> com um delta por título: positivo entra na prateleira (sobra encontrada), negativo sai (perda). A correção passa pelo local de ajuste, como um inventário — o histórico do estoque conta o que aconteceu.</li>
+        <li>Se as contas estão configuradas, o <strong>lançamento de valor</strong> é feito e vinculado ao movimento (campo <span class="field">Lançamento de Valor</span>): perda debita a conta de ajuste, sobra credita — sempre contra a conta de estoque de consignação. O valor usa o custo de cada título.</li>
+        <li>A auditoria fica <strong>Aceita</strong>; o botão inteligente <span class="field">Ajuste</span> abre o movimento gerado, e <span class="field">Prateleira</span> mostra o mapa já corrigido.</li>
+      </ol>
+      <div class="callout warn"><span class="title">Atenção</span><p>Um título com saldo fiscal <strong>negativo</strong> (mais vendas que remessas na série) é sinal de série incompleta — faltam XMLs de remessa ou um saldo de abertura. A prateleira não pode ficar negativa, então o aceito é travado em zero e o caso é anotado no histórico, com os títulos listados. Prefira completar a série (ou preencher a <span class="field">Abertura</span>) e recalcular.</p></div>
+      <figure class="shot"><img src="img/doc-liber_soc_audit-ajuste.png" alt="Movimento de ajuste gerado pela auditoria, com deltas positivos e negativos por título e o lançamento contábil de valor vinculado"><figcaption>O ajuste materializado: cada delta corrige a prateleira pelo estoque, e a diferença de valor vira um lançamento contábil rastreável.</figcaption></figure>
+
+      <h2 id="regras">Regras que o sistema garante</h2>
+      <div class="tablewrap"><table>
+        <thead><tr><th>Regra</th><th>Por quê</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Não se aceita com divergência sem resolução</strong> (<em>"N linha(s) divergente(s) ainda sem resolução…"</em>).</td><td>Aceitar é uma decisão por título; o sistema não decide por você.</td></tr>
+          <tr><td><strong>Auditoria aceita não se recalcula</strong> — é preciso voltá-la a rascunho primeiro.</td><td>O ajuste já foi para o estoque; recalcular por cima esconderia o que foi feito.</td></tr>
+          <tr><td><strong>Um ajuste concluído não se cancela</strong> (<em>"…já moveu estoque e lançou seu valor. Faça um ajuste oposto."</em>).</td><td>Correção se corrige com outra correção — nunca apagando a primeira. O rastro fica inteiro.</td></tr>
+          <tr><td><strong>Notas canceladas nunca contam.</strong></td><td>Nota cancelada não moveu livro nenhum.</td></tr>
+          <tr><td><strong>O que não pôde ser contado aparece em aviso</strong> — item sem produto, CFOP não mapeado, nota sem CFOP.</td><td>Uma diferença "resolvida" sobre série furada é pior que a diferença: os avisos impedem o fechamento cego.</td></tr>
+          <tr><td><strong>Aceitar exige contrato com prateleira ativa.</strong></td><td>O ajuste materializa <em>na prateleira</em>; sem contrato ativo não há onde aplicar. Ative o contrato antes (a auditoria de um contrato encerrado ainda calcula — só não ajusta).</td></tr>
+        </tbody>
+      </table></div>
+
+      <h2 id="faq">Perguntas frequentes</h2>
+      <p><strong>A auditoria substitui o inventário físico?</strong><br>
+      Não — são réguas diferentes. A auditoria compara o mapa com a <em>verdade fiscal</em> (o que as notas dizem); o <a href="liber_soc_moves.html#relatorios">Inventário</a> compara com a <em>contagem física</em> na livraria. O ideal é usar as duas: o fiscal encontra nota faltando, a contagem encontra livro sumido.</p>
+      <p><strong>Calculei e veio tudo zerado.</strong><br>
+      Ou não há notas importadas para esse cliente no período, ou as notas estão lá mas sem CFOP classificado — confira os avisos no topo e a tela de Efeitos de CFOP.</p>
+      <p><strong>Posso auditar só o último trimestre?</strong><br>
+      Pode, mas a conta só fecha se você preencher a <span class="field">Abertura</span> de cada título com o saldo no início do período. Sem abertura, período parcial produz diferenças falsas — na dúvida, deixe <span class="field">De</span> vazio e audite a série inteira.</p>
+      <p><strong>O ajuste apareceu na lista de Devoluções?</strong><br>
+      Não — a lista de Devoluções mostra só devoluções. Os ajustes são movimentos do tipo próprio <em>Ajuste</em> e são acessados pela auditoria que os gerou (botão <span class="field">Ajuste</span>).</p>
+
+      <div class="seealso">
+        <span class="title">Ver também</span>
+        <ul>
+          <li><a href="liber_nfe_xml.html">Importação de XML de NF-e</a> — de onde vêm as notas que a auditoria lê.</li>
+          <li><a href="liber_soc_settlement.html">Acerto de consignação</a> — o fluxo que mantém o mapa no dia a dia (e o Razão da Prateleira, que mostra as duas fontes lado a lado).</li>
+          <li><a href="liber_soc_fiscal_br.html">Fiscal da consignação</a> — a conta de estoque de consignação usada no lançamento de valor.</li>
+          <li><a href="liber_soc_agreements.html">Acordos de consignação</a> — o contrato e a prateleira que o ajuste corrige.</li>
+        </ul>
+      </div>
+
+      <nav class="pager" id="pager"></nav>
+    </article>
+  </div>
+</div>
+<script src="docs.js"></script>
+</body>
+</html>

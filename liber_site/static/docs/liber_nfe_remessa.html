@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Notas de remessa — Manuais do Liber</title>
+<link rel="icon" type="image/png" href="../logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;600;700&display=swap">
+<link rel="stylesheet" href="docs.css">
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="../index.html"><img src="../logo.png" alt="">liber<span>.</span></a>
+    <span class="doc-tag">Manuais</span>
+    <nav><a href="index.html">Índice</a><a href="../index.html">Site</a></nav>
+  </div>
+</header>
+<div class="wrap">
+  <div class="layout">
+    <aside class="sidebar" id="sidebar"></aside>
+    <article class="doc">
+      <div class="breadcrumb"><a href="index.html">Manuais</a><span class="sep">›</span>Fiscal<span class="sep">›</span>Notas de remessa</div>
+      <h1>Notas de remessa</h1>
+      <p class="lead">Notas fiscais que nunca geram cobrança — consignação, bonificação, material de feira — emitidas e baixadas automaticamente, sem jamais aparecerem como dívida de ninguém.</p>
+
+      <h2 id="visao-geral">Visão geral</h2>
+      <p>No Brasil, todo livro que sai do armazém precisa de nota fiscal — mesmo quando não há venda nenhuma. O lote consignado que vai para a livraria, os exemplares bonificados para divulgação, as caixas que viajam para uma feira: cada movimento desses exige uma nota, e nenhum deles é uma cobrança.</p>
+      <p>É para isso que existe a <b>nota de remessa</b>, o documento <b>REM/</b>. Ela é uma fatura de verdade — mesmo formulário, mesmos itens, mesmo valor — com duas diferenças:</p>
+      <ul>
+        <li>vive em um <b>diário próprio</b> (código REM), com numeração própria e contínua: REM/00001, REM/00002…;</li>
+        <li>ao ser confirmada, o valor a receber é <b>baixado automaticamente</b> contra uma conta-espelho configurada na posição fiscal — a nota nasce quitada, porque nunca houve dívida.</li>
+      </ul>
+      <p>Com isso, o menu <b>Faturas</b> fica só com as vendas de verdade (as que esperam pagamento e conciliação bancária), e as remessas ganham a sua própria lista, onde bonificação, consignação e eventos convivem separáveis pela origem.</p>
+
+      <div class="callout note"><span class="title">Nota</span>
+        <p>Normalmente <b>você não cria uma remessa à mão</b>. Elas nascem dos documentos que coordenam cada operação — a campanha de bonificação, o pedido de consignação — e chegam aqui prontas. Este módulo é a casa fiscal delas: o diário, a numeração, a baixa automática e a lista para consulta.</p>
+      </div>
+
+      <figure class="shot">
+        <img src="img/doc-liber_nfe_remessa-lista.png" alt="Lista de remessas com número REM, data, destinatário, origem da remessa, documento de origem e total">
+        <figcaption>A lista de Remessas: cada linha diz de onde a nota veio (bonificação, consignação) e para quem foi.</figcaption>
+      </figure>
+
+      <h2 id="configuracao">Configuração</h2>
+
+      <h3 id="config-fpos">A posição fiscal com baixa automática</h3>
+      <p>O que faz uma nota se quitar sozinha é a sua <b>posição fiscal</b>. Para cada tipo de remessa que a editora pratica (remessa em consignação, bonificação, feira…):</p>
+      <ol class="steps">
+        <li>Abra <span class="menupath">Faturamento<i>‣</i>Configuração<i>‣</i>Posições fiscais</span> e crie (ou abra) a posição fiscal da operação.</li>
+        <li>Marque <span class="field">Baixa automática (Auto Invoice Paid)</span>.</li>
+        <li>Em <span class="field">Conta da baixa automática</span>, escolha a conta-espelho que recebe a contrapartida — por exemplo, uma conta "(-) Remessa de mercadoria".</li>
+        <li>Salve.</li>
+      </ol>
+      <p>Os nomes dos campos são os mesmos usados na configuração do sistema de produção antigo, de propósito: as posições fiscais já existentes lá (devoluções, feiras, remessas, bonificação) migram uma a uma, sem tradução.</p>
+
+      <h3 id="config-diario">O diário REM</h3>
+      <p>Não há nada a criar: o diário de remessas (nome <b>Remessas</b>, código <b>REM</b>) é <b>criado automaticamente na primeira vez</b> que algum documento precisa dele, uma vez por empresa. É a marca "diário de remessa" nele — e não o código — que faz as notas dele sumirem de Faturas e aparecerem em Remessas.</p>
+
+      <div class="callout tip"><span class="title">Dica</span>
+        <p>A numeração fiscal não fura. A baixa automática é lançada em um diário de operações diversas, nunca no REM — uma sequência fiscal com buracos (REM/00001, 00003…) pareceria ter notas faltando, e aqui cada número é de uma nota de verdade.</p>
+      </div>
+
+      <h2 id="confirmar">O que acontece ao confirmar uma remessa</h2>
+      <p>Quando uma nota do diário REM é confirmada:</p>
+      <ol class="steps">
+        <li>A nota é lançada normalmente, com o próximo número REM/ da sequência.</li>
+        <li>No mesmo instante, o sistema cria um <b>lançamento de baixa</b>: o valor a receber é liquidado contra a <span class="field">Conta da baixa automática</span> da posição fiscal e as duas pontas são conciliadas.</li>
+        <li>A nota fica com saldo zero — quitada — e exibe a faixa azul <b>Simples remessa</b> em vez da faixa "Pago". Uma remessa nunca será "paga", porque nada jamais foi devido; a tela diz o que a nota <i>é</i>.</li>
+        <li>O botão <b>Baixa automática</b>, no topo do formulário, abre o lançamento de baixa correspondente: nota e baixa se enxergam mutuamente, como duas metades de um mesmo fato fiscal.</li>
+      </ol>
+
+      <figure class="shot">
+        <img src="img/doc-liber_nfe_remessa-form.png" alt="Formulário de uma nota de remessa confirmada, com a faixa Simples remessa e o botão que abre a baixa automática">
+        <figcaption>Nota confirmada: faixa "Simples remessa", saldo zero e o atalho para o lançamento de baixa.</figcaption>
+      </figure>
+
+      <div class="callout example"><span class="title">Exemplo</span>
+        <p>Uma campanha de divulgação envia 2 exemplares de R$ 25 para uma livraria. A nota REM/00007 é emitida por R$ 50, confirmada e imediatamente baixada contra a conta-espelho da bonificação. A livraria nunca aparece em nenhuma lista de cobrança, e o custo da campanha fica visível na conta-espelho.</p>
+      </div>
+
+      <h2 id="consultar">Consultar as remessas</h2>
+      <ol class="steps">
+        <li>Abra <span class="menupath">Faturamento<i>‣</i>Clientes<i>‣</i>Remessas</span>.</li>
+        <li>A lista mostra número, data, destinatário, <span class="field">Origem da remessa</span> (bonificação, consignação, outra), o <span class="field">Documento</span> que a gerou e o total.</li>
+        <li>Use os agrupamentos <b>Origem</b> e <b>Destinatário</b> do filtro para responder "quanto saiu em bonificação este mês?" ou "o que já mandamos para esta livraria?".</li>
+      </ol>
+      <p>Cada módulo que gera remessas registra ali a sua origem — a bonificação marca as dela, a consignação as dela — então uma lista só serve a todas as operações sem misturá-las.</p>
+
+      <h2 id="regras">Regras e guardas</h2>
+      <div class="tablewrap"><table>
+        <thead><tr><th>Regra</th><th>O que ela garante</th></tr></thead>
+        <tbody>
+          <tr><td>Diário de remessa exige posição fiscal com baixa automática</td><td>Confirmar uma nota no diário REM sem a posição fiscal configurada é <b>recusado com uma mensagem clara</b>. Sem essa trava, uma nota meio-configurada seria lançada em silêncio e, semanas depois, uma livraria seria cobrada por livros que nunca comprou.</td></tr>
+          <tr><td>A baixa não consome números REM/</td><td>O lançamento de quitação é contabilidade interna, não documento fiscal: ele é numerado no diário de diversos e a sequência REM/ permanece contínua.</td></tr>
+          <tr><td>Nota e baixa não se separam</td><td>Não é possível excluir uma nota cuja baixa continua lançada — seria deixar meia operação pendurada no razão. Estorne ou reabra a baixa primeiro.</td></tr>
+          <tr><td>Faturas só com vendas</td><td>A lista de Faturas de cliente exclui os diários de remessa; a lista de Remessas mostra só eles. Nenhum documento aparece nos dois lugares.</td></tr>
+          <tr><td>Vendas comuns não são tocadas</td><td>A baixa automática só age em notas do diário de remessa. Uma fatura normal continua em aberto até ser paga, como sempre.</td></tr>
+        </tbody>
+      </table></div>
+
+      <h2 id="faq">Perguntas frequentes</h2>
+      <p><b>Por que o extrato contábil mostra a remessa como quitada?</b> Porque o valor a receber foi de fato baixado — essa é a mecânica que impede a cobrança. A faixa "Simples remessa" na tela existe justamente para que ninguém leia essa quitação como um pagamento: não houve dinheiro, houve uma contrapartida na conta-espelho, auditável pelo botão <b>Baixa automática</b>.</p>
+      <p><b>Posso criar uma remessa manualmente?</b> Pode, para os casos que nenhum módulo cobre (um envio avulso de material, por exemplo): crie a nota pela lista de Remessas, no diário Remessas, com uma posição fiscal que tenha a baixa automática configurada. Ao confirmar, ela se comporta como qualquer outra. Mas o caminho normal é deixar que o documento da operação (campanha, pedido de consignação) a gere.</p>
+      <p><b>Confirmei e recebi um erro sobre a posição fiscal.</b> É a guarda em ação: a nota está no diário de remessa, mas a posição fiscal escolhida não tem <span class="field">Baixa automática (Auto Invoice Paid)</span> marcada (ou está sem a conta de contrapartida). Configure a posição fiscal — ou, se a nota é uma venda de verdade, mova-a para um diário de vendas comum.</p>
+      <p><b>E se a remessa foi emitida por engano?</b> Estorne ou redefina a baixa (pelo botão <b>Baixa automática</b>) e depois cancele a nota. A ordem importa: a trava de exclusão impede que a nota desapareça deixando a baixa órfã.</p>
+
+      <div class="seealso">
+        <p><b>Veja também</b></p>
+        <ul>
+          <li><a href="liber_soc_moves.html">Remessas e retornos</a> — a logística da consignação, que gera notas de remessa ao despachar para as livrarias.</li>
+          <li><a href="liber_product_bonus.html">Bonificação</a> — as campanhas de exemplares de cortesia que nascem como remessa.</li>
+          <li><a href="liber_nfe_xml.html">Importação de XML de NF-e</a> — o caminho inverso: as notas de terceiros (e as nossas) entrando no sistema pelo XML.</li>
+        </ul>
+      </div>
+
+      <nav class="pager" id="pager"></nav>
+    </article>
+  </div>
+</div>
+<script src="docs.js"></script>
+</body>
+</html>

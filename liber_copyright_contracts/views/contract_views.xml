@@ -50,7 +50,7 @@
                                     <field name="product_id"/>
                                     <field name="recoupable_advance" optional="show"/>
                                     <field name="non_recoupable_advance" optional="hide"/>
-                                    <field name="currency_id" invisible="1"/>
+                                    <field name="currency_id" column_invisible="1"/>
                                 </list>
                                 <form>
                                     <group>

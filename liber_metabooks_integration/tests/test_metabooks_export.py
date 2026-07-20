@@ -41,6 +41,14 @@ class TestMetabooksExport(TransactionCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
+        # The queue is global: action_prepare searches every pending book in
+        # the database, so a real one left pending by someone working in this
+        # database would join our batches and break the counts. Rolled back
+        # with the rest of the transaction.
+        cls.env['product.template'].search(
+            [('metabooks_export_pending', '=', True)]
+        ).action_metabooks_clear_pending()
+
         cls.availability = cls.env['metabooks.avalaibility.definition'].create({
             'identify_number': '21',
             'product_definition': 'Disponível',
@@ -75,6 +83,18 @@ class TestMetabooksExport(TransactionCase):
             'metabooks_export_last': fields.Datetime.now() - timedelta(days=30),
             'metabooks_export_last_track': _max_track(cls.env),
         })
+        # A book that came from Metabooks and was never sent from here -- the
+        # state every one of the 210 imported titles is actually in.
+        cls.imported = cls.env['product.template'].create({
+            'name': 'Livro importado',
+            'barcode': '9780000007771',
+            'list_price': 30.0,
+            'metabooks_vendor_id': 'BR0089701',
+            'metabooks_book_title': 'Livro importado',
+        })
+        # The connector creates it under metabooks_from_sync, so it arrives
+        # already settled -- nothing to tell them, they are where it came from.
+        cls.imported.action_metabooks_clear_pending()
         cls._settle(cls.env)
 
     def _batch(self):
@@ -194,6 +214,72 @@ class TestMetabooksExport(TransactionCase):
         change = second.change_ids
         self.assertEqual(change.old_value, 'O Cortiço')
         self.assertEqual(change.new_value, 'Título novo')
+
+    def test_a_book_metabooks_already_has_is_an_update(self):
+        """It carries their publisher id, so they have it -- even though we
+        have never sent it. Asking "did we send it?" instead emptied the first
+        update batch of the whole catalogue."""
+        self.assertFalse(self.imported.metabooks_export_last)
+        self._edit(self.imported, list_price=32.0)
+
+        batch = self._batch()
+        batch.action_prepare()
+        self.assertIn(self.imported, batch.line_ids.product_id)
+
+    def test_a_book_only_we_know_is_a_new_title(self):
+        home_grown = self.env['product.template'].create({
+            'name': 'Nosso', 'barcode': '9788599296266', 'list_price': 10.0})
+        self._settle(self.env)
+        self._edit(home_grown, list_price=12.0)
+        self._edit(metabooks_page_count=320)   # a known book, so V is not empty
+
+        update = self._batch()
+        update.action_prepare()
+        self.assertNotIn(home_grown, update.line_ids.product_id)
+
+        new = self.env['metabooks.export.batch'].create({'task': sheet.TASK_NEW})
+        new.action_prepare()
+        self.assertIn(home_grown, new.line_ids.product_id)
+
+    def test_unticking_one_change_keeps_the_book_and_drops_the_column(self):
+        self._edit(metabooks_page_count=320, synopsys='Sinopse nova')
+        batch = self._batch()
+        batch.action_prepare()
+        self.assertEqual(len(batch.change_ids), 2)
+
+        batch.change_ids.filtered(lambda c: c.column == 'Sinopse').selected = False
+        batch.action_generate()
+
+        page = openpyxl.load_workbook(
+            io.BytesIO(batch.attachment_id.raw)).active
+        headers = [c.value for c in page[1]]
+        self.assertIn('Número de páginas', headers)
+        self.assertNotIn('Sinopse', headers,
+                         "an unticked column must not be written at all -- a "
+                         "column Metabooks does not receive it leaves alone")
+
+    def test_a_value_edited_and_put_back_is_not_a_change(self):
+        self._edit(list_price=99.0)
+        self._edit(list_price=59.90)
+        self._edit(metabooks_page_count=320)
+
+        batch = self._batch()
+        batch.action_prepare()
+        self.assertEqual(set(batch.change_ids.mapped('column')),
+                         {'Número de páginas'},
+                         "the chatter remembers the round trip; Metabooks has "
+                         "nothing to learn from it")
+
+    def test_html_is_stripped_from_text(self):
+        """The website editor writes into synopsys too, and their column is
+        plain text -- a <div> would reach readers as literal markup."""
+        self._edit(synopsys='<div data-oe-version="2.0">Um vilarejo.</div>')
+        self.assertEqual(self.book._metabooks_cell('Sinopse'), 'Um vilarejo.')
+
+    def test_plain_text_with_an_angle_bracket_survives(self):
+        self._edit(synopsys='Sobre matemática: 3 < 5 e afins')
+        self.assertEqual(self.book._metabooks_cell('Sinopse'),
+                         'Sobre matemática: 3 < 5 e afins')
 
     def test_nothing_pending_is_an_error_not_an_empty_file(self):
         batch = self._batch()

@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Contratos de direitos autorais — Manuais do Liber</title>
+<link rel="icon" type="image/png" href="../logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;600;700&display=swap">
+<link rel="stylesheet" href="docs.css">
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="../index.html"><img src="../logo.png" alt="">liber<span>.</span></a>
+    <span class="doc-tag">Manuais</span>
+    <nav><a href="index.html">Índice</a><a href="../index.html">Site</a></nav>
+  </div>
+</header>
+<div class="wrap">
+  <div class="layout">
+    <aside class="sidebar" id="sidebar"></aside>
+    <article class="doc">
+      <div class="breadcrumb"><a href="index.html">Manuais</a><span class="sep">›</span>Direitos autorais<span class="sep">›</span>Contratos de direitos autorais</div>
+      <h1>Contratos de direitos autorais</h1>
+      <p class="lead">Registre os contratos da editora com autores, tradutores e ilustradores: quem recebe, por qual obra, com que percentual por faixa de exemplares — e deixe o sistema vigiar vencimentos e renovações.</p>
+
+      <h2 id="visao-geral">Visão geral</h2>
+      <p>Este é o módulo base da suíte de direitos autorais do Liber. Ele registra os <strong>termos</strong> de cada contrato: os <strong>favorecidos</strong> (autores, tradutores, ilustradores…), as <strong>obras</strong> (os livros do catálogo), as <strong>faixas de exemplares</strong> com o percentual de royalty de cada uma e os <strong>adiantamentos</strong> pagos. Ele também acompanha a vida do contrato — assinatura, vencimento, renovação (manual ou automática) e cancelamento — com lembretes para o responsável.</p>
+      <p>Sozinho, ele não calcula nada: quem transforma os termos em números são os módulos satélites, instalados por cima conforme a necessidade.</p>
+      <div class="tablewrap"><table>
+        <tr><th>Módulo</th><th>O que acrescenta</th></tr>
+        <tr><td><a href="liber_copyright_contracts.html">Contratos de direitos autorais</a> (este)</td><td>O contrato em si: favorecidos, obras, faixas, adiantamentos, vigência.</td></tr>
+        <tr><td><a href="liber_copyright_contracts_analytics.html">Cálculo de royalties</a></td><td>Apura os royalties a partir das vendas pagas, obra por obra.</td></tr>
+        <tr><td><a href="liber_copyright_contracts_payments.html">Pagamento de royalties</a></td><td>Gera as faturas de fornecedor que pagam os autores.</td></tr>
+        <tr><td><a href="liber_copyright_contracts_reports.html">Prestação de contas</a></td><td>O extrato do autor em PDF, para imprimir ou enviar por e-mail.</td></tr>
+        <tr><td><a href="liber_copyright_contracts_taxes.html">IRRF sobre direitos</a></td><td>Retém o imposto de renda na fonte sobre cada pagamento.</td></tr>
+      </table></div>
+      <p>Tudo fica no aplicativo <strong>Direitos Autorais</strong> do menu principal. Com o módulo base instalado, ele traz apenas <span class="menupath">Direitos Autorais<i>‣</i>Contratos</span> e <span class="menupath">Direitos Autorais<i>‣</i>Configurações</span>; os demais menus aparecem conforme os satélites são instalados.</p>
+
+      <h2 id="configuracao">Configuração</h2>
+      <h3>Grupos de acesso</h3>
+      <p>O módulo cria dois grupos, na categoria <strong>Direitos Autorais</strong> do cadastro de usuários (<span class="menupath">Configurações<i>‣</i>Usuários e Empresas<i>‣</i>Usuários</span>):</p>
+      <div class="tablewrap"><table>
+        <tr><th>Grupo</th><th>Pode</th></tr>
+        <tr><td><strong>Usuário</strong></td><td>Ver e editar contratos, favorecidos e obras; emitir prestações de contas.</td></tr>
+        <tr><td><strong>Administrador</strong></td><td>Tudo do Usuário, mais: os menus de Configurações, contas analíticas, relatórios e faturas dos módulos satélites, e a edição manual da <span class="field">Data do Último Pagamento</span> de uma linha de royalty.</td></tr>
+      </table></div>
+      <h3>Lembrete de vencimento</h3>
+      <ol class="steps">
+        <li>Acesse <span class="menupath">Direitos Autorais<i>‣</i>Configurações<i>‣</i>Preferências</span> (ou <span class="menupath">Configurações<i>‣</i>Direitos Autorais</span>).</li>
+        <li>Na seção <strong>Contratos</strong>, ajuste <span class="field">Janela de lembrete de vencimento</span> — quantos <em>dias antes do vencimento</em> o sistema cria uma atividade de lembrete para o responsável pelo contrato. O padrão é <strong>45 dias</strong>.</li>
+        <li>Clique em <strong>Salvar</strong>. O valor vale para toda a base, independentemente da empresa.</li>
+      </ol>
+
+      <h2 id="criar-contrato">Criar um contrato</h2>
+      <ol class="steps">
+        <li>Acesse <span class="menupath">Direitos Autorais<i>‣</i>Contratos</span> e clique em <strong>Novo</strong>.</li>
+        <li>O campo <span class="field">Número</span> mostra <em>Novo</em> — a numeração é automática e será atribuída ao salvar.</li>
+        <li>Preencha a <span class="field">Data de assinatura</span> e a <span class="field">Data de vencimento</span>. Ao informar as duas, o sistema sugere o <span class="field">Prazo de Renovação (anos)</span> a partir do intervalo entre elas — a sugestão só acontece enquanto você edita; depois de definido, o prazo fica fixo e cada renovação estende o vencimento pelo mesmo período.</li>
+        <li>Marque <span class="field">Renovável automaticamente</span> se o contrato deve se renovar sozinho ao vencer (veja <a href="#ciclo-de-vida">o ciclo de vida</a>).</li>
+        <li>Em <span class="field">Responsável</span>, indique quem acompanha o contrato — é essa pessoa que recebe os lembretes de vencimento.</li>
+        <li>Use <span class="field">Localização</span> para guardar o link ou o local de arquivamento do contrato assinado (uma URL do Drive, uma pasta física…).</li>
+        <li>Classifique com <span class="field">Marcadores</span>, se quiser — marcadores coloridos criados livremente, úteis para filtrar e agrupar a lista.</li>
+        <li>Salve. O contrato nasce como <strong>Minuta</strong>.</li>
+      </ol>
+      <figure class="shot"><img src="img/doc-liber_copyright_contracts-form.png" alt="Formulário de um contrato de direitos autorais, com datas, prazo de renovação e a aba de direitos autorais"><figcaption>O formulário do contrato: datas e renovação à esquerda, responsável e arquivo à direita, e as linhas de royalty na aba abaixo.</figcaption></figure>
+
+      <h2 id="linhas-de-royalty">Linhas de royalty e faixas de exemplares</h2>
+      <p>Na aba <strong>Direitos autorais</strong> do contrato, cada linha representa um par <strong>favorecido × obra</strong>: quem recebe, por qual livro.</p>
+      <ol class="steps">
+        <li>Clique em <strong>Adicionar linha</strong> na aba <strong>Direitos autorais</strong>.</li>
+        <li>Escolha o <span class="field">Favorecido</span> (o contato do autor, tradutor ou ilustrador) e a <span class="field">Obra</span> (o produto do livro).</li>
+        <li>Se houve adiantamento, informe o <span class="field">Adiantamento Descontável</span> — o valor já pago que será recuperado dos royalties que a obra gerar — e/ou o <span class="field">Adiantamento Não-Descontável</span>, que é apenas registrado.</li>
+        <li>Em <strong>Faixas de exemplares</strong>, adicione uma linha por faixa: <span class="field">De (exemplares)</span>, <span class="field">Até (exemplares)</span> e <span class="field">Percentual (%)</span>. Deixe <span class="field">Até (exemplares)</span> em <strong>0</strong> na última faixa para indicar "sem limite superior".</li>
+        <li>Salve a linha e repita para cada par favorecido × obra do contrato.</li>
+      </ol>
+      <div class="callout example"><span class="title">Exemplo</span>
+        <p>Um contrato típico de autor: 8% até 3.000 exemplares, 10% de 3.001 a 10.000 e 12% daí em diante.</p>
+        <div class="tablewrap"><table>
+          <tr><th>De (exemplares)</th><th>Até (exemplares)</th><th>Percentual (%)</th></tr>
+          <tr><td>0</td><td>3.000</td><td>8,00</td></tr>
+          <tr><td>3.001</td><td>10.000</td><td>10,00</td></tr>
+          <tr><td>10.001</td><td>0 (sem limite)</td><td>12,00</td></tr>
+        </table></div>
+        <p>A faixa é escolhida pela quantidade <strong>acumulada</strong> de exemplares vendidos da obra — o detalhe está no manual de <a href="liber_copyright_contracts_analytics.html">Cálculo de royalties</a>.</p>
+      </div>
+      <div class="callout note"><span class="title">Nota</span>
+        <p>O sistema impede duas coisas aqui: <strong>repetir o mesmo par favorecido × obra</strong> dentro de um contrato (cada combinação só pode ter uma linha) e cadastrar uma faixa cuja quantidade final seja <strong>menor</strong> que a inicial.</p>
+      </div>
+      <p>Os campos <span class="field">Favorecidos</span> e <span class="field">Obras</span> do contrato são calculados automaticamente a partir das linhas — são eles que aparecem na lista e nos filtros.</p>
+
+      <h2 id="ciclo-de-vida">Validar, renovar, cancelar</h2>
+      <p>A barra de situação do contrato passa por <strong>Minuta</strong>, <strong>Válido</strong>, <strong>Vencido</strong>, <strong>Renovado</strong> e <strong>Cancelado</strong>:</p>
+      <ol class="steps">
+        <li>Com os termos conferidos, clique em <strong>Validar</strong> — o contrato passa a <strong>Válido</strong> e entra em vigor.</li>
+        <li>Para estender o prazo manualmente, clique em <strong>Renovar</strong>: o vencimento avança pelo <span class="field">Prazo de Renovação (anos)</span> e a situação vira <strong>Renovado</strong>, com o registro "Contrato renovado até…" no histórico de mensagens.</li>
+        <li><strong>Cancelar</strong> encerra o contrato em qualquer ponto. Um contrato cancelado não cobre venda nenhuma para efeito de royalties.</li>
+      </ol>
+      <p>Uma rotina automática roda <strong>todos os dias</strong> e cuida do resto:</p>
+      <ul>
+        <li>Contratos vencidos e <em>não</em> renováveis passam a <strong>Vencido</strong>.</li>
+        <li>Contratos vencidos marcados como <span class="field">Renovável automaticamente</span> são renovados sozinhos: o vencimento avança pelo prazo de renovação quantas vezes for preciso para voltar a vigorar, a situação vira <strong>Renovado</strong> e o histórico registra "Renovado automaticamente até…". Marcar um contrato já <strong>Vencido</strong> como renovável faz a rotina do dia seguinte trazê-lo de volta.</li>
+        <li>Para os contratos que vencem dentro da janela configurada, a rotina cria uma atividade <em>A Fazer</em> ("Contrato vencendo em breve") para o <span class="field">Responsável</span> — uma só por contrato, sem duplicar em dias seguidos.</li>
+      </ul>
+      <div class="callout tip"><span class="title">Dica</span>
+        <p>A lista de contratos tem o filtro <strong>Vencendo (3 meses)</strong> e a visão de <strong>calendário</strong> mostra cada contrato no dia do seu vencimento — dois jeitos rápidos de enxergar o que precisa de atenção.</p>
+      </div>
+
+      <h2 id="reatribuir">Reatribuir o responsável em lote</h2>
+      <ol class="steps">
+        <li>Em <span class="menupath">Direitos Autorais<i>‣</i>Contratos</span>, marque os contratos desejados na lista.</li>
+        <li>No menu <strong>Ação</strong> (a engrenagem), escolha <strong>Reatribuir Responsável</strong>.</li>
+        <li>Escolha o <span class="field">Novo Responsável</span> e clique em <strong>Reatribuir</strong> — todos os contratos selecionados passam para ele, e os próximos lembretes também.</li>
+      </ol>
+
+      <h2 id="contato-e-produto">O contrato visto do contato e do livro</h2>
+      <p>No cadastro do contato e no cadastro do produto há um botão inteligente <strong>Contratos</strong> com a contagem de contratos em que aquele contato é favorecido (ou aquele produto é obra), além de uma aba listando esses contratos com situação e datas. O botão só aparece quando existe pelo menos um contrato.</p>
+      <figure class="shot"><img src="img/doc-liber_copyright_contracts-partner.png" alt="Cadastro de um contato com o botão inteligente Contratos e a aba listando os contratos em que ele é favorecido"><figcaption>No contato do autor, o botão Contratos abre tudo em que ele é favorecido.</figcaption></figure>
+
+      <h2 id="faq">Perguntas frequentes</h2>
+      <p><strong>Salvei o contrato e o número continua "Novo".</strong> O número definitivo é atribuído no primeiro salvamento; se aparecer "Novo" depois de salvar, a sequência de numeração foi removida — chame quem administra o sistema.</p>
+      <p><strong>Mudei as datas e o prazo de renovação não acompanhou.</strong> É o comportamento esperado depois que o prazo já foi definido: a sugestão automática só acontece na criação. Ajuste o <span class="field">Prazo de Renovação (anos)</span> à mão se o novo período for outro.</p>
+      <p><strong>Posso apagar uma linha de royalty?</strong> Pode, mas se os módulos de cálculo já lançaram valores na conta analítica dela, prefira manter a linha e tratar a mudança por aditivo (novo contrato ou nova linha) — apagar a linha remove também os lançamentos vinculados a ela.</p>
+      <p><strong>O que o campo Tempo restante mostra?</strong> Os dias (ou anos e meses) até o vencimento. Contratos cancelados ou já marcados como vencidos aparecem sem valor.</p>
+
+      <div class="seealso">
+        <span class="title">Veja também</span>
+        <ul>
+          <li><a href="liber_copyright_contracts_analytics.html">Cálculo de royalties</a> — apurar os royalties das vendas pagas.</li>
+          <li><a href="liber_copyright_contracts_payments.html">Pagamento de royalties</a> — gerar as faturas que pagam os autores.</li>
+          <li><a href="liber_copyright_contracts_taxes.html">IRRF sobre direitos</a> — a retenção do imposto na fonte.</li>
+          <li><a href="liber_copyright_contracts_reports.html">Prestação de contas</a> — o extrato do autor em PDF.</li>
+        </ul>
+      </div>
+
+      <nav class="pager" id="pager"></nav>
+    </article>
+  </div>
+</div>
+<script src="docs.js"></script>
+</body>
+</html>

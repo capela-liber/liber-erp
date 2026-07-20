@@ -1,0 +1,182 @@
+/* Documentação do Liber — mesma identidade visual do site (index.html). */
+:root {
+  --paper: #faf8fc;
+  --paper-2: #f1eaf6;
+  --ink: #251d2b;
+  --ink-soft: #5d5266;
+  --accent: #6e2f91;
+  --accent-soft: #8a4bad;
+  --logo: #c76ae1;
+  --ok: #2e6e4e;
+  --line: #e5dbee;
+  --radius: 14px;
+  --maxw: 1200px;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font: 16px/1.7 Inter, "Segoe UI", system-ui, sans-serif;
+}
+h1, h2, h3, h4 { font-family: "Space Grotesk", "Segoe UI", system-ui, sans-serif; line-height: 1.2; letter-spacing: -.015em; }
+.brand { font-family: Georgia, "Iowan Old Style", "Times New Roman", serif; }
+a { color: var(--accent); }
+.wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 24px; }
+
+/* topo */
+header.top {
+  position: sticky; top: 0; z-index: 10;
+  background: color-mix(in srgb, var(--paper) 88%, white);
+  backdrop-filter: blur(6px);
+  border-bottom: 1px solid var(--line);
+}
+header.top .wrap { display: flex; align-items: center; gap: 28px; height: 60px; }
+.brand { display: flex; align-items: center; font-size: 24px; font-weight: 700;
+  letter-spacing: .5px; color: var(--ink); text-decoration: none; }
+.brand img { height: 32px; width: 32px; border-radius: 8px; object-fit: cover; margin-right: 10px; }
+.brand span { color: var(--accent); }
+.doc-tag { font-size: 13px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+  color: var(--accent); border: 1px solid var(--line); border-radius: 999px; padding: 3px 12px;
+  background: var(--paper-2); }
+header.top nav { margin-left: auto; display: flex; gap: 22px; }
+header.top nav a { text-decoration: none; color: var(--ink-soft); font-size: 15px; }
+header.top nav a:hover { color: var(--accent); }
+
+/* layout com sidebar */
+.layout { display: grid; grid-template-columns: 260px 1fr; gap: 48px; padding: 40px 0 80px; }
+@media (max-width: 900px) { .layout { grid-template-columns: 1fr; } }
+
+aside.sidebar { position: sticky; top: 84px; align-self: start; max-height: calc(100vh - 108px); overflow-y: auto; }
+@media (max-width: 900px) {
+  aside.sidebar { position: static; max-height: none; border: 1px solid var(--line);
+    border-radius: var(--radius); padding: 14px 16px; background: var(--paper-2); }
+}
+.sidebar h4 { font-size: 12px; text-transform: uppercase; letter-spacing: .12em;
+  color: var(--ink-soft); margin: 18px 0 6px; }
+.sidebar h4:first-child { margin-top: 0; }
+.sidebar a { display: block; padding: 4px 10px; margin-left: -10px; border-radius: 8px;
+  font-size: 14.5px; color: var(--ink-soft); text-decoration: none; }
+.sidebar a:hover { color: var(--accent); background: var(--paper-2); }
+.sidebar a.current { color: var(--accent); font-weight: 600; background: var(--paper-2); }
+
+/* artigo */
+article.doc { max-width: 800px; min-width: 0; }
+.breadcrumb { font-size: 13.5px; color: var(--ink-soft); margin-bottom: 18px; }
+.breadcrumb a { color: var(--ink-soft); text-decoration: none; }
+.breadcrumb a:hover { color: var(--accent); }
+.breadcrumb .sep { margin: 0 6px; opacity: .6; }
+
+article.doc h1 { font-size: clamp(30px, 4vw, 40px); margin-bottom: 10px; }
+article.doc p.lead { font-size: 18.5px; color: var(--ink-soft); margin-bottom: 28px; max-width: 60ch; }
+article.doc h2 { font-size: 26px; margin: 44px 0 12px; padding-top: 18px; border-top: 1px solid var(--line); }
+article.doc h3 { font-size: 20px; margin: 30px 0 10px; }
+article.doc h4 { font-size: 16.5px; margin: 22px 0 8px; }
+article.doc p { margin-bottom: 12px; }
+article.doc ul, article.doc ol { margin: 0 0 14px 22px; }
+article.doc li { margin-bottom: 7px; }
+article.doc li > ul, article.doc li > ol { margin-top: 7px; }
+article.doc strong { color: var(--ink); }
+article.doc hr { border: 0; border-top: 1px solid var(--line); margin: 32px 0; }
+
+/* passos numerados destacados (fluxos) */
+article.doc ol.steps { list-style: none; margin-left: 0; counter-reset: step; }
+article.doc ol.steps > li { counter-increment: step; position: relative; padding-left: 44px; margin-bottom: 14px; }
+article.doc ol.steps > li::before { content: counter(step); position: absolute; left: 0; top: 1px;
+  width: 28px; height: 28px; border-radius: 50%; background: var(--paper-2); color: var(--accent);
+  border: 1px solid var(--line); font-weight: 700; font-size: 14px;
+  display: flex; align-items: center; justify-content: center;
+  font-family: "Space Grotesk", system-ui, sans-serif; }
+
+/* caminho de menu, como na doc do Odoo: Consignação ‣ Acordos ‣ Novo */
+.menupath { display: inline-block; background: var(--paper-2); border: 1px solid var(--line);
+  border-radius: 6px; padding: 1px 8px; font-size: 14px; color: var(--ink);
+  font-family: Inter, system-ui, sans-serif; white-space: nowrap; }
+.menupath i { font-style: normal; color: var(--accent); margin: 0 4px; font-weight: 700; }
+
+/* código e campos */
+code { background: var(--paper-2); border: 1px solid var(--line); border-radius: 5px;
+  padding: 1px 6px; font-size: 13.5px; font-family: "SF Mono", ui-monospace, Menlo, Consolas, monospace; }
+pre { background: #2b2233; color: #efe6f5; border-radius: var(--radius); padding: 16px 20px;
+  overflow-x: auto; margin: 0 0 16px; font-size: 13.5px; line-height: 1.6; }
+pre code { background: none; border: 0; padding: 0; color: inherit; font-size: inherit; }
+.field { font-weight: 600; color: var(--ink); }
+
+/* chamadas: nota / dica / importante / exemplo */
+.callout { border: 1px solid var(--line); border-left: 4px solid var(--accent);
+  border-radius: 10px; background: var(--paper-2); padding: 14px 18px; margin: 0 0 16px; }
+.callout > .title { font-weight: 700; font-size: 13px; letter-spacing: .08em;
+  text-transform: uppercase; margin-bottom: 4px; display: block; }
+.callout p:last-child { margin-bottom: 0; }
+.callout.note  { border-left-color: var(--accent); }
+.callout.note  > .title { color: var(--accent); }
+.callout.tip   { border-left-color: var(--ok); background: #eef5f0; border-color: #d8e7dd; }
+.callout.tip   > .title { color: var(--ok); }
+.callout.warn  { border-left-color: #b3831a; background: #faf3e3; border-color: #eddfba; }
+.callout.warn  > .title { color: #7a5a12; }
+.callout.example { border-left-color: var(--logo); }
+.callout.example > .title { color: var(--accent-soft); }
+
+/* tabelas */
+article.doc table { border-collapse: collapse; width: 100%; margin: 0 0 16px; font-size: 14.5px; }
+article.doc th, article.doc td { border: 1px solid var(--line); padding: 8px 12px; text-align: left; vertical-align: top; }
+article.doc th { background: var(--paper-2); font-family: "Space Grotesk", system-ui, sans-serif; font-size: 14px; }
+.tablewrap { overflow-x: auto; margin-bottom: 16px; }
+
+/* telas (mesmo mecanismo do site: placeholder enquanto não há captura) */
+figure.shot { margin: 20px 0 24px; }
+figure.shot img { max-width: 100%; display: block; border-radius: var(--radius);
+  border: 1px solid var(--line); box-shadow: 0 18px 40px -22px rgba(46,29,58,.35); cursor: zoom-in; }
+figure.shot figcaption { font-size: 13px; color: var(--ink-soft); margin-top: 10px; text-align: center; }
+.shot-missing { display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 8px; min-height: 200px; border: 2px dashed var(--line); border-radius: var(--radius);
+  background: repeating-linear-gradient(45deg, var(--paper), var(--paper) 12px, var(--paper-2) 12px, var(--paper-2) 24px);
+  color: var(--ink-soft); font-size: 14px; text-align: center; padding: 20px; }
+.shot-missing code { background: #fff; }
+
+/* lightbox */
+.lightbox { position: fixed; inset: 0; z-index: 100; display: none;
+  flex-direction: column; align-items: center; justify-content: center; gap: 16px;
+  padding: 32px; background: rgba(24,12,30,.88); cursor: zoom-out; }
+.lightbox.on { display: flex; }
+.lightbox img { max-width: min(1280px, 100%); max-height: 86vh; border-radius: 10px;
+  background: #fff; box-shadow: 0 30px 80px -20px rgba(0,0,0,.6); }
+.lightbox .cap { color: #efe6f5; font-size: 15px; text-align: center; max-width: 80ch; }
+body.lb-open { overflow: hidden; }
+body.lb-open header.top { visibility: hidden; }
+
+/* veja também */
+.seealso { border: 1px solid var(--line); border-radius: var(--radius); background: var(--paper-2);
+  padding: 16px 20px; margin: 32px 0 0; }
+.seealso .title { font-weight: 700; font-size: 13px; letter-spacing: .08em; text-transform: uppercase;
+  color: var(--ink-soft); margin-bottom: 8px; display: block; }
+.seealso ul { margin: 0 0 0 20px; }
+
+/* navegação anterior/próximo */
+.pager { display: flex; justify-content: space-between; gap: 16px; margin-top: 40px;
+  padding-top: 20px; border-top: 1px solid var(--line); }
+.pager a { flex: 1; text-decoration: none; border: 1px solid var(--line); border-radius: var(--radius);
+  padding: 12px 16px; background: var(--paper-2); color: var(--ink); font-size: 14.5px; }
+.pager a:hover { border-color: var(--accent); }
+.pager a .dir { display: block; font-size: 12px; text-transform: uppercase; letter-spacing: .08em; color: var(--ink-soft); }
+.pager a.next { text-align: right; }
+
+/* índice da documentação (docs/index.html) */
+.doc-hero { padding: 24px 0 8px; }
+.doc-hero h1 { font-size: clamp(30px, 4.4vw, 44px); margin-bottom: 10px; }
+.doc-hero p { font-size: 18px; color: var(--ink-soft); max-width: 62ch; }
+.area { margin-top: 40px; }
+.area h2 { font-size: 22px; margin-bottom: 4px; }
+.area > p { color: var(--ink-soft); font-size: 15px; margin-bottom: 16px; max-width: 70ch; }
+.cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; }
+.cards a.card { display: block; background: var(--paper-2); border: 1px solid var(--line);
+  border-radius: var(--radius); padding: 18px 20px; text-decoration: none; color: var(--ink); }
+.cards a.card:hover { border-color: var(--accent); }
+.cards a.card h3 { font-size: 16.5px; margin-bottom: 4px; }
+.cards a.card p { font-size: 14px; color: var(--ink-soft); }
+.cards a.card .mod { display: inline-block; margin-top: 10px; font-size: 12px;
+  font-family: "SF Mono", ui-monospace, Menlo, Consolas, monospace; color: var(--accent);
+  background: var(--paper); border: 1px solid var(--line); border-radius: 5px; padding: 1px 7px; }
+
+footer { border-top: 1px solid var(--line); padding: 28px 0 40px; color: var(--ink-soft); font-size: 14px; }
+footer .wrap { display: flex; flex-wrap: wrap; gap: 12px; justify-content: space-between; }

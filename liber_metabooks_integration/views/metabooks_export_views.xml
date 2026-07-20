@@ -88,15 +88,23 @@
                         <page string="Alterações" name="changes">
                             <!-- The de/para, flat. What is listed here is what
                                  comes out red in the spreadsheet. -->
-                            <field name="change_ids" nolabel="1" readonly="1">
-                                <list create="false" delete="false" edit="false"
+                            <field name="change_ids" nolabel="1"
+                                   readonly="state in ('sent', 'cancel')">
+                                <list editable="bottom" create="false"
+                                      delete="false"
                                       default_order="product_id, column">
-                                    <field name="product_id" string="Livro"/>
-                                    <field name="column" string="Coluna"/>
-                                    <field name="old_value" string="Antes"/>
-                                    <field name="new_value" string="Depois"/>
+                                    <field name="selected"
+                                           widget="boolean_toggle"/>
+                                    <field name="product_id" string="Livro"
+                                           readonly="1"/>
+                                    <field name="column" string="Coluna"
+                                           readonly="1"/>
+                                    <field name="old_value" string="Antes"
+                                           readonly="1"/>
+                                    <field name="new_value" string="Depois"
+                                           readonly="1"/>
                                     <field name="field_name" string="Campo"
-                                           optional="hide"/>
+                                           readonly="1" optional="hide"/>
                                 </list>
                             </field>
                         </page>

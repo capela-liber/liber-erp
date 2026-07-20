@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Integração Metabooks — Manuais do Liber</title>
+<link rel="icon" type="image/png" href="../logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;600;700&display=swap">
+<link rel="stylesheet" href="docs.css">
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="../index.html"><img src="../logo.png" alt="">liber<span>.</span></a>
+    <span class="doc-tag">Manuais</span>
+    <nav><a href="index.html">Índice</a><a href="../index.html">Site</a></nav>
+  </div>
+</header>
+<div class="wrap">
+  <div class="layout">
+    <aside class="sidebar" id="sidebar"></aside>
+    <article class="doc">
+      <div class="breadcrumb"><a href="index.html">Manuais</a><span class="sep">›</span>Catálogo<span class="sep">›</span>Integração Metabooks</div>
+      <h1>Integração Metabooks</h1>
+      <p class="lead">Os metadados dos seus livros — título, autores, sinopse, preço, medidas, capa — entrando no sistema direto da Metabooks, por ISBN ou por catálogo inteiro, sem digitação.</p>
+
+      <h2 id="visao-geral">Visão geral</h2>
+      <p>A <b>Metabooks</b> é a plataforma brasileira de metadados do mercado editorial (da MVB): é nela que editoras cadastram seus títulos no padrão ONIX, e é dela que livrarias e distribuidores leem esses dados. Este módulo conecta o sistema à Metabooks em duas direções:</p>
+      <ul>
+        <li><b>Importação</b> (madura, o dia a dia): busca os dados de um livro pelo ISBN, ou o catálogo completo de uma editora, e cria/atualiza os produtos correspondentes — ficha editorial, ficha técnica, capa e tudo.</li>
+        <li><b>Envio</b> (em desenvolvimento): o caminho de volta — editar um livro aqui e mandar a alteração para a Metabooks por planilha, com conferência humana no meio.</li>
+      </ul>
+      <p>Cada livro importado vira um <b>produto</b> comum do sistema, com o ISBN como código interno e código de barras. É esse mesmo ISBN que casa o livro com os itens das notas fiscais importadas e com o resto da casa: a Metabooks alimenta o catálogo, e o catálogo alimenta a consignação, a bonificação e as vendas.</p>
+      <p>Tudo mora no aplicativo <b>Metabooks</b> do menu principal: <b>Livros</b> (os produtos importados), <b>Importações</b>, <b>Envios</b>, <b>Catálogo</b> (autores, códigos BISAC, disponibilidades, editoras) e <b>Configuração</b>.</p>
+
+      <h2 id="configuracao">Configuração</h2>
+      <ol class="steps">
+        <li>Abra <span class="menupath">Metabooks<i>‣</i>Configuração<i>‣</i>Configurações</span> (a mesma página existe em <span class="menupath">Definições<i>‣</i>Metabooks</span>).</li>
+        <li>Preencha <span class="field">Usuário do Metabooks</span> e <span class="field">Senha do Metabooks</span> — as credenciais da sua conta no portal Metabooks.</li>
+        <li>Clique em <b>Testar conexão</b>. Se as credenciais estiverem certas, o sistema confirma e o campo <span class="field">Autorização do Metabooks</span> passa a guardar o código de acesso, renovado sozinho daí em diante — você não precisa mexer nele.</li>
+        <li>O campo <span class="field">Ids do Metabooks</span> é informativo, preenchido pela própria integração.</li>
+      </ol>
+      <p>Ainda nessa página, o bloco <b>Custom Product's Fields</b> permite escolher, em <span class="field">Product Fields</span>, quais campos do produto aparecem na página pública do livro no site.</p>
+      <p><b>Acesso.</b> Os botões de sincronização no formulário do produto pedem o grupo <b>Acesso ao Metabooks</b> (em <span class="menupath">Definições<i>‣</i>Usuários e empresas<i>‣</i>Usuários</span>, seção Metabooks Access). Os menus de configuração são de administrador.</p>
+      <div class="callout note"><span class="title">Nota</span>
+        <p>As credenciais valem para a conta toda — não há nada a configurar por empresa. Elas nunca entram em relatórios nem em testes; ficam guardadas nos parâmetros do sistema.</p>
+      </div>
+
+      <figure class="shot">
+        <img src="img/doc-liber_metabooks_integration-settings.png?v=2" alt="Página de configurações do Metabooks com usuário, senha, código de autorização e o botão Testar conexão">
+        <figcaption>Configurações da integração: credenciais do portal e o teste de conexão.</figcaption>
+      </figure>
+
+      <h2 id="importar-isbn">Importar livros por ISBN</h2>
+      <p>O caminho para poucos títulos — um lançamento, uma lista que chegou por e-mail:</p>
+      <ol class="steps">
+        <li>Abra <span class="menupath">Metabooks<i>‣</i>Importações<i>‣</i>Importar por ISBN</span>.</li>
+        <li>Cole os ISBNs no campo <span class="field">ISBNs</span> — um por linha, ou separados por vírgula ou espaço. Com ou sem hífens, tanto faz.</li>
+        <li>Clique em <b>Importar</b>.</li>
+      </ol>
+      <p>Ao final, o sistema abre a lista dos livros trazidos e resume o resultado: quantos são <b>novos</b>, quantos foram <b>atualizados</b> e quantos <b>não foram encontrados</b> na Metabooks. A importação é segura de repetir: um livro que já existe (mesmo ISBN) é atualizado, nunca duplicado.</p>
+      <p>A importação por ISBN traz o registro completo: ficha editorial, autores com seus papéis, sinopse, preço de capa, capa e a ficha técnica inteira (medidas, peso, páginas, acabamento, NCM, idiomas).</p>
+
+      <h2 id="importar-catalogo">Importar o catálogo de uma editora</h2>
+      <p>Para trazer (ou ressincronizar) tudo de uma vez:</p>
+      <ol class="steps">
+        <li>Abra <span class="menupath">Metabooks<i>‣</i>Importações<i>‣</i>Importar por ID da editora</span>.</li>
+        <li>Informe o <span class="field">ID da editora (MVB)</span> — o identificador da editora na Metabooks, por exemplo <code>BR0089701</code>.</li>
+        <li>Opcionalmente, use <span class="field">Limite</span> para um teste pequeno (0 importa o catálogo inteiro), e escolha se quer <span class="field">Baixar capas</span> e <span class="field">Baixar fichas técnicas</span>.</li>
+        <li>Clique em <b>Importar</b>. O sistema cria uma <b>importação de catálogo</b> e a processa em segundo plano, página a página.</li>
+      </ol>
+      <p>Acompanhe em <span class="menupath">Metabooks<i>‣</i>Importações<i>‣</i>Importações de catálogo</span>: cada registro mostra o tamanho do catálogo, quantos livros já entraram e a barra de progresso. O processamento salva o avanço a cada página — se for interrompido, retoma sozinho de onde parou. Os botões <b>Executar agora</b>, <b>Atualizar</b> e <b>Reexecutar</b> fazem o que dizem.</p>
+      <div class="callout tip"><span class="title">Dica</span>
+        <p>O catálogo (feed) da Metabooks não carrega a ficha técnica — medidas, peso, páginas, acabamento e NCM só existem no registro individual de cada ISBN. Marcando <span class="field">Baixar fichas técnicas</span>, o sistema encadeia automaticamente um segundo trabalho que completa cada livro, um ISBN por vez, sem tocar em preço, nome, categoria nem capa. É mais lento; deixe correr em segundo plano.</p>
+      </div>
+      <p>Também dá para disparar do cadastro da editora: no contato, o grupo <b>Product</b> lista os IDs Metabooks da editora, cada um com o botão <b>Import Catalogue</b>.</p>
+
+      <figure class="shot">
+        <img src="img/doc-liber_metabooks_integration-job.png?v=2" alt="Registro de importação de catálogo com progresso, total de livros, páginas e situação Em execução">
+        <figcaption>A importação de catálogo roda em segundo plano e mostra o progresso ao vivo.</figcaption>
+      </figure>
+
+      <h2 id="o-que-vem">O que é importado</h2>
+      <div class="tablewrap"><table>
+        <thead><tr><th>Na Metabooks</th><th>No sistema</th></tr></thead>
+        <tbody>
+          <tr><td>Título, subtítulo e autores</td><td>Nome do produto no formato "Título: Subtítulo (Autor; Autor)" — do jeito que a equipe procura o livro — mais os campos separados de título e subtítulo.</td></tr>
+          <tr><td>Contribuidores (autor, tradutor, organizador, ilustrador…)</td><td>Cadastro de autores com papel, ordem e nota biográfica, ligado ao livro. Consultável em <span class="menupath">Metabooks<i>‣</i>Catálogo<i>‣</i>Autores</span>.</td></tr>
+          <tr><td>Preço de capa</td><td>Preço de venda do produto.</td></tr>
+          <tr><td>Sinopse</td><td>Campo Sinopse da aba Metabooks do produto.</td></tr>
+          <tr><td>Capa</td><td>Imagem do produto.</td></tr>
+          <tr><td>Selo e coleção</td><td>Categoria do produto, na árvore <b>Selo / Coleção</b> — selos e coleções nunca se misturam.</td></tr>
+          <tr><td>Palavras-chave e assuntos</td><td>Marcadores do produto (somados aos que já existiam, nunca apagando os manuais).</td></tr>
+          <tr><td>Disponibilidade (ONIX)</td><td>Situação legível ("Em estoque", "Esgotado"…), com filtros prontos de disponível/indisponível. Tabela em <span class="menupath">Metabooks<i>‣</i>Catálogo<i>‣</i>Disponibilidade</span>.</td></tr>
+          <tr><td>Ficha técnica ONIX</td><td>Aba <b>Ficha técnica</b> do produto: formato, acabamento, altura, largura, lombada, peso, orelhas, sobrecapa, fitilho, páginas (miolo, pré e pós-textuais), ilustrações, edição, idiomas, NCM, cidade e país de publicação, status de publicação.</td></tr>
+          <tr><td>Tipo de produto</td><td>Livro impresso, e-book ou audiolivro — com filtros prontos na busca. Impressos entram com controle de estoque ligado; digitais, sem.</td></tr>
+        </tbody>
+      </table></div>
+
+      <h2 id="no-produto">No formulário do livro</h2>
+      <p>Todo produto importado ganha duas abas — <b>Metabooks</b> (dados editoriais e comerciais) e <b>Ficha técnica</b> (a especificação física, a mesma de que uma gráfica orça) — e dois botões no topo, para quem tem o grupo de acesso:</p>
+      <ul>
+        <li><b>Metabooks</b> — reimporta o registro completo deste livro, atualizando tudo;</li>
+        <li><b>Atualizar ficha técnica</b> — busca só a parte física, sem tocar no resto.</li>
+      </ul>
+      <p>A busca de produtos também aprende com a integração: dá para procurar por <b>autor</b>, <b>editora</b>, <b>selo</b> e <b>tipo de livro</b>, e agrupar por qualquer um deles.</p>
+
+      <h2 id="envio">Envio para a Metabooks (o caminho de volta)</h2>
+
+      <div class="callout warn"><span class="title">Em desenvolvimento</span>
+        <p>Esta frente está funcional até a geração da planilha, mas <b>a entrega à Metabooks ainda é manual</b>: o sistema não sobe o arquivo sozinho (nem por FTP, nem por API — o transporte automático depende de liberação da própria Metabooks). Baixe a planilha gerada, envie pelo canal combinado com eles e só então marque o envio como concluído. As tarefas de arquivamento (X) e reativação (R) existem na tela, mas ainda não foram exercitadas em produção.</p>
+      </div>
+
+      <p>A lógica: quando alguém edita, em um livro, um campo que a Metabooks conhece (título, sinopse, preço, medidas, autores…), o livro entra numa <b>fila de pendências</b>. De tempos em tempos, alguém junta as pendências num <b>envio</b>, confere o antes/depois de cada alteração e gera a planilha no formato que a Metabooks aceita.</p>
+      <ol class="steps">
+        <li>Veja o que está esperando em <span class="menupath">Metabooks<i>‣</i>Envios<i>‣</i>Alterações pendentes</span> — são os livros editados desde a última conversa com a Metabooks.</li>
+        <li>Abra <span class="menupath">Metabooks<i>‣</i>Envios<i>‣</i>Envios para a Metabooks</span> e crie um envio. Escolha a <span class="field">Tarefa</span>: <b>Alteração (V)</b> para atualizar títulos que a Metabooks já tem, <b>Cadastro novo (Z)</b> para títulos inéditos lá.</li>
+        <li>Clique em <b>Buscar alterações</b>. Cada livro pendente entra como uma linha, e a aba <b>Alterações</b> mostra o de/para de cada campo, lido do histórico do produto.</li>
+        <li>Desmarque o que não deve ir — um livro inteiro, ou um campo isolado de um livro. Campo desmarcado simplesmente não é escrito, e coluna que a Metabooks não recebe é coluna que ela não mexe.</li>
+        <li>Clique em <b>Verificar</b>. O sistema barra tudo o que a Metabooks recusaria: livro sem ISBN, ISBN que não tem 13 dígitos, dois livros com o mesmo ISBN, cadastro novo sem os campos obrigatórios, e campo que foi <b>apagado</b> aqui (apagar um dado lá exige uma marca especial que este envio ainda não escreve — a verificação explica o que fazer).</li>
+        <li>Clique em <b>Gerar planilha</b>. O arquivo <code>.xlsx</code> sai com o nome que a Metabooks espera (por exemplo <code>V_BR5108985_20260720_Alteracoes.xlsx</code>) e com <b>as células alteradas em vermelho</b> — a própria planilha é o documento de conferência: o que está vermelho é o que estamos pedindo para mudar.</li>
+        <li><b>Baixe</b> a planilha e envie à Metabooks pelo canal combinado com o atendimento deles.</li>
+        <li>Só depois do upload dar certo, clique em <b>Marcar como enviada</b>. É esse passo — e não a geração do arquivo — que tira os livros da fila: se o upload falhar, nada se perde. A confirmação da Metabooks chega por e-mail consolidado, depois da meia-noite.</li>
+      </ol>
+      <p>O histórico fica: <span class="menupath">Metabooks<i>‣</i>Envios<i>‣</i>Histórico</span> lista, campo a campo, tudo o que já foi pedido à Metabooks, em qual envio e com qual antes/depois.</p>
+
+      <figure class="shot">
+        <img src="img/doc-liber_metabooks_integration-envio.png" alt="Formulário de um envio para a Metabooks com os botões Buscar alterações, Verificar e Gerar planilha, e a aba de alterações com colunas Antes e Depois">
+        <figcaption>Um envio em preparação: os livros pendentes, o de/para de cada campo e os botões do ciclo.</figcaption>
+      </figure>
+
+      <div class="callout note"><span class="title">Nota</span>
+        <p>A atualização na Metabooks é <b>incremental</b>: a planilha leva só o ISBN, o título (para a linha ser legível) e as colunas que mudaram — o que não vai na planilha permanece intocado lá. Das 74 colunas do modelo oficial, o sistema sabe preencher as que de fato existem no cadastro daqui; as demais nunca são escritas.</p>
+      </div>
+
+      <h2 id="regras">Regras e guardas</h2>
+      <div class="tablewrap"><table>
+        <thead><tr><th>Regra</th><th>O que ela garante</th></tr></thead>
+        <tbody>
+          <tr><td>Um livro por ISBN</td><td>Importar de novo atualiza, nunca duplica. O ISBN é a identidade do livro em todo o sistema.</td></tr>
+          <tr><td>Importação não gera pendência de envio</td><td>Os dados que a própria Metabooks mandou não voltam para ela: só edições feitas por pessoas marcam o livro como pendente.</td></tr>
+          <tr><td>O segundo envio leva só o que mudou</td><td>Cada envio registra um marco no histórico do livro; o próximo parte dali. Editar e desfazer no meio do caminho não gera envio de nada.</td></tr>
+          <tr><td>Livro sem histórico legível vai completo</td><td>Se não há como saber o que mudou (coluna <b>Sem histórico</b> na tela do envio), todas as colunas mapeadas são enviadas — melhor do que uma linha vazia.</td></tr>
+          <tr><td>Envio concluído é definitivo</td><td>Um envio marcado como enviado não pode ser cancelado nem reaberto: ele é o registro do que foi pedido à Metabooks, e fica.</td></tr>
+          <tr><td>Marcadores e capas preservados</td><td>A importação soma marcadores sem apagar os manuais; a atualização de ficha técnica nunca toca preço, nome, categoria ou capa.</td></tr>
+        </tbody>
+      </table></div>
+
+      <h2 id="problemas">Solução de problemas</h2>
+      <p><b>"Set the Metabooks username and password…" ao importar.</b> As credenciais não estão salvas. Volte a <a href="#configuracao">Configuração</a>, preencha usuário e senha e use <b>Testar conexão</b>.</p>
+      <p><b>ISBN não encontrado.</b> O resumo da importação lista os ISBNs que a Metabooks não conhece. Confira a digitação; se o número estiver certo, o título ainda não foi cadastrado lá pela editora responsável.</p>
+      <p><b>A importação de catálogo parou em "Falhou".</b> Abra o registro em <b>Importações de catálogo</b>: o campo <span class="field">Mensagem</span> traz o motivo (credencial expirada, ID de editora errado, instabilidade da API). Resolvida a causa, <b>Reexecutar</b> recomeça do zero com segurança — o que já entrou será apenas atualizado.</p>
+      <p><b>Livros do catálogo vieram sem medidas ou sem autores.</b> É a limitação do feed: ele não carrega ficha técnica, e traz menos dados editoriais que o registro individual. Rode a importação com <span class="field">Baixar fichas técnicas</span> marcado, ou reimporte os títulos por ISBN.</p>
+      <p><b>"Verificar" reclamou de um campo apagado.</b> Apagar um dado na Metabooks exige uma marca de exclusão que o envio ainda não escreve. Ou devolva o valor ao campo, ou deixe esse livro fora do envio e faça a exclusão diretamente no painel deles.</p>
+
+      <div class="seealso">
+        <p><b>Veja também</b></p>
+        <ul>
+          <li><a href="liber_nfe_xml.html">Importação de XML de NF-e</a> — as notas importadas casam seus itens com os livros pelo mesmo ISBN que a Metabooks preenche.</li>
+          <li><a href="liber_soc_agreements.html">Acordos de consignação</a> — o catálogo importado é o que abastece as prateleiras consignadas.</li>
+        </ul>
+      </div>
+
+      <nav class="pager" id="pager"></nav>
+    </article>
+  </div>
+</div>
+<script src="docs.js"></script>
+</body>
+</html>

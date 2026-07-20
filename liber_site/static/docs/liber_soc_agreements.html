@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Acordos de consignação — Manuais do Liber</title>
+<link rel="icon" type="image/png" href="../logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;600;700&display=swap">
+<link rel="stylesheet" href="docs.css">
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="../index.html"><img src="../logo.png" alt="">liber<span>.</span></a>
+    <span class="doc-tag">Manuais</span>
+    <nav><a href="index.html">Índice</a><a href="../index.html">Site</a></nav>
+  </div>
+</header>
+<div class="wrap">
+  <div class="layout">
+    <aside class="sidebar" id="sidebar"></aside>
+    <article class="doc">
+      <div class="breadcrumb"><a href="index.html">Manuais</a><span class="sep">›</span>Consignação<span class="sep">›</span>Acordos de consignação</div>
+      <h1>Acordos de consignação</h1>
+      <p class="lead">Registre o contrato de consignação de cada livraria e ganhe, com um clique, a <strong>prateleira</strong> dela: o estoque da editora que fica fisicamente no cliente, mas continua sendo seu até vender.</p>
+
+      <h2 id="visao-geral">Visão geral</h2>
+      <p>A consignação editorial funciona assim: a editora deixa livros na livraria; eles continuam sendo da editora até que o cliente informe o que vendeu — e só então há uma venda. Para o sistema acompanhar isso, cada livraria precisa de duas coisas:</p>
+      <ul>
+        <li><strong>O contrato</strong> — o registro comercial da relação: quem é o cliente, quem atende (agente comercial e equipe de vendas), qual a condição comercial (lista de preços e desconto), com que frequência se faz o acerto. Cada contrato recebe um número na série <strong>AC/</strong> (ex.: AC/2026/0001).</li>
+        <li><strong>A prateleira</strong> — um local de estoque interno com o nome do cliente, criado automaticamente quando o contrato é ativado. Tudo que a editora remete em consignação entra nessa prateleira; tudo que o cliente devolve ou vende sai dela. O saldo da prateleira é o <em>mapa</em> da consignação daquele cliente.</li>
+      </ul>
+      <div class="callout note"><span class="title">Nota</span><p>As prateleiras ficam agrupadas sob uma localização-raiz chamada <strong>CO</strong>, que vive deliberadamente <em>fora do armazém</em>. Por isso o estoque consignado <strong>não infla o "Em mãos"</strong> do Estoque: o que está na livraria não está disponível para vender nem expedir, e os números nativos do Odoo continuam dizendo a verdade sobre o que está de fato no seu armazém.</p></div>
+      <p>Este módulo cuida só da <em>relação</em>: contrato e prateleira. Ele não movimenta estoque, não fatura e não emite documento fiscal — isso é papel dos módulos de <a href="liber_soc_moves.html">remessas e retornos</a>, <a href="liber_soc_settlement.html">acerto</a> e <a href="liber_soc_fiscal_br.html">fiscal</a>.</p>
+
+      <figure class="shot"><img src="img/doc-liber_soc_agreements-form.png" alt="Formulário de um contrato de consignação ativo, com os botões Ativar/Suspender/Encerrar no topo e o contador 'Na prateleira'"><figcaption>O contrato de consignação: dados comerciais à esquerda, frequência do acerto e prateleira à direita, e o botão inteligente <em>Na prateleira</em> mostrando o saldo atual no cliente.</figcaption></figure>
+
+      <h2 id="configuracao">Configuração</h2>
+      <h3>Grupos de acesso</h3>
+      <p>Em <span class="menupath">Definições<i>‣</i>Usuários e Empresas<i>‣</i>Usuários</span>, na seção <strong>Consignação</strong>, cada usuário recebe um dos papéis:</p>
+      <div class="tablewrap"><table>
+        <thead><tr><th>Papel</th><th>O que pode</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Usuário</strong></td><td>Ver, criar e editar contratos. Não pode excluir. É quem vê o menu <span class="menupath">Consignação</span>.</td></tr>
+          <tr><td><strong>Administrador</strong></td><td>Tudo do Usuário, mais excluir contratos.</td></tr>
+        </tbody>
+      </table></div>
+      <h3>Multiempresa</h3>
+      <p>Se a casa tem mais de uma empresa, cada usuário só enxerga os contratos das empresas selecionadas no seletor de empresas do topo da tela. A regra "um contrato aberto por cliente" também vale <em>por empresa</em>: a mesma livraria pode ter um contrato aberto em cada empresa do grupo.</p>
+      <h3>Dependências</h3>
+      <p>O módulo usa os aplicativos padrão de Contatos, Produtos, Estoque e Vendas. Não há nada para configurar em Definições antes de criar o primeiro contrato — a localização-raiz CO e as prateleiras são criadas sozinhas na ativação.</p>
+
+      <h2 id="criar">Criar um contrato</h2>
+      <ol class="steps">
+        <li>Acesse <span class="menupath">Consignação<i>‣</i>Contratos<i>‣</i>Novo</span>.</li>
+        <li>Em <span class="field">Cliente</span>, escolha a livraria. Só aparecem contatos marcados como <em>empresa</em> — consignação é um contrato com a livraria, não com uma pessoa.</li>
+        <li>Confira <span class="field">Agente Comercial</span> (preenchido com você) e <span class="field">Equipe de Vendas</span>. A equipe é importante: é por ela que as <a href="liber_soc_settlement.html#campanhas">campanhas</a> encontram este cliente.</li>
+        <li>Se houver condição comercial combinada, informe a <span class="field">Lista de Preços</span> e o <span class="field">Desconto Padrão %</span>. As linhas do acerto herdam esse desconto (e continuam editáveis uma a uma).</li>
+        <li>Em <span class="field">Destinatários dos Relatórios</span>, adicione os contatos da livraria que devem receber os relatórios da consignação por e-mail (mapa, pedidos de devolução).</li>
+        <li>Escolha a <span class="field">Frequência do Acerto</span> — <em>Semanal</em>, <em>Quinzenal</em> ou <em>Mensal</em> — e a <span class="field">Política de Reposição</span> (<em>Manual</em>, <em>Mín / Máx</em> ou <em>Giro</em>).</li>
+        <li>Ajuste a <span class="field">Data Inicial</span> se o contrato não começa hoje. Salve.</li>
+      </ol>
+      <div class="callout tip"><span class="title">Dica</span><p>Um contrato recém-criado fica <strong>Provisório</strong>: existe no papel, mas ainda não tem prateleira e não aceita movimentos. É o estado certo para deixar tudo conferido antes de começar a remeter livros.</p></div>
+
+      <h2 id="ativar">Ativar o contrato — nasce a prateleira</h2>
+      <ol class="steps">
+        <li>Abra o contrato em <span class="menupath">Consignação<i>‣</i>Contratos</span>.</li>
+        <li>Clique em <span class="field">Ativar</span>.</li>
+      </ol>
+      <p>Nesse momento o sistema:</p>
+      <ul>
+        <li>cria a <strong>prateleira do cliente</strong> — um local de estoque interno com o nome da livraria, pendurado na raiz CO (fora do armazém) — e o mostra no campo <span class="field">Prateleira do Cliente</span>;</li>
+        <li>marca a ficha do cliente com <span class="field">Permite Consignação</span> e aponta a prateleira nela;</li>
+        <li>muda o status para <strong>Ativo</strong>. A partir daqui remessas, acertos e devoluções são aceitos.</li>
+      </ul>
+      <div class="callout note"><span class="title">Nota</span><p>Ativar de novo um contrato já ativado não cria uma segunda prateleira — a operação é segura de repetir.</p></div>
+
+      <h2 id="acompanhar">Acompanhar a prateleira</h2>
+      <p>No topo do formulário do contrato, o botão <span class="field">Na prateleira</span> mostra quantas unidades estão agora no cliente. Clique nele para abrir a lista do estoque na prateleira, título a título. O campo <span class="field">Produtos na prateleira</span> conta quantos títulos diferentes estão lá.</p>
+      <p>Também dá para chegar ao contrato pelo caminho inverso: na ficha do cliente (aplicativo Contatos), o botão inteligente <span class="field">Consignação</span> lista os contratos daquela livraria.</p>
+      <figure class="shot"><img src="img/doc-liber_soc_agreements-shelf.png" alt="Lista do estoque na prateleira de um cliente, agrupada por produto, aberta pelo botão 'Na prateleira'"><figcaption>O saldo da prateleira: cada linha é um título que está fisicamente na livraria, mas ainda pertence à editora.</figcaption></figure>
+
+      <h2 id="ciclo">Suspender, reativar e encerrar</h2>
+      <h3>Suspender</h3>
+      <ol class="steps">
+        <li>No contrato ativo, clique em <span class="field">Suspender</span>.</li>
+      </ol>
+      <p>Um contrato <strong>Suspenso</strong> mantém a prateleira e o histórico, mas <strong>não aceita novos movimentos</strong> nem acertos — o sistema recusa qualquer operação enquanto o contrato não voltar a ficar ativo. Use quando a relação esfriou ou há pendência a resolver. Para retomar, clique em <span class="field">Reativar</span>; para recomeçar do zero, <span class="field">Redefinir para Provisório</span>.</p>
+      <h3>Encerrar</h3>
+      <ol class="steps">
+        <li>Traga de volta (ou acerte) tudo que ainda está na prateleira. O caminho rápido é o botão <span class="field">Recolher Tudo</span>, que cria uma devolução com o mapa inteiro — veja <a href="liber_soc_moves.html#recolher-tudo">Remessas e retornos</a>.</li>
+        <li>Depois que o armazém processar o retorno e a prateleira zerar, clique em <span class="field">Encerrar</span>.</li>
+      </ol>
+      <div class="callout warn"><span class="title">Atenção</span><p>O sistema <strong>não deixa encerrar um contrato com livros na prateleira</strong>. A mensagem é direta: <em>"Não é possível encerrar o contrato AC/…: a prateleira ainda guarda N unidades. Acerte ou recolha o estoque restante primeiro."</em> Isso evita o pior cenário da consignação — livros seus, na casa de um ex-cliente, sem contrato que os cubra.</p></div>
+      <p>Um contrato <strong>Encerrado</strong> é história: fica no sistema para consulta, e não bloqueia nada. Se a relação com a livraria recomeçar, crie um contrato novo — o encerrado não conflita.</p>
+
+      <h2 id="regras">Regras que o sistema garante</h2>
+      <div class="tablewrap"><table>
+        <thead><tr><th>Regra</th><th>Por quê</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Um único contrato aberto por cliente</strong> (por empresa). Tentar criar o segundo dá erro: <em>"… já possui um contrato de consignação aberto (AC/…). Encerre-o antes de abrir um novo."</em></td><td>Todos os documentos (pedidos, acertos, devoluções) encontram o contrato <em>a partir do cliente</em>. Dois contratos abertos tornariam ambíguo a que prateleira cada movimento pertence.</td></tr>
+          <tr><td><strong>Contrato encerrado não bloqueia um novo.</strong></td><td>Encerrar e reabrir é o ciclo natural: o histórico fica no contrato velho, o dia a dia segue no novo.</td></tr>
+          <tr><td><strong>A prateleira nasce fora do armazém.</strong></td><td>O "Em mãos" e o "Previsto" do Estoque contam tudo que está sob o armazém. Se a prateleira ficasse lá dentro, o consignado inflaria silenciosamente o estoque disponível — com livros que você não pode vender nem expedir.</td></tr>
+          <tr><td><strong>Não se encerra com saldo na prateleira.</strong></td><td>O consignado é patrimônio da editora. Encerrar sem recolher deixaria valor seu sem contrato que o ampare.</td></tr>
+          <tr><td><strong>O cliente do contrato só é editável em Provisório.</strong></td><td>Depois de ativo, a prateleira tem o nome do cliente e o histórico aponta para ele — trocar o cliente no meio do caminho misturaria consignações de livrarias diferentes.</td></tr>
+        </tbody>
+      </table></div>
+
+      <h2 id="faq">Perguntas frequentes</h2>
+      <p><strong>Preciso criar a prateleira no Estoque antes?</strong><br>
+      Não. A prateleira é criada sozinha na ativação do contrato, já no lugar certo (sob a raiz CO, fora do armazém). Não crie localizações de consignação à mão.</p>
+      <p><strong>A livraria aparece com estoque no relatório "Em mãos" do Estoque. É normal?</strong><br>
+      Não deveria. O consignado é visível nos relatórios próprios da consignação (<span class="menupath">Consignação<i>‣</i>Relatórios<i>‣</i>Na Prateleira</span>) e não deve aparecer no "Em mãos" do armazém. Se aparecer, a prateleira foi criada fora do fluxo — avise quem administra o sistema.</p>
+      <p><strong>Posso ter contrato com uma pessoa física?</strong><br>
+      O campo Cliente só aceita contatos marcados como empresa. Se a "livraria" é um sebo de uma pessoa só, cadastre-a como empresa no Contatos.</p>
+      <p><strong>Para que serve a Frequência do Acerto se nada acontece sozinho?</strong><br>
+      Ela documenta o combinado com o cliente e orienta a rotina mensal de <a href="liber_soc_settlement.html#gerar">geração de operações</a>. O calendário de cobrança de devoluções tem régua própria, configurada nas Definições da Consignação.</p>
+
+      <div class="seealso">
+        <span class="title">Ver também</span>
+        <ul>
+          <li><a href="liber_soc_moves.html">Remessas e retornos</a> — como os livros chegam e voltam da prateleira.</li>
+          <li><a href="liber_soc_settlement.html">Acerto de consignação</a> — a rotina que transforma o que vendeu em venda de verdade.</li>
+          <li><a href="liber_soc_audit.html">Auditoria pelo XML</a> — conferir (ou inaugurar) o saldo da prateleira pelas notas fiscais.</li>
+        </ul>
+      </div>
+
+      <nav class="pager" id="pager"></nav>
+    </article>
+  </div>
+</div>
+<script src="docs.js"></script>
+</body>
+</html>

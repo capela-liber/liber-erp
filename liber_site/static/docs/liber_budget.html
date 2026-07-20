@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Orçamento — Manuais do Liber</title>
+<link rel="icon" type="image/png" href="../logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;600;700&display=swap">
+<link rel="stylesheet" href="docs.css">
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="../index.html"><img src="../logo.png" alt="">liber<span>.</span></a>
+    <span class="doc-tag">Manuais</span>
+    <nav><a href="index.html">Índice</a><a href="../index.html">Site</a></nav>
+  </div>
+</header>
+<div class="wrap">
+  <div class="layout">
+    <aside class="sidebar" id="sidebar"></aside>
+    <article class="doc">
+      <div class="breadcrumb"><a href="index.html">Manuais</a><span class="sep">›</span>Gestão<span class="sep">›</span>Orçamento</div>
+      <h1>Orçamento</h1>
+      <p class="lead">Compare o que a casa planejou gastar (ou receber) com o que de fato aconteceu na contabilidade — por conta analítica ou direto do Razão, sem depender da versão Enterprise do Odoo.</p>
+
+      <h2 id="visao-geral">Visão geral</h2>
+      <p>Um <strong>orçamento</strong> é um período (data inicial e final) com uma lista de linhas. Cada linha diz "planejo este valor para esta rubrica" — e o sistema preenche, sozinho, quanto já se realizou. Quatro medidas convivem em cada linha:</p>
+      <div class="tablewrap"><table>
+        <thead><tr><th>Medida</th><th>Rótulo na tela</th><th>O que é</th></tr></thead>
+        <tbody>
+          <tr><td>Planejado</td><td><span class="field">Planned</span></td><td>O valor que você digitou.</td></tr>
+          <tr><td>Teórico</td><td><span class="field">Theoretical</span></td><td>O planejado proporcional aos dias já decorridos do período. Em julho, metade do orçamento do ano "deveria" ter acontecido.</td></tr>
+          <tr><td>Realizado</td><td><span class="field">Practical</span></td><td>O que de fato foi lançado e <em>confirmado</em> na contabilidade dentro do período.</td></tr>
+          <tr><td>Programado</td><td><span class="field">Programmed</span></td><td>Realizado + lançamentos ainda em rascunho. Útil para quem digita o futuro antes de confirmar. Nasce escondido no seletor de colunas.</td></tr>
+        </tbody>
+      </table></div>
+      <p>Os valores seguem a convenção de <strong>resultado</strong>: receita entra positiva, despesa entra negativa, e o total da linha de rodapé é o resultado líquido — o mesmo número que o Razão daria. Nas linhas, a cor avisa: vermelho quando o realizado está abaixo do planejado, azul quando está acima.</p>
+      <p>Cada linha escolhe <strong>de onde</strong> vem o realizado, e essa escolha é a decisão mais importante do módulo:</p>
+      <ul>
+        <li><strong>Posição orçamentária</strong> (<span class="field">Budgetary Position</span>) — um conjunto nomeado de contas do plano de contas (ex.: todas as contas de "funcionários"). O realizado é somado direto do Razão. Funciona <em>retroativamente</em>, sem preparo nenhum: serve para orçar sobre uma contabilidade que já existe.</li>
+        <li><strong>Conta analítica</strong> (<span class="field">Analytic Account</span>) — o realizado vem dos lançamentos analíticos. Exige que as faturas e lançamentos carreguem a distribuição analítica correspondente, mas permite fatiar um gasto que o plano de contas não separa (por projeto, por título, por verba).</li>
+      </ul>
+      <div class="callout note"><span class="title">Nota</span><p>A interface deste módulo ainda está em inglês (a tradução para o português é pendência conhecida). Os caminhos de menu abaixo citam os rótulos como aparecem na tela.</p></div>
+
+      <h2 id="configuracao">Configuração</h2>
+      <p><strong>Grupos de acesso:</strong> o módulo cria <em>Budget: User</em> e <em>Budget: Manager</em> (o gerente inclui o usuário). O menu <span class="menupath">Budgets</span> só aparece para quem tem pelo menos o grupo de usuário — é assim que os papéis de acesso do Liber decidem quem vê os boards de orçamento. Em bases com mais de uma empresa, cada um vê apenas os orçamentos das empresas a que tem acesso.</p>
+      <p><strong>Dependências:</strong> apenas a contabilidade e a contabilidade analítica do Odoo Community — nenhum módulo Enterprise.</p>
+      <p><strong>Cadastros de apoio</strong>, todos em <span class="menupath">Budgets<i>‣</i>Configuration</span>:</p>
+      <ol class="steps">
+        <li><span class="menupath">Budgets<i>‣</i>Configuration<i>‣</i>Budgetary Positions</span> — crie uma posição, dê um nome ("Funcionários", "Gráfica", "Receita de vendas") e liste as <span class="field">Accounts</span> do plano de contas que a compõem. Orçamentos que usam a posição leem o realizado direto do Razão, inclusive de períodos passados.</li>
+        <li><span class="menupath">Budgets<i>‣</i>Configuration<i>‣</i>Budget Groups</span> — grupos para organizar orçamentos (ex.: por ano, por área). Aparecem como coluna, filtro e linha do relatório.</li>
+        <li><span class="menupath">Budgets<i>‣</i>Configuration<i>‣</i>Budget Tags</span> — etiquetas coloridas, para classificação livre.</li>
+      </ol>
+
+      <h2 id="criar">Criar um orçamento</h2>
+      <ol class="steps">
+        <li>Abra <span class="menupath">Budgets<i>‣</i>Budgets</span> e crie um registro novo.</li>
+        <li>Dê um nome (ex.: "2026 Marketing Budget") e preencha <span class="field">Start Date</span> e <span class="field">End Date</span>. A data final não pode ser anterior à inicial.</li>
+        <li>Se quiser, escolha <span class="field">Group</span>, <span class="field">Tags</span> e o <span class="field">Responsible</span>.</li>
+        <li>Na aba <span class="field">Budget Lines</span>, adicione as linhas. Em cada uma, escolha <em>ou</em> uma <span class="field">Budgetary Position</span> <em>ou</em> uma <span class="field">Analytic Account</span> — e digite o valor em <span class="field">Planned</span> (receita positiva, despesa negativa).</li>
+        <li>Arraste as linhas pela alça para ordená-las como quiser ler.</li>
+        <li>Clique em <span class="field">Confirm</span>. O orçamento passa de <em>Draft</em> para <em>Open</em> e começa a valer como referência.</li>
+      </ol>
+      <div class="callout warn"><span class="title">Atenção</span><p>Toda linha precisa de uma fonte de realizado: uma posição orçamentária <em>ou</em> pelo menos uma conta analítica. Uma linha sem nenhuma das duas é recusada ao salvar. Quando a linha tem as duas, vale a posição (o modo Razão).</p></div>
+      <div class="callout example"><span class="title">Exemplo</span><p>Orçamento "2026" com três linhas: <em>Receita de vendas</em> (posição com as contas de receita, Planned +900.000), <em>Gráfica</em> (posição com as contas de custo industrial, Planned −300.000) e <em>Marketing — bonificações</em> (conta analítica da verba de marketing, Planned −40.000). O rodapé soma o resultado líquido planejado: +560.000 — e a coluna Practical mostra o resultado que de fato está se formando.</p></div>
+
+      <h2 id="acompanhar">Acompanhar o realizado</h2>
+      <ol class="steps">
+        <li>Abra o orçamento em <span class="menupath">Budgets<i>‣</i>Budgets</span>. As colunas <span class="field">Practical</span> e <span class="field">Practical (%)</span> mostram o realizado de cada linha; o seletor de colunas permite exibir também <span class="field">Programmed</span> e <span class="field">Theoretical</span>.</li>
+        <li>Compare <span class="field">Practical</span> com <span class="field">Theoretical</span>: se em julho o realizado está muito abaixo do teórico, ou o gasto está atrasado, ou o orçamento estava otimista.</li>
+        <li>Para auditar um número, clique no botão <span class="field">View</span> (a lupa) da linha: abre exatamente os lançamentos que o compõem — itens do Razão, no modo posição, ou lançamentos analíticos, no modo analítico, sempre recortados pelo período do orçamento.</li>
+      </ol>
+      <p>Não há nada para "rodar": o realizado é recalculado na hora, a cada abertura da tela, a partir da contabilidade.</p>
+      <figure class="shot"><img src="img/doc-liber_budget-lines.png" alt="Formulário do orçamento com as linhas: Planned, Theoretical e Practical lado a lado, linhas em vermelho abaixo do planejado."><figcaption>As linhas do orçamento: planejado, teórico e realizado lado a lado, com drill-down por linha.</figcaption></figure>
+
+      <h2 id="estados">O ciclo de vida e as revisões</h2>
+      <p>O orçamento percorre <em>Draft → Open → Done</em>, com <em>Canceled</em> como saída lateral e <em>Revised</em> para quem foi substituído:</p>
+      <ul>
+        <li><span class="field">Confirm</span> — de rascunho para aberto.</li>
+        <li><span class="field">Mark as Done</span> — encerra um orçamento aberto (fim do exercício).</li>
+        <li><span class="field">Reset to Draft</span> — reabre um orçamento aberto ou cancelado para edição.</li>
+        <li><span class="field">Cancel</span> — cancela (disponível enquanto não estiver concluído).</li>
+        <li><span class="field">New Revision</span> — cria uma cópia completa do orçamento, ligada ao original. O original passa a <em>Revised</em>; a cópia nasce em rascunho, com o campo <span class="field">Revision Of</span> apontando para ele. As revisões de um orçamento ficam no botão <span class="field">Revisions</span> do topo do formulário.</li>
+      </ul>
+      <p>Regras que o sistema garante:</p>
+      <ul>
+        <li>Só orçamentos em <em>Draft</em> ou <em>Canceled</em> podem ser <strong>excluídos</strong>. Um orçamento que já esteve aberto é registro — cancele ou conclua, não apague.</li>
+        <li>Um orçamento com revisões, ao ser confirmado de novo, volta ao estado <em>Revised</em> — quem vale é a revisão.</li>
+        <li>Correntes circulares de revisão (A revisa B que revisa A) são recusadas.</li>
+      </ul>
+      <div class="callout tip"><span class="title">Dica</span><p>Use a revisão em vez de editar um orçamento aberto no meio do ano: o original congelado conta a história do que se planejou em janeiro, e a revisão conta o replanejamento — os dois consultáveis.</p></div>
+
+      <h2 id="analise">Análise (relatório)</h2>
+      <ol class="steps">
+        <li>Abra <span class="menupath">Budgets<i>‣</i>Reporting<i>‣</i>Budget Analysis</span>.</li>
+        <li>A tabela dinâmica abre com <span class="field">Group</span> e <span class="field">Budgetary Position</span> nas linhas e as medidas <span class="field">Planned</span> e <span class="field">Practical</span> — acrescente <span class="field">Theoretical</span> e <span class="field">Programmed</span> pelo menu de medidas.</li>
+        <li>Alterne para gráfico de barras ou lista pelos botões de visão; agrupe por orçamento, grupo ou posição pelos filtros.</li>
+      </ol>
+      <p>Cada linha do relatório corresponde a uma linha de orçamento, com os mesmos números das telas — a mesma convenção de sinal, as mesmas fontes de realizado.</p>
+
+      <h2 id="limitacoes">Limitações conhecidas</h2>
+      <ul>
+        <li><strong>Vários planos analíticos:</strong> nas linhas do orçamento, contas de qualquer plano analítico funcionam. No relatório de Análise, porém, o realizado analítico é somado apenas pelo plano principal — uma linha orçada numa conta de outro plano aparece zerada <em>no relatório</em> (não no formulário do orçamento). Se a sua casa usa planos analíticos adicionais, confira os números no próprio orçamento.</li>
+        <li><strong>Tradução:</strong> a interface está em inglês; a tradução pt-BR é pendência.</li>
+      </ul>
+
+      <h2 id="faq">Perguntas frequentes</h2>
+      <p><strong>Minha linha analítica está sempre zerada.</strong><br>
+      O modo analítico só enxerga lançamentos que carregam a conta analítica — uma fatura sem distribuição analítica não conta. Para orçar sobre a contabilidade que já existe, sem re-etiquetar nada, use uma posição orçamentária: ela lê direto do Razão, inclusive o passado.</p>
+      <p><strong>Realizado e Programado mostram números diferentes. Qual vale?</strong><br>
+      <span class="field">Practical</span> só soma lançamentos confirmados; <span class="field">Programmed</span> inclui também os rascunhos. Para prestar contas, use o Practical. O Programmed serve a quem lança o futuro em rascunho e quer ver o comprometido.</p>
+      <p><strong>Por que minha despesa aparece negativa?</strong><br>
+      É a convenção de resultado: receita +, despesa −. Assim o total de um orçamento misto (receitas e despesas) é o resultado líquido, que bate com o Razão — em vez de uma soma sem significado.</p>
+      <p><strong>Não consigo excluir um orçamento.</strong><br>
+      Ele já esteve aberto. Volte-o a rascunho (<span class="field">Reset to Draft</span>) se realmente for o caso, ou cancele-o — o histórico agradece.</p>
+      <p><strong>Quem consegue ver os orçamentos?</strong><br>
+      Só quem tem os grupos de orçamento. Com os papéis de acesso do Liber, isso significa Direção e Financeiro/Gerente — as demais funções nem veem o menu.</p>
+
+      <div class="seealso">
+        <strong>Ver também</strong>
+        <ul>
+          <li><a href="liber_roles.html">Papéis de acesso</a> — quais funções da casa recebem os boards de orçamento.</li>
+          <li><a href="liber_product_bonus.html">Bonificação</a> — a verba de marketing que os envios de cortesia consomem.</li>
+          <li><a href="liber_copyright_contracts_analytics.html">Cálculo de royalties</a> — outra fonte de lançamentos analíticos da casa.</li>
+        </ul>
+      </div>
+
+      <nav class="pager" id="pager"></nav>
+    </article>
+  </div>
+</div>
+<script src="docs.js"></script>
+</body>
+</html>

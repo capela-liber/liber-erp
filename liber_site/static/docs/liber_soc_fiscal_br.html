@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fiscal da consignação — Manuais do Liber</title>
+<link rel="icon" type="image/png" href="../logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;600;700&display=swap">
+<link rel="stylesheet" href="docs.css">
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="../index.html"><img src="../logo.png" alt="">liber<span>.</span></a>
+    <span class="doc-tag">Manuais</span>
+    <nav><a href="index.html">Índice</a><a href="../index.html">Site</a></nav>
+  </div>
+</header>
+<div class="wrap">
+  <div class="layout">
+    <aside class="sidebar" id="sidebar"></aside>
+    <article class="doc">
+      <div class="breadcrumb"><a href="index.html">Manuais</a><span class="sep">›</span>Consignação<span class="sep">›</span>Fiscal da consignação</div>
+      <h1>Fiscal da consignação</h1>
+      <p class="lead">A camada fiscal e contábil da consignação: o valor do estoque consignado numa conta própria, a posição fiscal certa em cada documento, a nota de remessa do Pedido C — e a garantia de que bonificação e feira nunca sejam cobradas de ninguém.</p>
+
+      <h2 id="visao-geral">Visão geral</h2>
+      <p>Este módulo não cria menus novos: ele trabalha por baixo dos fluxos que você já conhece dos outros manuais, cuidando de três coisas:</p>
+      <ul>
+        <li><strong>Valor do consignado em conta própria.</strong> Fisicamente, o livro na prateleira continua seu (e continua contando nas quantidades). Contabilmente, porém, o valor dele sai da conta de Estoque normal e passa para uma conta de ativo dedicada — por exemplo, <em>115000 · Estoque em consignação</em>. O saldo dessa conta é, a qualquer momento, o valor total que a editora tem nas prateleiras dos clientes.</li>
+        <li><strong>O CFOP decide o documento.</strong> Três operações tiram livros do armazém sem vender, e não são a mesma coisa: <em>consignação</em> (CFOP 5917/6917 — o livro continua seu), <em>bonificação</em> (5910/6910 — o livro é dado, nunca vira receita) e <em>feira/exposição</em> (5914/6914 — o livro viaja e volta). O sistema impede que se misturem: cada CFOP só aceita o documento do seu tipo.</li>
+        <li><strong>A nota do Pedido C.</strong> Um Pedido C não fatura — mas precisa de nota fiscal para a mercadoria viajar. A nota da consignação é uma <strong>nota de remessa</strong> (série REM/), emitida com um botão próprio, que nunca gera cobrança para a livraria.</li>
+      </ul>
+      <div class="callout note"><span class="title">Nota</span><p>Os lançamentos contábeis funcionam assim: uma remessa (armazém → prateleira) debita a conta de consignação e credita Estoque; um retorno (prateleira → armazém) faz o inverso. Nenhuma venda, fatura ou recebível é criado — movimento de consignação não é venda.</p></div>
+
+      <h2 id="configuracao">Configuração</h2>
+      <p>Tudo em <span class="menupath">Consignação<i>‣</i>Configuração<i>‣</i>Configurações</span> (ou <span class="menupath">Definições</span>, seção <strong>Consignação</strong>):</p>
+      <h3>Bloco "Contabilidade de Consignação"</h3>
+      <ol class="steps">
+        <li>Em <span class="field">Conta de estoque de consignação</span>, escolha a conta de ativo circulante que guardará o valor consignado (ex.: 115000).</li>
+        <li>Clique em <span class="field">Conectar prateleiras de consignação</span>. O botão aplica a conta a todas as prateleiras <em>já existentes</em>; prateleiras criadas dali em diante já nascem com ela.</li>
+      </ol>
+      <div class="callout warn"><span class="title">Atenção</span><p>Os lançamentos automáticos só acontecem para produtos cuja <strong>categoria</strong> usa valoração de estoque <em>automatizada (perpétua)</em>. Essa é uma decisão contábil da empresa inteira, feita nas categorias de produto do Estoque — o módulo não a toma por você. Sem ela, as quantidades funcionam normalmente, mas o valor não se move entre as contas.</p></div>
+      <h3>Bloco "Fiscal de Consignação (CFOP / Posição Fiscal)"</h3>
+      <p>Uma posição fiscal por operação (a mesma dentro e fora do estado; só o CFOP muda entre interno 5xxx e interestadual 6xxx):</p>
+      <div class="tablewrap"><table>
+        <thead><tr><th>Operação</th><th>Campos</th><th>CFOPs de referência</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Remessa (Pedido C)</strong></td><td><span class="field">Remessa — Posição Fiscal</span>, <span class="field">Remessa — CFOP interno</span>, <span class="field">Remessa — CFOP interestadual</span></td><td>5917 / 6917</td></tr>
+          <tr><td><strong>Acerto (Venda S)</strong></td><td><span class="field">Acerto (Venda) — Posição Fiscal</span>, <span class="field">Acerto — CFOP interno</span>, <span class="field">Acerto — CFOP interestadual</span></td><td>5114 / 6114</td></tr>
+          <tr><td><strong>Devolução</strong></td><td><span class="field">Devolução — Posição Fiscal</span>, <span class="field">Devolução — CFOP interno</span>, <span class="field">Devolução — CFOP interestadual</span></td><td>5918 / 6918</td></tr>
+        </tbody>
+      </table></div>
+      <div class="callout note"><span class="title">Nota</span><p>A posição fiscal da <strong>remessa</strong> precisa estar configurada com a marcação de <em>baixa automática</em> (Auto Invoice Paid) e sua conta espelho — é o que faz a nota de remessa nunca virar cobrança. O manual de <a href="liber_nfe_remessa.html">Notas de remessa</a> explica essa mecânica; sem ela, o botão "Gerar nota" recusa e diz exatamente o que falta.</p></div>
+      <h3>Bloco "Operações de Estoque de Consignação"</h3>
+      <p>Mostra (e permite trocar) os tipos de operação do armazém usados pela consignação — <span class="field">Operação de Remessa de Consignação</span> (COM/) e <span class="field">Operação de Retorno de Consignação</span> (RET/). São criados sozinhos no primeiro uso; normalmente não há o que mexer.</p>
+
+      <h2 id="nota-remessa">Emitir a nota de remessa de um Pedido C</h2>
+      <p>No Pedido C, o botão de criar fatura simplesmente não existe — não há o que faturar. No lugar dele:</p>
+      <ol class="steps">
+        <li>Abra o Pedido C em <span class="menupath">Consignação<i>‣</i>Pedidos</span> e clique em <span class="field">Confirmar</span> (a nota só pode ser gerada com o pedido confirmado).</li>
+        <li>Clique em <span class="field">Gerar nota</span>. O sistema cria a nota de remessa no diário REM/, com a posição fiscal de consignação das Definições, uma linha por título com o valor de mercadoria, e a lança já <em>auto-baixada</em>: valor fiscal correto na nota, saldo zero para a livraria.</li>
+        <li>O botão inteligente <span class="field">Nota</span> passa a mostrar o número REM/ da nota (antes dele, mostra <em>"A emitir"</em>). Clique para abrir o documento.</li>
+      </ol>
+      <figure class="shot"><img src="img/doc-liber_soc_fiscal_br-gerar-nota.png?v=2" alt="Pedido C confirmado com o botão Gerar nota no lugar do Criar fatura, e o botão inteligente Nota mostrando 'A emitir'"><figcaption>O Pedido C confirmado: em vez de "Criar fatura", o botão <em>Gerar nota</em> — e o indicador <em>Nota</em> dizendo se a remessa já foi emitida.</figcaption></figure>
+      <p>No financeiro, essas notas aparecem no menu de Remessas com o filtro <span class="field">Consignações</span> — separadas das remessas de bonificação e das demais.</p>
+      <div class="callout tip"><span class="title">Dica</span><p>Gerar a nota duas vezes não duplica nada: se o pedido já tem nota, o botão não cria outra.</p></div>
+
+      <h2 id="posicao-acerto">A posição fiscal do acerto (venda S)</h2>
+      <p>Quando uma operação de acerto gera a venda S, o sistema aplica automaticamente a <span class="field">Acerto (Venda) — Posição Fiscal</span> das Definições — e recalcula os impostos das linhas com ela. Por que não usar a posição fiscal do cadastro do cliente? Porque o cliente tem <em>uma</em> posição fiscal, e a mesma livraria pode receber remessa de consignação num dia e comprar em firme no outro: a posição fiscal certa depende da <strong>operação</strong>, não do cadastro. Sem essa troca automática, o padrão do Odoo preencheria a posição de venda comum — e ninguém veria o erro até a nota sair errada.</p>
+      <p>Para proteger isso sem engessar:</p>
+      <ul>
+        <li>o campo <span class="field">Posição fiscal</span> fica <strong>visível</strong> na venda do acerto — quem emite a nota confere antes;</li>
+        <li>ele só é <strong>editável pelo Administrador de faturamento</strong> (grupo de Contabilidade). Uma exceção legítima — regime especial, substituição tributária — se resolve na casa, sem chamado ao desenvolvedor.</li>
+      </ul>
+      <p>Se a empresa ainda não configurou a posição fiscal do acerto, a venda sai com o padrão do Odoo em vez de travar o fluxo — o acerto é operação diária e não pode parar por configuração pendente. Configure o quanto antes.</p>
+
+      <h2 id="cfop-documento">Bonificação e feira não são consignação (nem faturam)</h2>
+      <p>Livro dado de presente (bonificação) e livro que viaja para uma feira saem do armazém sem vender — mas não podem entrar no mapa da consignação, senão o acerto acabaria <em>cobrando a livraria por livros que foram dados</em>. O sistema garante a separação:</p>
+      <ul>
+        <li>Um pedido com CFOP de <strong>consignação</strong> (5917/6917) tem de ser um Pedido C — o sistema recusa gravá-lo como pedido comum: <em>"… carrega o CFOP 5917, uma remessa de consignação… Tem de ser um Pedido C."</em></li>
+        <li>Um pedido com CFOP de <strong>bonificação</strong> (5910/6910) ou <strong>feira</strong> (5914/6914) não pode ser Pedido C — e <strong>também não fatura</strong>: <em>"Bonificação é presente — é despesa, nunca receita. Remessa de evento é transferência entre locais nossos, e volta."</em></li>
+      </ul>
+      <div class="callout example"><span class="title">Exemplo</span><p>Na migração da base histórica, essa regra reclassificou 3.124 pedidos que estavam todos como "consignação": só 1.797 eram de fato consignação — 1.212 eram bonificação e 64 eram feira. Se o acerto tivesse rodado sem a regra, as livrarias teriam sido cobradas por livros dados de presente.</p></div>
+      <div class="callout note"><span class="title">Nota</span><p><strong>Em desenvolvimento:</strong> hoje a bonificação e a feira já são documentos distintos e não faturam, mas o efeito físico/contábil completo ainda não existe — a bonificação ainda não baixa o estoque contra uma conta de despesa, e a feira ainda não usa uma localização de evento com retorno próprio (1914/2914). Também está planejada uma tela para o humano classificar os CFOPs ambíguos (5949 "outra saída"). Até lá, trate esses casos com os fluxos padrão do Estoque.</p></div>
+
+      <h2 id="regras">Regras que o sistema garante</h2>
+      <div class="tablewrap"><table>
+        <thead><tr><th>Regra</th><th>Por quê</th></tr></thead>
+        <tbody>
+          <tr><td><strong>A prateleira não é valorada como estoque comum</strong>: seu valor vive na conta de consignação, e volta ao Estoque quando o livro retorna.</td><td>O balanço mostra separadamente o que está no armazém e o que está "na rua" — sem dupla contagem e sem esconder o consignado.</td></tr>
+          <tr><td><strong>Prateleira nova já nasce com a conta configurada</strong>; o botão "Conectar prateleiras" cobre as antigas.</td><td>Configuração feita uma vez, valendo para sempre.</td></tr>
+          <tr><td><strong>A nota de remessa exige a posição fiscal mapeada.</strong> Sem o mapeamento, o botão recusa com a instrução exata do que configurar.</td><td>Uma remessa de consignação (5917/6917) <em>jamais</em> pode cobrar a livraria; melhor recusar do que emitir errado.</td></tr>
+          <tr><td><strong>Nota de remessa só com o pedido confirmado</strong> (<em>"confirme o Pedido primeiro, depois gere a nota"</em>) e só em Pedido C (<em>"venda comum fatura pelo Criar fatura"</em>).</td><td>Cada documento pela sua porta.</td></tr>
+          <tr><td><strong>CFOP e tipo de documento têm de concordar</strong> — consignação vira Pedido C, bonificação/feira nunca.</td><td>É o CFOP que diz o que a operação é; deixar o tipo à escolha repetiria o erro da base migrada.</td></tr>
+          <tr><td><strong>Bonificação e feira não faturam.</strong></td><td>Presente é despesa; feira é transferência. Nenhum dos dois é receita.</td></tr>
+          <tr><td><strong>A posição fiscal da venda do acerto é travada</strong> para quem não é Administrador de faturamento.</td><td>Erro de posição fiscal só aparece na nota — tarde demais. Visível para conferir, editável só com responsabilidade fiscal.</td></tr>
+        </tbody>
+      </table></div>
+
+      <h2 id="faq">Perguntas frequentes</h2>
+      <p><strong>Preciso usar este módulo para a consignação funcionar?</strong><br>
+      Os fluxos físicos (remessa, acerto, devolução) funcionam sem ele. Este módulo entra quando a contabilidade e as notas importam: valor consignado em conta própria, posição fiscal certa por operação e a nota de remessa do Pedido C.</p>
+      <p><strong>Configurei a conta 115000 e o saldo não se mexe.</strong><br>
+      Confira duas coisas: se clicou em <span class="field">Conectar prateleiras de consignação</span> (para as prateleiras antigas) e se as categorias dos produtos usam valoração automatizada — sem ela não há lançamento automático de estoque nenhum, consignado ou não.</p>
+      <p><strong>A livraria recebeu cobrança junto com a nota de remessa?</strong><br>
+      Não deveria — a nota é lançada auto-baixada. Se houve cobrança, a posição fiscal da remessa foi trocada ou perdeu a marcação de baixa automática; confira as Definições e o manual de <a href="liber_nfe_remessa.html">Notas de remessa</a>.</p>
+      <p><strong>Para que servem os campos de CFOP das Definições se a nota não os imprime?</strong><br>
+      Eles registram a parametrização fiscal da casa (que CFOP cada operação usa, interno e interestadual) e servem de referência para a emissão. A transmissão da NF-e à SEFAZ não acontece neste sistema — a emissão oficial segue no emissor da casa, com estes códigos.</p>
+
+      <div class="seealso">
+        <span class="title">Ver também</span>
+        <ul>
+          <li><a href="liber_soc_moves.html">Remessas e retornos</a> — o Pedido C e as transferências COM/ e RET/ que esta camada valora.</li>
+          <li><a href="liber_soc_settlement.html">Acerto de consignação</a> — a venda S que recebe a posição fiscal do acerto.</li>
+          <li><a href="liber_nfe_remessa.html">Notas de remessa</a> — a mecânica da nota sem cobrança (série REM/).</li>
+          <li><a href="liber_soc_audit.html">Auditoria pelo XML</a> — usa a conta de consignação para valorar os ajustes de prateleira.</li>
+        </ul>
+      </div>
+
+      <nav class="pager" id="pager"></nav>
+    </article>
+  </div>
+</div>
+<script src="docs.js"></script>
+</body>
+</html>

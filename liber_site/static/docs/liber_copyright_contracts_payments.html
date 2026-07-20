@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pagamento de royalties — Manuais do Liber</title>
+<link rel="icon" type="image/png" href="../logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;600;700&display=swap">
+<link rel="stylesheet" href="docs.css">
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="../index.html"><img src="../logo.png" alt="">liber<span>.</span></a>
+    <span class="doc-tag">Manuais</span>
+    <nav><a href="index.html">Índice</a><a href="../index.html">Site</a></nav>
+  </div>
+</header>
+<div class="wrap">
+  <div class="layout">
+    <aside class="sidebar" id="sidebar"></aside>
+    <article class="doc">
+      <div class="breadcrumb"><a href="index.html">Manuais</a><span class="sep">›</span>Direitos autorais<span class="sep">›</span>Pagamento de royalties</div>
+      <h1>Pagamento de royalties</h1>
+      <p class="lead">Transforme os royalties em aberto de cada autor em uma fatura de fornecedor com um clique — e, quando a fatura for paga, o saldo do autor se acerta sozinho.</p>
+
+      <h2 id="visao-geral">Visão geral</h2>
+      <p>O <a href="liber_copyright_contracts_analytics.html">Cálculo de royalties</a> mantém, para cada favorecido × obra, o saldo do que a editora deve. Este módulo fecha o ciclo do dinheiro:</p>
+      <ul>
+        <li>Uma ação gera as <strong>faturas de fornecedor</strong> que pagam os autores: <strong>uma fatura por favorecido</strong>, com <strong>uma linha por obra</strong> que ainda deve royalties.</li>
+        <li>Quando a fatura é <strong>paga</strong>, a <span class="field">Data do Último Pagamento</span> das linhas de royalty é carimbada automaticamente e a quitação é lançada na conta analítica — o saldo em aberto zera na hora, sem passo manual.</li>
+        <li>Os menus <span class="menupath">Direitos Autorais<i>‣</i>Faturas</span> e os botões inteligentes do contrato mostram o que falta pagar e o que já foi pago.</li>
+      </ul>
+      <p>Se o módulo de <a href="liber_copyright_contracts_taxes.html">IRRF sobre direitos</a> estiver instalado e configurado, a fatura já nasce com a retenção do imposto descontada.</p>
+      <div class="callout note"><span class="title">Nota</span>
+        <p>Os menus e as ações deste módulo são visíveis apenas para o grupo <strong>Administrador</strong> de Direitos Autorais.</p>
+      </div>
+
+      <h2 id="configuracao">Configuração</h2>
+      <p>O módulo funciona de fábrica: ele traz um produto de serviço chamado <strong>"Royalties"</strong> que é usado nas linhas das faturas quando você não escolhe outro. Ainda assim, vale conferir as opções:</p>
+      <ol class="steps">
+        <li>Acesse <span class="menupath">Configurações<i>‣</i>Direitos Autorais</span>, seção <strong>Pagamentos aos Beneficiários</strong>.</li>
+        <li><span class="field">Produto de pagamento</span> — o produto lançado nas linhas da fatura do autor. Vazio usa o "Royalties (padrão do módulo)".</li>
+        <li><span class="field">Conta de despesa</span> — a conta contábil dessas linhas. Vazio usa a conta de despesa do próprio produto.</li>
+        <li><span class="field">Diário de compras</span> — o diário onde as faturas são lançadas. Vazio usa o diário de compras padrão da empresa.</li>
+        <li><span class="field">Prazo de pagamento</span> — quantos <em>dias para pagar</em>: o vencimento da fatura é a data de geração mais esse prazo (padrão <strong>30</strong>).</li>
+        <li>Salve. As opções são por empresa.</li>
+      </ol>
+
+      <h2 id="gerar">Gerar as faturas dos autores</h2>
+      <ol class="steps">
+        <li>Abra o contrato (ou selecione vários na lista de <span class="menupath">Direitos Autorais<i>‣</i>Contratos</span>).</li>
+        <li>No menu <strong>Ação</strong>, escolha <strong>Gerar Faturas de Royalties</strong>.</li>
+        <li>O sistema percorre as linhas de royalty e monta as faturas: <strong>uma por favorecido</strong>, com <strong>uma linha por obra</strong> cujo saldo em aberto seja positivo. Cada linha usa o produto de pagamento, o valor devido e o nome "Direitos autorais <em>contrato</em> - <em>obra</em>".</li>
+        <li>A fatura nasce em <strong>rascunho</strong>, com data de hoje, vencimento conforme o prazo configurado e a referência "<em>número do contrato</em> · <em>favorecido</em>".</li>
+        <li>A tela abre a lista das faturas criadas. Confira, <strong>confirme</strong> e registre o pagamento como em qualquer fatura de fornecedor.</li>
+      </ol>
+      <p>Se não houver nada a faturar, uma notificação avisa: "<em>Nenhuma fatura a criar — os beneficiários não têm royalties em aberto, ou suas faturas já existem.</em>"</p>
+      <figure class="shot"><img src="img/doc-liber_copyright_contracts_payments-bill.png" alt="Fatura de fornecedor gerada para um autor, com uma linha por obra e a referência contrato · favorecido"><figcaption>A fatura do autor: uma linha por obra com saldo, vencimento pelo prazo configurado e o contrato de origem no cabeçalho.</figcaption></figure>
+      <div class="callout warn"><span class="title">Atenção</span>
+        <p><strong>Uma fatura em aberto trava a próxima.</strong> Enquanto existir uma fatura não paga (e não cancelada) pagando uma linha de royalty, a ação não gera outra para a mesma linha — é a guarda contra pagamento em duplicidade. Pague (ou cancele) a fatura pendente antes de gerar de novo.</p>
+      </div>
+
+      <h2 id="acompanhar">Acompanhar o que falta pagar</h2>
+      <ol class="steps">
+        <li>Acesse <span class="menupath">Direitos Autorais<i>‣</i>Faturas<i>‣</i>A Pagar</span> para ver todas as faturas de royalties ainda não pagas (inclusive as parcialmente pagas), de todos os contratos.</li>
+        <li>Em <span class="menupath">Direitos Autorais<i>‣</i>Faturas<i>‣</i>Pago</span> ficam as já pagas.</li>
+        <li>No formulário do contrato, os botões inteligentes resumem a situação: <strong>Em Aberto</strong> (o total de royalties ainda devidos), <strong>Pago</strong> (o total já quitado), <strong>A Pagar</strong> (quantidade de faturas pendentes) e <strong>Faturas Pagas</strong>.</li>
+      </ol>
+      <p>Na própria fatura, o campo <span class="field">Contrato de Direitos Autorais</span> mostra de onde ela veio, e cada linha guarda (na coluna opcional <span class="field">Linha de Royalty</span>) o par favorecido × obra que ela paga.</p>
+
+      <h2 id="baixa">O que acontece quando a fatura é paga</h2>
+      <ol class="steps">
+        <li>Registre o pagamento da fatura normalmente (botão <strong>Registrar pagamento</strong> da contabilidade).</li>
+        <li>No momento em que a fatura fica <strong>paga</strong> (ou em pagamento), o sistema carimba a data de hoje na <span class="field">Data do Último Pagamento</span> de cada linha de royalty paga por ela.</li>
+        <li>Em seguida, lança na conta analítica de cada linha o <strong>lançamento de quitação</strong> ("Pagamento"): um valor positivo que zera tudo o que estava apurado até essa data — inclusive a parte do adiantamento já recuperada.</li>
+        <li>O botão <strong>Em Aberto</strong> do contrato e o saldo do favorecido refletem a baixa imediatamente; os royalties das vendas seguintes começam a acumular de novo, do zero.</li>
+      </ol>
+      <div class="callout note"><span class="title">Nota</span>
+        <p><strong>Fatura em rascunho não quita nada.</strong> Só a fatura <em>confirmada e paga</em> carimba a data de pagamento e liquida o saldo — gerar a fatura, por si só, não muda o que é devido. E o custo contábil lançado pela própria fatura é marcado à parte, para não inflar o saldo em aberto de volta.</p>
+      </div>
+
+      <h2 id="regras">Regras e guardas</h2>
+      <ul>
+        <li><strong>Uma fatura por favorecido:</strong> mesmo com várias obras no contrato, o autor recebe uma única fatura com uma linha por obra — como espera quem recebe.</li>
+        <li><strong>Só saldo positivo vira fatura:</strong> linhas sem conta analítica, com saldo zero ou com adiantamento ainda não recuperado ficam de fora.</li>
+        <li><strong>Sem duplicatas:</strong> a linha que já tem fatura em aberto não entra em uma nova geração.</li>
+        <li><strong>Produto obrigatório:</strong> se o produto "Royalties" padrão tiver sido excluído e a empresa não tiver escolhido outro, a ação para com um aviso indicando onde configurar o <span class="field">Produto de pagamento</span>.</li>
+        <li><strong>A quitação usa a data de corte:</strong> quem fecha o período é a <span class="field">Data do Último Pagamento</span> — editável manualmente só por Administradores, exatamente porque ela "declara pago" tudo até ali.</li>
+      </ul>
+
+      <h2 id="faq">Perguntas frequentes</h2>
+      <p><strong>Gerei a fatura com o valor errado. E agora?</strong> Enquanto está em rascunho, basta cancelá-la (ou excluí-la) e corrigir a origem — as faixas, a apuração ou o adiantamento — antes de gerar de novo. Fatura cancelada não bloqueia a próxima geração.</p>
+      <p><strong>Paguei parcialmente. O saldo baixou?</strong> Não: o acerto automático só acontece quando a fatura fica com o estado de pagamento <em>Pago</em> (ou <em>Em pagamento</em>). Pagamentos parciais mantêm a fatura em "A Pagar" e o saldo em aberto intacto.</p>
+      <p><strong>Vendas novas depois de gerar a fatura entram nela?</strong> Não. A fatura congela o saldo do momento da geração. Vendas apuradas depois formam um novo saldo, faturado na próxima rodada — depois que a fatura atual for paga.</p>
+      <p><strong>Por que a fatura veio com uma linha negativa de IRRF?</strong> É a retenção do imposto, do módulo <a href="liber_copyright_contracts_taxes.html">IRRF sobre direitos</a>: o autor recebe o líquido e o imposto é recolhido ao governo pela editora.</p>
+
+      <div class="seealso">
+        <span class="title">Veja também</span>
+        <ul>
+          <li><a href="liber_copyright_contracts_analytics.html">Cálculo de royalties</a> — de onde vem o saldo que a fatura paga.</li>
+          <li><a href="liber_copyright_contracts_taxes.html">IRRF sobre direitos</a> — a retenção descontada na fatura do autor.</li>
+          <li><a href="liber_copyright_contracts_reports.html">Prestação de contas</a> — o extrato que acompanha o pagamento.</li>
+        </ul>
+      </div>
+
+      <nav class="pager" id="pager"></nav>
+    </article>
+  </div>
+</div>
+<script src="docs.js"></script>
+</body>
+</html>

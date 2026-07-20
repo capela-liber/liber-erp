@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cálculo de royalties — Manuais do Liber</title>
+<link rel="icon" type="image/png" href="../logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;600;700&display=swap">
+<link rel="stylesheet" href="docs.css">
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="../index.html"><img src="../logo.png" alt="">liber<span>.</span></a>
+    <span class="doc-tag">Manuais</span>
+    <nav><a href="index.html">Índice</a><a href="../index.html">Site</a></nav>
+  </div>
+</header>
+<div class="wrap">
+  <div class="layout">
+    <aside class="sidebar" id="sidebar"></aside>
+    <article class="doc">
+      <div class="breadcrumb"><a href="index.html">Manuais</a><span class="sep">›</span>Direitos autorais<span class="sep">›</span>Cálculo de royalties</div>
+      <h1>Cálculo de royalties</h1>
+      <p class="lead">Apure automaticamente quanto cada autor tem a receber: o módulo lê as vendas pagas de cada obra, aplica a faixa certa pelo total acumulado de exemplares e mantém o saldo de cada favorecido em uma conta própria.</p>
+
+      <h2 id="visao-geral">Visão geral</h2>
+      <p>Este módulo é o motor de cálculo da suíte de direitos autorais. O <a href="liber_copyright_contracts.html">módulo base</a> registra os termos do contrato; este transforma os termos em valores:</p>
+      <ul>
+        <li>Cada linha de royalty (favorecido × obra) ganha uma <strong>conta analítica</strong> — um extrato individual onde tudo é lançado.</li>
+        <li>As <strong>vendas pagas</strong> das obras geram lançamentos de royalty <em>devido</em> (valores negativos, "Provisionado").</li>
+        <li>Os <strong>adiantamentos descontáveis</strong> entram como crédito inicial, recuperado antes de qualquer novo valor ser devido.</li>
+        <li>Os <strong>pagamentos</strong> entram como valores positivos ("Pago") e zeram o que foi apurado até a data do último pagamento.</li>
+      </ul>
+      <p>O saldo dessas contas é o que alimenta o <a href="liber_copyright_contracts_payments.html">Pagamento de royalties</a> (que gera as faturas dos autores) e a <a href="liber_copyright_contracts_reports.html">Prestação de contas</a> (o extrato em PDF).</p>
+      <div class="callout note"><span class="title">Nota</span>
+        <p>Quase tudo neste módulo — menus, ações e colunas — é visível apenas para o grupo <strong>Administrador</strong> de Direitos Autorais. Usuários comuns continuam vendo os contratos normalmente, sem a parte contábil.</p>
+      </div>
+
+      <h2 id="configuracao">Configuração</h2>
+      <ol class="steps">
+        <li>Acesse <span class="menupath">Configurações<i>‣</i>Direitos Autorais</span> (as mesmas opções aparecem em <span class="menupath">Direitos Autorais<i>‣</i>Configurações<i>‣</i>Preferências</span>).</li>
+        <li>Na seção <strong>Contabilização de Royalties</strong>, defina:
+          <ul>
+            <li><span class="field">Plano analítico</span> — o plano onde as contas dos favorecidos serão criadas. O módulo já traz um plano próprio, "Direitos Autorais", usado quando você não escolhe outro.</li>
+            <li><span class="field">Conta de despesa</span> — a conta contábil espelhada nos royalties recém-apurados.</li>
+            <li><span class="field">Conta de passivo</span> — a conta para onde migram os royalties atrasados há muito tempo.</li>
+            <li><span class="field">Reclassificar como passivo após</span> — quantos <em>meses em atraso</em> um royalty pode ficar antes de deixar a despesa e virar passivo (padrão 20; 0 desliga). Uma rotina diária faz a troca nas duas direções.</li>
+          </ul>
+        </li>
+        <li>Na seção <strong>Vendas Especiais</strong> (opcional), defina:
+          <ul>
+            <li><span class="field">Times de vendas especiais</span> — as equipes de venda cujas vendas com desconto são tratadas como "vendas especiais".</li>
+            <li><span class="field">Desconto mínimo</span> — o desconto de linha (em %) a partir do qual a venda dessas equipes conta como especial. 0 significa que qualquer desconto qualifica.</li>
+          </ul>
+        </li>
+        <li>Salve. As opções são <strong>por empresa</strong>: o seletor de empresa no topo das Configurações decide qual delas você está ajustando.</li>
+      </ol>
+      <div class="callout note"><span class="title">Nota</span>
+        <p>Para marcar uma venda como sendo de uma equipe, a fatura de cliente ganha o campo <span class="field">Equipe de Vendas</span> (visível nas faturas de cliente, abaixo das condições de pagamento).</p>
+      </div>
+
+      <h2 id="contas-analiticas">Criar as contas analíticas</h2>
+      <p>Antes de apurar qualquer valor, cada linha de royalty precisa da sua conta analítica.</p>
+      <ol class="steps">
+        <li>Abra o contrato (ou selecione vários na lista) e, no menu <strong>Ação</strong>, escolha <strong>Criar Contas Analíticas</strong>.</li>
+        <li>O assistente lista todos os favorecidos do(s) contrato(s), com a coluna <span class="field">Nome da Nova Conta</span> mostrando o nome que será usado — montado a partir do número do contrato, da referência interna do produto, da obra e do favorecido.</li>
+        <li>Deixe marcada a coluna <span class="field">Aplicar</span> nas linhas desejadas. Se quiser aproveitar uma conta que já existe em vez de criar outra, escolha-a na coluna <span class="field">Conta Analítica</span>.</li>
+        <li>Confirme. As contas são criadas (ou vinculadas) e o botão inteligente <strong>Contas Analíticas</strong> do contrato passa a abri-las.</li>
+      </ol>
+      <p>Ao criar a conta, o <span class="field">Adiantamento Descontável</span> da linha é lançado como um crédito de abertura, datado na assinatura do contrato. É isso que faz os royalties "pagarem" o adiantamento primeiro: enquanto o acumulado da obra não superar o valor adiantado, nada novo é devido. O lançamento é único por linha — se o adiantamento mudar, ele é atualizado; se for zerado, é removido.</p>
+      <p>Todas as contas de direitos autorais ficam reunidas em <span class="menupath">Direitos Autorais<i>‣</i>Contas Analíticas</span> — o menu mostra apenas as contas nascidas no plano configurado, não o plano analítico da casa inteira.</p>
+      <figure class="shot"><img src="img/doc-liber_copyright_contracts_analytics-wizard.png" alt="Assistente Criar Contas Analíticas listando os favorecidos do contrato com o nome sugerido de cada conta"><figcaption>O assistente de criação: uma linha por favorecido × obra, com o nome padrão já montado.</figcaption></figure>
+
+      <h2 id="apurar">Apurar os royalties das vendas</h2>
+      <p>A apuração lê as <strong>faturas de cliente pagas</strong> (ou em pagamento, ou estornadas) que vendem as obras do contrato e lança o royalty devido em cada conta analítica.</p>
+      <ol class="steps">
+        <li>No contrato (ou com vários selecionados na lista), abra o menu <strong>Ação</strong> e escolha <strong>Preencher Linhas de Royalties</strong>.</li>
+        <li>O sistema varre todas as faturas de cliente pagas das obras, na ordem das datas, e lança em cada conta o valor da faixa correspondente. Ao final, uma notificação resume o que aconteceu — por exemplo, "<em>4 linha(s) de royalty adicionada(s)</em>".</li>
+        <li>Confira o resultado no botão inteligente <strong>Contas Analíticas</strong> do contrato ou no relatório <a href="#relatorio">Dívidas de Royalties</a>.</li>
+      </ol>
+      <p>Também dá para apurar a partir das próprias faturas: em <span class="menupath">Contabilidade<i>‣</i>Clientes<i>‣</i>Faturas</span>, selecione as faturas desejadas e use <strong>Ação ‣ Gerar Linhas Analíticas de Royalties</strong> — só as selecionadas são processadas.</p>
+      <div class="callout tip"><span class="title">Dica</span>
+        <p>Pode clicar quantas vezes quiser: a apuração é <strong>idempotente</strong>. Cada lançamento guarda a linha da fatura que o originou, e uma mesma linha de fatura nunca é lançada duas vezes na mesma conta. Rodar de novo só acrescenta o que for novo.</p>
+      </div>
+
+      <h3 id="faixas">Como a faixa é escolhida: quantidade acumulada</h3>
+      <p>O percentual não é escolhido pelo tamanho de cada venda, e sim pelo total <strong>acumulado</strong> de exemplares vendidos da obra, contado na ordem das faturas. É assim que um contrato "sobe de faixa" no meio da vida:</p>
+      <div class="callout example"><span class="title">Exemplo</span>
+        <p>Contrato com duas faixas: <strong>0 a 100 exemplares → 7%</strong> e <strong>101 em diante → 8%</strong>. O livro custa R$ 10,00.</p>
+        <div class="tablewrap"><table>
+          <tr><th>Fatura</th><th>Exemplares</th><th>Acumulado</th><th>Faixa</th><th>Base</th><th>Royalty</th></tr>
+          <tr><td>1ª venda</td><td>80</td><td>80</td><td>7%</td><td>R$ 800,00</td><td>R$ 56,00</td></tr>
+          <tr><td>2ª venda</td><td>40</td><td>120</td><td>8%</td><td>R$ 400,00</td><td>R$ 32,00</td></tr>
+        </table></div>
+        <p>A segunda venda inteira já é lançada a 8%, porque o acumulado (120) caiu na segunda faixa. Cada lançamento registra o percentual aplicado no campo <span class="field">% de royalty</span>, então o extrato mostra exatamente a conta feita.</p>
+      </div>
+
+      <h3 id="base">Base de cálculo: preço líquido ou preço de capa</h3>
+      <p>Por padrão, o royalty é calculado sobre o <strong>valor líquido faturado</strong> (depois do desconto da fatura). Se o contrato prevê percentual sobre o <strong>preço de capa</strong>, marque <span class="field">Sobre o Preço de Venda</span> na linha de royalty (dentro do formulário da linha, visível para administradores): a base passa a ser o preço unitário × quantidade, <em>antes</em> do desconto.</p>
+      <p><strong>Vendas especiais</strong> são a exceção: vendas feitas por uma das <span class="field">Equipes de Vendas Especiais</span> com desconto igual ou maior que o mínimo configurado são <em>sempre</em> calculadas sobre o valor líquido, mesmo com <span class="field">Sobre o Preço de Venda</span> marcado. O botão inteligente <strong>Vendas Especiais</strong> no contrato (e no cadastro da empresa e do favorecido) abre a lista dessas faturas.</p>
+      <div class="callout example"><span class="title">Exemplo</span>
+        <p>10 exemplares a R$ 10,00 com 50% de desconto, faixa de 7%: pela base líquida o royalty é 7% de R$ 50,00 = <strong>R$ 3,50</strong>; com <span class="field">Sobre o Preço de Venda</span>, 7% de R$ 100,00 = <strong>R$ 7,00</strong>. Se essa venda for de uma equipe especial qualificada, vale a base líquida (R$ 3,50) de qualquer forma.</p>
+      </div>
+
+      <h3 id="vigencia">Vigência: só conta o que foi vendido com o contrato em vigor</h3>
+      <p>Uma venda só gera royalty se a data da fatura cair <strong>dentro da vigência</strong> do contrato: entre a assinatura e o vencimento. Vendas anteriores à assinatura ou posteriores ao vencimento não geram nada — é isso que faz um contrato vencido parar de acumular valores novos sem perder o que ganhou enquanto vigorava. Um contrato <strong>cancelado</strong> não cobre venda nenhuma.</p>
+
+      <h3 id="mensagens">Quando "nada acontece", o sistema diz por quê</h3>
+      <p>Se a apuração termina sem lançar nada, a notificação explica a causa em vez de dizer apenas "concluído": nenhuma linha tem conta analítica ainda; nenhuma fatura paga vende as obras (fatura apenas confirmada, sem pagamento, não conta); as linhas não têm faixas de percentual; todas as vendas estão fora da vigência; ou tudo o que havia já estava lançado. Leia a mensagem — ela aponta o que falta.</p>
+
+      <h2 id="pagamentos">Pagamentos e a data de corte</h2>
+      <p>Cada linha de royalty tem uma <span class="field">Data do Último Pagamento</span>. Ela funciona como uma régua de corte: tudo o que foi apurado <strong>até essa data</strong> (incluindo o adiantamento em recuperação) é considerado quitado, por um lançamento compensatório chamado "Pagamento" na conta analítica. O que sobra depois dela é o saldo em aberto.</p>
+      <ul>
+        <li>Com o módulo de <a href="liber_copyright_contracts_payments.html">Pagamento de royalties</a> instalado, essa data é preenchida <strong>automaticamente</strong> quando a fatura do autor é paga.</li>
+        <li>Manualmente, só um <strong>Administrador</strong> de Direitos Autorais pode defini-la ou alterá-la — o sistema bloqueia a edição para os demais, porque uma data errada "quita" royalties que ninguém pagou.</li>
+      </ul>
+
+      <h2 id="relatorio">O relatório Dívidas de Royalties</h2>
+      <ol class="steps">
+        <li>Acesse <span class="menupath">Direitos Autorais<i>‣</i>Relatórios<i>‣</i>Dívidas de Royalties</span>.</li>
+        <li>A visão <strong>pivô</strong> abre agrupada por conta financeira e favorecido, com os anos nas colunas e três medidas: <span class="field">Royalty Provisionado</span> (o devido), <span class="field">Royalty Pago</span> (pagamentos e quitações) e <span class="field">Saldo</span>.</li>
+        <li>Alterne para a <strong>lista</strong> para ver lançamento a lançamento: data, conta analítica, favorecido, conta financeira, % de royalty, quantidade e valores somados no rodapé.</li>
+        <li>Use os filtros — <strong>Provisionado (devido)</strong>, <strong>Pago (pagamentos)</strong>, <strong>Provisionado (royalties)</strong>, <strong>Pagamentos/Cortes</strong> — e os agrupamentos por favorecido, obra, conta ou ano.</li>
+      </ol>
+      <p>No próprio contrato, a coluna <span class="field">Royalties em Aberto</span> da lista (e o botão "Em Aberto" no formulário, com o módulo de pagamentos) mostra a soma dos saldos dos favorecidos daquele contrato.</p>
+      <figure class="shot"><img src="img/doc-liber_copyright_contracts_analytics-debts.png" alt="Relatório Dívidas de Royalties em visão pivô, com Provisionado, Pago e Saldo por favorecido e ano"><figcaption>Dívidas de Royalties: o provisionado, o pago e o saldo de cada favorecido, ano a ano.</figcaption></figure>
+
+      <h2 id="solucao">Solução de problemas</h2>
+      <p><strong>A venda não gerou royalty.</strong> Verifique, nesta ordem: a fatura está <em>paga</em> (não apenas confirmada)? A linha de royalty tem <em>conta analítica</em>? Tem <em>faixas</em> cadastradas? A data da fatura cai <em>dentro da vigência</em> do contrato? A notificação da apuração indica qual desses é o caso.</p>
+      <p><strong>O saldo aberto está menor do que as vendas sugerem.</strong> Provavelmente há um adiantamento descontável em recuperação (o crédito de abertura consome os primeiros royalties) ou um pagamento já quitou parte do período.</p>
+      <p><strong>Rodei a apuração duas vezes — duplicou?</strong> Não. A guarda de idempotência impede o mesmo lançamento duas vezes; a segunda rodada apenas informa que tudo já estava lançado.</p>
+      <p><strong>Um royalty antigo mudou de conta contábil sozinho.</strong> É a reclassificação diária: royalties atrasados além do limite de <span class="field">Reclassificar como passivo após</span> migram da conta de despesa para a de passivo (e voltam, se forem quitados a tempo).</p>
+
+      <div class="seealso">
+        <span class="title">Veja também</span>
+        <ul>
+          <li><a href="liber_copyright_contracts.html">Contratos de direitos autorais</a> — o contrato, as linhas e as faixas.</li>
+          <li><a href="liber_copyright_contracts_payments.html">Pagamento de royalties</a> — transformar o saldo em fatura e pagar.</li>
+          <li><a href="liber_copyright_contracts_reports.html">Prestação de contas</a> — o extrato do autor construído sobre estes números.</li>
+        </ul>
+      </div>
+
+      <nav class="pager" id="pager"></nav>
+    </article>
+  </div>
+</div>
+<script src="docs.js"></script>
+</body>
+</html>
