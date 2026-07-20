@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Action menu entry on invoices: generate royalty analytic lines -->
+    <record id="action_server_generate_royalty_lines" model="ir.actions.server">
+        <field name="name">Generate Royalty Analytic Lines</field>
+        <field name="model_id" ref="account.model_account_move"/>
+        <field name="binding_model_id" ref="account.model_account_move"/>
+        <field name="binding_view_types">list,form</field>
+        <field name="group_ids"
+               eval="[(4, ref('liber_copyright_contracts.group_contract_manager'))]"/>
+        <field name="state">code</field>
+        <field name="code">action = records.action_generate_royalty_analytic_lines()</field>
+    </record>
+
+    <!-- Sales team on customer invoices (used to flag special sales) -->
+    <record id="view_move_form_sales_team" model="ir.ui.view">
+        <field name="name">account.move.form.sales.team</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='invoice_payment_term_id']" position="after">
+                <field name="team_id"
+                       invisible="move_type != 'out_invoice'"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

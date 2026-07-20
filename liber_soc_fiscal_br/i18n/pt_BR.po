@@ -1,0 +1,371 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* liber_soc_fiscal_br
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: pt_BR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: liber_soc_fiscal_br
+#. odoo-python
+#: code:addons/liber_soc_fiscal_br/models/sale_order.py:0
+msgid ""
+"%(order)s carries CFOP %(cfop)s (%(kind)s) and cannot be a Pedido C.\n"
+"\n"
+"A bonus is given away -- it leaves the stock and never becomes revenue. An event shipment comes back to us. Neither belongs on a customer's consignment shelf, and neither is ever settled."
+msgstr ""
+
+#. module: liber_soc_fiscal_br
+#. odoo-python
+#: code:addons/liber_soc_fiscal_br/models/sale_order.py:0
+msgid ""
+"%(order)s carries CFOP %(cfop)s, a consignment shipment: the books stay "
+"ours, on the customer's shelf. It has to be a Pedido C."
+msgstr ""
+
+#. module: liber_soc_fiscal_br
+#. odoo-python
+#: code:addons/liber_soc_fiscal_br/models/sale_order.py:0
+msgid ""
+"%s has no remessa note yet. Generate it with the \"Gerar nota\" button after"
+" confirming."
+msgstr "%s ainda não tem nota de remessa. Gere com o botão \"Gerar nota\" depois de confirmar."
+
+#. module: liber_soc_fiscal_br
+#. odoo-python
+#: code:addons/liber_soc_fiscal_br/models/sale_order.py:0
+msgid "%s is not a Pedido C -- a regular sale invoices through Criar fatura."
+msgstr "%s não é um Pedido C — venda comum fatura pelo Criar fatura."
+
+#. module: liber_soc_fiscal_br
+#. odoo-python
+#: code:addons/liber_soc_fiscal_br/models/sale_order.py:0
+msgid "%s: confirm the Pedido first, then generate the note."
+msgstr "%s: confirme o Pedido primeiro, depois gere a nota."
+
+#. module: liber_soc_fiscal_br
+#: model_terms:ir.ui.view,arch_db:liber_soc_fiscal_br.view_order_form_consignment_note
+msgid "<span class=\"o_stat_text\">Nota</span>"
+msgstr ""
+
+#. module: liber_soc_fiscal_br
+#: model_terms:ir.ui.view,arch_db:liber_soc_fiscal_br.res_config_settings_view_form_soc_fiscal
+msgid ""
+"<span class=\"text-muted ms-2\">Backfill the account on existing "
+"shelves.</span>"
+msgstr ""
+
+#. module: liber_soc_fiscal_br
+#: model:ir.model.fields,help:liber_soc_fiscal_br.field_sale_order__cfop_id
+msgid "A operação fiscal desta saída. É ela que decide que documento isto é."
+msgstr ""
+
+#. module: liber_soc_fiscal_br
+#: model_terms:ir.ui.view,arch_db:liber_soc_fiscal_br.res_config_settings_view_form_soc_fiscal
+msgid ""
+"Asset account (e.g. 115000) that holds the value of goods consigned at "
+"customers. Shelves re-qualify their value into it instead of Inventory."
+msgstr ""
+
+#. module: liber_soc_fiscal_br
+#: model:ir.model.fields,help:liber_soc_fiscal_br.field_res_company__consignment_stock_account_id
+#: model:ir.model.fields,help:liber_soc_fiscal_br.field_res_config_settings__consignment_stock_account_id
+msgid ""
+"Asset account that holds the value of goods currently consigned at customers"
+" (e.g. 115000). Consignment shelves re-qualify their value into this account"
+" instead of the warehouse Inventory account."
+msgstr ""
+
+#. module: liber_soc_fiscal_br
+#: model:ir.model.fields,field_description:liber_soc_fiscal_br.field_sale_order__cfop_id
+msgid "CFOP"
+msgstr ""
+
+#. module: liber_soc_fiscal_br
+#: model:ir.model,name:liber_soc_fiscal_br.model_res_company
+msgid "Companies"
+msgstr "Empresas"
+
+#. module: liber_soc_fiscal_br
+#: model:ir.model,name:liber_soc_fiscal_br.model_res_config_settings
+msgid "Config Settings"
+msgstr "Configurações"
+
+#. module: liber_soc_fiscal_br
+#: model:ir.model.fields.selection,name:liber_soc_fiscal_br.selection__account_move__remessa_origin__consignment
+msgid "Consignação"
+msgstr ""
+
+#. module: liber_soc_fiscal_br
+#: model_terms:ir.ui.view,arch_db:liber_soc_fiscal_br.view_nota_remessa_search_consignment
+msgid "Consignações"
+msgstr ""
+
+#. module: liber_soc_fiscal_br
+#: model_terms:ir.ui.view,arch_db:liber_soc_fiscal_br.res_config_settings_view_form_soc_fiscal
+msgid "Consignment Accounting"
+msgstr "Contabilidade de Consignação"
+
+#. module: liber_soc_fiscal_br
+#: model:ir.model,name:liber_soc_fiscal_br.model_consignment_agreement
+msgid "Consignment Agreement"
+msgstr "Contrato de Consignação"
+
+#. module: liber_soc_fiscal_br
+#: model_terms:ir.ui.view,arch_db:liber_soc_fiscal_br.res_config_settings_view_form_soc_fiscal
+msgid "Consignment Fiscal (CFOP / Fiscal Position)"
+msgstr "Fiscal de Consignação (CFOP / Posição Fiscal)"
+
+#. module: liber_soc_fiscal_br
+#: model:ir.model.fields,field_description:liber_soc_fiscal_br.field_res_config_settings__consignment_return_operation_type_id
+msgid "Consignment Return Operation"
+msgstr "Operação de Retorno de Consignação"
+
+#. module: liber_soc_fiscal_br
+#: model:ir.model.fields,field_description:liber_soc_fiscal_br.field_res_config_settings__consignment_shipment_operation_type_id
+msgid "Consignment Shipment Operation"
+msgstr "Operação de Remessa de Consignação"
+
+#. module: liber_soc_fiscal_br
+#: model:ir.model.fields,field_description:liber_soc_fiscal_br.field_res_company__consignment_stock_account_id
+#: model:ir.model.fields,field_description:liber_soc_fiscal_br.field_res_config_settings__consignment_stock_account_id
+msgid "Consignment Stock Account"
+msgstr "Conta de Estoque de Consignação"
+
+#. module: liber_soc_fiscal_br
+#: model_terms:ir.ui.view,arch_db:liber_soc_fiscal_br.res_config_settings_view_form_soc_fiscal
+msgid "Consignment Warehouse Operations"
+msgstr "Operações de Estoque de Consignação"
+
+#. module: liber_soc_fiscal_br
+#: model_terms:ir.ui.view,arch_db:liber_soc_fiscal_br.res_config_settings_view_form_soc_fiscal
+msgid ""
+"Consignment has its own warehouse operation types, separate from sales (so "
+"the warehouse can prioritise sales). Auto-created on first use: COM/ "
+"(shipment) and RET/ (return)."
+msgstr ""
+
+#. module: liber_soc_fiscal_br
+#: model_terms:ir.ui.view,arch_db:liber_soc_fiscal_br.res_config_settings_view_form_soc_fiscal
+msgid "Consignment return; CFOP 5918 internal / 6918 interstate."
+msgstr "Devolução de consignação; CFOP 5918 interno / 6918 interestadual."
+
+#. module: liber_soc_fiscal_br
+#: model_terms:ir.ui.view,arch_db:liber_soc_fiscal_br.res_config_settings_view_form_soc_fiscal
+msgid "Consignment stock account"
+msgstr "Conta de estoque de consignação"
+
+#. module: liber_soc_fiscal_br
+#: model:ir.model.fields,help:liber_soc_fiscal_br.field_sale_order__document_kind
+msgid "Derivado do CFOP. Vazio = indefinido: ninguém adivinha."
+msgstr ""
+
+#. module: liber_soc_fiscal_br
+#: model:ir.model.fields,field_description:liber_soc_fiscal_br.field_account_move__display_name
+#: model:ir.model.fields,field_description:liber_soc_fiscal_br.field_consignment_agreement__display_name
+#: model:ir.model.fields,field_description:liber_soc_fiscal_br.field_res_company__display_name
+#: model:ir.model.fields,field_description:liber_soc_fiscal_br.field_res_config_settings__display_name
+#: model:ir.model.fields,field_description:liber_soc_fiscal_br.field_sale_order__display_name
+#: model:ir.model.fields,field_description:liber_soc_fiscal_br.field_stock_location__display_name
+msgid "Display Name"
+msgstr "Nome exibido"
+
+#. module: liber_soc_fiscal_br
+#: model:ir.model.fields,help:liber_soc_fiscal_br.field_res_company__consignment_return_fiscal_position_id
+#: model:ir.model.fields,help:liber_soc_fiscal_br.field_res_config_settings__consignment_return_fiscal_position_id
+msgid "Fiscal position for the consignment return."
+msgstr "Posição fiscal para o retorno de consignação."
+
+#. module: liber_soc_fiscal_br
+#: model:ir.model.fields,help:liber_soc_fiscal_br.field_res_company__consignment_shipment_fiscal_position_id
+#: model:ir.model.fields,help:liber_soc_fiscal_br.field_res_config_settings__consignment_shipment_fiscal_position_id
+msgid "Fiscal position for the consignment shipment (Pedido C)."
+msgstr "Posição fiscal para a remessa de consignação (Pedido C)."
+
+#. module: liber_soc_fiscal_br
+#: model:ir.model.fields,help:liber_soc_fiscal_br.field_res_company__consignment_sale_fiscal_position_id
+#: model:ir.model.fields,help:liber_soc_fiscal_br.field_res_config_settings__consignment_sale_fiscal_position_id
+msgid "Fiscal position for the sale generated at settlement (Acerto S)."
+msgstr "Posição fiscal para a venda gerada no acerto (Acerto S)."
+
+#. module: liber_soc_fiscal_br
+#: model_terms:ir.ui.view,arch_db:liber_soc_fiscal_br.view_order_form_consignment_note
+msgid "Gerar nota"
+msgstr ""
+
+#. module: liber_soc_fiscal_br
+#: model:ir.model.fields,field_description:liber_soc_fiscal_br.field_account_move__id
+#: model:ir.model.fields,field_description:liber_soc_fiscal_br.field_consignment_agreement__id
+#: model:ir.model.fields,field_description:liber_soc_fiscal_br.field_res_company__id
+#: model:ir.model.fields,field_description:liber_soc_fiscal_br.field_res_config_settings__id
+#: model:ir.model.fields,field_description:liber_soc_fiscal_br.field_sale_order__id
+#: model:ir.model.fields,field_description:liber_soc_fiscal_br.field_stock_location__id
+msgid "ID"
+msgstr ""
+
+#. module: liber_soc_fiscal_br
+#: model:ir.model,name:liber_soc_fiscal_br.model_stock_location
+msgid "Inventory Locations"
+msgstr "Locais de inventário"
+
+#. module: liber_soc_fiscal_br
+#: model:ir.model,name:liber_soc_fiscal_br.model_account_move
+msgid "Journal Entry"
+msgstr ""
+
+#. module: liber_soc_fiscal_br
+#: model:ir.model.fields,field_description:liber_soc_fiscal_br.field_sale_order__remessa_note_state
+msgid "Note status"
+msgstr "Estado da nota"
+
+#. module: liber_soc_fiscal_br
+#: model_terms:ir.ui.view,arch_db:liber_soc_fiscal_br.res_config_settings_view_form_soc_fiscal
+msgid ""
+"One fiscal position (same inside/outside the state); CFOP 5917 internal / "
+"6917 interstate."
+msgstr ""
+
+#. module: liber_soc_fiscal_br
+#: model:ir.model.fields,field_description:liber_soc_fiscal_br.field_sale_order__document_kind
+msgid "Operation"
+msgstr ""
+
+#. module: liber_soc_fiscal_br
+#: model_terms:ir.ui.view,arch_db:liber_soc_fiscal_br.res_config_settings_view_form_soc_fiscal
+msgid "Operation types"
+msgstr "Tipos de operação"
+
+#. module: liber_soc_fiscal_br
+#: model:ir.model.fields,field_description:liber_soc_fiscal_br.field_sale_order__remessa_note_move_id
+msgid "Remessa note"
+msgstr "Nota de remessa"
+
+#. module: liber_soc_fiscal_br
+#: model:ir.model.fields,field_description:liber_soc_fiscal_br.field_account_bank_statement_line__remessa_origin
+#: model:ir.model.fields,field_description:liber_soc_fiscal_br.field_account_move__remessa_origin
+msgid "Remessa origin"
+msgstr ""
+
+#. module: liber_soc_fiscal_br
+#: model_terms:ir.ui.view,arch_db:liber_soc_fiscal_br.res_config_settings_view_form_soc_fiscal
+msgid "Return"
+msgstr "Devolução"
+
+#. module: liber_soc_fiscal_br
+#: model:ir.model.fields,field_description:liber_soc_fiscal_br.field_res_company__consignment_return_cfop_in_id
+#: model:ir.model.fields,field_description:liber_soc_fiscal_br.field_res_config_settings__consignment_return_cfop_in_id
+msgid "Return — CFOP (domestic)"
+msgstr "Devolução — CFOP interno"
+
+#. module: liber_soc_fiscal_br
+#: model:ir.model.fields,field_description:liber_soc_fiscal_br.field_res_company__consignment_return_cfop_out_id
+#: model:ir.model.fields,field_description:liber_soc_fiscal_br.field_res_config_settings__consignment_return_cfop_out_id
+msgid "Return — CFOP (interstate)"
+msgstr "Devolução — CFOP interestadual"
+
+#. module: liber_soc_fiscal_br
+#: model:ir.model.fields,field_description:liber_soc_fiscal_br.field_res_company__consignment_return_fiscal_position_id
+#: model:ir.model.fields,field_description:liber_soc_fiscal_br.field_res_config_settings__consignment_return_fiscal_position_id
+msgid "Return — Fiscal Position"
+msgstr "Devolução — Posição Fiscal"
+
+#. module: liber_soc_fiscal_br
+#: model_terms:ir.ui.view,arch_db:liber_soc_fiscal_br.res_config_settings_view_form_soc_fiscal
+msgid "Sale generated at settlement; CFOP 5114 internal / 6114 interstate."
+msgstr "Venda gerada no acerto; CFOP 5114 interno / 6114 interestadual."
+
+#. module: liber_soc_fiscal_br
+#: model:ir.model,name:liber_soc_fiscal_br.model_sale_order
+msgid "Sales Order"
+msgstr ""
+
+#. module: liber_soc_fiscal_br
+#: model_terms:ir.ui.view,arch_db:liber_soc_fiscal_br.res_config_settings_view_form_soc_fiscal
+msgid "Settlement (Sale S)"
+msgstr "Acerto (Venda S)"
+
+#. module: liber_soc_fiscal_br
+#: model:ir.model.fields,field_description:liber_soc_fiscal_br.field_res_company__consignment_sale_fiscal_position_id
+#: model:ir.model.fields,field_description:liber_soc_fiscal_br.field_res_config_settings__consignment_sale_fiscal_position_id
+msgid "Settlement (Sale) — Fiscal Position"
+msgstr "Acerto (Venda) — Posição Fiscal"
+
+#. module: liber_soc_fiscal_br
+#: model:ir.model.fields,field_description:liber_soc_fiscal_br.field_res_company__consignment_sale_cfop_in_id
+#: model:ir.model.fields,field_description:liber_soc_fiscal_br.field_res_config_settings__consignment_sale_cfop_in_id
+msgid "Settlement — CFOP (domestic)"
+msgstr "Acerto — CFOP interno"
+
+#. module: liber_soc_fiscal_br
+#: model:ir.model.fields,field_description:liber_soc_fiscal_br.field_res_company__consignment_sale_cfop_out_id
+#: model:ir.model.fields,field_description:liber_soc_fiscal_br.field_res_config_settings__consignment_sale_cfop_out_id
+msgid "Settlement — CFOP (interstate)"
+msgstr "Acerto — CFOP interestadual"
+
+#. module: liber_soc_fiscal_br
+#: model_terms:ir.ui.view,arch_db:liber_soc_fiscal_br.res_config_settings_view_form_soc_fiscal
+msgid "Shipment (Order C)"
+msgstr "Remessa (Pedido C)"
+
+#. module: liber_soc_fiscal_br
+#: model:ir.model.fields,field_description:liber_soc_fiscal_br.field_res_company__consignment_shipment_cfop_in_id
+#: model:ir.model.fields,field_description:liber_soc_fiscal_br.field_res_config_settings__consignment_shipment_cfop_in_id
+msgid "Shipment — CFOP (domestic)"
+msgstr "Remessa — CFOP interno"
+
+#. module: liber_soc_fiscal_br
+#: model:ir.model.fields,field_description:liber_soc_fiscal_br.field_res_company__consignment_shipment_cfop_out_id
+#: model:ir.model.fields,field_description:liber_soc_fiscal_br.field_res_config_settings__consignment_shipment_cfop_out_id
+msgid "Shipment — CFOP (interstate)"
+msgstr "Remessa — CFOP interestadual"
+
+#. module: liber_soc_fiscal_br
+#: model:ir.model.fields,field_description:liber_soc_fiscal_br.field_res_company__consignment_shipment_fiscal_position_id
+#: model:ir.model.fields,field_description:liber_soc_fiscal_br.field_res_config_settings__consignment_shipment_fiscal_position_id
+msgid "Shipment — Fiscal Position"
+msgstr "Remessa — Posição Fiscal"
+
+#. module: liber_soc_fiscal_br
+#. odoo-python
+#: code:addons/liber_soc_fiscal_br/models/sale_order.py:0
+msgid ""
+"The consignment shipment fiscal position is not mapped (it needs Auto "
+"Invoice Paid and its account). Set it in Settings > Consignment Fiscal -- a "
+"remessa de consignação (CFOP 5917/6917) must never bill the bookseller."
+msgstr "A posição fiscal da remessa de consignação não está mapeada (precisa do Auto Invoice Paid e da sua conta). Configure em Definições — uma remessa de consignação (CFOP 5917/6917) jamais pode cobrar o livreiro."
+
+#. module: liber_soc_fiscal_br
+#. odoo-python
+#: code:addons/liber_soc_fiscal_br/models/sale_order.py:0
+msgid ""
+"These orders do not invoice: %(orders)s.\n"
+"\n"
+"A bonus is a gift -- it is an expense, never revenue. An event shipment is a transfer between our own locations, and it comes back."
+msgstr ""
+
+#. module: liber_soc_fiscal_br
+#: model:ir.model.fields,help:liber_soc_fiscal_br.field_res_config_settings__consignment_return_operation_type_id
+msgid ""
+"Warehouse operation type used for consignment returns (customer shelf -> "
+"warehouse). It is a merchandise return, not a generic internal transfer."
+msgstr ""
+
+#. module: liber_soc_fiscal_br
+#: model:ir.model.fields,help:liber_soc_fiscal_br.field_res_config_settings__consignment_shipment_operation_type_id
+msgid ""
+"Warehouse operation type used for consignment shipments/replenishments "
+"(warehouse -> customer shelf)."
+msgstr ""
+
+#. module: liber_soc_fiscal_br
+#: model_terms:ir.ui.view,arch_db:liber_soc_fiscal_br.res_config_settings_view_form_soc_fiscal
+msgid "Wire consignment shelves"
+msgstr "Conectar prateleiras de consignação"

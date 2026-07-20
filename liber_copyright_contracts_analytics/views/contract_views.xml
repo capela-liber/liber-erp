@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_edlab_contract_form_analytics" model="ir.ui.view">
+        <field name="name">edlab.contract.form.analytics</field>
+        <field name="model">edlab.contract</field>
+        <field name="inherit_id" ref="liber_copyright_contracts.view_edlab_contract_form"/>
+        <field name="arch" type="xml">
+
+            <!-- Smart-button box (analytics owns it; other layers extend it) -->
+            <xpath expr="//sheet/div[hasclass('oe_title')]" position="before">
+                <div class="oe_button_box" name="button_box"
+                     groups="liber_copyright_contracts.group_contract_manager">
+                    <!-- Always visible, unlike the money buttons: a contract with
+                         ZERO analytic accounts is exactly the one you need to see,
+                         because nothing can be booked until they exist. -->
+                    <button name="action_view_contract_analytics" type="object"
+                            class="oe_stat_button" icon="fa-th-list">
+                        <field name="edlab_analytic_count" widget="statinfo"
+                               string="Analytic Accounts"/>
+                    </button>
+                    <button name="action_view_special_sales" type="object"
+                            class="oe_stat_button" icon="fa-star"
+                            invisible="special_sales_count == 0">
+                        <field name="special_sales_count" widget="statinfo"
+                               string="Special Sales"/>
+                    </button>
+                </div>
+            </xpath>
+
+            <!-- Columns in the royalty lines list (managers only) -->
+            <xpath expr="//field[@name='royalty_line_ids']/list/field[@name='product_id']"
+                   position="after">
+                <field name="analytic_account_id" optional="show"
+                       groups="liber_copyright_contracts.group_contract_manager"/>
+                <field name="last_payment_date" optional="show"
+                       groups="liber_copyright_contracts.group_contract_manager"/>
+            </xpath>
+
+            <!-- Fields in the royalty line sub-form (managers only) -->
+            <xpath expr="//field[@name='royalty_line_ids']/form//field[@name='product_id']"
+                   position="after">
+                <field name="analytic_account_id"
+                       groups="liber_copyright_contracts.group_contract_manager"/>
+                <field name="last_payment_date"
+                       groups="liber_copyright_contracts.group_contract_manager"/>
+                <field name="on_sales_price"
+                       groups="liber_copyright_contracts.group_contract_manager"/>
+            </xpath>
+
+        </field>
+    </record>
+
+    <!-- Contract list: outstanding royalties (sum of beneficiaries' analytic balances) -->
+    <record id="view_edlab_contract_tree_analytics" model="ir.ui.view">
+        <field name="name">edlab.contract.tree.analytics</field>
+        <field name="model">edlab.contract</field>
+        <field name="inherit_id" ref="liber_copyright_contracts.view_edlab_contract_tree"/>
+        <field name="arch" type="xml">
+            <list position="inside">
+                <field name="currency_id" invisible="1"/>
+                <field name="edlab_royalty_balance" sum="Open Royalties"
+                       optional="show"
+                       groups="liber_copyright_contracts.group_contract_manager"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Action menu entry (cog) available on both the contract list and form -->
+    <record id="action_server_analytic_wizard" model="ir.actions.server">
+        <field name="name">Create Analytic Accounts</field>
+        <field name="model_id" ref="liber_copyright_contracts.model_edlab_contract"/>
+        <field name="binding_model_id" ref="liber_copyright_contracts.model_edlab_contract"/>
+        <field name="binding_view_types">list,form</field>
+        <field name="group_ids"
+               eval="[(4, ref('liber_copyright_contracts.group_contract_manager'))]"/>
+        <field name="state">code</field>
+        <field name="code">action = records.action_open_analytic_wizard()</field>
+    </record>
+
+    <!-- Action menu entry: fill the analytic accounts from paid invoices -->
+    <record id="action_server_fill_royalty_lines" model="ir.actions.server">
+        <field name="name">Fill Royalty Lines</field>
+        <field name="model_id" ref="liber_copyright_contracts.model_edlab_contract"/>
+        <field name="binding_model_id" ref="liber_copyright_contracts.model_edlab_contract"/>
+        <field name="binding_view_types">list,form</field>
+        <field name="group_ids"
+               eval="[(4, ref('liber_copyright_contracts.group_contract_manager'))]"/>
+        <field name="state">code</field>
+        <field name="code">action = records.action_fill_royalty_lines()</field>
+    </record>
+
+</odoo>

@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_edlab_irrf_table_user,edlab.irrf.table user,model_edlab_irrf_table,liber_copyright_contracts.group_contract_user,1,0,0,0
+access_edlab_irrf_table_manager,edlab.irrf.table manager,model_edlab_irrf_table,liber_copyright_contracts.group_contract_manager,1,1,1,1
+access_edlab_irrf_bracket_user,edlab.irrf.bracket user,model_edlab_irrf_bracket,liber_copyright_contracts.group_contract_user,1,0,0,0
+access_edlab_irrf_bracket_manager,edlab.irrf.bracket manager,model_edlab_irrf_bracket,liber_copyright_contracts.group_contract_manager,1,1,1,1

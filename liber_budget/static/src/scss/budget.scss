@@ -1,0 +1,41 @@
+// Agrupa as colunas por COR, em duas faixas:
+//   PLANEJADO  (Planned + Theoretical)        -> verde bem suave
+//   REALIZADO  (Programmed + Practical + %)    -> azul bem suave
+// com ESPACOS BRANCOS separando os blocos.
+.o_budget_lines {
+    th[data-name="budget_amount"],       td[name="budget_amount"],
+    th[data-name="theoritical_amount"],  td[name="theoritical_amount"] {
+        background-color: rgba(25, 135, 84, 0.07);
+    }
+    th[data-name="programmed_amount"],     td[name="programmed_amount"],
+    th[data-name="practical_amount"],      td[name="practical_amount"],
+    th[data-name="practical_percentage"],  td[name="practical_percentage"] {
+        background-color: rgba(13, 110, 253, 0.07);
+    }
+
+    // espacos brancos:
+    // 0) entre a 1a e a 2a coluna (Budgetary Position | Analytic Account)
+    th[data-name="account_id"], td[name="account_id"] {
+        border-left: 6px solid #fff;
+    }
+    // 1) antes do grupo PLANEJADO (entre Analytic Account e Planned)
+    th[data-name="budget_amount"], td[name="budget_amount"] {
+        border-left: 6px solid #fff;
+    }
+    // 2) entre os dois grupos (entre Theoretical e Programmed)
+    th[data-name="programmed_amount"], td[name="programmed_amount"] {
+        border-left: 6px solid #fff;
+    }
+    // 3) depois do grupo REALIZADO (entre Practical (%) e View)
+    th[data-name="practical_percentage"], td[name="practical_percentage"] {
+        border-right: 6px solid #fff;
+    }
+
+    // aproxima Practical de Practical (%)
+    th[data-name="practical_amount"], td[name="practical_amount"] {
+        padding-right: 2px;
+    }
+    th[data-name="practical_percentage"], td[name="practical_percentage"] {
+        padding-left: 2px;
+    }
+}

@@ -1,0 +1,3102 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* liber_product_bonus
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: pt_BR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,help:liber_product_bonus.field_product_bonus__picking_state
+msgid ""
+" * Draft: The transfer is not confirmed yet. Reservation doesn't apply.\n"
+" * Waiting another operation: This transfer is waiting for another operation before being ready.\n"
+" * Waiting: The transfer is waiting for the availability of some products.\n"
+"(a) The shipping policy is \"As soon as possible\": no product could be reserved.\n"
+"(b) The shipping policy is \"When all products are ready\": not all the products could be reserved.\n"
+" * Ready: The transfer is ready to be processed.\n"
+"(a) The shipping policy is \"As soon as possible\": at least one product has been reserved.\n"
+"(b) The shipping policy is \"When all products are ready\": all product have been reserved.\n"
+" * Done: The transfer has been processed.\n"
+" * Cancelled: The transfer has been cancelled."
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_quota__pct_given
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_product__bonus_pct
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_template__bonus_pct
+msgid "% donated"
+msgstr "% doado"
+
+#. module: liber_product_bonus
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_quota_list
+msgid "% já doado"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_quota__pct_allowed
+msgid "% of print run"
+msgstr "% da tiragem"
+
+#. module: liber_product_bonus
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_quota_list
+msgid "% permitido"
+msgstr ""
+
+#. module: liber_product_bonus
+#. odoo-python
+#: code:addons/liber_product_bonus/wizard/bonus_list_add.py:0
+msgid ""
+"%(added)s contato(s) adicionado(s), %(revived)s reativado(s), de uma seleção"
+" de %(total)s."
+msgstr ""
+
+#. module: liber_product_bonus
+#. odoo-python
+#: code:addons/liber_product_bonus/models/bonus.py:0
+msgid "%(name)s needs approval first (reason: %(reason)s)."
+msgstr ""
+
+#. module: liber_product_bonus
+#. odoo-python
+#: code:addons/liber_product_bonus/models/bonus.py:0
+msgid "%s has no NF-e key yet -- the note has not been emitted."
+msgstr ""
+
+#. module: liber_product_bonus
+#. odoo-python
+#: code:addons/liber_product_bonus/models/bonus.py:0
+msgid "%s is not ready to be sent."
+msgstr ""
+
+#. module: liber_product_bonus
+#. odoo-python
+#: code:addons/liber_product_bonus/models/bonus.py:0
+msgid "%s: send it to logistics first, then generate the note."
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,help:liber_product_bonus.field_product_bonus__nfe_key
+msgid ""
+"44-digit access key of the remessa NF-e, once emitted and imported. This key"
+" -- not an id -- ties the B000 to its note."
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,help:liber_product_bonus.field_res_company__bonus_cfop_id
+#: model:ir.model.fields,help:liber_product_bonus.field_res_config_settings__bonus_cfop_id
+msgid "5910/6910 -- Remessa em bonificação, doação ou brinde."
+msgstr ""
+
+#. module: liber_product_bonus
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_move_form_bonus
+msgid "<span class=\"o_stat_text\">Bonificação</span>"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_form
+msgid "<span class=\"o_stat_text\">Histórico</span>"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_form
+msgid "<span class=\"o_stat_text\">MOV</span>"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_form
+msgid "<span class=\"o_stat_text\">NF-e</span>"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_form
+msgid "<span class=\"o_stat_text\">Nota</span>"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_config_settings
+msgid ""
+"<span class=\"oe_inline ms-1\">% da tiragem no total — numa tiragem de "
+"3.000, é o teto de doação da casa</span>"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_config_settings
+msgid "<span class=\"oe_inline ms-1\">% da tiragem</span>"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_config_settings
+msgid "<span class=\"oe_inline ms-1\">avaliações</span>"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_config_settings
+msgid "<span class=\"oe_inline ms-1\">dias após enviar, ligamos</span>"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_config_settings
+msgid "<span class=\"oe_inline ms-1\">meses até valer metade</span>"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_vip_form
+msgid ""
+"<span class=\"text-muted ms-2\">\n"
+"                                    ou filtre em Contatos e use Ação &gt;\n"
+"                                    Adicionar à lista VIP\n"
+"                                </span>"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_quota_list
+msgid "= exemplares"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_search
+msgid "A avaliar"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_search
+msgid "A confirmar chegada"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_config_settings
+msgid ""
+"A nota de bonificação é uma remessa (CFOP 5910): sai no diário REM/, com "
+"valor, e é baixada automaticamente ao lançar — nunca gera pagamento. A "
+"posição fiscal precisa ter o Auto Invoice Paid e sua conta; o mapeamento de "
+"contas dela decide onde o valor aterrissa."
+msgstr ""
+
+#. module: liber_product_bonus
+#. odoo-python
+#: code:addons/liber_product_bonus/wizard/bonus_list_import.py:0
+msgid "A planilha está vazia."
+msgstr "A planilha está vazia."
+
+#. module: liber_product_bonus
+#: model_terms:ir.actions.act_window,help:liber_product_bonus.action_bonus_quota
+msgid ""
+"A porcentagem padrão da casa fica em <b>Definições &gt; Bonificações</b>\n"
+"               e já vale para todos os títulos. Esta tela é só para a\n"
+"               <b>exceção</b>: o livro que merece uma meta diferente."
+msgstr ""
+
+#. module: liber_product_bonus
+#: model_terms:ir.actions.act_window,help:liber_product_bonus.action_bonus_quota
+msgid "A tiragem não se cadastra — ela é o estoque (a soma das entradas)."
+msgstr ""
+
+#. module: liber_product_bonus
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_config_settings
+msgid ""
+"Abaixo deste número de avaliações a pessoa aparece como 'em teste', sem "
+"score: uma amostra de 1 não é avaliação, é sorte. Acima dele o score nasce "
+"puxada para a média da casa e vai se soltando conforme o histórico cresce."
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.ui.menu,name:liber_product_bonus.menu_bonus_followup
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_config_settings
+msgid "Acompanhamento"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus__message_needaction
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_dispatch__message_needaction
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_list__message_needaction
+msgid "Action Needed"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_list__active
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_list_member__active
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_reason__active
+msgid "Active"
+msgstr "Ativo"
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus__activity_ids
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_dispatch__activity_ids
+msgid "Activities"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus__activity_exception_decoration
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_dispatch__activity_exception_decoration
+msgid "Activity Exception Decoration"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus__activity_state
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_dispatch__activity_state
+msgid "Activity State"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus__activity_type_icon
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_dispatch__activity_type_icon
+msgid "Activity Type Icon"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.model,name:liber_product_bonus.model_product_bonus_list_add
+msgid "Add Contacts to a VIP List"
+msgstr "Adicionar contatos a uma lista VIP"
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_list_member__added_by_id
+msgid "Added By"
+msgstr "Adicionado por"
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_dispatch_line__address_ok
+msgid "Address"
+msgstr "Endereço"
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,help:liber_product_bonus.field_product_bonus_dispatch__category_id
+msgid "Adds every contact carrying these tags. Empty adds nobody."
+msgstr ""
+
+#. module: liber_product_bonus
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_list_add_form
+msgid "Adicionar"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_vip_form
+msgid "Adicionar vários contatos"
+msgstr ""
+
+#. module: liber_product_bonus
+#. odoo-python
+#: code:addons/liber_product_bonus/models/bonus_list.py:0
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_list_add_form
+msgid "Adicionar à lista"
+msgstr "Adicionar à lista"
+
+#. module: liber_product_bonus
+#: model:ir.actions.act_window,name:liber_product_bonus.action_bonus_list_add
+msgid "Adicionar à lista VIP"
+msgstr "Adicionar à lista VIP"
+
+#. module: liber_product_bonus
+#: model:res.groups,name:liber_product_bonus.group_bonus_manager
+msgid "Administrator"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_search
+msgid "Aguardando"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_quota__qty_allowed
+msgid "Allowed copies"
+msgstr "Permitidos"
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_dispatch_line__has_title
+msgid "Already has it"
+msgstr "Já tem?"
+
+#. module: liber_product_bonus
+#: model:ir.actions.act_window,name:liber_product_bonus.action_bonus_report
+#: model:ir.ui.menu,name:liber_product_bonus.menu_bonus_report
+msgid "Análise"
+msgstr "Análise"
+
+#. module: liber_product_bonus
+#: model:ir.model.fields.selection,name:liber_product_bonus.selection__product_bonus_list_combine__source_action__delete
+msgid "Apagar as originárias"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_list_combine_form
+msgid ""
+"Apagar é definitivo. Se alguma das originárias já\n"
+"                    bonificou alguém, o assistente recusa e explica —\n"
+"                    nesse caso use <b>Arquivar</b>, que tira do seletor\n"
+"                    sem perder o histórico."
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.model.fields.selection,name:liber_product_bonus.selection__product_bonus__state__approved
+#: model:ir.model.fields.selection,name:liber_product_bonus.selection__product_bonus_dispatch__state__approved
+msgid "Approved"
+msgstr "Aprovado"
+
+#. module: liber_product_bonus
+#. odoo-python
+#: code:addons/liber_product_bonus/models/bonus.py:0
+msgid ""
+"Approved automatically: reason %s does not require it (the contract already "
+"did)."
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,help:liber_product_bonus.field_product_bonus_list__user_id
+msgid "Approves the bonus copies from this list."
+msgstr ""
+
+#. module: liber_product_bonus
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_reason_list
+msgid "Aprova?"
+msgstr "Aprova?"
+
+#. module: liber_product_bonus
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_dispatch_form
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_form
+msgid "Aprovar"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,help:liber_product_bonus.field_product_bonus_list__active
+msgid ""
+"Archive instead of deleting: a list that shipped books is history, and "
+"history does not get thrown away because it stopped being useful."
+msgstr ""
+
+#. module: liber_product_bonus
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_vip_search
+msgid "Arquivadas"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.model.fields.selection,name:liber_product_bonus.selection__product_bonus_list_combine__source_action__archive
+msgid "Arquivar as originárias"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,field_description:liber_product_bonus.field_res_config_settings__bonus_points_great
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_followup_list
+msgid "Arrasou"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.model.fields.selection,name:liber_product_bonus.selection__product_bonus__state__arrived
+msgid "Arrived"
+msgstr "Chegou"
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus__arrived_date
+msgid "Arrived Date"
+msgstr "Chegou em"
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_list_combine__source_action
+msgid "As listas de origem"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_reason_list
+msgid "Ativo"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus__message_attachment_count
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_dispatch__message_attachment_count
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_list__message_attachment_count
+msgid "Attachment Count"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.model.fields.selection,name:liber_product_bonus.selection__res_partner__bonus_partner_type__author
+msgid "Author"
+msgstr "Autor"
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,field_description:liber_product_bonus.field_res_config_settings__bonus_pct_editorial
+#: model:ir.model.fields.selection,name:liber_product_bonus.selection__product_bonus_quota__bucket__editorial
+#: model:ir.model.fields.selection,name:liber_product_bonus.selection__product_bonus_reason__bucket__editorial
+msgid "Author / Editorial"
+msgstr "Autor / Editorial"
+
+#. module: liber_product_bonus
+#: model:product.bonus.reason,name:liber_product_bonus.reason_author
+msgid "Author copies"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,help:liber_product_bonus.field_product_bonus_reason__requires_approval
+msgid ""
+"Author copies do not: the contract approved them when it was signed. "
+"Everything else does."
+msgstr ""
+
+#. module: liber_product_bonus
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_search
+msgid "Autor"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_list__outcome_pct
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_vip_list
+msgid "Aval. %"
+msgstr "Aval. %"
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_dispatch__outcome_rate
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_dispatch__outcome_summary
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_list__outcome_rate
+#: model:ir.model.fields,field_description:liber_product_bonus.field_res_partner__bonus_outcome_rate
+#: model:ir.model.fields,field_description:liber_product_bonus.field_res_users__bonus_outcome_rate
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_dispatch_list
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_form
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_search
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_vip_list
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_partner_form_bonus
+msgid "Avaliação"
+msgstr "Avaliação"
+
+#. module: liber_product_bonus
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_dispatch_form
+msgid "Avaliação da campanha"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.actions.act_window,name:liber_product_bonus.action_bonus_rate
+#: model:ir.ui.menu,name:liber_product_bonus.menu_bonus_rate
+msgid "Avaliações"
+msgstr "Avaliações"
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,field_description:liber_product_bonus.field_res_config_settings__bonus_rating_test_size
+msgid "Avaliações para sair do teste"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_dispatch_form
+msgid "BO"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_partner_search_bonus_lists
+msgid "Bonificados"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.model.fields.selection,name:liber_product_bonus.selection__account_move__remessa_origin__bonus
+msgid "Bonificação"
+msgstr ""
+
+#. module: liber_product_bonus
+#. odoo-python
+#: code:addons/liber_product_bonus/models/bonus_dispatch.py:0
+#: model:ir.actions.act_window,name:liber_product_bonus.action_bonus
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_list__bonus_ids
+#: model:ir.ui.menu,name:liber_product_bonus.menu_bonus_all
+#: model:ir.ui.menu,name:liber_product_bonus.menu_bonus_root
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_config_settings
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_dispatch_form
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_graph
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_pivot
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_vip_form
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_nota_remessa_search_bonus
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_partner_form_bonus
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_partner_list_bonus_lists
+msgid "Bonificações"
+msgstr "Bonificações"
+
+#. module: liber_product_bonus
+#. odoo-python
+#: code:addons/liber_product_bonus/models/bonus.py:0
+#: code:addons/liber_product_bonus/models/res_partner.py:0
+msgid "Bonificações — %s"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.actions.server,name:liber_product_bonus.cron_bonus_rating_ir_actions_server
+msgid "Bonificações: recalcular Score dos contatos"
+msgstr "Bonificações: recalcular Score dos contatos"
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,field_description:liber_product_bonus.field_account_bank_statement_line__bonus_id
+#: model:ir.model.fields,field_description:liber_product_bonus.field_account_move__bonus_id
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_dispatch__bonus_ids
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_line__bonus_id
+#: model:ir.model.fields,field_description:liber_product_bonus.field_res_partner__bonus_ids
+#: model:ir.model.fields,field_description:liber_product_bonus.field_res_users__bonus_ids
+msgid "Bonus"
+msgstr "Bonificação"
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,field_description:liber_product_bonus.field_res_company__bonus_cfop_id
+#: model:ir.model.fields,field_description:liber_product_bonus.field_res_config_settings__bonus_cfop_id
+msgid "Bonus CFOP"
+msgstr "CFOP"
+
+#. module: liber_product_bonus
+#: model:ir.module.category,name:liber_product_bonus.module_category_bonus
+#: model:res.groups.privilege,name:liber_product_bonus.privilege_bonus
+msgid "Bonus Copies"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.model,name:liber_product_bonus.model_product_bonus
+msgid "Bonus Copy"
+msgstr "Bonificação"
+
+#. module: liber_product_bonus
+#: model:ir.model,name:liber_product_bonus.model_product_bonus_line
+msgid "Bonus Copy Line"
+msgstr "Linha de bonificação"
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_dispatch__bonus_count
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_list__bonus_count
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_reason__bonus_count
+#: model:ir.model.fields,field_description:liber_product_bonus.field_res_partner__bonus_count
+#: model:ir.model.fields,field_description:liber_product_bonus.field_res_users__bonus_count
+msgid "Bonus Count"
+msgstr "Bonificações"
+
+#. module: liber_product_bonus
+#: model:ir.model,name:liber_product_bonus.model_product_bonus_dispatch
+msgid "Bonus Dispatch"
+msgstr "Disparo"
+
+#. module: liber_product_bonus
+#: model:ir.model,name:liber_product_bonus.model_product_bonus_dispatch_line
+msgid "Bonus Dispatch Candidate"
+msgstr "Candidato do disparo"
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,field_description:liber_product_bonus.field_res_company__bonus_fiscal_position_id
+#: model:ir.model.fields,field_description:liber_product_bonus.field_res_config_settings__bonus_fiscal_position_id
+msgid "Bonus Fiscal Position"
+msgstr "Posição fiscal"
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,field_description:liber_product_bonus.field_res_partner__bonus_last_date
+#: model:ir.model.fields,field_description:liber_product_bonus.field_res_users__bonus_last_date
+msgid "Bonus Last Date"
+msgstr "Última bonificação"
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,field_description:liber_product_bonus.field_res_partner__bonus_lifetime_cost
+#: model:ir.model.fields,field_description:liber_product_bonus.field_res_users__bonus_lifetime_cost
+msgid "Bonus Lifetime Cost"
+msgstr "Custo acumulado"
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,field_description:liber_product_bonus.field_res_company__bonus_operation_type_id
+msgid "Bonus Operation Type"
+msgstr "Tipo de operação de bonificação"
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,field_description:liber_product_bonus.field_res_partner__bonus_outcome_judged
+#: model:ir.model.fields,field_description:liber_product_bonus.field_res_users__bonus_outcome_judged
+msgid "Bonus Outcome Judged"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,field_description:liber_product_bonus.field_res_partner__bonus_outcome_ok
+#: model:ir.model.fields,field_description:liber_product_bonus.field_res_users__bonus_outcome_ok
+msgid "Bonus Outcome Ok"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.model,name:liber_product_bonus.model_product_bonus_quota
+msgid "Bonus Quota"
+msgstr "Meta de doação"
+
+#. module: liber_product_bonus
+#: model:ir.model,name:liber_product_bonus.model_bonus_rating_mixin
+msgid "Bonus Rating Computation"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.model,name:liber_product_bonus.model_product_bonus_reason
+msgid "Bonus Reason"
+msgstr "Motivo da bonificação"
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_product__bonus_cost
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_template__bonus_cost
+msgid "Bonus cost"
+msgstr "Custo de bonificação"
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,field_description:liber_product_bonus.field_res_partner__is_bonus_recipient
+#: model:ir.model.fields,field_description:liber_product_bonus.field_res_users__is_bonus_recipient
+msgid "Bonus recipient"
+msgstr "Recebe bonificação"
+
+#. module: liber_product_bonus
+#. odoo-python
+#: code:addons/liber_product_bonus/models/res_company.py:0
+msgid "Bonus shipment"
+msgstr ""
+
+#. module: liber_product_bonus
+#. odoo-python
+#: code:addons/liber_product_bonus/models/res_company.py:0
+msgid "Bonus shipment (%s)"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.model.fields.selection,name:liber_product_bonus.selection__res_partner__bonus_partner_type__bookshop
+msgid "Bookshop"
+msgstr "Livraria"
+
+#. module: liber_product_bonus
+#: model:product.bonus.reason,name:liber_product_bonus.reason_sample
+msgid "Bookshop sample"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_quota__bucket
+msgid "Bucket"
+msgstr "Balde"
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_list__built_on
+msgid "Built On"
+msgstr "Montada em"
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_list__built_by_id
+msgid "Built by"
+msgstr "Montada por"
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus__cfop_id
+msgid "CFOP"
+msgstr "CFOP"
+
+#. module: liber_product_bonus
+#: model_terms:ir.actions.act_window,help:liber_product_bonus.action_bonus_reason
+msgid ""
+"Cada motivo aponta para um dos três baldes (autor / marketing /\n"
+"               comercial) e carrega sua própria janela de retorno: influencer\n"
+"               posta em uma semana ou nunca; crítico de jornal leva três meses."
+msgstr ""
+
+#. module: liber_product_bonus
+#: model_terms:ir.actions.act_window,help:liber_product_bonus.action_bonus_reason
+msgid "Cadastre os motivos."
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus__call_date
+msgid "Call on"
+msgstr "Ligar em"
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_dispatch_line__origin
+msgid "Came from"
+msgstr "De onde veio"
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus__campaign
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_dispatch__campaign
+msgid "Campaign"
+msgstr "Campanha"
+
+#. module: liber_product_bonus
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_report_search
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_search
+msgid "Campanha"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_dispatch_form
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_form
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_list_add_form
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_list_combine_form
+msgid "Cancelar"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.model.fields.selection,name:liber_product_bonus.selection__product_bonus__state__cancelled
+#: model:ir.model.fields.selection,name:liber_product_bonus.selection__product_bonus_dispatch__state__cancelled
+msgid "Cancelled"
+msgstr "Cancelado"
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_list_import__match_by_name
+msgid "Casar por nome quando não houver e-mail"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_form
+msgid "Chave da NF-e emitida (44 dígitos)"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_dispatch__check_html
+msgid "Check Html"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_dispatch__checked
+msgid "Checked"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_followup_list
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_form
+msgid "Chegou"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.model.fields.selection,name:liber_product_bonus.selection__product_bonus__state__closed
+msgid "Closed"
+msgstr "Concluído"
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_list_tag__color
+msgid "Color"
+msgstr "Cor"
+
+#. module: liber_product_bonus
+#. odoo-python
+#: code:addons/liber_product_bonus/wizard/bonus_list_combine.py:0
+msgid "Combinada (%(mode)s) a partir de: %(lists)s"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.actions.act_window,name:liber_product_bonus.action_bonus_list_combine
+msgid "Combinar em nova lista"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_list_combine_form
+msgid "Combinar listas"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_list__combine_mode
+msgid "Combine Mode"
+msgstr "Modo"
+
+#. module: liber_product_bonus
+#: model:ir.model,name:liber_product_bonus.model_product_bonus_list_combine
+msgid "Combine VIP Lists"
+msgstr "Combinar listas VIP"
+
+#. module: liber_product_bonus
+#. odoo-python
+#: code:addons/liber_product_bonus/wizard/bonus_list_combine.py:0
+msgid "Combined (%(mode)s) from %(lists)s -- %(n)s people."
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_list__source_list_ids
+msgid "Combined from"
+msgstr "Combinada a partir de"
+
+#. module: liber_product_bonus
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_search
+msgid "Comercial"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,field_description:liber_product_bonus.field_res_config_settings__bonus_pct_commercial
+#: model:ir.model.fields.selection,name:liber_product_bonus.selection__product_bonus_quota__bucket__commercial
+#: model:ir.model.fields.selection,name:liber_product_bonus.selection__product_bonus_reason__bucket__commercial
+msgid "Commercial"
+msgstr "Comercial"
+
+#. module: liber_product_bonus
+#: model:ir.model,name:liber_product_bonus.model_res_company
+msgid "Companies"
+msgstr "Empresas"
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus__company_id
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_dispatch__company_id
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_list__company_id
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_quota__company_id
+msgid "Company"
+msgstr "Empresa"
+
+#. module: liber_product_bonus
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_form
+msgid "Conciliar NF-e"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_dispatch_form
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_list_import_form
+msgid "Conferir"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_dispatch_form
+msgid "Conferência"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.model,name:liber_product_bonus.model_res_config_settings
+msgid "Config Settings"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.ui.menu,name:liber_product_bonus.menu_bonus_config
+msgid "Configuração"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_config_settings
+msgid "Configuração fiscal"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.actions.server,name:liber_product_bonus.action_bonus_confirm_arrival
+msgid "Confirmar chegada"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_form
+msgid "Confirmar nota"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.model.fields.selection,name:liber_product_bonus.selection__product_bonus__partner_band_at_send__steady
+#: model:ir.model.fields.selection,name:liber_product_bonus.selection__res_partner__bonus_rating_band__steady
+msgid "Constante"
+msgstr "Constante"
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_reason__consumes_contract
+msgid "Consumes contract copies"
+msgstr "Consome exemplares do contrato"
+
+#. module: liber_product_bonus
+#: model:ir.model,name:liber_product_bonus.model_res_partner
+msgid "Contact"
+msgstr "Contato"
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_dispatch__category_id
+msgid "Contact tags"
+msgstr "Contatos com etiqueta"
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_list_add__partner_ids
+msgid "Contacts"
+msgstr "Contatos"
+
+#. module: liber_product_bonus
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_member_search
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_partner_list_bonus_lists
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_partner_search_bonus_lists
+msgid "Contato"
+msgstr "Contato"
+
+#. module: liber_product_bonus
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_dispatch_form
+msgid "Contatos"
+msgstr "Contatos"
+
+#. module: liber_product_bonus
+#: model:ir.actions.act_window,name:liber_product_bonus.action_partner_bonus_lists
+#: model:ir.ui.menu,name:liber_product_bonus.menu_bonus_partner_lists
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_partner_list_bonus_lists
+msgid "Contatos por lista"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.actions.act_window,name:liber_product_bonus.action_bonus_member_pivot
+#: model:ir.ui.menu,name:liber_product_bonus.menu_bonus_member_pivot
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_member_pivot
+msgid "Sobreposição de listas"
+msgstr "Sobreposição de listas"
+
+#. module: liber_product_bonus
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_reason_list
+msgid "Contrato"
+msgstr "Contrato"
+
+#. module: liber_product_bonus
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_form
+msgid "Contábil"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_dispatch__quantity
+msgid "Copies each"
+msgstr "Exemplares por pessoa"
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_dispatch__counter_html
+msgid "Counter Html"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,help:liber_product_bonus.field_product_bonus_reason__consumes_contract
+msgid "Counts against the author copies owed by the contract."
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.model.fields.selection,name:liber_product_bonus.selection__product_bonus__outcome__good
+msgid "Covered it"
+msgstr "Divulgou"
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus__create_uid
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_dispatch__create_uid
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_dispatch_line__create_uid
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_line__create_uid
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_list__create_uid
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_list_add__create_uid
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_list_combine__create_uid
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_list_import__create_uid
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_list_member__create_uid
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_list_tag__create_uid
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_quota__create_uid
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_reason__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus__create_date
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_dispatch__create_date
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_dispatch_line__create_date
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_line__create_date
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_list__create_date
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_list_add__create_date
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_list_combine__create_date
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_list_import__create_date
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_list_member__create_date
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_list_tag__create_date
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_quota__create_date
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_reason__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_list_combine_form
+msgid "Criar lista"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_list_import__create_missing
+msgid "Criar quem não existe"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model_terms:ir.actions.act_window,help:liber_product_bonus.action_bonus_vip_list
+msgid "Crie uma lista."
+msgstr ""
+
+#. module: liber_product_bonus
+#: model_terms:ir.actions.act_window,help:liber_product_bonus.action_bonus_report
+msgid ""
+"Cruze Investimento × Tipo de parceiro × Resultado × Lista. É aqui que\n"
+"               \"pra que mandar\" vira número: o que cada verba gastou e o que voltou."
+msgstr ""
+
+#. module: liber_product_bonus
+#: model_terms:ir.actions.act_window,help:liber_product_bonus.action_bonus_member_pivot
+msgid ""
+"Cruze contatos e listas: quem está em quais, quem se repete\n"
+"               entre duas listas, quem entrou quando. Clique numa célula para\n"
+"               ver os vínculos por trás dela."
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus__currency_id
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_dispatch__currency_id
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_line__currency_id
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_list__currency_id
+msgid "Currency"
+msgstr "Moeda"
+
+#. module: liber_product_bonus
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_dispatch_list
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_list
+msgid "Custo"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model_terms:ir.actions.act_window,help:liber_product_bonus.action_bonus_rate
+msgid "Custo é metade da conta. O retorno é a outra."
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus__date
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_dispatch__date
+msgid "Date"
+msgstr "Data"
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,field_description:liber_product_bonus.field_res_config_settings__bonus_days_to_call
+msgid "Days to call"
+msgstr "Dias para ligar"
+
+#. module: liber_product_bonus
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_dispatch_form
+msgid "De onde vem esta gente"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus__deadline
+msgid "Deadline"
+msgstr "Prazo"
+
+#. module: liber_product_bonus
+#: model:ir.ui.menu,name:liber_product_bonus.menu_bonus_config_settings
+msgid "Definições"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.actions.act_window,name:liber_product_bonus.action_bonus_config
+msgid "Definições de bonificação"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_list_import_form
+msgid "Deixe vazio se a planilha tem coluna Lista"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,help:liber_product_bonus.field_product_bonus_list_import__create_missing
+msgid ""
+"Desligado, a importação só liga à lista quem já está na base e relata os "
+"demais -- útil para conferir uma planilha antes de deixá-la entrar na base "
+"de contatos."
+msgstr ""
+
+#. module: liber_product_bonus
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_dispatch_form
+msgid "Desmarcar"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_report_search
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_search
+msgid "Deu certo"
+msgstr "Deu certo"
+
+#. module: liber_product_bonus
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_reason_list
+msgid "Dias"
+msgstr "Dias"
+
+#. module: liber_product_bonus
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_config_settings
+msgid ""
+"Dias após a expedição para a bonificação aparecer na lista 'Retorno'. É um "
+"valor provisório — a data real de chegada (distância, transportadora) virá "
+"depois."
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.model.fields.selection,name:liber_product_bonus.selection__product_bonus_list__combine_mode__difference
+msgid "Difference"
+msgstr "Diferença"
+
+#. module: liber_product_bonus
+#: model:ir.model.fields.selection,name:liber_product_bonus.selection__product_bonus_list_combine__mode__difference
+msgid "Difference -- the first one, minus the others"
+msgstr "Diferença — a primeira, menos as outras"
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,field_description:liber_product_bonus.field_res_partner__bonus_rating_trend
+#: model:ir.model.fields,field_description:liber_product_bonus.field_res_users__bonus_rating_trend
+msgid "Direção"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model_terms:ir.actions.act_window,help:liber_product_bonus.action_bonus_dispatch
+msgid "Dispare uma bonificação."
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.actions.act_window,name:liber_product_bonus.action_bonus_dispatch
+#: model:ir.ui.menu,name:liber_product_bonus.menu_bonus_dispatch
+msgid "Disparos"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus__dispatch_id
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_dispatch_line__dispatch_id
+msgid "Dispatch"
+msgstr "Disparo"
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,field_description:liber_product_bonus.field_account_move__display_name
+#: model:ir.model.fields,field_description:liber_product_bonus.field_bonus_rating_mixin__display_name
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus__display_name
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_dispatch__display_name
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_dispatch_line__display_name
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_line__display_name
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_list__display_name
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_list_add__display_name
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_list_combine__display_name
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_list_import__display_name
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_list_member__display_name
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_list_tag__display_name
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_quota__display_name
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_reason__display_name
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_product__display_name
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_template__display_name
+#: model:ir.model.fields,field_description:liber_product_bonus.field_res_company__display_name
+#: model:ir.model.fields,field_description:liber_product_bonus.field_res_config_settings__display_name
+#: model:ir.model.fields,field_description:liber_product_bonus.field_res_partner__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,field_description:liber_product_bonus.field_res_config_settings__bonus_points_good
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_followup_list
+msgid "Divulgou"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_list__quota_qty
+msgid "Donation target"
+msgstr "Meta de doação"
+
+#. module: liber_product_bonus
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_vip_search
+msgid "Dono"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.model.fields.selection,name:liber_product_bonus.selection__product_bonus__state__draft
+msgid "Draft"
+msgstr "Rascunho"
+
+#. module: liber_product_bonus
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_dispatch_form
+msgid "Duplicado"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_partner_search_bonus_lists
+msgid "Em 5 ou mais listas"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_partner_search_bonus_lists
+msgid "Em alguma lista"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,field_description:liber_product_bonus.field_res_partner__bonus_list_names
+#: model:ir.model.fields,field_description:liber_product_bonus.field_res_users__bonus_list_names
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_partner_list_bonus_lists
+msgid "Em quais listas"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.model.fields.selection,name:liber_product_bonus.selection__product_bonus__partner_band_at_send__testing
+#: model:ir.model.fields.selection,name:liber_product_bonus.selection__res_partner__bonus_rating_band__testing
+msgid "Em teste"
+msgstr "Em teste"
+
+#. module: liber_product_bonus
+#: model:ir.model.fields.selection,name:liber_product_bonus.selection__product_bonus__fiscal_state__emitted
+msgid "Emitted"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_dispatch_form
+msgid "End."
+msgstr "End."
+
+#. module: liber_product_bonus
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_form
+msgid "Entrega"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_member_search
+msgid "Entrou em"
+msgstr "Entrou em"
+
+#. module: liber_product_bonus
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_report_search
+msgid "Enviados"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_dispatch_form
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_vip_form
+msgid "Enviar bonificação"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_form
+msgid "Enviar para logística"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_dispatch_form
+msgid "Enviar tudo"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_dispatch_form
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_dispatch_list
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_reason_list
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_vip_list
+msgid "Envios"
+msgstr "Envios"
+
+#. module: liber_product_bonus
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_list_add_form
+msgid "Escolha uma lista ou digite um nome novo..."
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.model.fields.selection,name:liber_product_bonus.selection__product_bonus__partner_band_at_send__fading
+#: model:ir.model.fields.selection,name:liber_product_bonus.selection__res_partner__bonus_rating_band__fading
+msgid "Esfriando"
+msgstr "Esfriando"
+
+#. module: liber_product_bonus
+#. odoo-python
+#: code:addons/liber_product_bonus/models/bonus.py:0
+msgid ""
+"Esta bonificação ainda não tem nota.\n"
+"\n"
+"A nota é gerada pelo botão \"Gerar nota\" no topo, depois que a bonificação é enviada para a logística."
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,help:liber_product_bonus.field_product_bonus_dispatch_line__has_title
+msgid "Esta pessoa já recebeu ESTE título antes."
+msgstr ""
+
+#. module: liber_product_bonus
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_search
+msgid "Estado"
+msgstr ""
+
+#. module: liber_product_bonus
+#. odoo-python
+#: code:addons/liber_product_bonus/wizard/bonus_list_combine.py:0
+msgid ""
+"Estas listas já bonificaram alguém e por isso não são descartáveis -- apagá-las tiraria de cada bonificação a informação de por qual lista ela passou:\n"
+"\n"
+"%(lists)s\n"
+"\n"
+"Escolha 'Arquivar' -- some do seletor, o histórico fica."
+msgstr ""
+
+#. module: liber_product_bonus
+#. odoo-python
+#: code:addons/liber_product_bonus/wizard/bonus_list_import.py:0
+msgid "Este servidor não lê .xlsx. Salve a planilha como CSV."
+msgstr "Este servidor não lê .xlsx. Salve a planilha como CSV."
+
+#. module: liber_product_bonus
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_config_settings
+msgid "Etapa de testes"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_vip_search
+msgid "Etiqueta"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_dispatch_form
+msgid "Etiquetas"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.actions.act_window,name:liber_product_bonus.action_bonus_list_tag
+#: model:ir.ui.menu,name:liber_product_bonus.menu_bonus_list_tag
+msgid "Etiquetas de lista"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,help:liber_product_bonus.field_product_bonus_dispatch__source_dispatch_ids
+msgid ""
+"Everyone who got a copy in these dispatches. The last launch is usually the "
+"best starting point for the next one."
+msgstr ""
+
+#. module: liber_product_bonus
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_form
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_list
+msgid "Exemplares"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_list_import_form
+msgid "Fechar"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,help:liber_product_bonus.field_product_bonus_list_add__note
+msgid "Fica em cada membro adicionado -- por que este grupo entrou."
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_list_import__filename
+msgid "Filename"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_dispatch__fits
+msgid "Fits"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus__message_follower_ids
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_dispatch__message_follower_ids
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_list__message_follower_ids
+msgid "Followers"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus__message_partner_ids
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_dispatch__message_partner_ids
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_list__message_partner_ids
+msgid "Followers (Partners)"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,help:liber_product_bonus.field_product_bonus__activity_type_icon
+#: model:ir.model.fields,help:liber_product_bonus.field_product_bonus_dispatch__activity_type_icon
+msgid "Font awesome icon e.g. fa-tasks"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_partner_search_bonus_lists
+msgid "Fora de qualquer lista"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,help:liber_product_bonus.field_product_bonus__campaign
+msgid "Free text: the launch, the fair, the push."
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,help:liber_product_bonus.field_product_bonus_line__unit_cost
+msgid ""
+"Frozen when sent. This is the cash that left (print, paper), not the cover "
+"price."
+msgstr ""
+
+#. module: liber_product_bonus
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_vip_list
+msgid "Gasto"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_form
+msgid "Gerar nota"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_quota__qty_given
+msgid "Given"
+msgstr "Doados"
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_product__bonus_qty
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_template__bonus_qty
+msgid "Given away"
+msgstr "Doados"
+
+#. module: liber_product_bonus
+#: model:ir.model.fields.selection,name:liber_product_bonus.selection__product_bonus__outcome__weak
+msgid "Half-hearted"
+msgstr "Meia-boca"
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_dispatch__manual_partner_ids
+msgid "Hand-picked"
+msgstr "A dedo"
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus__has_message
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_dispatch__has_message
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_list__has_message
+msgid "Has Message"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_partner_form_bonus
+msgid "Histórico"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,help:liber_product_bonus.field_product_bonus_reason__return_window_days
+msgid ""
+"How long to wait before calling it silence. Influencer ~21, press ~120. "
+"Nobody is judged before their window closes."
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,help:liber_product_bonus.field_product_bonus_quota__pct_allowed
+msgid ""
+"How much of the print run this bucket may give away. The copies are computed"
+" from it, so a reprint widens the allowance on its own."
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,field_description:liber_product_bonus.field_account_move__id
+#: model:ir.model.fields,field_description:liber_product_bonus.field_bonus_rating_mixin__id
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus__id
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_dispatch__id
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_dispatch_line__id
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_line__id
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_list__id
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_list_add__id
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_list_combine__id
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_list_import__id
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_list_member__id
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_list_tag__id
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_quota__id
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_reason__id
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_product__id
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_template__id
+#: model:ir.model.fields,field_description:liber_product_bonus.field_res_company__id
+#: model:ir.model.fields,field_description:liber_product_bonus.field_res_config_settings__id
+#: model:ir.model.fields,field_description:liber_product_bonus.field_res_partner__id
+msgid "ID"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus__activity_exception_icon
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_dispatch__activity_exception_icon
+msgid "Icon"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,help:liber_product_bonus.field_product_bonus__activity_exception_icon
+#: model:ir.model.fields,help:liber_product_bonus.field_product_bonus_dispatch__activity_exception_icon
+msgid "Icon to indicate an exception activity."
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,help:liber_product_bonus.field_product_bonus__message_needaction
+#: model:ir.model.fields,help:liber_product_bonus.field_product_bonus_dispatch__message_needaction
+#: model:ir.model.fields,help:liber_product_bonus.field_product_bonus_list__message_needaction
+msgid "If checked, new messages require your attention."
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,help:liber_product_bonus.field_product_bonus__message_has_error
+#: model:ir.model.fields,help:liber_product_bonus.field_product_bonus__message_has_sms_error
+#: model:ir.model.fields,help:liber_product_bonus.field_product_bonus_dispatch__message_has_error
+#: model:ir.model.fields,help:liber_product_bonus.field_product_bonus_dispatch__message_has_sms_error
+#: model:ir.model.fields,help:liber_product_bonus.field_product_bonus_list__message_has_error
+#: model:ir.model.fields,help:liber_product_bonus.field_product_bonus_list__message_has_sms_error
+msgid "If checked, some messages have a delivery error."
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.model,name:liber_product_bonus.model_product_bonus_list_import
+msgid "Import Contacts into a VIP List"
+msgstr "Importar contatos para uma lista VIP"
+
+#. module: liber_product_bonus
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_list_import_form
+msgid "Importar"
+msgstr ""
+
+#. module: liber_product_bonus
+#. odoo-python
+#: code:addons/liber_product_bonus/models/bonus_list.py:0
+#: model:ir.actions.act_window,name:liber_product_bonus.action_bonus_list_import
+#: model:ir.ui.menu,name:liber_product_bonus.menu_bonus_list_import
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_list_import_form
+msgid "Importar contatos"
+msgstr "Importar contatos"
+
+#. module: liber_product_bonus
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_vip_form
+msgid "Importar planilha"
+msgstr ""
+
+#. module: liber_product_bonus
+#. odoo-python
+#: code:addons/liber_product_bonus/wizard/bonus_list_import.py:0
+msgid ""
+"Importação de %(file)s: %(linked)s contatos ligados a esta lista "
+"(%(created)s cadastros novos no arquivo inteiro)."
+msgstr ""
+
+#. module: liber_product_bonus
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_list_combine_form
+msgid "Imprensa de poesia"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_vip_form
+msgid "Imprensa literária"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_dispatch_form
+msgid "Imprensa literária, Influencers..."
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.model.fields.selection,name:liber_product_bonus.selection__res_partner__bonus_partner_type__influencer
+#: model:product.bonus.reason,name:liber_product_bonus.reason_influencer
+msgid "Influencer"
+msgstr "Influenciador"
+
+#. module: liber_product_bonus
+#: model:ir.model.fields.selection,name:liber_product_bonus.selection__product_bonus_list__combine_mode__intersection
+msgid "Intersection"
+msgstr "Interseção"
+
+#. module: liber_product_bonus
+#: model:ir.model.fields.selection,name:liber_product_bonus.selection__product_bonus_list_combine__mode__intersection
+msgid "Intersection -- only who is in ALL of them"
+msgstr "Interseção — só quem está em TODAS"
+
+#. module: liber_product_bonus
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_list
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_report_search
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_search
+msgid "Investimento"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus__bucket
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_dispatch__bucket
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_reason__bucket
+msgid "Investment"
+msgstr "Investimento"
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus__message_is_follower
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_dispatch__message_is_follower
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_list__message_is_follower
+msgid "Is Follower"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus__is_waiting
+msgid "Is Waiting"
+msgstr "Aguardando"
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_list_member__joined_on
+msgid "Joined On"
+msgstr "Entrou em"
+
+#. module: liber_product_bonus
+#: model:ir.model,name:liber_product_bonus.model_account_move
+msgid "Journal Entry"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.model.fields.selection,name:liber_product_bonus.selection__res_partner__bonus_partner_type__journalist
+msgid "Journalist"
+msgstr "Jornalista"
+
+#. module: liber_product_bonus
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_member_search
+msgid "Já saíram"
+msgstr "Já saíram"
+
+#. module: liber_product_bonus
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_vip_search
+msgid "Já usadas"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_dispatch_form
+msgid "Lançamento, feira, ação..."
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_dispatch_line__last_date
+msgid "Last"
+msgstr "Último"
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,field_description:liber_product_bonus.field_res_partner__bonus_bio
+#: model:ir.model.fields,field_description:liber_product_bonus.field_res_users__bonus_bio
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_dispatch_line__partner_bio
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_list_member__partner_bio
+msgid "Who they are"
+msgstr "Quem é"
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,help:liber_product_bonus.field_res_partner__bonus_bio
+#: model:ir.model.fields,help:liber_product_bonus.field_res_users__bonus_bio
+msgid ""
+"One line saying who this person is in the book world -- shown next to the "
+"name wherever bonus copies are decided."
+msgstr ""
+"Uma linha dizendo quem esta pessoa é no mundo do livro -- aparece ao lado do "
+"nome onde se decide um envio de bonificação."
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_list__last_shipment_on
+msgid "Last shipment"
+msgstr "Último envio"
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,help:liber_product_bonus.field_product_bonus_list__last_shipment_on
+msgid ""
+"When this list last shipped a book. Imported lists carry the date of the last"
+" shipment found in the history."
+msgstr ""
+"Quando esta lista enviou um livro pela última vez. Listas importadas trazem a"
+" data do último envio encontrado no histórico."
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus__write_uid
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_dispatch__write_uid
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_dispatch_line__write_uid
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_line__write_uid
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_list__write_uid
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_list_add__write_uid
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_list_combine__write_uid
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_list_import__write_uid
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_list_member__write_uid
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_list_tag__write_uid
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_quota__write_uid
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_reason__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus__write_date
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_dispatch__write_date
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_dispatch_line__write_date
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_line__write_date
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_list__write_date
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_list_add__write_date
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_list_combine__write_date
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_list_import__write_date
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_list_member__write_date
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_list_tag__write_date
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_quota__write_date
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_reason__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:product.bonus.reason,name:liber_product_bonus.reason_launch
+msgid "Launch"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_quota__qty_remaining
+msgid "Left"
+msgstr "Livres"
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_list_member__left_on
+msgid "Left On"
+msgstr "Saiu em"
+
+#. module: liber_product_bonus
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_followup_list
+msgid "Ligar em"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus__line_ids
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_dispatch__line_ids
+msgid "Line"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus__outcome_link
+msgid "Link"
+msgstr "Link"
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_list_member__list_id
+msgid "List"
+msgstr "Lista"
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_list_add__list_id
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_list_import__list_id
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_member_search
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_report_search
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_search
+msgid "Lista"
+msgstr "Lista"
+
+#. module: liber_product_bonus
+#: model:ir.actions.act_window,name:liber_product_bonus.action_bonus_vip_list
+#: model:ir.model.fields,field_description:liber_product_bonus.field_res_partner__bonus_list_count
+#: model:ir.model.fields,field_description:liber_product_bonus.field_res_users__bonus_list_count
+#: model:ir.ui.menu,name:liber_product_bonus.menu_bonus_lists
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_dispatch_form
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_partner_list_bonus_lists
+msgid "Listas"
+msgstr ""
+
+#. module: liber_product_bonus
+#. odoo-python
+#: code:addons/liber_product_bonus/wizard/bonus_list_import.py:0
+msgid "Listas importadas"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_list_combine__list_ids
+msgid "Lists"
+msgstr "Listas"
+
+#. module: liber_product_bonus
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_form
+msgid "Logística"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus__picking_state
+msgid "MOV"
+msgstr "MOV"
+
+#. module: liber_product_bonus
+#: model:ir.model.fields.selection,name:liber_product_bonus.selection__product_bonus_list_combine__source_action__keep
+msgid "Manter como estão"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_dispatch_form
+msgid "Marcar todos"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,field_description:liber_product_bonus.field_res_config_settings__bonus_pct_marketing
+#: model:ir.model.fields.selection,name:liber_product_bonus.selection__product_bonus_quota__bucket__marketing
+#: model:ir.model.fields.selection,name:liber_product_bonus.selection__product_bonus_reason__bucket__marketing
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_search
+msgid "Marketing"
+msgstr "Marketing"
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,help:liber_product_bonus.field_product_bonus_dispatch_line__selected
+msgid "Marque quem recebe. É o 'vai ou não vai?' desta linha."
+msgstr ""
+
+#. module: liber_product_bonus
+#: model_terms:ir.actions.act_window,help:liber_product_bonus.action_bonus_vip_list
+msgid ""
+"Marque várias e use <b>Ação &gt; Combinar em nova lista</b> para\n"
+"               unir, cruzar ou subtrair. Mas repare: para <i>mandar</i> uma\n"
+"               campanha para três listas, não precisa criar lista nenhuma — o\n"
+"               disparo aceita várias de uma vez e não duplica ninguém."
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,field_description:liber_product_bonus.field_res_config_settings__bonus_points_weak
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_followup_list
+msgid "Meia-boca"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,field_description:liber_product_bonus.field_res_config_settings__bonus_rating_half_life
+msgid "Meia-vida da recência (meses)"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_list__member_ids
+msgid "Member"
+msgstr "Membro"
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_list__member_count
+msgid "Member Count"
+msgstr "Membros"
+
+#. module: liber_product_bonus
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_vip_form
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_vip_list
+msgid "Membros"
+msgstr "Membros"
+
+#. module: liber_product_bonus
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_config_settings
+msgid ""
+"Meses até uma avaliação valer metade. Faz o 'divulgou bem em 2019' parar de "
+"sustentar quem sumiu desde então."
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus__message_has_error
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_dispatch__message_has_error
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_list__message_has_error
+msgid "Message Delivery error"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus__message_ids
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_dispatch__message_ids
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_list__message_ids
+msgid "Messages"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_vip_form
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_vip_list
+msgid "Meta"
+msgstr "Meta"
+
+#. module: liber_product_bonus
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_config_settings
+msgid "Meta de doação"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.actions.act_window,name:liber_product_bonus.action_bonus_quota
+#: model:ir.ui.menu,name:liber_product_bonus.menu_bonus_quota
+msgid "Metas"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_vip_search
+msgid "Minhas"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_list_combine__mode
+msgid "Mode"
+msgstr "Modo"
+
+#. module: liber_product_bonus
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_report_search
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_search
+msgid "Motivo"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.actions.act_window,name:liber_product_bonus.action_bonus_reason
+#: model:ir.ui.menu,name:liber_product_bonus.menu_bonus_reason
+msgid "Motivos"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,help:liber_product_bonus.field_res_company__bonus_fiscal_position_id
+#: model:ir.model.fields,help:liber_product_bonus.field_res_config_settings__bonus_fiscal_position_id
+msgid ""
+"Must have Auto Invoice Paid: a bonus note never generates payment. Also "
+"carries the account mapping for the future NF-e."
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus__my_activity_date_deadline
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_dispatch__my_activity_date_deadline
+msgid "My Activity Deadline"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_partner_form_bonus
+msgid ""
+"Média dos resultados ponderada por recência,\n"
+"                                encolhida para a média da casa enquanto há pouco\n"
+"                                histórico. Os pontos e os cortes ficam em\n"
+"                                Definições &gt; Bonificações."
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,help:liber_product_bonus.field_res_partner__bonus_rating
+#: model:ir.model.fields,help:liber_product_bonus.field_res_users__bonus_rating
+msgid ""
+"Média dos resultados ponderada por recência, encolhida para a média da casa "
+"enquanto há pouco histórico. Zero enquanto em teste."
+msgstr ""
+
+#. module: liber_product_bonus
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_report_search
+msgid "Mês"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus__nfe_xml_panel_id
+msgid "NF-e"
+msgstr ""
+
+#. module: liber_product_bonus
+#. odoo-python
+#: code:addons/liber_product_bonus/models/bonus.py:0
+msgid "NF-e %s reconciled with the entry."
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus__nfe_key
+msgid "NF-e key"
+msgstr "Chave da NF-e"
+
+#. module: liber_product_bonus
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_list_import_form
+msgid ""
+"Na dúvida, comece pela planilha de\n"
+"                        exemplo — ela está aí em cima, é só clicar para\n"
+"                        baixar."
+msgstr ""
+
+#. module: liber_product_bonus
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_member_search
+msgid "Na lista hoje"
+msgstr "Na lista hoje"
+
+#. module: liber_product_bonus
+#: model_terms:ir.actions.act_window,help:liber_product_bonus.action_bonus_rate
+msgid "Nada a avaliar."
+msgstr ""
+
+#. module: liber_product_bonus
+#: model_terms:ir.actions.act_window,help:liber_product_bonus.action_bonus_quota
+msgid "Nada aqui, e está tudo bem."
+msgstr ""
+
+#. module: liber_product_bonus
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_list_import_form
+msgid "Nada foi gravado até aqui."
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.model.fields.selection,name:liber_product_bonus.selection__product_bonus__outcome__great
+msgid "Nailed it"
+msgstr "Arrasou"
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus__name
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_dispatch__name
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_list__name
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_list_tag__name
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_reason__name
+msgid "Name"
+msgstr "Nome"
+
+#. module: liber_product_bonus
+#. odoo-python
+#: code:addons/liber_product_bonus/wizard/bonus_list_import.py:0
+msgid "Nenhum arquivo."
+msgstr "Nenhum arquivo."
+
+#. module: liber_product_bonus
+#: model_terms:ir.actions.act_window,help:liber_product_bonus.action_bonus_member_pivot
+msgid "Nenhum vínculo ainda"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.model.fields.selection,name:liber_product_bonus.selection__product_bonus__state__lost
+msgid "Never arrived"
+msgstr "Não chegou"
+
+#. module: liber_product_bonus
+#. odoo-python
+#: code:addons/liber_product_bonus/models/bonus.py:0
+msgid ""
+"Never arrived. This is a logistics failure, not a return failure -- it does "
+"not count against %s."
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_list_combine__name
+msgid "New list"
+msgstr "Lista nova"
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus__activity_date_deadline
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_dispatch__activity_date_deadline
+msgid "Next Activity Deadline"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus__activity_summary
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_dispatch__activity_summary
+msgid "Next Activity Summary"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus__activity_type_id
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_dispatch__activity_type_id
+msgid "Next Activity Type"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model_terms:ir.actions.act_window,help:liber_product_bonus.action_partner_bonus_lists
+msgid "Ninguém em lista ainda"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model_terms:ir.actions.act_window,help:liber_product_bonus.action_bonus_confirm
+msgid "Ninguém para ligar hoje."
+msgstr ""
+
+#. module: liber_product_bonus
+#. odoo-python
+#: code:addons/liber_product_bonus/models/bonus.py:0
+msgid "No warehouse on %s: the book cannot leave."
+msgstr ""
+
+#. module: liber_product_bonus
+#. odoo-python
+#: code:addons/liber_product_bonus/wizard/bonus_list_combine.py:0
+msgid "Nobody is left with this mode."
+msgstr ""
+
+#. module: liber_product_bonus
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_partner_search_bonus_lists
+msgid "Nome da lista"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_list_combine__note
+msgid "Nota"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_form
+msgid "Nota e logística"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_form
+msgid "Nota fiscal (NF-e)"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_vip_form
+msgid "Notas"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus__note_label
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_list__note
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_list_add__note
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_list_member__note
+msgid "Note"
+msgstr "Observação"
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus__fiscal_state
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus__note_state
+msgid "Note status"
+msgstr "Estado da nota"
+
+#. module: liber_product_bonus
+#. odoo-python
+#: code:addons/liber_product_bonus/models/bonus_dispatch.py:0
+msgid "Nothing selected."
+msgstr ""
+
+#. module: liber_product_bonus
+#. odoo-python
+#: code:addons/liber_product_bonus/models/bonus_dispatch.py:0
+msgid "Nothing to send: everything selected is without an address."
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.model.fields.selection,name:liber_product_bonus.selection__product_bonus__partner_band_at_send__new
+#: model:ir.model.fields.selection,name:liber_product_bonus.selection__res_partner__bonus_rating_band__new
+msgid "Novo"
+msgstr "Novo"
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus__message_needaction_counter
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_dispatch__message_needaction_counter
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_list__message_needaction_counter
+msgid "Number of Actions"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus__message_has_error_counter
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_dispatch__message_has_error_counter
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_list__message_has_error_counter
+msgid "Number of errors"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,help:liber_product_bonus.field_product_bonus__message_needaction_counter
+#: model:ir.model.fields,help:liber_product_bonus.field_product_bonus_dispatch__message_needaction_counter
+#: model:ir.model.fields,help:liber_product_bonus.field_product_bonus_list__message_needaction_counter
+msgid "Number of messages requiring action"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,help:liber_product_bonus.field_product_bonus__message_has_error_counter
+#: model:ir.model.fields,help:liber_product_bonus.field_product_bonus_dispatch__message_has_error_counter
+#: model:ir.model.fields,help:liber_product_bonus.field_product_bonus_list__message_has_error_counter
+msgid "Number of messages with delivery error"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_partner_search_bonus_lists
+msgid "Nº de listas"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_followup_list
+msgid "Não"
+msgstr ""
+
+#. module: liber_product_bonus
+#. odoo-python
+#: code:addons/liber_product_bonus/wizard/bonus_list_import.py:0
+msgid ""
+"Não achei as colunas. A planilha precisa de pelo menos 'Nome' ou 'E-mail' no cabeçalho.\n"
+"\n"
+"Baixe o modelo no botão ao lado e use os mesmos títulos."
+msgstr ""
+
+#. module: liber_product_bonus
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_form
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_report_search
+msgid "Não chegou"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model_terms:ir.actions.act_window,help:liber_product_bonus.action_bonus_dispatch
+msgid ""
+"O BO é o disparo: uma decisão de marketing. Ele gera uma ficha B\n"
+"               para cada pessoa — porque cada uma tem endereço, pacote e nota\n"
+"               próprios."
+msgstr ""
+
+#. module: liber_product_bonus
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_dispatch_form
+msgid "O autor pediu mais um"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_list_import_form
+msgid "O que vai acontecer"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_config_settings
+msgid ""
+"O score é a média destes pontos ponderada por recência. Fibonacci de "
+"propósito: os saltos crescem, então uma cobertura excelente vale muito mais "
+"que proporcionalmente mais — que é como funciona de verdade."
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.model.constraint,message:liber_product_bonus.constraint_product_bonus_quota_product_bucket_uniq
+msgid "One quota per title and bucket."
+msgstr ""
+
+#. module: liber_product_bonus
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_dispatch_form
+msgid "Origem"
+msgstr ""
+
+#. module: liber_product_bonus
+#. odoo-python
+#: code:addons/liber_product_bonus/wizard/bonus_list_combine.py:0
+msgid "Originárias apagadas: %(lists)s"
+msgstr ""
+
+#. module: liber_product_bonus
+#. odoo-python
+#: code:addons/liber_product_bonus/wizard/bonus_list_combine.py:0
+msgid "Originárias arquivadas: %(lists)s"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_list_import_form
+msgid ""
+"Os títulos das colunas podem estar em qualquer ordem —\n"
+"                        o importador reconhece variações comuns (nome/contato,\n"
+"                        e-mail/email, telefone/celular, veículo/observação...).\n"
+"                        Só <b>Nome</b> ou <b>E-mail</b> é obrigatório."
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.model.fields.selection,name:liber_product_bonus.selection__res_partner__bonus_partner_type__other
+msgid "Other"
+msgstr "Outro"
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus__outcome
+msgid "Outcome"
+msgstr "Retorno"
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus__outcome_date
+msgid "Outcome Date"
+msgstr "Avaliado em"
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus__outcome_user_id
+msgid "Outcome User"
+msgstr "Avaliado por"
+
+#. module: liber_product_bonus
+#. odoo-python
+#: code:addons/liber_product_bonus/models/bonus.py:0
+msgid ""
+"Over quota for %(product)s (%(bucket)s).\n"
+"\n"
+"Allowed %(allowed)s, already given %(given)s, left %(left)s -- this asks for %(asked)s.\n"
+"\n"
+"A manager can release it, and the release is recorded."
+msgstr ""
+
+#. module: liber_product_bonus
+#. odoo-python
+#: code:addons/liber_product_bonus/models/bonus_dispatch.py:0
+msgid "Over quota. A manager can release it."
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_list__user_id
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_list_combine__user_id
+msgid "Owner"
+msgstr "Dono"
+
+#. module: liber_product_bonus
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_list_import_form
+msgid ""
+"Para importar <b>várias listas de uma vez</b>, ponha\n"
+"                        uma coluna <b>Lista</b> na planilha dizendo a que lista\n"
+"                        cada contato pertence — a lista que ainda não existir é\n"
+"                        criada, e a mesma pessoa pode aparecer em quantas listas\n"
+"                        fizer sentido, sem duplicar o cadastro."
+msgstr ""
+
+#. module: liber_product_bonus
+#. odoo-python
+#: code:addons/liber_product_bonus/wizard/bonus_list_import.py:0
+msgid ""
+"Para onde vão estes contatos? Escolha uma lista no campo acima, ou ponha uma"
+" coluna 'Lista' na planilha dizendo, linha a linha, a que lista cada contato"
+" pertence."
+msgstr ""
+
+#. module: liber_product_bonus
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_vip_form
+msgid "Para que serve esta lista?"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,field_description:liber_product_bonus.field_res_partner__bonus_list_member_ids
+#: model:ir.model.fields,field_description:liber_product_bonus.field_res_users__bonus_list_member_ids
+msgid "Participações"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_dispatch_line__partner_id
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_list_member__partner_id
+msgid "Partner"
+msgstr "Parceiro"
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus__partner_type
+#: model:ir.model.fields,field_description:liber_product_bonus.field_res_partner__bonus_partner_type
+#: model:ir.model.fields,field_description:liber_product_bonus.field_res_users__bonus_partner_type
+msgid "Partner type"
+msgstr "Tipo de parceiro"
+
+#. module: liber_product_bonus
+#: model_terms:ir.actions.act_window,help:liber_product_bonus.action_bonus_confirm
+msgid ""
+"Passados os dias configurados (Definições &gt; Bonificações), quem\n"
+"               foi expedido e não confirmou chegada aparece aqui — com o telefone,\n"
+"               para você ligar e perguntar se o livro chegou."
+msgstr ""
+
+#. module: liber_product_bonus
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_config_settings
+msgid ""
+"Percentual da tiragem que cada balde pode dar. Vale para todos os títulos; a"
+" exceção por título fica em Bonificações > Metas."
+msgstr ""
+
+#. module: liber_product_bonus
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_config_settings
+msgid "Peso do tempo"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus__phone
+msgid "Phone"
+msgstr "Telefone"
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_list_import__file
+msgid "Planilha"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_list_import_form
+msgid "Planilha (.xlsx ou .csv)"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_list_import__template_file
+msgid "Planilha de exemplo"
+msgstr "Planilha de exemplo"
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,help:liber_product_bonus.field_product_bonus_list_combine__note
+msgid ""
+"Por que esta lista existe. Vai para a nota da nova lista, acima da "
+"procedência -- que o assistente escreve sozinho."
+msgstr ""
+
+#. module: liber_product_bonus
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_list_combine_form
+msgid "Por que esta lista existe..."
+msgstr ""
+
+#. module: liber_product_bonus
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_config_settings
+msgid "Posição fiscal da nota de remessa"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:product.bonus.reason,name:liber_product_bonus.reason_press
+msgid "Press"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_list_combine__preview_html
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_list_import__preview_html
+msgid "Preview Html"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_dispatch__source_dispatch_ids
+msgid "Previous dispatches"
+msgstr "Disparos anteriores"
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_dispatch__print_run
+msgid "Print Run"
+msgstr "Tiragem"
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_quota__print_run
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_product__bonus_print_run
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_template__bonus_print_run
+msgid "Print run"
+msgstr "Tiragem"
+
+#. module: liber_product_bonus
+#: model:ir.model,name:liber_product_bonus.model_product_template
+msgid "Product"
+msgstr "Produto"
+
+#. module: liber_product_bonus
+#: model:ir.model,name:liber_product_bonus.model_product_product
+msgid "Product Variant"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,help:liber_product_bonus.field_product_bonus_list__outcome_pct
+msgid ""
+"Proporção de avaliações positivas. Serve para ordenar; a fração ao lado é o "
+"que se lê, porque mostra de quantas."
+msgstr ""
+
+#. module: liber_product_bonus
+#: model_terms:ir.actions.act_window,help:liber_product_bonus.action_partner_bonus_lists
+msgid ""
+"Quando houver listas com membros, esta tela mostra cada contato\n"
+"               e em quantas listas ele está."
+msgstr ""
+
+#. module: liber_product_bonus
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_config_settings
+msgid "Quando ligar para confirmar chegada"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus__quantity
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_line__quantity
+msgid "Quantity"
+msgstr "Quantidade"
+
+#. module: liber_product_bonus
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_config_settings
+msgid "Quanto da tiragem pode ser doado"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_config_settings
+msgid "Quanto vale cada resultado"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_dispatch_form
+msgid "Quem recebeu o livro anterior"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_dispatch__quota_after
+msgid "Quota After"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_dispatch__quota_allowed
+msgid "Quota Allowed"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_dispatch__quota_given
+msgid "Quota Given"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_dispatch__quota_left
+msgid "Quota Left"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_dispatch__quota_pct
+msgid "Quota Pct"
+msgstr ""
+
+#. module: liber_product_bonus
+#. odoo-python
+#: code:addons/liber_product_bonus/models/bonus.py:0
+msgid "Quota override for %(product)s by %(user)s."
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,help:liber_product_bonus.field_product_bonus_list__outcome_rate
+msgid ""
+"Raw rate, never a score. Tells which list is worth it and which one became "
+"junk mail."
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus__reason_id
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_dispatch__reason_id
+msgid "Reason"
+msgstr "Motivo"
+
+#. module: liber_product_bonus
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_dispatch_form
+msgid "Recarregar"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_dispatch_line__received_count
+msgid "Received"
+msgstr "Recebeu"
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus__partner_id
+msgid "Recipient"
+msgstr "Destinatário"
+
+#. module: liber_product_bonus
+#: model:ir.model.fields.selection,name:liber_product_bonus.selection__product_bonus__fiscal_state__reconciled
+msgid "Reconciled"
+msgstr "Conciliada"
+
+#. module: liber_product_bonus
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_form
+msgid "Reenviar"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,help:liber_product_bonus.field_product_bonus__cfop_id
+msgid "Remessa em bonificação (5910/6910). Stamped for the NF-e."
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus__note_move_id
+msgid "Remessa note"
+msgstr "Nota de remessa"
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,field_description:liber_product_bonus.field_account_bank_statement_line__remessa_origin
+#: model:ir.model.fields,field_description:liber_product_bonus.field_account_move__remessa_origin
+msgid "Remessa origin"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.model.fields.selection,name:liber_product_bonus.selection__product_bonus__partner_band_at_send__warm
+#: model:ir.model.fields.selection,name:liber_product_bonus.selection__res_partner__bonus_rating_band__warm
+msgid "Rendendo"
+msgstr "Rendendo"
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_reason__requires_approval
+msgid "Requires approval"
+msgstr "Exige aprovação"
+
+#. module: liber_product_bonus
+#. odoo-python
+#: code:addons/liber_product_bonus/models/bonus.py:0
+msgid "Resent after %s never arrived."
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus__user_id
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_dispatch__user_id
+msgid "Responsible"
+msgstr "Responsável"
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus__activity_user_id
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_dispatch__activity_user_id
+msgid "Responsible User"
+msgstr "Responsável"
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_list_combine__result_count
+msgid "Result Count"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_list_import__result_html
+msgid "Result Html"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_report_search
+msgid "Resultado"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.actions.act_window,name:liber_product_bonus.action_bonus_confirm
+#: model:ir.ui.menu,name:liber_product_bonus.menu_bonus_confirm
+msgid "Retorno"
+msgstr "Retorno"
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_dispatch_line__outcome_rate
+msgid "Return"
+msgstr "Rendeu"
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_reason__return_window_days
+msgid "Return window (days)"
+msgstr "Janela de retorno (dias)"
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus__message_has_sms_error
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_dispatch__message_has_sms_error
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_list__message_has_sms_error
+msgid "SMS Delivery error"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_member_list
+msgid "Saiu"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_dispatch_form
+msgid "Salvar seleção como lista"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_dispatch_line__rating_html
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_dispatch_line__rating_label
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_list_member__rating_html
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_list_member__rating_label
+#: model:ir.model.fields,field_description:liber_product_bonus.field_res_partner__bonus_rating
+#: model:ir.model.fields,field_description:liber_product_bonus.field_res_partner__bonus_rating_html
+#: model:ir.model.fields,field_description:liber_product_bonus.field_res_partner__bonus_rating_label
+#: model:ir.model.fields,field_description:liber_product_bonus.field_res_users__bonus_rating
+#: model:ir.model.fields,field_description:liber_product_bonus.field_res_users__bonus_rating_html
+#: model:ir.model.fields,field_description:liber_product_bonus.field_res_users__bonus_rating_label
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_dispatch_form
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_vip_form
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_partner_form_bonus
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_partner_list_bonus_lists
+msgid "Score"
+msgstr "Score"
+
+#. module: liber_product_bonus
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_config_settings
+msgid "Score do parceiro"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_dispatch_line__selected
+msgid "Selected"
+msgstr "Selecionado"
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_dispatch__selected_count
+msgid "Selected Count"
+msgstr "Selecionados"
+
+#. module: liber_product_bonus
+#: model_terms:ir.actions.act_window,help:liber_product_bonus.action_bonus_report
+msgid "Sem dados ainda."
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,help:liber_product_bonus.field_product_bonus_list_import__match_by_name
+msgid ""
+"Sem e-mail, tenta achar um contato com o mesmo nome exato. Desligue se a "
+"base tem muitos homônimos -- na dúvida o importador cria um contato novo, "
+"que é o erro mais fácil de desfazer."
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.model.fields.selection,name:liber_product_bonus.selection__product_bonus__partner_band_at_send__cold
+#: model:ir.model.fields.selection,name:liber_product_bonus.selection__res_partner__bonus_rating_band__cold
+msgid "Sem retorno"
+msgstr "Sem retorno"
+
+#. module: liber_product_bonus
+#: model:ir.model.fields.selection,name:liber_product_bonus.selection__product_bonus__state__sent
+#: model:ir.model.fields.selection,name:liber_product_bonus.selection__product_bonus_dispatch__state__sent
+msgid "Sent"
+msgstr "Enviado"
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus__sent_date
+msgid "Sent Date"
+msgstr "Enviado em"
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_reason__sequence
+msgid "Sequence"
+msgstr "Sequência"
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus__picking_id
+msgid "Shipment"
+msgstr "Movimentação"
+
+#. module: liber_product_bonus
+#: model:ir.model.fields.selection,name:liber_product_bonus.selection__product_bonus__outcome__silence
+msgid "Silence"
+msgstr "Silêncio"
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,field_description:liber_product_bonus.field_res_config_settings__bonus_points_silence
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_followup_list
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_report_search
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_search
+msgid "Silêncio"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_dispatch_line__rating_band
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_list_member__rating_band
+#: model:ir.model.fields,field_description:liber_product_bonus.field_res_partner__bonus_rating_band
+#: model:ir.model.fields,field_description:liber_product_bonus.field_res_users__bonus_rating_band
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_partner_form_bonus
+msgid "Situação"
+msgstr "Situação"
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus__partner_band_at_send
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_report_search
+msgid "Situação no envio"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_dispatch__sources_html
+msgid "Sources Html"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_list__spent
+msgid "Spent"
+msgstr "Gasto"
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus__state
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_dispatch__state
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_list_import__state
+msgid "State"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,help:liber_product_bonus.field_product_bonus__activity_state
+#: model:ir.model.fields,help:liber_product_bonus.field_product_bonus_dispatch__activity_state
+msgid ""
+"Status based on activities\n"
+"Overdue: Due date is already passed\n"
+"Today: Activity date is today\n"
+"Planned: Future activities."
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_line__subtotal
+msgid "Subtotal"
+msgstr "Subtotal"
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,help:liber_product_bonus.field_product_bonus_quota__print_run
+msgid ""
+"Sum of what came INTO stock -- not the balance on hand. Stock is a moving "
+"number; a print run of 3000 stays 3000 forever."
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_list_add__summary_html
+msgid "Summary Html"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,help:liber_product_bonus.field_product_bonus_list_import__list_id
+msgid ""
+"Só para planilha de uma lista. Se o arquivo tiver coluna 'Lista', ela manda "
+"-- e este campo é ignorado."
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.model.constraint,message:liber_product_bonus.constraint_product_bonus_list_tag_name_uniq
+msgid "Tag already exists."
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_list__tag_ids
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_list_combine__tag_ids
+msgid "Tags"
+msgstr "Etiquetas"
+
+#. module: liber_product_bonus
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_followup_list
+msgid "Telefone"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,help:liber_product_bonus.field_product_bonus_dispatch_line__address_ok
+msgid ""
+"Tem endereço utilizável: rua, CEP e cidade. Sem isto o pacote não sai do "
+"depósito."
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_list_import__template_filename
+msgid "Template Filename"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,help:liber_product_bonus.field_product_bonus_dispatch__manual_partner_ids
+msgid "The author asked for one more. There is always one."
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,help:liber_product_bonus.field_account_bank_statement_line__bonus_id
+#: model:ir.model.fields,help:liber_product_bonus.field_account_move__bonus_id
+msgid "The bonus copy (B000) this note was generated for."
+msgstr ""
+
+#. module: liber_product_bonus
+#. odoo-python
+#: code:addons/liber_product_bonus/models/bonus.py:0
+msgid ""
+"The bonus fiscal position is not mapped (it needs Auto Invoice Paid and its "
+"account). Set it in Definições > Bonificações before generating the note."
+msgstr ""
+
+#. module: liber_product_bonus
+#. odoo-python
+#: code:addons/liber_product_bonus/models/bonus.py:0
+msgid ""
+"The bonus note is a nota de simples remessa (CFOP 5910) and it must be "
+"mapped. Set the CFOP in Definições > Bonificações."
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.model.constraint,message:liber_product_bonus.constraint_product_bonus_name_uniq
+msgid "The bonus number must be unique."
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,help:liber_product_bonus.field_product_bonus_list__quota_qty
+msgid "The ceiling the bonus copies of this list have to fit in."
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.model.constraint,message:liber_product_bonus.constraint_product_bonus_dispatch_name_uniq
+msgid "The dispatch number must be unique."
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,help:liber_product_bonus.field_product_bonus__nfe_xml_panel_id
+msgid "The imported NF-e panel, resolved by the access key."
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,help:liber_product_bonus.field_product_bonus_dispatch__campaign
+msgid "The launch, the fair, the push."
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,help:liber_product_bonus.field_product_bonus_dispatch__list_ids
+msgid ""
+"The owners of these lists approve the dispatch -- once, not once per person."
+" Somebody on two lists still gets a single copy."
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,help:liber_product_bonus.field_product_bonus__outcome_link
+msgid ""
+"The post, the review, the video. 'Covered it' without a link is an opinion; "
+"with a link it is a fact -- and in two years someone can click it instead of"
+" trusting the memory of a person who has left the company."
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.model.constraint,message:liber_product_bonus.constraint_product_bonus_list_member_list_partner_uniq
+msgid "This contact is already on the list."
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_list_member__partner_type
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_partner_list_bonus_lists
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_partner_search_bonus_lists
+msgid "Tipo"
+msgstr "Tipo"
+
+#. module: liber_product_bonus
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_list
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_member_search
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_report_search
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_search
+msgid "Tipo de parceiro"
+msgstr "Tipo de parceiro"
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus__product_id
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_dispatch__product_id
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_line__product_id
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_quota__product_id
+msgid "Title"
+msgstr "Título"
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus__to_call
+msgid "To call"
+msgstr "A ligar"
+
+#. module: liber_product_bonus
+#: model:ir.model.fields.selection,name:liber_product_bonus.selection__product_bonus__fiscal_state__to_emit
+msgid "To emit"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,field_description:liber_product_bonus.field_res_config_settings__bonus_pct_total
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_form
+msgid "Total"
+msgstr "Total"
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus__total_cost
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_dispatch__total_cost
+msgid "Total Cost"
+msgstr "Custo total"
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus__tracking_ref
+msgid "Tracking code"
+msgstr "Código de rastreio"
+
+#. module: liber_product_bonus
+#: model:ir.model.fields.selection,name:liber_product_bonus.selection__product_bonus_dispatch__state__draft
+msgid "Triage"
+msgstr "Triagem"
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,help:liber_product_bonus.field_product_bonus__activity_exception_decoration
+#: model:ir.model.fields,help:liber_product_bonus.field_product_bonus_dispatch__activity_exception_decoration
+msgid "Type of the exception activity on record."
+msgstr ""
+
+#. module: liber_product_bonus
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_followup_list
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_list
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_report_search
+msgid "Título"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model_terms:ir.actions.act_window,help:liber_product_bonus.action_bonus_vip_list
+msgid ""
+"Uma lista VIP não é uma tag em contatos: ela tem dono, orçamento\n"
+"               e história — quem montou, o que gastou, quem entrou e quando."
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.model.fields.selection,name:liber_product_bonus.selection__product_bonus_list__combine_mode__union
+msgid "Union"
+msgstr "União"
+
+#. module: liber_product_bonus
+#: model:ir.model.fields.selection,name:liber_product_bonus.selection__product_bonus_list_combine__mode__union
+msgid "Union -- everyone in any of them"
+msgstr "União — quem está em qualquer uma"
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_line__unit_cost
+msgid "Unit cost"
+msgstr "Custo unitário"
+
+#. module: liber_product_bonus
+#: model:res.groups,name:liber_product_bonus.group_bonus_user
+msgid "User"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.model,name:liber_product_bonus.model_product_bonus_list
+msgid "VIP List"
+msgstr "Lista VIP"
+
+#. module: liber_product_bonus
+#: model:ir.model,name:liber_product_bonus.model_product_bonus_list_member
+msgid "VIP List Member"
+msgstr "Membro da lista VIP"
+
+#. module: liber_product_bonus
+#: model:ir.model,name:liber_product_bonus.model_product_bonus_list_tag
+msgid "VIP List Tag"
+msgstr "Etiqueta de lista"
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus__list_id
+msgid "VIP list"
+msgstr "Lista VIP"
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_dispatch__list_ids
+msgid "VIP lists"
+msgstr "Listas VIP"
+
+#. module: liber_product_bonus
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_list_import_form
+msgid "Voltar"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_form
+msgid "Voltar a rascunho"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_dispatch_form
+msgid "Voltar à triagem"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus__website_message_ids
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_dispatch__website_message_ids
+#: model:ir.model.fields,field_description:liber_product_bonus.field_product_bonus_list__website_message_ids
+msgid "Website Messages"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,help:liber_product_bonus.field_product_bonus__website_message_ids
+#: model:ir.model.fields,help:liber_product_bonus.field_product_bonus_dispatch__website_message_ids
+#: model:ir.model.fields,help:liber_product_bonus.field_product_bonus_list__website_message_ids
+msgid "Website communication history"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,help:liber_product_bonus.field_product_bonus__deadline
+msgid ""
+"When the return window closes. Until then it is 'waiting', not 'silence'."
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,help:liber_product_bonus.field_product_bonus__call_date
+msgid "When to call the recipient to confirm arrival."
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,help:liber_product_bonus.field_product_bonus__bucket
+#: model:ir.model.fields,help:liber_product_bonus.field_product_bonus_dispatch__bucket
+#: model:ir.model.fields,help:liber_product_bonus.field_product_bonus_reason__bucket
+msgid ""
+"Which budget pays for it (the investment), and which quota it consumes."
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,help:liber_product_bonus.field_product_bonus__list_id
+msgid "Which list this came from. The list's owner approves it."
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,help:liber_product_bonus.field_product_bonus__partner_type
+#: model:ir.model.fields,help:liber_product_bonus.field_product_bonus_list_member__partner_type
+#: model:ir.model.fields,help:liber_product_bonus.field_res_partner__bonus_partner_type
+#: model:ir.model.fields,help:liber_product_bonus.field_res_users__bonus_partner_type
+msgid ""
+"Who they are (author, journalist, influencer, bookshop) -- not which budget "
+"pays for the book. That is the investment."
+msgstr ""
+
+#. module: liber_product_bonus
+#. odoo-python
+#: code:addons/liber_product_bonus/models/bonus_dispatch.py:0
+msgid "dispatch_id"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.model.fields.selection,name:liber_product_bonus.selection__product_bonus_list_import__state__done
+msgid "done"
+msgstr ""
+
+#. module: liber_product_bonus
+#. odoo-python
+#: code:addons/liber_product_bonus/wizard/bonus_list_import.py:0
+msgid "id"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_vip_form
+msgid "imprensa, poesia, SP..."
+msgstr ""
+
+#. module: liber_product_bonus
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_dispatch_form
+msgid "jornalista, influencer..."
+msgstr ""
+
+#. module: liber_product_bonus
+#. odoo-python
+#: code:addons/liber_product_bonus/wizard/bonus_list_import.py:0
+msgid "planilha"
+msgstr "planilha"
+
+#. module: liber_product_bonus
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_list_add_form
+msgid "por que este grupo entrou"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.model.fields.selection,name:liber_product_bonus.selection__product_bonus_list_import__state__preview
+msgid "preview"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.model.fields.selection,name:liber_product_bonus.selection__product_bonus_list_import__state__upload
+msgid "upload"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_bonus_dispatch_form
+#: model_terms:ir.ui.view,arch_db:liber_product_bonus.view_partner_list_bonus_lists
+msgid "Último"
+msgstr ""
+
+#. module: liber_product_bonus
+#: model:ir.model.fields,help:liber_product_bonus.field_product_bonus_dispatch_line__rating_html
+#: model:ir.model.fields,help:liber_product_bonus.field_product_bonus_dispatch_line__rating_label
+#: model:ir.model.fields,help:liber_product_bonus.field_product_bonus_list_member__rating_html
+#: model:ir.model.fields,help:liber_product_bonus.field_product_bonus_list_member__rating_label
+#: model:ir.model.fields,help:liber_product_bonus.field_res_partner__bonus_rating_html
+#: model:ir.model.fields,help:liber_product_bonus.field_res_partner__bonus_rating_label
+#: model:ir.model.fields,help:liber_product_bonus.field_res_users__bonus_rating_html
+#: model:ir.model.fields,help:liber_product_bonus.field_res_users__bonus_rating_label
+msgid ""
+"⚘ nunca recebeu. Sem histórico não há score, e isso é um convite: é assim que a casa descobre gente.\n"
+"⚗ n/N — recebeu pouco, ainda em teste. Uma amostra de 1 não é avaliação, é sorte; abaixo de N avaliações nenhum número seria honesto.\n"
+"0 a 13 — média dos resultados ponderada por recência (o recente pesa mais), encolhida para a média da casa enquanto o histórico é curto.\n"
+"↑ → ↓ — a direção compara os envios recentes com os anteriores. É a seta, não o número, que diz se a pessoa está esquentando ou acabando.\n"
+"Os pontos e os cortes ficam em Definições > Bonificações."
+msgstr ""

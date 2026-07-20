@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="budget_tag_view_list" model="ir.ui.view">
+        <field name="name">budget.tag.list</field>
+        <field name="model">budget.tag</field>
+        <field name="arch" type="xml">
+            <list editable="bottom">
+                <field name="name"/>
+                <field name="color" widget="color_picker"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="budget_tag_action" model="ir.actions.act_window">
+        <field name="name">Budget Tags</field>
+        <field name="res_model">budget.tag</field>
+        <field name="view_mode">list</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Create a budget tag</p>
+            <p>Tags para classificar/filtrar os orcamentos.</p>
+        </field>
+    </record>
+
+    <menuitem id="menu_budget_tag" parent="menu_budget_config"
+              action="budget_tag_action" sequence="30"/>
+
+</odoo>

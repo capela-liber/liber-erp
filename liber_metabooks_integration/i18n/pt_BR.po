@@ -1,0 +1,1924 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* liber_metabooks_integration
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0-20260630\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-07-12 23:04+0000\n"
+"PO-Revision-Date: 2026-07-12 23:04+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: liber_metabooks_integration
+#. odoo-python
+#: code:addons/liber_metabooks_integration/wizards/metabooks_import_isbn.py:0
+msgid " (%s not found)"
+msgstr " (%s não encontrado(s))"
+
+#. module: liber_metabooks_integration
+#. odoo-python
+#: code:addons/liber_metabooks_integration/models/metabooks_product.py:0
+msgid "%(updated)s book(s) updated, %(missing)s not found."
+msgstr "%(updated)s livro(s) atualizado(s), %(missing)s não encontrado(s)."
+
+#. module: liber_metabooks_integration
+#: model_terms:ir.ui.view,arch_db:liber_metabooks_integration.metabooks_product_offer_detail_page
+msgid ""
+"<span class=\"fa fa-eye mr-2 \"/>\n"
+"                        <span>Size Chart</span>"
+msgstr ""
+
+#. module: liber_metabooks_integration
+#: model_terms:ir.ui.view,arch_db:liber_metabooks_integration.metabooks_product_offer_detail_page
+msgid "<span>Product Size Chart</span>"
+msgstr "<span>Tabela de medidas do produto</span>"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields.selection,name:liber_metabooks_integration.selection__product_template__metabooks_publishing_status__04
+msgid "Active"
+msgstr "Ativo"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields.selection,name:liber_metabooks_integration.selection__product_template__metabooks_publishing_status__13
+msgid "Active, but not sold separately"
+msgstr "Ativo, mas não vendido separadamente"
+
+#. module: liber_metabooks_integration
+#. odoo-python
+#: code:addons/liber_metabooks_integration/models/metabooks_vendor.py:0
+msgid "Add Xml File"
+msgstr "Adicionar arquivo XML"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields.selection,name:liber_metabooks_integration.selection__product_template__metabooks_product_form__aa
+msgid "Audio"
+msgstr "Áudio"
+
+#. module: liber_metabooks_integration
+#: model_terms:ir.ui.view,arch_db:liber_metabooks_integration.metabooks_product_filter_inherit_form_1
+msgid "Audiobook (abook)"
+msgstr "Audiolivro (abook)"
+
+#. module: liber_metabooks_integration
+#: model_terms:ir.ui.view,arch_db:liber_metabooks_integration.metabooks_product_filter_inherit_form_1
+msgid "Author"
+msgstr "Autor"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_author_contributor_role__name
+msgid "Author Code"
+msgstr "Código do autor"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_product_product__book_auther_ids
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_product_template__book_auther_ids
+msgid "Author List"
+msgstr "Lista de autores"
+
+#. module: liber_metabooks_integration
+#: model_terms:ir.ui.view,arch_db:liber_metabooks_integration.hedra_metabooks_res_config_inherit_form
+msgid "Authorisation code"
+msgstr "Código de autorização"
+
+#. module: liber_metabooks_integration
+#: model:ir.actions.act_window,name:liber_metabooks_integration.action_metabooks_authors
+#: model:ir.ui.menu,name:liber_metabooks_integration.menu_metabooks_authors
+msgid "Authors"
+msgstr "Autores"
+
+#. module: liber_metabooks_integration
+#: model:ir.actions.act_window,name:liber_metabooks_integration.action_metabooks_product_identifier
+#: model:ir.ui.menu,name:liber_metabooks_integration.menu_metabooks_product_identifier
+msgid "Availability"
+msgstr "Disponibilidade"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_metabooks_avalaibility_definition__identify_number
+msgid "Availability Code"
+msgstr "Código de disponibilidade"
+
+#. module: liber_metabooks_integration
+#: model_terms:ir.ui.view,arch_db:liber_metabooks_integration.metabooks_product_filter_inherit_form_1
+msgid "Available"
+msgstr "Disponível"
+
+#. module: liber_metabooks_integration
+#: model:ir.actions.act_window,name:liber_metabooks_integration.action_metabooks_bisac_codes
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_product_product__bisac_code
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_product_template__bisac_code
+#: model:ir.ui.menu,name:liber_metabooks_integration.menu_metabooks_bisac
+msgid "BISAC"
+msgstr "BISAC"
+
+#. module: liber_metabooks_integration
+#: model:ir.model,name:liber_metabooks_integration.model_biblio_bisac_codes
+msgid "BISAC Codes"
+msgstr "Códigos BISAC"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_product_product__bisac_code_ids
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_product_template__bisac_code_ids
+msgid "BISAC List"
+msgstr "Lista BISAC"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_product_product__metabooks_back_matter_pages
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_product_template__metabooks_back_matter_pages
+msgid "Back Matter Pages"
+msgstr "Páginas pós-textuais"
+
+#. module: liber_metabooks_integration
+#: model_terms:ir.ui.view,arch_db:liber_metabooks_integration.metabooks_product_inherit_form
+msgid "Basic"
+msgstr "Básico"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields.selection,name:liber_metabooks_integration.selection__product_template__metabooks_product_form__bj
+msgid "Bath book"
+msgstr "Livro de banho"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields.selection,name:liber_metabooks_integration.selection__product_template__metabooks_product_form__bm
+msgid "Big book"
+msgstr "Livro gigante"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_product_product__binding
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_product_product__metabooks_binding
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_product_template__binding
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_product_template__metabooks_binding
+msgid "Binding"
+msgstr "Encadernação"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_metabooks_auther_publiser__auhor_biographical_note
+msgid "Biographical note"
+msgstr "Nota biográfica"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_metabooks_book_subjects__metabooks_bisac_code
+msgid "Bisac"
+msgstr "BISAC"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_biblio_bisac_codes__bisac_category
+msgid "Bisac Categories"
+msgstr "Categorias BISAC"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_biblio_bisac_codes__bisac_code
+msgid "Bisac Code"
+msgstr "Código BISAC"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_biblio_bisac_codes__bisac_prefix
+msgid "Bisac Prefix"
+msgstr "Prefixo BISAC"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_product_product__bisac_prefix
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_product_template__bisac_prefix
+msgid "Bisac prefix"
+msgstr "Prefixo BISAC"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields.selection,name:liber_metabooks_integration.selection__product_template__metabooks_product_form__bh
+msgid "Board book"
+msgstr "Livro cartonado"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields.selection,name:liber_metabooks_integration.selection__product_template__metabooks_product_form__ba
+msgid "Book"
+msgstr "Livro"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_product_product__metabooks_book_subtitle
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_product_template__metabooks_book_subtitle
+msgid "Book Subitle"
+msgstr "Subtítulo do livro"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_product_product__metabooks_book_title
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_product_template__metabooks_book_title
+msgid "Book Title"
+msgstr "Título do livro"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_product_product__metabooks_product_type
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_product_template__metabooks_product_type
+#: model_terms:ir.ui.view,arch_db:liber_metabooks_integration.metabooks_product_filter_inherit_form_1
+msgid "Book Type"
+msgstr "Tipo de livro"
+
+#. module: liber_metabooks_integration
+#: model:ir.actions.act_window,name:liber_metabooks_integration.action_metabooks_books
+#: model:ir.ui.menu,name:liber_metabooks_integration.menu_metabooks_books
+msgid "Books"
+msgstr "Livros"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_product_product__ks_product_brand_id
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_product_template__ks_product_brand_id
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_vendor_metabooks_ids__brand
+#: model_terms:ir.ui.view,arch_db:liber_metabooks_integration.view_metabooks_vendor_ids_search
+msgid "Brand"
+msgstr "Marca"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields,help:liber_metabooks_integration.field_product_product__metabooks_ncm
+#: model:ir.model.fields,help:liber_metabooks_integration.field_product_template__metabooks_ncm
+msgid ""
+"Brazilian fiscal classification, as declared to Metabooks (ONIX product "
+"classification type 10)."
+msgstr ""
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields.selection,name:liber_metabooks_integration.selection__product_template__metabooks_product_form__ac
+msgid "CD-Audio"
+msgstr "CD de áudio"
+
+#. module: liber_metabooks_integration
+#: model_terms:ir.ui.view,arch_db:liber_metabooks_integration.metabooks_import_isbn_form
+#: model_terms:ir.ui.view,arch_db:liber_metabooks_integration.metabooks_import_vendor_form
+msgid "Cancel"
+msgstr "Cancelar"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields.selection,name:liber_metabooks_integration.selection__product_template__metabooks_publishing_status__01
+msgid "Cancelled"
+msgstr "Cancelado"
+
+#. module: liber_metabooks_integration
+#: model:ir.ui.menu,name:liber_metabooks_integration.menu_metabooks_catalogue
+msgid "Catalogue"
+msgstr "Catálogo"
+
+#. module: liber_metabooks_integration
+#. odoo-python
+#: code:addons/liber_metabooks_integration/models/metabooks_import_job.py:0
+#: model_terms:ir.ui.view,arch_db:liber_metabooks_integration.metabooks_import_job_form
+msgid "Catalogue Import"
+msgstr "Importação de catálogo"
+
+#. module: liber_metabooks_integration
+#: model:ir.actions.act_window,name:liber_metabooks_integration.action_metabooks_import_jobs
+#: model:ir.ui.menu,name:liber_metabooks_integration.menu_metabooks_import_jobs
+#: model_terms:ir.ui.view,arch_db:liber_metabooks_integration.metabooks_import_job_list
+msgid "Catalogue Imports"
+msgstr "Importações de catálogo"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_metabooks_import_job__total_pages
+msgid "Catalogue Pages"
+msgstr "Páginas do catálogo"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_metabooks_import_job__total
+msgid "Catalogue Size"
+msgstr "Tamanho do catálogo"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields.selection,name:liber_metabooks_integration.selection__metabooks_import_job__job_type__catalog
+msgid "Catalogue import"
+msgstr "Importação de catálogo"
+
+#. module: liber_metabooks_integration
+#. odoo-python
+#: code:addons/liber_metabooks_integration/models/metabooks_connector.py:0
+msgid "Code %s"
+msgstr "Código %s"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_vendor_metabooks_ids__company_id
+msgid "Company Id"
+msgstr "Id da empresa"
+
+#. module: liber_metabooks_integration
+#: model:ir.model,name:liber_metabooks_integration.model_res_config_settings
+msgid "Config Settings"
+msgstr "Configurações"
+
+#. module: liber_metabooks_integration
+#: model:ir.ui.menu,name:liber_metabooks_integration.menu_metabooks_config
+msgid "Configuration"
+msgstr "Configuração"
+
+#. module: liber_metabooks_integration
+#. odoo-python
+#: code:addons/liber_metabooks_integration/models/hedra_res_config.py:0
+msgid "Connection successful."
+msgstr "Conexão bem-sucedida."
+
+#. module: liber_metabooks_integration
+#: model:ir.model,name:liber_metabooks_integration.model_res_partner
+msgid "Contact"
+msgstr "Contato"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_metabooks_auther_publiser__author_full_name
+msgid "Contributor"
+msgstr "Contribuidor"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_metabooks_auther_publiser__author_contributor_role
+msgid "Contributor Role"
+msgstr "Papel do contribuidor"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_product_product__metabooks_country_of_manufacture
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_product_template__metabooks_country_of_manufacture
+msgid "Country of Manufacture"
+msgstr "País de fabricação"
+
+#. module: liber_metabooks_integration
+#: model:ir.model,website_form_label:liber_metabooks_integration.model_res_partner
+msgid "Create a Customer"
+msgstr "Criar um cliente"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_author_contributor_role__create_uid
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_biblio_bisac_codes__create_uid
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_import_metadata_wizard__create_uid
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_isbn_book_subjects__create_uid
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_metabooks_auther_publiser__create_uid
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_metabooks_avalaibility_definition__create_uid
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_metabooks_book_subjects__create_uid
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_metabooks_book_type__create_uid
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_metabooks_import_isbn__create_uid
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_metabooks_import_job__create_uid
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_metabooks_import_vendor__create_uid
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_metabooks_isbn_code_prefix__create_uid
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_metabooks_product_identifier__create_uid
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_vendor_metabooks_ids__create_uid
+msgid "Created by"
+msgstr "Criado por"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_author_contributor_role__create_date
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_biblio_bisac_codes__create_date
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_import_metadata_wizard__create_date
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_isbn_book_subjects__create_date
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_metabooks_auther_publiser__create_date
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_metabooks_avalaibility_definition__create_date
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_metabooks_book_subjects__create_date
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_metabooks_book_type__create_date
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_metabooks_import_isbn__create_date
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_metabooks_import_job__create_date
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_metabooks_import_vendor__create_date
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_metabooks_isbn_code_prefix__create_date
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_metabooks_product_identifier__create_date
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_vendor_metabooks_ids__create_date
+msgid "Created on"
+msgstr "Criado em"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_product_product__metabooks_creation_date
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_product_template__metabooks_creation_date
+msgid "Creation Date"
+msgstr "Data de criação"
+
+#. module: liber_metabooks_integration
+#: model_terms:ir.ui.view,arch_db:liber_metabooks_integration.hedra_metabooks_res_config_inherit_form
+msgid "Custom Product's Fields"
+msgstr "Campos personalizados do produto"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields.selection,name:liber_metabooks_integration.selection__product_template__metabooks_product_form__ai
+msgid "DVD Audio"
+msgstr "DVD de áudio"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields.selection,name:liber_metabooks_integration.selection__product_template__metabooks_product_form__vi
+msgid "DVD video"
+msgstr "DVD de vídeo"
+
+#. module: liber_metabooks_integration
+#: model_terms:ir.ui.view,arch_db:liber_metabooks_integration.metabooks_product_inherit_form
+msgid "Dates"
+msgstr "Datas"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_metabooks_avalaibility_definition__product_definition
+#: model_terms:ir.ui.view,arch_db:liber_metabooks_integration.product_description
+msgid "Description"
+msgstr "Descrição"
+
+#. module: liber_metabooks_integration
+#: model_terms:ir.ui.view,arch_db:liber_metabooks_integration.product_description
+msgid "Details"
+msgstr "Detalhes"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields.selection,name:liber_metabooks_integration.selection__product_template__metabooks_product_form__ea
+msgid "Digital (delivered electronically)"
+msgstr "Digital (entrega eletrônica)"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields.selection,name:liber_metabooks_integration.selection__product_template__metabooks_product_form__ed
+msgid "Digital download"
+msgstr "Download digital"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields.selection,name:liber_metabooks_integration.selection__product_template__metabooks_product_form__eb
+msgid "Digital download and online"
+msgstr "Download digital e online"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields.selection,name:liber_metabooks_integration.selection__product_template__metabooks_product_form__ec
+msgid "Digital online / streamed"
+msgstr "Digital online / streaming"
+
+#. module: liber_metabooks_integration
+#: model_terms:ir.ui.view,arch_db:liber_metabooks_integration.import_metadata_wizard_view_form
+msgid "Discard"
+msgstr "Descartar"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_author_contributor_role__display_name
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_biblio_bisac_codes__display_name
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_import_metadata_wizard__display_name
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_isbn_book_subjects__display_name
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_metabooks_auther_publiser__display_name
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_metabooks_avalaibility_definition__display_name
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_metabooks_book_subjects__display_name
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_metabooks_book_type__display_name
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_metabooks_connector__display_name
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_metabooks_import_isbn__display_name
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_metabooks_import_job__display_name
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_metabooks_import_vendor__display_name
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_metabooks_isbn_code_prefix__display_name
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_metabooks_product_identifier__display_name
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_product_template__display_name
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_res_config_settings__display_name
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_res_partner__display_name
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_vendor_metabooks_ids__display_name
+msgid "Display Name"
+msgstr "Nome exibido"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields.selection,name:liber_metabooks_integration.selection__metabooks_import_job__state__done
+msgid "Done"
+msgstr "Concluída"
+
+#. module: liber_metabooks_integration
+#: model_terms:ir.ui.view,arch_db:liber_metabooks_integration.metabooks_product_offer_detail_page
+msgid "Download"
+msgstr "Baixar"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_metabooks_import_job__with_covers
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_metabooks_import_vendor__with_covers
+msgid "Download covers"
+msgstr "Baixar capas"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields.selection,name:liber_metabooks_integration.selection__product_template__metabooks_product_form__an
+msgid "Downloadable and online audio"
+msgstr "Áudio para download e online"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields.selection,name:liber_metabooks_integration.selection__product_template__metabooks_product_form__aj
+msgid "Downloadable audio file"
+msgstr "Arquivo de áudio para download"
+
+#. module: liber_metabooks_integration
+#: model_terms:ir.ui.view,arch_db:liber_metabooks_integration.metabooks_product_filter_inherit_form_1
+msgid "E-book (ebook)"
+msgstr "E-book (ebook)"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_product_product__metabooks_ebook_format
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_product_template__metabooks_ebook_format
+msgid "E-book Format"
+msgstr "Formato do e-book"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_product_product__edition
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_product_template__edition
+msgid "Edition"
+msgstr "Edição"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_product_product__metabooks_edition_number
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_product_template__metabooks_edition_number
+msgid "Edition Number"
+msgstr "Número da edição"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_product_product__metabooks_edition_type
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_product_template__metabooks_edition_type
+msgid "Edition Type"
+msgstr "Tipo de edição"
+
+#. module: liber_metabooks_integration
+#: model_terms:ir.ui.view,arch_db:liber_metabooks_integration.metabooks_product_inherit_form
+msgid "Edition and Origin"
+msgstr "Edição e origem"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields,help:liber_metabooks_integration.field_product_product__metabooks_publishing_status
+#: model:ir.model.fields,help:liber_metabooks_integration.field_product_template__metabooks_publishing_status
+msgid ""
+"Editorial life of the title (ONIX list 64). Not the same as availability: a "
+"title can be Active and still out of stock."
+msgstr ""
+
+#. module: liber_metabooks_integration
+#. odoo-python
+#: code:addons/liber_metabooks_integration/wizards/metabooks_import_vendor.py:0
+msgid "Enter a Vendor / MVB ID."
+msgstr "Informe um ID de editora (MVB)."
+
+#. module: liber_metabooks_integration
+#. odoo-python
+#: code:addons/liber_metabooks_integration/wizards/metabooks_import_isbn.py:0
+msgid "Enter at least one ISBN."
+msgstr "Informe ao menos um ISBN."
+
+#. module: liber_metabooks_integration
+#. odoo-python
+#: code:addons/liber_metabooks_integration/models/import_metadata_wizard.py:0
+msgid ""
+"Error while Importing Data \n"
+" %s"
+msgstr ""
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_product_product__excerpt
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_product_template__excerpt
+msgid "Excerpt"
+msgstr "Trecho"
+
+#. module: liber_metabooks_integration
+#: model:ir.actions.server,name:liber_metabooks_integration.action_create_metadata
+msgid "Export Metadata "
+msgstr "Exportar metadados "
+
+#. module: liber_metabooks_integration
+#: model_terms:ir.ui.view,arch_db:liber_metabooks_integration.metabooks_product_inherit_form
+msgid "Extent"
+msgstr "Extensão"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields.selection,name:liber_metabooks_integration.selection__metabooks_import_job__state__failed
+msgid "Failed"
+msgstr "Falhou"
+
+#. module: liber_metabooks_integration
+#: model_terms:ir.ui.view,arch_db:liber_metabooks_integration.metabooks_product_inherit_form
+msgid "Finishing"
+msgstr "Acabamento"
+
+#. module: liber_metabooks_integration
+#: model_terms:ir.ui.view,arch_db:liber_metabooks_integration.metabooks_author_form_view_id
+msgid "First Name"
+msgstr "Nome"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields.selection,name:liber_metabooks_integration.selection__product_template__metabooks_product_form__bp
+msgid "Foam book"
+msgstr "Livro de espuma"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields.selection,name:liber_metabooks_integration.selection__product_template__metabooks_product_form__bo
+msgid "Fold-out book or chart"
+msgstr "Livro ou mapa desdobrável"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_product_product__metabooks_form_detail
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_product_template__metabooks_form_detail
+msgid "Form Detail Codes"
+msgstr "Códigos de detalhe do formato"
+
+#. module: liber_metabooks_integration
+#: model_terms:ir.ui.view,arch_db:liber_metabooks_integration.metabooks_product_inherit_form
+msgid "Format"
+msgstr "Formato"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields.selection,name:liber_metabooks_integration.selection__product_template__metabooks_publishing_status__02
+msgid "Forthcoming"
+msgstr "No prelo"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_product_product__metabooks_front_matter_pages
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_product_template__metabooks_front_matter_pages
+msgid "Front Matter Pages"
+msgstr "Páginas pré-textuais"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields.selection,name:liber_metabooks_integration.selection__product_template__metabooks_product_form__ze
+msgid "Game"
+msgstr "Jogo"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields.selection,name:liber_metabooks_integration.selection__product_template__metabooks_product_form__za
+msgid "General merchandise"
+msgstr "Mercadoria geral"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields,help:liber_metabooks_integration.field_biblio_bisac_codes__sequence
+msgid "Gives the sequence order when displaying a list of bisac categories."
+msgstr "Define a ordem de exibição da lista de categorias BISAC."
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields.selection,name:liber_metabooks_integration.selection__product_template__metabooks_binding__half
+msgid "Half bound"
+msgstr "Meia encadernação"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields.selection,name:liber_metabooks_integration.selection__product_template__metabooks_product_form__bb
+msgid "Hardback"
+msgstr "Capa dura"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_author_contributor_role__header_role
+msgid "Heading Role"
+msgstr "Papel (cabeçalho)"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_product_product__metabooks_height
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_product_template__metabooks_height
+msgid "Height"
+msgstr "Altura"
+
+#. module: liber_metabooks_integration
+#: model_terms:ir.ui.view,arch_db:liber_metabooks_integration.metabooks_product_inherit_form
+msgid "Height (mm)"
+msgstr "Altura (mm)"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields,help:liber_metabooks_integration.field_product_product__metabooks_binding
+#: model:ir.model.fields,help:liber_metabooks_integration.field_product_template__metabooks_binding
+msgid ""
+"How the block is bound (ONIX product form detail, B3xx). Sewn signatures and"
+" a glued spine are different jobs on a print order."
+msgstr ""
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_author_contributor_role__id
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_biblio_bisac_codes__id
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_import_metadata_wizard__id
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_isbn_book_subjects__id
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_metabooks_auther_publiser__id
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_metabooks_avalaibility_definition__id
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_metabooks_book_subjects__id
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_metabooks_book_type__id
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_metabooks_connector__id
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_metabooks_import_isbn__id
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_metabooks_import_job__id
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_metabooks_import_vendor__id
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_metabooks_isbn_code_prefix__id
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_metabooks_product_identifier__id
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_product_template__id
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_res_config_settings__id
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_res_partner__id
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_vendor_metabooks_ids__id
+msgid "ID"
+msgstr "ID"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_product_product__isbn
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_product_template__isbn
+msgid "ISBN"
+msgstr "ISBN"
+
+#. module: liber_metabooks_integration
+#: model:ir.model,name:liber_metabooks_integration.model_metabooks_isbn_code_prefix
+msgid "ISBN PREFIXES"
+msgstr "PREFIXOS ISBN"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_product_product__isbn_publisher_id
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_product_template__isbn_publisher_id
+msgid "ISBN Publisher"
+msgstr "Editora do ISBN"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_product_product__isbn_subject
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_product_template__isbn_subject
+msgid "ISBN Subjects"
+msgstr "Assuntos do ISBN"
+
+#. module: liber_metabooks_integration
+#: model_terms:ir.ui.view,arch_db:liber_metabooks_integration.metabooks_vendor_inherit_form
+msgid "ISBN prefixes"
+msgstr "Prefixos ISBN"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_metabooks_import_isbn__isbns
+msgid "ISBNs"
+msgstr "ISBNs"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_metabooks_product_identifier__id_value
+msgid "Identifier ID"
+msgstr "ID do identificador"
+
+#. module: liber_metabooks_integration
+#: model:ir.model,name:liber_metabooks_integration.model_metabooks_product_identifier
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_metabooks_product_identifier__metabooks_identifier_type
+msgid "Identifier Type"
+msgstr "Tipo de identificador"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_product_product__metabooks_illustration_note
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_product_template__metabooks_illustration_note
+msgid "Illustration Note"
+msgstr "Nota de ilustrações"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_product_product__metabooks_illustration_count
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_product_template__metabooks_illustration_count
+msgid "Illustrations"
+msgstr "Ilustrações"
+
+#. module: liber_metabooks_integration
+#: model_terms:ir.ui.view,arch_db:liber_metabooks_integration.import_metadata_wizard_view_form
+#: model_terms:ir.ui.view,arch_db:liber_metabooks_integration.metabooks_import_isbn_form
+#: model_terms:ir.ui.view,arch_db:liber_metabooks_integration.metabooks_import_vendor_form
+msgid "Import"
+msgstr "Importar"
+
+#. module: liber_metabooks_integration
+#: model_terms:ir.ui.view,arch_db:liber_metabooks_integration.metabooks_vendor_inherit_form
+#: model_terms:ir.ui.view,arch_db:liber_metabooks_integration.view_metabooks_vendor_ids
+msgid "Import Catalogue"
+msgstr "Importar catálogo"
+
+#. module: liber_metabooks_integration
+#: model:ir.actions.server,name:liber_metabooks_integration.action_import_metadata
+msgid "Import Mercado Editorial "
+msgstr "Importar Mercado Editorial "
+
+#. module: liber_metabooks_integration
+#: model:res.groups,name:liber_metabooks_integration.metadata_group
+msgid "Import Metadata Access"
+msgstr "Acesso à importação de metadados"
+
+#. module: liber_metabooks_integration
+#: model:ir.model,name:liber_metabooks_integration.model_metabooks_import_vendor
+msgid "Import a publisher catalogue from Metabooks by Vendor/MVB ID"
+msgstr "Importar o catálogo de uma editora do Metabooks pelo ID (MVB)"
+
+#. module: liber_metabooks_integration
+#: model:ir.ui.menu,name:liber_metabooks_integration.menu_metabooks_import_isbn
+msgid "Import by ISBN"
+msgstr "Importar por ISBN"
+
+#. module: liber_metabooks_integration
+#: model:ir.ui.menu,name:liber_metabooks_integration.menu_metabooks_import_vendor
+msgid "Import by Vendor ID"
+msgstr "Importar por ID da editora"
+
+#. module: liber_metabooks_integration
+#: model:ir.actions.act_window,name:liber_metabooks_integration.action_metabooks_import_isbn
+#: model_terms:ir.ui.view,arch_db:liber_metabooks_integration.metabooks_import_isbn_form
+msgid "Import from Metabooks (ISBN)"
+msgstr "Importar do Metabooks (ISBN)"
+
+#. module: liber_metabooks_integration
+#: model:ir.actions.act_window,name:liber_metabooks_integration.action_metabooks_import_vendor
+#: model_terms:ir.ui.view,arch_db:liber_metabooks_integration.metabooks_import_vendor_form
+msgid "Import from Metabooks (Vendor)"
+msgstr "Importar do Metabooks (editora)"
+
+#. module: liber_metabooks_integration
+#: model:ir.model,name:liber_metabooks_integration.model_metabooks_import_isbn
+msgid "Import products from Metabooks by ISBN"
+msgstr "Importar produtos do Metabooks por ISBN"
+
+#. module: liber_metabooks_integration
+#: model_terms:ir.ui.view,arch_db:liber_metabooks_integration.metabooks_vendor_inherit_form
+msgid "Import this publisher's catalogue from Metabooks"
+msgstr "Importar o catálogo desta editora do Metabooks"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_metabooks_import_job__imported
+msgid "Imported"
+msgstr "Importados"
+
+#. module: liber_metabooks_integration
+#. odoo-python
+#: code:addons/liber_metabooks_integration/models/metabooks_import_job.py:0
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_metabooks_import_job__product_ids
+msgid "Imported Products"
+msgstr "Produtos importados"
+
+#. module: liber_metabooks_integration
+#: model_terms:ir.ui.view,arch_db:liber_metabooks_integration.metabooks_import_job_form
+msgid "Imported products"
+msgstr "Produtos importados"
+
+#. module: liber_metabooks_integration
+#: model:ir.ui.menu,name:liber_metabooks_integration.menu_metabooks_imports
+msgid "Imports"
+msgstr "Importações"
+
+#. module: liber_metabooks_integration
+#: model_terms:ir.ui.view,arch_db:liber_metabooks_integration.metabooks_import_vendor_form
+msgid ""
+"Imports/updates the publisher's whole catalogue, filing products\n"
+"                    under <b>Imprint / Collection</b> categories. Large catalogues run\n"
+"                    in the background — use the limit to test first."
+msgstr ""
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields.selection,name:liber_metabooks_integration.selection__product_template__metabooks_publishing_status__08
+msgid "Inactive"
+msgstr "Inativo"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_metabooks_auther_publiser__is_auther
+msgid "Is Auther"
+msgstr "É autor"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_metabooks_auther_publiser__is_publiser
+msgid "Is Publiser"
+msgstr "É editora"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_metabooks_isbn_code_prefix__name
+msgid "Isbn Prefix"
+msgstr "Prefixo ISBN"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_res_partner__isbn_prefixes
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_res_users__isbn_prefixes
+msgid "Isbn Prefxes"
+msgstr "Prefixos ISBN"
+
+#. module: liber_metabooks_integration
+#: model_terms:ir.ui.view,arch_db:liber_metabooks_integration.metabooks_vendor_inherit_form
+msgid "Isbn prefixes"
+msgstr "Prefixos ISBN"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_metabooks_import_job__job_type
+msgid "Job Type"
+msgstr "Tipo de tarefa"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_product_product__metabooks_json_data
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_product_template__metabooks_json_data
+msgid "Json file"
+msgstr "Arquivo JSON"
+
+#. module: liber_metabooks_integration
+#: model_terms:ir.ui.view,arch_db:liber_metabooks_integration.metabooks_product_filter_inherit_form_1
+msgid "Label"
+msgstr "Selo"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_product_product__metabooks_language
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_product_template__metabooks_language
+msgid "Language"
+msgstr "Idioma"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields,help:liber_metabooks_integration.field_product_product__metabooks_original_language
+#: model:ir.model.fields,help:liber_metabooks_integration.field_product_template__metabooks_original_language
+msgid "Language the work was translated from, when it is a translation."
+msgstr "Idioma do qual a obra foi traduzida, quando é uma tradução."
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_product_product__metabooks_last_updatedate
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_product_template__metabooks_last_updatedate
+msgid "Last Modified Date"
+msgstr "Data da última modificação"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_metabooks_auther_publiser__author_last_name
+msgid "Last Name"
+msgstr "Sobrenome"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_author_contributor_role__write_uid
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_biblio_bisac_codes__write_uid
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_import_metadata_wizard__write_uid
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_isbn_book_subjects__write_uid
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_metabooks_auther_publiser__write_uid
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_metabooks_avalaibility_definition__write_uid
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_metabooks_book_subjects__write_uid
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_metabooks_book_type__write_uid
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_metabooks_import_isbn__write_uid
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_metabooks_import_job__write_uid
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_metabooks_import_vendor__write_uid
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_metabooks_isbn_code_prefix__write_uid
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_metabooks_product_identifier__write_uid
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_vendor_metabooks_ids__write_uid
+msgid "Last Updated by"
+msgstr "Última atualização por"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_author_contributor_role__write_date
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_biblio_bisac_codes__write_date
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_import_metadata_wizard__write_date
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_isbn_book_subjects__write_date
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_metabooks_auther_publiser__write_date
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_metabooks_avalaibility_definition__write_date
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_metabooks_book_subjects__write_date
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_metabooks_book_type__write_date
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_metabooks_import_isbn__write_date
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_metabooks_import_job__write_date
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_metabooks_import_vendor__write_date
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_metabooks_isbn_code_prefix__write_date
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_metabooks_product_identifier__write_date
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_vendor_metabooks_ids__write_date
+msgid "Last Updated on"
+msgstr "Última atualização em"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields,help:liber_metabooks_integration.field_product_product__metabooks_technical_sync
+#: model:ir.model.fields,help:liber_metabooks_integration.field_product_template__metabooks_technical_sync
+msgid "Last time the technical sheet was pulled from the by-ISBN ONIX record."
+msgstr "Última vez que a ficha técnica foi puxada do registro ONIX por ISBN."
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_res_partner__pricelist_lead_time
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_res_users__pricelist_lead_time
+msgid "Lead Time"
+msgstr "Prazo de entrega"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields.selection,name:liber_metabooks_integration.selection__product_template__metabooks_product_form__bg
+msgid "Leather / fine binding"
+msgstr "Encadernação em couro"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields.selection,name:liber_metabooks_integration.selection__product_template__metabooks_binding__library
+msgid "Library binding"
+msgstr "Encadernação de biblioteca"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_metabooks_import_job__limit
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_metabooks_import_vendor__limit
+msgid "Limit"
+msgstr "Limite"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields.selection,name:liber_metabooks_integration.selection__product_template__metabooks_binding__loose_leaf
+#: model:ir.model.fields.selection,name:liber_metabooks_integration.selection__product_template__metabooks_product_form__bd
+msgid "Loose-leaf"
+msgstr "Folhas soltas"
+
+#. module: liber_metabooks_integration
+#: model_terms:ir.ui.view,arch_db:liber_metabooks_integration.metabooks_product_inherit_form
+msgid "Main Content Pages"
+msgstr "Páginas do miolo"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_metabooks_book_subjects__metabooks_main_subject
+msgid "Main Subject"
+msgstr "Assunto principal"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields,help:liber_metabooks_integration.field_product_product__metabooks_total_page_count
+#: model:ir.model.fields,help:liber_metabooks_integration.field_product_template__metabooks_total_page_count
+msgid ""
+"Main content plus front and back matter: the sheet count a printer bills."
+msgstr ""
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields,help:liber_metabooks_integration.field_metabooks_import_vendor__limit
+msgid ""
+"Max number of products to import (0 = whole catalogue). Use a small number "
+"to test first."
+msgstr ""
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_metabooks_import_job__message
+#: model_terms:ir.ui.view,arch_db:liber_metabooks_integration.metabooks_import_job_form
+msgid "Message"
+msgstr "Mensagem"
+
+#. module: liber_metabooks_integration
+#. odoo-python
+#: code:addons/liber_metabooks_integration/models/hedra_res_config.py:0
+#: code:addons/liber_metabooks_integration/models/metabooks_product.py:0
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_res_config_settings__metabooks_ids
+#: model:ir.ui.menu,name:liber_metabooks_integration.menu_metabooks_root
+#: model_terms:ir.ui.view,arch_db:liber_metabooks_integration.hedra_metabooks_res_config_inherit_form
+#: model_terms:ir.ui.view,arch_db:liber_metabooks_integration.metabooks_product_inherit_form
+msgid "Metabooks"
+msgstr "Metabooks"
+
+#. module: liber_metabooks_integration
+#: model:ir.model,name:liber_metabooks_integration.model_metabooks_connector
+msgid "Metabooks API Connector"
+msgstr "Conector da API Metabooks"
+
+#. module: liber_metabooks_integration
+#: model:ir.module.category,name:liber_metabooks_integration.metabooks_access_category
+#: model:res.groups,name:liber_metabooks_integration.metabooks_product_group
+#: model:res.groups.privilege,name:liber_metabooks_integration.metabooks_access_privilege
+msgid "Metabooks Access"
+msgstr "Acesso ao Metabooks"
+
+#. module: liber_metabooks_integration
+#: model:ir.model,name:liber_metabooks_integration.model_author_contributor_role
+msgid "Metabooks Author Contributor"
+msgstr "Contribuidor (Metabooks)"
+
+#. module: liber_metabooks_integration
+#: model_terms:ir.ui.view,arch_db:liber_metabooks_integration.hedra_metabooks_res_config_inherit_form
+msgid "Metabooks Authorisation"
+msgstr "Autorização do Metabooks"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_res_config_settings__metabooks_authorisation_code
+msgid "Metabooks Authorisation Code"
+msgstr "Código de autorização do Metabooks"
+
+#. module: liber_metabooks_integration
+#: model:ir.model,name:liber_metabooks_integration.model_metabooks_avalaibility_definition
+msgid "Metabooks Avalaibility"
+msgstr "Disponibilidade (Metabooks)"
+
+#. module: liber_metabooks_integration
+#: model:ir.model,name:liber_metabooks_integration.model_metabooks_import_job
+msgid "Metabooks Catalogue Import"
+msgstr "Importação de catálogo Metabooks"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_product_product__metabooks_collections
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_product_template__metabooks_collections
+msgid "Metabooks Collections"
+msgstr "Coleções (Metabooks)"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_res_partner__metabooks_editor_id
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_res_users__metabooks_editor_id
+msgid "Metabooks Edito Id"
+msgstr "Id da editora no Metabooks"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_vendor_metabooks_ids__metabooks_editor_id
+#: model_terms:ir.ui.view,arch_db:liber_metabooks_integration.view_metabooks_vendor_ids_search
+msgid "Metabooks Id"
+msgstr "Id do Metabooks"
+
+#. module: liber_metabooks_integration
+#: model_terms:ir.ui.view,arch_db:liber_metabooks_integration.hedra_metabooks_res_config_inherit_form
+msgid "Metabooks Ids"
+msgstr "Ids do Metabooks"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_product_product__metabooks_image_url
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_product_template__metabooks_image_url
+msgid "Metabooks Image"
+msgstr "Imagem do Metabooks"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_product_product__metabooks_keywords
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_product_template__metabooks_keywords
+msgid "Metabooks Keywords"
+msgstr "Palavras-chave (Metabooks)"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_res_config_settings__metabooks_password
+#: model_terms:ir.ui.view,arch_db:liber_metabooks_integration.hedra_metabooks_res_config_inherit_form
+msgid "Metabooks Password"
+msgstr "Senha do Metabooks"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_product_product__metabooks_publication_country
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_product_template__metabooks_publication_country
+msgid "Metabooks Publication Country"
+msgstr "País de publicação (Metabooks)"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_product_product__metabooks_publish_date
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_product_template__metabooks_publish_date
+msgid "Metabooks Publish Date"
+msgstr "Data de publicação (Metabooks)"
+
+#. module: liber_metabooks_integration
+#: model_terms:ir.ui.view,arch_db:liber_metabooks_integration.metabooks_product_filter_inherit_form_1
+msgid "Metabooks Publisher"
+msgstr "Editora (Metabooks)"
+
+#. module: liber_metabooks_integration
+#: model:ir.model,name:liber_metabooks_integration.model_metabooks_book_subjects
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_product_product__metabooks_subjects
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_product_template__metabooks_subjects
+msgid "Metabooks Subjects"
+msgstr "Assuntos (Metabooks)"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_product_product__metabooks_thickness
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_product_template__metabooks_thickness
+msgid "Metabooks Thickness"
+msgstr "Espessura (Metabooks)"
+
+#. module: liber_metabooks_integration
+#: model:ir.model,name:liber_metabooks_integration.model_metabooks_book_type
+msgid "Metabooks Type"
+msgstr "Tipo (Metabooks)"
+
+#. module: liber_metabooks_integration
+#: model_terms:ir.ui.view,arch_db:liber_metabooks_integration.hedra_metabooks_res_config_inherit_form
+msgid "Metabooks User name"
+msgstr "Usuário do Metabooks"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_res_config_settings__metabooks_username
+msgid "Metabooks Username"
+msgstr "Usuário do Metabooks"
+
+#. module: liber_metabooks_integration
+#: model:ir.model,name:liber_metabooks_integration.model_vendor_metabooks_ids
+msgid "Metabooks Vendors"
+msgstr "Editoras do Metabooks"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_product_product__metabooks_weight
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_product_template__metabooks_weight
+msgid "Metabooks Weight"
+msgstr "Peso (Metabooks)"
+
+#. module: liber_metabooks_integration
+#. odoo-python
+#: code:addons/liber_metabooks_integration/models/metabooks_connector.py:0
+msgid ""
+"Metabooks connection failed:\n"
+"%s"
+msgstr ""
+
+#. module: liber_metabooks_integration
+#. odoo-python
+#: code:addons/liber_metabooks_integration/models/metabooks_connector.py:0
+msgid ""
+"Metabooks error for ISBN %s:\n"
+"%s"
+msgstr ""
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_res_partner__vendor_metabooks_ids
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_res_users__vendor_metabooks_ids
+msgid "Metabooks ids"
+msgstr "Ids do Metabooks"
+
+#. module: liber_metabooks_integration
+#. odoo-python
+#: code:addons/liber_metabooks_integration/wizards/metabooks_import_isbn.py:0
+msgid "Metabooks import — %(new)s new, %(updated)s updated"
+msgstr "Importação Metabooks — %(new)s novo(s), %(updated)s atualizado(s)"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields,help:liber_metabooks_integration.field_metabooks_import_vendor__mvb_id
+msgid "Metabooks publisher id (VL / mvbId), e.g. BR0089701."
+msgstr "ID da editora no Metabooks (VL / mvbId), ex.: BR0089701."
+
+#. module: liber_metabooks_integration
+#: model_terms:ir.ui.view,arch_db:liber_metabooks_integration.hedra_metabooks_res_config_inherit_form
+msgid "Metabooks username"
+msgstr "Usuário do Metabooks"
+
+#. module: liber_metabooks_integration
+#: model:ir.actions.server,name:liber_metabooks_integration.cron_metabooks_import_jobs_ir_actions_server
+msgid "Metabooks: process catalogue import jobs"
+msgstr "Metabooks: processar tarefas de importação de catálogo"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields.selection,name:liber_metabooks_integration.selection__product_template__metabooks_product_form__sa
+msgid "Multiple-component retail product"
+msgstr "Produto com múltiplos componentes"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields.selection,name:liber_metabooks_integration.selection__product_template__metabooks_product_form__sb
+msgid "Multiple-component retail product, boxed"
+msgstr "Produto com múltiplos componentes, em caixa"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields.selection,name:liber_metabooks_integration.selection__product_template__metabooks_product_form__sg
+msgid "Multiple-component retail product, entirely digital"
+msgstr "Produto com múltiplos componentes, inteiramente digital"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields.selection,name:liber_metabooks_integration.selection__product_template__metabooks_product_form__se
+msgid "Multiple-component retail product, loose"
+msgstr "Produto com múltiplos componentes, avulso"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields.selection,name:liber_metabooks_integration.selection__product_template__metabooks_product_form__sf
+msgid "Multiple-component retail product, part(s) enclosed"
+msgstr "Produto com múltiplos componentes, com parte(s) encartada(s)"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields.selection,name:liber_metabooks_integration.selection__product_template__metabooks_product_form__sd
+msgid "Multiple-component retail product, shrink-wrapped"
+msgstr "Produto com múltiplos componentes, retratilizado"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields.selection,name:liber_metabooks_integration.selection__product_template__metabooks_product_form__sc
+msgid "Multiple-component retail product, slip-cased"
+msgstr "Produto com múltiplos componentes, em estojo"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_product_product__metabooks_ncm
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_product_template__metabooks_ncm
+msgid "NCM"
+msgstr "NCM"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_metabooks_auther_publiser__name
+msgid "Name"
+msgstr "Nome"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_product_product__new_books_published
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_product_template__new_books_published
+msgid "New Book"
+msgstr "Livro novo"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_metabooks_import_job__next_page
+msgid "Next Page"
+msgstr "Próxima página"
+
+#. module: liber_metabooks_integration
+#: model_terms:ir.actions.act_window,help:liber_metabooks_integration.action_metabooks_books
+msgid "No books imported yet"
+msgstr "Nenhum livro importado ainda"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields.selection,name:liber_metabooks_integration.selection__product_template__metabooks_publishing_status__05
+msgid "No longer our product"
+msgstr "Não é mais nosso produto"
+
+#. module: liber_metabooks_integration
+#. odoo-python
+#: code:addons/liber_metabooks_integration/wizards/metabooks_import_isbn.py:0
+msgid "No product was found on Metabooks for the given ISBN(s)."
+msgstr "Nenhum produto foi encontrado no Metabooks para o(s) ISBN(s) informado(s)."
+
+#. module: liber_metabooks_integration
+#. odoo-python
+#: code:addons/liber_metabooks_integration/models/metabooks_vendor.py:0
+msgid "No products found"
+msgstr "Nenhum produto encontrado"
+
+#. module: liber_metabooks_integration
+#. odoo-python
+#: code:addons/liber_metabooks_integration/models/metabooks_product.py:0
+msgid "None of the selected products has an ISBN to look up on Metabooks."
+msgstr "Nenhum dos produtos selecionados tem ISBN para consultar no Metabooks."
+
+#. module: liber_metabooks_integration
+#: model_terms:ir.ui.view,arch_db:liber_metabooks_integration.metabooks_product_filter_inherit_form_1
+msgid "Not available"
+msgstr "Indisponível"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_metabooks_avalaibility_definition__product_notes
+msgid "Notes"
+msgstr "Notas"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields.selection,name:liber_metabooks_integration.selection__product_template__metabooks_product_form__bk
+msgid "Novelty book"
+msgstr "Livro-brinquedo"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields,help:liber_metabooks_integration.field_product_product__metabooks_product_form
+#: model:ir.model.fields,help:liber_metabooks_integration.field_product_template__metabooks_product_form
+msgid "ONIX product form (list 150): paperback, hardback, digital..."
+msgstr "Formato do produto no ONIX (lista 150): brochura, capa dura, digital..."
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields.selection,name:liber_metabooks_integration.selection__product_template__metabooks_product_form__ao
+msgid "Online / streamed audio"
+msgstr "Áudio online / streaming"
+
+#. module: liber_metabooks_integration
+#: model_terms:ir.ui.view,arch_db:liber_metabooks_integration.import_metadata_wizard_view_form
+msgid "Or"
+msgstr "Ou"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_product_product__metabooks_original_language
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_product_template__metabooks_original_language
+msgid "Original Language"
+msgstr "Idioma original"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields.selection,name:liber_metabooks_integration.selection__product_template__metabooks_product_form__az
+msgid "Other audio format"
+msgstr "Outro formato de áudio"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields.selection,name:liber_metabooks_integration.selection__product_template__metabooks_product_form__bz
+msgid "Other book format"
+msgstr "Outro formato de livro"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields.selection,name:liber_metabooks_integration.selection__product_template__metabooks_product_form__zz
+msgid "Other merchandise"
+msgstr "Outra mercadoria"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields.selection,name:liber_metabooks_integration.selection__product_template__metabooks_publishing_status__07
+msgid "Out of print"
+msgstr "Esgotado"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields.selection,name:liber_metabooks_integration.selection__product_template__metabooks_publishing_status__06
+msgid "Out of stock indefinitely"
+msgstr "Sem estoque por tempo indeterminado"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_product_product__metabooks_page_count
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_product_template__metabooks_page_count
+msgid "Page Count"
+msgstr "Número de páginas"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields.selection,name:liber_metabooks_integration.selection__product_template__metabooks_product_form__bf
+msgid "Pamphlet"
+msgstr "Folheto"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields.selection,name:liber_metabooks_integration.selection__product_template__metabooks_product_form__bc
+msgid "Paperback"
+msgstr "Brochura"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_product_product__metabooks_parental_rating
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_product_template__metabooks_parental_rating
+msgid "Parental Rating"
+msgstr "Classificação indicativa"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields.selection,name:liber_metabooks_integration.selection__product_template__metabooks_product_form__bn
+msgid "Part-work (fascicle)"
+msgstr "Fascículo"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_vendor_metabooks_ids__partner_id
+msgid "Partner"
+msgstr "Parceiro"
+
+#. module: liber_metabooks_integration
+#: model_terms:ir.ui.view,arch_db:liber_metabooks_integration.hedra_metabooks_res_config_inherit_form
+msgid "Password"
+msgstr "Senha"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields,help:liber_metabooks_integration.field_metabooks_import_isbn__isbns
+msgid "Paste one or more ISBNs (one per line, or separated by comma/space)."
+msgstr "Cole um ou mais ISBNs (um por linha, ou separados por vírgula/espaço)."
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields.selection,name:liber_metabooks_integration.selection__product_template__metabooks_publishing_status__17
+msgid "Permanently withdrawn from sale"
+msgstr "Definitivamente retirado de venda"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields.selection,name:liber_metabooks_integration.selection__product_template__metabooks_publishing_status__03
+msgid "Postponed indefinitely"
+msgstr "Adiado por tempo indeterminado"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_product_product__prices
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_product_template__prices
+msgid "Prices"
+msgstr "Preços"
+
+#. module: liber_metabooks_integration
+#: model_terms:ir.ui.view,arch_db:liber_metabooks_integration.metabooks_product_filter_inherit_form_1
+msgid "Printed book (pbook)"
+msgstr "Livro impresso (pbook)"
+
+#. module: liber_metabooks_integration
+#: model:ir.model,name:liber_metabooks_integration.model_product_template
+#: model_terms:ir.ui.view,arch_db:liber_metabooks_integration.metabooks_vendor_inherit_form
+msgid "Product"
+msgstr "Produto"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_product_product__metabooks_product_availability
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_product_template__metabooks_product_availability
+#: model_terms:ir.ui.view,arch_db:liber_metabooks_integration.metabooks_product_filter_inherit_form_1
+msgid "Product Availability"
+msgstr "Disponibilidade do produto"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_biblio_bisac_codes__bisac_product_category
+msgid "Product Category"
+msgstr "Categoria do produto"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_res_config_settings__product_fields
+#: model_terms:ir.ui.view,arch_db:liber_metabooks_integration.hedra_metabooks_res_config_inherit_form
+msgid "Product Fields"
+msgstr "Campos do produto"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_product_product__metabooks_product_form
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_product_template__metabooks_product_form
+msgid "Product Form"
+msgstr "Formato do produto"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_product_product__product_identifier
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_product_template__product_identifier
+msgid "Product Identifier"
+msgstr "Identificador do produto"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_metabooks_book_type__name
+msgid "Product Type"
+msgstr "Tipo de produto"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_metabooks_auther_publiser__author_professional_position
+msgid "Professional Position"
+msgstr "Cargo"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_metabooks_import_job__progress
+msgid "Progress"
+msgstr "Progresso"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_product_product__metabooks_publication_city
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_product_template__metabooks_publication_city
+msgid "Publication City"
+msgstr "Cidade de publicação"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_product_product__publish_date
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_product_template__publish_date
+msgid "Publish Date(S)"
+msgstr "Data de publicação"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_product_product__metabooks_publisher
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_product_template__metabooks_publisher
+#: model_terms:ir.ui.view,arch_db:liber_metabooks_integration.metabooks_product_filter_inherit_form_1
+msgid "Publisher"
+msgstr "Editora"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_product_product__metabooks_publishing_status
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_product_template__metabooks_publishing_status
+msgid "Publishing Status"
+msgstr "Situação editorial"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields.selection,name:liber_metabooks_integration.selection__product_template__metabooks_binding__quarter
+msgid "Quarter bound"
+msgstr "Encadernação em quarto"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields.selection,name:liber_metabooks_integration.selection__metabooks_import_job__state__queued
+msgid "Queued"
+msgstr "Na fila"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields.selection,name:liber_metabooks_integration.selection__product_template__metabooks_product_form__bi
+msgid "Rag book"
+msgstr "Livro de pano"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields,help:liber_metabooks_integration.field_product_product__metabooks_form_detail
+#: model:ir.model.fields,help:liber_metabooks_integration.field_product_template__metabooks_form_detail
+msgid "Raw ONIX product form detail codes, kept for audit."
+msgstr "Códigos brutos de detalhe de formato do ONIX, mantidos para auditoria."
+
+#. module: liber_metabooks_integration
+#: model_terms:ir.ui.view,arch_db:liber_metabooks_integration.metabooks_import_job_form
+msgid "Re-run"
+msgstr "Reexecutar"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields.selection,name:liber_metabooks_integration.selection__product_template__metabooks_publishing_status__12
+msgid "Recalled"
+msgstr "Recolhido"
+
+#. module: liber_metabooks_integration
+#: model_terms:ir.ui.view,arch_db:liber_metabooks_integration.metabooks_import_job_form
+msgid "Refresh"
+msgstr "Atualizar"
+
+#. module: liber_metabooks_integration
+#: model_terms:ir.ui.view,arch_db:liber_metabooks_integration.metabooks_product_inherit_form
+msgid "Refresh Technical Sheet"
+msgstr "Atualizar ficha técnica"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields.selection,name:liber_metabooks_integration.selection__product_template__metabooks_binding__reinforced
+msgid "Reinforced binding"
+msgstr "Encadernação reforçada"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_product_product__product_relation_codes
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_product_template__product_relation_codes
+msgid "Related Product Codes"
+msgstr "Códigos de produtos relacionados"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_product_product__product_id_values
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_product_template__product_id_values
+msgid "Related Products"
+msgstr "Produtos relacionados"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields.selection,name:liber_metabooks_integration.selection__product_template__metabooks_publishing_status__10
+msgid "Remaindered"
+msgstr "Saldo"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_metabooks_auther_publiser__author_role
+msgid "Role"
+msgstr "Papel"
+
+#. module: liber_metabooks_integration
+#: model_terms:ir.ui.view,arch_db:liber_metabooks_integration.metabooks_import_job_form
+msgid "Run now"
+msgstr "Executar agora"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields.selection,name:liber_metabooks_integration.selection__metabooks_import_job__state__running
+msgid "Running"
+msgstr "Em execução"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields.selection,name:liber_metabooks_integration.selection__product_template__metabooks_binding__saddle
+msgid "Saddle-sewn"
+msgstr "Grampeado (canoa)"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_import_metadata_wizard__metadata_file
+msgid "Select File"
+msgstr "Selecionar arquivo"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_biblio_bisac_codes__sequence
+msgid "Sequence"
+msgstr "Sequência"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_metabooks_auther_publiser__author_sequence_number
+msgid "Sequence Number"
+msgstr "Número de sequência"
+
+#. module: liber_metabooks_integration
+#. odoo-python
+#: code:addons/liber_metabooks_integration/models/metabooks_vendor.py:0
+msgid "Set the Metabooks Id (mvbId / VL) first."
+msgstr "Defina antes o Metabooks Id (mvbId / VL)."
+
+#. module: liber_metabooks_integration
+#. odoo-python
+#: code:addons/liber_metabooks_integration/models/metabooks_connector.py:0
+msgid "Set the Metabooks username and password in Settings → Metabooks first."
+msgstr "Defina antes o usuário e a senha do Metabooks em Configurações → Metabooks."
+
+#. module: liber_metabooks_integration
+#: model:ir.actions.act_window,name:liber_metabooks_integration.action_metabooks_config_settings
+#: model:ir.ui.menu,name:liber_metabooks_integration.menu_metabooks_settings
+msgid "Settings"
+msgstr "Configurações"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields.selection,name:liber_metabooks_integration.selection__product_template__metabooks_binding__sewn
+msgid "Sewn"
+msgstr "Costurado"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_product_product__size_chart
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_product_template__size_chart
+msgid "Size Chart"
+msgstr "Tabela de medidas"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_product_product__size_chart_link
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_product_template__size_chart_link
+msgid "Size Chart Link"
+msgstr "Link da tabela de medidas"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_product_product__size_chart_name
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_product_template__size_chart_name
+msgid "Size Chart Name"
+msgstr "Nome da tabela de medidas"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields.selection,name:liber_metabooks_integration.selection__product_template__metabooks_product_form__bl
+msgid "Slide bound"
+msgstr "Encadernação com trilho"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_metabooks_book_subjects__metabooks_subject_source_name
+msgid "Source name"
+msgstr "Nome da fonte"
+
+#. module: liber_metabooks_integration
+#: model_terms:ir.ui.view,arch_db:liber_metabooks_integration.metabooks_product_inherit_form
+msgid "Spine (mm)"
+msgstr "Lombada (mm)"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields.selection,name:liber_metabooks_integration.selection__product_template__metabooks_product_form__be
+msgid "Spiral bound"
+msgstr "Espiral"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_metabooks_import_job__state
+msgid "State"
+msgstr "Situação"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_product_product__metabooks_product_status
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_product_template__metabooks_product_status
+msgid "Status"
+msgstr "Situação"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields,help:liber_metabooks_integration.field_metabooks_import_job__limit
+msgid "Stop after N products (0 = whole catalogue)."
+msgstr "Parar após N produtos (0 = catálogo inteiro)."
+
+#. module: liber_metabooks_integration
+#: model_terms:ir.ui.view,arch_db:liber_metabooks_integration.metabooks_product_inherit_form
+msgid "Structural data"
+msgstr "Dados estruturais"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_metabooks_book_subjects__metabooks_subject_code
+msgid "Subject Code"
+msgstr "Código do assunto"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_metabooks_book_subjects__name
+#: model_terms:ir.ui.view,arch_db:liber_metabooks_integration.metabooks_subject_form_view
+msgid "Subject Heading"
+msgstr "Cabeçalho do assunto"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_metabooks_book_subjects__metabooks_subject_identifier
+msgid "Subject Identifier"
+msgstr "Identificador do assunto"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_metabooks_book_subjects__metabooks_subject_scheme_version
+msgid "Subject Scheme Version"
+msgstr "Versão do esquema de assunto"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_isbn_book_subjects__name
+msgid "Subjects"
+msgstr "Assuntos"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_res_partner__metabooks_automatic_sync_products
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_res_users__metabooks_automatic_sync_products
+msgid "Sync Product Automatically"
+msgstr "Sincronizar produto automaticamente"
+
+#. module: liber_metabooks_integration
+#: model_terms:ir.ui.view,arch_db:liber_metabooks_integration.metabooks_product_inherit_form
+msgid "Synopsis"
+msgstr "Sinopse"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_product_product__synopsys
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_product_template__synopsys
+msgid "Synopsys"
+msgstr "Sinopse"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_product_product__metabooks_technical_sync
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_product_template__metabooks_technical_sync
+msgid "Technical Data Synced"
+msgstr "Ficha técnica sincronizada em"
+
+#. module: liber_metabooks_integration
+#: model_terms:ir.ui.view,arch_db:liber_metabooks_integration.metabooks_product_inherit_form
+msgid "Technical Sheet"
+msgstr "Ficha técnica"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields.selection,name:liber_metabooks_integration.selection__metabooks_import_job__job_type__technical
+msgid "Technical sheet (one call per ISBN)"
+msgstr "Ficha técnica (uma chamada por ISBN)"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields.selection,name:liber_metabooks_integration.selection__product_template__metabooks_publishing_status__16
+msgid "Temporarily withdrawn from sale"
+msgstr "Temporariamente retirado de venda"
+
+#. module: liber_metabooks_integration
+#: model_terms:ir.ui.view,arch_db:liber_metabooks_integration.hedra_metabooks_res_config_inherit_form
+msgid "Test Connection"
+msgstr "Testar conexão"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields,help:liber_metabooks_integration.field_metabooks_import_job__job_type
+msgid ""
+"The catalogue feed carries no dimensions, weight, page count, binding or "
+"NCM. A technical job tops those up on books already imported, one by-ISBN "
+"call each, without touching their price, name, category or cover."
+msgstr ""
+
+#. module: liber_metabooks_integration
+#. odoo-python
+#: code:addons/liber_metabooks_integration/models/metabooks_product.py:0
+msgid ""
+"This product has no ISBN (Internal Reference or Barcode) to look up on "
+"Metabooks."
+msgstr ""
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_product_product__metabooks_total_page_count
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_product_template__metabooks_total_page_count
+msgid "Total Pages"
+msgstr "Total de páginas"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields.selection,name:liber_metabooks_integration.selection__product_template__metabooks_product_form__xa
+msgid "Trade-only material"
+msgstr "Material exclusivo para o trade"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields.selection,name:liber_metabooks_integration.selection__product_template__metabooks_publishing_status__09
+msgid "Unknown"
+msgstr "Desconhecida"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields.selection,name:liber_metabooks_integration.selection__product_template__metabooks_binding__adhesive
+msgid "Unsewn / adhesive bound"
+msgstr "Colado (hotmelt)"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields.selection,name:liber_metabooks_integration.selection__product_template__metabooks_publishing_status__00
+msgid "Unspecified"
+msgstr "Não especificada"
+
+#. module: liber_metabooks_integration
+#: model:ir.actions.server,name:liber_metabooks_integration.action_bisac_codes_categories
+msgid "Update Bisac categories"
+msgstr "Atualizar categorias BISAC"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_res_partner__metaoook_update_book_also
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_res_users__metaoook_update_book_also
+msgid "Update Book Also"
+msgstr "Atualizar também o livro"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_res_partner__metabooks_update_by_lastdate
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_res_users__metabooks_update_by_lastdate
+msgid "Update By LastUpdateDate"
+msgstr "Atualizar pela data de modificação"
+
+#. module: liber_metabooks_integration
+#: model_terms:ir.actions.act_window,help:liber_metabooks_integration.action_metabooks_books
+msgid ""
+"Use <b>Imports ▸ Import by ISBN</b> or <b>Import by Vendor ID</b> to bring\n"
+"               books in from Metabooks."
+msgstr ""
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_import_metadata_wizard__vendor_id
+#: model_terms:ir.ui.view,arch_db:liber_metabooks_integration.view_metabooks_vendor_ids_search
+msgid "Vendor"
+msgstr "Fornecedor"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_metabooks_import_job__mvb_id
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_metabooks_import_vendor__mvb_id
+msgid "Vendor / MVB ID"
+msgstr "ID da editora (MVB)"
+
+#. module: liber_metabooks_integration
+#: model:ir.actions.act_window,name:liber_metabooks_integration.action_vendor_metabooks_ids
+#: model:ir.ui.menu,name:liber_metabooks_integration.menu_vendor_metabooks_ids
+#: model_terms:ir.ui.view,arch_db:liber_metabooks_integration.view_metabooks_vendor_ids_search
+msgid "Vendor Metabooks"
+msgstr "Fornecedor Metabooks"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_product_product__metabooks_vendor_id
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_product_template__metabooks_vendor_id
+msgid "Vendor Metabooks Id"
+msgstr "Id Metabooks do fornecedor"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields.selection,name:liber_metabooks_integration.selection__product_template__metabooks_product_form__va
+msgid "Video"
+msgstr "Vídeo"
+
+#. module: liber_metabooks_integration
+#. odoo-python
+#: code:addons/liber_metabooks_integration/models/inherit_product_template.py:0
+msgid "Warning"
+msgstr "Aviso"
+
+#. module: liber_metabooks_integration
+#: model_terms:ir.ui.view,arch_db:liber_metabooks_integration.metabooks_product_inherit_form
+msgid "Weight (g)"
+msgstr "Peso (g)"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields,help:liber_metabooks_integration.field_product_product__metabooks_country_of_manufacture
+#: model:ir.model.fields,help:liber_metabooks_integration.field_product_template__metabooks_country_of_manufacture
+msgid "Where the book was physically printed."
+msgstr "Onde o livro foi fisicamente impresso."
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_product_product__metabooks_width
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_product_template__metabooks_width
+msgid "Width"
+msgstr "Largura"
+
+#. module: liber_metabooks_integration
+#: model_terms:ir.ui.view,arch_db:liber_metabooks_integration.metabooks_product_inherit_form
+msgid "Width (mm)"
+msgstr "Largura (mm)"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_product_product__metabooks_has_dust_jacket
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_product_template__metabooks_has_dust_jacket
+msgid "With Dust Jacket"
+msgstr "Com sobrecapa"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_product_product__metabooks_has_flaps
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_product_template__metabooks_has_flaps
+msgid "With Flaps"
+msgstr "Com orelhas"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_product_product__metabooks_has_ribbon
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_product_template__metabooks_has_ribbon
+msgid "With Ribbon Marker"
+msgstr "Com marcador de fita"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_product_product__metabooks_has_thumb_index
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_product_template__metabooks_has_thumb_index
+msgid "With Thumb Index"
+msgstr "Com índice lateral"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields.selection,name:liber_metabooks_integration.selection__product_template__metabooks_publishing_status__11
+msgid "Withdrawn from sale"
+msgstr "Retirado de venda"
+
+#. module: liber_metabooks_integration
+#: model_terms:ir.ui.view,arch_db:liber_metabooks_integration.metabooks_import_vendor_form
+msgid "e.g. BR0089701"
+msgstr "ex.: BR0089701"
+
+#. module: liber_metabooks_integration
+#. odoo-python
+#: code:addons/liber_metabooks_integration/models/metabooks_import_job.py:0
+msgid "id"
+msgstr "id"
+
+#. module: liber_metabooks_integration
+#: model:ir.model,name:liber_metabooks_integration.model_import_metadata_wizard
+msgid "import metadata wizard"
+msgstr "assistente de importação de metadados"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_product_product__metabooks_label
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_product_template__metabooks_label
+msgid "label"
+msgstr "rótulo"
+
+#. module: liber_metabooks_integration
+#: model:ir.model,name:liber_metabooks_integration.model_isbn_book_subjects
+msgid "metabooks book subjects"
+msgstr "assuntos de livro do Metabooks"
+
+#. module: liber_metabooks_integration
+#: model:ir.model,name:liber_metabooks_integration.model_metabooks_auther_publiser
+msgid "metabooks.auther.publiser"
+msgstr "metabooks.auther.publiser"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_metabooks_import_job__with_technical
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_metabooks_import_vendor__with_technical
+msgid "Download technical sheets"
+msgstr "Baixar fichas técnicas"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields,help:liber_metabooks_integration.field_metabooks_import_job__with_technical
+msgid "After the catalogue feed finishes, also fetch each book's technical sheet (dimensions, weight, page count, binding, NCM) -- one by-ISBN call per book, queued as a follow-up job since it is far slower than the feed. Import by ISBN already carries the technical sheet, so this only applies to the publisher (catalogue) import."
+msgstr "Depois que o feed do catálogo termina, também busca a ficha técnica de cada livro (dimensões, peso, número de páginas, encadernação, NCM) — uma chamada por ISBN por livro, enfileirada como job de acompanhamento, já que é bem mais lenta que o feed. O import por ISBN já traz a ficha técnica, então isto vale apenas para o import por editora (catálogo)."
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields,help:liber_metabooks_integration.field_metabooks_import_vendor__with_technical
+msgid "Also fetch each book's technical sheet (dimensions, weight, page count, binding, NCM) after the catalogue import — one by-ISBN call per book, run as a follow-up background job."
+msgstr "Também busca a ficha técnica de cada livro (dimensões, peso, número de páginas, encadernação, NCM) após o import do catálogo — uma chamada por ISBN por livro, executada como job de acompanhamento em segundo plano."

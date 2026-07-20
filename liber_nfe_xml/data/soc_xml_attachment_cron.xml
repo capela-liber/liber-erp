@@ -1,0 +1,28 @@
+<odoo>
+    <data noupdate="0">
+        <record id="nfe_xml_attach_cron" model="ir.cron">
+            <field name="name">NFe XML Attachment Panel Cron </field>
+            <field name="active" eval="True" />
+            <field name="user_id" ref="base.user_admin" />
+            <field name="model_id" ref="model_ir_attachment"/>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="nextcall" eval="(DateTime.now() + timedelta(days=0)).strftime('%Y-%m-%d 18:30:00')" />
+            <field name="state">code</field>
+            <field name="code">model.create_nfe_xml_panel_cron()</field>
+            <field name="priority" eval="5" />
+        </record>
+         <!--  Cron to Create Exceptions for SOC Purchase Order Limt Exceed in Orders-->
+<!--        <record id="nfe_po_limit_exception_cron" model="ir.cron">-->
+<!--            <field name="name">SOC Purchase Order Limt Exceed Cron</field>-->
+<!--            <field name="model_id" ref="model_purchase_order"/>-->
+<!--            <field name="state">code</field>-->
+<!--            <field name="code">model.create_soc_po_limit_exception()</field>-->
+<!--            <field name='interval_number'>1</field>-->
+<!--            <field name="interval_type">days</field>-->
+<!--            <field name="active">True</field>-->
+<!--            <field name="priority">5</field>-->
+<!--        </record>-->
+
+    </data>
+</odoo>

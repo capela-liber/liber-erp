@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="import_xml_wizard_view" model="ir.ui.view">
+            <field name="name">import.xml.file.wizard</field>
+            <field name="model">import.xml.file</field>
+            <field name="arch" type="xml">
+                <form string="Import XML File">
+                    <group>
+                        <field name="attachment_ids" widget="many2many_binary" string="ZIP Files"/>
+                        <field name="company_id" options="{'no_create': True, 'no_open': True}"/>
+                    </group>
+                    <footer>
+                        <button name="import_xml_file" string="Import" type="object" />
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="xml_import_wizard" model="ir.actions.act_window">
+            <field name="name">Import XML File</field>
+            <field name="res_model">import.xml.file</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+        <menuitem action="xml_import_wizard" id="xml_wizard_import"
+            parent="liber_nfe_xml.menu_nfe_xml_panel" sequence="3"/>
+    </data>
+</odoo>

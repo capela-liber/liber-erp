@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!-- LAB FORK: common book-trade CFOPs (production gets the full table
+             from the l10n_br localization). -->
+        <record id="cfop_5102" model="nfe.cfop">
+            <field name="code">5102</field>
+            <field name="name">Venda de mercadoria adquirida ou recebida de terceiros</field>
+        </record>
+        <record id="cfop_6102" model="nfe.cfop">
+            <field name="code">6102</field>
+            <field name="name">Venda de mercadoria adquirida ou recebida de terceiros (interestadual)</field>
+        </record>
+        <record id="cfop_5101" model="nfe.cfop">
+            <field name="code">5101</field>
+            <field name="name">Venda de produção do estabelecimento</field>
+        </record>
+        <record id="cfop_6101" model="nfe.cfop">
+            <field name="code">6101</field>
+            <field name="name">Venda de produção do estabelecimento (interestadual)</field>
+        </record>
+        <record id="cfop_5910" model="nfe.cfop">
+            <field name="code">5910</field>
+            <field name="name">Remessa em bonificação, doação ou brinde</field>
+        </record>
+        <record id="cfop_6910" model="nfe.cfop">
+            <field name="code">6910</field>
+            <field name="name">Remessa em bonificação, doação ou brinde (interestadual)</field>
+        </record>
+        <record id="cfop_5917" model="nfe.cfop">
+            <field name="code">5917</field>
+            <field name="name">Remessa de mercadoria em consignação mercantil</field>
+        </record>
+        <record id="cfop_6917" model="nfe.cfop">
+            <field name="code">6917</field>
+            <field name="name">Remessa de mercadoria em consignação mercantil (interestadual)</field>
+        </record>
+        <record id="cfop_5918" model="nfe.cfop">
+            <field name="code">5918</field>
+            <field name="name">Devolução de mercadoria em consignação mercantil</field>
+        </record>
+        <record id="cfop_6918" model="nfe.cfop">
+            <field name="code">6918</field>
+            <field name="name">Devolução de mercadoria em consignação mercantil (interestadual)</field>
+        </record>
+        <record id="cfop_1202" model="nfe.cfop">
+            <field name="code">1202</field>
+            <field name="name">Devolução de venda de mercadoria</field>
+        </record>
+        <record id="cfop_2202" model="nfe.cfop">
+            <field name="code">2202</field>
+            <field name="name">Devolução de venda de mercadoria (interestadual)</field>
+        </record>
+    </data>
+</odoo>

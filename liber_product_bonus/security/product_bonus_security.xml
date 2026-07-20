@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="module_category_bonus" model="ir.module.category">
+        <field name="name">Bonus Copies</field>
+        <field name="sequence">25</field>
+    </record>
+
+    <!-- v19: res.groups no longer carries category_id directly; it is held by a
+         res.groups.privilege that the groups link to via privilege_id. -->
+    <record id="privilege_bonus" model="res.groups.privilege">
+        <field name="name">Bonus Copies</field>
+        <field name="category_id" ref="module_category_bonus"/>
+    </record>
+
+    <record id="group_bonus_user" model="res.groups">
+        <field name="name">User</field>
+        <field name="privilege_id" ref="privilege_bonus"/>
+    </record>
+
+    <record id="group_bonus_manager" model="res.groups">
+        <field name="name">Administrator</field>
+        <field name="privilege_id" ref="privilege_bonus"/>
+        <field name="implied_ids" eval="[(4, ref('group_bonus_user'))]"/>
+        <field name="user_ids" eval="[(4, ref('base.user_admin'))]"/>
+    </record>
+
+    <record id="bonus_company_rule" model="ir.rule">
+        <field name="name">Bonus: multi-company</field>
+        <field name="model_id" ref="model_product_bonus"/>
+        <field name="domain_force">['|', ('company_id', 'in', company_ids), ('company_id', '=', False)]</field>
+    </record>
+</odoo>

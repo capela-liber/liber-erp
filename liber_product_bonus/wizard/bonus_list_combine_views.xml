@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_bonus_list_combine_form" model="ir.ui.view">
+        <field name="name">product.bonus.list.combine.form</field>
+        <field name="model">product.bonus.list.combine</field>
+        <field name="arch" type="xml">
+            <form string="Combinar listas">
+                <group>
+                    <field name="list_ids" widget="many2many_tags"
+                           options="{'no_create': True}"/>
+                    <field name="mode" widget="radio"/>
+                    <field name="name" placeholder="Imprensa de poesia"/>
+                    <field name="user_id"/>
+                    <field name="tag_ids" widget="many2many_tags"
+                           options="{'color_field': 'color'}"/>
+                    <field name="note" placeholder="Por que esta lista existe..."/>
+                    <field name="source_action" widget="radio"/>
+                </group>
+                <div class="alert alert-warning" role="alert"
+                     invisible="source_action != 'delete'">
+                    Apagar é definitivo. Se alguma das originárias já
+                    bonificou alguém, o assistente recusa e explica —
+                    nesse caso use <b>Arquivar</b>, que tira do seletor
+                    sem perder o histórico.
+                </div>
+                <!-- A sobreposicao E a informacao: "37 pessoas estao em mais de
+                     uma lista" diz se estas listas sao coisas diferentes ou a
+                     mesma coisa com dois nomes. -->
+                <field name="preview_html" nolabel="1" readonly="1"/>
+                <field name="result_count" invisible="1"/>
+                <footer>
+                    <button name="action_combine" type="object"
+                            string="Criar lista" class="btn-primary"
+                            invisible="result_count == 0"/>
+                    <button string="Cancelar" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_bonus_list_combine" model="ir.actions.act_window">
+        <field name="name">Combinar em nova lista</field>
+        <field name="res_model">product.bonus.list.combine</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="binding_model_id" ref="model_product_bonus_list"/>
+        <field name="binding_view_types">list</field>
+    </record>
+</odoo>

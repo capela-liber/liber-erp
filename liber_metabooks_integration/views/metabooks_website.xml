@@ -1,0 +1,295 @@
+<odoo>
+    <template id="product_description" inherit_id="website_sale.product" name="Product">
+        <xpath expr="//section[@id='product_detail']" position="after">
+            <div class="container">
+                <ul id="productTab" role="tablist" class="nav nav-tabs justify-content-center">
+                    <li class="px-3 nav-item">
+                        <a id="description-tab" data-toggle="tab" href="#description" role="tab"
+                           aria-controls="description"
+                           aria-selected="true" class="nav-link px-2 active show">Description
+                        </a>
+                    </li>
+                    <li class="px-3 nav-item">
+                        <a id="details-tab" data-toggle="tab" href="#details" role="tab"
+                           aria-controls="details"
+                           aria-selected="false" class="nav-link px-2">Details
+                        </a>
+                    </li>
+                </ul>
+                <div id="productTabContent" class="tab-content px-lg-3 py-3">
+                     <div id="description" role="tabpanel" aria-labelledby="description-tab"
+                         class="tab-pane fade px-0 px-md-5 active show">
+                        <br/>
+                         <div>
+                             <t t-set="product_fields" t-value="request.env['res.config.settings'].publish_product_fields()"/>
+                         </div>
+<!--                         <t t-if="'synopsys' in product_fields">-->
+                            <div itemprop="description" class="oe_structure mt16 px-0 px-lg-5" t-raw="product.synopsys"
+                                id="product_full_description"/>
+<!--                         </t>-->
+                        <br/>
+                     </div>
+                    <div id="details" class="body tab-pane fade px-0 px-md-5" role="tabpanel" aria-labelledby="details-tab">
+                        <table class="table table-bordered table-striped">
+                            <tbody>
+                                <t t-foreach="product_fields" t-as="fields">
+                                    <tr>
+                                        <t t-set="product_label" t-value="request.env['res.config.settings'].publish_product_label(fields)"/>
+                                        <th>
+                                            <t t-esc= "product_label"/>
+                                        </th>
+                                        <t t-set="product_field_value" t-value="request.env['res.config.settings'].product_field_value(fields, product)"/>
+                                        <td>
+                                            <t t-esc= "product_field_value"/>
+                                        </td>
+                                    </tr>
+                                </t>
+<!--                                <t t-if="'barcode' in product_fields">-->
+<!--                                    <tr>-->
+<!--                                        <th>ISBN :</th>-->
+<!--                                        <td>-->
+<!--                                            <t t-esc="product.barcode"/>-->
+<!--                                        </td>-->
+<!--                                    </tr>-->
+<!--                                </t>-->
+<!--                                <t t-if="('metabooks_height' or 'metabooks_width')  in product_fields">-->
+<!--                                     <tr>-->
+<!--                                        <th>Formato</th>-->
+<!--                                        <td>-->
+<!--                                            <t t-esc="product.metabooks_height"/>-->
+<!--                                                x-->
+<!--                                            <t t-esc="product.metabooks_width"/>-->
+<!--                                        </td>-->
+<!--                                    </tr>-->
+<!--                                </t>-->
+<!--                                <t t-if="'metabooks_product_availability'  in product_fields">-->
+<!--                                    <tr>-->
+<!--                                        <th>Book status</th>-->
+<!--                                        <td>-->
+<!--                                            <t t-esc="product.metabooks_product_availability.product_definition"/>-->
+<!--                                        </td>-->
+<!--                                    </tr>-->
+<!--                                </t>-->
+<!--                                <t t-if="'metabooks_page_count'  in product_fields">-->
+<!--                                    <tr>-->
+<!--                                        <th>Número de páginas</th>-->
+<!--                                        <td>-->
+<!--                                            <t t-esc="product.metabooks_page_count"/>-->
+<!--                                        </td>-->
+<!--                                    </tr>-->
+<!--                                </t>-->
+<!--                                <t t-if="'metabooks_publisher'  in product_fields">-->
+<!--                                    <tr>-->
+<!--                                        <th>Editora</th>-->
+<!--                                        <td>-->
+<!--                                            <t t-esc="product.metabooks_publisher"/>-->
+<!--                                        </td>-->
+<!--                                    </tr>-->
+<!--                                </t>-->
+<!--                                <t t-if="metabooks_publish_date  in product_fields">-->
+<!--                                    <tr>-->
+<!--                                        <th>Data de publicação</th>-->
+<!--                                        <td>-->
+<!--                                            <t t-esc="product.metabooks_publish_date"/>-->
+<!--                                        </td>-->
+<!--                                    </tr>-->
+<!--                                </t>-->
+<!--                                <t t-if="'metabooks_subjects'  in product_fields">-->
+<!--                                    <tr>-->
+<!--                                        <th>Assunto</th>-->
+<!--                                        <td>-->
+<!--                                            <t t-foreach="product.metabooks_subjects" t-as="pms">-->
+<!--                                                <t t-if="pms.metabooks_subject_code">-->
+<!--                                                    <t t-esc="pms.metabooks_subject_code"/>-->
+<!--                                                </t>-->
+<!--                                            </t>-->
+<!--                                        </td>-->
+<!--                                    </tr>-->
+<!--                                </t>-->
+<!--                                <t t-if="'metabooks_weight'  in product_fields">-->
+<!--                                    <tr>-->
+<!--                                        <th>Peso</th>-->
+<!--                                        <td>-->
+<!--                                            <t t-esc="product.metabooks_weight"/>-->
+<!--                                            <t t-if="product.sudo().weight_uom_name">-->
+<!--                                                <t t-esc="product.sudo().weight_uom_name"/>-->
+<!--                                            </t>-->
+<!--                                        </td>-->
+<!--                                    </tr>-->
+<!--                                </t>-->
+<!--                                <tr>-->
+                                    <br/>
+    <!--                                <t t-foreach="product.book_auther_ids" t-as="author">-->
+    <!--                                    <t t-if="author.auhor_biographical_note">-->
+    <!--                                        <b>-->
+    <!--                                            <t t-esc="author.author_full_name"/>-->
+    <!--                                        </b>-->
+
+    <!--                                        <p>-->
+    <!--                                            <t t-esc="author.auhor_biographical_note"/>-->
+    <!--                                        </p>-->
+    <!--                                    </t>-->
+    <!--                                </t>-->
+<!--                                </tr>-->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </xpath>
+    </template>
+
+    <template id="metabooks_product_offer_detail_page" inherit_id="website_sale.product" name="Product Size Chart" customize_show="True">
+        <!-- v19 port: #product_details no longer has a direct <h1> child (the title is
+             now a t-call="website_sale.product_title"). The size-chart button is
+             absolutely positioned, so inject it inside the position-relative
+             #product_details container instead. -->
+        <xpath expr="//div[@id='product_details']" position="inside">
+            <t t-if="product.size_chart">
+                <span class="ks_product_pdf" style="right: 0px; position: absolute;">
+                    <input type="hidden" name="product_tmp_id" t-att-value="product.id"/>
+                    <button class="btn-size-chart" data-toggle="modal" data-target="#size_chart_modal" style="border: 1px solid #228399;border-radius: 4px;background: rgba(34, 131, 153, 0.1);white-space: nowrap;">
+                        <span class="fa fa-eye mr-2 "/>
+                        <span>Size Chart</span>
+                    </button>
+                </span>
+            </t>
+        </xpath>
+        <xpath expr="//div[@id='product_details']" position="after">
+            <!-- size chart Modal -->
+            <div id="size_chart_modal" class="modal fade" role="dialog">
+                <div class="modal-dialog size_chart_preview_modal">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">
+                                <span>Product Size Chart</span>
+                            </h4>
+                            <button type="button" class="close" data-dismiss="modal">
+                                <span class="fa fa-close"/>
+                            </button>
+                        </div>
+                        <div class="modal-body" style="width: 100%;">
+                            <iframe t-att-src="'/product/sizechart/size_chart/'+str(product.id)" method="get"
+                                    height="100%" width="100%"/>
+                        </div>
+                        <div class="modal-footer justify-content-start">
+                            <a class="ks_dwnld"  t-att-href="'/product/sizechart/download/'+str(product.id)">
+                                <button type="button" title="Download" aria-label="Download" class="btn btn-primary pull-right mr-8">
+                                    <span class="fa fa-download"/>
+                                </button>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </xpath>
+    </template>
+
+<!--    <template id="product_fields_now" inherit_id="website_sale.product" active="False" customize_show="True" name="Custom Product Fields">-->
+<!--        <xpath expr="//a[@id='add_to_cart']" position="after">-->
+<!--            <a role="button" class="btn btn-outline-primary btn-lg px-5 font-weight-bold o_we_buy_now" href="#"><i class="fa fa-bolt mr-2"/>BUY NOW</a>-->
+<!--        </xpath>-->
+<!--    </template>-->
+
+<!--    <template id="updated_product_detail" name="Updated Prod Details" inherit_id="website_sale.product">-->
+<!--        <xpath expr="//div[@t-field='product.website_description']" position="replace">-->
+<!--            <div id="productTabContent" class="tab-content py-3 px-5">-->
+<!--                <div id="description" role="tabpanel" aria-labelledby="description-tab"-->
+<!--                     class="tab-pane fade px-0 px-md-5 active show">-->
+<!--                    <br/>-->
+<!--                    <div itemprop="description" class="oe_structure mt16 px-0 px-lg-5" t-raw="product.synopsys"-->
+<!--                         id="product_full_description"/>-->
+<!--                    <br/>-->
+<!--                </div>-->
+<!--                <div id="details" role="tabpanel" aria-labelledby="details-tab" class="tab-pane fade">-->
+<!--                    <table class="details-table table-bordered table-striped table">-->
+<!--                        <tr>-->
+<!--                            <th>Autor</th>-->
+
+<!--                            <td>-->
+<!--                                <t t-foreach="product.book_auther_ids" t-as="auth">-->
+<!--                                    <t t-if="auth.author_contributor_role.name == 'A01'">-->
+<!--                                        <t t-esc="auth.author_full_name"/>-->
+<!--                                    </t>-->
+<!--                                </t>-->
+<!--                            </td>-->
+<!--                        </tr>-->
+<!--                        <tr>-->
+<!--                            <th>Colaboradores</th>-->
+
+<!--                            <td>-->
+<!--                                <t t-foreach="product.book_auther_ids" t-as="bauth">-->
+<!--                                    <t t-esc="bauth.author_full_name + ','"/>-->
+<!--                                </t>-->
+<!--                            </td>-->
+<!--                        </tr>-->
+<!--                        <tr>-->
+<!--                            <th>ISBN</th>-->
+<!--                            <td>-->
+<!--                                <t t-if="product.isbn">-->
+<!--                                    <t t-esc="product.isbn"/>-->
+<!--                                </t>-->
+<!--                                <t t-elif="product.default_code">-->
+<!--                                    <t t-esc="product.default_code"/>-->
+<!--                                </t>-->
+<!--                            </td>-->
+<!--                        </tr>-->
+<!--                        <tr>-->
+<!--                            <th>Número de páginas</th>-->
+<!--                            <td>-->
+<!--                                <t t-esc="product.metabooks_page_count"/>-->
+<!--                            </td>-->
+<!--                        </tr>-->
+<!--                        <tr>-->
+<!--                            <th>Editora</th>-->
+<!--                            <td>-->
+<!--                                <t t-esc="product.metabooks_publisher"/>-->
+<!--                            </td>-->
+<!--                        </tr>-->
+<!--                        <tr>-->
+<!--                            <th>Data de publicação</th>-->
+<!--                            <td>-->
+<!--                                <t t-esc="product.metabooks_publish_date"/>-->
+<!--                            </td>-->
+<!--                        </tr>-->
+<!--                        <tr>-->
+<!--                            <th>Assunto</th>-->
+<!--                            <td>-->
+<!--                                <t t-foreach="product.metabooks_subjects" t-as="pms">-->
+<!--                                    <t t-if="pms.metabooks_subject_code">-->
+<!--                                        <t t-esc="pms.metabooks_subject_code"/>-->
+<!--                                    </t>-->
+<!--                                </t>-->
+<!--                            </td>-->
+<!--                        </tr>-->
+<!--                        <tr>-->
+<!--                            <th>Peso</th>-->
+<!--                            <td>-->
+<!--                                <t t-esc="product.metabooks_weight"/>-->
+<!--                                <t t-if="product.weight_uom_name">-->
+<!--                                    <t t-esc="product.weight_uom_name"/>-->
+<!--                                </t>-->
+<!--                            </td>-->
+<!--                        </tr>-->
+<!--                    </table>-->
+<!--                </div>-->
+<!--                <div id="reviews" role="tabpanel" aria-labelledby="reviews-tab" class="tab-pane fade">-->
+<!--                    &lt;!&ndash;This div is used to place review and rating under review option of our owm&ndash;&gt;-->
+<!--                    <div class="o_shop_discussion_rating ks_rating">-->
+<!--                        <section class="container mt16 mb16">-->
+<!--                            <div class="row">-->
+<!--                                <div class="col-lg-8 offset-lg-2">-->
+<!--                                    <t t-call="portal.message_thread">-->
+<!--                                        <t t-set="object" t-value="product"/>-->
+<!--                                        <t t-set="display_rating" t-value="True"/>-->
+<!--                                    </t>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </section>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </xpath>-->
+<!--    </template>-->
+
+</odoo>

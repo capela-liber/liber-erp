@@ -1,0 +1,32 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+
+# Odoo
+*.pot~
+.odoorc
+odoo.conf
+
+# Dados reais — NUNCA versionar (LGPD + material de terceiro)
+_dump/
+_temp/
+docs/*.xlsx
+docs/*.pdf
+*.pfx
+*.p12
+*.pem
+*.key
+*.jks
+*.crt
+*.cer
+.env
+.env.*
+
+# Editores / SO
+.vscode/
+.idea/
+*.swp
+.DS_Store

@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_consignment_audit_list" model="ir.ui.view">
+        <field name="name">consignment.audit.list</field>
+        <field name="model">consignment.audit</field>
+        <field name="arch" type="xml">
+            <list decoration-warning="diff_count &gt; 0 and state != 'accepted'">
+                <field name="name"/>
+                <field name="partner_id"/>
+                <field name="date_from" optional="show"/>
+                <field name="date_to"/>
+                <field name="panel_count" optional="show"/>
+                <field name="line_count" optional="hide"/>
+                <field name="diff_count" string="Divergences"/>
+                <field name="coverage_status" optional="show" widget="badge"
+                       decoration-success="coverage_status == 'complete'"
+                       decoration-warning="coverage_status == 'partial'"
+                       decoration-muted="coverage_status == 'unknown'"/>
+                <field name="state" widget="badge"
+                       decoration-info="state == 'draft'"
+                       decoration-primary="state in ('computed', 'under_review')"
+                       decoration-success="state == 'accepted'"
+                       decoration-muted="state == 'cancel'"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_consignment_audit_form" model="ir.ui.view">
+        <field name="name">consignment.audit.form</field>
+        <field name="model">consignment.audit</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_compute" type="object"
+                            string="Compute" class="btn-primary"
+                            invisible="state in ('accepted', 'cancel')"/>
+                    <button name="action_accept_all_fiscal" type="object"
+                            string="Accept XML" class="btn-secondary"
+                            confirm="Set every line to the fiscal (XML) balance?"
+                            invisible="state not in ('computed', 'under_review')"/>
+                    <button name="action_accept_all_map" type="object"
+                            string="Accept Map" class="btn-secondary"
+                            confirm="Keep the current map on every line?"
+                            invisible="state not in ('computed', 'under_review')"/>
+                    <button name="action_accept" type="object"
+                            string="Accept &amp; Adjust" class="btn-primary"
+                            confirm="Generate the shelf adjustment for the accepted balances? This moves stock."
+                            invisible="state not in ('computed', 'under_review')"/>
+                    <button name="action_cancel" type="object" string="Cancel"
+                            invisible="state in ('accepted', 'cancel')"/>
+                    <button name="action_reset_to_draft" type="object"
+                            string="Reset to Draft"
+                            invisible="state in ('draft',)"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,computed,under_review,accepted"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_adjustment" type="object"
+                                class="oe_stat_button" icon="fa-wrench"
+                                invisible="not adjustment_move_id">
+                            <div class="o_stat_info">
+                                <span class="o_stat_text ms-2">Adjustment</span>
+                            </div>
+                        </button>
+                        <button name="action_view_shelf" type="object"
+                                class="oe_stat_button" icon="fa-inbox"
+                                invisible="not location_id">
+                            <div class="o_stat_info">
+                                <span class="o_stat_text ms-2">Shelf</span>
+                            </div>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <h1><field name="name" readonly="1"/></h1>
+                    </div>
+
+                    <div class="alert alert-warning" role="alert"
+                         invisible="unmatched_item_count == 0">
+                        <strong>Unmatched fiscal items:</strong>
+                        <field name="unmatched_item_count" class="oe_inline"/> item(s)
+                        (<field name="unmatched_qty" class="oe_inline"/> units) could
+                        not be matched to a product and are NOT counted. Fix the
+                        catalogue/alias and recompute.
+                    </div>
+                    <div class="alert alert-warning" role="alert"
+                         invisible="not unmapped_cfop_ids">
+                        <strong>Unmapped CFOPs found on this customer's notes:</strong>
+                        <field name="unmapped_cfop_ids" widget="many2many_tags" readonly="1"/>
+                        Map them (Configuration &gt; CFOP Effects) if any is a
+                        consignment movement, then recompute.
+                    </div>
+                    <div class="alert alert-danger" role="alert"
+                         invisible="no_cfop_panel_count == 0">
+                        <strong>Notes without a CFOP:</strong>
+                        <field name="no_cfop_panel_count" class="oe_inline"/> note(s)
+                        in the period have no CFOP recorded (not parsed, or the code
+                        is missing from the CFOP table) and are NOT counted. Seed the
+                        CFOP (Configuration &gt; CFOP Effects) and relink, then recompute.
+                    </div>
+
+                    <group>
+                        <group>
+                            <field name="partner_id" readonly="state != 'draft'"/>
+                            <field name="agreement_id"/>
+                            <field name="location_id"/>
+                            <field name="company_id"
+                                   groups="base.group_multi_company"/>
+                        </group>
+                        <group>
+                            <field name="date_from" readonly="state == 'accepted'"/>
+                            <field name="date_to" readonly="state == 'accepted'"/>
+                            <field name="coverage_status"/>
+                            <field name="panel_count"/>
+                        </group>
+                    </group>
+
+                    <notebook>
+                        <page string="Reconciliation" name="lines">
+                            <field name="line_ids"
+                                   readonly="state in ('accepted', 'cancel')">
+                                <list editable="bottom"
+                                      decoration-warning="line_state == 'divergent'"
+                                      decoration-success="line_state == 'accepted'"
+                                      decoration-muted="line_state == 'match'"
+                                      default_order="line_state">
+                                    <field name="product_id" readonly="qty_map != 0 or qty_shipped_xml != 0"/>
+                                    <field name="qty_opening"/>
+                                    <field name="qty_shipped_xml"/>
+                                    <field name="qty_sold_xml"/>
+                                    <field name="qty_returned_xml"/>
+                                    <field name="qty_expected" decoration-bf="1"/>
+                                    <field name="qty_map"/>
+                                    <field name="qty_diff"
+                                           decoration-danger="qty_diff &lt; 0"
+                                           decoration-success="qty_diff &gt; 0"/>
+                                    <field name="last_settlement_date" optional="show"/>
+                                    <field name="days_since_settlement" optional="hide"/>
+                                    <field name="shelf_status" widget="badge" optional="show"
+                                           decoration-success="shelf_status == 'ok'"
+                                           decoration-warning="shelf_status == 'attention'"
+                                           decoration-danger="shelf_status == 'critical'"
+                                           decoration-muted="shelf_status == 'no_return'"/>
+                                    <field name="panel_count" string="NFes"/>
+                                    <button name="action_view_panels" type="object"
+                                            icon="fa-external-link"
+                                            title="View fiscal documents"
+                                            invisible="panel_count == 0"/>
+                                    <field name="resolution"/>
+                                    <field name="accepted_qty"
+                                           readonly="not resolution"/>
+                                    <field name="adjustment_delta"
+                                           decoration-bf="1"
+                                           decoration-danger="adjustment_delta &lt; 0"
+                                           decoration-success="adjustment_delta &gt; 0"/>
+                                    <field name="note" optional="hide"/>
+                                    <field name="line_state" widget="badge"
+                                           decoration-warning="line_state == 'divergent'"
+                                           decoration-success="line_state == 'accepted'"
+                                           decoration-muted="line_state == 'match'"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Notes" name="notes">
+                            <field name="note"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_consignment_audit_search" model="ir.ui.view">
+        <field name="name">consignment.audit.search</field>
+        <field name="model">consignment.audit</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="partner_id"/>
+                <filter string="With divergences" name="f_diff"
+                        domain="[('diff_count', '&gt;', 0)]"/>
+                <filter string="Draft" name="f_draft" domain="[('state', '=', 'draft')]"/>
+                <filter string="Computed" name="f_computed"
+                        domain="[('state', 'in', ('computed', 'under_review'))]"/>
+                <filter string="Accepted" name="f_accepted" domain="[('state', '=', 'accepted')]"/>
+                <group>
+                    <filter string="Customer" name="g_partner" context="{'group_by': 'partner_id'}"/>
+                    <filter string="Status" name="g_state" context="{'group_by': 'state'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_consignment_audit" model="ir.actions.act_window">
+        <field name="name">Audits</field>
+        <field name="res_model">consignment.audit</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_consignment_audit_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Audit a customer's shelf against the fiscal truth
+            </p>
+            <p>
+                Pick a customer and a period, then Compute: the audit rebuilds
+                the expected shelf balance from every consignment NFe (shipments,
+                sales, returns) and confronts it with the current map. Accept the
+                difference item by item or in toto — accepting generates a shelf
+                adjustment that corrects (or initialises) the map.
+            </p>
+        </field>
+    </record>
+
+</odoo>

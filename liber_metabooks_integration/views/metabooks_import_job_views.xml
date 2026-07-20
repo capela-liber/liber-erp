@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Background cron that processes queued/running catalogue imports -->
+    <record id="cron_metabooks_import_jobs" model="ir.cron">
+        <field name="name">Metabooks: process catalogue import jobs</field>
+        <field name="model_id" ref="model_metabooks_import_job"/>
+        <field name="state">code</field>
+        <field name="code">model._cron_process_jobs()</field>
+        <field name="interval_number">5</field>
+        <field name="interval_type">minutes</field>
+        <field name="active" eval="True"/>
+    </record>
+
+    <record id="metabooks_import_job_form" model="ir.ui.view">
+        <field name="name">metabooks.import.job.form</field>
+        <field name="model">metabooks.import.job</field>
+        <field name="arch" type="xml">
+            <form string="Catalogue Import">
+                <header>
+                    <button name="action_refresh" type="object" string="Refresh"
+                            class="btn-primary" icon="fa-refresh"
+                            invisible="state in ('done','failed')"/>
+                    <button name="action_run_now" type="object" string="Run now"
+                            invisible="state in ('done','running')"/>
+                    <button name="action_requeue" type="object" string="Re-run"
+                            invisible="state not in ('done','failed')"/>
+                    <button name="action_view_products" type="object"
+                            string="Imported products" invisible="imported == 0"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="queued,running,done"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="mvb_id"/>
+                            <field name="job_type"/>
+                            <field name="with_covers" invisible="job_type == 'technical'"/>
+                            <field name="with_technical" invisible="job_type == 'technical'"/>
+                            <field name="limit"/>
+                        </group>
+                        <group>
+                            <field name="total"/>
+                            <field name="imported"/>
+                            <field name="progress" widget="progressbar"/>
+                            <field name="total_pages" invisible="job_type == 'technical'"/>
+                            <field name="next_page" invisible="job_type == 'technical'"/>
+                        </group>
+                    </group>
+                    <group string="Message" invisible="not message">
+                        <field name="message" nolabel="1" readonly="1"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="metabooks_import_job_list" model="ir.ui.view">
+        <field name="name">metabooks.import.job.list</field>
+        <field name="model">metabooks.import.job</field>
+        <field name="arch" type="xml">
+            <list string="Catalogue Imports">
+                <field name="create_date"/>
+                <field name="mvb_id"/>
+                <field name="job_type"/>
+                <field name="total"/>
+                <field name="imported"/>
+                <field name="progress" widget="progressbar"/>
+                <field name="state" widget="badge"
+                       decoration-success="state == 'done'"
+                       decoration-info="state == 'running'"
+                       decoration-danger="state == 'failed'"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="action_metabooks_import_jobs" model="ir.actions.act_window">
+        <field name="name">Catalogue Imports</field>
+        <field name="res_model">metabooks.import.job</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem id="menu_metabooks_import_jobs"
+              name="Catalogue Imports"
+              parent="liber_metabooks_integration.menu_metabooks_imports"
+              action="action_metabooks_import_jobs"
+              sequence="5"/>
+</odoo>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_bonus_reason_list" model="ir.ui.view">
+        <field name="name">product.bonus.reason.list</field>
+        <field name="model">product.bonus.reason</field>
+        <field name="arch" type="xml">
+            <list editable="bottom">
+                <field name="sequence" widget="handle"/>
+                <field name="name"/>
+                <field name="bucket"/>
+                <!-- Rótulos curtos na LISTA (o nome completo continua no
+                     formulário e na dica): "Janela de retorno (dias)" e
+                     "Consome exemplares do contrato" não cabiam e apareciam
+                     cortados com reticências, que é pior que abreviar de
+                     propósito. Booleanos centralizados: a marca fica sob o
+                     rótulo, não empurrada para a beirada. -->
+                <field name="return_window_days" string="Dias"/>
+                <field name="requires_approval" string="Aprova?"
+                       class="text-center"/>
+                <field name="consumes_contract" string="Contrato"
+                       class="text-center"/>
+                <field name="bonus_count" string="Envios" class="text-center"/>
+                <field name="active" widget="boolean_toggle" string="Ativo"
+                       class="text-center"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="action_bonus_reason" model="ir.actions.act_window">
+        <field name="name">Motivos</field>
+        <field name="res_model">product.bonus.reason</field>
+        <field name="view_mode">list</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Cadastre os motivos.</p>
+            <p>Cada motivo aponta para um dos três baldes (autor / marketing /
+               comercial) e carrega sua própria janela de retorno: influencer
+               posta em uma semana ou nunca; crítico de jornal leva três meses.</p>
+        </field>
+    </record>
+</odoo>

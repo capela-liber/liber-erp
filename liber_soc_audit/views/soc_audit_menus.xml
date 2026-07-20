@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="menu_consignment_audit"
+              name="Audits"
+              parent="liber_soc_agreements.menu_consignment_root"
+              action="action_consignment_audit"
+              sequence="20"/>
+
+    <menuitem id="menu_soc_audit_cfop_effects"
+              name="CFOP Effects"
+              parent="liber_soc_settlement.menu_soc_config"
+              action="action_nfe_cfop_effect"
+              sequence="20"
+              groups="base.group_system"/>
+</odoo>

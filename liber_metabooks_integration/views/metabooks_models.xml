@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="view_tree_metabooks_authors">
+            <field name="name">BISAC</field>
+            <field name="model">biblio.bisac.codes</field>
+            <field name="arch" type="xml">
+                <list>
+                    <field name="bisac_code"/>
+                    <field name="bisac_prefix"/>
+                    <field name="bisac_category"/>
+                    <field name="bisac_product_category"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="action_metabooks_bisac_codes" model="ir.actions.act_window">
+            <field name="name">BISAC</field>
+            <field name="res_model">biblio.bisac.codes</field>
+            <field name="view_mode">list,form</field>
+        </record>
+
+        <menuitem id="menu_metabooks_bisac" name="BISAC" action="action_metabooks_bisac_codes"
+                  parent="liber_metabooks_integration.menu_metabooks_catalogue"/>
+
+        <record model="ir.ui.view" id="view_tree_product_identifier">
+            <field name="name">Product Identifier</field>
+            <field name="model">metabooks.avalaibility.definition</field>
+            <field name="arch" type="xml">
+                <list>
+                    <field name="identify_number"/>
+                    <field name="product_definition"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="action_metabooks_product_identifier" model="ir.actions.act_window">
+            <field name="name">Availability</field>
+            <field name="res_model">metabooks.avalaibility.definition</field>
+            <field name="view_mode">list,form</field>
+        </record>
+
+        <menuitem id="menu_metabooks_product_identifier" name="Availability"
+                  action="action_metabooks_product_identifier" parent="liber_metabooks_integration.menu_metabooks_catalogue"/>
+
+
+        <record id="view_metabooks_vendor_ids" model="ir.ui.view">
+            <field name="name">vendor.metabooks.form.view</field>
+            <field name="model">vendor.metabooks.ids</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                        <button name="action_import_catalog" string="Import Catalogue" type="object" class="btn-primary"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <field name="partner_id"/>
+                            <field name="metabooks_editor_id"/>
+                            <field name="brand"/>
+                            <field name="company_id"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="view_form_metabooks_vendor_ids" model="ir.ui.view">
+            <field name="name">vendor.metabooks.list.view</field>
+            <field name="model">vendor.metabooks.ids</field>
+            <field name="arch" type="xml">
+                <list>
+                    <field name="partner_id"/>
+                    <field name="metabooks_editor_id"/>
+                    <field name="brand"/>
+                    <field name="company_id"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="view_metabooks_vendor_ids_search" model="ir.ui.view">
+            <field name="name">vendor.metabooks.view.search</field>
+            <field name="model">vendor.metabooks.ids</field>
+            <field name="arch" type="xml">
+                <search string="Vendor Metabooks">
+                    <field name="partner_id"/>
+                    <field name="metabooks_editor_id"/>
+                    <field name="brand"/>
+                    <field name="company_id"/>
+                    <group>
+                        <filter name="group_partner_id" string='Vendor' domain="[]"
+                                context="{'group_by' : 'partner_id'}"/>
+                        <filter name="group_metabooks_editor_id" string='Metabooks Id' domain="[]"
+                                context="{'group_by' : 'metabooks_editor_id'}"/>
+                        <filter name="group_brand" string='Brand' domain="[]" context="{'group_by' : 'brand'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_vendor_metabooks_ids" model="ir.actions.act_window">
+            <field name="name">Vendor Metabooks</field>
+            <field name="res_model">vendor.metabooks.ids</field>
+            <field name="view_mode">list,form</field>
+        </record>
+
+        <menuitem id="menu_vendor_metabooks_ids" name="Vendor Metabooks" action="action_vendor_metabooks_ids"
+                  parent="liber_metabooks_integration.menu_metabooks_catalogue"/>
+
+        <record id="action_metabooks_authors" model="ir.actions.act_window">
+            <field name="name">Authors</field>
+            <field name="res_model">metabooks.auther.publiser</field>
+            <field name="view_mode">list,form</field>
+        </record>
+
+        <menuitem id="menu_metabooks_authors" name="Authors" action="action_metabooks_authors"
+        				  parent="liber_metabooks_integration.menu_metabooks_catalogue"/>
+
+        <record id="action_bisac_codes_categories" model="ir.actions.server">
+            <field name="name">Update Bisac categories</field>
+            <field name="type">ir.actions.server</field>
+            <field name="model_id" ref="model_biblio_bisac_codes"/>
+            <field name="binding_model_id" ref="model_biblio_bisac_codes"/>
+            <field name="state">code</field>
+            <field name="code">records.update_bisac_categories()</field>
+        </record>
+    </data>
+</odoo>

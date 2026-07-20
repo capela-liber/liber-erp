@@ -1,0 +1,11 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_edlab_contract_user,edlab.contract.user,model_edlab_contract,group_contract_user,1,1,1,0
+access_edlab_contract_manager,edlab.contract.manager,model_edlab_contract,group_contract_manager,1,1,1,1
+access_edlab_royalty_line_user,edlab.contract.royalty.line.user,model_edlab_contract_royalty_line,group_contract_user,1,1,1,1
+access_edlab_royalty_line_manager,edlab.contract.royalty.line.manager,model_edlab_contract_royalty_line,group_contract_manager,1,1,1,1
+access_edlab_royalty_tier_user,edlab.contract.royalty.tier.user,model_edlab_contract_royalty_tier,group_contract_user,1,1,1,1
+access_edlab_royalty_tier_manager,edlab.contract.royalty.tier.manager,model_edlab_contract_royalty_tier,group_contract_manager,1,1,1,1
+access_edlab_contract_reassign_user,edlab.contract.reassign.user,model_edlab_contract_reassign,group_contract_user,1,1,1,1
+access_edlab_contract_reassign_manager,edlab.contract.reassign.manager,model_edlab_contract_reassign,group_contract_manager,1,1,1,1
+access_edlab_contract_tag_user,edlab.contract.tag.user,model_edlab_contract_tag,group_contract_user,1,1,1,0
+access_edlab_contract_tag_manager,edlab.contract.tag.manager,model_edlab_contract_tag,group_contract_manager,1,1,1,1

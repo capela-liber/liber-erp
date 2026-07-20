@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_bonus_list_import_form" model="ir.ui.view">
+        <field name="name">product.bonus.list.import.form</field>
+        <field name="model">product.bonus.list.import</field>
+        <field name="arch" type="xml">
+            <form string="Importar contatos">
+                <field name="state" invisible="1"/>
+
+                <div invisible="state != 'upload'">
+                    <group>
+                        <group>
+                            <field name="file" filename="filename"
+                                   string="Planilha (.xlsx ou .csv)"/>
+                            <field name="filename" invisible="1"/>
+                            <!-- Dentro do <group>, e não no parágrafo do
+                                 alerta: campo binário só ganha o widget de
+                                 anexo (com nome do arquivo e clique para
+                                 baixar) quando é uma linha de formulário. -->
+                            <field name="template_file"
+                                   filename="template_filename" readonly="1"/>
+                            <field name="template_filename" invisible="1"/>
+                            <field name="list_id"
+                                   placeholder="Deixe vazio se a planilha tem coluna Lista"/>
+                        </group>
+                        <group>
+                            <field name="create_missing"/>
+                            <field name="match_by_name"/>
+                        </group>
+                    </group>
+                    <div class="alert alert-info" role="alert">
+                        <p>Os títulos das colunas podem estar em qualquer ordem —
+                        o importador reconhece variações comuns (nome/contato,
+                        e-mail/email, telefone/celular, veículo/observação...).
+                        Só <b>Nome</b> ou <b>E-mail</b> é obrigatório.</p>
+                        <p>Para importar <b>várias listas de uma vez</b>, ponha
+                        uma coluna <b>Lista</b> na planilha dizendo a que lista
+                        cada contato pertence — a lista que ainda não existir é
+                        criada, e a mesma pessoa pode aparecer em quantas listas
+                        fizer sentido, sem duplicar o cadastro.</p>
+                        <p class="mb-0">Na dúvida, comece pela planilha de
+                        exemplo — ela está aí em cima, é só clicar para
+                        baixar.</p>
+                    </div>
+                </div>
+
+                <div invisible="state != 'preview'">
+                    <!-- Nada foi gravado ainda: a prévia sai do MESMO
+                         código que a importação usa, então ela não mente. -->
+                    <h4>O que vai acontecer</h4>
+                    <field name="preview_html" nolabel="1" readonly="1"/>
+                    <p class="text-muted">Nada foi gravado até aqui.</p>
+                </div>
+
+                <div invisible="state != 'done'">
+                    <field name="result_html" nolabel="1" readonly="1"/>
+                </div>
+
+                <footer>
+                    <button name="action_preview" type="object"
+                            string="Conferir" class="btn-primary"
+                            invisible="state != 'upload'"/>
+                    <button name="action_import" type="object"
+                            string="Importar" class="btn-primary"
+                            invisible="state != 'preview'"/>
+                    <button string="Voltar" name="action_back" type="object"
+                            class="btn-secondary" invisible="state != 'preview'"/>
+                    <button string="Fechar" special="cancel"
+                            class="btn-secondary"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_bonus_list_import" model="ir.actions.act_window">
+        <field name="name">Importar contatos</field>
+        <field name="res_model">product.bonus.list.import</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <!-- Filho de "Listas". Era irmão, porque um menu com filhos deixa de abrir
+         a própria ação e a lista de listas sumiria — mas ela não some: virou o
+         primeiro filho do grupo (ver product_bonus_menus.xml). -->
+    <menuitem id="menu_bonus_list_import" name="Importar contatos"
+              parent="menu_bonus_lists" action="action_bonus_list_import"
+              sequence="20"/>
+</odoo>

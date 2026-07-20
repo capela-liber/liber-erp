@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="metabooks_product_inherit_form" model="ir.ui.view">
+            <field name="name">product.template.metabooks.inherit.form</field>
+            <field name="model">product.template</field>
+            <field name="priority">18</field>
+            <field name="inherit_id" ref="product.product_template_only_form_view"/>
+            <field name="arch" type="xml">
+                <!-- v19 port: the product form has no <header> (products have no
+                     workflow), so create one before the sheet for the action button. -->
+                <xpath expr="//sheet" position="before">
+                    <header>
+                        <button name="update_metabooks_books" string="Metabooks" type="object" class="btn-primary"
+                                groups="liber_metabooks_integration.metabooks_product_group"/>
+                        <button name="action_metabooks_refresh_technical" string="Refresh Technical Sheet"
+                                type="object"
+                                groups="liber_metabooks_integration.metabooks_product_group"/>
+                    </header>
+                </xpath>
+                 <xpath expr="//notebook" position="inside">
+                    <page name="metabooks_data" string="Metabooks">
+<!--                <xpath expr="//group[@name='basic_metabooks_group']" position="after">-->
+                        <group>
+                            <group>
+                                <field name="synopsys" widget="html" string="Synopsis"/>
+                                <field name="metabooks_book_title"/>
+                                <field name="metabooks_book_subtitle"/>
+                                <field name="metabooks_parental_rating"/>
+                                <field name="metabooks_collections"/>
+                                <field name="metabooks_publication_country"/>
+                                <field name="size_chart_link" widget="url" readonly="1"/>
+                                <field name="size_chart_name" invisible="1"/>
+                                <field name="size_chart" filename="size_chart_name" widget="binary"/>
+                                <field name="product_id_values"/>
+                            </group>
+                            <group name="metabooks_structural_data" string="Structural data">
+                                <field name="metabooks_image_url" widget="url" readonly="1"/>
+                                <field name="metabooks_vendor_id" readonly="1"/>
+                                <field name="metabooks_weight"/>
+                                <field name="metabooks_height"/>
+                                <field name="metabooks_width"/>
+                                <field name="metabooks_thickness"/>
+                                <field name="metabooks_publisher"/>
+                                <field name="metabooks_label"/>
+                                <field name="metabooks_subjects"/>
+                            </group>
+                            <group name="book_date_group" string="Dates">
+                                <field name="metabooks_publish_date"/>
+                                <field name="metabooks_creation_date"/>
+                                <field name="metabooks_last_updatedate"/>
+                                <field name="metabooks_page_count"/>
+                                <field name="metabooks_product_type" widget="selection"/>
+                                <field name="metabooks_json_data"/>
+                                <field name="metabooks_product_availability"/>
+                                <field name="metabooks_product_status"/>
+                                <field name="metabooks_keywords"/>
+                                <field name="bisac_code"/>
+                                <field name="bisac_code_ids" widget="many2many_tags"/>
+                                <field name="bisac_prefix" invisible="1"/>
+                                <field name="product_identifier">
+                                    <list>
+                                        <field name="id_value"/>
+                                        <field name="metabooks_identifier_type"/>
+                                    </list>
+                                </field>
+                            </group>
+                            <group string="Basic">
+								<field name="edition"/>
+                                <field name="book_auther_ids">
+                                    <list>
+                                        <field name="author_full_name"/>
+                                        <field name="author_role"/>
+                                    </list>
+                                </field>
+                            </group>
+                        </group>
+                    </page>
+                    <!-- The physical specification, as declared to Metabooks in ONIX.
+                         This is the sheet a print shop quotes from, so it is kept
+                         apart from the editorial/commercial Metabooks page above. -->
+                    <page name="metabooks_technical" string="Technical Sheet">
+                        <group>
+                            <group name="metabooks_format" string="Format">
+                                <field name="metabooks_product_form"/>
+                                <field name="metabooks_binding"/>
+                                <field name="metabooks_height" string="Height (mm)"/>
+                                <field name="metabooks_width" string="Width (mm)"/>
+                                <field name="metabooks_thickness" string="Spine (mm)"/>
+                                <field name="metabooks_weight" string="Weight (g)"/>
+                                <field name="metabooks_ebook_format"
+                                       invisible="not metabooks_ebook_format"/>
+                                <field name="metabooks_form_detail" readonly="1"/>
+                            </group>
+                            <group name="metabooks_finishing" string="Finishing">
+                                <field name="metabooks_has_flaps"/>
+                                <field name="metabooks_has_dust_jacket"/>
+                                <field name="metabooks_has_ribbon"/>
+                                <field name="metabooks_has_thumb_index"/>
+                            </group>
+                            <group name="metabooks_extent" string="Extent">
+                                <field name="metabooks_page_count" string="Main Content Pages"/>
+                                <field name="metabooks_front_matter_pages"/>
+                                <field name="metabooks_back_matter_pages"/>
+                                <field name="metabooks_total_page_count"/>
+                                <field name="metabooks_illustration_count"/>
+                                <field name="metabooks_illustration_note"
+                                       invisible="not metabooks_illustration_note"/>
+                            </group>
+                            <group name="metabooks_edition_group" string="Edition and Origin">
+                                <field name="metabooks_edition_number"/>
+                                <field name="metabooks_edition_type"/>
+                                <field name="metabooks_publish_date"/>
+                                <field name="metabooks_publishing_status"/>
+                                <field name="metabooks_language"/>
+                                <field name="metabooks_original_language"/>
+                                <field name="metabooks_publication_city"/>
+                                <field name="metabooks_country_of_manufacture"/>
+                                <field name="metabooks_ncm"/>
+                                <field name="metabooks_technical_sync"/>
+                            </group>
+                        </group>
+                    </page>
+                 </xpath>
+<!--                </xpath>-->
+<!--                <xpath expr="//field[@name='book_auther_ids']" position="replace">-->
+<!--                    <field name="book_auther_ids">-->
+<!--                        <list>-->
+<!--                            <field name="author_full_name"/>-->
+<!--                            <field name="author_role"/>-->
+<!--                        </list>-->
+<!--                    </field>-->
+
+<!--                </xpath>-->
+<!--                <xpath expr="//field[@name='synopsys']" position="before">-->
+<!--                    <field name="metabooks_book_title"/>-->
+<!--                    <field name="metabooks_book_subtitle"/>-->
+<!--                    <field name="metabooks_parental_rating"/>-->
+<!--                    <field name="metabooks_collections"/>-->
+<!--                    <field name="metabooks_publication_country"/>-->
+<!--                    <field name="size_chart_link" widget="url" readonly="1"/>-->
+<!--                    <field name="product_id_values"/>-->
+<!--                </xpath>-->
+            </field>
+        </record>
+
+        <record id="metabooks_subject_form_view" model="ir.ui.view">
+            <field name="name">metabooks.subject.form.view</field>
+            <field name="model">metabooks.book.subjects</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <group>
+                            <field name="name" string="Subject Heading"/>
+                            <field name="metabooks_subject_code" />
+                            <field name="metabooks_subject_scheme_version" />
+                            <field name="metabooks_bisac_code" />
+                        </group>
+                        <group>
+                            <field name="metabooks_subject_source_name"/>
+                            <field name="metabooks_subject_identifier"/>
+                            <field name="metabooks_main_subject"/>
+                        </group>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="metabooks_product_filter_inherit_form_1">
+            <field name="name">metabooks.product.search</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_search_view"/>
+            <field name="arch" type="xml">
+                <!-- v19 port: search view has no pricelist_id field nor 'consumable'
+                     filter; re-anchored to categ_id / goods. -->
+                <xpath expr="//field[@name='categ_id']" position="after">
+                    <!-- staff usually recall the contributor before the title -->
+                    <field name="book_auther_ids" string="Author"
+                           filter_domain="[('book_auther_ids.author_full_name','ilike',self)]"/>
+                    <field name="metabooks_publisher" string="Publisher" filter_domain="[('metabooks_publisher','ilike',self)]"/>
+                    <field name="metabooks_label" string="Label" filter_domain="[('metabooks_label','ilike',self)]"/>
+                    <field name="metabooks_product_type" string="Book Type" filter_domain="[('metabooks_product_type','ilike',self)]"/>
+                </xpath>
+                <xpath expr="//filter[@name='goods']" position="after">
+                    <separator/>
+                    <filter string="Printed book (pbook)" name="type_pbook"
+                            domain="[('metabooks_product_type.name', '=', 'pbook')]"/>
+                    <filter string="E-book (ebook)" name="type_ebook"
+                            domain="[('metabooks_product_type.name', '=', 'ebook')]"/>
+                    <filter string="Audiobook (abook)" name="type_abook"
+                            domain="[('metabooks_product_type.name', '=', 'abook')]"/>
+                    <separator/>
+                    <filter string="Available" name="metabooks_available"
+                            domain="[('metabooks_product_availability.identify_number', 'in', ['20', '21'])]"/>
+                    <filter string="Not available" name="metabooks_unavailable"
+                            domain="['&amp;', ('metabooks_product_availability', '!=', False), ('metabooks_product_availability.identify_number', 'not in', ['20', '21'])]"/>
+                    <separator/>
+                    <filter string="Book Type" name="group_by_metabooks_type" context="{'group_by' : 'metabooks_product_type'}"/>
+                    <filter string="Product Availability" name="group_by_metabooks_product_availability" context="{'group_by' : 'metabooks_product_availability'}"/>
+                    <filter string="Metabooks Publisher" name="group_by_metabooks_publisher" context="{'group_by' : 'metabooks_publisher'}"/>
+                    <separator/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,31 @@
+<odoo>
+    <data>
+        <!-- LAB FORK / Odoo 19: the active flag and its boolean_button
+             toggle were dropped - ir.attachment forbids an active field
+             now; nfe_xml_processed marks handled attachments. -->
+        <record id="view_soc_ir_attachment_inherit" model="ir.ui.view">
+            <field name="name">soc.ir.attachment.inherit</field>
+            <field name="model">ir.attachment</field>
+            <field name="inherit_id" ref="base.view_attachment_form"/>
+            <field name="arch" type="xml">
+                <field name="public" position="after">
+                    <field name="nfe_xml_processed"/>
+                    <field name="status"/>
+                </field>
+            </field>
+        </record>
+
+        <record id="view_attachment_search_soc_inherit" model="ir.ui.view">
+            <field name="name">ir.attachment.inherit</field>
+            <field name="model">ir.attachment</field>
+            <field name="inherit_id" ref="base.view_attachment_search"/>
+            <field name="arch" type="xml">
+                <xpath expr="//search" position="inside">
+                    <separator/>
+                    <filter name="cron_status" string="Cron Status" context="{'group_by': 'status'}"/>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

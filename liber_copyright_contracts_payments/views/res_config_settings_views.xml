@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Plug the payment settings into the Copyright app in Settings. They were
+         only reachable on the company form until now, which is where nobody
+         looks: the first thing "Generate Royalty Bills" needs is the payment
+         product, so it has to be visible where people configure the app. -->
+    <record id="res_config_settings_view_form_payments" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.copyright.payments</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="liber_copyright_contracts.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//block[@name='copyright_contracts_block']" position="after">
+                <block title="Beneficiary Payments" name="copyright_payments_block">
+                    <setting string="Payment product"
+                             help="Product placed on the vendor bill lines that pay authors. Leave empty to use the &quot;Royalties&quot; service product shipped with the module.">
+                        <field name="contract_payment_product_id"
+                               placeholder="Royalties (module default)"/>
+                    </setting>
+                    <setting string="Expense account"
+                             help="Expense account used on those bill lines. Leave empty to use the product's own expense account.">
+                        <field name="contract_payment_account_id"/>
+                    </setting>
+                    <setting string="Purchase journal"
+                             help="Journal for the royalty payment bills. Leave empty to use the company's default purchase journal.">
+                        <field name="contract_payment_journal_id"/>
+                    </setting>
+                    <setting string="Payment term"
+                             help="Days added to today to set the due date of a royalty payment bill.">
+                        <div class="content-group">
+                            <div class="mt8">
+                                <field name="contract_payment_days" class="o_light_label"/>
+                                <span class="ms-2">days to pay</span>
+                            </div>
+                        </div>
+                    </setting>
+                </block>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

@@ -1,0 +1,332 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ============================================================
+         Modelo realista: livros clássicos (obras), tradutores
+         (beneficiários) com dados completos e contratos.
+         ============================================================ -->
+
+    <!-- Bancos -->
+    <record id="bank_bb" model="res.bank">
+        <field name="name">Banco do Brasil</field>
+        <field name="bic">BRASBRRJ</field>
+    </record>
+    <record id="bank_itau" model="res.bank">
+        <field name="name">Itaú Unibanco</field>
+        <field name="bic">ITAUBRSP</field>
+    </record>
+
+    <!-- ==================== Obras (livros) ==================== -->
+    <record id="book_iliada" model="product.template">
+        <field name="name">Ilíada</field>
+        <field name="default_code">LIV-ILI</field>
+        <field name="barcode">9788573264029</field>
+        <field name="list_price">74.90</field>
+        <field name="type">consu</field>
+    </record>
+    <record id="book_odisseia" model="product.template">
+        <field name="name">Odisseia</field>
+        <field name="default_code">LIV-ODI</field>
+        <field name="barcode">9788573265590</field>
+        <field name="list_price">69.90</field>
+        <field name="type">consu</field>
+    </record>
+    <record id="book_hamlet" model="product.template">
+        <field name="name">Hamlet</field>
+        <field name="default_code">LIV-HAM</field>
+        <field name="barcode">9788525042255</field>
+        <field name="list_price">39.90</field>
+        <field name="type">consu</field>
+    </record>
+    <record id="book_romeu" model="product.template">
+        <field name="name">Romeu e Julieta</field>
+        <field name="default_code">LIV-ROM</field>
+        <field name="barcode">9788594318600</field>
+        <field name="list_price">34.90</field>
+        <field name="type">consu</field>
+    </record>
+    <record id="book_quixote" model="product.template">
+        <field name="name">Dom Quixote</field>
+        <field name="default_code">LIV-QUI</field>
+        <field name="barcode">9788573261547</field>
+        <field name="list_price">89.90</field>
+        <field name="type">consu</field>
+    </record>
+    <record id="book_divina" model="product.template">
+        <field name="name">A Divina Comédia</field>
+        <field name="default_code">LIV-DIV</field>
+        <field name="barcode">9788533613412</field>
+        <field name="list_price">79.90</field>
+        <field name="type">consu</field>
+    </record>
+    <record id="book_lusiadas" model="product.template">
+        <field name="name">Os Lusíadas</field>
+        <field name="default_code">LIV-LUS</field>
+        <field name="barcode">9788520925829</field>
+        <field name="list_price">54.90</field>
+        <field name="type">consu</field>
+    </record>
+    <record id="book_crime" model="product.template">
+        <field name="name">Crime e Castigo</field>
+        <field name="default_code">LIV-CRI</field>
+        <field name="barcode">9788573261134</field>
+        <field name="list_price">64.90</field>
+        <field name="type">consu</field>
+    </record>
+    <record id="book_orgulho" model="product.template">
+        <field name="name">Orgulho e Preconceito</field>
+        <field name="default_code">LIV-ORG</field>
+        <field name="barcode">9788594318174</field>
+        <field name="list_price">44.90</field>
+        <field name="type">consu</field>
+    </record>
+    <record id="book_moby" model="product.template">
+        <field name="name">Moby Dick</field>
+        <field name="default_code">LIV-MOB</field>
+        <field name="barcode">9788563560247</field>
+        <field name="list_price">59.90</field>
+        <field name="type">consu</field>
+    </record>
+
+    <!-- ==================== Beneficiários (tradutores) ==================== -->
+    <record id="author_nunes" model="res.partner">
+        <field name="name">Carlos Alberto Nunes</field>
+        <field name="is_company" eval="False"/>
+        <field name="email">carlos.nunes@example.com</field>
+        <field name="vat">124.583.907-45</field>
+        <field name="edlab_rg">12.345.678-9</field>
+        <field name="edlab_pis">120.45678.90-1</field>
+        <field name="edlab_birthdate">1951-04-19</field>
+        <field name="edlab_nationality">Brasileira</field>
+        <field name="edlab_irrf_percentage">27.5</field>
+        <field name="street">Rua Bela Cintra, 1200</field>
+        <field name="city">São Paulo</field>
+        <field name="zip">01415-000</field>
+        <field name="country_id" ref="base.br"/>
+    </record>
+    <record id="bank_author_nunes" model="res.partner.bank">
+        <field name="partner_id" ref="author_nunes"/>
+        <field name="bank_id" ref="bank_bb"/>
+        <field name="acc_number">12345-6</field>
+        <field name="edlab_agency">1234-5</field>
+    </record>
+
+    <record id="author_millor" model="res.partner">
+        <field name="name">Millôr Fernandes</field>
+        <field name="is_company" eval="False"/>
+        <field name="email">millor.fernandes@example.com</field>
+        <field name="vat">238.716.409-82</field>
+        <field name="edlab_rg">23.876.541-0</field>
+        <field name="edlab_pis">231.87654.09-2</field>
+        <field name="edlab_birthdate">1953-08-16</field>
+        <field name="edlab_nationality">Brasileira</field>
+        <field name="edlab_irrf_percentage">15.0</field>
+        <field name="street">Rua Voluntários da Pátria, 340</field>
+        <field name="city">Rio de Janeiro</field>
+        <field name="zip">22270-000</field>
+        <field name="country_id" ref="base.br"/>
+    </record>
+    <record id="bank_author_millor" model="res.partner.bank">
+        <field name="partner_id" ref="author_millor"/>
+        <field name="bank_id" ref="bank_itau"/>
+        <field name="acc_number">67890-1</field>
+        <field name="edlab_agency">0567</field>
+    </record>
+
+    <record id="author_molina" model="res.partner">
+        <field name="name">Sérgio Molina</field>
+        <field name="is_company" eval="False"/>
+        <field name="email">sergio.molina@example.com</field>
+        <field name="vat">305.947.128-60</field>
+        <field name="edlab_rg">30.594.712-8</field>
+        <field name="edlab_pis">305.94712.86-0</field>
+        <field name="edlab_birthdate">1961-11-03</field>
+        <field name="edlab_nationality">Brasileira</field>
+        <field name="edlab_irrf_percentage">7.5</field>
+        <field name="street">Rua Augusta, 2075</field>
+        <field name="city">São Paulo</field>
+        <field name="zip">01413-000</field>
+        <field name="country_id" ref="base.br"/>
+    </record>
+    <record id="bank_author_molina" model="res.partner.bank">
+        <field name="partner_id" ref="author_molina"/>
+        <field name="bank_id" ref="bank_bb"/>
+        <field name="acc_number">24680-3</field>
+        <field name="edlab_agency">3456-7</field>
+    </record>
+
+    <record id="author_bezerra" model="res.partner">
+        <field name="name">Paulo Bezerra</field>
+        <field name="is_company" eval="False"/>
+        <field name="email">paulo.bezerra@example.com</field>
+        <field name="vat">419.628.375-11</field>
+        <field name="edlab_rg">41.962.837-5</field>
+        <field name="edlab_pis">419.62837.51-1</field>
+        <field name="edlab_birthdate">1940-07-25</field>
+        <field name="edlab_nationality">Brasileira</field>
+        <field name="edlab_irrf_percentage">27.5</field>
+        <field name="street">Avenida Nossa Senhora de Copacabana, 500</field>
+        <field name="city">Rio de Janeiro</field>
+        <field name="zip">22020-001</field>
+        <field name="country_id" ref="base.br"/>
+    </record>
+    <record id="bank_author_bezerra" model="res.partner.bank">
+        <field name="partner_id" ref="author_bezerra"/>
+        <field name="bank_id" ref="bank_itau"/>
+        <field name="acc_number">13579-2</field>
+        <field name="edlab_agency">0891</field>
+    </record>
+
+    <record id="author_lucia" model="res.partner">
+        <field name="name">Lúcia Miguel Pereira</field>
+        <field name="is_company" eval="False"/>
+        <field name="email">lucia.pereira@example.com</field>
+        <field name="vat">507.813.264-30</field>
+        <field name="edlab_rg">50.781.326-4</field>
+        <field name="edlab_pis">507.81326.43-0</field>
+        <field name="edlab_birthdate">1955-03-12</field>
+        <field name="edlab_nationality">Brasileira</field>
+        <field name="edlab_irrf_percentage">15.0</field>
+        <field name="street">Rua Marquês de São Vicente, 225</field>
+        <field name="city">Rio de Janeiro</field>
+        <field name="zip">22451-041</field>
+        <field name="country_id" ref="base.br"/>
+    </record>
+    <record id="bank_author_lucia" model="res.partner.bank">
+        <field name="partner_id" ref="author_lucia"/>
+        <field name="bank_id" ref="bank_bb"/>
+        <field name="acc_number">97531-8</field>
+        <field name="edlab_agency">6789-0</field>
+    </record>
+
+    <!-- ==================== Contratos ==================== -->
+    <!-- BC1 — Homero por Carlos Alberto Nunes (duas obras) -->
+    <record id="book_contract_1" model="edlab.contract">
+        <field name="signature_date">2019-02-10</field>
+        <field name="expiration_date">2029-02-10</field>
+        <field name="auto_renew" eval="True"/>
+        <field name="state">valid</field>
+    </record>
+    <record id="book_contract_1_line_iliada" model="edlab.contract.royalty.line">
+        <field name="contract_id" ref="book_contract_1"/>
+        <field name="partner_id" ref="author_nunes"/>
+        <field name="product_id" ref="book_iliada"/>
+        <field name="recoupable_advance">5000.0</field>
+        <field name="non_recoupable_advance">1000.0</field>
+    </record>
+    <record id="book_contract_1_iliada_t1" model="edlab.contract.royalty.tier">
+        <field name="line_id" ref="book_contract_1_line_iliada"/>
+        <field name="qty_from">0</field>
+        <field name="qty_to">3000</field>
+        <field name="percentage">10.0</field>
+    </record>
+    <record id="book_contract_1_iliada_t2" model="edlab.contract.royalty.tier">
+        <field name="line_id" ref="book_contract_1_line_iliada"/>
+        <field name="qty_from">3001</field>
+        <field name="qty_to">0</field>
+        <field name="percentage">12.0</field>
+    </record>
+    <record id="book_contract_1_line_odisseia" model="edlab.contract.royalty.line">
+        <field name="contract_id" ref="book_contract_1"/>
+        <field name="partner_id" ref="author_nunes"/>
+        <field name="product_id" ref="book_odisseia"/>
+        <field name="recoupable_advance">4000.0</field>
+    </record>
+    <record id="book_contract_1_odisseia_t1" model="edlab.contract.royalty.tier">
+        <field name="line_id" ref="book_contract_1_line_odisseia"/>
+        <field name="qty_from">0</field>
+        <field name="qty_to">0</field>
+        <field name="percentage">10.0</field>
+    </record>
+
+    <!-- BC2 — Hamlet por Millôr Fernandes -->
+    <record id="book_contract_2" model="edlab.contract">
+        <field name="signature_date">2020-05-20</field>
+        <field name="expiration_date">2030-05-20</field>
+        <field name="auto_renew" eval="True"/>
+        <field name="state">valid</field>
+    </record>
+    <record id="book_contract_2_line_hamlet" model="edlab.contract.royalty.line">
+        <field name="contract_id" ref="book_contract_2"/>
+        <field name="partner_id" ref="author_millor"/>
+        <field name="product_id" ref="book_hamlet"/>
+        <field name="recoupable_advance">3000.0</field>
+    </record>
+    <record id="book_contract_2_hamlet_t1" model="edlab.contract.royalty.tier">
+        <field name="line_id" ref="book_contract_2_line_hamlet"/>
+        <field name="qty_from">0</field>
+        <field name="qty_to">5000</field>
+        <field name="percentage">8.0</field>
+    </record>
+    <record id="book_contract_2_hamlet_t2" model="edlab.contract.royalty.tier">
+        <field name="line_id" ref="book_contract_2_line_hamlet"/>
+        <field name="qty_from">5001</field>
+        <field name="qty_to">0</field>
+        <field name="percentage">10.0</field>
+    </record>
+
+    <!-- BC3 — Dom Quixote por Sérgio Molina -->
+    <record id="book_contract_3" model="edlab.contract">
+        <field name="signature_date">2021-09-01</field>
+        <field name="expiration_date">2031-09-01</field>
+        <field name="state">valid</field>
+    </record>
+    <record id="book_contract_3_line_quixote" model="edlab.contract.royalty.line">
+        <field name="contract_id" ref="book_contract_3"/>
+        <field name="partner_id" ref="author_molina"/>
+        <field name="product_id" ref="book_quixote"/>
+        <field name="recoupable_advance">8000.0</field>
+    </record>
+    <record id="book_contract_3_quixote_t1" model="edlab.contract.royalty.tier">
+        <field name="line_id" ref="book_contract_3_line_quixote"/>
+        <field name="qty_from">0</field>
+        <field name="qty_to">0</field>
+        <field name="percentage">10.0</field>
+    </record>
+
+    <!-- BC4 — Crime e Castigo por Paulo Bezerra -->
+    <record id="book_contract_4" model="edlab.contract">
+        <field name="signature_date">2022-03-15</field>
+        <field name="expiration_date">2032-03-15</field>
+        <field name="auto_renew" eval="True"/>
+        <field name="state">valid</field>
+    </record>
+    <record id="book_contract_4_line_crime" model="edlab.contract.royalty.line">
+        <field name="contract_id" ref="book_contract_4"/>
+        <field name="partner_id" ref="author_bezerra"/>
+        <field name="product_id" ref="book_crime"/>
+        <field name="recoupable_advance">6000.0</field>
+        <field name="non_recoupable_advance">1500.0</field>
+    </record>
+    <record id="book_contract_4_crime_t1" model="edlab.contract.royalty.tier">
+        <field name="line_id" ref="book_contract_4_line_crime"/>
+        <field name="qty_from">0</field>
+        <field name="qty_to">4000</field>
+        <field name="percentage">9.0</field>
+    </record>
+    <record id="book_contract_4_crime_t2" model="edlab.contract.royalty.tier">
+        <field name="line_id" ref="book_contract_4_line_crime"/>
+        <field name="qty_from">4001</field>
+        <field name="qty_to">0</field>
+        <field name="percentage">11.0</field>
+    </record>
+
+    <!-- BC5 — Orgulho e Preconceito por Lúcia Miguel Pereira -->
+    <record id="book_contract_5" model="edlab.contract">
+        <field name="signature_date">2023-06-05</field>
+        <field name="expiration_date">2033-06-05</field>
+        <field name="state">valid</field>
+    </record>
+    <record id="book_contract_5_line_orgulho" model="edlab.contract.royalty.line">
+        <field name="contract_id" ref="book_contract_5"/>
+        <field name="partner_id" ref="author_lucia"/>
+        <field name="product_id" ref="book_orgulho"/>
+    </record>
+    <record id="book_contract_5_orgulho_t1" model="edlab.contract.royalty.tier">
+        <field name="line_id" ref="book_contract_5_line_orgulho"/>
+        <field name="qty_from">0</field>
+        <field name="qty_to">0</field>
+        <field name="percentage">10.0</field>
+    </record>
+
+</odoo>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_royalty_statement_wizard_form" model="ir.ui.view">
+        <field name="name">edlab.royalty.statement.wizard.form</field>
+        <field name="model">edlab.royalty.statement.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Royalty Statement">
+                <group>
+                    <field name="partner_ids" widget="many2many_tags"
+                           options="{'no_create': True}"/>
+                    <field name="date_to"/>
+                </group>
+                <p class="text-muted">
+                    The statement covers each author's open royalties since
+                    their last payment, matching their open payment bill.
+                </p>
+                <footer>
+                    <button name="action_send" type="object"
+                            string="Send by Email" class="btn-primary"
+                            data-hotkey="q"/>
+                    <button name="action_print" type="object"
+                            string="Print" class="btn-secondary"/>
+                    <button string="Cancel" class="btn-secondary"
+                            special="cancel" data-hotkey="z"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+</odoo>

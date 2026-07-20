@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="menu_bonus_root" name="Bonificações"
+              web_icon="liber_product_bonus,static/description/icon.png" sequence="55"/>
+
+    <menuitem id="menu_bonus_dispatch" name="Disparos"
+              parent="menu_bonus_root" action="action_bonus_dispatch" sequence="5"/>
+
+    <menuitem id="menu_bonus_all" name="Bonificações"
+              parent="menu_bonus_root" action="action_bonus" sequence="10"/>
+
+    <!-- "Listas" é grupo, e o cadastro é o primeiro filho (padrão do próprio
+         Odoo: Produtos > Produtos). O importador morava solto na raiz, ancorado
+         só pela vizinhança, e se perdia a cada mudança de sequência. Aqui ele
+         está DENTRO de Listas, que é onde a mão procura.
+         Por que não uma ação do menu "Ação" da lista: ela só aparece com
+         registro selecionado, e o importador serve justamente para quando não
+         há o que selecionar — lista vazia, ou a planilha com coluna "Lista"
+         que resolve dezenas de listas de uma vez. Importar para UMA lista já
+         tem porta em contexto: o botão na aba Membros. -->
+    <menuitem id="menu_bonus_lists" name="Listas"
+              parent="menu_bonus_root" sequence="20"/>
+    <menuitem id="menu_bonus_lists_all" name="Listas"
+              parent="menu_bonus_lists" action="action_bonus_vip_list" sequence="10"/>
+    <!-- "Listas" ERA um menu com ação. Tirar o atributo do <menuitem> não limpa
+         a coluna numa base já instalada — o menu ficaria com a ação velha
+         pendurada, invisível (menu com filhos não abre a própria ação) e
+         diferente do que uma instalação limpa produz. Zera explicitamente. -->
+    <record id="menu_bonus_lists" model="ir.ui.menu">
+        <field name="action" eval="False"/>
+    </record>
+
+    <menuitem id="menu_bonus_followup" name="Acompanhamento"
+              parent="menu_bonus_root" sequence="30"/>
+    <menuitem id="menu_bonus_confirm" name="Retorno"
+              parent="menu_bonus_followup" action="action_bonus_confirm" sequence="10"/>
+    <menuitem id="menu_bonus_rate" name="Avaliações"
+              parent="menu_bonus_followup" action="action_bonus_rate" sequence="20"/>
+
+    <!-- Os três relatórios moravam soltos na raiz, intercalados com as telas de
+         trabalho — e um deles ("Contatos × listas") ficava vizinho de "Contatos
+         por lista" com nome quase igual. Juntos e renomeados: cada um diz o que
+         responde. -->
+    <menuitem id="menu_bonus_reports" name="Relatórios"
+              parent="menu_bonus_root" sequence="40"/>
+    <menuitem id="menu_bonus_report" name="Análise"
+              parent="menu_bonus_reports" action="action_bonus_report" sequence="10"/>
+    <menuitem id="menu_bonus_member_pivot" name="Sobreposição de listas"
+              parent="menu_bonus_reports" action="action_bonus_member_pivot"
+              sequence="20"/>
+    <menuitem id="menu_bonus_partner_lists" name="Contatos por lista"
+              parent="menu_bonus_reports" action="action_partner_bonus_lists"
+              sequence="30"/>
+
+    <menuitem id="menu_bonus_quota" name="Metas"
+              parent="menu_bonus_root" action="action_bonus_quota" sequence="50"/>
+
+    <menuitem id="menu_bonus_config" name="Configuração"
+              parent="menu_bonus_root" sequence="90" groups="base.group_system"/>
+    <!-- Chamava-se "Meta de doação (%)" e a página tem metas, acompanhamento E
+         a configuração fiscal — o rótulo escondia dois terços do conteúdo. -->
+    <menuitem id="menu_bonus_config_settings" name="Definições"
+              parent="menu_bonus_config" action="action_bonus_config" sequence="90"/>
+    <menuitem id="menu_bonus_reason" name="Motivos"
+              parent="menu_bonus_config" action="action_bonus_reason" sequence="10"/>
+    <menuitem id="menu_bonus_list_tag" name="Etiquetas de lista"
+              parent="menu_bonus_config" action="action_bonus_list_tag" sequence="20"/>
+</odoo>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Add the payment settings to the Copyrights page added by the analytics layer -->
+    <record id="view_company_form_copyright_payments" model="ir.ui.view">
+        <field name="name">res.company.form.copyright.payments</field>
+        <field name="model">res.company</field>
+        <field name="inherit_id"
+               ref="liber_copyright_contracts_analytics.view_company_form_copyrights"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='contract_special_min_discount']"
+                   position="after">
+                <separator string="Beneficiary Payments" colspan="2"/>
+                <field name="contract_payment_product_id"
+                       placeholder="Royalties (module default)"/>
+                <field name="contract_payment_account_id"/>
+                <field name="contract_payment_journal_id"/>
+                <field name="contract_payment_days"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

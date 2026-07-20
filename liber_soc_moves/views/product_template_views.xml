@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_product_template_form_soc" model="ir.ui.view">
+        <field name="name">product.template.form.soc.consigned</field>
+        <field name="model">product.template</field>
+        <!-- Inherit the view that carries the native On Hand / Forecasted button,
+             so we can land right beside it: the three numbers that answer "where
+             are my books?" are then read in one glance, instead of ours being
+             pushed into the "More" dropdown at the end of the button box. -->
+        <field name="inherit_id" ref="stock.product_template_form_view_procurement_button"/>
+        <field name="arch" type="xml">
+            <xpath expr="//button[@name='action_product_tmpl_forecast_report']" position="after">
+                <button name="action_view_soc_wh_stock" type="object"
+                        class="oe_stat_button" icon="fa-cubes"
+                        groups="stock.group_stock_user">
+                    <field name="soc_qty_wh" widget="statinfo"
+                           string="Stock"/>
+                </button>
+                <button name="action_view_soc_consigned" type="object"
+                        class="oe_stat_button" icon="fa-handshake-o"
+                        groups="stock.group_stock_user">
+                    <field name="soc_qty_consigned" widget="statinfo"
+                           string="Consigned"/>
+                </button>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

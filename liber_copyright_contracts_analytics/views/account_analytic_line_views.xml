@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_analytic_line_tree_royalty" model="ir.ui.view">
+        <field name="name">account.analytic.line.tree.royalty</field>
+        <field name="model">account.analytic.line</field>
+        <field name="inherit_id" ref="analytic.view_account_analytic_line_tree"/>
+        <field name="arch" type="xml">
+            <field name="amount" position="before">
+                <field name="edlab_royalty_percentage" optional="show"/>
+            </field>
+            <field name="amount" position="after">
+                <field name="general_account_id" optional="hide"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="view_analytic_line_form_royalty" model="ir.ui.view">
+        <field name="name">account.analytic.line.form.royalty</field>
+        <field name="model">account.analytic.line</field>
+        <field name="inherit_id" ref="analytic.view_account_analytic_line_form"/>
+        <field name="arch" type="xml">
+            <field name="amount" position="after">
+                <field name="edlab_royalty_percentage"/>
+            </field>
+        </field>
+    </record>
+
+</odoo>

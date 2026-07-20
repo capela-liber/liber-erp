@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <record model="ir.module.category" id="metabooks_access_category">
+            <field name="name">Metabooks Access</field>
+            <field name="sequence">100</field>
+        </record>
+
+        <!-- v19 port: res.groups no longer carries category_id directly; groups are
+             attached to a res.groups.privilege which holds the category_id. -->
+        <record model="res.groups.privilege" id="metabooks_access_privilege">
+            <field name="name">Metabooks Access</field>
+            <field name="category_id" ref="metabooks_access_category"/>
+        </record>
+
+        <record id="metabooks_product_group" model="res.groups">
+            <field name="name">Metabooks Access</field>
+            <field name="privilege_id" ref="metabooks_access_privilege"/>
+        </record>
+
+        <record id="metadata_group" model="res.groups">
+            <field name="name">Import Metadata Access</field>
+            <field name="privilege_id" ref="metabooks_access_privilege"/>
+        </record>
+
+    </data>
+</odoo>

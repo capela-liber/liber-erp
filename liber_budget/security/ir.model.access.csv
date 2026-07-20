@@ -1,0 +1,13 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_budget_analytic_user,budget.analytic.user,model_budget_analytic,liber_budget.group_budget_user,1,1,1,1
+access_budget_analytic_manager,budget.analytic.manager,model_budget_analytic,liber_budget.group_budget_manager,1,1,1,1
+access_budget_line_user,budget.line.user,model_budget_line,liber_budget.group_budget_user,1,1,1,1
+access_budget_line_manager,budget.line.manager,model_budget_line,liber_budget.group_budget_manager,1,1,1,1
+access_budget_position_user,budget.position.user,model_budget_position,liber_budget.group_budget_user,1,1,1,1
+access_budget_position_manager,budget.position.manager,model_budget_position,liber_budget.group_budget_manager,1,1,1,1
+access_budget_group_user,budget.group.user,model_budget_group,liber_budget.group_budget_user,1,1,1,1
+access_budget_group_manager,budget.group.manager,model_budget_group,liber_budget.group_budget_manager,1,1,1,1
+access_budget_tag_user,budget.tag.user,model_budget_tag,liber_budget.group_budget_user,1,1,1,1
+access_budget_tag_manager,budget.tag.manager,model_budget_tag,liber_budget.group_budget_manager,1,1,1,1
+access_budget_report_user,budget.report.user,model_budget_report,liber_budget.group_budget_user,1,0,0,0
+access_budget_report_manager,budget.report.manager,model_budget_report,liber_budget.group_budget_manager,1,0,0,0

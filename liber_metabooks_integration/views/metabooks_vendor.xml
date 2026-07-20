@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+		<record id="metabooks_vendor_inherit_form" model="ir.ui.view">
+			<field name="name">res.partner.metabooks.inherit.form</field>
+			<field name="model">res.partner</field>
+			<field name="inherit_id" ref="base.view_partner_form"/>
+			<field name="arch" type="xml">
+                <xpath expr="//group[@name='container_row_2']" position="inside">
+<!--                    <group string="Product" name="product" attrs="{'invisible':[('supplier_rank','=',False)]}">-->
+                    <group string="Product" name="product">
+                        <field name="metabooks_editor_id"/>
+                        <field name="vendor_metabooks_ids">
+							<list editable="bottom">
+								<field name="metabooks_editor_id"/>
+								<field name="brand"/>
+								<field name="company_id"/>
+								<button name="action_import_catalog" help="Import this publisher's catalogue from Metabooks" type="object" string="Import Catalogue" icon="fa-download"/>
+							</list>
+						</field>
+                        <field name="metabooks_automatic_sync_products"/>
+                        <field name="metaoook_update_book_also"/>
+                        <field name="metabooks_update_by_lastdate"/>
+                    </group>
+                </xpath>
+                <xpath expr="//notebook" position="inside">
+<!--                    <page name="isbn_prefix" string="Isbn prefixes" attrs="{'invisible':[('supplier','=',False)]}">-->
+                    <page name="isbn_prefix" string="Isbn prefixes" invisible="True">
+                        <group name="isbn_group" string="ISBN prefixes"/>
+                        <field name="isbn_prefixes"/>
+                    </page>
+                </xpath>
+				<xpath expr="//field[@name='property_supplier_payment_term_id']" position="after">
+					<field name="pricelist_lead_time"/>
+				</xpath>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="metabooks_author_form_view_id">
+			<field name="name">metabooks.author.form.view</field>
+			<field name="model">metabooks.auther.publiser</field>
+			<field name="arch" type="xml">
+				<form>
+					<sheet>
+						<group>
+							<group>
+								<field name="name" string="First Name"/>
+								<field name="author_contributor_role"/>
+								<field name="auhor_biographical_note"/>
+							</group>
+							<group>
+								<field name="author_last_name"/>
+								<field name="author_professional_position"/>
+								<field name="author_sequence_number"/>
+								<field name="author_full_name"/>
+								<field name="author_role"/>
+							</group>
+						</group>
+					</sheet>
+				</form>
+			</field>
+		</record>
+
+		<record id="metabooks_author_list_view_id" model="ir.ui.view">
+			<field name="name">list.metabooks.auther.publiser</field>
+			<field name="model">metabooks.auther.publiser</field>
+			<field name="arch" type="xml">
+				<list>
+					<field name="name"/>
+					<field name="author_last_name"/>
+					<field name="author_contributor_role"/>
+					<field name="auhor_biographical_note"/>
+				</list>
+			</field>
+		</record>
+
+		<record id="action_metabooks_authors" model="ir.actions.act_window">
+			<field name="name">Authors</field>
+			<field name="res_model">metabooks.auther.publiser</field>
+        	<field name="view_mode">list,form</field>
+		</record>
+
+<!--		<menuitem id="menu_metabooks_authors" string="Authors" action="action_metabooks_authors" parent="sale.menu_sale_config"/>-->
+ 	</data>
+</odoo>

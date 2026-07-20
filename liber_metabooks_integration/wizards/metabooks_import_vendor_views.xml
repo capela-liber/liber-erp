@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="metabooks_import_vendor_form" model="ir.ui.view">
+        <field name="name">metabooks.import.vendor.form</field>
+        <field name="model">metabooks.import.vendor</field>
+        <field name="arch" type="xml">
+            <form string="Import from Metabooks (Vendor)">
+                <group>
+                    <field name="mvb_id" placeholder="e.g. BR0089701"/>
+                    <field name="limit"/>
+                    <field name="with_covers"/>
+                    <field name="with_technical"/>
+                </group>
+                <p class="text-muted">
+                    Imports/updates the publisher's whole catalogue, filing products
+                    under <b>Imprint / Collection</b> categories. Large catalogues run
+                    in the background — use the limit to test first.
+                </p>
+                <footer>
+                    <button name="action_import" type="object" string="Import"
+                            class="btn-primary"/>
+                    <button string="Cancel" special="cancel" class="btn-secondary"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_metabooks_import_vendor" model="ir.actions.act_window">
+        <field name="name">Import from Metabooks (Vendor)</field>
+        <field name="res_model">metabooks.import.vendor</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem id="menu_metabooks_import_vendor"
+              name="Import by Vendor ID"
+              parent="liber_metabooks_integration.menu_metabooks_imports"
+              action="action_metabooks_import_vendor"
+              sequence="4"/>
+</odoo>

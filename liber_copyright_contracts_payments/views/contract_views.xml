@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Smart button linking the contract to its royalty payment bills -->
+    <record id="view_edlab_contract_form_payments" model="ir.ui.view">
+        <field name="name">edlab.contract.form.payments</field>
+        <field name="model">edlab.contract</field>
+        <field name="inherit_id" ref="liber_copyright_contracts.view_edlab_contract_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@name='button_box']" position="inside">
+                    <field name="currency_id" invisible="1"/>
+                    <field name="edlab_analytic_count" invisible="1"/>
+                    <button name="action_view_contract_analytics" type="object"
+                            class="oe_stat_button" icon="fa-book"
+                            invisible="edlab_analytic_count == 0">
+                        <div class="o_stat_info">
+                            <field name="edlab_royalty_balance" widget="monetary"
+                                   class="o_stat_value"/>
+                            <span class="o_stat_text">Open</span>
+                        </div>
+                    </button>
+                    <button name="action_view_contract_analytics" type="object"
+                            class="oe_stat_button" icon="fa-money"
+                            invisible="edlab_analytic_count == 0">
+                        <div class="o_stat_info">
+                            <field name="edlab_royalty_paid" widget="monetary"
+                                   class="o_stat_value"/>
+                            <span class="o_stat_text">Paid</span>
+                        </div>
+                    </button>
+                    <button name="action_view_bills_to_pay" type="object"
+                            class="oe_stat_button" icon="fa-clock-o"
+                            invisible="edlab_bill_to_pay_count == 0">
+                        <field name="edlab_bill_to_pay_count" widget="statinfo"
+                               string="To Pay"/>
+                    </button>
+                    <button name="action_view_bills_paid" type="object"
+                            class="oe_stat_button" icon="fa-check"
+                            invisible="edlab_bill_paid_count == 0">
+                        <field name="edlab_bill_paid_count" widget="statinfo"
+                               string="Paid Bills"/>
+                    </button>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Action menu (cog) entry: generate the royalty payment bills -->
+    <record id="action_server_generate_royalty_bills" model="ir.actions.server">
+        <field name="name">Generate Royalty Bills</field>
+        <field name="model_id" ref="liber_copyright_contracts.model_edlab_contract"/>
+        <field name="binding_model_id" ref="liber_copyright_contracts.model_edlab_contract"/>
+        <field name="binding_view_types">list,form</field>
+        <field name="group_ids"
+               eval="[(4, ref('liber_copyright_contracts.group_contract_manager'))]"/>
+        <field name="state">code</field>
+        <field name="code">action = records.action_generate_royalty_bills()</field>
+    </record>
+
+</odoo>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_map_run_wizard_form" model="ir.ui.view">
+        <field name="name">consignment.map.run.wizard.form</field>
+        <field name="model">consignment.map.run.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Send Consignment Maps">
+                <p>
+                    Sends the <strong>Consignment Map</strong> (PDF) by email to the
+                    customers of operations in <strong>draft</strong> and in a
+                    <strong>not-done</strong> stage (folded stages — e.g. "Done" — are
+                    skipped). Recipients: the customer + the agreement contacts.
+                </p>
+                <group>
+                    <field name="eligible_count"/>
+                </group>
+                <footer>
+                    <button name="action_confirm" type="object" string="Confirm and Send"
+                            class="btn-primary" invisible="eligible_count == 0"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_map_run_wizard" model="ir.actions.act_window">
+        <field name="name">Consignment Map</field>
+        <field name="res_model">consignment.map.run.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+</odoo>

@@ -1,0 +1,9 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_consignment_move_user,consignment.move.user,model_consignment_move,liber_soc_agreements.group_soc_user,1,1,1,0
+access_consignment_move_manager,consignment.move.manager,model_consignment_move,liber_soc_agreements.group_soc_manager,1,1,1,1
+access_consignment_move_line_user,consignment.move.line.user,model_consignment_move_line,liber_soc_agreements.group_soc_user,1,1,1,1
+access_consignment_move_line_manager,consignment.move.line.manager,model_consignment_move_line,liber_soc_agreements.group_soc_manager,1,1,1,1
+access_consignment_template_user,consignment.template.user,model_consignment_template,liber_soc_agreements.group_soc_user,1,0,0,0
+access_consignment_template_manager,consignment.template.manager,model_consignment_template,liber_soc_agreements.group_soc_manager,1,1,1,1
+access_consignment_template_line_user,consignment.template.line.user,model_consignment_template_line,liber_soc_agreements.group_soc_user,1,0,0,0
+access_consignment_template_line_manager,consignment.template.line.manager,model_consignment_template_line,liber_soc_agreements.group_soc_manager,1,1,1,1

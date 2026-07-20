@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="module_category_consignment" model="ir.module.category">
+        <field name="name">Consignment</field>
+        <field name="sequence">20</field>
+    </record>
+
+    <!-- v19: res.groups no longer carries category_id directly; it is held by a
+         res.groups.privilege that the groups link to via privilege_id. -->
+    <record id="privilege_consignment" model="res.groups.privilege">
+        <field name="name">Consignment</field>
+        <field name="category_id" ref="module_category_consignment"/>
+    </record>
+
+    <record id="group_soc_user" model="res.groups">
+        <field name="name">User</field>
+        <field name="privilege_id" ref="privilege_consignment"/>
+    </record>
+
+    <record id="group_soc_manager" model="res.groups">
+        <field name="name">Administrator</field>
+        <field name="privilege_id" ref="privilege_consignment"/>
+        <field name="implied_ids" eval="[(4, ref('group_soc_user'))]"/>
+        <field name="user_ids" eval="[(4, ref('base.user_admin'))]"/>
+    </record>
+
+    <!-- Multi-company: a user only sees agreements of the companies selected in
+         the company switcher (records with no company stay visible to all). -->
+    <record id="consignment_agreement_company_rule" model="ir.rule">
+        <field name="name">Consignment Agreement: multi-company</field>
+        <field name="model_id" ref="model_consignment_agreement"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">['|', ('company_id', 'in', company_ids), ('company_id', '=', False)]</field>
+    </record>
+</odoo>

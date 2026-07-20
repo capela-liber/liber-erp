@@ -1,0 +1,2246 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* liber_soc_settlement
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0-20260630\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-07-10 01:44+0000\n"
+"PO-Revision-Date: 2026-07-10 01:44+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: liber_soc_settlement
+#. odoo-python
+#: code:addons/liber_soc_settlement/models/consignment_settlement.py:0
+msgid " %(n)s skipped (no e-mail): %(names)s"
+msgstr " %(n)s pulado(s) (sem e-mail): %(names)s"
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_consignment_agreement__settlement_count
+msgid "# Settlements"
+msgstr "# Acertos"
+
+#. module: liber_soc_settlement
+#. odoo-python
+#: code:addons/liber_soc_settlement/models/consignment_settlement.py:0
+msgid ""
+"%(product)s: cannot return %(ret)s. Only %(rem)s remain on the shelf after "
+"the reported sale."
+msgstr ""
+"%(product)s: não é possível devolver %(ret)s. Restam apenas %(rem)s na "
+"prateleira após a venda informada."
+
+#. module: liber_soc_settlement
+#. odoo-python
+#: code:addons/liber_soc_settlement/models/consignment_settlement.py:0
+msgid ""
+"%(product)s: replenish %(rep)s exceeds On Hand %(oh)s. We can't ship what we"
+" don't have."
+msgstr ""
+"%(product)s: repor %(rep)s excede o Em mãos %(oh)s. Não podemos enviar o que"
+" não temos."
+
+#. module: liber_soc_settlement
+#. odoo-python
+#: code:addons/liber_soc_settlement/models/consignment_settlement.py:0
+msgid ""
+"%(product)s: you can return at most %(rem)s (shelf %(map)s minus %(rep)s "
+"reported sold). Adjusted to %(rem)s."
+msgstr ""
+"%(product)s: você pode devolver no máximo %(rem)s (prateleira %(map)s menos "
+"%(rep)s informados como vendidos). Ajustado para %(rem)s."
+
+#. module: liber_soc_settlement
+#. odoo-python
+#: code:addons/liber_soc_settlement/models/consignment_settlement.py:0
+msgid ""
+"%s has no consignment agreement. Create and activate one before settling."
+msgstr ""
+"%s não possui contrato de consignação. Crie e ative um antes de acertar."
+
+#. module: liber_soc_settlement
+#. odoo-python
+#: code:addons/liber_soc_settlement/models/consignment_settlement.py:0
+#: code:addons/liber_soc_settlement/wizards/map_run_wizard.py:0
+msgid "%s map(s) queued for sending."
+msgstr "%s mapa(s) enfileirado(s) para envio."
+
+#. module: liber_soc_settlement
+#: model:ir.actions.report,print_report_name:liber_soc_settlement.action_report_consignment_map
+msgid "'Mapa de Consignacao - %s' % (object.partner_id.name or '')"
+msgstr ""
+
+#. module: liber_soc_settlement
+#. odoo-python
+#: code:addons/liber_soc_settlement/models/consignment_settlement.py:0
+msgid "- %(product)s: replenish %(rep)s, on hand %(oh)s"
+msgstr "- %(product)s: repor %(rep)s, em mãos %(oh)s"
+
+#. module: liber_soc_settlement
+#: model:mail.template,body_html:liber_soc_settlement.mail_template_consignment_map
+msgid ""
+"<div style=\"font-size: 13px;\">\n"
+"                <p>Prezados,</p>\n"
+"                <p>Segue em anexo o <strong>Mapa de Consignação</strong>\n"
+"                   <t t-out=\"object.name or ''\"/>, com o resumo desta operação —\n"
+"                   devolução, acerto (venda) e pedido de reposição, quando houver.</p>\n"
+"                <p>Ficou com alguma dúvida? Basta <strong>responder este e-mail</strong>\n"
+"                   e retornamos com mais informações.</p>\n"
+"                <p>Atenciosamente,<br/><t t-out=\"object.company_id.name or ''\"/></p>\n"
+"            </div>\n"
+"        "
+msgstr ""
+
+#. module: liber_soc_settlement
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.res_config_settings_view_form_soc
+msgid "<span class=\"col-lg-3 o_form_label\">months</span>"
+msgstr "<span class=\"col-lg-3 o_form_label\">meses</span>"
+
+#. module: liber_soc_settlement
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.view_consignment_move_form_soc_operation
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.view_sale_order_form_soc_operation
+msgid "<span class=\"o_stat_text ms-2\">Consignment</span>"
+msgstr "<span class=\"o_stat_text ms-2\">Consignação</span>"
+
+#. module: liber_soc_settlement
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.view_consignment_settlement_form
+msgid "<span class=\"o_stat_text ms-2\">Order</span>"
+msgstr "<span class=\"o_stat_text ms-2\">Pedido</span>"
+
+#. module: liber_soc_settlement
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.view_consignment_settlement_form
+msgid "<span class=\"o_stat_text ms-2\">Return</span>"
+msgstr "<span class=\"o_stat_text ms-2\">Devolução</span>"
+
+#. module: liber_soc_settlement
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.view_consignment_settlement_form
+msgid "<span class=\"o_stat_text ms-2\">Settlement</span>"
+msgstr "<span class=\"o_stat_text ms-2\">Acerto</span>"
+
+#. module: liber_soc_settlement
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.report_consignment_map
+msgid "<strong>Cliente:</strong>"
+msgstr ""
+
+#. module: liber_soc_settlement
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.report_consignment_map
+msgid "<strong>Contrato:</strong>"
+msgstr ""
+
+#. module: liber_soc_settlement
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.report_consignment_map
+msgid "<strong>Data:</strong>"
+msgstr ""
+
+#. module: liber_soc_settlement
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.report_consignment_map
+msgid "<strong>Empresa:</strong>"
+msgstr ""
+
+#. module: liber_soc_settlement
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.report_consignment_map
+msgid "Acerto (venda)"
+msgstr ""
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_consignment_settlement__message_needaction
+msgid "Action Needed"
+msgstr "Ação necessária"
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_consignment_settlement__activity_ids
+msgid "Activities"
+msgstr "Atividades"
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_consignment_settlement__activity_exception_decoration
+msgid "Activity Exception Decoration"
+msgstr "Decoração de exceção de atividade"
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_consignment_settlement__activity_state
+msgid "Activity State"
+msgstr "Estado da atividade"
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_consignment_settlement__activity_type_icon
+msgid "Activity Type Icon"
+msgstr "Ícone do tipo de atividade"
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_consignment_settlement__agreement_id
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.view_sales_order_filter_settlement
+msgid "Agreement"
+msgstr "Contrato"
+
+#. module: liber_soc_settlement
+#. odoo-python
+#: code:addons/liber_soc_settlement/models/consignment_settlement.py:0
+msgid "Agreement %s must be active to settle (current status: %s)."
+msgstr "O contrato %s precisa estar ativo para acertar (status atual: %s)."
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_consignment_settlement__agreement_state
+msgid "Agreement Status"
+msgstr "Status do Contrato"
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_consignment_settlement_generate_wizard__existing_draft_count
+msgid "Already draft (skipped)"
+msgstr "Já com rascunho (serão puladas)"
+
+#. module: liber_soc_settlement
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.view_consignment_settlement_form
+msgid "Apply Template"
+msgstr "Aplicar Modelo"
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_consignment_settlement__message_attachment_count
+msgid "Attachment Count"
+msgstr "Contagem de anexos"
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields.selection,name:liber_soc_settlement.selection__consignment_settlement__state__cancel
+msgid "Cancelled"
+msgstr "Cancelado"
+
+#. module: liber_soc_settlement
+#: model:ir.model,name:liber_soc_settlement.model_res_company
+msgid "Companies"
+msgstr "Empresas"
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_consignment_settlement__company_id
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_consignment_ledger__company_id
+msgid "Company"
+msgstr "Empresa"
+
+#. module: liber_soc_settlement
+#: model:ir.model,name:liber_soc_settlement.model_res_config_settings
+msgid "Config Settings"
+msgstr "Configurações"
+
+#. module: liber_soc_settlement
+#: model:ir.ui.menu,name:liber_soc_settlement.menu_soc_config
+msgid "Configuration"
+msgstr "Configuração"
+
+#. module: liber_soc_settlement
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.view_generate_wizard_form
+msgid "Confirm"
+msgstr "Confirmar"
+
+#. module: liber_soc_settlement
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.view_map_run_wizard_form
+msgid "Confirm and Send"
+msgstr "Confirmar e enviar"
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields.selection,name:liber_soc_settlement.selection__consignment_settlement__state__confirmed
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.view_consignment_settlement_search
+msgid "Confirmed"
+msgstr "Confirmado"
+
+#. module: liber_soc_settlement
+#. odoo-python
+#: code:addons/liber_soc_settlement/models/related_documents.py:0
+#: model:ir.model,name:liber_soc_settlement.model_consignment_settlement
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_consignment_move__consignment_operation_id
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_consignment_run_overstock_wizard__settlement_id
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.res_config_settings_view_form_soc
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.view_sales_order_filter_settlement
+msgid "Consignment"
+msgstr "Consignação"
+
+#. module: liber_soc_settlement
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.view_soc_xml_panel_form_settlement
+msgid "Consignment (Settlement)"
+msgstr "Consignação (Acerto)"
+
+#. module: liber_soc_settlement
+#: model:ir.model,name:liber_soc_settlement.model_consignment_agreement
+msgid "Consignment Agreement"
+msgstr "Contrato de Consignação"
+
+#. module: liber_soc_settlement
+#. odoo-python
+#: code:addons/liber_soc_settlement/wizards/map_run_wizard.py:0
+#: model:ir.actions.act_window,name:liber_soc_settlement.action_map_run_wizard
+#: model:ir.ui.menu,name:liber_soc_settlement.menu_map_run
+#: model:mail.template,name:liber_soc_settlement.mail_template_consignment_map
+msgid "Consignment Map"
+msgstr "Mapa de Consignação"
+
+#. module: liber_soc_settlement
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.res_config_settings_view_form_soc
+msgid "Consignment Map (PDF)"
+msgstr "Mapa de Consignação (PDF)"
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_res_company__consignment_map_text
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_res_config_settings__consignment_map_text
+msgid "Consignment Map Text"
+msgstr "Texto do Mapa de Consignação"
+
+#. module: liber_soc_settlement
+#: model:ir.model,name:liber_soc_settlement.model_consignment_move
+msgid "Consignment Movement"
+msgstr "Movimento de Consignação"
+
+#. module: liber_soc_settlement
+#: model:ir.model,name:liber_soc_settlement.model_consignment_settlement_line
+msgid "Consignment Settlement Line"
+msgstr "Linha de Acerto de Consignação"
+
+#. module: liber_soc_settlement
+#: model:ir.model,name:liber_soc_settlement.model_consignment_settlement_stage
+msgid "Consignment Settlement Stage"
+msgstr "Etapa de Acerto de Consignação"
+
+#. module: liber_soc_settlement
+#: model:ir.actions.act_window,name:liber_soc_settlement.action_settlement_stage
+msgid "Consignment Stages"
+msgstr "Etapas de Consignação"
+
+#. module: liber_soc_settlement
+#. odoo-python
+#: code:addons/liber_soc_settlement/models/consignment_settlement.py:0
+msgid "Consignment cancelled. Documents cancelled: %s"
+msgstr "Consignação cancelada. Documentos cancelados: %s"
+
+#. module: liber_soc_settlement
+#. odoo-python
+#: code:addons/liber_soc_settlement/models/consignment_settlement.py:0
+msgid "Consignment finalized: all logistics and invoicing closed."
+msgstr "Consignação finalizada: toda a logística e faturamento encerrados."
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,help:liber_soc_settlement.field_nfe_xml_panel__consignment_settlement_ids
+msgid ""
+"Consignment settlements (acertos) this fiscal document belongs to. A "
+"shipment/return can be split across settlements, so this is a many-to-many "
+"link."
+msgstr ""
+"Acertos de consignação a que este documento fiscal pertence. Uma "
+"remessa/devolução pode ser dividida entre acertos, por isso é um vínculo "
+"muitos-para-muitos."
+
+#. module: liber_soc_settlement
+#: model:ir.actions.server,name:liber_soc_settlement.ir_cron_finalize_settlements_ir_actions_server
+msgid "Consignment: finalize closed operations"
+msgstr "Consignação: finalizar operações concluídas"
+
+#. module: liber_soc_settlement
+#. odoo-python
+#: code:addons/liber_soc_settlement/models/related_documents.py:0
+#: model:ir.actions.act_window,name:liber_soc_settlement.action_consignment_settlement
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_nfe_xml_panel__consignment_settlement_ids
+#: model:ir.ui.menu,name:liber_soc_settlement.menu_consignment_settlements
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.view_consignment_agreement_form_settlements
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.view_soc_xml_panel_form_settlement
+msgid "Consignments"
+msgstr "Consignações"
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_nfe_xml_panel__consignment_settlement_count
+msgid "Consignments Count"
+msgstr "Contagem de Consignações"
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_consignment_map_run_wizard__create_uid
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_consignment_run_overstock_wizard__create_uid
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_consignment_settlement__create_uid
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_consignment_settlement_generate_wizard__create_uid
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_consignment_settlement_line__create_uid
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_consignment_settlement_stage__create_uid
+msgid "Created by"
+msgstr "Criado por"
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_consignment_map_run_wizard__create_date
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_consignment_run_overstock_wizard__create_date
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_consignment_settlement__create_date
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_consignment_settlement_generate_wizard__create_date
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_consignment_settlement_line__create_date
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_consignment_settlement_stage__create_date
+msgid "Created on"
+msgstr "Criado em"
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_consignment_settlement__currency_id
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_consignment_settlement_line__currency_id
+msgid "Currency"
+msgstr "Moeda"
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,help:liber_soc_settlement.field_consignment_settlement_line__qty_on_shelf
+msgid "Current stock at the customer (the map)."
+msgstr "Estoque atual no cliente (o mapa)."
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_consignment_settlement__partner_id
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.view_consignment_settlement_search
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_consignment_ledger__partner_id
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.view_consignment_ledger_search
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_consignment_settlement_line__partner_id
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_consignment_coverage__partner_id
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.view_consignment_coverage_search
+msgid "Customer"
+msgstr "Cliente"
+
+#. module: liber_soc_settlement
+#. odoo-python
+#: code:addons/liber_soc_settlement/models/consignment_settlement.py:0
+msgid ""
+"Customer %s has no consignment agreement. A customer can only be settled "
+"through an active agreement."
+msgstr ""
+"O cliente %s não possui contrato de consignação. Um cliente só pode ser "
+"acertado através de um contrato ativo."
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_consignment_settlement__location_id
+msgid "Customer Shelf"
+msgstr "Prateleira do Cliente"
+
+#. module: liber_soc_settlement
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.report_consignment_map
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.report_consignment_op_table
+msgid "Desc.%"
+msgstr ""
+
+#. module: liber_soc_settlement
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.report_consignment_map
+msgid "Devolução"
+msgstr ""
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_consignment_settlement_line__discount
+msgid "Disc.%"
+msgstr "Desc.%"
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_consignment_agreement__display_name
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_consignment_map_run_wizard__display_name
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_consignment_move__display_name
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_consignment_run_overstock_wizard__display_name
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_consignment_settlement__display_name
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_consignment_settlement_generate_wizard__display_name
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_consignment_settlement_line__display_name
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_consignment_settlement_stage__display_name
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_nfe_xml_panel__display_name
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_res_company__display_name
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_res_config_settings__display_name
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_sale_order__display_name
+msgid "Display Name"
+msgstr "Nome exibido"
+
+#. module: liber_soc_settlement
+#: model:consignment.settlement.stage,name:liber_soc_settlement.stage_doing
+msgid "Doing"
+msgstr "Fazendo"
+
+#. module: liber_soc_settlement
+#: model:consignment.settlement.stage,name:liber_soc_settlement.stage_done
+msgid "Done"
+msgstr "Feito"
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields.selection,name:liber_soc_settlement.selection__consignment_settlement__state__draft
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.view_consignment_settlement_search
+msgid "Draft"
+msgstr "Provisório"
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_consignment_map_run_wizard__eligible_count
+msgid "Eligible COs"
+msgstr "COs elegíveis"
+
+#. module: liber_soc_settlement
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.report_consignment_map
+msgid "Em prateleira"
+msgstr ""
+
+#. module: liber_soc_settlement
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.report_consignment_map
+msgid ""
+"Ficou com alguma dúvida sobre este acerto? Basta\n"
+"                            <strong>responder este e-mail</strong> e retornamos com mais informações."
+msgstr ""
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields.selection,name:liber_soc_settlement.selection__consignment_settlement__state__done
+msgid "Finalized"
+msgstr "Finalizado"
+
+#. module: liber_soc_settlement
+#. odoo-python
+#: code:addons/liber_soc_settlement/models/related_documents.py:0
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_consignment_settlement__nfe_xml_ids
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.view_consignment_settlement_form_nfe
+msgid "Fiscal Documents (NFe)"
+msgstr "Documentos Fiscais (NFe)"
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,help:liber_soc_settlement.field_consignment_settlement_stage__fold
+msgid ""
+"Fold this column in the kanban when it has no records to show (typical for a"
+" terminal stage like 'Feito')."
+msgstr "Recolher esta coluna no kanban quando não houver registros a mostrar (típico de um estágio final como 'Feito')."
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_consignment_settlement_stage__fold
+msgid "Folded in Kanban"
+msgstr "Recolhido no Kanban"
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_consignment_settlement__message_follower_ids
+msgid "Followers"
+msgstr "Seguidores"
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_consignment_settlement__message_partner_ids
+msgid "Followers (Partners)"
+msgstr "Seguidores (Parceiros)"
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,help:liber_soc_settlement.field_consignment_settlement__activity_type_icon
+msgid "Font awesome icon e.g. fa-tasks"
+msgstr "Ícone Font Awesome, ex.: fa-tasks"
+
+#. module: liber_soc_settlement
+#: model:ir.model,name:liber_soc_settlement.model_consignment_settlement_generate_wizard
+msgid "Generate Monthly Consignment Operations"
+msgstr "Gerar Operações Mensais de Consignação"
+
+#. module: liber_soc_settlement
+#: model:ir.actions.act_window,name:liber_soc_settlement.action_generate_wizard
+#: model:ir.ui.menu,name:liber_soc_settlement.menu_generate_monthly_settlements
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.view_generate_wizard_form
+msgid "Generate Operations"
+msgstr "Gerar Operações"
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_consignment_settlement__has_message
+msgid "Has Message"
+msgstr "Tem mensagem"
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_consignment_agreement__id
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_consignment_map_run_wizard__id
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_consignment_move__id
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_consignment_run_overstock_wizard__id
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_consignment_settlement__id
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_consignment_settlement_generate_wizard__id
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_consignment_settlement_line__id
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_consignment_settlement_stage__id
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_nfe_xml_panel__id
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_res_company__id
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_res_config_settings__id
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_sale_order__id
+msgid "ID"
+msgstr ""
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_consignment_settlement__activity_exception_icon
+msgid "Icon"
+msgstr "Ícone"
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,help:liber_soc_settlement.field_consignment_settlement__activity_exception_icon
+msgid "Icon to indicate an exception activity."
+msgstr "Ícone para indicar uma atividade de exceção."
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,help:liber_soc_settlement.field_consignment_settlement__message_needaction
+msgid "If checked, new messages require your attention."
+msgstr "Se marcado, novas mensagens requerem sua atenção."
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,help:liber_soc_settlement.field_consignment_settlement__message_has_error
+#: model:ir.model.fields,help:liber_soc_settlement.field_consignment_settlement__message_has_sms_error
+msgid "If checked, some messages have a delivery error."
+msgstr "Se marcado, algumas mensagens têm erro de entrega."
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,help:liber_soc_settlement.field_consignment_settlement_line__discount
+msgid "Inherited from the agreement's default discount; editable per line."
+msgstr "Herdado do desconto padrão do contrato; editável por linha."
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,help:liber_soc_settlement.field_consignment_settlement__location_id
+msgid ""
+"Internal location that holds our stock physically placed at this customer. "
+"Created automatically when the agreement is activated."
+msgstr ""
+"Localização interna que guarda nosso estoque fisicamente colocado neste "
+"cliente. Criada automaticamente quando o contrato é ativado."
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_consignment_settlement__message_is_follower
+msgid "Is Follower"
+msgstr "É seguidor"
+
+#. module: liber_soc_settlement
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.report_consignment_map
+msgid ""
+"Itens que você informou como vendidos no período. É sobre eles que emitimos "
+"a nota de venda."
+msgstr ""
+
+#. module: liber_soc_settlement
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.report_consignment_map
+msgid ""
+"Itens sem venda que pedimos que você nos devolva, retornando ao nosso "
+"estoque."
+msgstr ""
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_consignment_map_run_wizard__write_uid
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_consignment_run_overstock_wizard__write_uid
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_consignment_settlement__write_uid
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_consignment_settlement_generate_wizard__write_uid
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_consignment_settlement_line__write_uid
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_consignment_settlement_stage__write_uid
+msgid "Last Updated by"
+msgstr "Última atualização por"
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_consignment_map_run_wizard__write_date
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_consignment_run_overstock_wizard__write_date
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_consignment_settlement__write_date
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_consignment_settlement_generate_wizard__write_date
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_consignment_settlement_line__write_date
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_consignment_settlement_stage__write_date
+msgid "Last Updated on"
+msgstr "Última atualização em"
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_consignment_settlement__line_ids
+msgid "Lines"
+msgstr "Linhas"
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_consignment_run_overstock_wizard__summary
+msgid "Lines over On Hand"
+msgstr "Linhas acima do Em mãos"
+
+#. module: liber_soc_settlement
+#. odoo-python
+#: code:addons/liber_soc_settlement/models/consignment_settlement.py:0
+msgid "Load the map before running the operation."
+msgstr "Carregue o mapa antes de executar a operação."
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_consignment_settlement_line__qty_on_shelf
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.view_consignment_settlement_form
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.view_shortfall_list
+msgid "Map"
+msgstr "Mapa"
+
+#. module: liber_soc_settlement
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.report_consignment_map
+msgid "Mapa da prateleira"
+msgstr ""
+
+#. module: liber_soc_settlement
+#: model:ir.actions.report,name:liber_soc_settlement.action_report_consignment_map
+msgid "Mapa de Consignação"
+msgstr ""
+
+#. module: liber_soc_settlement
+#: model:mail.template,subject:liber_soc_settlement.mail_template_consignment_map
+msgid "Mapa de Consignação - {{ object.name }}"
+msgstr ""
+
+#. module: liber_soc_settlement
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.report_consignment_map
+msgid "Mapa de Consignação —"
+msgstr ""
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_consignment_settlement__message_has_error
+msgid "Message Delivery error"
+msgstr "Erro de entrega de mensagem"
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_consignment_settlement__message_ids
+msgid "Messages"
+msgstr "Mensagens"
+
+#. module: liber_soc_settlement
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.res_config_settings_view_form_soc
+msgid ""
+"Months used to total a title's recent sales in the settlement analysis "
+"column."
+msgstr ""
+"Meses usados para totalizar as vendas recentes de um título na coluna de "
+"análise do acerto."
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_consignment_settlement__my_activity_date_deadline
+msgid "My Activity Deadline"
+msgstr "Prazo da minha atividade"
+
+#. module: liber_soc_settlement
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.view_consignment_settlement_form_nfe
+msgid "NFe"
+msgstr ""
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_consignment_settlement__nfe_xml_count
+msgid "NFe Count"
+msgstr "Contagem de NFe"
+
+#. module: liber_soc_settlement
+#: model:ir.model,name:liber_soc_settlement.model_nfe_xml_panel
+msgid "NFe XML Panel"
+msgstr "Painel XML NFe"
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,help:liber_soc_settlement.field_consignment_settlement__nfe_xml_ids
+msgid ""
+"NFe documents (shipments, returns, sales) that support this settlement, for "
+"the historical audit against the map."
+msgstr ""
+"Documentos NFe (remessas, devoluções, vendas) que embasam este acerto, para "
+"a auditoria histórica contra o mapa."
+
+#. module: liber_soc_settlement
+#. odoo-python
+#: code:addons/liber_soc_settlement/models/consignment_settlement.py:0
+msgid "New"
+msgstr "Novo"
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_consignment_settlement__activity_date_deadline
+msgid "Next Activity Deadline"
+msgstr "Prazo da próxima atividade"
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_consignment_settlement__activity_summary
+msgid "Next Activity Summary"
+msgstr "Resumo da próxima atividade"
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_consignment_settlement__activity_type_id
+msgid "Next Activity Type"
+msgstr "Tipo da próxima atividade"
+
+#. module: liber_soc_settlement
+#. odoo-python
+#: code:addons/liber_soc_settlement/models/consignment_settlement.py:0
+msgid "No valid agreement"
+msgstr "Nenhum contrato válido"
+
+#. module: liber_soc_settlement
+#. odoo-python
+#: code:addons/liber_soc_settlement/models/consignment_settlement.py:0
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.view_run_overstock_wizard_form
+msgid "Not enough stock"
+msgstr "Estoque insuficiente"
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_consignment_settlement__note
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.view_consignment_settlement_form
+msgid "Notes"
+msgstr "Notas"
+
+#. module: liber_soc_settlement
+#. odoo-python
+#: code:addons/liber_soc_settlement/models/consignment_settlement.py:0
+msgid ""
+"Nothing to do: no sales reported, no replenishment and no return planned."
+msgstr ""
+"Nada a fazer: nenhuma venda informada, nenhuma reposição e nenhuma devolução"
+" planejada."
+
+#. module: liber_soc_settlement
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.report_consignment_map
+msgid "Novos itens que enviaremos para repor a sua prateleira."
+msgstr ""
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_consignment_settlement__message_needaction_counter
+msgid "Number of Actions"
+msgstr "Número de ações"
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_consignment_settlement__message_has_error_counter
+msgid "Number of errors"
+msgstr "Número de erros"
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,help:liber_soc_settlement.field_consignment_settlement__message_needaction_counter
+msgid "Number of messages requiring action"
+msgstr "Número de mensagens que requerem ação"
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,help:liber_soc_settlement.field_consignment_settlement__message_has_error_counter
+msgid "Number of messages with delivery error"
+msgstr "Número de mensagens com erro de entrega"
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,help:liber_soc_settlement.field_res_config_settings__soc_sales_window_months
+msgid ""
+"Number of months used to total the recent sales of a title (reported "
+"quantities across settled settlements) shown in the settlement analysis "
+"column."
+msgstr ""
+"Número de meses usados para totalizar as vendas recentes de um título "
+"(quantidades informadas nos acertos concluídos) exibido na coluna de análise"
+" do acerto."
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_consignment_settlement_line__qty_on_hand
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.view_shortfall_list
+msgid "On Hand"
+msgstr "Em mãos"
+
+#. module: liber_soc_settlement
+#: model_terms:ir.actions.act_window,help:liber_soc_settlement.action_consignment_settlement
+msgid ""
+"One screen per customer: load the map, enter what the customer\n"
+"                reported sold, and plan the replenishment. Confirming dispatches\n"
+"                the right documents — a real sale order for what sold, and a\n"
+"                consignment movement (with note, not a sale) for what you resend."
+msgstr ""
+"Uma tela por cliente: carregue o mapa, informe o que o cliente reportou como"
+" vendido e planeje a reposição. Confirmar dispara os documentos certos — um "
+"pedido de venda real para o que foi vendido e um movimento de consignação "
+"(com nota, não uma venda) para o que você reenvia."
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_consignment_settlement_generate_wizard__open_count
+msgid "Open consignments"
+msgstr "Consignações abertas"
+
+#. module: liber_soc_settlement
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.view_generate_wizard_form
+msgid ""
+"Opens one <strong>consignment operation (CO)</strong> per\n"
+"                    open consignment for the month (active agreement with shelf balance),\n"
+"                    <strong>skipping</strong> those that already have a draft operation."
+msgstr "Abre uma <strong>operação de consignação (CO)</strong> por consignação aberta no mês (contrato ativo com saldo em prateleira), <strong>pulando</strong> as que já têm uma operação em rascunho."
+
+#. module: liber_soc_settlement
+#: model:ir.ui.menu,name:liber_soc_settlement.menu_consignment_board
+msgid "Operations"
+msgstr "Operações"
+
+#. module: liber_soc_settlement
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.view_consignment_settlement_search
+msgid "Operations with a customer message you haven't read yet."
+msgstr "Operações com mensagem do cliente ainda não lida por você."
+
+#. module: liber_soc_settlement
+#. odoo-python
+#: code:addons/liber_soc_settlement/models/consignment_settlement.py:0
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.view_consignment_settlement_kanban
+msgid "Order"
+msgstr "Pedido"
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,help:liber_soc_settlement.field_consignment_settlement_line__qty_on_hand
+msgid ""
+"Our warehouse stock available to replenish this title. Don't suggest "
+"replenishing what we don't have."
+msgstr ""
+"Nosso estoque em armazém disponível para repor este título. Não sugerir "
+"repor o que não temos."
+
+#. module: liber_soc_settlement
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.report_consignment_map
+msgid "Pedido (reposição)"
+msgstr ""
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,help:liber_soc_settlement.field_consignment_settlement__user_id
+msgid ""
+"Person in charge of this consignment operation. Defaults to the sales team's"
+" leader (from the contract's team), and is editable."
+msgstr "Responsável por esta operação de consignação. Padrão: o líder da equipe de vendas (da equipe do contrato); editável."
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_consignment_settlement_line__qty_replenish
+msgid "Place"
+msgstr "Reposição"
+
+#. module: liber_soc_settlement
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.report_consignment_map
+msgid "Posição atual da mercadoria em consignação na sua loja."
+msgstr ""
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,help:liber_soc_settlement.field_consignment_settlement__template_id
+msgid "Pre-set product assortment. Use 'Apply Template' to fill the lines."
+msgstr ""
+"Sortimento de produtos pré-definido. Use 'Aplicar Modelo' para preencher as "
+"linhas."
+
+#. module: liber_soc_settlement
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.report_consignment_map
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.report_consignment_op_table
+msgid "Preço unit."
+msgstr ""
+
+#. module: liber_soc_settlement
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.view_consignment_settlement_form
+msgid "Print Map"
+msgstr "Imprimir Mapa"
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_consignment_settlement_line__product_id
+msgid "Product"
+msgstr "Produto"
+
+#. module: liber_soc_settlement
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.view_consignment_settlement_form
+msgid "Products"
+msgstr "Produtos"
+
+#. module: liber_soc_settlement
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.report_consignment_op_table
+msgid "Qtd."
+msgstr ""
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,help:liber_soc_settlement.field_consignment_settlement_line__qty_reported
+msgid "Quantity the customer reported as sold. This is the settlement."
+msgstr "Quantidade que o cliente informou como vendida. Este é o acerto."
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,help:liber_soc_settlement.field_consignment_settlement_line__qty_return
+msgid ""
+"Quantity to recall from the shelf (no turnover). Pure stock movement back to"
+" the warehouse; never a sale."
+msgstr ""
+"Quantidade a recolher da prateleira (sem giro). Puro movimento de estoque de"
+" volta ao armazém; nunca uma venda."
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,help:liber_soc_settlement.field_consignment_settlement_line__qty_replenish
+msgid ""
+"Quantity to resend to refill the shelf. Suggested equal to what was reported"
+" sold; editable."
+msgstr ""
+"Quantidade a reenviar para reabastecer a prateleira. Sugerida igual ao que "
+"foi informado como vendido; editável."
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_consignment_settlement__rating_ids
+msgid "Ratings"
+msgstr "Avaliações"
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_consignment_settlement_line__sale_order_ids
+msgid "Recent Sale Orders"
+msgstr "Pedidos de Venda Recentes"
+
+#. module: liber_soc_settlement
+#. odoo-python
+#: code:addons/liber_soc_settlement/models/consignment_settlement.py:0
+msgid "Recent sales of %s"
+msgstr "Vendas recentes de %s"
+
+#. module: liber_soc_settlement
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.res_config_settings_view_form_soc
+msgid "Recent sales window"
+msgstr "Janela de vendas recentes"
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_consignment_settlement__name
+msgid "Reference"
+msgstr "Referência"
+
+#. module: liber_soc_settlement
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.view_run_overstock_wizard_form
+msgid "Remove and Run"
+msgstr "Remover e Executar"
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_consignment_settlement__replenishment_order_id
+msgid "Replenishment Order"
+msgstr "Pedido de Reposição"
+
+#. module: liber_soc_settlement
+#: model:ir.model,name:liber_soc_settlement.model_consignment_run_overstock_wizard
+msgid "Replenishment lines that exceed On Hand"
+msgstr "Linhas de reposição que excedem o Em mãos"
+
+#. module: liber_soc_settlement
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.view_consignment_settlement_search
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.view_consignment_move_search_dunning
+msgid "Reply"
+msgstr "Responder"
+
+#. module: liber_soc_settlement
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.view_consignment_settlement_form
+msgid "Reset to Draft"
+msgstr "Redefinir para Provisório"
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,help:liber_soc_settlement.field_consignment_settlement__agreement_id
+msgid "Resolved from the customer (one agreement per customer)."
+msgstr "Resolvido a partir do cliente (um contrato por cliente)."
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_consignment_settlement__user_id
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_consignment_move__user_id
+msgid "Responsible"
+msgstr "Responsável"
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_consignment_settlement__activity_user_id
+msgid "Responsible User"
+msgstr "Usuário Responsável"
+
+#. module: liber_soc_settlement
+#. odoo-python
+#: code:addons/liber_soc_settlement/models/consignment_settlement.py:0
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_consignment_settlement__return_move_id
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_consignment_settlement_line__qty_return
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.view_consignment_settlement_kanban
+#: model:ir.model.fields.selection,name:liber_soc_settlement.selection__consignment_ledger__kind__return
+msgid "Return"
+msgstr "Devolução"
+
+#. module: liber_soc_settlement
+#. odoo-python
+#: code:addons/liber_soc_settlement/models/consignment_settlement.py:0
+msgid "Return from consignment %s"
+msgstr "Devolução da consignação %s"
+
+#. module: liber_soc_settlement
+#. odoo-python
+#: code:addons/liber_soc_settlement/models/consignment_settlement.py:0
+msgid "Return too high"
+msgstr "Devolução alta demais"
+
+#. module: liber_soc_settlement
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.view_consignment_settlement_form
+msgid "Run"
+msgstr "Executar"
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_consignment_settlement__message_has_sms_error
+msgid "SMS Delivery error"
+msgstr "Erro de entrega de SMS"
+
+#. module: liber_soc_settlement
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.view_consignment_settlement_kanban
+#: model:ir.model.fields.selection,name:liber_soc_settlement.selection__consignment_ledger__kind__sale
+msgid "Sale"
+msgstr "Venda"
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_consignment_settlement__sale_order_id
+msgid "Sale Order"
+msgstr "Pedido de Venda"
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_consignment_settlement_line__qty_recent_sales
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.view_consignment_ledger_search
+msgid "Sales"
+msgstr "Vendas"
+
+#. module: liber_soc_settlement
+#: model:ir.model,name:liber_soc_settlement.model_sale_order
+msgid "Sales Order"
+msgstr "Pedido de venda"
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_res_config_settings__soc_sales_window_months
+msgid "Sales analysis window (months)"
+msgstr "Janela de análise de vendas (meses)"
+
+#. module: liber_soc_settlement
+#. odoo-python
+#: code:addons/liber_soc_settlement/models/consignment_settlement.py:0
+msgid "Select a template first."
+msgstr "Selecione um modelo primeiro."
+
+#. module: liber_soc_settlement
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.view_map_run_wizard_form
+msgid "Send Consignment Maps"
+msgstr "Enviar Mapas de Consignação"
+
+#. module: liber_soc_settlement
+#: model:ir.model,name:liber_soc_settlement.model_consignment_map_run_wizard
+msgid "Send Consignment Maps (RUN)"
+msgstr "Enviar Mapas de Consignação (RUN)"
+
+#. module: liber_soc_settlement
+#. odoo-python
+#: code:addons/liber_soc_settlement/models/consignment_settlement.py:0
+#: model:ir.actions.server,name:liber_soc_settlement.action_send_map_server
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.view_consignment_settlement_form
+msgid "Send Map"
+msgstr "Enviar Mapa"
+
+#. module: liber_soc_settlement
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.view_map_run_wizard_form
+msgid ""
+"Sends the <strong>Consignment Map</strong> (PDF) by email to the\n"
+"                    customers of operations in <strong>draft</strong> and in a\n"
+"                    <strong>not-done</strong> stage (folded stages — e.g. \"Done\" — are\n"
+"                    skipped). Recipients: the customer + the agreement contacts."
+msgstr "Envia o <strong>Mapa de Consignação</strong> (PDF) por e-mail aos clientes das operações em <strong>rascunho</strong> e em estágio <strong>não concluído</strong> (estágios recolhidos — ex.: \"Feito\" — são pulados). Destinatários: o cliente + os contatos do contrato."
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_consignment_settlement_stage__sequence
+msgid "Sequence"
+msgstr "Sequência"
+
+#. module: liber_soc_settlement
+#: model:ir.actions.act_window,name:liber_soc_settlement.action_soc_config_settings
+#: model:ir.ui.menu,name:liber_soc_settlement.menu_soc_settings
+msgid "Settings"
+msgstr "Configurações"
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_consignment_settlement_line__qty_reported
+msgid "Settled"
+msgstr "Acerto"
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_consignment_settlement_line__settlement_id
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.view_quotation_tree_settlement
+msgid "Settlement"
+msgstr "Acerto"
+
+#. module: liber_soc_settlement
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.res_config_settings_view_form_soc
+msgid "Settlement Analysis"
+msgstr "Análise do Acerto"
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_consignment_settlement__date
+msgid "Settlement Date"
+msgstr "Data do Acerto"
+
+#. module: liber_soc_settlement
+#. odoo-python
+#: code:addons/liber_soc_settlement/models/consignment_agreement.py:0
+#: code:addons/liber_soc_settlement/models/consignment_settlement.py:0
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_consignment_agreement__settlement_ids
+#: model:ir.ui.menu,name:liber_soc_settlement.menu_consignment_acertos
+msgid "Settlements"
+msgstr "Acertos"
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_consignment_settlement__delivery_picking_id
+msgid "Shelf Delivery"
+msgstr "Entrega na Prateleira"
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_consignment_settlement__amount_total
+msgid "Sold Amount"
+msgstr "Valor Vendido"
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_consignment_settlement__stage_id
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_consignment_settlement_stage__name
+msgid "Stage"
+msgstr "Etapa"
+
+#. module: liber_soc_settlement
+#: model:ir.ui.menu,name:liber_soc_settlement.menu_soc_stages
+msgid "Stages"
+msgstr "Etapas"
+
+#. module: liber_soc_settlement
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.res_config_settings_view_form_soc
+msgid "Standard map text"
+msgstr "Texto padrão do mapa"
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,help:liber_soc_settlement.field_res_company__consignment_map_text
+#: model:ir.model.fields,help:liber_soc_settlement.field_res_config_settings__consignment_map_text
+msgid ""
+"Standard text printed at the top of the consignment map (CO) that is printed"
+" or e-mailed to the customer. Editable in the Consignment settings."
+msgstr "Texto padrão impresso no topo do mapa de consignação (CO) impresso ou enviado por e-mail ao cliente. Editável nas configurações de Consignação."
+
+#. module: liber_soc_settlement
+#: model_terms:ir.actions.act_window,help:liber_soc_settlement.action_consignment_settlement
+msgid "Start your first consignment"
+msgstr "Inicie sua primeira consignação"
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_consignment_settlement__state
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.view_consignment_settlement_search
+msgid "Status"
+msgstr "Situação"
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,help:liber_soc_settlement.field_consignment_settlement__activity_state
+msgid ""
+"Status based on activities\n"
+"Overdue: Due date is already passed\n"
+"Today: Activity date is today\n"
+"Planned: Future activities."
+msgstr ""
+"Estado com base nas atividades\n"
+"Atrasada: a data de vencimento já passou\n"
+"Hoje: a atividade é para hoje\n"
+"Planejada: atividades futuras."
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_consignment_settlement_line__price_subtotal
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.report_consignment_map
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.report_consignment_op_table
+msgid "Subtotal"
+msgstr ""
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_consignment_settlement__template_id
+msgid "Template"
+msgstr "Modelo"
+
+#. module: liber_soc_settlement
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.res_config_settings_view_form_soc
+msgid ""
+"Text printed at the top of the consignment map (CO) printed or e-mailed to "
+"the customer."
+msgstr "Texto impresso no topo do mapa de consignação (CO) impresso ou enviado por e-mail ao cliente."
+
+#. module: liber_soc_settlement
+#. odoo-python
+#: code:addons/liber_soc_settlement/models/consignment_settlement.py:0
+msgid "The agreement %s for %s is not active (status: %s)."
+msgstr "O contrato %s de %s não está ativo (status: %s)."
+
+#. module: liber_soc_settlement
+#. odoo-python
+#: code:addons/liber_soc_settlement/models/consignment_settlement.py:0
+msgid "The agreement has no shelf. Activate it first."
+msgstr "O contrato não tem prateleira. Ative-o primeiro."
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,help:liber_soc_settlement.field_consignment_move__consignment_operation_id
+msgid "The consignment (acerto) that generated this movement."
+msgstr "O acerto de consignação que gerou este movimento."
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,help:liber_soc_settlement.field_sale_order__consignment_operation_id
+msgid "The consignment (acerto) that generated this sale."
+msgstr "O acerto de consignação que gerou esta venda."
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,help:liber_soc_settlement.field_consignment_settlement__replenishment_order_id
+msgid "The consignment Pedido (C) the dispatcher fires to refill the shelf."
+msgstr ""
+"O Pedido (C) de consignação que a logística dispara para reabastecer a "
+"prateleira."
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,help:liber_soc_settlement.field_consignment_settlement__agreement_valid
+msgid "The customer has an active consignment agreement."
+msgstr "O cliente tem um contrato de consignação ativo."
+
+#. module: liber_soc_settlement
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.view_run_overstock_wizard_form
+msgid ""
+"These titles ask for more than we have On Hand. You can remove\n"
+"                    them from the shipment and run the rest."
+msgstr ""
+"Estes títulos pedem mais do que temos Em mãos. Você pode removê-los da "
+"remessa e executar o restante."
+
+#. module: liber_soc_settlement
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.view_consignment_settlement_form
+msgid ""
+"This customer has no active consignment agreement, so no\n"
+"                        consignment can run. Create and activate an agreement first."
+msgstr ""
+"Este cliente não tem contrato de consignação ativo, então nenhuma "
+"consignação pode ser executada. Crie e ative um contrato primeiro."
+
+#. module: liber_soc_settlement
+#: model:consignment.settlement.stage,name:liber_soc_settlement.stage_todo
+msgid "To Do"
+msgstr "A Fazer"
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_consignment_settlement_generate_wizard__to_create_count
+msgid "To create"
+msgstr "Serão criadas"
+
+#. module: liber_soc_settlement
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.report_consignment_map
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.report_consignment_op_table
+msgid "Total"
+msgstr ""
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,help:liber_soc_settlement.field_consignment_settlement__activity_exception_decoration
+msgid "Type of the exception activity on record."
+msgstr "Tipo da atividade de exceção no registro."
+
+#. module: liber_soc_settlement
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.report_consignment_map
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.report_consignment_op_table
+msgid "Título"
+msgstr ""
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_consignment_settlement_line__price_unit
+msgid "Unit Price"
+msgstr "Preço Unitário"
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,help:liber_soc_settlement.field_consignment_settlement_line__qty_recent_sales
+msgid ""
+"Units of this title THIS customer sold (reported) within the analysis window"
+" configured in Settings (3 or 6 months). Click to see the composing sale "
+"orders."
+msgstr ""
+"Unidades deste título que vendemos dentro da janela de análise configurada "
+"em Configurações (3 ou 6 meses). Clique para ver os pedidos de venda que a "
+"compõem."
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_consignment_settlement__agreement_valid
+msgid "Valid Agreement"
+msgstr "Contrato Válido"
+
+#. module: liber_soc_settlement
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.view_consignment_settlement_form
+msgid "View sale orders"
+msgstr "Ver pedidos de venda"
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_consignment_settlement__website_message_ids
+msgid "Website Messages"
+msgstr "Mensagens do Site"
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,help:liber_soc_settlement.field_consignment_settlement__website_message_ids
+msgid "Website communication history"
+msgstr "Histórico de comunicação do site"
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,help:liber_soc_settlement.field_consignment_settlement__stage_id
+msgid ""
+"Work stage on the consignment board (A Fazer / Fazendo / Feito). Separate "
+"from the technical Status; this is the team's task view."
+msgstr "Estágio de trabalho no quadro de consignação (A Fazer / Fazendo / Feito). Separado do Status técnico; esta é a visão de tarefas da equipe."
+
+#. module: liber_soc_settlement
+#. odoo-python
+#: code:addons/liber_soc_settlement/models/consignment_agreement.py:0
+msgid "agreement_id"
+msgstr ""
+
+#. module: liber_soc_settlement
+#. odoo-python
+#: code:addons/liber_soc_settlement/models/related_documents.py:0
+msgid "id"
+msgstr ""
+
+#. module: liber_soc_settlement
+#. odoo-python
+#: code:addons/liber_soc_settlement/models/consignment_settlement.py:0
+msgid "💬 %(customer)s respondeu na %(co)s."
+msgstr ""
+
+# --- Return dunning (CR) — added translations ---
+
+#. module: liber_soc_settlement
+#. odoo-python
+#: code:addons/liber_soc_settlement/models/consignment_move_dunning.py:0
+msgid "(no manager set)"
+msgstr "(sem gerente definido)"
+
+#. module: liber_soc_settlement
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.res_config_settings_view_form_soc
+msgid "<span class=\"col-lg-4 o_form_label\">Broadcast at</span>"
+msgstr "<span class=\"col-lg-4 o_form_label\">Aviso geral em</span>"
+
+#. module: liber_soc_settlement
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.res_config_settings_view_form_soc
+msgid "<span class=\"col-lg-4 o_form_label\">Call due at</span>"
+msgstr "<span class=\"col-lg-4 o_form_label\">Ligação em</span>"
+
+#. module: liber_soc_settlement
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.res_config_settings_view_form_soc
+msgid "<span class=\"col-lg-4 o_form_label\">Nudge at</span>"
+msgstr "<span class=\"col-lg-4 o_form_label\">Lembrete em</span>"
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_res_config_settings__return_broadcast_pct
+msgid "Broadcast at (% of window)"
+msgstr "Aviso geral em (% do prazo)"
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_res_config_settings__return_call_pct
+msgid "Call due at (% of window)"
+msgstr "Ligação em (% do prazo)"
+
+#. module: liber_soc_settlement
+#. odoo-python
+#: code:addons/liber_soc_settlement/models/consignment_move_dunning.py:0
+msgid "Call the customer about the pending return %s"
+msgstr "Ligar para o cliente sobre a devolução pendente %s"
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_res_config_settings__return_dunning_enabled
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.res_config_settings_view_form_soc
+msgid "Chase pending returns"
+msgstr "Cobrar devoluções pendentes"
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,help:liber_soc_settlement.field_consignment_move__return_due_date
+msgid ""
+"Deadline for the customer to send the merchandise back. Set when the return "
+"(CR) is created; overdue past this date."
+msgstr "Prazo para o cliente devolver a mercadoria. Definido quando a devolução (CR) é criada; vencido após esta data."
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,help:liber_soc_settlement.field_res_config_settings__return_call_pct
+msgid ""
+"Deadline of the 'call the customer' activity scheduled at the nudge. Default"
+" 40% (~day 12 of 30)."
+msgstr "Prazo da atividade 'ligar para o cliente' agendada no lembrete. Padrão 40% (~dia 12 de 30)."
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_consignment_move__dunning_step
+msgid "Dunning Step"
+msgstr "Etapa da Cobrança"
+
+#. module: liber_soc_settlement
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.res_config_settings_view_form_soc
+msgid "Escalation manager"
+msgstr "Gerente de escalonamento"
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,help:liber_soc_settlement.field_consignment_move__dunning_step
+msgid ""
+"How far up the chasing ladder this return has climbed: 0 none · 1 nudged · 2"
+" broadcast to the team · 3 escalated to the manager. Guards each rung so it "
+"fires only once."
+msgstr "Até que degrau da régua de cobrança esta devolução subiu: 0 nenhum · 1 lembrete · 2 aviso à equipe · 3 escalado ao gerente. Trava cada degrau para disparar só uma vez."
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,help:liber_soc_settlement.field_res_config_settings__return_sla_days
+msgid ""
+"How long a customer may take to send merchandise back before the return (CR)"
+" is considered overdue. The dunning checkpoints below are computed as a "
+"percentage of this window."
+msgstr "Quanto tempo o cliente pode levar para devolver a mercadoria antes de a devolução (CR) ser considerada vencida. Os checkpoints de cobrança abaixo são calculados como uma porcentagem deste prazo."
+
+#. module: liber_soc_settlement
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.res_config_settings_view_form_soc
+msgid ""
+"How long a customer may take to send merchandise back before the return (CR)"
+" is overdue. The checkpoints below are a percentage of it."
+msgstr "Quanto tempo o cliente pode levar para devolver a mercadoria antes de a devolução (CR) vencer. Os checkpoints abaixo são uma porcentagem dele."
+
+#. module: liber_soc_settlement
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.res_config_settings_view_form_soc
+msgid ""
+"Intro text of the return-request e-mail (CR). Leave empty to use the built-"
+"in default."
+msgstr "Texto de abertura do e-mail de pedido de devolução (CR). Deixe vazio para usar o padrão."
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,help:liber_soc_settlement.field_res_config_settings__return_dunning_enabled
+msgid ""
+"Master switch: when off, the nightly cron does nothing and no return-request"
+" e-mails, calls, alerts or escalations are fired."
+msgstr "Interruptor geral: quando desligado, o cron noturno não faz nada e nenhum e-mail de pedido de devolução, ligação, alerta ou escalonamento é disparado."
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_res_config_settings__return_nudge_pct
+msgid "Nudge at (% of window)"
+msgstr "Lembrete em (% do prazo)"
+
+#. module: liber_soc_settlement
+#. odoo-python
+#: code:addons/liber_soc_settlement/models/consignment_move_dunning.py:0
+msgid "Overdue consignment return %s — take over"
+msgstr "Devolução de consignação vencida %s — assumir"
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_consignment_move__return_due_date
+msgid "Return Due"
+msgstr "Prazo da Devolução"
+
+#. module: liber_soc_settlement
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.res_config_settings_view_form_soc
+msgid "Return Dunning (CR)"
+msgstr "Cobrança de Devolução (CR)"
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_res_company__return_escalation_manager_id
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_res_config_settings__return_escalation_manager_id
+msgid "Return Escalation Manager"
+msgstr "Gerente de Escalonamento de Devolução"
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_res_company__return_request_text
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_res_config_settings__return_request_text
+msgid "Return Request Text"
+msgstr "Texto do Pedido de Devolução"
+
+#. module: liber_soc_settlement
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.res_config_settings_view_form_soc
+msgid "Return request e-mail text"
+msgstr "Texto do e-mail de pedido de devolução"
+
+#. module: liber_soc_settlement
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.view_consignment_move_form_dunning
+msgid "Send Return Request"
+msgstr "Enviar Pedido de Devolução"
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,help:liber_soc_settlement.field_res_company__return_request_text
+#: model:ir.model.fields,help:liber_soc_settlement.field_res_config_settings__return_request_text
+msgid ""
+"Standard intro text of the return-request e-mail (CR) sent to the customer "
+"when a return is overdue. Editable in the Consignment settings."
+msgstr "Texto padrão de abertura do e-mail de pedido de devolução (CR) enviado ao cliente quando uma devolução está vencida. Editável nas configurações de Consignação."
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,help:liber_soc_settlement.field_res_config_settings__return_broadcast_pct
+msgid ""
+"Still no return by this point posts a red alert in the 'Consignação — "
+"Respostas' channel so the whole team sees it. Default 65% (~day 20 of 30). "
+"At 100% it escalates to the manager."
+msgstr "Sem devolução até este ponto, posta um alerta vermelho no canal 'Consignação — Respostas' para toda a equipe ver. Padrão 65% (~dia 20 de 30). Em 100% escala para o gerente."
+
+#. module: liber_soc_settlement
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.res_config_settings_view_form_soc
+msgid "Tolerable return window"
+msgstr "Prazo tolerável de devolução"
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_res_config_settings__return_sla_days
+msgid "Tolerable return window (days)"
+msgstr "Prazo tolerável de devolução (dias)"
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,help:liber_soc_settlement.field_res_config_settings__return_nudge_pct
+msgid ""
+"When no return has happened by this share of the window, e-mail the return "
+"request (CR) again and schedule a call for the responsible. Default 25% "
+"(~day 7 of 30)."
+msgstr "Quando nenhuma devolução ocorreu até esta fração do prazo, reenvia o pedido de devolução (CR) por e-mail e agenda uma ligação para o responsável. Padrão 25% (~dia 7 de 30)."
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,help:liber_soc_settlement.field_res_company__return_escalation_manager_id
+#: model:ir.model.fields,help:liber_soc_settlement.field_res_config_settings__return_escalation_manager_id
+msgid ""
+"Who gets notified when a consignment return (CR) blows past its tolerable "
+"window (the last rung of the dunning ladder). Editable in the Consignment "
+"settings."
+msgstr "Quem é notificado quando uma devolução de consignação (CR) estoura o prazo tolerável (o último degrau da régua de cobrança). Editável nas configurações de Consignação."
+
+#. module: liber_soc_settlement
+#. odoo-python
+#: code:addons/liber_soc_settlement/models/consignment_move_dunning.py:0
+msgid ""
+"⏳ %(customer)s hasn't returned yet — return request re-sent for %(cr)s (due "
+"%(due)s)."
+msgstr "⏳ %(customer)s ainda não devolveu — pedido de devolução reenviado para %(cr)s (prazo %(due)s)."
+
+#. module: liber_soc_settlement
+#. odoo-python
+#: code:addons/liber_soc_settlement/models/consignment_move_dunning.py:0
+msgid ""
+"📣 Return %(cr)s from %(customer)s is closing on its deadline (%(due)s) with "
+"no return. Someone please chase it."
+msgstr "📣 A devolução %(cr)s de %(customer)s está perto do prazo (%(due)s) sem retorno. Alguém precisa cobrar."
+
+#. module: liber_soc_settlement
+#. odoo-python
+#: code:addons/liber_soc_settlement/models/consignment_move_dunning.py:0
+msgid ""
+"🚨 Return %(cr)s from %(customer)s is OVERDUE (was due %(due)s). Escalated to"
+" %(manager)s."
+msgstr "🚨 A devolução %(cr)s de %(customer)s está VENCIDA (prazo era %(due)s). Escalada para %(manager)s."
+
+# --- Overdue filter — added translations ---
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,help:liber_soc_settlement.field_consignment_move__return_overdue
+msgid ""
+"A return whose due date has passed and which hasn't been returned or "
+"cancelled yet."
+msgstr "Uma devolução cujo prazo já passou e que ainda não foi devolvida nem cancelada."
+
+#. module: liber_soc_settlement
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.view_consignment_move_search_dunning
+msgid "In dunning"
+msgstr "Em cobrança"
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_consignment_move__return_overdue
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.view_consignment_move_search_dunning
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.view_consigned_stock_search_age
+msgid "Overdue"
+msgstr "Vencidos"
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,help:liber_soc_settlement.field_consignment_move__user_id
+msgid "Person responsible for chasing this return. Defaults to the responsible of the consignment operation (CO) that generated it."
+msgstr "Responsável por cobrar esta devolução. Padrão: o responsável da operação de consignação (CO) que a gerou."
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_consignment_move__dunning_stage
+msgid "Dunning Stage"
+msgstr "Estágio da Cobrança"
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields.selection,name:liber_soc_settlement.selection__consignment_move__dunning_stage__0
+msgid "Not chasing"
+msgstr "Sem cobrança"
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields.selection,name:liber_soc_settlement.selection__consignment_move__dunning_stage__1
+msgid "Reminder sent"
+msgstr "Lembrete enviado"
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields.selection,name:liber_soc_settlement.selection__consignment_move__dunning_stage__2
+msgid "Team alerted"
+msgstr "Equipe avisada"
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields.selection,name:liber_soc_settlement.selection__consignment_move__dunning_stage__3
+msgid "Escalated"
+msgstr "Escalado"
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,help:liber_soc_settlement.field_consignment_move__dunning_stage
+msgid "The dunning rung as a coloured badge (blue reminder · orange team alert · red escalated)."
+msgstr "O degrau da cobrança como um selo colorido (azul lembrete · laranja aviso à equipe · vermelho escalado)."
+
+#. module: liber_soc_settlement
+#. odoo-python
+#: code:addons/liber_soc_settlement/models/res_company.py:0
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_sale_order__consignment_operation_id
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.view_order_form_settlement
+msgid "Consignment Settlement"
+msgstr "Acerto de Consignação"
+
+#. module: liber_soc_settlement
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.view_sales_order_filter_settlement
+msgid "Consignment Settlements"
+msgstr "Acertos de Consignação"
+
+#. module: liber_soc_settlement
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.view_sales_order_filter_settlement
+msgid "Regular Sales"
+msgstr "Vendas Normais"
+
+#. module: liber_soc_settlement
+#: model:ir.ui.menu,name:liber_soc_settlement.menu_generate_monthly_settlements
+msgid "⚙️ Generate Operations"
+msgstr "⚙️ Gerar Operações"
+
+#. module: liber_soc_settlement
+#: model:ir.ui.menu,name:liber_soc_settlement.menu_map_run
+msgid "⚙️ Consignment Map"
+msgstr "⚙️ Mapa de Consignação"
+
+# --- Consigned title health ---
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields.selection,name:liber_soc_settlement.selection__consignment_settlement_line__shelf_status__attention
+#: model:ir.model.fields.selection,name:liber_soc_settlement.selection__stock_quant__shelf_status__attention
+msgid "Attention"
+msgstr "Atenção"
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_res_config_settings__shelf_attention_days
+msgid "Attention up to (days)"
+msgstr "Atenção até (dias)"
+
+#. module: liber_soc_settlement
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.res_config_settings_view_form_soc
+msgid "Consigned title health"
+msgstr "Situação dos títulos consignados"
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields.selection,name:liber_soc_settlement.selection__consignment_settlement_line__shelf_status__critical
+#: model:ir.model.fields.selection,name:liber_soc_settlement.selection__stock_quant__shelf_status__critical
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.view_consigned_stock_search_age
+msgid "Critical"
+msgstr "Crítico"
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_res_config_settings__shelf_critical_days
+msgid "Critical up to (days)"
+msgstr "Crítico até (dias)"
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_consignment_settlement_line__days_since_settlement
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_stock_quant__days_since_settlement
+msgid "Days"
+msgstr "Dias"
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_res_config_settings__shelf_ok_days
+msgid "Ok up to (days)"
+msgstr "Ok até (dias)"
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_consignment_settlement_line__last_settlement_date
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_stock_quant__last_settlement_date
+msgid "Last Settlement"
+msgstr "Último Acerto"
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields.selection,name:liber_soc_settlement.selection__consignment_settlement_line__shelf_status__no_return
+#: model:ir.model.fields.selection,name:liber_soc_settlement.selection__stock_quant__shelf_status__no_return
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.view_consigned_stock_search_age
+msgid "No Return"
+msgstr "Sem retorno"
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_consignment_settlement_line__shelf_status
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_stock_quant__shelf_status
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.view_consigned_stock_search_age
+msgid "Shelf Status"
+msgstr "Situação"
+
+#. module: liber_soc_settlement
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.res_config_settings_view_form_soc
+msgid "Ok up to"
+msgstr "Ok até"
+
+#. module: liber_soc_settlement
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.res_config_settings_view_form_soc
+msgid "days"
+msgstr "dias"
+
+#. module: liber_soc_settlement
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.res_config_settings_view_form_soc
+msgid ""
+"Days since a title's last settlement (acerto) that flip its map tag Ok -> "
+"Attention -> Critical -> No Return."
+msgstr ""
+"Dias desde o último acerto de um título que mudam sua etiqueta no mapa: Ok → "
+"Atenção → Crítico → Sem retorno."
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_consignment_coverage__campaign_id
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.view_consignment_coverage_list
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.view_consignment_coverage_search
+msgid "Campaign"
+msgstr "Campanha"
+
+#. module: liber_soc_settlement
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.res_config_settings_view_form_soc
+msgid "Attention up to"
+msgstr "Atenção até"
+
+#. module: liber_soc_settlement
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.res_config_settings_view_form_soc
+msgid "Critical up to"
+msgstr "Crítico até"
+
+#. module: liber_soc_settlement
+#: model:ir.model,name:liber_soc_settlement.model_consignment_ledger
+msgid "Consignment Shelf Ledger"
+msgstr "Razão da Prateleira"
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_consignment_ledger__date
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.view_consignment_ledger_search
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_consignment_settlement_line__date
+msgid "Date"
+msgstr "Data"
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_consignment_ledger__product_id
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.view_consignment_ledger_search
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_consignment_coverage__product_id
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.view_consignment_coverage_search
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.view_consignment_template_search_campaign
+msgid "Title"
+msgstr "Título"
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_consignment_ledger__source
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.view_consignment_ledger_search
+msgid "Source"
+msgstr "Fonte"
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_consignment_ledger__kind
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.view_consignment_ledger_search
+msgid "Movement"
+msgstr "Movimento"
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_consignment_ledger__quantity
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.view_consignment_ledger_list
+msgid "Balance"
+msgstr "Saldo"
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_consignment_ledger__qty_in
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.view_consignment_ledger_list
+msgid "In"
+msgstr "Entrada"
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_consignment_ledger__qty_out
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.view_consignment_ledger_list
+msgid "Out"
+msgstr "Saída"
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_consignment_ledger__document
+msgid "Document"
+msgstr "Documento"
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,help:liber_soc_settlement.field_consignment_ledger__quantity
+msgid "Signed: a shipment adds to the shelf, a sale or a return takes off it. Summing a period gives the shelf balance for that period."
+msgstr "Com sinal: a remessa soma na prateleira, a venda e a devolução subtraem. Somando um período, dá o saldo da prateleira naquele período."
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields.selection,name:liber_soc_settlement.selection__consignment_ledger__source__stock
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.view_consignment_ledger_search
+msgid "Odoo stock"
+msgstr "Estoque Odoo"
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields.selection,name:liber_soc_settlement.selection__consignment_ledger__source__fiscal
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.view_consignment_ledger_search
+msgid "Fiscal (NFe)"
+msgstr "Fiscal (NFe)"
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields.selection,name:liber_soc_settlement.selection__consignment_ledger__kind__ship
+msgid "Shipment"
+msgstr "Remessa"
+
+#. module: liber_soc_settlement
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.view_consignment_ledger_list
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.view_consignment_ledger_search
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.view_consignment_ledger_pivot
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.view_consignment_ledger_graph
+#: model:ir.actions.act_window,name:liber_soc_settlement.action_consignment_ledger
+#: model:ir.ui.menu,name:liber_soc_settlement.menu_consignment_ledger
+msgid "Shelf Ledger"
+msgstr "Razão da Prateleira"
+
+#. module: liber_soc_settlement
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.view_consignment_ledger_search
+msgid "Shipments"
+msgstr "Remessas"
+
+#. module: liber_soc_settlement
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.view_consignment_ledger_search
+msgid "Returns"
+msgstr "Devoluções"
+
+#. module: liber_soc_settlement
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.view_consignment_ledger_search
+msgid "Month"
+msgstr "Mês"
+
+#. module: liber_soc_settlement
+#: model:ir.actions.act_window,help:liber_soc_settlement.action_consignment_ledger
+msgid "<p class=\"o_view_nocontent_smiling_face\">No movement on any shelf yet.</p>\n            <p>Every unit in and out of a customer's shelf, from Odoo's stock and\n               from the imported NFe. Group by Source to see where the two\n               disagree.</p>\n        "
+msgstr "<p class=\"o_view_nocontent_smiling_face\">Nenhum movimento em prateleira ainda.</p>\n            <p>Cada unidade que entra e sai da prateleira de um cliente, vinda do\n               estoque do Odoo e da NFe importada. Agrupe por Fonte para ver onde\n               os dois discordam.</p>\n        "
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_consignment_settlement_line__qty_on_shelf_frozen
+msgid "Map (frozen)"
+msgstr "Mapa (congelado)"
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,help:liber_soc_settlement.field_consignment_settlement_line__qty_on_shelf_frozen
+msgid "The map as it stood when the operation was run."
+msgstr "O mapa como estava no momento em que a operação foi rodada."
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,help:liber_soc_settlement.field_consignment_settlement_line__qty_on_shelf
+msgid "Stock at the customer. Live while the operation is a draft; frozen once it is run (the map the customer was sent)."
+msgstr "Estoque no cliente. Vivo enquanto a operação é rascunho; congelado quando ela roda (o mapa que foi enviado ao cliente)."
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,help:liber_soc_settlement.field_consignment_settlement_line__qty_recent_sales
+msgid "Units THIS customer sold within the analysis window (see Settings): the settlements run in Odoo, or -- for a title never settled here yet -- what the imported NFe says. Click to see the composing sale orders."
+msgstr "Unidades que ESTE cliente vendeu dentro da janela de análise (ver Configurações): os acertos rodados no Odoo, ou -- para um título nunca acertado aqui -- o que diz a NFe importada. Clique para ver os pedidos de venda que a compõem."
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,help:liber_soc_settlement.field_consignment_settlement_line__days_since_settlement
+msgid "Days since this title's last settlement (acerto) for this customer. Never settled: counted from when it hit the shelf."
+msgstr "Dias desde o último acerto deste título para este cliente. Nunca acertado: contado desde quando chegou à prateleira."
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,help:liber_soc_settlement.field_consignment_settlement_line__shelf_status
+msgid "Ok / Attention / Critical / No Return by days since this title's last settlement (acerto). Thresholds in the Consignment settings."
+msgstr "Ok / Atenção / Crítico / Sem retorno conforme os dias desde o último acerto deste título. Limiares nas configurações de Consignação."
+
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,help:liber_soc_settlement.field_stock_quant__days_since_settlement
+msgid "Days this title has been sitting on the customer's shelf without an acerto. Refreshed every morning."
+msgstr "Dias que este título está parado na prateleira do cliente sem acerto. Atualizado toda manhã."
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,help:liber_soc_settlement.field_stock_quant__last_settlement_date
+msgid "Date of the most recent acerto of this title for this customer. Never settled: when it hit the shelf."
+msgstr "Data do acerto mais recente deste título para este cliente. Nunca acertado: quando chegou à prateleira."
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,help:liber_soc_settlement.field_stock_quant__shelf_status
+msgid "Ok / Attention / Critical / No Return by days without an acerto. Thresholds in the Consignment settings."
+msgstr "Ok / Atenção / Crítico / Sem retorno conforme os dias sem acerto. Limiares nas configurações de Consignação."
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields.selection,name:liber_soc_settlement.selection__stock_quant__shelf_status__ok
+msgid "Ok"
+msgstr "Ok"
+
+#. module: liber_soc_settlement
+#: model:ir.cron,cron_name:liber_soc_settlement.cron_refresh_shelf_age
+msgid "Consignment: refresh shelf age"
+msgstr "Consignação: atualizar idade da prateleira"
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_consignment_template__team_id
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.view_consignment_template_search_campaign
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_consignment_settlement_line__team_id
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_consignment_coverage__team_id
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.view_consignment_coverage_search
+msgid "Sales Channel"
+msgstr "Canal de Vendas"
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_consignment_template__date_start
+msgid "From"
+msgstr "De"
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_consignment_template__date_end
+msgid "To"
+msgstr "Até"
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_consignment_template__is_running
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.view_consignment_template_search_campaign
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.view_consignment_template_kanban_campaign
+msgid "Running"
+msgstr "Em curso"
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_consignment_template__partner_count
+msgid "# Customers"
+msgstr "Nº de Clientes"
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_consignment_template_line__publish_date
+msgid "Published"
+msgstr "Publicado em"
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_consignment_template_line__isbn
+msgid "ISBN"
+msgstr "ISBN"
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_consignment_template_line__availability_id
+msgid "Availability"
+msgstr "Disponibilidade"
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_product_template__soc_consignable
+msgid "Consignable"
+msgstr "Consignável"
+
+#. module: liber_soc_settlement
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.view_consignment_template_form_campaign
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_consignment_template__partner_count
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.view_consignment_template_kanban_campaign
+msgid "Customers"
+msgstr "Clientes"
+
+#. module: liber_soc_settlement
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.view_consignment_template_form_campaign
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.view_consignment_template_search_campaign
+msgid "Archived"
+msgstr "Arquivados"
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_consignment_template_line__categ_id
+msgid "Category"
+msgstr "Categoria"
+
+
+#. module: liber_soc_settlement
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.view_consignment_template_form_campaign
+msgid "Catalog"
+msgstr "Catálogo"
+
+
+#. module: liber_soc_settlement
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.view_consignment_template_list_campaign
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.view_consignment_template_kanban_campaign
+msgid "Titles"
+msgstr "Títulos"
+
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_consignment_settlement__campaign_ids
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_sale_order__campaign_ids
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_consignment_settlement_line__campaign_ids
+#: model:ir.actions.act_window,name:liber_soc_settlement.action_consignment_coverage
+#: model:ir.ui.menu,name:liber_soc_settlement.menu_consignment_coverage
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.view_consignment_coverage_list
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.view_consignment_coverage_pivot
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.view_consignment_coverage_graph
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.view_consignment_coverage_search
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.view_consignment_template_calendar_campaign
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.view_consignment_template_pivot_campaign
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.view_consignment_template_graph_campaign
+msgid "Campaigns"
+msgstr "Campanhas"
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_consignment_settlement_line__qty_target
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_stock_quant__qty_target
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_consignment_coverage__qty_target
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.view_consignment_coverage_list
+msgid "Target"
+msgstr "Alvo"
+
+#. module: liber_soc_settlement
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.view_consignment_settlement_form
+msgid "Apply Campaigns"
+msgstr "Aplicar Campanhas"
+
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_consignment_settlement_line__qty_short
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_consignment_template__qty_short_total
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_consignment_coverage__qty_short
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.view_consignment_template_form_campaign
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.view_consignment_coverage_list
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.view_consignment_template_kanban_campaign
+msgid "Short"
+msgstr "Faltou"
+
+#. module: liber_soc_settlement
+#: code:addons/liber_soc_settlement/models/consignment_settlement.py:0
+msgid "<b>%(n)s title(s) of the campaign were not placed: we have none in stock.</b><br/>%(names)s"
+msgstr "<b>%(n)s título(s) da campanha não foram colocados: não temos nenhum em estoque.</b><br/>%(names)s"
+
+
+#. module: liber_soc_settlement
+#: code:addons/liber_soc_settlement/models/consignment_template.py:0
+msgid "<b>Applied to %(co)s</b> (%(customer)s): %(placed)s title(s) placed."
+msgstr "<b>Aplicada na %(co)s</b> (%(customer)s): %(placed)s título(s) colocado(s)."
+
+#. module: liber_soc_settlement
+#: code:addons/liber_soc_settlement/models/consignment_template.py:0
+msgid "<b>%(units)s copy(ies) short across %(n)s title(s)</b> -- not enough stock:"
+msgstr "<b>Faltaram %(units)s exemplar(es) em %(n)s título(s)</b> — sem estoque suficiente:"
+
+#. module: liber_soc_settlement
+#: code:addons/liber_soc_settlement/models/consignment_template.py:0
+msgid "<li>%(title)s: wanted %(want)s, sent %(sent)s, short %(short)s (on hand %(oh)s)</li>"
+msgstr "<li>%(title)s: queria %(want)s, enviou %(sent)s, faltou %(short)s (em mãos %(oh)s)</li>"
+
+#. module: liber_soc_settlement
+#: code:addons/liber_soc_settlement/models/consignment_template.py:0
+msgid "<b>%(n)s title(s) not placed at all</b> -- none in stock: %(names)s"
+msgstr "<b>%(n)s título(s) nem foram colocados</b> — nenhum em estoque: %(names)s"
+
+#. module: liber_soc_settlement
+#: code:addons/liber_soc_settlement/models/consignment_template.py:0
+msgid "Fully supplied."
+msgstr "Atendida integralmente."
+
+#. module: liber_soc_settlement
+#: code:addons/liber_soc_settlement/models/consignment_template.py:0
+msgid "Short of stock: %s"
+msgstr "Sem estoque: %s"
+
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_consignment_template__code
+msgid "Code"
+msgstr "Código"
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_consignment_template__order_ids
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.view_consignment_template_form_campaign
+msgid "Orders"
+msgstr "Pedidos"
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_consignment_template__order_count
+msgid "# Orders"
+msgstr "Nº de Pedidos"
+
+#. module: liber_soc_settlement
+#: code:addons/liber_soc_settlement/models/consignment_template.py:0
+msgid "Orders of %s"
+msgstr "Pedidos de %s"
+
+
+#. module: liber_soc_settlement
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.view_shortfall_list
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.view_shortfall_search
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.view_shortfall_pivot
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.view_shortfall_graph
+#: model:ir.actions.act_window,name:liber_soc_settlement.action_shortfall
+#: model:ir.ui.menu,name:liber_soc_settlement.menu_shortfall
+msgid "Stock-out"
+msgstr "Ruptura"
+
+#. module: liber_soc_settlement
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.view_shortfall_list
+msgid "Sent"
+msgstr "Enviou"
+
+#. module: liber_soc_settlement
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.view_shortfall_search
+msgid "Nothing sent"
+msgstr "Nada enviado"
+
+#. module: liber_soc_settlement
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.view_shortfall_search
+msgid "Operation"
+msgstr "Operação"
+
+#. module: liber_soc_settlement
+#: code:addons/liber_soc_settlement/models/consignment_template.py:0
+msgid "Stock-out: %s"
+msgstr "Ruptura: %s"
+
+
+#. module: liber_soc_settlement
+#: model:ir.actions.report,name:liber_soc_settlement.action_report_consignment_return
+msgid "Solicitação de Devolução"
+msgstr "Solicitação de Devolução"
+
+#. module: liber_soc_settlement
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.view_consignment_move_form_dunning
+msgid "Print Return"
+msgstr "Imprimir Devolução"
+
+
+#. module: liber_soc_settlement
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.view_generate_wizard_form
+msgid "Nothing to create."
+msgstr "Nada a criar."
+
+#. module: liber_soc_settlement
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.view_generate_wizard_form
+msgid "Every open consignment already has a draft operation waiting to\n                    be run. Open them and settle, or run them and generate again\n                    next month."
+msgstr "Toda consignação aberta já tem uma operação em rascunho esperando para ser executada. Abra-as e faça o acerto, ou execute-as e gere de novo no mês que vem."
+
+#. module: liber_soc_settlement
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.view_generate_wizard_form
+msgid "No open consignment."
+msgstr "Nenhuma consignação aberta."
+
+#. module: liber_soc_settlement
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.view_generate_wizard_form
+msgid "No active agreement has stock on the shelf, so there is nothing\n                    to settle. Ship first, then come back."
+msgstr "Nenhum contrato ativo tem saldo em prateleira, então não há o que acertar. Faça uma remessa primeiro e volte aqui."
+
+#. module: liber_soc_settlement
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.view_generate_wizard_form
+msgid "Open the drafts"
+msgstr "Abrir os rascunhos"
+
+#. module: liber_soc_settlement
+#: code:addons/liber_soc_settlement/wizards/generate_wizard.py:0
+msgid "Operations to run"
+msgstr "Operações a executar"
+
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_consignment_settlement__has_documents
+msgid "Has Documents"
+msgstr "Tem Documentos"
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_consignment_settlement__document_ids_summary
+msgid "Documents"
+msgstr "Documentos"
+
+#. module: liber_soc_settlement
+#: code:addons/liber_soc_settlement/models/consignment_settlement.py:0
+msgid "%(co)s already generated documents (%(docs)s) and cannot go back to draft. They were cancelled, but this operation still points at them, so running it again would create nothing. Open a new operation."
+msgstr "%(co)s já gerou documentos (%(docs)s) e não pode voltar a rascunho. Eles foram cancelados, mas esta operação continua apontando para eles — executá-la de novo não criaria nada. Abra uma operação nova."
+
+#. module: liber_soc_settlement
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.view_consignment_settlement_form
+msgid "This operation generated"
+msgstr "Esta operação gerou"
+
+#. module: liber_soc_settlement
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.view_consignment_settlement_form
+msgid "and cannot go back to\n                        draft: it still points at those documents, so running it\n                        again would create nothing. Open a new operation."
+msgstr "e não pode voltar a rascunho: ela continua apontando para esses documentos, então executá-la de novo não criaria nada. Abra uma operação nova."
+
+
+#. module: liber_soc_settlement
+#: code:addons/liber_soc_settlement/models/consignment_move_dunning.py:0
+msgid "replied"
+msgstr "respondeu"
+
+#. module: liber_soc_settlement
+#: code:addons/liber_soc_settlement/models/consignment_move_dunning.py:0
+msgid "noted"
+msgstr "anotou"
+
+#. module: liber_soc_settlement
+#: code:addons/liber_soc_settlement/models/consignment_move_dunning.py:0
+msgid "Someone"
+msgstr "Alguém"
+
+#. module: liber_soc_settlement
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.view_shelf_inventory_search
+msgid "With campaign"
+msgstr "Com campanha"
+
+#. module: liber_soc_settlement
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.view_shelf_inventory_search
+msgid "On shelf now"
+msgstr "Na prateleira agora"
+
+#. module: liber_soc_settlement
+#: model:ir.actions.act_window,name:liber_soc_settlement.action_consignment_coverage
+msgid "Campaign Coverage"
+msgstr "Campanhas"
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_consignment_coverage__qty_on_shelf
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.view_consignment_coverage_list
+msgid "On Shelf"
+msgstr "Na prateleira"
+
+#. module: liber_soc_settlement
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.view_consignment_coverage_search
+msgid "On shelf"
+msgstr "Na prateleira"
+
+#. module: liber_soc_settlement
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.view_consignment_coverage_search
+msgid "Never received"
+msgstr "Nunca recebeu"
+
+#. module: liber_soc_settlement
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.view_consignment_coverage_search
+msgid "Below target"
+msgstr "Abaixo do alvo"
+

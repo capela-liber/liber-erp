@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_consignment_template_form_campaign" model="ir.ui.view">
+        <field name="name">consignment.template.form.campaign</field>
+        <field name="model">consignment.template</field>
+        <field name="inherit_id" ref="liber_soc_moves.view_consignment_template_form"/>
+        <field name="arch" type="xml">
+
+            <!-- Archiving a finished campaign: `active` existed on the model and
+                 was never exposed, so nobody could retire one. The base form has
+                 no button box at all, so it is created here. -->
+            <xpath expr="//sheet/div[hasclass('oe_title')]" position="before">
+                <div name="button_box" class="oe_button_box">
+                    <button name="action_view_partners" type="object"
+                            class="oe_stat_button" icon="fa-users"
+                            invisible="not team_id">
+                        <field name="partner_count" widget="statinfo" string="Customers"/>
+                    </button>
+                    <!-- What the warehouse could not feed. The manager reads the
+                         campaign, not the acerto: from the CO a campaign that
+                         shipped 60 of 400 copies still looks "applied". -->
+                    <button name="action_view_shortfall" type="object"
+                            class="oe_stat_button" icon="fa-exclamation-triangle"
+                            invisible="qty_short_total == 0">
+                        <field name="qty_short_total" widget="statinfo" string="Short"/>
+                    </button>
+                    <!-- The crossing: every order this campaign put out carries its
+                         code. This is what makes it measurable at all. -->
+                    <button name="action_view_orders" type="object"
+                            class="oe_stat_button" icon="fa-shopping-cart"
+                            invisible="order_count == 0">
+                        <field name="order_count" widget="statinfo" string="Orders"/>
+                    </button>
+                </div>
+                <widget name="web_ribbon" title="Archived" bg_color="text-bg-danger"
+                        invisible="active"/>
+            </xpath>
+
+            <xpath expr="//sheet/div[hasclass('oe_title')]" position="inside">
+                <h2 class="text-muted"><field name="code" readonly="1"/></h2>
+            </xpath>
+
+            <field name="company_id" position="before">
+                <field name="team_id" options="{'no_create': True}"/>
+                <field name="date_start"/>
+                <field name="date_end"/>
+                <field name="active" invisible="1"/>
+                <field name="is_running" invisible="1"/>
+            </field>
+
+            <!-- Curation inside the universe: only a physical book that Metabooks
+                 lists as available can be picked. And the publication date is on
+                 the line because you cannot tell a launch from backlist without
+                 it, which is the decision the list exists to make. -->
+            <xpath expr="//field[@name='line_ids']/list/field[@name='product_id']" position="attributes">
+                <attribute name="widget">many2one_multi</attribute>
+                <attribute name="domain">[('soc_consignable', '=', True)]</attribute>
+                <attribute name="options">{'no_create': True}</attribute>
+                <attribute name="width">340px</attribute>
+            </xpath>
+
+            <xpath expr="//sheet" position="after">
+                <chatter/>
+            </xpath>
+
+            <xpath expr="//field[@name='line_ids']/list/field[@name='product_id']" position="after">
+                <field name="isbn" optional="show"/>
+                <field name="publish_date" optional="show"/>
+                <field name="categ_id" optional="hide"/>
+                <field name="availability_id" optional="hide"/>
+                <field name="soc_consignable" column_invisible="1"/>
+            </xpath>
+
+        </field>
+    </record>
+
+    <record id="view_consignment_template_list_campaign" model="ir.ui.view">
+        <field name="name">consignment.template.list.campaign</field>
+        <field name="model">consignment.template</field>
+        <field name="inherit_id" ref="liber_soc_moves.view_consignment_template_list"/>
+        <field name="arch" type="xml">
+            <!-- The name column is the only one that should stretch; everything
+                 else gets a width that actually fits its label, otherwise Odoo
+                 squeezes the numeric columns and truncates the headers. -->
+            <field name="name" position="attributes">
+                <attribute name="width">240px</attribute>
+            </field>
+            <field name="name" position="before">
+                <field name="code" width="130px"/>
+            </field>
+            <field name="product_count" position="attributes">
+                <attribute name="string">Titles</attribute>
+                <attribute name="width">90px</attribute>
+            </field>
+            <field name="name" position="after">
+                <field name="team_id" optional="show" width="200px"/>
+                <field name="date_start" optional="hide" width="110px"/>
+                <field name="date_end" optional="show" width="110px"/>
+                <field name="partner_count" optional="show" width="100px"/>
+                <field name="qty_short_total" optional="show" width="90px"
+                       decoration-warning="qty_short_total &gt; 0"/>
+                <field name="is_running" widget="boolean_toggle" readonly="1"
+                       width="100px"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="view_consignment_template_kanban_campaign" model="ir.ui.view">
+        <field name="name">consignment.template.kanban.campaign</field>
+        <field name="model">consignment.template</field>
+        <field name="arch" type="xml">
+            <kanban sample="1">
+                <field name="is_running"/>
+                <field name="qty_short_total"/>
+                <field name="partner_count"/>
+                <field name="product_count"/>
+                <field name="date_end"/>
+                <templates>
+                    <t t-name="card">
+                        <div class="o_kanban_record_top mb8">
+                            <div class="o_kanban_record_headings">
+                                <strong class="o_kanban_record_title">
+                                    <field name="name"/>
+                                </strong>
+                                <div class="text-muted o_kanban_record_subtitle">
+                                    <field name="code"/>
+                                </div>
+                            </div>
+                            <span t-if="record.is_running.raw_value"
+                                  class="badge rounded-pill text-bg-success">Running</span>
+                        </div>
+                        <div class="o_kanban_record_body">
+                            <!-- The icons are decorative and carry no tooltip on
+                                 purpose: a translatable attribute on a lone <i>
+                                 makes the WHOLE tag the msgid ("<i class=... /"),
+                                 which no .po entry will ever match. The value
+                                 sits right beside each icon anyway. -->
+                            <div t-if="record.team_id.value">
+                                <i class="fa fa-sitemap" aria-hidden="true"/>
+                                <span> <field name="team_id"/></span>
+                            </div>
+                            <div t-if="record.date_end.raw_value">
+                                <i class="fa fa-calendar" aria-hidden="true"/>
+                                <span> <field name="date_end"/></span>
+                            </div>
+                        </div>
+                        <div class="o_kanban_record_bottom">
+                            <div class="oe_kanban_bottom_left">
+                                <span class="badge rounded-pill text-bg-light me-1">
+                                    <field name="product_count"/> Titles
+                                </span>
+                                <span class="badge rounded-pill text-bg-light">
+                                    <field name="partner_count"/> Customers
+                                </span>
+                            </div>
+                            <div class="oe_kanban_bottom_right">
+                                <!-- The one number that should catch the eye from
+                                     across the room: what the campaign asked for and
+                                     the warehouse never delivered. -->
+                                <span t-if="record.qty_short_total.raw_value"
+                                      class="badge rounded-pill text-bg-warning">
+                                    <field name="qty_short_total"/> Short
+                                </span>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <!-- A campaign IS a window in time, and until now nothing showed it as one:
+         you read "30 de set." on a row and had to hold the calendar in your head.
+         Campaigns with no start date simply have no place on a calendar: they
+         are open-ended by construction, and the list is where they live. -->
+    <record id="view_consignment_template_calendar_campaign" model="ir.ui.view">
+        <field name="name">consignment.template.calendar.campaign</field>
+        <field name="model">consignment.template</field>
+        <field name="arch" type="xml">
+            <calendar string="Campaigns" date_start="date_start" date_stop="date_end"
+                      color="team_id" mode="month" event_open_popup="true"
+                      quick_create="0">
+                <field name="team_id" filters="1"/>
+                <field name="partner_count"/>
+            </calendar>
+        </field>
+    </record>
+
+    <!-- Count only: the numbers on the list (Titles, Customers, Short) are
+         computed on read and not stored, and pivot/graph can only aggregate a
+         stored column. So this answers "how many campaigns, by channel and
+         window", not "how many copies". The copies are measured, with axes, in
+         the Coverage and Ruptura reports, which read the rows themselves. -->
+    <record id="view_consignment_template_pivot_campaign" model="ir.ui.view">
+        <field name="name">consignment.template.pivot.campaign</field>
+        <field name="model">consignment.template</field>
+        <field name="arch" type="xml">
+            <pivot string="Campaigns" sample="1">
+                <field name="team_id" type="row"/>
+                <field name="is_running" type="col"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="view_consignment_template_graph_campaign" model="ir.ui.view">
+        <field name="name">consignment.template.graph.campaign</field>
+        <field name="model">consignment.template</field>
+        <field name="arch" type="xml">
+            <graph string="Campaigns" type="bar" sample="1">
+                <field name="team_id"/>
+                <field name="is_running"/>
+            </graph>
+        </field>
+    </record>
+
+    <!-- The action lives in soc_moves, where the template is still a plain bag of
+         products with no channel and no window. Every view added here depends on
+         fields this module puts on it, so the switcher is opened here too. List
+         stays first: it is the working screen. -->
+    <record id="liber_soc_moves.action_consignment_template" model="ir.actions.act_window">
+        <field name="view_mode">list,kanban,calendar,pivot,graph,form</field>
+    </record>
+
+    <record id="view_consignment_template_search_campaign" model="ir.ui.view">
+        <field name="name">consignment.template.search.campaign</field>
+        <field name="model">consignment.template</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="code"/>
+                <!-- "Which campaign has this title in it?" was unanswerable from
+                     here: you had to open campaigns one by one. The ISBN is the
+                     handle a bookseller actually has, so it searches too. -->
+                <field name="line_ids" string="Title"
+                       filter_domain="['|', ('line_ids.product_id', 'ilike', self),
+                                            ('line_ids.product_id.default_code', 'ilike', self)]"/>
+                <field name="team_id"/>
+                <filter name="f_running" string="Running"
+                        domain="[('is_running', '=', True)]"/>
+                <separator/>
+                <filter name="f_archived" string="Archived"
+                        domain="[('active', '=', False)]"/>
+                <group>
+                    <filter name="g_team" string="Sales Channel" domain="[]"
+                            context="{'group_by': 'team_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+</odoo>

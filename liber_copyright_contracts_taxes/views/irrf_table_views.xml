@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_edlab_irrf_table_tree" model="ir.ui.view">
+        <field name="name">edlab.irrf.table.tree</field>
+        <field name="model">edlab.irrf.table</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="date_from"/>
+                <field name="no_withholding_limit"/>
+                <field name="simplified_discount"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_edlab_irrf_table_form" model="ir.ui.view">
+        <field name="name">edlab.irrf.table.form</field>
+        <field name="model">edlab.irrf.table</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="name" placeholder="e.g. IRRF 2026"/></h1>
+                    </div>
+                    <group>
+                        <group string="Validity and Base">
+                            <field name="date_from"/>
+                            <field name="no_withholding_limit"/>
+                            <field name="simplified_discount"/>
+                        </group>
+                        <group string="Reducer (Lei 15.270/2025)">
+                            <field name="reducer_a"/>
+                            <field name="reducer_b"/>
+                            <field name="reducer_cap_limit"/>
+                        </group>
+                    </group>
+                    <separator string="Progressive Brackets"/>
+                    <field name="bracket_ids">
+                        <list editable="bottom">
+                            <field name="amount_to"/>
+                            <field name="rate"/>
+                            <field name="deductible"/>
+                        </list>
+                    </field>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_edlab_irrf_tables" model="ir.actions.act_window">
+        <field name="name">IRRF Tables</field>
+        <field name="res_model">edlab.irrf.table</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">No IRRF table yet</p>
+            <p>Create the progressive table in force; the newest table whose
+               start date has passed is applied to each bill.</p>
+        </field>
+    </record>
+
+    <menuitem id="menu_edlab_irrf_tables"
+              name="IRRF Tables"
+              parent="liber_copyright_contracts.menu_copyright_contracts_settings"
+              action="action_edlab_irrf_tables"
+              groups="liber_copyright_contracts.group_contract_manager"
+              sequence="20"/>
+
+</odoo>

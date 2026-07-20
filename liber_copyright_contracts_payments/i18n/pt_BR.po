@@ -1,0 +1,424 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* liber_copyright_contracts_payments
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0-20260630\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-07-08 12:18+0000\n"
+"PO-Revision-Date: 2026-07-08 12:18+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: liber_copyright_contracts_payments
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_payments.view_edlab_contract_form_payments
+msgid "<span class=\"o_stat_text\">Open</span>"
+msgstr "<span class=\"o_stat_text\">Em Aberto</span>"
+
+#. module: liber_copyright_contracts_payments
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_payments.view_edlab_contract_form_payments
+msgid "<span class=\"o_stat_text\">Paid</span>"
+msgstr "<span class=\"o_stat_text\">Pago</span>"
+
+#. module: liber_copyright_contracts_payments
+#: model:ir.model.fields,field_description:liber_copyright_contracts_payments.field_edlab_contract__edlab_analytic_count
+msgid "Analytic Accounts"
+msgstr "Contas Analíticas"
+
+#. module: liber_copyright_contracts_payments
+#: model:ir.model,name:liber_copyright_contracts_payments.model_account_analytic_line
+msgid "Analytic Line"
+msgstr "Linha analítica"
+
+#. module: liber_copyright_contracts_payments
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_payments.res_config_settings_view_form_payments
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_payments.view_company_form_copyright_payments
+msgid "Beneficiary Payments"
+msgstr "Pagamentos aos Beneficiários"
+
+#. module: liber_copyright_contracts_payments
+#: model:ir.ui.menu,name:liber_copyright_contracts_payments.menu_edlab_bills
+msgid "Bills"
+msgstr "Faturas"
+
+#. module: liber_copyright_contracts_payments
+#. odoo-python
+#: code:addons/liber_copyright_contracts_payments/models/contract.py:0
+#: model:ir.actions.act_window,name:liber_copyright_contracts_payments.action_edlab_bills_to_pay
+#: model:ir.model.fields,field_description:liber_copyright_contracts_payments.field_edlab_contract__edlab_bill_to_pay_count
+msgid "Bills to Pay"
+msgstr "Faturas a Pagar"
+
+#. module: liber_copyright_contracts_payments
+#: model:ir.model,name:liber_copyright_contracts_payments.model_res_company
+msgid "Companies"
+msgstr "Empresas"
+
+#. module: liber_copyright_contracts_payments
+#. odoo-python
+#: code:addons/liber_copyright_contracts_payments/models/contract.py:0
+msgid "Contract Analytics"
+msgstr "Analítico de contratos"
+
+#. module: liber_copyright_contracts_payments
+#: model:ir.model,name:liber_copyright_contracts_payments.model_edlab_contract
+#: model:ir.model.fields,field_description:liber_copyright_contracts_payments.field_account_bank_statement_line__edlab_contract_id
+#: model:ir.model.fields,field_description:liber_copyright_contracts_payments.field_account_move__edlab_contract_id
+msgid "Copyright Contract"
+msgstr "Contrato de Direitos Autorais"
+
+#. module: liber_copyright_contracts_payments
+#: model:ir.model.fields,help:liber_copyright_contracts_payments.field_account_bank_statement_line__edlab_contract_id
+#: model:ir.model.fields,help:liber_copyright_contracts_payments.field_account_move__edlab_contract_id
+msgid "Copyright contract this royalty payment bill was generated from."
+msgstr ""
+"Contrato de direitos autorais a partir do qual esta fatura de pagamento de "
+"royalties foi gerada."
+
+#. module: liber_copyright_contracts_payments
+#: model:ir.model.fields,field_description:liber_copyright_contracts_payments.field_account_analytic_line__display_name
+#: model:ir.model.fields,field_description:liber_copyright_contracts_payments.field_account_move__display_name
+#: model:ir.model.fields,field_description:liber_copyright_contracts_payments.field_account_move_line__display_name
+#: model:ir.model.fields,field_description:liber_copyright_contracts_payments.field_edlab_contract__display_name
+#: model:ir.model.fields,field_description:liber_copyright_contracts_payments.field_edlab_contract_royalty_line__display_name
+#: model:ir.model.fields,field_description:liber_copyright_contracts_payments.field_res_company__display_name
+msgid "Display Name"
+msgstr "Nome exibido"
+
+#. module: liber_copyright_contracts_payments
+#: model:ir.model.fields,field_description:liber_copyright_contracts_payments.field_res_company__contract_payment_days
+msgid "Due in (days)"
+msgstr "Vencimento (dias)"
+
+#. module: liber_copyright_contracts_payments
+#: model:ir.model.fields,help:liber_copyright_contracts_payments.field_res_company__contract_payment_account_id
+msgid ""
+"Expense account used on the vendor bill lines that pay royalties. Leave "
+"empty to use the product's default expense account."
+msgstr ""
+"Conta de despesa usada nas linhas da fatura de fornecedor que pagam "
+"royalties. Deixe vazio para usar a conta de despesa padrão do produto."
+
+#. module: liber_copyright_contracts_payments
+#: model:ir.actions.server,name:liber_copyright_contracts_payments.action_server_generate_royalty_bills
+msgid "Generate Royalty Bills"
+msgstr "Gerar Faturas de Royalties"
+
+#. module: liber_copyright_contracts_payments
+#: model_terms:ir.actions.act_window,help:liber_copyright_contracts_payments.action_edlab_bills_to_pay
+msgid "Generate them from Contracts › Action › Generate Royalty Bills."
+msgstr "Gere-as em Contratos › Ação › Gerar Faturas de Royalties."
+
+#. module: liber_copyright_contracts_payments
+#: model:ir.model.fields,field_description:liber_copyright_contracts_payments.field_account_analytic_line__id
+#: model:ir.model.fields,field_description:liber_copyright_contracts_payments.field_account_move__id
+#: model:ir.model.fields,field_description:liber_copyright_contracts_payments.field_account_move_line__id
+#: model:ir.model.fields,field_description:liber_copyright_contracts_payments.field_edlab_contract__id
+#: model:ir.model.fields,field_description:liber_copyright_contracts_payments.field_edlab_contract_royalty_line__id
+#: model:ir.model.fields,field_description:liber_copyright_contracts_payments.field_res_company__id
+msgid "ID"
+msgstr "ID"
+
+#. module: liber_copyright_contracts_payments
+#: model:ir.model,name:liber_copyright_contracts_payments.model_account_move
+msgid "Journal Entry"
+msgstr "Lançamento de diário"
+
+#. module: liber_copyright_contracts_payments
+#: model:ir.model,name:liber_copyright_contracts_payments.model_account_move_line
+msgid "Journal Item"
+msgstr "Item de diário"
+
+#. module: liber_copyright_contracts_payments
+#. odoo-python
+#: code:addons/liber_copyright_contracts_payments/models/royalty_line.py:0
+msgid "New"
+msgstr "Novo"
+
+#. module: liber_copyright_contracts_payments
+#. odoo-python
+#: code:addons/liber_copyright_contracts_payments/models/contract.py:0
+msgid ""
+"No bills to create - the beneficiaries have no open royalties, or their "
+"bills already exist."
+msgstr "Nenhuma fatura a criar - os favorecidos não têm direitos autorais em aberto, ou suas faturas já existem."
+
+#. module: liber_copyright_contracts_payments
+#: model_terms:ir.actions.act_window,help:liber_copyright_contracts_payments.action_edlab_bills_paid
+msgid "No paid royalty bills yet"
+msgstr "Ainda não há faturas de royalties pagas"
+
+#. module: liber_copyright_contracts_payments
+#: model_terms:ir.actions.act_window,help:liber_copyright_contracts_payments.action_edlab_bills_to_pay
+msgid "No royalty bills to pay"
+msgstr "Nenhuma fatura de royalties a pagar"
+
+#. module: liber_copyright_contracts_payments
+#: model:ir.model.fields,help:liber_copyright_contracts_payments.field_res_company__contract_payment_days
+msgid ""
+"Number of days added to today to set the due date of the royalty payment "
+"vendor bills."
+msgstr ""
+"Número de dias somados a hoje para definir a data de vencimento das faturas "
+"de pagamento de royalties."
+
+#. module: liber_copyright_contracts_payments
+#: model:ir.ui.menu,name:liber_copyright_contracts_payments.menu_edlab_bills_paid
+msgid "Paid"
+msgstr "Pago"
+
+#. module: liber_copyright_contracts_payments
+#. odoo-python
+#: code:addons/liber_copyright_contracts_payments/models/contract.py:0
+#: model:ir.actions.act_window,name:liber_copyright_contracts_payments.action_edlab_bills_paid
+#: model:ir.model.fields,field_description:liber_copyright_contracts_payments.field_edlab_contract__edlab_bill_paid_count
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_payments.view_edlab_contract_form_payments
+msgid "Paid Bills"
+msgstr "Faturas Pagas"
+
+#. module: liber_copyright_contracts_payments
+#: model:ir.model.fields,field_description:liber_copyright_contracts_payments.field_edlab_contract__edlab_royalty_paid
+msgid "Paid Royalties"
+msgstr "Royalties Pagos"
+
+#. module: liber_copyright_contracts_payments
+#: model:ir.model.fields,field_description:liber_copyright_contracts_payments.field_res_company__contract_payment_account_id
+msgid "Payment Account"
+msgstr "Conta de Pagamento"
+
+#. module: liber_copyright_contracts_payments
+#: model:ir.model.fields,field_description:liber_copyright_contracts_payments.field_res_company__contract_payment_journal_id
+msgid "Payment Journal"
+msgstr "Diário de Pagamento"
+
+#. module: liber_copyright_contracts_payments
+#: model:ir.model.fields,field_description:liber_copyright_contracts_payments.field_res_company__contract_payment_product_id
+msgid "Payment Product"
+msgstr "Produto de Pagamento"
+
+#. module: liber_copyright_contracts_payments
+#: model:ir.model.fields,help:liber_copyright_contracts_payments.field_res_company__contract_payment_product_id
+msgid "Product placed on the vendor bill lines generated to pay authors."
+msgstr ""
+"Produto colocado nas linhas da fatura de fornecedor geradas para pagar os "
+"autores."
+
+#. module: liber_copyright_contracts_payments
+#: model:ir.model.fields,help:liber_copyright_contracts_payments.field_res_company__contract_payment_journal_id
+msgid ""
+"Purchase journal used for the royalty payment vendor bills. Leave empty to "
+"use the company default purchase journal."
+msgstr ""
+"Diário de compras usado nas faturas de pagamento de royalties. Deixe vazio "
+"para usar o diário de compras padrão da empresa."
+
+#. module: liber_copyright_contracts_payments
+#. odoo-python
+#: code:addons/liber_copyright_contracts_payments/models/royalty_line.py:0
+msgid "Royalties %s - %s"
+msgstr "Direitos autorais %s - %s"
+
+#. module: liber_copyright_contracts_payments
+#: model:ir.model.fields,help:liber_copyright_contracts_payments.field_edlab_contract__edlab_royalty_paid
+msgid ""
+"Royalties already settled on this contract's beneficiaries' analytic "
+"accounts (the positive settlement entries booked when their payment bills "
+"were paid)."
+msgstr ""
+"Royalties já liquidados nas contas analíticas dos beneficiários deste "
+"contrato (os lançamentos positivos de liquidação feitos quando suas faturas "
+"de pagamento foram pagas)."
+
+#. module: liber_copyright_contracts_payments
+#. odoo-python
+#: code:addons/liber_copyright_contracts_payments/models/contract.py:0
+#: model:ir.model.fields,field_description:liber_copyright_contracts_payments.field_edlab_contract__edlab_bill_count
+#: model:ir.model.fields,field_description:liber_copyright_contracts_payments.field_edlab_contract__edlab_bill_ids
+msgid "Royalty Bills"
+msgstr "Faturas de Royalties"
+
+#. module: liber_copyright_contracts_payments
+#: model:ir.model.fields,field_description:liber_copyright_contracts_payments.field_account_move_line__edlab_royalty_line_id
+msgid "Royalty Line"
+msgstr "Linha de Royalty"
+
+#. module: liber_copyright_contracts_payments
+#: model:ir.model,name:liber_copyright_contracts_payments.model_edlab_contract_royalty_line
+msgid "Royalty Line (beneficiary x work)"
+msgstr "Linha de Royalty (beneficiário x obra)"
+
+#. module: liber_copyright_contracts_payments
+#: model:ir.model.fields,field_description:liber_copyright_contracts_payments.field_account_analytic_line__edlab_is_royalty_payment
+msgid "Royalty Payment Line"
+msgstr "Linha de Pagamento de Royalty"
+
+#. module: liber_copyright_contracts_payments
+#. odoo-python
+#: code:addons/liber_copyright_contracts_payments/models/contract.py:0
+msgid "Royalty bills"
+msgstr "Faturas de royalty"
+
+#. module: liber_copyright_contracts_payments
+#: model:ir.model.fields,help:liber_copyright_contracts_payments.field_account_move_line__edlab_royalty_line_id
+msgid ""
+"Royalty line (work x beneficiary) this vendor bill line pays. When the bill "
+"is paid, this royalty line's last payment date is updated."
+msgstr ""
+"Linha de royalty (obra x beneficiário) que esta linha da fatura de "
+"fornecedor paga. Quando a fatura é paga, a data do último pagamento desta "
+"linha de royalty é atualizada."
+
+#. module: liber_copyright_contracts_payments
+#: model:ir.model.fields,help:liber_copyright_contracts_payments.field_account_analytic_line__edlab_is_royalty_payment
+msgid ""
+"Set on the analytic line generated by a royalty payment vendor bill. Such "
+"lines record the actual cash cost on the analytic account but are excluded "
+"from the 'Open Royalties' owed balance, which is settled through the "
+"beneficiary's last payment date instead."
+msgstr ""
+"Definido na linha analítica gerada por uma fatura de pagamento de royalties."
+" Essas linhas registram o custo de caixa real na conta analítica, mas são "
+"excluídas do saldo devido de 'Royalties em Aberto', que é liquidado pela "
+"data do último pagamento do beneficiário."
+
+#. module: liber_copyright_contracts_payments
+#: model:ir.ui.menu,name:liber_copyright_contracts_payments.menu_edlab_bills_to_pay
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_payments.view_edlab_contract_form_payments
+msgid "To Pay"
+msgstr "A Pagar"
+
+#. module: liber_copyright_contracts_payments
+#. odoo-python
+#: code:addons/liber_copyright_contracts_payments/models/contract.py:0
+msgid "id"
+msgstr "id"
+
+#. module: liber_copyright_contracts_payments
+#. odoo-python
+#: code:addons/liber_copyright_contracts_payments/models/contract.py:0
+msgid "not_paid"
+msgstr "not_paid"
+
+#. module: liber_copyright_contracts_payments
+#. odoo-python
+#: code:addons/liber_copyright_contracts_payments/models/contract.py:0
+msgid "paid"
+msgstr "paid"
+
+#. module: liber_copyright_contracts_payments
+#. odoo-python
+#: code:addons/liber_copyright_contracts_payments/models/contract.py:0
+msgid "payment_state"
+msgstr "payment_state"
+
+#. module: liber_copyright_contracts_payments
+#. odoo-python
+#: code:addons/liber_copyright_contracts_payments/models/contract.py:0
+msgid "state"
+msgstr "state"
+
+#. module: liber_copyright_contracts_payments
+#. odoo-python
+#: code:addons/liber_copyright_contracts_payments/models/contract.py:0
+msgid ""
+"The bill lines that pay authors need a product, and neither %s nor this "
+"module has one: the default \"Royalties\" product is gone. Set one under "
+"Settings > Users & Companies > Companies > %s > Copyrights > Beneficiary "
+"Payments > Payment Product."
+msgstr ""
+"As linhas da fatura que pagam os autores precisam de um produto, e nem %s nem "
+"este módulo têm um: o produto padrão \"Royalties\" sumiu. Defina um em "
+"Configurações > Usuários e Empresas > Empresas > %s > Direitos Autorais > "
+"Pagamentos a Beneficiários > Produto de Pagamento."
+
+#. module: liber_copyright_contracts_payments
+#: model:product.template,name:liber_copyright_contracts_payments.product_royalty_payment
+msgid "Royalties"
+msgstr "Royalties"
+
+#. module: liber_copyright_contracts_payments
+#: model:product.template,description_purchase:liber_copyright_contracts_payments.product_royalty_payment
+msgid "Royalties owed to the beneficiary under a copyright contract."
+msgstr "Royalties devidos ao beneficiário por contrato de direitos autorais."
+
+#. module: liber_copyright_contracts_payments
+#: model:ir.model.fields,field_description:liber_copyright_contracts_payments.field_res_company__contract_payment_product_id
+msgid ""
+"Product placed on the vendor bill lines generated to pay authors. Leave empty "
+"to use the \"Royalties\" service product shipped with this module."
+msgstr ""
+"Produto usado nas linhas da fatura de fornecedor geradas para pagar os "
+"autores. Deixe vazio para usar o produto de serviço \"Royalties\" que vem "
+"com este módulo."
+
+#. module: liber_copyright_contracts_payments
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_payments.res_config_settings_view_form_payments
+msgid "Payment product"
+msgstr "Produto de pagamento"
+
+#. module: liber_copyright_contracts_payments
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_payments.res_config_settings_view_form_payments
+msgid ""
+"Product placed on the vendor bill lines that pay authors. Leave empty to use "
+"the \"Royalties\" service product shipped with the module."
+msgstr ""
+"Produto usado nas linhas da fatura de fornecedor que pagam os autores. Deixe "
+"vazio para usar o produto de serviço \"Royalties\" que vem com o módulo."
+
+#. module: liber_copyright_contracts_payments
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_payments.res_config_settings_view_form_payments
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_payments.view_company_form_copyright_payments
+msgid "Royalties (module default)"
+msgstr "Royalties (padrão do módulo)"
+
+#. module: liber_copyright_contracts_payments
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_payments.res_config_settings_view_form_payments
+msgid "Expense account"
+msgstr "Conta de despesa"
+
+#. module: liber_copyright_contracts_payments
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_payments.res_config_settings_view_form_payments
+msgid ""
+"Expense account used on those bill lines. Leave empty to use the product's "
+"own expense account."
+msgstr ""
+"Conta de despesa usada nessas linhas da fatura. Deixe vazio para usar a conta "
+"de despesa do próprio produto."
+
+#. module: liber_copyright_contracts_payments
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_payments.res_config_settings_view_form_payments
+msgid "Purchase journal"
+msgstr "Diário de compras"
+
+#. module: liber_copyright_contracts_payments
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_payments.res_config_settings_view_form_payments
+msgid ""
+"Journal for the royalty payment bills. Leave empty to use the company's "
+"default purchase journal."
+msgstr ""
+"Diário das faturas de pagamento de royalty. Deixe vazio para usar o diário de "
+"compras padrão da empresa."
+
+#. module: liber_copyright_contracts_payments
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_payments.res_config_settings_view_form_payments
+msgid "Payment term"
+msgstr "Prazo de pagamento"
+
+#. module: liber_copyright_contracts_payments
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_payments.res_config_settings_view_form_payments
+msgid ""
+"Days added to today to set the due date of a royalty payment bill."
+msgstr ""
+"Dias somados a hoje para definir o vencimento da fatura de pagamento de "
+"royalty."
+
+#. module: liber_copyright_contracts_payments
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_payments.res_config_settings_view_form_payments
+msgid "days to pay"
+msgstr "dias para pagar"
+

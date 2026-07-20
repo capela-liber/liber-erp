@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="action_create_metadata" model="ir.actions.server">
+            <field name="name">Export Metadata </field>
+            <field name="model_id" ref="model_vendor_metabooks_ids"/>
+            <field name="binding_model_id" ref="model_vendor_metabooks_ids"/>
+            <field name="state">code</field>
+            <field name="code">
+                if records:
+                    action = records.export_metadata()
+            </field>
+        </record>
+
+        <record id="action_import_metadata" model="ir.actions.server">
+            <field name="name">Import Mercado Editorial </field>
+            <field name="model_id" ref="model_res_partner"/>
+            <field name="binding_model_id" ref="model_res_partner"/>
+            <field name="state">code</field>
+            <field name="code">
+                if records:
+                action = records.import_metadata()
+            </field>
+        </record>
+    </data>
+</odoo>

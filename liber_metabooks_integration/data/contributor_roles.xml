@@ -1,0 +1,549 @@
+<odoo>
+    <data noupdate="1">
+        <record id="contributor_role_A01" model="author.contributor.role">
+            <field name="name">A01</field>
+            <field name="header_role">By (author)</field>
+        </record>
+
+        <record id="contributor_role_A02" model="author.contributor.role">
+            <field name="name">A02</field>
+            <field name="header_role">With</field>
+        </record>
+
+        <record id="contributor_role_A03" model="author.contributor.role">
+            <field name="name">A03</field>
+            <field name="header_role">Screenplay by</field>
+        </record>
+
+        <record id="contributor_role_A04" model="author.contributor.role">
+            <field name="name">A04</field>
+            <field name="header_role">Libretto by</field>
+        </record>
+
+        <record id="contributor_role_A05" model="author.contributor.role">
+            <field name="name">A05</field>
+            <field name="header_role">Lyrics by</field>
+        </record>
+
+        <record id="contributor_role_A06" model="author.contributor.role">
+            <field name="name">A06</field>
+            <field name="header_role">By (composer)</field>
+        </record>
+
+        <record id="contributor_role_A07" model="author.contributor.role">
+            <field name="name">A07</field>
+            <field name="header_role">By (artist)</field>
+        </record>
+
+        <record id="contributor_role_A08" model="author.contributor.role">
+            <field name="name">A08</field>
+            <field name="header_role">By (photographer)</field>
+        </record>
+
+        <record id="contributor_role_A09" model="author.contributor.role">
+            <field name="name">A09</field>
+            <field name="header_role">Created by</field>
+        </record>
+
+        <record id="contributor_role_A10" model="author.contributor.role">
+            <field name="name">A10</field>
+            <field name="header_role">From an idea by</field>
+        </record>
+
+        <record id="contributor_role_A11" model="author.contributor.role">
+            <field name="name">A11</field>
+            <field name="header_role">Designed by</field>
+        </record>
+
+        <record id="contributor_role_A12" model="author.contributor.role">
+            <field name="name">A12</field>
+            <field name="header_role">Illustrated by</field>
+        </record>
+
+        <record id="contributor_role_A13" model="author.contributor.role">
+            <field name="name">A13</field>
+            <field name="header_role">Photographs by</field>
+        </record>
+
+        <record id="contributor_role_A14" model="author.contributor.role">
+            <field name="name">A14</field>
+            <field name="header_role">Text by</field>
+        </record>
+
+        <record id="contributor_role_A15" model="author.contributor.role">
+            <field name="name">A15</field>
+            <field name="header_role">Preface by</field>
+        </record>
+
+        <record id="contributor_role_A16" model="author.contributor.role">
+            <field name="name">A16</field>
+            <field name="header_role">Prologue by</field>
+        </record>
+
+        <record id="contributor_role_A17" model="author.contributor.role">
+            <field name="name">A17</field>
+            <field name="header_role">Summary by</field>
+        </record>
+
+        <record id="contributor_role_A18" model="author.contributor.role">
+            <field name="name">A18</field>
+            <field name="header_role">Supplement by</field>
+        </record>
+
+        <record id="contributor_role_A19" model="author.contributor.role">
+            <field name="name">A19</field>
+            <field name="header_role">Afterword by</field>
+        </record>
+
+        <record id="contributor_role_A20" model="author.contributor.role">
+            <field name="name">A20</field>
+            <field name="header_role">Notes by</field>
+        </record>
+
+        <record id="contributor_role_A21" model="author.contributor.role">
+            <field name="name">A21</field>
+            <field name="header_role">Commentaries by</field>
+        </record>
+
+        <record id="contributor_role_A22" model="author.contributor.role">
+            <field name="name">A22</field>
+            <field name="header_role">Epilogue by</field>
+        </record>
+
+        <record id="contributor_role_A23" model="author.contributor.role">
+            <field name="name">A23</field>
+            <field name="header_role">Foreword by</field>
+        </record>
+
+        <record id="contributor_role_A24" model="author.contributor.role">
+            <field name="name">A24</field>
+            <field name="header_role">Introduction by</field>
+        </record>
+
+        <record id="contributor_role_A25" model="author.contributor.role">
+            <field name="name">A25</field>
+            <field name="header_role">Footnotes by</field>
+        </record>
+
+        <record id="contributor_role_A26" model="author.contributor.role">
+            <field name="name">A26</field>
+            <field name="header_role">Memoir by</field>
+        </record>
+
+        <record id="contributor_role_A27" model="author.contributor.role">
+            <field name="name">A27</field>
+            <field name="header_role">Experiments by</field>
+        </record>
+
+        <record id="contributor_role_A29" model="author.contributor.role">
+            <field name="name">A29</field>
+            <field name="header_role">Introduction and notes by</field>
+        </record>
+
+        <record id="contributor_role_A30" model="author.contributor.role">
+            <field name="name">A30</field>
+            <field name="header_role">Software written by</field>
+        </record>
+
+        <record id="contributor_role_A31" model="author.contributor.role">
+            <field name="name">A31</field>
+            <field name="header_role">Book and lyrics by</field>
+        </record>
+
+        <record id="contributor_role_A32" model="author.contributor.role">
+            <field name="name">A32</field>
+            <field name="header_role">Contributions by</field>
+        </record>
+
+        <record id="contributor_role_A33" model="author.contributor.role">
+            <field name="name">A33</field>
+            <field name="header_role">Appendix by</field>
+        </record>
+
+        <record id="contributor_role_A34" model="author.contributor.role">
+            <field name="name">A34</field>
+            <field name="header_role">Index by</field>
+        </record>
+
+        <record id="contributor_role_A35" model="author.contributor.role">
+            <field name="name">A35</field>
+            <field name="header_role">Drawings by</field>
+        </record>
+
+        <record id="contributor_role_A36" model="author.contributor.role">
+            <field name="name">A36</field>
+            <field name="header_role">Cover design or artwork by</field>
+        </record>
+
+        <record id="contributor_role_A37" model="author.contributor.role">
+            <field name="name">A37</field>
+            <field name="header_role">Preliminary work by</field>
+        </record>
+
+        <record id="contributor_role_A38" model="author.contributor.role">
+            <field name="name">A38</field>
+            <field name="header_role">Original author</field>
+        </record>
+
+        <record id="contributor_role_A39" model="author.contributor.role">
+            <field name="name">A39</field>
+            <field name="header_role">Maps by</field>
+        </record>
+
+        <record id="contributor_role_A40" model="author.contributor.role">
+            <field name="name">A40</field>
+            <field name="header_role">Inked or colored by</field>
+        </record>
+
+        <record id="contributor_role_A41" model="author.contributor.role">
+            <field name="name">A41</field>
+            <field name="header_role">Paper engineering by</field>
+        </record>
+
+        <record id="contributor_role_A42" model="author.contributor.role">
+            <field name="name">A42</field>
+            <field name="header_role">Continued by</field>
+        </record>
+
+        <record id="contributor_role_A43" model="author.contributor.role">
+            <field name="name">A43</field>
+            <field name="header_role">Interviewer</field>
+        </record>
+
+        <record id="contributor_role_A44" model="author.contributor.role">
+            <field name="name">A44</field>
+            <field name="header_role">Interviewee</field>
+        </record>
+
+        <record id="contributor_role_A45" model="author.contributor.role">
+            <field name="name">A45</field>
+            <field name="header_role">Comic script by</field>
+        </record>
+
+        <record id="contributor_role_A46" model="author.contributor.role">
+            <field name="name">A46</field>
+            <field name="header_role">Inker</field>
+        </record>
+
+        <record id="contributor_role_A47" model="author.contributor.role">
+            <field name="name">A47</field>
+            <field name="header_role">Colorist</field>
+        </record>
+
+        <record id="contributor_role_A48" model="author.contributor.role">
+            <field name="name">A48</field>
+            <field name="header_role">Letterer</field>
+        </record>
+
+        <record id="contributor_role_A51" model="author.contributor.role">
+            <field name="name">A51</field>
+            <field name="header_role">Research by</field>
+        </record>
+
+        <record id="contributor_role_A99" model="author.contributor.role">
+            <field name="name">A99</field>
+            <field name="header_role">Other primary creator</field>
+        </record>
+
+        <record id="contributor_role_B01" model="author.contributor.role">
+            <field name="name">B01</field>
+            <field name="header_role">Edited by</field>
+        </record>
+
+        <record id="contributor_role_B02" model="author.contributor.role">
+            <field name="name">B02</field>
+            <field name="header_role">Revised by</field>
+        </record>
+
+        <record id="contributor_role_B03" model="author.contributor.role">
+            <field name="name">B03</field>
+            <field name="header_role">Retold by</field>
+        </record>
+
+        <record id="contributor_role_B04" model="author.contributor.role">
+            <field name="name">B04</field>
+            <field name="header_role">Abridged by</field>
+        </record>
+
+        <record id="contributor_role_B05" model="author.contributor.role">
+            <field name="name">B05</field>
+            <field name="header_role">Adapted by</field>
+        </record>
+
+        <record id="contributor_role_B06" model="author.contributor.role">
+            <field name="name">B06</field>
+            <field name="header_role">Translated by</field>
+        </record>
+
+        <record id="contributor_role_B07" model="author.contributor.role">
+            <field name="name">B07</field>
+            <field name="header_role">As told by</field>
+        </record>
+
+        <record id="contributor_role_B08" model="author.contributor.role">
+            <field name="name">B08</field>
+            <field name="header_role">Translated with commentary by</field>
+        </record>
+
+        <record id="contributor_role_B09" model="author.contributor.role">
+            <field name="name">B09</field>
+            <field name="header_role">Series edited by</field>
+        </record>
+
+        <record id="contributor_role_B10" model="author.contributor.role">
+            <field name="name">B10</field>
+            <field name="header_role">Edited and translated by</field>
+        </record>
+
+        <record id="contributor_role_B11" model="author.contributor.role">
+            <field name="name">B11</field>
+            <field name="header_role">Editor-in-chief</field>
+        </record>
+
+        <record id="contributor_role_B12" model="author.contributor.role">
+            <field name="name">B12</field>
+            <field name="header_role">Guest editor</field>
+        </record>
+
+        <record id="contributor_role_B13" model="author.contributor.role">
+            <field name="name">B13</field>
+            <field name="header_role">Volume editor</field>
+        </record>
+
+        <record id="contributor_role_B14" model="author.contributor.role">
+            <field name="name">B14</field>
+            <field name="header_role">Editorial board member</field>
+        </record>
+
+        <record id="contributor_role_B15" model="author.contributor.role">
+            <field name="name">B15</field>
+            <field name="header_role">Editorial coordination by</field>
+        </record>
+
+        <record id="contributor_role_B16" model="author.contributor.role">
+            <field name="name">B16</field>
+            <field name="header_role">Managing editor</field>
+        </record>
+
+        <record id="contributor_role_B17" model="author.contributor.role">
+            <field name="name">B17</field>
+            <field name="header_role">Founded by</field>
+        </record>
+
+        <record id="contributor_role_B18" model="author.contributor.role">
+            <field name="name">B18</field>
+            <field name="header_role">Prepared for publication by</field>
+        </record>
+
+        <record id="contributor_role_B19" model="author.contributor.role">
+            <field name="name">B19</field>
+            <field name="header_role">Associate editor</field>
+        </record>
+
+        <record id="contributor_role_B20" model="author.contributor.role">
+            <field name="name">B20</field>
+            <field name="header_role">Consultant editor</field>
+        </record>
+
+        <record id="contributor_role_B21" model="author.contributor.role">
+            <field name="name">B21</field>
+            <field name="header_role">General editor</field>
+        </record>
+
+        <record id="contributor_role_B22" model="author.contributor.role">
+            <field name="name">B22</field>
+            <field name="header_role">Dramatized by</field>
+        </record>
+
+        <record id="contributor_role_B23" model="author.contributor.role">
+            <field name="name">B23</field>
+            <field name="header_role">General rapporteur</field>
+        </record>
+
+        <record id="contributor_role_B24" model="author.contributor.role">
+            <field name="name">B24</field>
+            <field name="header_role">Literary editor</field>
+        </record>
+
+        <record id="contributor_role_B25" model="author.contributor.role">
+            <field name="name">B25</field>
+            <field name="header_role">Arranged by (music)</field>
+        </record>
+
+        <record id="contributor_role_B26" model="author.contributor.role">
+            <field name="name">B26</field>
+            <field name="header_role">Technical editor</field>
+        </record>
+
+        <record id="contributor_role_B27" model="author.contributor.role">
+            <field name="name">B27</field>
+            <field name="header_role">Thesis advisor or supervisor</field>
+        </record>
+
+        <record id="contributor_role_B28" model="author.contributor.role">
+            <field name="name">B28</field>
+            <field name="header_role">Thesis examiner</field>
+        </record>
+
+        <record id="contributor_role_B29" model="author.contributor.role">
+            <field name="name">B29</field>
+            <field name="header_role">Scientific editor</field>
+        </record>
+
+        <record id="contributor_role_B30" model="author.contributor.role">
+            <field name="name">B30</field>
+            <field name="header_role">Historical advisor</field>
+        </record>
+
+        <record id="contributor_role_B31" model="author.contributor.role">
+            <field name="name">B31</field>
+            <field name="header_role">Original editor</field>
+        </record>
+
+        <record id="contributor_role_B99" model="author.contributor.role">
+            <field name="name">B99</field>
+            <field name="header_role">Other adaptation by</field>
+        </record>
+
+        <record id="contributor_role_C01" model="author.contributor.role">
+            <field name="name">C01</field>
+            <field name="header_role">Compiled by</field>
+        </record>
+
+        <record id="contributor_role_C02" model="author.contributor.role">
+            <field name="name">C02</field>
+            <field name="header_role">Selected by</field>
+        </record>
+
+        <record id="contributor_role_C03" model="author.contributor.role">
+            <field name="name">C03</field>
+            <field name="header_role">Non-text material selected by</field>
+        </record>
+
+        <record id="contributor_role_C04" model="author.contributor.role">
+            <field name="name">C04</field>
+            <field name="header_role">Curated by</field>
+        </record>
+
+        <record id="contributor_role_C99" model="author.contributor.role">
+            <field name="name">C99</field>
+            <field name="header_role">Other compilation by</field>
+        </record>
+
+        <record id="contributor_role_D01" model="author.contributor.role">
+            <field name="name">D01</field>
+            <field name="header_role">Producer</field>
+        </record>
+
+        <record id="contributor_role_D02" model="author.contributor.role">
+            <field name="name">D02</field>
+            <field name="header_role">Director</field>
+        </record>
+
+        <record id="contributor_role_D03" model="author.contributor.role">
+            <field name="name">D03</field>
+            <field name="header_role">Conductor</field>
+        </record>
+
+        <record id="contributor_role_D04" model="author.contributor.role">
+            <field name="name">D04</field>
+            <field name="header_role">Choreographer</field>
+        </record>
+
+        <record id="contributor_role_D99" model="author.contributor.role">
+            <field name="name">D99</field>
+            <field name="header_role">Other direction by</field>
+        </record>
+
+        <record id="contributor_role_E01" model="author.contributor.role">
+            <field name="name">E01</field>
+            <field name="header_role">Actor</field>
+        </record>
+
+        <record id="contributor_role_E02" model="author.contributor.role">
+            <field name="name">E02</field>
+            <field name="header_role">Dancer</field>
+        </record>
+
+        <record id="contributor_role_E03" model="author.contributor.role">
+            <field name="name">E03</field>
+            <field name="header_role">Narrator</field>
+        </record>
+
+        <record id="contributor_role_E04" model="author.contributor.role">
+            <field name="name">E04</field>
+            <field name="header_role">Commentator</field>
+        </record>
+
+        <record id="contributor_role_E05" model="author.contributor.role">
+            <field name="name">E05</field>
+            <field name="header_role">Vocal soloist</field>
+        </record>
+
+        <record id="contributor_role_E06" model="author.contributor.role">
+            <field name="name">E06</field>
+            <field name="header_role">Instrumental soloist</field>
+        </record>
+
+        <record id="contributor_role_E07" model="author.contributor.role">
+            <field name="name">E07</field>
+            <field name="header_role">Read by</field>
+        </record>
+
+        <record id="contributor_role_E08" model="author.contributor.role">
+            <field name="name">E08</field>
+            <field name="header_role">Performed by (orchestra, band, ensemble)</field>
+        </record>
+
+        <record id="contributor_role_E09" model="author.contributor.role">
+            <field name="name">E09</field>
+            <field name="header_role">Speaker</field>
+        </record>
+
+        <record id="contributor_role_E10" model="author.contributor.role">
+            <field name="name">E10</field>
+            <field name="header_role">Presenter</field>
+        </record>
+
+        <record id="contributor_role_E99" model="author.contributor.role">
+            <field name="name">E99</field>
+            <field name="header_role">Performed by</field>
+        </record>
+
+        <record id="contributor_role_F01" model="author.contributor.role">
+            <field name="name">F01</field>
+            <field name="header_role">Filmed/photographed by</field>
+        </record>
+
+        <record id="contributor_role_F02" model="author.contributor.role">
+            <field name="name">F02</field>
+            <field name="header_role">Editor (film or video)</field>
+        </record>
+
+        <record id="contributor_role_F99" model="author.contributor.role">
+            <field name="name">F99</field>
+            <field name="header_role">Other recording by</field>
+        </record>
+
+        <record id="contributor_role_Z01" model="author.contributor.role">
+            <field name="name">Z01</field>
+            <field name="header_role">Assisted by</field>
+        </record>
+
+        <record id="contributor_role_Z02" model="author.contributor.role">
+            <field name="name">Z02</field>
+            <field name="header_role">Honored/dedicated to</field>
+        </record>
+
+        <record id="contributor_role_Z98" model="author.contributor.role">
+            <field name="name">Z98</field>
+            <field name="header_role">(Various roles)</field>
+        </record>
+
+        <record id="contributor_role_Z99" model="author.contributor.role">
+            <field name="name">Z99</field>
+            <field name="header_role">Other</field>
+        </record>
+
+    </data>
+</odoo>

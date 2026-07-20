@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_consignment_agreement_form_moves" model="ir.ui.view">
+        <field name="name">consignment.agreement.form.moves</field>
+        <field name="model">consignment.agreement</field>
+        <field name="inherit_id" ref="liber_soc_agreements.view_consignment_agreement_form"/>
+        <field name="arch" type="xml">
+            <div name="button_box" position="inside">
+                <button name="action_view_orders" type="object"
+                        class="oe_stat_button" icon="fa-shopping-cart"
+                        invisible="order_count == 0">
+                    <field name="order_count" widget="statinfo" string="Orders"/>
+                </button>
+            </div>
+            <button name="action_close" position="before">
+                <button name="action_symbolic_renewal" type="object"
+                        string="Symbolic Renewal"
+                        invisible="state != 'active'"/>
+                <button name="action_recall_all" type="object"
+                        string="Recall All"
+                        invisible="state not in ('active', 'suspended') or on_shelf_qty == 0"/>
+            </button>
+        </field>
+    </record>
+
+</odoo>

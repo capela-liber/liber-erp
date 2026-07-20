@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="action_edlab_analytic_accounts" model="ir.actions.act_window">
+        <field name="name">Analytic Accounts</field>
+        <field name="res_model">account.analytic.account</field>
+        <field name="view_mode">list,form</field>
+        <!-- Só os analíticos DE DIREITOS AUTORAIS: os que nascem no plano de contratos
+             que a empresa configura em Settings. Sem este domínio, o menu listava as
+             896 contas analíticas da casa inteira, o que engana. -->
+        <field name="domain">[('is_copyright_analytic', '=', True)]</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No analytic accounts yet
+            </p>
+            <p>
+                Analytic accounts created from copyright contracts appear here.
+            </p>
+        </field>
+    </record>
+
+    <menuitem id="menu_edlab_analytic_accounts"
+              name="Analytic Accounts"
+              parent="liber_copyright_contracts.menu_copyright_contracts_root"
+              action="action_edlab_analytic_accounts"
+              groups="liber_copyright_contracts.group_contract_manager"
+              sequence="20"/>
+
+</odoo>

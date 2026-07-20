@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!--
+          The 'tempo' rupture is the only one no event can raise: it is the
+          absence of an acerto. A running campaign whose customers simply stop
+          being settled drifts below target and nothing anywhere writes that
+          down. A clock has to notice it. Rebuilt from scratch each run, so a
+          customer settled today drops off the list on its own.
+        -->
+        <record id="cron_flag_overdue_campaigns" model="ir.cron">
+            <field name="name">Consignment: flag overdue campaign targets</field>
+            <field name="model_id" ref="liber_soc_moves.model_consignment_template"/>
+            <field name="state">code</field>
+            <field name="code">model._cron_flag_overdue()</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="active" eval="True"/>
+            <field name="nextcall"
+                   eval="(DateTime.now().replace(hour=5, minute=45, second=0) + timedelta(days=1)).strftime('%Y-%m-%d %H:%M:%S')"/>
+        </record>
+
+        <!--
+          Coverage is stored so the report can sort/filter/group by "Will Short",
+          but stock and the customer base move with no write on the campaign line
+          to notice it. Refreshed nightly, the same way the shelf age is.
+        -->
+        <record id="cron_refresh_coverage" model="ir.cron">
+            <field name="name">Consignment: refresh campaign coverage</field>
+            <field name="model_id" ref="liber_soc_moves.model_consignment_template_line"/>
+            <field name="state">code</field>
+            <field name="code">model._cron_refresh_coverage()</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="active" eval="True"/>
+            <field name="nextcall"
+                   eval="(DateTime.now().replace(hour=5, minute=50, second=0) + timedelta(days=1)).strftime('%Y-%m-%d %H:%M:%S')"/>
+        </record>
+    </data>
+</odoo>

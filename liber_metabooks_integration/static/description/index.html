@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<center>
+    <h1>Metabooks Integration</h1>
+</center>
+
+<ul>
+    <li>
+        <strong>Metabooks Setting -> General Settings panel:</strong>
+        <p>Fill the form with Metabooks Username, password and provided code.</p>
+        <img src="1- metabooks Settings.png" class="oe_picture"/>
+    </li>
+    <li>
+        <strong>Metabooks Sync Processing Status inside Odoo</strong>
+        <p>Sync every one(1) day the metabooks data and creates a log inside <strong>Sales</strong> with the processing status.</p>
+        <img src="2- metabooks cron.png" class="oe_picture"/>  
+    </li>
+    <li>
+        <strong>Updating only one product metabooks</strong>
+        <p>This button allows the user to update only one book data instead of the hole metabooks database.</p>
+        <img src="3- updating each product metabooks.png" class="oe_picture"/>
+    </li>
+    <li>
+        <strong>Info from metabooks inside product</strong>
+        <p>Data that has been pulled from metabooks.</p>
+        <img src="4- data from metabooks inside product.png" class="oe_picture"/>
+    </li>
+    <li>
+        ISSUES
+        <ol>
+            <li>If processing takes to long(1-2 days), he will move from "processing" to "fail".</li>
+        </ol>
+    </li>
+</ul>
+
+<h2>Testes</h2>
+<ul>
+    <li>
+        <strong>Teste automático (sem credencial, sem rede)</strong>
+        <p>
+            A camada HTTP é mockada num único ponto:
+            <code>metabooks.connector._get_client</code> é substituído por um
+            cliente falso, então nenhuma credencial de
+            <code>ir.config_parameter</code> é lida e nenhuma chamada de rede
+            acontece. Verifica-se o parsing + upsert: dado um payload conhecido
+            da API, os campos <code>metabooks_*</code> corretos são gravados no
+            produto (import por ISBN, idempotência, "não encontrado" e import
+            de catálogo de editora). Rodar:
+        </p>
+        <pre>odoo -d copyright19 -u liber_metabooks_integration \
+  --test-enable --test-tags '/liber_metabooks_integration:TestMetabooksSync' \
+  --http-port=8072 --stop-after-init</pre>
+    </li>
+    <li>
+        <strong>Smoke test manual (sync real de uma editora)</strong>
+        <p>
+            Para exercitar a integração de ponta a ponta contra a API real —
+            por exemplo o catálogo da editora <code>BR0089701</code> (um id
+            VL / mvbId, não um ISBN):
+        </p>
+        <ol>
+            <li>Em Definições &rarr; Metabooks, preencha usuário e senha reais.
+                As credenciais ficam em <code>ir.config_parameter</code> e
+                <strong>nunca</strong> no código nem no repositório.</li>
+            <li>Use o assistente "Importar por editora" e informe
+                <code>BR0089701</code>, ou dispare um
+                <code>metabooks.import.job</code> para o catálogo completo
+                (roda em segundo plano, retomável).</li>
+            <li>Confira que os produtos foram criados/atualizados com título,
+                editora, autores e dados técnicos, e que a capa baixou.</li>
+        </ol>
+        <p>
+            Este passo depende de credencial válida e de rede, por isso fica
+            fora do teste automático — é uma verificação humana, sob demanda.
+        </p>
+    </li>
+</ul>

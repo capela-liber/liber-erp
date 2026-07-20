@@ -1,0 +1,26 @@
+// O `class="text-center"` de um campo de lista chega na célula mas nunca no
+// cabeçalho: o Odoo monta as classes do <th> sozinho (getColumnClass) e ignora
+// o atributo da arch. Sem isto, "Duplicado", "Envios", "Score" e "End." ficam
+// com o rótulo à esquerda sobre um conteúdo centrado -- e a coluna deixa de se
+// ler de relance, que é a única razão de ela existir na seleção do BO.
+//
+// A célula também precisa da regra: na linha em edição o Odoo descarta o
+// `class` da arch (só o aplica quando usa o formatter), e "Envios" é inteiro,
+// portanto alinhado à direita por o_list_number.
+.o_field_x2many {
+    thead th[data-name="has_title"],
+    thead th[data-name="received_count"],
+    thead th[data-name="rating_html"],
+    thead th[data-name="address_ok"] {
+        > div > span {
+            text-align: center;
+        }
+    }
+
+    td[name="has_title"],
+    td[name="received_count"],
+    td[name="rating_html"],
+    td[name="address_ok"] {
+        text-align: center;
+    }
+}

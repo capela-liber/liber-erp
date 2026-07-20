@@ -1,0 +1,322 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_consignment_settlement_list" model="ir.ui.view">
+        <field name="name">consignment.settlement.list</field>
+        <field name="model">consignment.settlement</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="date"/>
+                <field name="partner_id"/>
+                <field name="user_id" widget="many2one_avatar_user" optional="show"/>
+                <field name="amount_total" optional="show"/>
+                <field name="currency_id" column_invisible="1"/>
+                <field name="state" widget="badge"
+                       decoration-info="state == 'draft'"
+                       decoration-warning="state == 'confirmed'"
+                       decoration-success="state == 'done'"
+                       decoration-muted="state == 'cancel'"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_consignment_settlement_kanban" model="ir.ui.view">
+        <field name="name">consignment.settlement.kanban</field>
+        <field name="model">consignment.settlement</field>
+        <field name="arch" type="xml">
+            <kanban default_group_by="stage_id">
+                <progressbar field="state"
+                             colors='{"draft": "info", "confirmed": "warning", "done": "success", "cancel": "muted"}'
+                             sum_field="amount_total"/>
+                <field name="stage_id"/>
+                <field name="partner_id"/>
+                <field name="name"/>
+                <field name="amount_total"/>
+                <field name="state"/>
+                <field name="user_id"/>
+                <field name="currency_id"/>
+                <field name="sale_order_id"/>
+                <field name="replenishment_order_id"/>
+                <field name="return_move_id"/>
+                <templates>
+                    <t t-name="card">
+                        <div class="d-flex justify-content-between align-items-center mb-1">
+                            <strong class="fs-6"><field name="partner_id"/></strong>
+                            <field name="state" widget="label_selection"
+                                   options="{'classes': {'draft': 'info', 'confirmed': 'warning', 'done': 'success', 'cancel': 'muted'}}"/>
+                        </div>
+                        <div><field name="amount_total" widget="monetary"/></div>
+                        <div class="d-flex justify-content-between align-items-center mt-2">
+                            <div class="text-muted">
+                                <i t-if="record.sale_order_id.raw_value"
+                                   class="fa fa-usd me-2" title="Sale"/>
+                                <i t-if="record.replenishment_order_id.raw_value"
+                                   class="fa fa-truck me-2" title="Order"/>
+                                <i t-if="record.return_move_id.raw_value"
+                                   class="fa fa-undo me-2" title="Return"/>
+                            </div>
+                            <field name="user_id" widget="many2one_avatar_user"/>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="view_consignment_settlement_form" model="ir.ui.view">
+        <field name="name">consignment.settlement.form</field>
+        <field name="model">consignment.settlement</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_populate_from_shelf" type="object"
+                            string="Map" class="btn-secondary"
+                            invisible="state != 'draft'"/>
+                    <button name="action_run" type="object"
+                            string="Run" class="btn-primary"
+                            invisible="state != 'draft'"/>
+                    <button name="%(action_report_consignment_map)d" type="action"
+                            string="Print Map" class="btn-secondary"/>
+                    <button name="action_send_map" type="object"
+                            string="Send Map" class="btn-secondary"/>
+                    <!-- Cancel a DRAFT too: an operation opened by mistake, or
+                         postponed by the customer, had no way out. It just sat
+                         there forever, blocking the next one. -->
+                    <button name="action_cancel" type="object" string="Cancel"
+                            invisible="state not in ('draft', 'confirmed')"/>
+                    <!-- Back to draft only if it never fanned out. See action_draft:
+                         the links to the cancelled S/C/CR survive, so a re-Run
+                         would create nothing, silently. -->
+                    <button name="action_draft" type="object" string="Reset to Draft"
+                            invisible="state != 'cancel' or has_documents"/>
+                    <field name="has_documents" invisible="1"/>
+                    <field name="stage_id" widget="statusbar"
+                           options="{'clickable': '1'}"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,confirmed,done"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_sale_order" type="object"
+                                class="oe_stat_button" icon="fa-usd"
+                                invisible="not sale_order_id">
+                            <div class="o_stat_info">
+                                <span class="o_stat_text ms-2">Settlement</span>
+                            </div>
+                        </button>
+                        <button name="action_view_replenishment" type="object"
+                                class="oe_stat_button" icon="fa-truck"
+                                invisible="not replenishment_order_id">
+                            <div class="o_stat_info">
+                                <span class="o_stat_text ms-2">Order</span>
+                            </div>
+                        </button>
+                        <button name="action_view_return" type="object"
+                                class="oe_stat_button" icon="fa-undo"
+                                invisible="not return_move_id">
+                            <div class="o_stat_info">
+                                <span class="o_stat_text ms-2">Return</span>
+                            </div>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <h1><field name="name" readonly="1"/></h1>
+                    </div>
+                    <div class="alert alert-info" role="alert"
+                         invisible="state != 'cancel' or not has_documents">
+                        This operation generated <field name="document_ids_summary"
+                        readonly="1" class="oe_inline"/> and cannot go back to
+                        draft: it still points at those documents, so running it
+                        again would create nothing. Open a new operation.
+                    </div>
+                    <div class="alert alert-warning" role="alert"
+                         invisible="not partner_id or agreement_valid">
+                        This customer has no active consignment agreement, so no
+                        consignment can run. Create and activate an agreement first.
+                    </div>
+                    <group>
+                        <group>
+                            <field name="partner_id" readonly="state != 'draft'"/>
+                            <field name="agreement_id"/>
+                            <field name="agreement_state"/>
+                            <field name="agreement_valid" invisible="1"/>
+                            <field name="location_id"/>
+                        </group>
+                        <group>
+                            <field name="campaign_ids" widget="many2many_tags"
+                                   readonly="1" invisible="not campaign_ids"/>
+                            <field name="date"/>
+                            <field name="user_id" widget="many2one_avatar_user"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Products" name="lines">
+                            <!-- The campaigns are not chosen here: the manager
+                                 defines them on the channel, and the operation
+                                 executes them. The button sits next to the lines
+                                 because that is where its effect lands. -->
+                            <button name="action_apply_campaigns" type="object"
+                                    string="Apply Campaigns" class="btn-secondary mb-2"
+                                    icon="fa-bullhorn"
+                                    invisible="state != 'draft'"/>
+                            <field name="line_ids"
+                                   readonly="state != 'draft'">
+                                <list editable="bottom">
+                                    <!-- Blue = the campaign put its hand here:
+                                         a brand new title (not on the map) or a
+                                         line whose replenishment it corrected. -->
+                                    <field name="product_id" readonly="qty_on_shelf != 0"
+                                           width="340px"
+                                           decoration-info="qty_on_shelf == 0 or qty_target > 0"/>
+                                    <field name="qty_on_hand"/>
+                                    <field name="sale_order_ids" column_invisible="1"/>
+                                    <!-- Sales in the window, and nothing else. The movement
+                                         breakdown (opening / sent / sold / returned / turnover)
+                                         moved to the Shelf Ledger: this list is for RUNNING the
+                                         acerto, not for analysing it. -->
+                                    <field name="qty_recent_sales"
+                                           options="{'allow_order': True}"/>
+                                    <button name="action_view_recent_sales" type="object"
+                                            icon="fa-external-link" title="View sale orders"
+                                            invisible="qty_recent_sales == 0"/>
+                                    <field name="qty_on_shelf"/>
+                                    <field name="qty_reported" decoration-bf="1"/>
+                                    <!-- Money comes from the agreement and is not the operator's
+                                         job during a settlement: read-only, and off by default to
+                                         leave room for the title. Re-enable via the column picker. -->
+                                    <field name="price_unit" readonly="1" optional="hide"/>
+                                    <field name="discount" readonly="1" optional="hide"/>
+                                    <field name="price_subtotal" optional="hide"/>
+                                    <field name="qty_target" optional="show" width="70px"
+                                           decoration-info="qty_target > 0"/>
+                                    <!-- Red = we do not have the stock to send it.
+                                         Shown, not shouted: action_run stops on the
+                                         same condition, through the overstock wizard,
+                                         and that is when it decides something. -->
+                                    <field name="qty_replenish"
+                                           decoration-info="qty_target > 0 and qty_replenish &lt;= qty_on_hand"
+                                           decoration-danger="qty_replenish > qty_on_hand"/>
+                                    <field name="qty_return"/>
+                                    <field name="currency_id" column_invisible="1"/>
+                                    <!-- Both are computed non-stored, so they are not sortable by
+                                         default; allow_order lets the list sort them in memory
+                                         (StaticList._sort), no store=True needed. -->
+                                    <field name="days_since_settlement" width="60px"
+                                           options="{'allow_order': True}"/>
+                                    <field name="shelf_status" widget="badge" width="110px"
+                                           options="{'allow_order': True}"
+                                           decoration-success="shelf_status == 'ok'"
+                                           decoration-warning="shelf_status == 'attention'"
+                                           decoration-danger="shelf_status == 'critical'"
+                                           decoration-muted="shelf_status == 'no_return'"/>
+                                </list>
+                            </field>
+                            <group class="oe_subtotal_footer">
+                                <field name="amount_total"/>
+                            </group>
+                        </page>
+                        <page string="Notes" name="notes">
+                            <field name="note"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_consignment_settlement_search" model="ir.ui.view">
+        <field name="name">consignment.settlement.search</field>
+        <field name="model">consignment.settlement</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="partner_id"/>
+                <filter string="Draft" name="f_draft" domain="[('state', '=', 'draft')]"/>
+                <filter string="Confirmed" name="f_confirmed" domain="[('state', '=', 'confirmed')]"/>
+                <separator/>
+                <filter string="Reply" name="f_unread"
+                        domain="[('message_needaction', '=', True)]"
+                        help="Operations with a customer message you haven't read yet."/>
+                <group>
+                    <filter string="Customer" name="g_partner" context="{'group_by': 'partner_id'}"/>
+                    <filter string="Status" name="g_state" context="{'group_by': 'state'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_consignment_settlement" model="ir.actions.act_window">
+        <field name="name">Consignments</field>
+        <field name="res_model">consignment.settlement</field>
+        <field name="view_mode">kanban,list,form</field>
+        <field name="search_view_id" ref="view_consignment_settlement_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Start your first consignment
+            </p>
+            <p>
+                One screen per customer: load the map, enter what the customer
+                reported sold, and plan the replenishment. Confirming dispatches
+                the right documents — a real sale order for what sold, and a
+                consignment movement (with note, not a sale) for what you resend.
+            </p>
+        </field>
+    </record>
+
+    <!-- "Acertos" for the top-level trio (Orders · Settlements · Returns).
+         A Settlement (Acerto) is the REAL sale (S) generated by a consignment
+         operation (CO): a sale.order with consignment_operation_id and NOT
+         is_consignment. These stay in Sales (revenue universe); this is just the
+         single place to LIST them (create is disabled; they are born only from
+         the CO, never here and never in Sales). -->
+    <record id="action_consignment_acerto" model="ir.actions.act_window">
+        <field name="name">Settlements</field>
+        <field name="res_model">sale.order</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('consignment_operation_id', '!=', False), ('is_consignment', '=', False)]</field>
+        <field name="context">{'create': False}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">No settlements yet</p>
+            <p>
+                A Settlement (Acerto) is the real sale (S) generated when a
+                consignment operation turns the customer's reported sales into
+                revenue. They are created only from the operation — never here,
+                never in Sales.
+            </p>
+        </field>
+    </record>
+
+    <record id="view_settlement_stage_list" model="ir.ui.view">
+        <field name="name">consignment.settlement.stage.list</field>
+        <field name="model">consignment.settlement.stage</field>
+        <field name="arch" type="xml">
+            <list editable="bottom">
+                <field name="sequence" widget="handle"/>
+                <field name="name"/>
+                <field name="fold"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="action_settlement_stage" model="ir.actions.act_window">
+        <field name="name">Consignment Stages</field>
+        <field name="res_model">consignment.settlement.stage</field>
+        <field name="view_mode">list</field>
+    </record>
+
+    <!-- "Generate Operations" lives only in the menu (action_generate_wizard);
+         no redundant Action-menu binding. -->
+
+    <record id="action_send_map_server" model="ir.actions.server">
+        <field name="name">Send Map</field>
+        <field name="model_id" ref="model_consignment_settlement"/>
+        <field name="binding_model_id" ref="model_consignment_settlement"/>
+        <field name="binding_view_types">list,kanban</field>
+        <field name="state">code</field>
+        <field name="code">action = records.action_send_map_batch()</field>
+    </record>
+
+</odoo>

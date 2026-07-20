@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Group + Tags -->
+    <record id="demo_group_ops" model="budget.group">
+        <field name="name">Operações (demo)</field>
+    </record>
+    <record id="demo_tag_2024" model="budget.tag">
+        <field name="name">2024</field>
+        <field name="color">3</field>
+    </record>
+    <record id="demo_tag_estrat" model="budget.tag">
+        <field name="name">Estratégico</field>
+        <field name="color">5</field>
+    </record>
+
+    <!-- Contas GL demo (isoladas) -->
+    <record id="demo_acc_exp" model="account.account">
+        <field name="name">Demo Salários (budget)</field>
+        <field name="code">LBDMOE</field>
+        <field name="account_type">expense</field>
+        <field name="company_ids" eval="[(4, ref('base.main_company'))]"/>
+    </record>
+    <record id="demo_acc_exp2" model="account.account">
+        <field name="name">Demo Marketing (budget)</field>
+        <field name="code">LBDMOM</field>
+        <field name="account_type">expense</field>
+        <field name="company_ids" eval="[(4, ref('base.main_company'))]"/>
+    </record>
+    <record id="demo_acc_cash" model="account.account">
+        <field name="name">Demo Caixa (budget)</field>
+        <field name="code">LBDMOC</field>
+        <field name="account_type">asset_cash</field>
+        <field name="company_ids" eval="[(4, ref('base.main_company'))]"/>
+    </record>
+
+    <!-- Diário + lançamentos postados (alimentam o Practical) -->
+    <record id="demo_journal" model="account.journal">
+        <field name="name">Lab Budget Demo</field>
+        <field name="code">LBDMO</field>
+        <field name="type">general</field>
+    </record>
+    <data noupdate="1">
+        <record id="demo_move" model="account.move">
+            <field name="move_type">entry</field>
+            <field name="journal_id" ref="demo_journal"/>
+            <field name="date">2024-06-15</field>
+            <field name="line_ids" eval="[
+                (0, 0, {'account_id': ref('demo_acc_exp'),  'debit': 8000, 'credit': 0, 'name': 'Folha demo'}),
+                (0, 0, {'account_id': ref('demo_acc_cash'), 'debit': 0, 'credit': 8000, 'name': 'Folha demo'}),
+            ]"/>
+        </record>
+        <record id="demo_move2" model="account.move">
+            <field name="move_type">entry</field>
+            <field name="journal_id" ref="demo_journal"/>
+            <field name="date">2024-08-10</field>
+            <field name="line_ids" eval="[
+                (0, 0, {'account_id': ref('demo_acc_exp2'), 'debit': 4000, 'credit': 0, 'name': 'Campanha demo'}),
+                (0, 0, {'account_id': ref('demo_acc_cash'), 'debit': 0, 'credit': 4000, 'name': 'Campanha demo'}),
+            ]"/>
+        </record>
+        <function model="budget.analytic" name="_demo_post_moves">
+            <value eval="['liber_budget.demo_move', 'liber_budget.demo_move2']"/>
+        </function>
+    </data>
+
+    <!-- Posições orçamentárias (modo GL) -->
+    <record id="demo_position_func" model="budget.position">
+        <field name="name">Funcionários (demo)</field>
+        <field name="account_ids" eval="[(6, 0, [ref('demo_acc_exp')])]"/>
+    </record>
+    <record id="demo_position_mkt" model="budget.position">
+        <field name="name">Marketing (demo)</field>
+        <field name="account_ids" eval="[(6, 0, [ref('demo_acc_exp2')])]"/>
+    </record>
+
+    <!-- Plano + conta analítica demo (modo analítico) -->
+    <record id="demo_plan" model="account.analytic.plan">
+        <field name="name">Plano Demo</field>
+    </record>
+    <record id="demo_analytic" model="account.analytic.account">
+        <field name="name">Projeto Demo</field>
+        <field name="plan_id" ref="demo_plan"/>
+    </record>
+    <record id="demo_aal" model="account.analytic.line">
+        <field name="name">Custo demo</field>
+        <field name="account_id" ref="demo_analytic"/>
+        <field name="amount">-3000</field>
+        <field name="date">2024-07-01</field>
+    </record>
+
+    <!-- Orçamento exemplo: 3 linhas (GL, analítico, e ambos), convenção P&L -->
+    <record id="demo_budget" model="budget.analytic">
+        <field name="name">Orçamento Exemplo 2024</field>
+        <field name="date_from">2024-01-01</field>
+        <field name="date_to">2024-12-31</field>
+        <field name="group_id" ref="demo_group_ops"/>
+        <field name="tag_ids" eval="[(6, 0, [ref('demo_tag_2024'), ref('demo_tag_estrat')])]"/>
+    </record>
+    <!-- 1) só budgetary position (GL) -->
+    <record id="demo_line_gl" model="budget.line">
+        <field name="budget_analytic_id" ref="demo_budget"/>
+        <field name="position_id" ref="demo_position_func"/>
+        <field name="budget_amount">-10000</field>
+        <field name="sequence">10</field>
+    </record>
+    <!-- 2) só analítico -->
+    <record id="demo_line_ana" model="budget.line">
+        <field name="budget_analytic_id" ref="demo_budget"/>
+        <field name="account_id" ref="demo_analytic"/>
+        <field name="budget_amount">-5000</field>
+        <field name="sequence">20</field>
+    </record>
+    <!-- 3) analítico + budgetary position (realizado vem da posição/GL) -->
+    <record id="demo_line_both" model="budget.line">
+        <field name="budget_analytic_id" ref="demo_budget"/>
+        <field name="position_id" ref="demo_position_mkt"/>
+        <field name="account_id" ref="demo_analytic"/>
+        <field name="budget_amount">-6000</field>
+        <field name="sequence">30</field>
+    </record>
+
+</odoo>

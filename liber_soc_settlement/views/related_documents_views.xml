@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_sale_order_form_soc_operation" model="ir.ui.view">
+        <field name="name">sale.order.form.soc.operation</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <div name="button_box" position="inside">
+                <button name="action_view_consignment_operation" type="object"
+                        class="oe_stat_button" icon="fa-refresh"
+                        invisible="not consignment_operation_id">
+                    <div class="o_stat_info">
+                        <span class="o_stat_text ms-2">Consignment</span>
+                    </div>
+                </button>
+            </div>
+        </field>
+    </record>
+
+    <record id="view_consignment_move_form_soc_operation" model="ir.ui.view">
+        <field name="name">consignment.move.form.soc.operation</field>
+        <field name="model">consignment.move</field>
+        <field name="inherit_id" ref="liber_soc_moves.view_consignment_move_form"/>
+        <field name="arch" type="xml">
+            <div name="button_box" position="inside">
+                <button name="action_view_consignment_operation" type="object"
+                        class="oe_stat_button" icon="fa-refresh"
+                        invisible="not consignment_operation_id">
+                    <div class="o_stat_info">
+                        <span class="o_stat_text ms-2">Consignment</span>
+                    </div>
+                </button>
+            </div>
+        </field>
+    </record>
+
+    <!-- Settlement (AS): smart button + page listing the linked NFe documents -->
+    <record id="view_consignment_settlement_form_nfe" model="ir.ui.view">
+        <field name="name">consignment.settlement.form.nfe</field>
+        <field name="model">consignment.settlement</field>
+        <field name="inherit_id" ref="liber_soc_settlement.view_consignment_settlement_form"/>
+        <field name="arch" type="xml">
+            <div name="button_box" position="inside">
+                <button name="action_view_nfe_xml" type="object"
+                        class="oe_stat_button" icon="fa-file-text-o"
+                        invisible="nfe_xml_count == 0">
+                    <field name="nfe_xml_count" widget="statinfo" string="NFe"/>
+                </button>
+            </div>
+            <notebook position="inside">
+                <page string="Fiscal Documents (NFe)" name="nfe_xml">
+                    <field name="nfe_xml_ids" widget="many2many"
+                           options="{'no_create': True}">
+                        <list>
+                            <field name="danfe_no"/>
+                            <field name="partner_id"/>
+                            <field name="cfop_id"/>
+                            <field name="file_create_date"/>
+                            <field name="key"/>
+                        </list>
+                    </field>
+                </page>
+            </notebook>
+        </field>
+    </record>
+
+    <!-- NFe panel: smart button + field to attach the fiscal document to settlements -->
+    <record id="view_soc_xml_panel_form_settlement" model="ir.ui.view">
+        <field name="name">nfe.xml.panel.form.settlement</field>
+        <field name="model">nfe.xml.panel</field>
+        <field name="inherit_id" ref="liber_nfe_xml.view_soc_xml_panel_form"/>
+        <field name="arch" type="xml">
+            <div name="button_box" position="inside">
+                <button name="action_view_consignment_settlements" type="object"
+                        class="oe_stat_button" icon="fa-refresh"
+                        invisible="consignment_settlement_count == 0">
+                    <field name="consignment_settlement_count" widget="statinfo"
+                           string="Consignments"/>
+                </button>
+            </div>
+            <sheet position="inside">
+                <group string="Consignment (Settlement)">
+                    <field name="consignment_settlement_ids" widget="many2many_tags"
+                           options="{'no_create': True}"/>
+                </group>
+            </sheet>
+        </field>
+    </record>
+
+    <!-- Identify Acertos (consignment settlements) inside the Sales app. The
+         Pedido C is already excluded from Sales, so here a set
+         consignment_operation_id means the sale is an Acerto. Field lives in
+         soc_settlement, so these view extensions must too. -->
+    <record id="view_order_form_settlement" model="ir.ui.view">
+        <field name="name">sale.order.form.settlement</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <field name="partner_id" position="after">
+                <field name="consignment_operation_id"
+                       string="Consignment Settlement"
+                       invisible="not consignment_operation_id"
+                       readonly="1"/>
+            </field>
+            <!-- A Pedido C born from a CO is a replenishment: lock its type. -->
+            <field name="consignment_type" position="attributes">
+                <attribute name="readonly">consignment_operation_id</attribute>
+            </field>
+        </field>
+    </record>
+
+    <record id="view_sales_order_filter_settlement" model="ir.ui.view">
+        <field name="name">sale.order.search.settlement</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_sales_order_filter"/>
+        <field name="arch" type="xml">
+            <filter name="my_sale_orders_filter" position="after">
+                <separator/>
+                <filter string="Consignment Settlements" name="f_consignment_settlement"
+                        domain="[('consignment_operation_id', '!=', False), ('is_consignment', '=', False)]"/>
+                <filter string="Regular Sales" name="f_regular_sales"
+                        domain="[('consignment_operation_id', '=', False)]"/>
+            </filter>
+            <filter name="salesperson" position="after">
+                <filter string="Agreement" name="g_consignment_agreement"
+                        context="{'group_by': 'consignment_agreement_id'}"/>
+            </filter>
+        </field>
+    </record>
+
+    <record id="view_quotation_tree_settlement" model="ir.ui.view">
+        <field name="name">sale.order.quotation.tree.settlement</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_quotation_tree"/>
+        <field name="arch" type="xml">
+            <field name="partner_id" position="after">
+                <field name="consignment_operation_id" string="Settlement" optional="hide"/>
+            </field>
+        </field>
+    </record>
+
+</odoo>

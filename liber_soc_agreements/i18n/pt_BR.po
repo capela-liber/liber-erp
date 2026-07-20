@@ -1,0 +1,563 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* liber_soc_agreements
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0-20260630\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-07-08 12:54+0000\n"
+"PO-Revision-Date: 2026-07-08 12:54+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: liber_soc_agreements
+#: model:ir.model.fields,field_description:liber_soc_agreements.field_res_partner__consignment_agreement_count
+#: model:ir.model.fields,field_description:liber_soc_agreements.field_res_users__consignment_agreement_count
+msgid "# Consignment Agreements"
+msgstr "# Contratos de Consignação"
+
+#. module: liber_soc_agreements
+#. odoo-python
+#: code:addons/liber_soc_agreements/models/consignment_agreement.py:0
+msgid ""
+"%(partner)s already has a consignment agreement (%(ref)s). A customer can "
+"only have one."
+msgstr "%(partner)s já possui um contrato de consignação (%(ref)s). Um cliente só pode ter um."
+
+#. module: liber_soc_agreements
+#: model:ir.model.fields,field_description:liber_soc_agreements.field_consignment_agreement__message_needaction
+msgid "Action Needed"
+msgstr "Ação necessária"
+
+#. module: liber_soc_agreements
+#: model_terms:ir.ui.view,arch_db:liber_soc_agreements.view_consignment_agreement_form
+msgid "Activate"
+msgstr "Ativar"
+
+#. module: liber_soc_agreements
+#: model:ir.model.fields,field_description:liber_soc_agreements.field_consignment_agreement__active
+#: model:ir.model.fields.selection,name:liber_soc_agreements.selection__consignment_agreement__state__active
+#: model_terms:ir.ui.view,arch_db:liber_soc_agreements.view_consignment_agreement_search
+msgid "Active"
+msgstr "Ativo"
+
+#. module: liber_soc_agreements
+#: model:ir.model.fields,field_description:liber_soc_agreements.field_consignment_agreement__activity_ids
+msgid "Activities"
+msgstr "Atividades"
+
+#. module: liber_soc_agreements
+#: model:ir.model.fields,field_description:liber_soc_agreements.field_consignment_agreement__activity_exception_decoration
+msgid "Activity Exception Decoration"
+msgstr "Decoração de exceção de atividade"
+
+#. module: liber_soc_agreements
+#: model:ir.model.fields,field_description:liber_soc_agreements.field_consignment_agreement__activity_state
+msgid "Activity State"
+msgstr "Estado da atividade"
+
+#. module: liber_soc_agreements
+#: model:ir.model.fields,field_description:liber_soc_agreements.field_consignment_agreement__activity_type_icon
+msgid "Activity Type Icon"
+msgstr "Ícone do tipo de atividade"
+
+#. module: liber_soc_agreements
+#: model:res.groups,name:liber_soc_agreements.group_soc_manager
+msgid "Administrator"
+msgstr "Administrador"
+
+#. module: liber_soc_agreements
+#: model:ir.actions.act_window,name:liber_soc_agreements.action_consignment_agreement
+#: model:ir.ui.menu,name:liber_soc_agreements.menu_consignment_agreements
+msgid "Agreements"
+msgstr "Contratos"
+
+#. module: liber_soc_agreements
+#: model:ir.model.fields,field_description:liber_soc_agreements.field_res_partner__allow_consignment
+#: model:ir.model.fields,field_description:liber_soc_agreements.field_res_users__allow_consignment
+msgid "Allows Consignment"
+msgstr "Permite Consignação"
+
+#. module: liber_soc_agreements
+#: model_terms:ir.actions.act_window,help:liber_soc_agreements.action_consignment_agreement
+msgid ""
+"An agreement links a customer to a shelf that holds our stock at\n"
+"                their premises. Activate it to create the shelf."
+msgstr "Um contrato liga um cliente a uma prateleira que guarda nosso estoque nas dependências dele. Ative-o para criar a prateleira."
+
+#. module: liber_soc_agreements
+#: model_terms:ir.ui.view,arch_db:liber_soc_agreements.view_consignment_agreement_search
+msgid "Archived"
+msgstr "Arquivado"
+
+#. module: liber_soc_agreements
+#: model:ir.model.fields,field_description:liber_soc_agreements.field_consignment_agreement__message_attachment_count
+msgid "Attachment Count"
+msgstr "Contagem de anexos"
+
+#. module: liber_soc_agreements
+#: model:ir.model.fields.selection,name:liber_soc_agreements.selection__consignment_agreement__settlement_frequency__biweekly
+msgid "Biweekly"
+msgstr "Quinzenal"
+
+#. module: liber_soc_agreements
+#: model:ir.model.fields,help:liber_soc_agreements.field_consignment_agreement__discount
+msgid ""
+"Blanket discount granted to this customer. Settlement lines inherit it "
+"(still editable per line)."
+msgstr "Desconto geral concedido a este cliente. As linhas do acerto o herdam (ainda editável por linha)."
+
+#. module: liber_soc_agreements
+#. odoo-python
+#: code:addons/liber_soc_agreements/models/consignment_agreement.py:0
+msgid ""
+"Cannot close agreement %(ref)s: the shelf still holds %(qty).2f units. "
+"Settle or recall the remaining stock first."
+msgstr "Não é possível encerrar o contrato %(ref)s: a prateleira ainda guarda %(qty).2f unidades. Acerte ou recolha o estoque restante primeiro."
+
+#. module: liber_soc_agreements
+#: model_terms:ir.ui.view,arch_db:liber_soc_agreements.view_consignment_agreement_form
+msgid "Close"
+msgstr "Encerrar"
+
+#. module: liber_soc_agreements
+#: model:ir.model.fields.selection,name:liber_soc_agreements.selection__consignment_agreement__state__closed
+msgid "Closed"
+msgstr "Encerrado"
+
+#. module: liber_soc_agreements
+#: model:ir.model.fields,field_description:liber_soc_agreements.field_consignment_agreement__user_id
+#: model_terms:ir.ui.view,arch_db:liber_soc_agreements.view_consignment_agreement_search
+msgid "Commercial Agent"
+msgstr "Agente Comercial"
+
+#. module: liber_soc_agreements
+#: model:ir.model.fields,help:liber_soc_agreements.field_consignment_agreement__pricelist_id
+msgid "Commercial condition applied at settlement."
+msgstr "Condição comercial aplicada no acerto."
+
+#. module: liber_soc_agreements
+#: model:ir.model.fields,field_description:liber_soc_agreements.field_consignment_agreement__company_id
+msgid "Company"
+msgstr "Empresa"
+
+#. module: liber_soc_agreements
+#: model:ir.model.fields,field_description:liber_soc_agreements.field_stock_location__consignment_partner_id
+msgid "Consignee"
+msgstr "Consignatário"
+
+#. module: liber_soc_agreements
+#: model:ir.module.category,name:liber_soc_agreements.module_category_consignment
+#: model:ir.ui.menu,name:liber_soc_agreements.menu_consignment_root
+#: model:res.groups.privilege,name:liber_soc_agreements.privilege_consignment
+#: model_terms:ir.ui.view,arch_db:liber_soc_agreements.view_partner_form_soc
+msgid "Consignment"
+msgstr "Consignação"
+
+#. module: liber_soc_agreements
+#: model:ir.model,name:liber_soc_agreements.model_consignment_agreement
+msgid "Consignment Agreement"
+msgstr "Contrato de Consignação"
+
+#. module: liber_soc_agreements
+#. odoo-python
+#: code:addons/liber_soc_agreements/models/res_partner.py:0
+#: model:ir.model.fields,field_description:liber_soc_agreements.field_res_partner__consignment_agreement_ids
+#: model:ir.model.fields,field_description:liber_soc_agreements.field_res_users__consignment_agreement_ids
+msgid "Consignment Agreements"
+msgstr "Contratos de Consignação"
+
+#. module: liber_soc_agreements
+#: model:ir.model.fields,field_description:liber_soc_agreements.field_stock_location__is_consignment_root
+msgid "Consignment Root"
+msgstr "Raiz de Consignação"
+
+#. module: liber_soc_agreements
+#: model:ir.model.fields,field_description:liber_soc_agreements.field_res_partner__consignment_location_id
+#: model:ir.model.fields,field_description:liber_soc_agreements.field_res_users__consignment_location_id
+#: model:ir.model.fields,field_description:liber_soc_agreements.field_stock_location__is_consignment_shelf
+msgid "Consignment Shelf"
+msgstr "Prateleira de Consignação"
+
+#. module: liber_soc_agreements
+#: model:ir.model,name:liber_soc_agreements.model_res_partner
+msgid "Contact"
+msgstr "Contato"
+
+#. module: liber_soc_agreements
+#: model_terms:ir.actions.act_window,help:liber_soc_agreements.action_consignment_agreement
+msgid "Create your first consignment agreement"
+msgstr "Crie seu primeiro contrato de consignação"
+
+#. module: liber_soc_agreements
+#: model:ir.model.fields,field_description:liber_soc_agreements.field_consignment_agreement__create_uid
+msgid "Created by"
+msgstr "Criado por"
+
+#. module: liber_soc_agreements
+#: model:ir.model.fields,field_description:liber_soc_agreements.field_consignment_agreement__create_date
+msgid "Created on"
+msgstr "Criado em"
+
+#. module: liber_soc_agreements
+#: model:ir.model.fields,field_description:liber_soc_agreements.field_consignment_agreement__currency_id
+msgid "Currency"
+msgstr "Moeda"
+
+#. module: liber_soc_agreements
+#: model:ir.model.fields,field_description:liber_soc_agreements.field_consignment_agreement__partner_id
+#: model_terms:ir.ui.view,arch_db:liber_soc_agreements.view_consignment_agreement_search
+msgid "Customer"
+msgstr "Cliente"
+
+#. module: liber_soc_agreements
+#: model:ir.model.fields,field_description:liber_soc_agreements.field_consignment_agreement__location_id
+msgid "Customer Shelf"
+msgstr "Prateleira do Cliente"
+
+#. module: liber_soc_agreements
+#: model:ir.model.fields,help:liber_soc_agreements.field_stock_location__consignment_partner_id
+msgid "Customer whose shelf this location represents."
+msgstr "Cliente cuja prateleira esta localização representa."
+
+#. module: liber_soc_agreements
+#: model:ir.model.fields,field_description:liber_soc_agreements.field_consignment_agreement__discount
+msgid "Default Discount %"
+msgstr "Desconto Padrão %"
+
+#. module: liber_soc_agreements
+#: model:ir.model.fields,field_description:liber_soc_agreements.field_consignment_agreement__display_name
+#: model:ir.model.fields,field_description:liber_soc_agreements.field_res_partner__display_name
+#: model:ir.model.fields,field_description:liber_soc_agreements.field_stock_location__display_name
+msgid "Display Name"
+msgstr "Nome exibido"
+
+#. module: liber_soc_agreements
+#: model:ir.model.fields.selection,name:liber_soc_agreements.selection__consignment_agreement__state__draft
+#: model_terms:ir.ui.view,arch_db:liber_soc_agreements.view_consignment_agreement_search
+msgid "Draft"
+msgstr "Provisório"
+
+#. module: liber_soc_agreements
+#: model:ir.model.fields,field_description:liber_soc_agreements.field_consignment_agreement__date_end
+msgid "End Date"
+msgstr "Data Final"
+
+#. module: liber_soc_agreements
+#: model:ir.model.fields,field_description:liber_soc_agreements.field_consignment_agreement__message_follower_ids
+msgid "Followers"
+msgstr "Seguidores"
+
+#. module: liber_soc_agreements
+#: model:ir.model.fields,field_description:liber_soc_agreements.field_consignment_agreement__message_partner_ids
+msgid "Followers (Partners)"
+msgstr "Seguidores (Parceiros)"
+
+#. module: liber_soc_agreements
+#: model:ir.model.fields,help:liber_soc_agreements.field_consignment_agreement__activity_type_icon
+msgid "Font awesome icon e.g. fa-tasks"
+msgstr "Ícone Font Awesome, ex.: fa-tasks"
+
+#. module: liber_soc_agreements
+#: model:ir.model.fields,field_description:liber_soc_agreements.field_consignment_agreement__has_message
+msgid "Has Message"
+msgstr "Tem mensagem"
+
+#. module: liber_soc_agreements
+#: model:ir.model.fields,field_description:liber_soc_agreements.field_consignment_agreement__id
+#: model:ir.model.fields,field_description:liber_soc_agreements.field_res_partner__id
+#: model:ir.model.fields,field_description:liber_soc_agreements.field_stock_location__id
+msgid "ID"
+msgstr "ID"
+
+#. module: liber_soc_agreements
+#: model:ir.model.fields,field_description:liber_soc_agreements.field_consignment_agreement__activity_exception_icon
+msgid "Icon"
+msgstr "Ícone"
+
+#. module: liber_soc_agreements
+#: model:ir.model.fields,help:liber_soc_agreements.field_consignment_agreement__activity_exception_icon
+msgid "Icon to indicate an exception activity."
+msgstr "Ícone para indicar uma atividade de exceção."
+
+#. module: liber_soc_agreements
+#: model:ir.model.fields,help:liber_soc_agreements.field_consignment_agreement__message_needaction
+msgid "If checked, new messages require your attention."
+msgstr "Se marcado, novas mensagens requerem sua atenção."
+
+#. module: liber_soc_agreements
+#: model:ir.model.fields,help:liber_soc_agreements.field_consignment_agreement__message_has_error
+#: model:ir.model.fields,help:liber_soc_agreements.field_consignment_agreement__message_has_sms_error
+msgid "If checked, some messages have a delivery error."
+msgstr "Se marcado, algumas mensagens têm erro de entrega."
+
+#. module: liber_soc_agreements
+#: model:ir.model.fields,help:liber_soc_agreements.field_stock_location__is_consignment_shelf
+msgid "Internal location holding our stock physically placed at a customer."
+msgstr "Localização interna que guarda nosso estoque fisicamente colocado em um cliente."
+
+#. module: liber_soc_agreements
+#: model:ir.model.fields,help:liber_soc_agreements.field_res_partner__consignment_location_id
+#: model:ir.model.fields,help:liber_soc_agreements.field_res_users__consignment_location_id
+msgid "Internal location holding our stock placed at this customer."
+msgstr "Localização interna que guarda nosso estoque colocado neste cliente."
+
+#. module: liber_soc_agreements
+#: model:ir.model.fields,help:liber_soc_agreements.field_consignment_agreement__location_id
+msgid ""
+"Internal location that holds our stock physically placed at this customer. "
+"Created automatically when the agreement is activated."
+msgstr "Localização interna que guarda nosso estoque fisicamente colocado neste cliente. Criada automaticamente quando o contrato é ativado."
+
+#. module: liber_soc_agreements
+#: model_terms:ir.ui.view,arch_db:liber_soc_agreements.view_consignment_agreement_form
+msgid "Internal notes..."
+msgstr "Notas internas..."
+
+#. module: liber_soc_agreements
+#: model:ir.model,name:liber_soc_agreements.model_stock_location
+msgid "Inventory Locations"
+msgstr "Locais de inventário"
+
+#. module: liber_soc_agreements
+#: model:ir.model.fields,field_description:liber_soc_agreements.field_consignment_agreement__message_is_follower
+msgid "Is Follower"
+msgstr "É seguidor"
+
+#. module: liber_soc_agreements
+#: model:ir.model.fields,field_description:liber_soc_agreements.field_consignment_agreement__write_uid
+msgid "Last Updated by"
+msgstr "Última atualização por"
+
+#. module: liber_soc_agreements
+#: model:ir.model.fields,field_description:liber_soc_agreements.field_consignment_agreement__write_date
+msgid "Last Updated on"
+msgstr "Última atualização em"
+
+#. module: liber_soc_agreements
+#: model:ir.model.fields.selection,name:liber_soc_agreements.selection__consignment_agreement__replenishment_policy__manual
+msgid "Manual"
+msgstr "Manual"
+
+#. module: liber_soc_agreements
+#: model:ir.model.fields,field_description:liber_soc_agreements.field_consignment_agreement__message_has_error
+msgid "Message Delivery error"
+msgstr "Erro de entrega de mensagem"
+
+#. module: liber_soc_agreements
+#: model:ir.model.fields,field_description:liber_soc_agreements.field_consignment_agreement__message_ids
+msgid "Messages"
+msgstr "Mensagens"
+
+#. module: liber_soc_agreements
+#: model:ir.model.fields.selection,name:liber_soc_agreements.selection__consignment_agreement__replenishment_policy__min_max
+msgid "Min / Max"
+msgstr "Mín / Máx"
+
+#. module: liber_soc_agreements
+#: model:ir.model.fields.selection,name:liber_soc_agreements.selection__consignment_agreement__settlement_frequency__monthly
+msgid "Monthly"
+msgstr "Mensal"
+
+#. module: liber_soc_agreements
+#: model:ir.model.fields,field_description:liber_soc_agreements.field_consignment_agreement__my_activity_date_deadline
+msgid "My Activity Deadline"
+msgstr "Prazo da minha atividade"
+
+#. module: liber_soc_agreements
+#. odoo-python
+#: code:addons/liber_soc_agreements/models/consignment_agreement.py:0
+msgid "New"
+msgstr "Novo"
+
+#. module: liber_soc_agreements
+#: model:ir.model.fields,field_description:liber_soc_agreements.field_consignment_agreement__activity_date_deadline
+msgid "Next Activity Deadline"
+msgstr "Prazo da próxima atividade"
+
+#. module: liber_soc_agreements
+#: model:ir.model.fields,field_description:liber_soc_agreements.field_consignment_agreement__activity_summary
+msgid "Next Activity Summary"
+msgstr "Resumo da próxima atividade"
+
+#. module: liber_soc_agreements
+#: model:ir.model.fields,field_description:liber_soc_agreements.field_consignment_agreement__activity_type_id
+msgid "Next Activity Type"
+msgstr "Tipo da próxima atividade"
+
+#. module: liber_soc_agreements
+#: model:ir.model.fields,field_description:liber_soc_agreements.field_consignment_agreement__note
+#: model_terms:ir.ui.view,arch_db:liber_soc_agreements.view_consignment_agreement_form
+msgid "Notes"
+msgstr "Notas"
+
+#. module: liber_soc_agreements
+#: model:ir.model.fields,field_description:liber_soc_agreements.field_consignment_agreement__message_needaction_counter
+msgid "Number of Actions"
+msgstr "Número de ações"
+
+#. module: liber_soc_agreements
+#: model:ir.model.fields,field_description:liber_soc_agreements.field_consignment_agreement__message_has_error_counter
+msgid "Number of errors"
+msgstr "Número de erros"
+
+#. module: liber_soc_agreements
+#: model:ir.model.fields,help:liber_soc_agreements.field_consignment_agreement__message_needaction_counter
+msgid "Number of messages requiring action"
+msgstr "Número de mensagens que requerem ação"
+
+#. module: liber_soc_agreements
+#: model:ir.model.fields,help:liber_soc_agreements.field_consignment_agreement__message_has_error_counter
+msgid "Number of messages with delivery error"
+msgstr "Número de mensagens com erro de entrega"
+
+#. module: liber_soc_agreements
+#: model_terms:ir.ui.view,arch_db:liber_soc_agreements.view_consignment_agreement_form
+msgid "On shelf"
+msgstr "Na prateleira"
+
+#. module: liber_soc_agreements
+#: model:ir.model.fields,field_description:liber_soc_agreements.field_consignment_agreement__on_shelf_product_count
+msgid "On-shelf Products"
+msgstr "Produtos na prateleira"
+
+#. module: liber_soc_agreements
+#: model:ir.model.fields,field_description:liber_soc_agreements.field_consignment_agreement__on_shelf_qty
+msgid "On-shelf Qty"
+msgstr "Qtd na prateleira"
+
+#. module: liber_soc_agreements
+#: model:ir.model.fields,help:liber_soc_agreements.field_stock_location__is_consignment_root
+msgid ""
+"Parent (view) location grouping all consignment customer shelves of the "
+"company."
+msgstr "Localização-pai (de visão) que agrupa todas as prateleiras de clientes de consignação da empresa."
+
+#. module: liber_soc_agreements
+#: model:ir.model.fields,field_description:liber_soc_agreements.field_consignment_agreement__pricelist_id
+msgid "Pricelist"
+msgstr "Lista de Preços"
+
+#. module: liber_soc_agreements
+#: model_terms:ir.ui.view,arch_db:liber_soc_agreements.view_consignment_agreement_form
+msgid "Reactivate"
+msgstr "Reativar"
+
+#. module: liber_soc_agreements
+#: model:ir.model.fields,field_description:liber_soc_agreements.field_consignment_agreement__name
+msgid "Reference"
+msgstr "Referência"
+
+#. module: liber_soc_agreements
+#: model:ir.model.fields,field_description:liber_soc_agreements.field_consignment_agreement__replenishment_policy
+msgid "Replenishment Policy"
+msgstr "Política de Reposição"
+
+#. module: liber_soc_agreements
+#: model_terms:ir.ui.view,arch_db:liber_soc_agreements.view_consignment_agreement_form
+msgid "Reset to Draft"
+msgstr "Redefinir para Provisório"
+
+#. module: liber_soc_agreements
+#: model:ir.model.fields,field_description:liber_soc_agreements.field_consignment_agreement__activity_user_id
+msgid "Responsible User"
+msgstr "Usuário Responsável"
+
+#. module: liber_soc_agreements
+#: model:ir.model.fields,field_description:liber_soc_agreements.field_consignment_agreement__message_has_sms_error
+msgid "SMS Delivery error"
+msgstr "Erro de entrega de SMS"
+
+#. module: liber_soc_agreements
+#: model:ir.model.fields.selection,name:liber_soc_agreements.selection__consignment_agreement__replenishment_policy__sell_through
+msgid "Sell-through"
+msgstr "Giro"
+
+#. module: liber_soc_agreements
+#: model:ir.model.fields,field_description:liber_soc_agreements.field_consignment_agreement__settlement_frequency
+msgid "Settlement Frequency"
+msgstr "Frequência do Acerto"
+
+#. module: liber_soc_agreements
+#. odoo-python
+#: code:addons/liber_soc_agreements/models/consignment_agreement.py:0
+msgid "Shelf Stock"
+msgstr "Estoque na Prateleira"
+
+#. module: liber_soc_agreements
+#: model:ir.model.fields,field_description:liber_soc_agreements.field_consignment_agreement__date_start
+msgid "Start Date"
+msgstr "Data Inicial"
+
+#. module: liber_soc_agreements
+#: model:ir.model.fields,field_description:liber_soc_agreements.field_consignment_agreement__state
+#: model_terms:ir.ui.view,arch_db:liber_soc_agreements.view_consignment_agreement_search
+msgid "Status"
+msgstr "Status"
+
+#. module: liber_soc_agreements
+#: model:ir.model.fields,help:liber_soc_agreements.field_consignment_agreement__activity_state
+msgid ""
+"Status based on activities\n"
+"Overdue: Due date is already passed\n"
+"Today: Activity date is today\n"
+"Planned: Future activities."
+msgstr "Estado com base nas atividades\nAtrasada: a data de vencimento já passou\nHoje: a atividade é para hoje\nPlanejada: atividades futuras."
+
+#. module: liber_soc_agreements
+#: model_terms:ir.ui.view,arch_db:liber_soc_agreements.view_consignment_agreement_form
+msgid "Suspend"
+msgstr "Suspender"
+
+#. module: liber_soc_agreements
+#: model:ir.model.fields.selection,name:liber_soc_agreements.selection__consignment_agreement__state__suspended
+#: model_terms:ir.ui.view,arch_db:liber_soc_agreements.view_consignment_agreement_search
+msgid "Suspended"
+msgstr "Suspenso"
+
+#. module: liber_soc_agreements
+#: model:ir.model.fields,help:liber_soc_agreements.field_consignment_agreement__activity_exception_decoration
+msgid "Type of the exception activity on record."
+msgstr "Tipo da atividade de exceção no registro."
+
+#. module: liber_soc_agreements
+#: model:ir.model.fields,help:liber_soc_agreements.field_consignment_agreement__on_shelf_qty
+msgid "Units currently on the customer's shelf (still ours)."
+msgstr "Unidades atualmente na prateleira do cliente (ainda nossas)."
+
+#. module: liber_soc_agreements
+#: model:res.groups,name:liber_soc_agreements.group_soc_user
+msgid "User"
+msgstr "Usuário"
+
+#. module: liber_soc_agreements
+#: model:ir.model.fields,field_description:liber_soc_agreements.field_consignment_agreement__website_message_ids
+msgid "Website Messages"
+msgstr "Mensagens do Site"
+
+#. module: liber_soc_agreements
+#: model:ir.model.fields,help:liber_soc_agreements.field_consignment_agreement__website_message_ids
+msgid "Website communication history"
+msgstr "Histórico de comunicação do site"
+
+#. module: liber_soc_agreements
+#: model:ir.model.fields.selection,name:liber_soc_agreements.selection__consignment_agreement__settlement_frequency__weekly
+msgid "Weekly"
+msgstr "Semanal"
+
+#. module: liber_soc_agreements
+#. odoo-python
+#: code:addons/liber_soc_agreements/models/consignment_agreement.py:0
+msgid "location_id"
+msgstr "location_id"
+
+#. module: liber_soc_agreements
+#. odoo-python
+#: code:addons/liber_soc_agreements/models/res_partner.py:0
+msgid "partner_id"
+msgstr "partner_id"

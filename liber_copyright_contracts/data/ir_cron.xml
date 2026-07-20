@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <record id="cron_update_contract_states" model="ir.cron">
+        <field name="name">Contracts: update status (expired / auto-renewal)</field>
+        <field name="model_id" ref="model_edlab_contract"/>
+        <field name="user_id" ref="base.user_root"/>
+        <field name="state">code</field>
+        <field name="code">model._cron_update_contract_states()</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="active" eval="True"/>
+        <field name="nextcall" eval="(datetime.now())"/>
+    </record>
+</odoo>

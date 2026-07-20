@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_nfe_xml_painel" model="ir.actions.act_url">
+        <field name="name">Analytics Panel (XML)</field>
+        <field name="url">/liber_nfe_xml/painel</field>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem id="menu_nfe_xml_painel_analitico"
+              name="Analytics Panel (XML)"
+              parent="liber_nfe_xml.menu_nfe_xml_panel"
+              action="action_nfe_xml_painel"
+              sequence="90"/>
+</odoo>

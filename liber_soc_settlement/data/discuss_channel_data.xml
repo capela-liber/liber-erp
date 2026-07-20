@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <!--
+      Two feeds, because they demand different attention.
+
+      OPERAÇÕES: the CO flow. A customer replies on an operation and the team sees
+      it here. Busy, mostly routine.
+
+      DEVOLUÇÕES: the CR flow. A return is a clock running against a third party
+      who is holding goods that are ours, and every week of silence is money on
+      someone else's shelf. This feed takes EVERYTHING that touches a CR: the
+      customer's replies, the team's internal notes, and the dunning alerts.
+      When a return goes wrong, what you need is the whole conversation in one
+      place, not half of it.
+
+      noupdate="1", so the channels survive an upgrade with their history. The
+      rename of the old channel is done by the post-init hook, which is the only
+      way to touch a noupdate record.
+    -->
+    <record id="channel_consignment_replies" model="discuss.channel">
+        <field name="name">Consignação / Operações</field>
+        <field name="channel_type">channel</field>
+    </record>
+
+    <record id="channel_consignment_returns" model="discuss.channel">
+        <field name="name">Consignação / Devoluções</field>
+        <field name="channel_type">channel</field>
+    </record>
+</odoo>

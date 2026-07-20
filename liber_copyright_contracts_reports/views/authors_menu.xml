@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="action_edlab_authors" model="ir.actions.act_window">
+        <field name="name">Beneficiaries</field>
+        <field name="res_model">res.partner</field>
+        <field name="view_mode">kanban,list,form</field>
+        <field name="domain">[('is_edlab_author', '=', True)]</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No beneficiaries yet
+            </p>
+            <p>
+                A contact becomes a beneficiary as soon as a contract royalty
+                line names them.
+            </p>
+        </field>
+    </record>
+
+    <menuitem id="menu_edlab_authors"
+              name="Beneficiaries"
+              parent="liber_copyright_contracts.menu_copyright_contracts_root"
+              action="action_edlab_authors"
+              sequence="20"/>
+
+</odoo>

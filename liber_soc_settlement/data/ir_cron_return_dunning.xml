@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Nightly return-chasing (dunning). Walks each open return (CR) one rung
+         up the escalation ladder when its checkpoint is due: nudge (re-send +
+         schedule call) -> broadcast to the channel -> escalate to the manager.
+         Each rung is guarded by dunning_step, so this is idempotent. -->
+    <record id="ir_cron_return_dunning" model="ir.cron">
+        <field name="name">Consignment: chase pending returns (CR)</field>
+        <field name="model_id" ref="liber_soc_moves.model_consignment_move"/>
+        <field name="state">code</field>
+        <field name="code">model._cron_return_dunning()</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="active" eval="True"/>
+    </record>
+</odoo>

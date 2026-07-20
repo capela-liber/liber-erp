@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ============ Consigned Stock (menu "Stock") ============ -->
+    <record id="view_consigned_stock_list" model="ir.ui.view">
+        <field name="name">stock.quant.consigned.list</field>
+        <field name="model">stock.quant</field>
+        <field name="arch" type="xml">
+            <list create="0" edit="0" default_order="consignment_partner_id">
+                <field name="consignment_partner_id"/>
+                <field name="consignment_team_id" optional="show"/>
+                <field name="location_id" optional="hide"/>
+                <field name="product_id"/>
+                <field name="quantity"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_consigned_stock_pivot" model="ir.ui.view">
+        <field name="name">stock.quant.consigned.pivot</field>
+        <field name="model">stock.quant</field>
+        <field name="arch" type="xml">
+            <pivot string="Consigned Stock">
+                <field name="consignment_team_id" type="row"/>
+                <field name="consignment_partner_id" type="row"/>
+                <field name="product_id" type="col"/>
+                <field name="quantity" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="view_consigned_stock_graph" model="ir.ui.view">
+        <field name="name">stock.quant.consigned.graph</field>
+        <field name="model">stock.quant</field>
+        <field name="arch" type="xml">
+            <graph string="Consigned Stock" type="bar">
+                <field name="consignment_partner_id"/>
+                <field name="quantity" type="measure"/>
+            </graph>
+        </field>
+    </record>
+
+    <record id="view_consigned_stock_search" model="ir.ui.view">
+        <field name="name">stock.quant.consigned.search</field>
+        <field name="model">stock.quant</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="consignment_partner_id"/>
+                <field name="consignment_team_id"/>
+                <field name="product_id"/>
+                <field name="location_id"/>
+                <group>
+                    <filter name="g_customer" string="Customer"
+                            context="{'group_by': 'consignment_partner_id'}"/>
+                    <!-- The channel is the axis the campaigns work on: without it
+                         here, you can see what a shelf holds but not whether the
+                         channel it belongs to is being served. -->
+                    <filter name="g_team" string="Sales Channel"
+                            context="{'group_by': 'consignment_team_id'}"/>
+                    <filter name="g_product" string="Product"
+                            context="{'group_by': 'product_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_consigned_stock" model="ir.actions.act_window">
+        <field name="name">Consigned Stock</field>
+        <field name="res_model">stock.quant</field>
+        <field name="view_mode">list,pivot,graph</field>
+        <field name="search_view_id" ref="view_consigned_stock_search"/>
+        <field name="domain">[('location_id.is_consignment_shelf', '=', True), ('quantity', '!=', 0)]</field>
+        <field name="context">{'search_default_g_customer': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Nothing on consignment yet</p>
+            <p>Everything we currently have placed on customer shelves (still ours until sold).</p>
+        </field>
+    </record>
+
+    <!-- ============ Ledger: every + and - that touched a shelf ============ -->
+    <record id="view_consignment_ledger_search" model="ir.ui.view">
+        <field name="name">stock.move.consignment.ledger.search</field>
+        <field name="model">stock.move</field>
+        <field name="arch" type="xml">
+            <search string="Consignment Ledger">
+                <field name="consignment_partner_id" string="Customer"/>
+                <field name="product_id" string="Book"/>
+                <field name="date"/>
+                <filter name="ledger_in" string="Onto shelf (+)"
+                        domain="[('location_dest_id.is_consignment_shelf', '=', True)]"/>
+                <filter name="ledger_out" string="Off shelf (−)"
+                        domain="[('location_id.is_consignment_shelf', '=', True)]"/>
+                <separator/>
+                <filter name="ledger_this_year" string="This Year"
+                        domain="[('date', '&gt;=', time.strftime('%Y-01-01'))]"/>
+                <filter name="ledger_last_year" string="Last Year"
+                        domain="[('date', '&gt;=', (context_today() - relativedelta(years=1)).strftime('%Y-01-01')),
+                                 ('date', '&lt;', time.strftime('%Y-01-01'))]"/>
+                <group>
+                    <filter name="g_customer" string="Customer"
+                            context="{'group_by': 'consignment_partner_id'}"/>
+                    <filter name="g_book" string="Book"
+                            context="{'group_by': 'product_id'}"/>
+                    <filter name="g_month" string="Month"
+                            context="{'group_by': 'date:month'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="view_consignment_ledger_pivot" model="ir.ui.view">
+        <field name="name">stock.move.consignment.ledger.pivot</field>
+        <field name="model">stock.move</field>
+        <field name="arch" type="xml">
+            <pivot string="Consignment Ledger">
+                <field name="consignment_partner_id" type="row"/>
+                <field name="product_id" type="row"/>
+                <field name="date" interval="month" type="col"/>
+                <field name="consignment_qty" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="view_consignment_ledger_graph" model="ir.ui.view">
+        <field name="name">stock.move.consignment.ledger.graph</field>
+        <field name="model">stock.move</field>
+        <field name="arch" type="xml">
+            <graph string="Consignment Ledger" type="line">
+                <field name="date" interval="month"/>
+                <field name="consignment_partner_id"/>
+                <field name="consignment_qty" type="measure"/>
+            </graph>
+        </field>
+    </record>
+
+    <record id="view_consignment_ledger_list" model="ir.ui.view">
+        <field name="name">stock.move.consignment.ledger.list</field>
+        <field name="model">stock.move</field>
+        <field name="arch" type="xml">
+            <list string="Consignment Ledger" create="0" default_order="date desc">
+                <field name="date"/>
+                <field name="consignment_partner_id"/>
+                <field name="product_id"/>
+                <field name="consignment_qty" sum="Net"/>
+                <field name="consignment_balance"/>
+                <field name="reference" optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="action_consignment_ledger" model="ir.actions.act_window">
+        <field name="name">Consignment Ledger</field>
+        <field name="res_model">stock.move</field>
+        <field name="view_mode">pivot,graph,list,form</field>
+        <field name="search_view_id" ref="view_consignment_ledger_search"/>
+        <field name="domain">['|', ('location_id.is_consignment_shelf', '=', True), ('location_dest_id.is_consignment_shelf', '=', True), ('state', '=', 'done')]</field>
+        <field name="context">{}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">No consignment movements yet</p>
+            <p>Every stock move in and out of a consignment shelf: shipments and
+               replenishments (+), returns and settled sales (-). Opens grouped by
+               customer and month so you can follow how each customer's
+               consignment evolves over time.</p>
+        </field>
+    </record>
+
+    <!-- ============ Inventory: count/correct shelves (draft adjustment) ============ -->
+    <record id="view_stock_quant_inventory_editable_soc" model="ir.ui.view">
+        <field name="name">stock.quant.inventory.list.editable.soc</field>
+        <field name="model">stock.quant</field>
+        <field name="inherit_id" ref="stock.view_stock_quant_tree_inventory_editable"/>
+        <field name="arch" type="xml">
+            <field name="product_id" position="before">
+                <field name="consignment_partner_id" optional="show"
+                       column_invisible="not context.get('consignment_inventory')"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="action_shelf_inventory" model="ir.actions.act_window">
+        <field name="name">Inventory</field>
+        <field name="res_model">stock.quant</field>
+        <field name="view_mode">list</field>
+        <field name="view_id" ref="stock.view_stock_quant_tree_inventory_editable"/>
+        <field name="domain">[('location_id.is_consignment_shelf', '=', True)]</field>
+        <field name="context">{'inventory_mode': True, 'no_at_date': True, 'consignment_inventory': True}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Nothing to count yet</p>
+            <p>Enter the counted quantity per title on each customer's shelf.
+               Nothing moves until you press Apply — the count stays as a draft
+               adjustment. You can also import counts from a spreadsheet.</p>
+        </field>
+    </record>
+
+    <!-- "Reports" section grouping the report-like views: on-shelf balance,
+         inventory count and the shelf ledger (the latter added by
+         soc_settlement, which depends on this module). -->
+    <menuitem id="menu_consignment_stock_root"
+              name="Reports"
+              parent="liber_soc_agreements.menu_consignment_root"
+              sequence="25"/>
+
+    <menuitem id="menu_consigned_stock"
+              name="On Shelf"
+              parent="menu_consignment_stock_root"
+              action="action_consigned_stock"
+              sequence="10"/>
+
+    <menuitem id="menu_shelf_inventory"
+              name="Inventory"
+              parent="menu_consignment_stock_root"
+              action="action_shelf_inventory"
+              sequence="20"/>
+
+    <menuitem id="menu_consignment_ledger"
+              name="Ledger"
+              parent="menu_consignment_stock_root"
+              action="action_consignment_ledger"
+              sequence="30"/>
+
+</odoo>

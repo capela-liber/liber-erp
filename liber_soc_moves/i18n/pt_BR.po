@@ -1,0 +1,1097 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* liber_soc_moves
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0-20260630\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-07-09 22:51+0000\n"
+"PO-Revision-Date: 2026-07-09 22:51+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: liber_soc_moves
+#: model:ir.model.fields,help:liber_soc_moves.field_consignment_move__picking_state
+msgid ""
+" * Draft: The transfer is not confirmed yet. Reservation doesn't apply.\n"
+" * Waiting another operation: This transfer is waiting for another operation before being ready.\n"
+" * Waiting: The transfer is waiting for the availability of some products.\n"
+"(a) The shipping policy is \"As soon as possible\": no product could be reserved.\n"
+"(b) The shipping policy is \"When all products are ready\": not all the products could be reserved.\n"
+" * Ready: The transfer is ready to be processed.\n"
+"(a) The shipping policy is \"As soon as possible\": at least one product has been reserved.\n"
+"(b) The shipping policy is \"When all products are ready\": all product have been reserved.\n"
+" * Done: The transfer has been processed.\n"
+" * Cancelled: The transfer has been cancelled."
+msgstr ""
+" * Provisório: A transferência ainda não foi confirmada. A reserva não se aplica.\n"
+" * Aguardando outra operação: Esta transferência está aguardando outra operação antes de ficar pronta.\n"
+" * Aguardando: A transferência está aguardando a disponibilidade de alguns produtos.\n"
+"(a) A política de envio é \"O mais rápido possível\": nenhum produto pôde ser reservado.\n"
+"(b) A política de envio é \"Quando todos os produtos estiverem prontos\": nem todos os produtos puderam ser reservados.\n"
+" * Pronto: A transferência está pronta para ser processada.\n"
+"(a) A política de envio é \"O mais rápido possível\": ao menos um produto foi reservado.\n"
+"(b) A política de envio é \"Quando todos os produtos estiverem prontos\": todos os produtos foram reservados.\n"
+" * Concluído: A transferência foi processada.\n"
+" * Cancelado: A transferência foi cancelada."
+
+#. module: liber_soc_moves
+#: model:ir.model.fields,field_description:liber_soc_moves.field_consignment_agreement__move_count
+msgid "# Movements"
+msgstr "# Movimentos"
+
+#. module: liber_soc_moves
+#: model:ir.model.fields,field_description:liber_soc_moves.field_consignment_agreement__order_count
+msgid "# Orders"
+msgstr "Nº de Pedidos"
+
+#. module: liber_soc_moves
+#: model:ir.model.fields,field_description:liber_soc_moves.field_consignment_template__product_count
+msgid "# Products"
+msgstr "# Produtos"
+
+#. module: liber_soc_moves
+#: model_terms:ir.ui.view,arch_db:liber_soc_moves.view_consignment_move_form
+msgid "<span class=\"o_stat_text ms-2\">Agreement</span>"
+msgstr "<span class=\"o_stat_text ms-2\">Contrato</span>"
+
+#. module: liber_soc_moves
+#: model_terms:ir.ui.view,arch_db:liber_soc_moves.view_consignment_move_form
+msgid "<span class=\"o_stat_text ms-2\">Transfer</span>"
+msgstr "<span class=\"o_stat_text ms-2\">Transferência</span>"
+
+#. module: liber_soc_moves
+#: model_terms:ir.actions.act_window,help:liber_soc_moves.action_consignment_template
+msgid ""
+"A reusable pre-set list of products you can load into a\n"
+"                consignment with one click."
+msgstr ""
+"Uma lista pré-definida e reutilizável de produtos que você pode carregar em "
+"uma consignação com um clique."
+
+#. module: liber_soc_moves
+#: model:ir.model.fields,field_description:liber_soc_moves.field_consignment_move__message_needaction
+msgid "Action Needed"
+msgstr "Ação necessária"
+
+#. module: liber_soc_moves
+#: model:ir.model.fields,field_description:liber_soc_moves.field_consignment_template__active
+msgid "Active"
+msgstr "Ativo"
+
+#. module: liber_soc_moves
+#: model:ir.model.fields,field_description:liber_soc_moves.field_consignment_move__activity_ids
+msgid "Activities"
+msgstr "Atividades"
+
+#. module: liber_soc_moves
+#: model:ir.model.fields,field_description:liber_soc_moves.field_consignment_move__activity_exception_decoration
+msgid "Activity Exception Decoration"
+msgstr "Decoração de exceção de atividade"
+
+#. module: liber_soc_moves
+#: model:ir.model.fields,field_description:liber_soc_moves.field_consignment_move__activity_state
+msgid "Activity State"
+msgstr "Estado da atividade"
+
+#. module: liber_soc_moves
+#: model:ir.model.fields,field_description:liber_soc_moves.field_consignment_move__activity_type_icon
+msgid "Activity Type Icon"
+msgstr "Ícone do tipo de atividade"
+
+#. module: liber_soc_moves
+#. odoo-python
+#: code:addons/liber_soc_moves/models/consignment_move.py:0
+msgid "Add at least one product line before confirming."
+msgstr "Adicione ao menos uma linha de produto antes de confirmar."
+
+#. module: liber_soc_moves
+#. odoo-python
+#: code:addons/liber_soc_moves/models/consignment_move.py:0
+#: model:ir.model.fields,field_description:liber_soc_moves.field_consignment_move__agreement_id
+msgid "Agreement"
+msgstr "Contrato"
+
+#. module: liber_soc_moves
+#. odoo-python
+#: code:addons/liber_soc_moves/models/consignment_move.py:0
+msgid "Agreement %s has no shelf. Activate it first."
+msgstr "O contrato %s não tem prateleira. Ative-o primeiro."
+
+#. module: liber_soc_moves
+#. odoo-python
+#: code:addons/liber_soc_moves/models/consignment_move.py:0
+msgid "Agreement %s must be active to register movements."
+msgstr "O contrato %s precisa estar ativo para registrar movimentos."
+
+#. module: liber_soc_moves
+#: model:ir.model.fields,field_description:liber_soc_moves.field_consignment_move__message_attachment_count
+msgid "Attachment Count"
+msgstr "Contagem de anexos"
+
+#. module: liber_soc_moves
+#: model_terms:ir.ui.view,arch_db:liber_soc_moves.view_consignment_ledger_search
+msgid "Book"
+msgstr "Livro"
+
+#. module: liber_soc_moves
+#: model_terms:ir.ui.view,arch_db:liber_soc_moves.view_consignment_move_form
+msgid "Cancel"
+msgstr "Cancelar"
+
+#. module: liber_soc_moves
+#: model:ir.model.fields.selection,name:liber_soc_moves.selection__consignment_move__state__cancel
+msgid "Cancelled"
+msgstr "Cancelado"
+
+#. module: liber_soc_moves
+#: model:ir.model,name:liber_soc_moves.model_res_company
+msgid "Companies"
+msgstr "Empresas"
+
+#. module: liber_soc_moves
+#: model:ir.model.fields,field_description:liber_soc_moves.field_consignment_move__company_id
+#: model:ir.model.fields,field_description:liber_soc_moves.field_consignment_template__company_id
+msgid "Company"
+msgstr "Empresa"
+
+#. module: liber_soc_moves
+#: model_terms:ir.ui.view,arch_db:liber_soc_moves.view_consignment_move_form
+msgid "Confirm"
+msgstr "Confirmar"
+
+#. module: liber_soc_moves
+#: model:ir.model.fields.selection,name:liber_soc_moves.selection__consignment_move__state__confirmed
+msgid "Confirmed"
+msgstr "Confirmado"
+
+#. module: liber_soc_moves
+#: model:ir.model.fields,field_description:liber_soc_moves.field_product_product__soc_qty_consigned
+#: model:ir.model.fields,field_description:liber_soc_moves.field_product_template__soc_qty_consigned
+#: model_terms:ir.ui.view,arch_db:liber_soc_moves.view_product_template_form_soc
+msgid "Consigned"
+msgstr "Consignado"
+
+#. module: liber_soc_moves
+#: model:ir.model.fields,field_description:liber_soc_moves.field_stock_move__consignment_qty
+msgid "Consigned Qty"
+msgstr "Qtd. Consignada"
+
+#. module: liber_soc_moves
+#. odoo-python
+#: code:addons/liber_soc_moves/models/product_template.py:0
+#: model:ir.actions.act_window,name:liber_soc_moves.action_consigned_stock
+#: model_terms:ir.ui.view,arch_db:liber_soc_moves.view_consigned_stock_graph
+#: model_terms:ir.ui.view,arch_db:liber_soc_moves.view_consigned_stock_pivot
+msgid "Consigned Stock"
+msgstr "Estoque Consignado"
+
+#. module: liber_soc_moves
+#: model:ir.model.fields,field_description:liber_soc_moves.field_sale_order__is_consignment
+msgid "Consignment Order"
+msgstr "Pedido de Consignação"
+
+#. module: liber_soc_moves
+#: model:ir.model,name:liber_soc_moves.model_consignment_agreement
+#: model:ir.model.fields,field_description:liber_soc_moves.field_sale_order__consignment_agreement_id
+msgid "Consignment Agreement"
+msgstr "Contrato de Consignação"
+
+#. module: liber_soc_moves
+#: model:ir.actions.act_window,name:liber_soc_moves.action_consignment_ledger
+#: model_terms:ir.ui.view,arch_db:liber_soc_moves.view_consignment_ledger_graph
+#: model_terms:ir.ui.view,arch_db:liber_soc_moves.view_consignment_ledger_list
+#: model_terms:ir.ui.view,arch_db:liber_soc_moves.view_consignment_ledger_pivot
+#: model_terms:ir.ui.view,arch_db:liber_soc_moves.view_consignment_ledger_search
+msgid "Consignment Ledger"
+msgstr "Razão de Consignação"
+
+#. module: liber_soc_moves
+#: model:ir.model,name:liber_soc_moves.model_consignment_move
+msgid "Consignment Returns"
+msgstr "Devoluções"
+
+#. module: liber_soc_moves
+#: model:ir.model,name:liber_soc_moves.model_consignment_move_line
+msgid "Consignment Movement Line"
+msgstr "Linha de Movimento de Consignação"
+
+#. module: liber_soc_moves
+#: model:ir.model,name:liber_soc_moves.model_consignment_template
+msgid "Consignment Order Template"
+msgstr "Modelo de Pedido de Consignação"
+
+#. module: liber_soc_moves
+#: model:ir.model,name:liber_soc_moves.model_consignment_template_line
+msgid "Consignment Order Template Line"
+msgstr "Linha de Modelo de Pedido de Consignação"
+
+#. module: liber_soc_moves
+#. odoo-python
+#: code:addons/liber_soc_moves/models/res_company.py:0
+msgid "Consignment Return"
+msgstr "Retorno de Consignação"
+
+#. module: liber_soc_moves
+#: model:ir.model.fields,field_description:liber_soc_moves.field_res_company__consignment_return_operation_type_id
+msgid "Consignment Return Operation"
+msgstr "Operação de Retorno de Consignação"
+
+#. module: liber_soc_moves
+#. odoo-python
+#: code:addons/liber_soc_moves/models/res_company.py:0
+msgid "Consignment Shipment"
+msgstr "Remessa de Consignação"
+
+#. module: liber_soc_moves
+#: model:ir.model.fields,field_description:liber_soc_moves.field_res_company__consignment_shipment_operation_type_id
+msgid "Consignment Shipment Operation"
+msgstr "Operação de Remessa de Consignação"
+
+#. module: liber_soc_moves
+#: model:ir.model.fields,help:liber_soc_moves.field_stock_move__consignment_balance
+msgid ""
+"Consignment balance on this customer's shelf for this book right after this "
+"move: the cumulative sum of every earlier consigned quantity (+/-) plus this"
+" one, chronologically. Read the ledger oldest-to-newest to follow the shelf "
+"balance move by move."
+msgstr ""
+
+#. module: liber_soc_moves
+#: model:ir.model.fields,help:liber_soc_moves.field_sale_order__is_consignment
+msgid ""
+"Consignment order (Pedido C). Follows the sale flow but is not a sale: "
+"excluded from Sales reporting; revenue only at the Acerto."
+msgstr ""
+
+#. module: liber_soc_moves
+#: model_terms:ir.actions.act_window,help:liber_soc_moves.action_consignment_template
+msgid "Create a consignment order template"
+msgstr "Crie um modelo de pedido de consignação"
+
+#. module: liber_soc_moves
+#: model_terms:ir.actions.act_window,help:liber_soc_moves.action_consignment_sale_order
+msgid "Create your first consignment order"
+msgstr "Crie o primeiro pedido de consignação"
+
+#. module: liber_soc_moves
+#: model:ir.model.fields,field_description:liber_soc_moves.field_consignment_move__create_uid
+#: model:ir.model.fields,field_description:liber_soc_moves.field_consignment_move_line__create_uid
+#: model:ir.model.fields,field_description:liber_soc_moves.field_consignment_template__create_uid
+#: model:ir.model.fields,field_description:liber_soc_moves.field_consignment_template_line__create_uid
+msgid "Created by"
+msgstr "Criado por"
+
+#. module: liber_soc_moves
+#: model:ir.model.fields,field_description:liber_soc_moves.field_consignment_move__create_date
+#: model:ir.model.fields,field_description:liber_soc_moves.field_consignment_move_line__create_date
+#: model:ir.model.fields,field_description:liber_soc_moves.field_consignment_template__create_date
+#: model:ir.model.fields,field_description:liber_soc_moves.field_consignment_template_line__create_date
+msgid "Created on"
+msgstr "Criado em"
+
+#. module: liber_soc_moves
+#: model:ir.model.fields,field_description:liber_soc_moves.field_consignment_move__currency_id
+#: model:ir.model.fields,field_description:liber_soc_moves.field_consignment_move_line__currency_id
+msgid "Currency"
+msgstr "Moeda"
+
+#. module: liber_soc_moves
+#: model:ir.model.fields,field_description:liber_soc_moves.field_consignment_move__partner_id
+#: model:ir.model.fields,field_description:liber_soc_moves.field_stock_move__consignment_partner_id
+#: model:ir.model.fields,field_description:liber_soc_moves.field_stock_quant__consignment_partner_id
+#: model_terms:ir.ui.view,arch_db:liber_soc_moves.view_consigned_stock_search
+#: model_terms:ir.ui.view,arch_db:liber_soc_moves.view_consignment_ledger_search
+#: model_terms:ir.ui.view,arch_db:liber_soc_moves.view_consignment_move_search
+msgid "Customer"
+msgstr "Cliente"
+
+#. module: liber_soc_moves
+#. odoo-python
+#: code:addons/liber_soc_moves/models/consignment_move.py:0
+msgid "Customer %s has no consignment agreement."
+msgstr "O cliente %s não possui contrato de consignação."
+
+#. module: liber_soc_moves
+#: model:ir.model.fields,field_description:liber_soc_moves.field_consignment_move__location_id
+msgid "Customer Shelf"
+msgstr "Prateleira do Cliente"
+
+#. module: liber_soc_moves
+#: model:ir.model.fields,help:liber_soc_moves.field_stock_quant__consignment_partner_id
+msgid "Customer whose consignment shelf holds this stock."
+msgstr "Cliente cuja prateleira de consignação guarda este estoque."
+
+#. module: liber_soc_moves
+#: model:ir.model.fields,help:liber_soc_moves.field_stock_move__consignment_partner_id
+msgid ""
+"Customer whose consignment shelf this move touched. Lets the ledger group "
+"every shipment/return by customer, not just by book."
+msgstr ""
+
+#. module: liber_soc_moves
+#: model:ir.model.fields,field_description:liber_soc_moves.field_consignment_move__date
+msgid "Date"
+msgstr "Data"
+
+#. module: liber_soc_moves
+#: model:ir.model.fields,field_description:liber_soc_moves.field_consignment_agreement__display_name
+#: model:ir.model.fields,field_description:liber_soc_moves.field_consignment_move__display_name
+#: model:ir.model.fields,field_description:liber_soc_moves.field_consignment_move_line__display_name
+#: model:ir.model.fields,field_description:liber_soc_moves.field_consignment_template__display_name
+#: model:ir.model.fields,field_description:liber_soc_moves.field_consignment_template_line__display_name
+#: model:ir.model.fields,field_description:liber_soc_moves.field_product_template__display_name
+#: model:ir.model.fields,field_description:liber_soc_moves.field_res_company__display_name
+#: model:ir.model.fields,field_description:liber_soc_moves.field_sale_order__display_name
+#: model:ir.model.fields,field_description:liber_soc_moves.field_sale_report__display_name
+#: model:ir.model.fields,field_description:liber_soc_moves.field_stock_move__display_name
+#: model:ir.model.fields,field_description:liber_soc_moves.field_stock_quant__display_name
+msgid "Display Name"
+msgstr "Nome exibido"
+
+#. module: liber_soc_moves
+#: model:ir.model.fields.selection,name:liber_soc_moves.selection__consignment_move__state__done
+#: model_terms:ir.ui.view,arch_db:liber_soc_moves.view_consignment_move_search
+msgid "Done"
+msgstr "Concluído"
+
+#. module: liber_soc_moves
+#: model:ir.model.fields.selection,name:liber_soc_moves.selection__consignment_move__state__draft
+#: model_terms:ir.ui.view,arch_db:liber_soc_moves.view_consignment_move_search
+msgid "Draft"
+msgstr "Provisório"
+
+#. module: liber_soc_moves
+#: model_terms:ir.actions.act_window,help:liber_soc_moves.action_shelf_inventory
+msgid ""
+"Enter the counted quantity per title on each customer's shelf.\n"
+"               Nothing moves until you press Apply — the count stays as a draft\n"
+"               adjustment. You can also import counts from a spreadsheet."
+msgstr ""
+"Informe a quantidade contada por título na prateleira de cada cliente. Nada "
+"se move até você pressionar Aplicar — a contagem fica como um ajuste "
+"provisório. Você também pode importar as contagens de uma planilha."
+
+#. module: liber_soc_moves
+#: model_terms:ir.actions.act_window,help:liber_soc_moves.action_consignment_ledger
+msgid ""
+"Every stock move in and out of a consignment shelf: shipments and\n"
+"               replenishments (+), returns and settled sales (-). Opens grouped by\n"
+"               customer and month so you can follow how each customer's\n"
+"               consignment evolves over time."
+msgstr ""
+
+#. module: liber_soc_moves
+#: model_terms:ir.actions.act_window,help:liber_soc_moves.action_consigned_stock
+msgid ""
+"Everything we currently have placed on customer shelves (still ours until "
+"sold)."
+msgstr ""
+"Tudo o que temos atualmente colocado nas prateleiras dos clientes (ainda "
+"nosso até ser vendido)."
+
+#. module: liber_soc_moves
+#: model:ir.model.fields,field_description:liber_soc_moves.field_consignment_move__message_follower_ids
+msgid "Followers"
+msgstr "Seguidores"
+
+#. module: liber_soc_moves
+#: model:ir.model.fields,field_description:liber_soc_moves.field_consignment_move__message_partner_ids
+msgid "Followers (Partners)"
+msgstr "Seguidores (Parceiros)"
+
+#. module: liber_soc_moves
+#: model:ir.model.fields,help:liber_soc_moves.field_consignment_move__activity_type_icon
+msgid "Font awesome icon e.g. fa-tasks"
+msgstr "Ícone Font Awesome, ex.: fa-tasks"
+
+#. module: liber_soc_moves
+#: model:ir.model.fields,field_description:liber_soc_moves.field_consignment_move__amount_total
+msgid "Goods Value"
+msgstr "Valor das Mercadorias"
+
+#. module: liber_soc_moves
+#: model:ir.model.fields,field_description:liber_soc_moves.field_consignment_move__has_message
+msgid "Has Message"
+msgstr "Tem mensagem"
+
+#. module: liber_soc_moves
+#: model:ir.model.fields,field_description:liber_soc_moves.field_consignment_agreement__id
+#: model:ir.model.fields,field_description:liber_soc_moves.field_consignment_move__id
+#: model:ir.model.fields,field_description:liber_soc_moves.field_consignment_move_line__id
+#: model:ir.model.fields,field_description:liber_soc_moves.field_consignment_template__id
+#: model:ir.model.fields,field_description:liber_soc_moves.field_consignment_template_line__id
+#: model:ir.model.fields,field_description:liber_soc_moves.field_product_template__id
+#: model:ir.model.fields,field_description:liber_soc_moves.field_res_company__id
+#: model:ir.model.fields,field_description:liber_soc_moves.field_sale_order__id
+#: model:ir.model.fields,field_description:liber_soc_moves.field_sale_report__id
+#: model:ir.model.fields,field_description:liber_soc_moves.field_stock_move__id
+#: model:ir.model.fields,field_description:liber_soc_moves.field_stock_quant__id
+msgid "ID"
+msgstr ""
+
+#. module: liber_soc_moves
+#: model:ir.model.fields,field_description:liber_soc_moves.field_consignment_move__activity_exception_icon
+msgid "Icon"
+msgstr "Ícone"
+
+#. module: liber_soc_moves
+#: model:ir.model.fields,help:liber_soc_moves.field_consignment_move__activity_exception_icon
+msgid "Icon to indicate an exception activity."
+msgstr "Ícone para indicar uma atividade de exceção."
+
+#. module: liber_soc_moves
+#: model:ir.model.fields,help:liber_soc_moves.field_consignment_move__message_needaction
+msgid "If checked, new messages require your attention."
+msgstr "Se marcado, novas mensagens requerem sua atenção."
+
+#. module: liber_soc_moves
+#: model:ir.model.fields,help:liber_soc_moves.field_consignment_move__message_has_error
+#: model:ir.model.fields,help:liber_soc_moves.field_consignment_move__message_has_sms_error
+msgid "If checked, some messages have a delivery error."
+msgstr "Se marcado, algumas mensagens têm erro de entrega."
+
+#. module: liber_soc_moves
+#: model:ir.model.fields,help:liber_soc_moves.field_consignment_move__location_id
+msgid ""
+"Internal location that holds our stock physically placed at this customer. "
+"Created automatically when the agreement is activated."
+msgstr ""
+"Localização interna que guarda nosso estoque fisicamente colocado neste "
+"cliente. Criada automaticamente quando o contrato é ativado."
+
+#. module: liber_soc_moves
+#: model:ir.actions.act_window,name:liber_soc_moves.action_shelf_inventory
+#: model:ir.ui.menu,name:liber_soc_moves.menu_shelf_inventory
+msgid "Inventory"
+msgstr "Inventário"
+
+#. module: liber_soc_moves
+#: model:ir.model.fields,field_description:liber_soc_moves.field_consignment_move__message_is_follower
+msgid "Is Follower"
+msgstr "É seguidor"
+
+#. module: liber_soc_moves
+#: model:ir.model.fields,field_description:liber_soc_moves.field_consignment_move__is_physical
+msgid "Is Physical"
+msgstr "É físico"
+
+#. module: liber_soc_moves
+#: model:ir.model.fields,field_description:liber_soc_moves.field_consignment_move__write_uid
+#: model:ir.model.fields,field_description:liber_soc_moves.field_consignment_move_line__write_uid
+#: model:ir.model.fields,field_description:liber_soc_moves.field_consignment_template__write_uid
+#: model:ir.model.fields,field_description:liber_soc_moves.field_consignment_template_line__write_uid
+msgid "Last Updated by"
+msgstr "Última atualização por"
+
+#. module: liber_soc_moves
+#: model:ir.model.fields,field_description:liber_soc_moves.field_consignment_move__write_date
+#: model:ir.model.fields,field_description:liber_soc_moves.field_consignment_move_line__write_date
+#: model:ir.model.fields,field_description:liber_soc_moves.field_consignment_template__write_date
+#: model:ir.model.fields,field_description:liber_soc_moves.field_consignment_template_line__write_date
+msgid "Last Updated on"
+msgstr "Última atualização em"
+
+#. module: liber_soc_moves
+#: model_terms:ir.ui.view,arch_db:liber_soc_moves.view_consignment_ledger_search
+msgid "Last Year"
+msgstr "Ano Passado"
+
+#. module: liber_soc_moves
+#: model:ir.ui.menu,name:liber_soc_moves.menu_consignment_ledger
+msgid "Ledger"
+msgstr "Razão"
+
+#. module: liber_soc_moves
+#: model:ir.model.fields,field_description:liber_soc_moves.field_consignment_move__line_ids
+msgid "Lines"
+msgstr "Linhas"
+
+#. module: liber_soc_moves
+#: model_terms:ir.ui.view,arch_db:liber_soc_moves.view_consignment_move_form
+msgid "Load from Template"
+msgstr "Carregar do Modelo"
+
+#. module: liber_soc_moves
+#: model:ir.model.fields,help:liber_soc_moves.field_consignment_move__amount_total
+msgid ""
+"Merchandise value carried by the movement's fiscal note. This is not revenue"
+" -- a consignment movement is not a sale."
+msgstr ""
+"Valor da mercadoria transportado pela nota fiscal do movimento. Isto não é "
+"receita -- um movimento de consignação não é uma venda."
+
+#. module: liber_soc_moves
+#: model:ir.model.fields,help:liber_soc_moves.field_consignment_move_line__price_unit
+msgid "Merchandise value per unit for the fiscal note (not a sale price)."
+msgstr ""
+"Valor da mercadoria por unidade para a nota fiscal (não é preço de venda)."
+
+#. module: liber_soc_moves
+#: model:ir.model.fields,field_description:liber_soc_moves.field_consignment_move__message_has_error
+msgid "Message Delivery error"
+msgstr "Erro de entrega de mensagem"
+
+#. module: liber_soc_moves
+#: model:ir.model.fields,field_description:liber_soc_moves.field_consignment_move__message_ids
+msgid "Messages"
+msgstr "Mensagens"
+
+#. module: liber_soc_moves
+#: model_terms:ir.ui.view,arch_db:liber_soc_moves.view_consignment_ledger_search
+msgid "Month"
+msgstr "Mês"
+
+#. module: liber_soc_moves
+#: model:ir.model.fields,field_description:liber_soc_moves.field_consignment_move_line__move_id
+msgid "Movement"
+msgstr "Movimento"
+
+#. module: liber_soc_moves
+#. odoo-python
+#: code:addons/liber_soc_moves/models/consignment_agreement.py:0
+#: model:ir.model.fields,field_description:liber_soc_moves.field_consignment_agreement__move_ids
+msgid "Movements"
+msgstr "Movimentos"
+
+#. module: liber_soc_moves
+#: model:ir.model.fields,field_description:liber_soc_moves.field_consignment_move__my_activity_date_deadline
+msgid "My Activity Deadline"
+msgstr "Prazo da minha atividade"
+
+#. module: liber_soc_moves
+#: model_terms:ir.ui.view,arch_db:liber_soc_moves.view_consignment_ledger_list
+msgid "Net"
+msgstr "Líquido"
+
+#. module: liber_soc_moves
+#: model:ir.model.fields,help:liber_soc_moves.field_stock_move__consignment_qty
+msgid ""
+"Net effect on the customer's shelf: positive when goods are placed on it "
+"(shipment / replenishment), negative when they leave it (return or settled "
+"sale). Sum it over time to follow how each customer's consignment balance "
+"evolves."
+msgstr ""
+
+#. module: liber_soc_moves
+#. odoo-python
+#: code:addons/liber_soc_moves/models/consignment_move.py:0
+#: code:addons/liber_soc_moves/models/sale_order.py:0
+msgid "New"
+msgstr "Novo"
+
+#. module: liber_soc_moves
+#: model:ir.model.fields,field_description:liber_soc_moves.field_consignment_move__activity_date_deadline
+msgid "Next Activity Deadline"
+msgstr "Prazo da próxima atividade"
+
+#. module: liber_soc_moves
+#: model:ir.model.fields,field_description:liber_soc_moves.field_consignment_move__activity_summary
+msgid "Next Activity Summary"
+msgstr "Resumo da próxima atividade"
+
+#. module: liber_soc_moves
+#: model:ir.model.fields,field_description:liber_soc_moves.field_consignment_move__activity_type_id
+msgid "Next Activity Type"
+msgstr "Tipo da próxima atividade"
+
+#. module: liber_soc_moves
+#: model_terms:ir.actions.act_window,help:liber_soc_moves.action_consignment_ledger
+msgid "No consignment movements yet"
+msgstr "Ainda não há movimentos de consignação"
+
+#. module: liber_soc_moves
+#: model_terms:ir.actions.act_window,help:liber_soc_moves.action_consignment_move
+msgid "No movements yet"
+msgstr "Ainda não há movimentos"
+
+#. module: liber_soc_moves
+#. odoo-python
+#: code:addons/liber_soc_moves/models/consignment_move.py:0
+msgid "No warehouse configured for company %s."
+msgstr "Nenhum armazém configurado para a empresa %s."
+
+#. module: liber_soc_moves
+#: model:ir.model.fields,field_description:liber_soc_moves.field_consignment_move__note
+#: model:ir.model.fields,field_description:liber_soc_moves.field_consignment_template__note
+#: model_terms:ir.ui.view,arch_db:liber_soc_moves.view_consignment_move_form
+#: model_terms:ir.ui.view,arch_db:liber_soc_moves.view_consignment_template_form
+msgid "Notes"
+msgstr "Notas"
+
+#. module: liber_soc_moves
+#: model_terms:ir.actions.act_window,help:liber_soc_moves.action_consigned_stock
+msgid "Nothing on consignment yet"
+msgstr "Nada em consignação ainda"
+
+#. module: liber_soc_moves
+#: model_terms:ir.actions.act_window,help:liber_soc_moves.action_shelf_inventory
+msgid "Nothing to count yet"
+msgstr "Nada a contar ainda"
+
+#. module: liber_soc_moves
+#: model:ir.model.fields,field_description:liber_soc_moves.field_consignment_move__message_needaction_counter
+msgid "Number of Actions"
+msgstr "Número de ações"
+
+#. module: liber_soc_moves
+#: model:ir.model.fields,field_description:liber_soc_moves.field_consignment_move__message_has_error_counter
+msgid "Number of errors"
+msgstr "Número de erros"
+
+#. module: liber_soc_moves
+#: model:ir.model.fields,help:liber_soc_moves.field_consignment_move__message_needaction_counter
+msgid "Number of messages requiring action"
+msgstr "Número de mensagens que requerem ação"
+
+#. module: liber_soc_moves
+#: model:ir.model.fields,help:liber_soc_moves.field_consignment_move__message_has_error_counter
+msgid "Number of messages with delivery error"
+msgstr "Número de mensagens com erro de entrega"
+
+#. module: liber_soc_moves
+#: model_terms:ir.ui.view,arch_db:liber_soc_moves.view_consignment_ledger_search
+msgid "Off shelf (−)"
+msgstr "Saída da prateleira (−)"
+
+#. module: liber_soc_moves
+#: model:ir.ui.menu,name:liber_soc_moves.menu_consigned_stock
+msgid "On Shelf"
+msgstr "Na Prateleira"
+
+#. module: liber_soc_moves
+#. odoo-python
+#: code:addons/liber_soc_moves/models/consignment_agreement.py:0
+msgid "Only an active agreement can be renewed."
+msgstr "Apenas um contrato ativo pode ser renovado."
+
+#. module: liber_soc_moves
+#. odoo-python
+#: code:addons/liber_soc_moves/models/consignment_agreement.py:0
+msgid "Only an active or suspended agreement can be recalled."
+msgstr "Apenas um contrato ativo ou suspenso pode ser recolhido."
+
+#. module: liber_soc_moves
+#: model_terms:ir.ui.view,arch_db:liber_soc_moves.view_consignment_ledger_search
+msgid "Onto shelf (+)"
+msgstr "Entrada na prateleira (+)"
+
+#. module: liber_soc_moves
+#: model:ir.actions.act_window,name:liber_soc_moves.action_consignment_template
+msgid "Order Templates"
+msgstr "Modelos de Pedido"
+
+#. module: liber_soc_moves
+#. odoo-python
+#: code:addons/liber_soc_moves/models/consignment_agreement.py:0
+#: model:ir.actions.act_window,name:liber_soc_moves.action_consignment_sale_order
+#: model:ir.ui.menu,name:liber_soc_moves.menu_consignment_orders
+#: model_terms:ir.ui.view,arch_db:liber_soc_moves.view_consignment_agreement_form_moves
+msgid "Orders"
+msgstr "Pedidos"
+
+#. module: liber_soc_moves
+#: model:ir.model.fields,help:liber_soc_moves.field_product_product__soc_qty_wh
+#: model:ir.model.fields,help:liber_soc_moves.field_product_template__soc_qty_wh
+msgid ""
+"Our own stock on hand in the main stock location. Consignment shelves live "
+"outside the warehouse, so they count neither here nor in the native On Hand."
+msgstr ""
+"Nosso próprio estoque na localização de estoque principal. As prateleiras de "
+"consignação ficam fora do armazém, então não entram nem aqui nem no Em mãos "
+"nativo."
+
+#. module: liber_soc_moves
+#: model:ir.model.fields,help:liber_soc_moves.field_consignment_move__template_id
+msgid "Pre-set product list. Use 'Load from Template' to fill the lines."
+msgstr ""
+"Lista de produtos pré-definida. Use 'Carregar do Modelo' para preencher as "
+"linhas."
+
+#. module: liber_soc_moves
+#: model:ir.model,name:liber_soc_moves.model_product_template
+#: model:ir.model.fields,field_description:liber_soc_moves.field_consignment_move_line__product_id
+#: model:ir.model.fields,field_description:liber_soc_moves.field_consignment_template_line__product_id
+#: model_terms:ir.ui.view,arch_db:liber_soc_moves.view_consigned_stock_search
+msgid "Product"
+msgstr "Produto"
+
+#. module: liber_soc_moves
+#: model:ir.model.fields,field_description:liber_soc_moves.field_consignment_template__line_ids
+#: model_terms:ir.ui.view,arch_db:liber_soc_moves.view_consignment_move_form
+#: model_terms:ir.ui.view,arch_db:liber_soc_moves.view_consignment_template_form
+msgid "Products"
+msgstr "Produtos"
+
+#. module: liber_soc_moves
+#: model:ir.model.fields,field_description:liber_soc_moves.field_consignment_move_line__product_uom_qty
+#: model:ir.model.fields,field_description:liber_soc_moves.field_consignment_template_line__product_uom_qty
+msgid "Quantity"
+msgstr "Quantidade"
+
+#. module: liber_soc_moves
+#: model:ir.model,name:liber_soc_moves.model_stock_quant
+msgid "Quants"
+msgstr ""
+
+#. module: liber_soc_moves
+#: model:ir.model.fields,field_description:liber_soc_moves.field_consignment_move__rating_ids
+msgid "Ratings"
+msgstr ""
+
+#. module: liber_soc_moves
+#: model_terms:ir.ui.view,arch_db:liber_soc_moves.view_consignment_agreement_form_moves
+msgid "Recall All"
+msgstr "Recolher Tudo"
+
+#. module: liber_soc_moves
+#: model:ir.model.fields,field_description:liber_soc_moves.field_consignment_move__name
+msgid "Reference"
+msgstr "Referência"
+
+#. module: liber_soc_moves
+#: model_terms:ir.ui.view,arch_db:liber_soc_moves.view_consignment_move_form
+msgid "Release to Logistics"
+msgstr "Liberar para Logística"
+
+#. module: liber_soc_moves
+#: model_terms:ir.ui.view,arch_db:liber_soc_moves.view_consignment_move_search
+msgid "Renewals"
+msgstr "Renovações"
+
+#. module: liber_soc_moves
+#: model:ir.model.fields.selection,name:liber_soc_moves.selection__consignment_move__move_kind__replenishment
+#: model:ir.model.fields.selection,name:liber_soc_moves.selection__sale_order__consignment_type__replenishment
+msgid "Replenishment"
+msgstr "Reposição"
+
+#. module: liber_soc_moves
+#: model:ir.ui.menu,name:liber_soc_moves.menu_consignment_stock_root
+msgid "Report"
+msgstr "Relatório"
+
+#. module: liber_soc_moves
+#: model_terms:ir.ui.view,arch_db:liber_soc_moves.view_consignment_move_form
+msgid "Reset to Draft"
+msgstr "Redefinir para Provisório"
+
+#. module: liber_soc_moves
+#: model:ir.model.fields,help:liber_soc_moves.field_consignment_move__agreement_id
+#: model:ir.model.fields,help:liber_soc_moves.field_sale_order__consignment_agreement_id
+msgid "Resolved from the customer (one agreement per customer)."
+msgstr "Resolvido a partir do cliente (um contrato por cliente)."
+
+#. module: liber_soc_moves
+#: model:ir.model.fields,field_description:liber_soc_moves.field_consignment_move__activity_user_id
+msgid "Responsible User"
+msgstr "Usuário Responsável"
+
+#. module: liber_soc_moves
+#: model:ir.model.fields.selection,name:liber_soc_moves.selection__consignment_move__move_kind__return
+msgid "Return"
+msgstr "Devolução"
+
+#. module: liber_soc_moves
+#: model:ir.actions.act_window,name:liber_soc_moves.action_consignment_move
+#: model:ir.ui.menu,name:liber_soc_moves.menu_consignment_moves
+msgid "Returns"
+msgstr "Devoluções"
+
+#. module: liber_soc_moves
+#: model:ir.model.fields,field_description:liber_soc_moves.field_stock_move__consignment_balance
+msgid "Running Balance"
+msgstr "Saldo Corrente"
+
+#. module: liber_soc_moves
+#: model:ir.model.fields,field_description:liber_soc_moves.field_consignment_move__message_has_sms_error
+msgid "SMS Delivery error"
+msgstr "Erro de entrega de SMS"
+
+#. module: liber_soc_moves
+#: model:ir.model,name:liber_soc_moves.model_sale_report
+msgid "Sales Analysis Report"
+msgstr "Relatório de análise de vendas"
+
+#. module: liber_soc_moves
+#: model:ir.model,name:liber_soc_moves.model_sale_order
+msgid "Sales Order"
+msgstr "Pedido de venda"
+
+#. module: liber_soc_moves
+#. odoo-python
+#: code:addons/liber_soc_moves/models/consignment_move.py:0
+msgid "Select a template first."
+msgstr "Selecione um modelo primeiro."
+
+#. module: liber_soc_moves
+#: model:ir.model.fields.selection,name:liber_soc_moves.selection__consignment_move__move_kind__shipment
+msgid "Shipment"
+msgstr "Remessa"
+
+#. module: liber_soc_moves
+#: model:ir.model.fields,field_description:liber_soc_moves.field_consignment_move__state
+#: model_terms:ir.ui.view,arch_db:liber_soc_moves.view_consignment_move_search
+msgid "Status"
+msgstr "Situação"
+
+#. module: liber_soc_moves
+#: model:ir.model.fields,help:liber_soc_moves.field_consignment_move__activity_state
+msgid ""
+"Status based on activities\n"
+"Overdue: Due date is already passed\n"
+"Today: Activity date is today\n"
+"Planned: Future activities."
+msgstr ""
+"Estado com base nas atividades\n"
+"Atrasada: a data de vencimento já passou\n"
+"Hoje: a atividade é para hoje\n"
+"Planejada: atividades futuras."
+
+#. module: liber_soc_moves
+#. odoo-python
+#: code:addons/liber_soc_moves/models/product_template.py:0
+#: model:ir.model.fields,field_description:liber_soc_moves.field_product_product__soc_qty_wh
+#: model:ir.model.fields,field_description:liber_soc_moves.field_product_template__soc_qty_wh
+#: model_terms:ir.ui.view,arch_db:liber_soc_moves.view_product_template_form_soc
+msgid "Stock"
+msgstr "Estoque"
+
+#. module: liber_soc_moves
+#: model:ir.model,name:liber_soc_moves.model_stock_move
+msgid "Stock Move"
+msgstr "Movimentação de estoque"
+
+#. module: liber_soc_moves
+#: model:ir.model.fields,field_description:liber_soc_moves.field_consignment_move_line__price_subtotal
+msgid "Subtotal"
+msgstr ""
+
+#. module: liber_soc_moves
+#. odoo-python
+#: code:addons/liber_soc_moves/models/consignment_agreement.py:0
+#: model:ir.model.fields.selection,name:liber_soc_moves.selection__consignment_move__move_kind__symbolic_renewal
+#: model_terms:ir.ui.view,arch_db:liber_soc_moves.view_consignment_agreement_form_moves
+msgid "Symbolic Renewal"
+msgstr "Renovação Simbólica"
+
+#. module: liber_soc_moves
+#. odoo-python
+#: code:addons/liber_soc_moves/models/consignment_move.py:0
+msgid "Symbolic renewal %s registered (no physical movement)."
+msgstr "Renovação simbólica %s registrada (sem movimento físico)."
+
+#. module: liber_soc_moves
+#. odoo-python
+#: code:addons/liber_soc_moves/models/consignment_agreement.py:0
+msgid "Symbolic renewal for agreement %s (fiscal clock)."
+msgstr "Renovação simbólica do contrato %s (relógio fiscal)."
+
+#. module: liber_soc_moves
+#: model:ir.model.fields,field_description:liber_soc_moves.field_consignment_move__template_id
+#: model:ir.model.fields,field_description:liber_soc_moves.field_consignment_template__name
+#: model:ir.model.fields,field_description:liber_soc_moves.field_consignment_template_line__template_id
+msgid "Template"
+msgstr "Modelo"
+
+#. module: liber_soc_moves
+#: model:ir.ui.menu,name:liber_soc_moves.menu_consignment_templates
+msgid "Templates"
+msgstr "Modelos"
+
+#. module: liber_soc_moves
+#: model_terms:ir.actions.act_window,help:liber_soc_moves.action_consignment_sale_order
+msgid ""
+"The Order (C) is a commercial order — same flow as a sale, but\n"
+"               it is not a sale: it stays out of Sales reports and only becomes\n"
+"               revenue at Settlement."
+msgstr ""
+
+#. module: liber_soc_moves
+#. odoo-python
+#: code:addons/liber_soc_moves/models/consignment_agreement.py:0
+msgid "The shelf is already empty; nothing to recall."
+msgstr "A prateleira já está vazia; nada a recolher."
+
+#. module: liber_soc_moves
+#: model_terms:ir.ui.view,arch_db:liber_soc_moves.view_consignment_ledger_search
+msgid "This Year"
+msgstr "Este Ano"
+
+#. module: liber_soc_moves
+#: model_terms:ir.actions.act_window,help:liber_soc_moves.action_consignment_move
+msgid ""
+"This is the movement ledger. Shipments, replenishments, returns\n"
+"                and symbolic renewals are originated from an Operation, not here.\n"
+"                Warehouse processing (confirm/validate the transfer) happens on\n"
+"                each record."
+msgstr ""
+"Este é o razão de movimentos. Remessas, reposições, devoluções e renovações "
+"simbólicas são originadas de uma Operação, não aqui. O processamento no "
+"armazém (confirmar/validar a transferência) acontece em cada registro."
+
+#. module: liber_soc_moves
+#. odoo-python
+#: code:addons/liber_soc_moves/models/consignment_agreement.py:0
+msgid "Total Recall"
+msgstr "Recolhimento Total"
+
+#. module: liber_soc_moves
+#. odoo-python
+#: code:addons/liber_soc_moves/models/consignment_agreement.py:0
+msgid "Total recall for agreement %s (closing)."
+msgstr "Recolhimento total do contrato %s (encerramento)."
+
+#. module: liber_soc_moves
+#. odoo-python
+#: code:addons/liber_soc_moves/models/consignment_move.py:0
+#: model:ir.model.fields,field_description:liber_soc_moves.field_consignment_move__picking_id
+msgid "Transfer"
+msgstr "Transferência"
+
+#. module: liber_soc_moves
+#: model:ir.model.fields,field_description:liber_soc_moves.field_consignment_move__picking_state
+msgid "Transfer Status"
+msgstr "Status da Transferência"
+
+#. module: liber_soc_moves
+#: model:ir.model.fields,field_description:liber_soc_moves.field_consignment_move__move_kind
+#: model_terms:ir.ui.view,arch_db:liber_soc_moves.view_consignment_move_search
+msgid "Type"
+msgstr "Tipo"
+
+#. module: liber_soc_moves
+#: model:ir.model.fields,help:liber_soc_moves.field_consignment_move__activity_exception_decoration
+msgid "Type of the exception activity on record."
+msgstr "Tipo da atividade de exceção no registro."
+
+#. module: liber_soc_moves
+#: model:ir.model.fields,field_description:liber_soc_moves.field_consignment_move_line__price_unit
+msgid "Unit Value"
+msgstr "Valor Unitário"
+
+#. module: liber_soc_moves
+#: model:ir.model.fields,help:liber_soc_moves.field_product_product__soc_qty_consigned
+#: model:ir.model.fields,help:liber_soc_moves.field_product_template__soc_qty_consigned
+msgid "Units currently placed on customers' consignment shelves."
+msgstr ""
+"Unidades atualmente colocadas nas prateleiras de consignação dos clientes."
+
+#. module: liber_soc_moves
+#: model:ir.model.fields,field_description:liber_soc_moves.field_consignment_move_line__product_uom
+msgid "UoM"
+msgstr "UdM"
+
+#. module: liber_soc_moves
+#: model:ir.model.fields.selection,name:liber_soc_moves.selection__consignment_move__state__waiting
+#: model_terms:ir.ui.view,arch_db:liber_soc_moves.view_consignment_move_search
+msgid "Waiting"
+msgstr "Aguardando"
+
+#. module: liber_soc_moves
+#: model:ir.model.fields,help:liber_soc_moves.field_res_company__consignment_return_operation_type_id
+msgid ""
+"Warehouse operation type used for consignment returns (customer shelf -> "
+"warehouse). It is a merchandise return, not a generic internal transfer."
+msgstr ""
+
+#. module: liber_soc_moves
+#: model:ir.model.fields,help:liber_soc_moves.field_res_company__consignment_shipment_operation_type_id
+msgid ""
+"Warehouse operation type used for consignment shipments/replenishments "
+"(warehouse -> customer shelf)."
+msgstr ""
+
+#. module: liber_soc_moves
+#: model:ir.model.fields,field_description:liber_soc_moves.field_consignment_move__website_message_ids
+msgid "Website Messages"
+msgstr "Mensagens do Site"
+
+#. module: liber_soc_moves
+#: model:ir.model.fields,help:liber_soc_moves.field_consignment_move__website_message_ids
+msgid "Website communication history"
+msgstr "Histórico de comunicação do site"
+
+#. module: liber_soc_moves
+#. odoo-python
+#: code:addons/liber_soc_moves/models/consignment_agreement.py:0
+msgid "agreement_id"
+msgstr ""
+
+#. module: liber_soc_moves
+#. odoo-python
+#: code:addons/liber_soc_moves/models/consignment_agreement.py:0
+msgid "consignment_agreement_id"
+msgstr ""
+
+#. module: liber_soc_moves
+#: model_terms:ir.ui.view,arch_db:liber_soc_moves.view_consignment_template_form
+msgid "e.g. Lançamento Infantil"
+msgstr "ex.: Lançamento Infantil"
+
+#. module: liber_soc_moves
+#. odoo-python
+#: code:addons/liber_soc_moves/models/product_template.py:0
+msgid "product_id"
+msgstr ""
+
+#. module: liber_soc_moves
+#: model:ir.model.fields,field_description:liber_soc_moves.field_sale_order__consignment_type
+msgid "Consignment Type"
+msgstr "Tipo de Consignação"
+
+#. module: liber_soc_moves
+#: model:ir.model.fields.selection,name:liber_soc_moves.selection__sale_order__consignment_type__opening
+msgid "Consignment Opening"
+msgstr "Abertura de Consignação"
+
+
+#. module: liber_soc_moves
+#: model:ir.ui.menu,name:liber_soc_moves.menu_consignment_stock_root
+msgid "Reports"
+msgstr "Relatórios"
+
+
+#. module: liber_soc_moves
+#: model:ir.model,name:liber_soc_moves.model_consignment_template
+msgid "Consignment Campaign"
+msgstr "Campanha de Consignação"
+
+#. module: liber_soc_moves
+#: model:ir.model,name:liber_soc_moves.model_consignment_template_line
+msgid "Consignment Campaign Line"
+msgstr "Linha da Campanha de Consignação"
+
+#. module: liber_soc_moves
+#: model:ir.model.fields,field_description:liber_soc_moves.field_consignment_template__name
+#: model:ir.model.fields,field_description:liber_soc_moves.field_consignment_template_line__template_id
+#: model:ir.model.fields,field_description:liber_soc_moves.field_consignment_move__template_id
+msgid "Campaign"
+msgstr "Campanha"
+
+#. module: liber_soc_moves
+#: model:ir.ui.menu,name:liber_soc_moves.menu_consignment_templates
+#: model:ir.actions.act_window,name:liber_soc_moves.action_consignment_template
+msgid "Campaigns"
+msgstr "Campanhas"
+
+#. module: liber_soc_moves
+#: model_terms:ir.ui.view,arch_db:liber_soc_moves.view_consignment_move_form
+msgid "Load from Campaign"
+msgstr "Carregar da Campanha"
+
+#. module: liber_soc_moves
+#: code:addons/liber_soc_moves/models/consignment_move.py:0
+msgid "Select a campaign first."
+msgstr "Selecione uma campanha primeiro."
+
+
+#. module: liber_soc_moves
+#: model:ir.model.fields,field_description:liber_soc_moves.field_stock_quant__consignment_team_id
+#: model_terms:ir.ui.view,arch_db:liber_soc_moves.view_consigned_stock_search
+msgid "Sales Channel"
+msgstr "Canal de Vendas"

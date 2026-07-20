@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Auto-finalize confirmed consignment operations whose downstream
+         documents (sale, replenishment Pedido, return) have all closed their
+         logistics/invoicing. Runs periodically; the Finalize button on the
+         form does the same on demand. -->
+    <record id="ir_cron_finalize_settlements" model="ir.cron">
+        <field name="name">Consignment: finalize closed operations</field>
+        <field name="model_id" ref="model_consignment_settlement"/>
+        <field name="state">code</field>
+        <field name="code">model._cron_finalize_closed()</field>
+        <field name="interval_number">30</field>
+        <field name="interval_type">minutes</field>
+        <field name="active" eval="True"/>
+    </record>
+</odoo>

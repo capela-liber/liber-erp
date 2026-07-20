@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Debt report over the royalty analytic lines -->
+    <record id="view_royalty_debt_pivot" model="ir.ui.view">
+        <field name="name">edlab.royalty.debt.pivot</field>
+        <field name="model">account.analytic.line</field>
+        <field name="arch" type="xml">
+            <pivot string="Royalty Debts" sample="1">
+                <field name="general_account_id" type="row"/>
+                <field name="partner_id" type="row"/>
+                <field name="date" interval="year" type="col"/>
+                <field name="edlab_amount_charged" type="measure"/>
+                <field name="edlab_amount_paid" type="measure"/>
+                <field name="amount" string="Balance" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="view_royalty_debt_tree" model="ir.ui.view">
+        <field name="name">edlab.royalty.debt.tree</field>
+        <field name="model">account.analytic.line</field>
+        <field name="arch" type="xml">
+            <list string="Royalty Debts" create="false" edit="false">
+                <field name="date"/>
+                <field name="account_id" string="Analytic Account"/>
+                <field name="partner_id" string="Beneficiary"/>
+                <field name="general_account_id" string="Financial Account"/>
+                <field name="edlab_royalty_percentage" string="Royalty %"/>
+                <field name="unit_amount" string="Quantity" sum="Quantity"/>
+                <field name="edlab_amount_charged" string="Charged" sum="Charged" optional="show"/>
+                <field name="edlab_amount_paid" string="Paid" sum="Paid" optional="show"/>
+                <field name="amount" string="Balance" sum="Balance"/>
+                <field name="currency_id" invisible="1"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_royalty_debt_search" model="ir.ui.view">
+        <field name="name">edlab.royalty.debt.search</field>
+        <field name="model">account.analytic.line</field>
+        <field name="arch" type="xml">
+            <search string="Royalty Debts">
+                <field name="account_id" string="Analytic Account"/>
+                <field name="partner_id" string="Beneficiary"/>
+                <field name="general_account_id" string="Financial Account"/>
+                <field name="product_id" string="Work"/>
+                <separator/>
+                <filter name="charged" string="Charged (owed)"
+                        domain="[('amount', '&lt;', 0)]"/>
+                <filter name="paid" string="Paid (payments)"
+                        domain="[('amount', '&gt;', 0)]"/>
+                <separator/>
+                <filter name="accrued" string="Accrued (royalties)"
+                        domain="[('edlab_source_move_line_id', '!=', False)]"/>
+                <filter name="payments" string="Payments/Cutoffs"
+                        domain="[('edlab_payment_cutoff_line_id', '!=', False)]"/>
+                <group>
+                    <filter name="g_finaccount" string="Financial Account"
+                            context="{'group_by': 'general_account_id'}"/>
+                    <filter name="g_partner" string="Beneficiary"
+                            context="{'group_by': 'partner_id'}"/>
+                    <filter name="g_account" string="Analytic Account"
+                            context="{'group_by': 'account_id'}"/>
+                    <filter name="g_work" string="Work"
+                            context="{'group_by': 'product_id'}"/>
+                    <filter name="g_date" string="Date"
+                            context="{'group_by': 'date:year'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_edlab_royalty_debts" model="ir.actions.act_window">
+        <field name="name">Royalty Debts</field>
+        <field name="res_model">account.analytic.line</field>
+        <field name="view_mode">pivot,list,graph</field>
+        <field name="domain">['|', ('edlab_source_move_line_id', '!=', False), ('edlab_payment_cutoff_line_id', '!=', False)]</field>
+        <field name="search_view_id" ref="view_royalty_debt_search"/>
+        <field name="context">{'search_default_g_finaccount': 1, 'search_default_g_partner': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">No royalty debts yet</p>
+            <p>Generate them from Contracts &#8250; Action &#8250; Fill Royalty Lines.</p>
+        </field>
+    </record>
+
+    <record id="action_edlab_royalty_debts_pivot_view" model="ir.actions.act_window.view">
+        <field name="sequence">1</field>
+        <field name="view_mode">pivot</field>
+        <field name="view_id" ref="view_royalty_debt_pivot"/>
+        <field name="act_window_id" ref="action_edlab_royalty_debts"/>
+    </record>
+    <record id="action_edlab_royalty_debts_tree_view" model="ir.actions.act_window.view">
+        <field name="sequence">2</field>
+        <field name="view_mode">list</field>
+        <field name="view_id" ref="view_royalty_debt_tree"/>
+        <field name="act_window_id" ref="action_edlab_royalty_debts"/>
+    </record>
+
+    <!-- Reports section under Copyright -->
+    <menuitem id="menu_edlab_reports"
+              name="Reports"
+              parent="liber_copyright_contracts.menu_copyright_contracts_root"
+              groups="liber_copyright_contracts.group_contract_manager"
+              sequence="30"/>
+    <menuitem id="menu_edlab_royalty_debts"
+              name="Royalty Debts"
+              parent="menu_edlab_reports"
+              action="action_edlab_royalty_debts"
+              groups="liber_copyright_contracts.group_contract_manager"
+              sequence="10"/>
+
+</odoo>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_run_overstock_wizard_form" model="ir.ui.view">
+        <field name="name">consignment.run.overstock.wizard.form</field>
+        <field name="model">consignment.run.overstock.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Not enough stock">
+                <div class="alert alert-warning" role="alert">
+                    These titles ask for more than we have On Hand. You can remove
+                    them from the shipment and run the rest.
+                </div>
+                <field name="settlement_id" invisible="1"/>
+                <field name="summary" nolabel="1" readonly="1"
+                       widget="text" class="o_field_text"/>
+                <footer>
+                    <button name="action_remove_and_run" type="object"
+                            string="Remove and Run" class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+</odoo>

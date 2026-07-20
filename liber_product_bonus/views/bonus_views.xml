@@ -1,0 +1,426 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_bonus_list" model="ir.ui.view">
+        <field name="name">product.bonus.list</field>
+        <field name="model">product.bonus</field>
+        <field name="arch" type="xml">
+            <list decoration-muted="state == 'cancelled'"
+                  decoration-danger="state == 'lost'"
+                  decoration-success="outcome in ('good', 'great')">
+                <field name="name"/>
+                <field name="date"/>
+                <field name="partner_id"/>
+                <field name="product_id" string="Título" optional="show"/>
+                <field name="dispatch_id" optional="show"/>
+                <field name="reason_id"/>
+                <field name="bucket" string="Investimento" optional="show"/>
+                <field name="partner_type" string="Tipo de parceiro" optional="hide"/>
+                <field name="list_id" optional="show"/>
+                <field name="campaign" optional="hide"/>
+                <field name="quantity" sum="Exemplares"/>
+                <field name="total_cost" sum="Custo" widget="monetary"/>
+                <field name="currency_id" column_invisible="1"/>
+                <field name="state" widget="badge"
+                       decoration-success="state == 'closed'"
+                       decoration-info="state == 'sent'"
+                       decoration-danger="state == 'lost'"/>
+                <!-- Mesma escala dos botões. Silêncio era decoration-danger:
+                     vermelho num dado que, na maioria das vezes, mede a nossa
+                     logística e não a pessoa. -->
+                <field name="outcome" widget="badge" optional="show"
+                       decoration-success="outcome == 'great'"
+                       decoration-info="outcome == 'good'"
+                       decoration-warning="outcome == 'weak'"
+                       decoration-muted="outcome == 'silence'"/>
+                <field name="deadline" optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_bonus_form" model="ir.ui.view">
+        <field name="name">product.bonus.form</field>
+        <field name="model">product.bonus</field>
+        <field name="arch" type="xml">
+            <form>
+                <!-- Padrão dos documentos de consignação (C000/S000): passos
+                     explícitos no header (enviar à logística, gerar nota,
+                     confirmar nota) e UM statusbar de estado. Sem faixas. -->
+                <header>
+                    <button name="action_approve" type="object" string="Aprovar"
+                            class="btn-primary" invisible="state != 'draft'"/>
+                    <!-- "Enviar para logística" — homólogo ao "Release to
+                         Logistics" do consignment.move: cria o MOV e lança a
+                         despesa. -->
+                    <button name="action_send" type="object"
+                            string="Enviar para logística" class="btn-primary"
+                            invisible="state not in ('draft', 'approved')"/>
+                    <!-- Gerar a nota (simples remessa, CFOP 5910) como em
+                         qualquer S000. É passo explícito e exige o mapeamento
+                         fiscal. -->
+                    <button name="action_generate_note" type="object"
+                            string="Gerar nota" class="btn-primary"
+                            invisible="state in ('draft', 'approved') or note_move_id"/>
+                    <!-- Confirmação da nota, no header como no C/S: casar a NF-e
+                         emitida (fora) com o lançamento. -->
+                    <button name="action_reconcile_nfe" type="object"
+                            string="Confirmar nota" class="btn-primary"
+                            invisible="not nfe_key or fiscal_state == 'reconciled'"/>
+                    <button name="action_arrived" type="object" string="Chegou"
+                            class="btn-primary" invisible="state != 'sent'"/>
+                    <button name="action_lost" type="object" string="Não chegou"
+                            invisible="state != 'sent'"/>
+                    <!-- Nao chegou e falha logistica, nao do destinatario.
+                         A resposta certa e reenviar, nao punir. -->
+                    <button name="action_resend" type="object" string="Reenviar"
+                            class="btn-primary" invisible="state != 'lost'"/>
+                    <button name="action_cancel" type="object" string="Cancelar"
+                            invisible="state in ('cancelled', 'closed')"/>
+                    <button name="action_reset" type="object" string="Voltar a rascunho"
+                            invisible="state != 'cancelled'"/>
+                    <!-- Um statusbar só, o do documento — padrão Odoo. -->
+                    <field name="nfe_key" invisible="1"/>
+                    <field name="fiscal_state" invisible="1"/>
+                    <field name="note_move_id" invisible="1"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,approved,sent,arrived,closed"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_partner_history" type="object"
+                                class="oe_stat_button" icon="fa-gift"
+                                invisible="not partner_id">
+                            <div class="o_stat_info">
+                                <span class="o_stat_text">Histórico</span>
+                            </div>
+                        </button>
+                        <button name="action_view_picking" type="object"
+                                class="oe_stat_button" icon="fa-truck"
+                                invisible="not picking_id">
+                            <div class="o_stat_info">
+                                <field name="picking_state" widget="statinfo"
+                                       nolabel="1" class="o_stat_value"/>
+                                <span class="o_stat_text">MOV</span>
+                            </div>
+                        </button>
+                        <button name="action_view_note" type="object"
+                                class="oe_stat_button" icon="fa-book">
+                            <div class="o_stat_info">
+                                <field name="note_label" widget="statinfo"
+                                       nolabel="1" class="o_stat_value"/>
+                                <span class="o_stat_text">Nota</span>
+                            </div>
+                        </button>
+                        <button name="action_view_nfe" type="object"
+                                class="oe_stat_button" icon="fa-file-text-o"
+                                invisible="not nfe_xml_panel_id">
+                            <div class="o_stat_info">
+                                <span class="o_stat_text">NF-e</span>
+                            </div>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <h1><field name="name" readonly="1"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="partner_id"/>
+                            <field name="reason_id"/>
+                            <field name="bucket" readonly="1"/>
+                            <field name="dispatch_id"/>
+                            <field name="list_id"/>
+                        </group>
+                        <group>
+                            <field name="date"/>
+                            <field name="campaign"/>
+                            <field name="user_id"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                    </group>
+
+                    <notebook>
+                        <page string="Exemplares">
+                            <field name="line_ids">
+                                <list editable="bottom">
+                                    <field name="product_id"/>
+                                    <field name="quantity"/>
+                                    <field name="unit_cost" widget="monetary"/>
+                                    <field name="subtotal" widget="monetary" sum="Total"/>
+                                    <field name="currency_id" column_invisible="1"/>
+                                </list>
+                            </field>
+                            <group class="oe_subtotal_footer">
+                                <field name="total_cost" widget="monetary"/>
+                                <field name="currency_id" invisible="1"/>
+                            </group>
+                        </page>
+
+                        <page string="Nota e logística" invisible="state == 'draft'">
+                            <!-- O B000 COORDENA: amarra logística e nota, como o
+                                 C000/S000. Não emite a nota (import-only); casa a
+                                 NF-e por chave e concilia com o lançamento. -->
+                            <group>
+                                <group string="Logística">
+                                    <field name="picking_id" readonly="1"/>
+                                    <field name="sent_date" readonly="1"/>
+                                    <field name="tracking_ref"/>
+                                </group>
+                                <group string="Contábil">
+                                    <field name="note_move_id" readonly="1"/>
+                                    <field name="note_state" readonly="1"/>
+                                    <field name="cfop_id" readonly="1"/>
+                                </group>
+                            </group>
+                            <group string="Nota fiscal (NF-e)">
+                                <field name="fiscal_state" readonly="1"/>
+                                <field name="nfe_key"
+                                       placeholder="Chave da NF-e emitida (44 dígitos)"
+                                       readonly="state == 'closed'"/>
+                                <field name="nfe_xml_panel_id" readonly="1"/>
+                                <button name="action_reconcile_nfe" type="object"
+                                        string="Conciliar NF-e" class="btn-secondary"
+                                        invisible="not nfe_key or fiscal_state == 'reconciled'"/>
+                            </group>
+                        </page>
+
+                        <page string="Avaliação" invisible="state == 'draft'">
+                            <group>
+                                <group string="Entrega">
+                                    <field name="arrived_date" readonly="1"/>
+                                </group>
+                                <group string="Avaliação">
+                                    <!-- aguardando != silencio: enquanto a janela
+                                         nao fecha, e cedo para julgar. -->
+                                    <field name="deadline" readonly="1"/>
+                                    <field name="is_waiting" readonly="1"/>
+                                    <field name="outcome_link" widget="url"/>
+                                    <field name="outcome_date" readonly="1"/>
+                                    <field name="outcome_user_id" readonly="1"/>
+                                </group>
+                            </group>
+                            <div invisible="state not in ('sent', 'arrived')" class="mt-2">
+                                <!-- Statusbar clicável no lugar de quatro
+                                     botões: mostra QUAL foi escolhida, que os
+                                     botões nunca mostravam. Perde a cor por
+                                     estágio; os badges das listas a mantêm. -->
+                                <field name="outcome" widget="statusbar"
+                                       options="{'clickable': '1'}"
+                                       statusbar_visible="silence,weak,good,great"
+                                       nolabel="1"/>
+                            </div>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_bonus_search" model="ir.ui.view">
+        <field name="name">product.bonus.search</field>
+        <field name="model">product.bonus</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="partner_id"/>
+                <field name="campaign"/>
+                <field name="list_id"/>
+                <filter name="f_waiting" string="Aguardando"
+                        domain="[('is_waiting', '=', True)]"/>
+                <filter name="f_toconfirm" string="A confirmar chegada"
+                        domain="[('state', '=', 'sent')]"/>
+                <filter name="f_torate" string="A avaliar"
+                        domain="[('state', '=', 'arrived'), ('outcome', '=', False)]"/>
+                <separator/>
+                <!-- Não vira "Avaliação": este filtro não busca quem TEM
+                     avaliação, busca quem teve avaliação BOA. Chamá-lo de
+                     Avaliação seria mentir sobre o que ele faz. -->
+                <filter name="f_good" string="Deu certo"
+                        domain="[('outcome', 'in', ('good', 'great'))]"/>
+                <filter name="f_silence" string="Silêncio"
+                        domain="[('outcome', '=', 'silence')]"/>
+                <separator/>
+                <filter name="f_editorial" string="Autor"
+                        domain="[('bucket', '=', 'editorial')]"/>
+                <filter name="f_marketing" string="Marketing"
+                        domain="[('bucket', '=', 'marketing')]"/>
+                <filter name="f_commercial" string="Comercial"
+                        domain="[('bucket', '=', 'commercial')]"/>
+                <group>
+                    <filter name="g_bucket" string="Investimento" context="{'group_by': 'bucket'}"/>
+                    <filter name="g_ptype" string="Tipo de parceiro" context="{'group_by': 'partner_type'}"/>
+                    <filter name="g_reason" string="Motivo" context="{'group_by': 'reason_id'}"/>
+                    <filter name="g_outcome" string="Avaliação" context="{'group_by': 'outcome'}"/>
+                    <filter name="g_list" string="Lista" context="{'group_by': 'list_id'}"/>
+                    <filter name="g_campaign" string="Campanha" context="{'group_by': 'campaign'}"/>
+                    <filter name="g_state" string="Estado" context="{'group_by': 'state'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_bonus" model="ir.actions.act_window">
+        <field name="name">Bonificações</field>
+        <field name="res_model">product.bonus</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <!-- Confirmar a chegada de VÁRIAS de uma vez — selecione na lista (a de
+         "Retorno", tipicamente, depois de uma leva de ligações) e Ação >
+         Confirmar chegada. Só as enviadas mudam. -->
+    <record id="action_bonus_confirm_arrival" model="ir.actions.server">
+        <field name="name">Confirmar chegada</field>
+        <field name="model_id" ref="model_product_bonus"/>
+        <field name="binding_model_id" ref="model_product_bonus"/>
+        <field name="binding_view_types">list</field>
+        <field name="state">code</field>
+        <field name="code">records.action_arrived()</field>
+    </record>
+
+    <!-- Acompanhamento: dois botoes por linha, um clique. Se custar mais que
+         um clique, nao e feito — e um historico pela metade e pior que
+         nenhum, porque parece completo. -->
+    <record id="view_bonus_followup_list" model="ir.ui.view">
+        <field name="name">product.bonus.followup</field>
+        <field name="model">product.bonus</field>
+        <field name="arch" type="xml">
+            <list create="false" decoration-warning="state == 'sent'">
+                <field name="name"/>
+                <field name="partner_id"/>
+                <!-- O telefone mora aqui porque a acao desta tela e LIGAR para
+                     perguntar se chegou. Ter que abrir a ficha do contato para
+                     achar o numero e o tipo de atrito que faz a tarefa nao
+                     acontecer. -->
+                <field name="phone" string="Telefone" widget="phone"/>
+                <field name="product_id" string="Título"/>
+                <field name="sent_date"/>
+                <field name="call_date" string="Ligar em"/>
+                <field name="picking_id" optional="hide"/>
+                <field name="deadline"/>
+                <field name="state" widget="badge"/>
+                <button name="action_arrived" type="object" string="Chegou"
+                        class="btn-primary btn-sm" invisible="state != 'sent'"/>
+                <button name="action_lost" type="object" string="Não"
+                        class="btn-secondary btn-sm" invisible="state != 'sent'"/>
+                <button name="action_outcome_silence" type="object" string="Silêncio"
+                        class="btn-secondary btn-sm" invisible="state != 'arrived'"/>
+                <button name="action_outcome_weak" type="object" string="Meia-boca"
+                        class="btn-warning btn-sm" invisible="state != 'arrived'"/>
+                <button name="action_outcome_good" type="object" string="Divulgou"
+                        class="btn-info btn-sm" invisible="state != 'arrived'"/>
+                <button name="action_outcome_great" type="object" string="Arrasou"
+                        class="btn-success btn-sm" invisible="state != 'arrived'"/>
+                <field name="outcome_link" widget="url" optional="show"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="action_bonus_confirm" model="ir.actions.act_window">
+        <field name="name">Retorno</field>
+        <field name="res_model">product.bonus</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('to_call', '=', True)]</field>
+        <field name="view_id" ref="view_bonus_followup_list"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Ninguém para ligar hoje.</p>
+            <p>Passados os dias configurados (Definições &gt; Bonificações), quem
+               foi expedido e não confirmou chegada aparece aqui — com o telefone,
+               para você ligar e perguntar se o livro chegou.</p>
+        </field>
+    </record>
+
+    <record id="action_bonus_rate" model="ir.actions.act_window">
+        <field name="name">Avaliações</field>
+        <field name="res_model">product.bonus</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('state', '=', 'arrived'), ('outcome', '=', False)]</field>
+        <field name="view_id" ref="view_bonus_followup_list"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Nada a avaliar.</p>
+            <p>Custo é metade da conta. O retorno é a outra.</p>
+        </field>
+    </record>
+
+    <!-- Relatórios: cruzar Investimento × Tipo de parceiro × Resultado × Lista.
+         "Pra que mandar" só se responde vendo o que rendeu, fatiado. -->
+    <record id="view_bonus_pivot" model="ir.ui.view">
+        <field name="name">product.bonus.pivot</field>
+        <field name="model">product.bonus</field>
+        <field name="arch" type="xml">
+            <pivot string="Bonificações" sample="1">
+                <field name="bucket" type="row"/>
+                <field name="partner_band_at_send" type="row"/>
+                <field name="outcome" type="col"/>
+                <field name="quantity" type="measure"/>
+                <field name="total_cost" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="view_bonus_graph" model="ir.ui.view">
+        <field name="name">product.bonus.graph</field>
+        <field name="model">product.bonus</field>
+        <field name="arch" type="xml">
+            <graph string="Bonificações" type="bar" sample="1">
+                <field name="bucket"/>
+                <field name="outcome"/>
+                <field name="total_cost" type="measure"/>
+            </graph>
+        </field>
+    </record>
+
+    <record id="view_bonus_report_search" model="ir.ui.view">
+        <field name="name">product.bonus.report.search</field>
+        <field name="model">product.bonus</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="partner_id"/>
+                <field name="campaign"/>
+                <field name="list_id"/>
+                <field name="product_id"/>
+                <filter name="r_good" string="Deu certo"
+                        domain="[('outcome', 'in', ('good', 'great'))]"/>
+                <filter name="r_band" string="Situação no envio"
+                        context="{'group_by': 'partner_band_at_send'}"/>
+                <filter name="r_silence" string="Silêncio"
+                        domain="[('outcome', '=', 'silence')]"/>
+                <filter name="r_lost" string="Não chegou"
+                        domain="[('state', '=', 'lost')]"/>
+                <separator/>
+                <filter name="r_sent" string="Enviados"
+                        domain="[('state', 'in', ('sent', 'arrived', 'closed'))]"/>
+                <group>
+                    <filter name="rg_bucket" string="Investimento"
+                            context="{'group_by': 'bucket'}"/>
+                    <filter name="rg_ptype" string="Tipo de parceiro"
+                            context="{'group_by': 'partner_type'}"/>
+                    <filter name="rg_outcome" string="Resultado"
+                            context="{'group_by': 'outcome'}"/>
+                    <filter name="rg_reason" string="Motivo"
+                            context="{'group_by': 'reason_id'}"/>
+                    <filter name="rg_list" string="Lista"
+                            context="{'group_by': 'list_id'}"/>
+                    <filter name="rg_campaign" string="Campanha"
+                            context="{'group_by': 'campaign'}"/>
+                    <filter name="rg_product" string="Título"
+                            context="{'group_by': 'product_id'}"/>
+                    <filter name="rg_month" string="Mês"
+                            context="{'group_by': 'date:month'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_bonus_report" model="ir.actions.act_window">
+        <field name="name">Análise</field>
+        <field name="res_model">product.bonus</field>
+        <field name="view_mode">pivot,graph,list</field>
+        <field name="search_view_id" ref="view_bonus_report_search"/>
+        <field name="domain">[('state', '!=', 'cancelled')]</field>
+        <field name="context">{'search_default_r_sent': 1, 'search_default_rg_bucket': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Sem dados ainda.</p>
+            <p>Cruze Investimento × Tipo de parceiro × Resultado × Lista. É aqui que
+               "pra que mandar" vira número: o que cada verba gastou e o que voltou.</p>
+        </field>
+    </record>
+</odoo>

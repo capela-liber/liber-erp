@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_consignment_audit_user,consignment.audit.user,model_consignment_audit,liber_soc_agreements.group_soc_user,1,1,1,0
+access_consignment_audit_manager,consignment.audit.manager,model_consignment_audit,liber_soc_agreements.group_soc_manager,1,1,1,1
+access_consignment_audit_line_user,consignment.audit.line.user,model_consignment_audit_line,liber_soc_agreements.group_soc_user,1,1,1,1
+access_consignment_audit_line_manager,consignment.audit.line.manager,model_consignment_audit_line,liber_soc_agreements.group_soc_manager,1,1,1,1

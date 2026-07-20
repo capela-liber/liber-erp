@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <menuitem id="menu_copyright_contracts_root"
+              name="Copyright"
+              web_icon="liber_copyright_contracts,static/description/icon.png"
+              sequence="90"
+              groups="liber_copyright_contracts.group_contract_user"/>
+
+    <menuitem id="menu_copyright_contracts"
+              name="Contracts"
+              parent="menu_copyright_contracts_root"
+              action="action_edlab_contract"
+              sequence="10"/>
+
+</odoo>

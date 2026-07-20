@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <record id="seq_consignment_audit" model="ir.sequence">
+        <field name="name">Consignment Audit</field>
+        <field name="code">consignment.audit</field>
+        <field name="prefix">CA</field>
+        <field name="padding">5</field>
+        <field name="company_id" eval="False"/>
+    </record>
+</odoo>

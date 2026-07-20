@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- The statement is a Brazilian accountability document ("prestação de
+         contas"), so its fixed labels are written directly in pt-BR. -->
+    <template id="report_royalty_statement">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-set="st" t-value="statements[doc.id]"/>
+                <t t-call="web.external_layout">
+                    <div class="page">
+
+                        <!-- Table styling: gradient header + soft striped
+                             rows, in the palette derived from the company's
+                             document-layout color (``colors``, see the report
+                             parser). Each background has a solid fallback
+                             first, because wkhtmltopdf's WebKit may skip the
+                             gradient. -->
+                        <style>
+                            /* Do not trust Bootstrap here: the class is in the
+                               HTML but wkhtmltopdf's WebKit does not resolve it,
+                               so every money column rendered left-aligned. State
+                               the rule the document itself depends on. */
+                            .text-end { text-align: right; }
+                            .royalty-table th {
+                                color: <t t-out="colors['header_text']"/>;
+                                background: <t t-out="colors['header']"/>;
+                                background: linear-gradient(90deg, <t t-out="colors['header_dark']"/> 0%, <t t-out="colors['header']"/> 45%, <t t-out="colors['header_light']"/> 100%);
+                                border: none;
+                            }
+                            .royalty-table tbody tr:nth-child(even) td {
+                                background: <t t-out="colors['row']"/>;
+                                background: linear-gradient(90deg, <t t-out="colors['row']"/> 0%, <t t-out="colors['row_light']"/> 100%);
+                            }
+                        </style>
+
+                        <!-- Title + works (bullets, no contact name: the
+                             beneficiary may not be the author). -->
+                        <div style="margin-top: 24px;">
+                            <h2 style="margin-bottom: 4px;">Prestação de contas de direitos autorais</h2>
+                            <t t-if="st['works']">
+                                <ul style="margin-top: 8px;">
+                                    <li t-foreach="st['works']" t-as="w">
+                                        <em t-esc="w"/>
+                                    </li>
+                                </ul>
+                            </t>
+                        </div>
+
+                        <!-- Summary -->
+                        <div style="margin-top: 24px;">
+                            <div style="font-variant: small-caps; color: #555; border-bottom: 1px solid #ccc; padding-bottom: 2px; margin-bottom: 8px;">resumo</div>
+                            <table class="table table-sm" style="width: auto;">
+                                <tr>
+                                    <td><strong>Período</strong></td>
+                                    <td><span t-esc="st['period_label']"/></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Valor total</strong></td>
+                                    <td class="text-end"><span t-esc="st['accrued']" t-options='{"widget": "monetary", "display_currency": st["currency"]}'/></td>
+                                </tr>
+                                <!-- Only shown when there is something to recover:
+                                     the author has to see why the payable amount
+                                     is smaller than what the works earned. -->
+                                <tr t-if="st['advance_recouped']">
+                                    <td><strong>A recuperar (adiantamento)</strong></td>
+                                    <td class="text-end"><span t-esc="-st['advance_recouped']" t-options='{"widget": "monetary", "display_currency": st["currency"]}'/></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>A deduzir (IRRF)</strong></td>
+                                    <td class="text-end"><span t-esc="-st['irrf']" t-options='{"widget": "monetary", "display_currency": st["currency"]}'/></td>
+                                </tr>
+                                <tr style="border-top: 2px solid #000;">
+                                    <td><strong>A receber</strong></td>
+                                    <td class="text-end"><strong><span t-esc="st['net']" t-options='{"widget": "monetary", "display_currency": st["currency"]}'/></strong></td>
+                                </tr>
+                            </table>
+                        </div>
+
+                        <!-- Royalties earned -->
+                        <div style="margin-top: 24px;">
+                            <div style="font-variant: small-caps; color: #555; border-bottom: 1px solid #ccc; padding-bottom: 2px; margin-bottom: 8px;">direitos autorais</div>
+                            <t t-if="st['rows']">
+                                <table class="table table-sm o_main_table royalty-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Obra / Canal</th>
+                                            <th>Contrato</th>
+                                            <th class="text-end">Livros vendidos</th>
+                                            <th class="text-end">Valor base</th>
+                                            <th class="text-end">%</th>
+                                            <th class="text-end">Direito autoral</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr t-foreach="st['rows']" t-as="row">
+                                            <td><span t-esc="row['work']"/></td>
+                                            <td><span t-esc="row['contract']"/></td>
+                                            <td class="text-end"><span t-esc="row['qty']"/></td>
+                                            <td class="text-end">
+                                                <span t-esc="row['base']" t-options='{"widget": "monetary", "display_currency": st["currency"]}'/>
+                                            </td>
+                                            <td class="text-end"><span t-esc="row['percentage_label']"/></td>
+                                            <td class="text-end">
+                                                <span t-esc="row['amount']" t-options='{"widget": "monetary", "display_currency": st["currency"]}'/>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                    <tfoot>
+                                        <tr style="font-weight: bold; border-top: 2px solid #000;">
+                                            <td colspan="5" class="text-end">Total</td>
+                                            <td class="text-end">
+                                                <span t-esc="st['accrued']" t-options='{"widget": "monetary", "display_currency": st["currency"]}'/>
+                                            </td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </t>
+                            <t t-else="">
+                                <p><em>Nenhum direito autoral em aberto.</em></p>
+                            </t>
+                        </div>
+
+                        <!-- Advances already paid to the beneficiary -->
+                        <t t-if="st['advances']">
+                            <div style="margin-top: 24px;">
+                                <div style="font-variant: small-caps; color: #555; border-bottom: 1px solid #ccc; padding-bottom: 2px; margin-bottom: 8px;">adiantamentos</div>
+                                <table class="table table-sm o_main_table">
+                                    <thead>
+                                        <tr>
+                                            <th>Obra / Canal</th>
+                                            <th>Contrato</th>
+                                            <th class="text-end">Adiantamento descontável</th>
+                                            <th class="text-end">Não descontável</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr t-foreach="st['advances']" t-as="adv">
+                                            <td><span t-esc="adv['work']"/></td>
+                                            <td><span t-esc="adv['contract']"/></td>
+                                            <td class="text-end">
+                                                <span t-esc="adv['recoupable']" t-options='{"widget": "monetary", "display_currency": st["currency"]}'/>
+                                            </td>
+                                            <td class="text-end">
+                                                <span t-esc="adv['non_recoupable']" t-options='{"widget": "monetary", "display_currency": st["currency"]}'/>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                    <tfoot>
+                                        <tr style="font-weight: bold; border-top: 2px solid #000;">
+                                            <td colspan="2" class="text-end">Total</td>
+                                            <td class="text-end">
+                                                <span t-esc="st['recoupable_advance_total']" t-options='{"widget": "monetary", "display_currency": st["currency"]}'/>
+                                            </td>
+                                            <td class="text-end">
+                                                <span t-esc="st['non_recoupable_advance_total']" t-options='{"widget": "monetary", "display_currency": st["currency"]}'/>
+                                            </td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                                <p style="color: #555; font-size: 0.9em;"><em>O adiantamento descontável já foi pago ao autor e é recuperado à medida que os direitos autorais são apurados.</em></p>
+                            </div>
+                        </t>
+
+                        <!-- Special sales detail -->
+                        <t t-if="st['special_sales']">
+                            <div style="margin-top: 24px;">
+                                <div style="font-variant: small-caps; color: #555; border-bottom: 1px solid #ccc; padding-bottom: 2px; margin-bottom: 8px;">vendas especiais</div>
+                                <table class="table table-sm o_main_table royalty-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Cliente</th>
+                                            <th>Documento</th>
+                                            <th>Obra</th>
+                                            <th class="text-end">Quantidade</th>
+                                            <th class="text-end">Desconto</th>
+                                            <th class="text-end">Valor</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr t-foreach="st['special_sales']" t-as="sale">
+                                            <td><span t-esc="sale['customer']"/></td>
+                                            <td><span t-esc="sale['invoice']"/></td>
+                                            <td><span t-esc="sale['work']"/></td>
+                                            <td class="text-end"><span t-esc="sale['qty']"/></td>
+                                            <td class="text-end"><span t-esc="sale['discount_label']"/></td>
+                                            <td class="text-end">
+                                                <span t-esc="sale['amount']" t-options='{"widget": "monetary", "display_currency": st["currency"]}'/>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                    <tfoot>
+                                        <tr style="font-weight: bold; border-top: 2px solid #000;">
+                                            <td colspan="5" class="text-end">Total</td>
+                                            <td class="text-end">
+                                                <span t-esc="st['special_sales_total']" t-options='{"widget": "monetary", "display_currency": st["currency"]}'/>
+                                            </td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </t>
+
+                        <!-- Open payment bill(s): the statement total matches
+                             the amount still owed on them. -->
+                        <t t-if="st['bills']">
+                            <div style="margin-top: 24px;">
+                                <div style="font-variant: small-caps; color: #555; border-bottom: 1px solid #ccc; padding-bottom: 2px; margin-bottom: 8px;">ordem de pagamento</div>
+                                <table class="table table-sm o_main_table royalty-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Documento</th>
+                                            <th>Data</th>
+                                            <th>Pagamento</th>
+                                            <th>Situação</th>
+                                            <th class="text-end">Valor</th>
+                                            <th class="text-end">Em aberto</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr t-foreach="st['bills']" t-as="bill">
+                                            <td><span t-esc="bill['name']"/></td>
+                                            <td><span t-esc="bill['date_label']"/></td>
+                                            <td><span t-esc="bill['due_label']"/></td>
+                                            <td><span t-esc="bill['state_label']"/></td>
+                                            <td class="text-end">
+                                                <span t-esc="bill['amount_total']" t-options='{"widget": "monetary", "display_currency": st["currency"]}'/>
+                                            </td>
+                                            <td class="text-end">
+                                                <span t-esc="bill['amount_residual']" t-options='{"widget": "monetary", "display_currency": st["currency"]}'/>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </t>
+
+                        <!-- Beneficiary identification and bank details, for
+                             the payment (kept below the accountability). -->
+                        <div style="margin-top: 24px;">
+                            <div style="font-variant: small-caps; color: #555; border-bottom: 1px solid #ccc; padding-bottom: 2px; margin-bottom: 8px;">beneficiário</div>
+                            <strong>Nome completo</strong> <span t-esc="doc.name"/><br/>
+                            <t t-if="doc.email">
+                                <strong>E-mail</strong> <span t-esc="doc.email"/><br/>
+                            </t>
+                            <t t-if="doc.edlab_birthdate">
+                                <strong>Data de nascimento</strong> <span t-field="doc.edlab_birthdate"/><br/>
+                            </t>
+                            <t t-if="doc.vat">
+                                <strong>CPF</strong> <span t-esc="doc.vat"/><br/>
+                            </t>
+                            <t t-if="doc.edlab_rg">
+                                <strong>RG</strong> <span t-esc="doc.edlab_rg"/><br/>
+                            </t>
+                            <t t-if="doc.edlab_pis">
+                                <strong>PIS</strong> <span t-esc="doc.edlab_pis"/><br/>
+                            </t>
+                            <t t-if="doc.edlab_nationality">
+                                <strong>Nacionalidade</strong> <span t-esc="doc.edlab_nationality"/><br/>
+                            </t>
+                            <t t-if="st['address']">
+                                <strong>Endereço</strong> <span t-esc="st['address']"/>
+                            </t>
+                        </div>
+
+                        <div style="margin-top: 16px;">
+                            <div style="font-variant: small-caps; color: #555; border-bottom: 1px solid #ccc; padding-bottom: 2px; margin-bottom: 8px;">dados bancários</div>
+                            <t t-if="st['bank']">
+                                <strong>Banco</strong> <span t-esc="st['bank'].bank_id.name"/><br/>
+                                <t t-if="st['bank'].edlab_agency">
+                                    <strong>Agência</strong> <span t-esc="st['bank'].edlab_agency"/><br/>
+                                </t>
+                                <strong>Conta corrente</strong> <span t-esc="st['bank'].acc_number"/>
+                            </t>
+                            <t t-else="">
+                                <em>Sem dados bancários cadastrados.</em>
+                            </t>
+                        </div>
+
+                        <div class="text-end" style="margin-top: 32px;">
+                            <span t-esc="st['today_label']"/>
+                        </div>
+
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+</odoo>

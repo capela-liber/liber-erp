@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- IRRF mode next to the legacy manual percentage on the Author page -->
+    <record id="view_partner_form_edlab_irrf_mode" model="ir.ui.view">
+        <field name="name">res.partner.form.edlab.irrf.mode</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id"
+               ref="liber_copyright_contracts_reports.view_partner_form_edlab_author"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='edlab_irrf_percentage']" position="before">
+                <field name="edlab_irrf_mode" widget="radio"/>
+            </xpath>
+            <xpath expr="//field[@name='edlab_irrf_percentage']" position="attributes">
+                <attribute name="invisible">edlab_irrf_mode != 'manual'</attribute>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

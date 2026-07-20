@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Top-level Metabooks app menu and its sections. Individual items set their
+         parent to one of these sections (defined here so they load first). -->
+    <menuitem id="menu_metabooks_root"
+              name="Metabooks"
+              web_icon="liber_metabooks_integration,static/description/icon.png"
+              sequence="90"/>
+
+    <!-- Landing page: the imported books. Must be a normal (target=current) action
+         so clicking the Metabooks app does not open a modal wizard by default. -->
+    <record id="action_metabooks_books" model="ir.actions.act_window">
+        <field name="name">Books</field>
+        <field name="res_model">product.template</field>
+        <field name="view_mode">kanban,list,form</field>
+        <field name="domain">[('metabooks_vendor_id', '!=', False)]</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">No books imported yet</p>
+            <p>Use <b>Imports ▸ Import by ISBN</b> or <b>Import by Vendor ID</b> to bring
+               books in from Metabooks.</p>
+        </field>
+    </record>
+
+    <menuitem id="menu_metabooks_books"
+              name="Books"
+              parent="menu_metabooks_root"
+              action="action_metabooks_books"
+              sequence="1"/>
+
+    <menuitem id="menu_metabooks_imports"
+              name="Imports"
+              parent="menu_metabooks_root"
+              sequence="10"/>
+
+    <menuitem id="menu_metabooks_catalogue"
+              name="Catalogue"
+              parent="menu_metabooks_root"
+              sequence="20"/>
+</odoo>

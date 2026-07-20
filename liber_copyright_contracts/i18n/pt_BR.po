@@ -1,0 +1,766 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* liber_copyright_contracts
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0-20260630\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-07-08 12:18+0000\n"
+"PO-Revision-Date: 2026-07-08 12:18+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: liber_copyright_contracts
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts.view_edlab_contract_kanban
+msgid ""
+"<i class=\"fa fa-calendar\" role=\"img\" aria-label=\"Expiration Date\" "
+"title=\"Expiration Date\"/>"
+msgstr "<i class=\"fa fa-calendar\" role=\"img\" aria-label=\"Data de vencimento\" title=\"Data de vencimento\"/>"
+
+#. module: liber_copyright_contracts
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts.res_config_settings_view_form
+msgid "<span class=\"ms-2\">days before expiration</span>"
+msgstr "<span class=\"ms-2\">dias antes do vencimento</span>"
+
+#. module: liber_copyright_contracts
+#: model:ir.model.fields,field_description:liber_copyright_contracts.field_edlab_contract__message_needaction
+msgid "Action Needed"
+msgstr "Ação necessária"
+
+#. module: liber_copyright_contracts
+#: model:ir.model.fields,field_description:liber_copyright_contracts.field_edlab_contract__activity_ids
+msgid "Activities"
+msgstr "Atividades"
+
+#. module: liber_copyright_contracts
+#: model:ir.model.fields,field_description:liber_copyright_contracts.field_edlab_contract__activity_exception_decoration
+msgid "Activity Exception Decoration"
+msgstr "Decoração de exceção de atividade"
+
+#. module: liber_copyright_contracts
+#: model:ir.model.fields,field_description:liber_copyright_contracts.field_edlab_contract__activity_state
+msgid "Activity State"
+msgstr "Estado da atividade"
+
+#. module: liber_copyright_contracts
+#: model:ir.model.fields,field_description:liber_copyright_contracts.field_edlab_contract__activity_type_icon
+msgid "Activity Type Icon"
+msgstr "Ícone do tipo de atividade"
+
+#. module: liber_copyright_contracts
+#: model:res.groups,name:liber_copyright_contracts.group_contract_manager
+msgid "Administrator"
+msgstr "Administrador"
+
+#. module: liber_copyright_contracts
+#: model:ir.model.fields,help:liber_copyright_contracts.field_edlab_contract_royalty_line__recoupable_advance
+msgid ""
+"Advance already paid to the beneficiary for this work, recoupable against "
+"the royalties accrued on it."
+msgstr "Adiantamento já pago ao favorecido por esta obra, descontável dos direitos autorais apurados sobre ela."
+
+#. module: liber_copyright_contracts
+#: model:ir.model.fields,field_description:liber_copyright_contracts.field_edlab_contract__message_attachment_count
+msgid "Attachment Count"
+msgstr "Contagem de anexos"
+
+#. module: liber_copyright_contracts
+#: model:ir.model.fields,field_description:liber_copyright_contracts.field_edlab_contract__auto_renew
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts.view_edlab_contract_kanban
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts.view_edlab_contract_search
+msgid "Auto-Renewable"
+msgstr "Renovável automaticamente"
+
+#. module: liber_copyright_contracts
+#. odoo-python
+#: code:addons/liber_copyright_contracts/models/contract.py:0
+msgid "Automatically renewed until %s."
+msgstr "Renovado automaticamente até %s."
+
+#. module: liber_copyright_contracts
+#: model:ir.model.fields,field_description:liber_copyright_contracts.field_edlab_contract__partner_ids
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts.view_edlab_contract_tree
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts.view_product_template_form_copyright_contracts
+msgid "Beneficiaries"
+msgstr "Favorecidos"
+
+#. module: liber_copyright_contracts
+#: model:ir.model.fields,field_description:liber_copyright_contracts.field_edlab_contract_royalty_line__partner_id
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts.view_edlab_contract_search
+msgid "Beneficiary"
+msgstr "Favorecido"
+
+#. module: liber_copyright_contracts
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts.view_edlab_contract_form
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts.view_edlab_contract_reassign_form
+msgid "Cancel"
+msgstr "Cancelar"
+
+#. module: liber_copyright_contracts
+#: model:ir.model.fields.selection,name:liber_copyright_contracts.selection__edlab_contract__state__cancelled
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts.view_edlab_contract_search
+msgid "Cancelled"
+msgstr "Cancelado"
+
+#. module: liber_copyright_contracts
+#: model:ir.model.fields,field_description:liber_copyright_contracts.field_edlab_contract_tag__color
+msgid "Color"
+msgstr "Cor"
+
+#. module: liber_copyright_contracts
+#: model:ir.model.fields,field_description:liber_copyright_contracts.field_edlab_contract__company_id
+#: model:ir.model.fields,field_description:liber_copyright_contracts.field_edlab_contract_royalty_line__company_id
+msgid "Company"
+msgstr "Empresa"
+
+#. module: liber_copyright_contracts
+#: model:ir.model,name:liber_copyright_contracts.model_res_config_settings
+msgid "Config Settings"
+msgstr "Configurações"
+
+#. module: liber_copyright_contracts
+#: model:ir.model,name:liber_copyright_contracts.model_res_partner
+msgid "Contact"
+msgstr "Contato"
+
+#. module: liber_copyright_contracts
+#: model:ir.model.fields,field_description:liber_copyright_contracts.field_edlab_contract_royalty_line__contract_id
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts.view_edlab_contract_form
+msgid "Contract"
+msgstr "Contrato"
+
+#. module: liber_copyright_contracts
+#: model:ir.model,name:liber_copyright_contracts.model_edlab_contract_tag
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts.view_edlab_contract_tag_form
+msgid "Contract Tag"
+msgstr "Marcador de Contrato"
+
+#. module: liber_copyright_contracts
+#. odoo-python
+#: code:addons/liber_copyright_contracts/models/contract.py:0
+msgid "Contract expiring soon"
+msgstr "Contrato vencendo em breve"
+
+#. module: liber_copyright_contracts
+#: model:ir.model.fields,field_description:liber_copyright_contracts.field_res_config_settings__contract_expiry_reminder_days
+msgid "Contract expiry reminder (days)"
+msgstr "Lembrete de vencimento do contrato (dias)"
+
+#. module: liber_copyright_contracts
+#. odoo-python
+#: code:addons/liber_copyright_contracts/models/contract.py:0
+msgid "Contract renewed until %s."
+msgstr "Contrato renovado até %s."
+
+#. module: liber_copyright_contracts
+#: model:ir.actions.act_window,name:liber_copyright_contracts.action_edlab_contract
+#: model:ir.model.fields,field_description:liber_copyright_contracts.field_edlab_contract_reassign__contract_ids
+#: model:ir.model.fields,field_description:liber_copyright_contracts.field_product_product__edlab_contract_count
+#: model:ir.model.fields,field_description:liber_copyright_contracts.field_product_template__edlab_contract_count
+#: model:ir.model.fields,field_description:liber_copyright_contracts.field_res_partner__edlab_contract_count
+#: model:ir.model.fields,field_description:liber_copyright_contracts.field_res_users__edlab_contract_count
+#: model:ir.ui.menu,name:liber_copyright_contracts.menu_copyright_contracts
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts.res_config_settings_view_form
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts.view_edlab_contract_calendar
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts.view_partner_form_copyright_contracts
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts.view_product_template_form_copyright_contracts
+msgid "Contracts"
+msgstr "Contratos"
+
+#. module: liber_copyright_contracts
+#: model:ir.model.fields,help:liber_copyright_contracts.field_res_partner__edlab_contract_ids
+#: model:ir.model.fields,help:liber_copyright_contracts.field_res_users__edlab_contract_ids
+msgid "Contracts where this contact is a beneficiary."
+msgstr "Contratos em que este contato é beneficiário."
+
+#. module: liber_copyright_contracts
+#: model:ir.model.fields,help:liber_copyright_contracts.field_product_product__edlab_contract_ids
+#: model:ir.model.fields,help:liber_copyright_contracts.field_product_template__edlab_contract_ids
+msgid "Contracts where this product is a licensed work."
+msgstr "Contratos em que este produto é uma obra licenciada."
+
+#. module: liber_copyright_contracts
+#: model:ir.actions.server,name:liber_copyright_contracts.cron_update_contract_states_ir_actions_server
+msgid "Contracts: update status (expired / auto-renewal)"
+msgstr "Contratos: atualizar status (vencidos / auto-renovação)"
+
+#. module: liber_copyright_contracts
+#: model:ir.model,name:liber_copyright_contracts.model_edlab_contract_royalty_tier
+msgid "Copies Tier"
+msgstr "Faixa de Exemplares"
+
+#. module: liber_copyright_contracts
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts.view_edlab_contract_form
+msgid "Copies tiers"
+msgstr "Faixas de exemplares"
+
+#. module: liber_copyright_contracts
+#: model:ir.module.category,name:liber_copyright_contracts.module_category_copyright_contracts
+#: model:ir.ui.menu,name:liber_copyright_contracts.menu_copyright_contracts_root
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts.res_config_settings_view_form
+msgid "Copyright"
+msgstr "Direitos Autorais"
+
+#. module: liber_copyright_contracts
+#: model:ir.model,name:liber_copyright_contracts.model_edlab_contract
+msgid "Copyright Contract"
+msgstr "Contrato de Direitos Autorais"
+
+#. module: liber_copyright_contracts
+#. odoo-python
+#: code:addons/liber_copyright_contracts/models/product_template.py:0
+#: code:addons/liber_copyright_contracts/models/res_partner.py:0
+#: model:ir.model.fields,field_description:liber_copyright_contracts.field_product_product__edlab_contract_ids
+#: model:ir.model.fields,field_description:liber_copyright_contracts.field_product_template__edlab_contract_ids
+#: model:ir.model.fields,field_description:liber_copyright_contracts.field_res_partner__edlab_contract_ids
+#: model:ir.model.fields,field_description:liber_copyright_contracts.field_res_users__edlab_contract_ids
+#: model:res.groups.privilege,name:liber_copyright_contracts.privilege_copyright_contracts
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts.view_partner_form_copyright_contracts
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts.view_product_template_form_copyright_contracts
+msgid "Copyright Contracts"
+msgstr "Controle de Contratos e Direitos Autorais"
+
+#. module: liber_copyright_contracts
+#: model_terms:ir.actions.act_window,help:liber_copyright_contracts.action_edlab_contract
+msgid "Create your first copyright contract"
+msgstr "Cadastre seu primeiro contrato de direitos autorais"
+
+#. module: liber_copyright_contracts
+#: model:ir.model.fields,field_description:liber_copyright_contracts.field_edlab_contract__create_uid
+#: model:ir.model.fields,field_description:liber_copyright_contracts.field_edlab_contract_reassign__create_uid
+#: model:ir.model.fields,field_description:liber_copyright_contracts.field_edlab_contract_royalty_line__create_uid
+#: model:ir.model.fields,field_description:liber_copyright_contracts.field_edlab_contract_royalty_tier__create_uid
+#: model:ir.model.fields,field_description:liber_copyright_contracts.field_edlab_contract_tag__create_uid
+msgid "Created by"
+msgstr "Criado por"
+
+#. module: liber_copyright_contracts
+#: model:ir.model.fields,field_description:liber_copyright_contracts.field_edlab_contract__create_date
+#: model:ir.model.fields,field_description:liber_copyright_contracts.field_edlab_contract_reassign__create_date
+#: model:ir.model.fields,field_description:liber_copyright_contracts.field_edlab_contract_royalty_line__create_date
+#: model:ir.model.fields,field_description:liber_copyright_contracts.field_edlab_contract_royalty_tier__create_date
+#: model:ir.model.fields,field_description:liber_copyright_contracts.field_edlab_contract_tag__create_date
+msgid "Created on"
+msgstr "Criado em"
+
+#. module: liber_copyright_contracts
+#: model:ir.model.fields,field_description:liber_copyright_contracts.field_edlab_contract__currency_id
+#: model:ir.model.fields,field_description:liber_copyright_contracts.field_edlab_contract_royalty_line__currency_id
+msgid "Currency"
+msgstr "Moeda"
+
+#. module: liber_copyright_contracts
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts.view_edlab_contract_form
+msgid "Dates"
+msgstr "Datas"
+
+#. module: liber_copyright_contracts
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts.res_config_settings_view_form
+msgid "Days before expiration to remind the responsible user."
+msgstr "Dias antes do vencimento para lembrar o usuário responsável."
+
+#. module: liber_copyright_contracts
+#: model:ir.model.fields,help:liber_copyright_contracts.field_edlab_contract__days_to_expiration
+msgid "Days remaining until the expiration date (negative if already past)."
+msgstr "Dias restantes até o vencimento (negativo se já passou)."
+
+#. module: liber_copyright_contracts
+#: model:ir.model.fields,field_description:liber_copyright_contracts.field_edlab_contract__days_to_expiration
+msgid "Days to Expiration"
+msgstr "Dias para o vencimento"
+
+#. module: liber_copyright_contracts
+#: model:ir.model.fields,field_description:liber_copyright_contracts.field_edlab_contract__display_name
+#: model:ir.model.fields,field_description:liber_copyright_contracts.field_edlab_contract_reassign__display_name
+#: model:ir.model.fields,field_description:liber_copyright_contracts.field_edlab_contract_royalty_line__display_name
+#: model:ir.model.fields,field_description:liber_copyright_contracts.field_edlab_contract_royalty_tier__display_name
+#: model:ir.model.fields,field_description:liber_copyright_contracts.field_edlab_contract_tag__display_name
+#: model:ir.model.fields,field_description:liber_copyright_contracts.field_product_template__display_name
+#: model:ir.model.fields,field_description:liber_copyright_contracts.field_res_config_settings__display_name
+#: model:ir.model.fields,field_description:liber_copyright_contracts.field_res_partner__display_name
+msgid "Display Name"
+msgstr "Nome exibido"
+
+#. module: liber_copyright_contracts
+#: model:ir.model.fields.selection,name:liber_copyright_contracts.selection__edlab_contract__state__draft
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts.view_edlab_contract_search
+msgid "Draft"
+msgstr "Minuta"
+
+#. module: liber_copyright_contracts
+#: model:ir.model.fields,field_description:liber_copyright_contracts.field_edlab_contract__expiration_date
+msgid "Expiration Date"
+msgstr "Data de vencimento"
+
+#. module: liber_copyright_contracts
+#. odoo-python
+#: code:addons/liber_copyright_contracts/models/contract.py:0
+#: model:ir.model.fields.selection,name:liber_copyright_contracts.selection__edlab_contract__state__expired
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts.view_edlab_contract_search
+msgid "Expired"
+msgstr "Vencido"
+
+#. module: liber_copyright_contracts
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts.view_edlab_contract_search
+msgid "Expiring (3 months)"
+msgstr "Vencendo (3 meses)"
+
+#. module: liber_copyright_contracts
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts.res_config_settings_view_form
+msgid "Expiry reminder window"
+msgstr "Janela de lembrete de vencimento"
+
+#. module: liber_copyright_contracts
+#: model:ir.model.fields,help:liber_copyright_contracts.field_edlab_contract__renewal_period_years
+msgid ""
+"Fixed term (in years) added to the expiration date on each renewal. "
+"Suggested from the initial signature-to-expiration span when the contract is"
+" created, but stays fixed afterwards so every renewal extends by the same "
+"period."
+msgstr ""
+"Duração do contrato em anos (da assinatura ao vencimento). É o prazo "
+"adicionado à data de vencimento a cada renovação."
+
+#. module: liber_copyright_contracts
+#: model:ir.model.fields,field_description:liber_copyright_contracts.field_edlab_contract__message_follower_ids
+msgid "Followers"
+msgstr "Seguidores"
+
+#. module: liber_copyright_contracts
+#: model:ir.model.fields,field_description:liber_copyright_contracts.field_edlab_contract__message_partner_ids
+msgid "Followers (Partners)"
+msgstr "Seguidores (parceiros)"
+
+#. module: liber_copyright_contracts
+#: model:ir.model.fields,help:liber_copyright_contracts.field_edlab_contract__activity_type_icon
+msgid "Font awesome icon e.g. fa-tasks"
+msgstr "Ícone Font Awesome, ex.: fa-tasks"
+
+#. module: liber_copyright_contracts
+#: model:ir.model.fields,field_description:liber_copyright_contracts.field_edlab_contract_royalty_tier__qty_from
+msgid "From (copies)"
+msgstr "De (exemplares)"
+
+#. module: liber_copyright_contracts
+#: model:ir.model.fields,field_description:liber_copyright_contracts.field_edlab_contract__has_message
+msgid "Has Message"
+msgstr "Tem mensagem"
+
+#. module: liber_copyright_contracts
+#: model:ir.model.fields,help:liber_copyright_contracts.field_res_config_settings__contract_expiry_reminder_days
+msgid ""
+"How many days before a contract's expiration date the daily job creates a "
+"reminder activity for the responsible user."
+msgstr "Quantos dias antes da data de vencimento do contrato a rotina diária cria uma atividade de lembrete para o usuário responsável."
+
+#. module: liber_copyright_contracts
+#: model:ir.model.fields,field_description:liber_copyright_contracts.field_edlab_contract__id
+#: model:ir.model.fields,field_description:liber_copyright_contracts.field_edlab_contract_reassign__id
+#: model:ir.model.fields,field_description:liber_copyright_contracts.field_edlab_contract_royalty_line__id
+#: model:ir.model.fields,field_description:liber_copyright_contracts.field_edlab_contract_royalty_tier__id
+#: model:ir.model.fields,field_description:liber_copyright_contracts.field_edlab_contract_tag__id
+#: model:ir.model.fields,field_description:liber_copyright_contracts.field_product_template__id
+#: model:ir.model.fields,field_description:liber_copyright_contracts.field_res_config_settings__id
+#: model:ir.model.fields,field_description:liber_copyright_contracts.field_res_partner__id
+msgid "ID"
+msgstr "ID"
+
+#. module: liber_copyright_contracts
+#: model:ir.model.fields,field_description:liber_copyright_contracts.field_edlab_contract__activity_exception_icon
+msgid "Icon"
+msgstr "Ícone"
+
+#. module: liber_copyright_contracts
+#: model:ir.model.fields,help:liber_copyright_contracts.field_edlab_contract__activity_exception_icon
+msgid "Icon to indicate an exception activity."
+msgstr "Ícone para indicar uma atividade de exceção."
+
+#. module: liber_copyright_contracts
+#: model:ir.model.fields,help:liber_copyright_contracts.field_edlab_contract__message_needaction
+msgid "If checked, new messages require your attention."
+msgstr "Se marcado, novas mensagens requerem sua atenção."
+
+#. module: liber_copyright_contracts
+#: model:ir.model.fields,help:liber_copyright_contracts.field_edlab_contract__message_has_error
+msgid "If checked, some messages have a delivery error."
+msgstr "Se marcado, algumas mensagens têm erro de entrega."
+
+#. module: liber_copyright_contracts
+#: model:ir.model.fields,field_description:liber_copyright_contracts.field_edlab_contract__message_is_follower
+msgid "Is Follower"
+msgstr "É seguidor"
+
+#. module: liber_copyright_contracts
+#: model:ir.model.fields,field_description:liber_copyright_contracts.field_edlab_contract__write_uid
+#: model:ir.model.fields,field_description:liber_copyright_contracts.field_edlab_contract_reassign__write_uid
+#: model:ir.model.fields,field_description:liber_copyright_contracts.field_edlab_contract_royalty_line__write_uid
+#: model:ir.model.fields,field_description:liber_copyright_contracts.field_edlab_contract_royalty_tier__write_uid
+#: model:ir.model.fields,field_description:liber_copyright_contracts.field_edlab_contract_tag__write_uid
+msgid "Last Updated by"
+msgstr "Última atualização por"
+
+#. module: liber_copyright_contracts
+#: model:ir.model.fields,field_description:liber_copyright_contracts.field_edlab_contract__write_date
+#: model:ir.model.fields,field_description:liber_copyright_contracts.field_edlab_contract_reassign__write_date
+#: model:ir.model.fields,field_description:liber_copyright_contracts.field_edlab_contract_royalty_line__write_date
+#: model:ir.model.fields,field_description:liber_copyright_contracts.field_edlab_contract_royalty_tier__write_date
+#: model:ir.model.fields,field_description:liber_copyright_contracts.field_edlab_contract_tag__write_date
+msgid "Last Updated on"
+msgstr "Última atualização em"
+
+#. module: liber_copyright_contracts
+#: model:ir.model.fields,help:liber_copyright_contracts.field_edlab_contract_royalty_tier__qty_to
+msgid "Leave 0 to indicate 'no upper limit'."
+msgstr "Deixe 0 para indicar 'sem limite superior'."
+
+#. module: liber_copyright_contracts
+#: model_terms:ir.actions.act_window,help:liber_copyright_contracts.action_edlab_contract
+msgid "Link beneficiaries to works and record royalties by copies tier."
+msgstr ""
+"Ligue favorecidos a obras e registre os royalties por faixa de exemplares."
+
+#. module: liber_copyright_contracts
+#: model:ir.model.fields,field_description:liber_copyright_contracts.field_edlab_contract__location
+msgid "Location"
+msgstr "Localização"
+
+#. module: liber_copyright_contracts
+#: model:ir.model.fields,field_description:liber_copyright_contracts.field_edlab_contract__message_has_error
+msgid "Message Delivery error"
+msgstr "Erro de entrega de mensagem"
+
+#. module: liber_copyright_contracts
+#: model:ir.model.fields,field_description:liber_copyright_contracts.field_edlab_contract__message_ids
+msgid "Messages"
+msgstr "Mensagens"
+
+#. module: liber_copyright_contracts
+#: model:ir.model.fields,field_description:liber_copyright_contracts.field_edlab_contract__my_activity_date_deadline
+msgid "My Activity Deadline"
+msgstr "Prazo da minha atividade"
+
+#. module: liber_copyright_contracts
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts.view_edlab_contract_search
+msgid "My Contracts"
+msgstr "Meus Contratos"
+
+#. module: liber_copyright_contracts
+#: model:ir.model.fields,field_description:liber_copyright_contracts.field_edlab_contract_tag__name
+msgid "Name"
+msgstr "Nome"
+
+#. module: liber_copyright_contracts
+#. odoo-python
+#: code:addons/liber_copyright_contracts/models/contract.py:0
+msgid "New"
+msgstr "Novo"
+
+#. module: liber_copyright_contracts
+#: model:ir.model.fields,field_description:liber_copyright_contracts.field_edlab_contract_reassign__user_id
+msgid "New Responsible"
+msgstr "Novo Responsável"
+
+#. module: liber_copyright_contracts
+#: model:ir.model.fields,field_description:liber_copyright_contracts.field_edlab_contract__activity_date_deadline
+msgid "Next Activity Deadline"
+msgstr "Prazo da próxima atividade"
+
+#. module: liber_copyright_contracts
+#: model:ir.model.fields,field_description:liber_copyright_contracts.field_edlab_contract__activity_summary
+msgid "Next Activity Summary"
+msgstr "Resumo da próxima atividade"
+
+#. module: liber_copyright_contracts
+#: model:ir.model.fields,field_description:liber_copyright_contracts.field_edlab_contract__activity_type_id
+msgid "Next Activity Type"
+msgstr "Tipo da próxima atividade"
+
+#. module: liber_copyright_contracts
+#: model:ir.model.fields,field_description:liber_copyright_contracts.field_edlab_contract_royalty_line__non_recoupable_advance
+msgid "Non-Recoupable Advance"
+msgstr "Adiantamento Não-Descontável"
+
+#. module: liber_copyright_contracts
+#: model:ir.model.fields,field_description:liber_copyright_contracts.field_edlab_contract__name
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts.view_edlab_contract_search
+msgid "Number"
+msgstr "Número"
+
+#. module: liber_copyright_contracts
+#: model:ir.model.fields,field_description:liber_copyright_contracts.field_edlab_contract__message_needaction_counter
+msgid "Number of Actions"
+msgstr "Número de ações"
+
+#. module: liber_copyright_contracts
+#: model:ir.model.fields,field_description:liber_copyright_contracts.field_edlab_contract__message_has_error_counter
+msgid "Number of errors"
+msgstr "Número de erros"
+
+#. module: liber_copyright_contracts
+#: model:ir.model.fields,help:liber_copyright_contracts.field_edlab_contract__message_needaction_counter
+msgid "Number of messages requiring action"
+msgstr "Número de mensagens que requerem ação"
+
+#. module: liber_copyright_contracts
+#: model:ir.model.fields,help:liber_copyright_contracts.field_edlab_contract__message_has_error_counter
+msgid "Number of messages with delivery error"
+msgstr "Número de mensagens com erro de entrega"
+
+#. module: liber_copyright_contracts
+#: model:ir.model.fields,field_description:liber_copyright_contracts.field_edlab_contract_royalty_tier__percentage
+msgid "Percentage (%)"
+msgstr "Percentual (%)"
+
+#. module: liber_copyright_contracts
+#: model:ir.model.fields,help:liber_copyright_contracts.field_edlab_contract__user_id
+msgid "Person in charge of following this contract."
+msgstr "Pessoa encarregada de acompanhar este contrato."
+
+#. module: liber_copyright_contracts
+#: model:ir.ui.menu,name:liber_copyright_contracts.menu_copyright_contracts_settings_general
+msgid "Preferences"
+msgstr "Preferências"
+
+#. module: liber_copyright_contracts
+#: model:ir.model,name:liber_copyright_contracts.model_product_template
+msgid "Product"
+msgstr "Produto"
+
+#. module: liber_copyright_contracts
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts.view_edlab_contract_reassign_form
+msgid "Reassign"
+msgstr "Reatribuir"
+
+#. module: liber_copyright_contracts
+#: model:ir.model,name:liber_copyright_contracts.model_edlab_contract_reassign
+msgid "Reassign Contract Responsible"
+msgstr "Reatribuir Responsável do Contrato"
+
+#. module: liber_copyright_contracts
+#: model:ir.actions.act_window,name:liber_copyright_contracts.action_edlab_contract_reassign
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts.view_edlab_contract_reassign_form
+msgid "Reassign Responsible"
+msgstr "Reatribuir Responsável"
+
+#. module: liber_copyright_contracts
+#: model:ir.model.fields,field_description:liber_copyright_contracts.field_edlab_contract_royalty_line__recoupable_advance
+msgid "Recoupable Advance"
+msgstr "Adiantamento Descontável"
+
+#. module: liber_copyright_contracts
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts.view_edlab_contract_form
+msgid "Renew"
+msgstr "Renovar"
+
+#. module: liber_copyright_contracts
+#: model:ir.model.fields,field_description:liber_copyright_contracts.field_edlab_contract__renewal_period_years
+msgid "Renewal Term (years)"
+msgstr "Prazo de Renovação (anos)"
+
+#. module: liber_copyright_contracts
+#: model:ir.model.fields.selection,name:liber_copyright_contracts.selection__edlab_contract__state__renewed
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts.view_edlab_contract_search
+msgid "Renewed"
+msgstr "Renovado"
+
+#. module: liber_copyright_contracts
+#: model:ir.model.fields,field_description:liber_copyright_contracts.field_edlab_contract__user_id
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts.view_edlab_contract_search
+msgid "Responsible"
+msgstr "Responsável"
+
+#. module: liber_copyright_contracts
+#: model:ir.model.fields,field_description:liber_copyright_contracts.field_edlab_contract__activity_user_id
+msgid "Responsible User"
+msgstr "Usuário Responsável"
+
+#. module: liber_copyright_contracts
+#: model:ir.model.fields,field_description:liber_copyright_contracts.field_edlab_contract__royalty_line_ids
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts.view_edlab_contract_form
+msgid "Royalties"
+msgstr "Direitos autorais"
+
+#. module: liber_copyright_contracts
+#: model:ir.model.fields,field_description:liber_copyright_contracts.field_edlab_contract_royalty_tier__line_id
+msgid "Royalty Line"
+msgstr "Linha de Royalty"
+
+#. module: liber_copyright_contracts
+#: model:ir.model,name:liber_copyright_contracts.model_edlab_contract_royalty_line
+msgid "Royalty Line (beneficiary x work)"
+msgstr "Linha de Royalty (beneficiário x obra)"
+
+#. module: liber_copyright_contracts
+#: model:ir.actions.act_window,name:liber_copyright_contracts.action_copyright_contracts_settings
+#: model:ir.ui.menu,name:liber_copyright_contracts.menu_copyright_contracts_settings
+msgid "Settings"
+msgstr "Configurações"
+
+#. module: liber_copyright_contracts
+#: model:ir.model.fields,field_description:liber_copyright_contracts.field_edlab_contract__signature_date
+msgid "Signature Date"
+msgstr "Data de assinatura"
+
+#. module: liber_copyright_contracts
+#: model:ir.model.fields,field_description:liber_copyright_contracts.field_edlab_contract__state
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts.view_edlab_contract_search
+msgid "Status"
+msgstr "Situação"
+
+#. module: liber_copyright_contracts
+#: model:ir.model.fields,help:liber_copyright_contracts.field_edlab_contract__activity_state
+msgid ""
+"Status based on activities\n"
+"Overdue: Due date is already passed\n"
+"Today: Activity date is today\n"
+"Planned: Future activities."
+msgstr "Estado com base nas atividades\nAtrasada: a data de vencimento já passou\nHoje: a atividade é para hoje\nPlanejada: atividades futuras."
+
+#. module: liber_copyright_contracts
+#: model:ir.model.fields,field_description:liber_copyright_contracts.field_edlab_contract__tag_ids
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts.view_edlab_contract_search
+msgid "Tags"
+msgstr "Marcadores"
+
+#. module: liber_copyright_contracts
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts.view_edlab_contract_form
+msgid "Tags..."
+msgstr "Marcadores..."
+
+#. module: liber_copyright_contracts
+#. odoo-python
+#: code:addons/liber_copyright_contracts/models/royalty_line.py:0
+msgid "The end quantity must be greater than or equal to the start quantity."
+msgstr "A quantidade final deve ser maior ou igual à quantidade inicial."
+
+#. module: liber_copyright_contracts
+#. odoo-python
+#: code:addons/liber_copyright_contracts/models/contract.py:0
+msgid "This contract expires on %s. Review renewal or cancellation."
+msgstr "Este contrato vence em %s. Revise a renovação ou o cancelamento."
+
+#. module: liber_copyright_contracts
+#: model:ir.model.fields,field_description:liber_copyright_contracts.field_edlab_contract_royalty_line__tier_ids
+msgid "Tiers"
+msgstr "Faixas"
+
+#. module: liber_copyright_contracts
+#: model:ir.model.fields,field_description:liber_copyright_contracts.field_edlab_contract__time_left_display
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts.view_edlab_contract_tree
+msgid "Time Left"
+msgstr "Tempo restante"
+
+#. module: liber_copyright_contracts
+#: model:ir.model.fields,field_description:liber_copyright_contracts.field_edlab_contract_royalty_tier__qty_to
+msgid "To (copies)"
+msgstr "Até (exemplares)"
+
+#. module: liber_copyright_contracts
+#: model:ir.model.fields,help:liber_copyright_contracts.field_edlab_contract__activity_exception_decoration
+msgid "Type of the exception activity on record."
+msgstr "Tipo da atividade de exceção no registro."
+
+#. module: liber_copyright_contracts
+#: model:ir.model.fields,help:liber_copyright_contracts.field_edlab_contract__location
+msgid "URL or filing location of the contract."
+msgstr "URL ou local de arquivamento do contrato."
+
+#. module: liber_copyright_contracts
+#: model:res.groups,name:liber_copyright_contracts.group_contract_user
+msgid "User"
+msgstr "Usuário"
+
+#. module: liber_copyright_contracts
+#: model:ir.model.fields.selection,name:liber_copyright_contracts.selection__edlab_contract__state__valid
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts.view_edlab_contract_search
+msgid "Valid"
+msgstr "Válido"
+
+#. module: liber_copyright_contracts
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts.view_edlab_contract_form
+msgid "Validate"
+msgstr "Validar"
+
+#. module: liber_copyright_contracts
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts.view_edlab_contract_form
+msgid "Values and file"
+msgstr "Valores e arquivo"
+
+#. module: liber_copyright_contracts
+#: model:ir.model.fields,field_description:liber_copyright_contracts.field_edlab_contract_royalty_line__product_id
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts.view_edlab_contract_search
+msgid "Work"
+msgstr "Obra"
+
+#. module: liber_copyright_contracts
+#: model:ir.model.fields,field_description:liber_copyright_contracts.field_edlab_contract__product_ids
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts.view_edlab_contract_tree
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts.view_partner_form_copyright_contracts
+msgid "Works"
+msgstr "Obras"
+
+#. module: liber_copyright_contracts
+#. odoo-python
+#: code:addons/liber_copyright_contracts/models/contract.py:0
+msgid "and"
+msgstr "e"
+
+#. module: liber_copyright_contracts
+#. odoo-python
+#: code:addons/liber_copyright_contracts/models/contract.py:0
+msgid "day"
+msgstr "dia"
+
+#. module: liber_copyright_contracts
+#. odoo-python
+#: code:addons/liber_copyright_contracts/models/contract.py:0
+msgid "days"
+msgstr "dias"
+
+#. module: liber_copyright_contracts
+#. odoo-python
+#: code:addons/liber_copyright_contracts/models/contract.py:0
+msgid "month"
+msgstr "mês"
+
+#. module: liber_copyright_contracts
+#. odoo-python
+#: code:addons/liber_copyright_contracts/models/contract.py:0
+msgid "months"
+msgstr "meses"
+
+#. module: liber_copyright_contracts
+#. odoo-python
+#: code:addons/liber_copyright_contracts/models/res_partner.py:0
+msgid "partner_ids"
+msgstr "partner_ids"
+
+#. module: liber_copyright_contracts
+#. odoo-python
+#: code:addons/liber_copyright_contracts/models/product_template.py:0
+msgid "product_ids"
+msgstr "product_ids"
+
+#. module: liber_copyright_contracts
+#. odoo-python
+#: code:addons/liber_copyright_contracts/models/contract.py:0
+msgid "year"
+msgstr "ano"
+
+#. module: liber_copyright_contracts
+#. odoo-python
+#: code:addons/liber_copyright_contracts/models/contract.py:0
+msgid "years"
+msgstr "anos"
+
+#. module: liber_copyright_contracts
+#. odoo-python
+#: code:addons/liber_copyright_contracts/models/product_template.py:0
+#: code:addons/liber_copyright_contracts/models/res_partner.py:0
+msgid "Contracts of %s"
+msgstr "Contratos de %s"

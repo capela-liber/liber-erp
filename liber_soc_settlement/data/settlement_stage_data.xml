@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <!-- Default kanban columns for the consignment board. noupdate=1 so the
+         team can rename/reorder/fold them without a module update clobbering it. -->
+    <record id="stage_todo" model="consignment.settlement.stage">
+        <field name="name">To Do</field>
+        <field name="sequence">10</field>
+    </record>
+    <record id="stage_doing" model="consignment.settlement.stage">
+        <field name="name">Doing</field>
+        <field name="sequence">20</field>
+    </record>
+    <record id="stage_done" model="consignment.settlement.stage">
+        <field name="name">Done</field>
+        <field name="sequence">30</field>
+        <field name="fold" eval="True"/>
+    </record>
+</odoo>

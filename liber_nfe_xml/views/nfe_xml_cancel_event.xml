@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="view_nfe_xml_cancel_event_list" model="ir.ui.view">
+            <field name="name">nfe.xml.cancel.event.list</field>
+            <field name="model">nfe.xml.cancel.event</field>
+            <field name="arch" type="xml">
+                <list string="NFe Cancellation Events">
+                    <field name="event_date"/>
+                    <field name="key"/>
+                    <field name="nfe_id"/>
+                    <field name="protocol"/>
+                    <field name="reason"/>
+                    <field name="tp_evento"/>
+                    <field name="company_id"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="view_nfe_xml_cancel_event_form" model="ir.ui.view">
+            <field name="name">nfe.xml.cancel.event.form</field>
+            <field name="model">nfe.xml.cancel.event</field>
+            <field name="arch" type="xml">
+                <form string="NFe Cancellation Event">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="key"/>
+                                <field name="nfe_id"/>
+                                <field name="tp_evento"/>
+                                <field name="desc_evento"/>
+                            </group>
+                            <group>
+                                <field name="event_date"/>
+                                <field name="protocol"/>
+                                <field name="company_id"/>
+                            </group>
+                        </group>
+                        <group string="Justification">
+                            <field name="reason" nolabel="1"/>
+                        </group>
+                        <group string="Cancellation XML">
+                            <field name="file" filename="file_name"/>
+                            <field name="file_name" invisible="1"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_nfe_xml_cancel_event_search" model="ir.ui.view">
+            <field name="name">nfe.xml.cancel.event.search</field>
+            <field name="model">nfe.xml.cancel.event</field>
+            <field name="arch" type="xml">
+                <search string="Search">
+                    <field name="key"/>
+                    <field name="nfe_id"/>
+                    <field name="protocol"/>
+                    <field name="company_id"/>
+                    <filter string="Linked to NFe" domain="[('nfe_id','!=', False)]" name="linked_set"/>
+                    <filter string="Orphan (no NFe)" domain="[('nfe_id','=', False)]" name="orphan_set"/>
+                    <group>
+                        <filter name="group_by_event_date" string="Event Date" context="{'group_by':'event_date'}"/>
+                        <filter name="group_by_company" string="Company" context="{'group_by':'company_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_nfe_xml_cancel_event">
+            <field name="name">NFe Cancellations</field>
+            <field name="res_model">nfe.xml.cancel.event</field>
+            <field name="view_mode">list,form</field>
+            <field name="search_view_id" ref="view_nfe_xml_cancel_event_search"/>
+        </record>
+
+        <menuitem id="nfe_xml_cancel_event_menu"
+                  name="NFe Cancellations"
+                  parent="liber_nfe_xml.menu_nfe_xml_panel"
+                  action="action_nfe_xml_cancel_event"
+                  sequence="2"/>
+    </data>
+</odoo>

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id='hedra_metabooks_res_config_inherit_form' model="ir.ui.view">
+            <field name="name">res.config.inherit.metabooks.form</field>
+            <field name="model">res.config.settings</field>
+            <field name="priority" eval="40"/>
+            <field name="inherit_id" ref="base.res_config_settings_view_form"/>
+            <field name="arch" type="xml">
+                <!-- v19 port: settings page uses app/block/setting under //form
+                     (the old div.settings / app_settings_block layout was removed). -->
+                <xpath expr="//form" position="inside">
+                    <app data-string="Metabooks" string="Metabooks" name="liber_metabooks_integration"
+                         logo="/base/static/description/settings.png">
+                        <block title="Metabooks" name="metabooks_setting_container">
+                            <setting string="Metabooks User name" help="Metabooks username">
+                                <field name="metabooks_username"/>
+                            </setting>
+                            <setting string="Metabooks Password" help="Password">
+                                <field name="metabooks_password"/>
+                            </setting>
+                            <!-- TODO v19 port: NCM setting disabled ('account.ncm' absent in v19 community)
+                            <setting string="Default NCM code" help="Default NCM code">
+                                <field name="ncm_product_code_new"/>
+                            </setting>
+                            -->
+                            <setting string="Metabooks Authorisation" help="Authorisation code">
+                                <field name="metabooks_authorisation_code"/>
+                                <div class="mt8">
+                                    <button name="action_test_metabooks_connection" string="Test Connection"
+                                            type="object" class="btn-primary"/>
+                                </div>
+                            </setting>
+                            <setting string="Metabooks Ids">
+                                <field name="metabooks_ids"/>
+                            </setting>
+                        </block>
+                        <!-- v19 port: this "Custom Product's Fields" setting used to be
+                             injected into the Website settings page via a
+                             #webmaster_settings anchor that no longer exists in v19.
+                             Moved here into the Metabooks settings app instead. -->
+                        <block title="Custom Product's Fields" name="metabooks_product_fields_container">
+                            <setting string="Product Fields">
+                                <field name="product_fields" widget="many2many_tags"/>
+                            </setting>
+                        </block>
+                    </app>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="action_metabooks_config_settings" model="ir.actions.act_window">
+            <field name="name">Settings</field>
+            <field name="res_model">res.config.settings</field>
+            <field name="view_mode">form</field>
+            <field name="target">current</field>
+            <field name="context">{'module': 'liber_metabooks_integration'}</field>
+        </record>
+
+        <!-- Settings reachable from inside the app, not only from the general
+             Settings page (same pattern as the Consignment app). Menus live here,
+             after the action, because this file loads after metabooks_menus.xml. -->
+        <menuitem id="menu_metabooks_config"
+                  name="Configuration"
+                  parent="menu_metabooks_root"
+                  sequence="90"
+                  groups="base.group_system"/>
+
+        <menuitem id="menu_metabooks_settings"
+                  name="Settings"
+                  parent="menu_metabooks_config"
+                  action="action_metabooks_config_settings"
+                  sequence="10"
+                  groups="base.group_system"/>
+    </data>
+</odoo>

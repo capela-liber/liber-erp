@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <!--Form view for exam-->
+    <record id="nfe_xml_items_form_view" model="ir.ui.view">
+        <field name="name">nfe.xml.items.form.view</field>
+        <field name="model">nfe.xml.items</field>
+        <field name="arch" type="xml">
+            <form string="Panel Items">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="soc_xml_id"/>
+                            <field name="ks_partner_id"/>
+                            <field name="ks_product_barcode"/>
+                            <field name="ks_product_id"/>
+                            <field name="ks_product_name"/>
+                            <field name="ks_cfop_id"/>
+                            <field name="ks_xml_date"/>
+                            <field name="company_id"/>
+                            <field name="team_id"/>
+                            <field name="vendor_id"/>
+                            <field name="customer_id"/>
+                            <field name="nfe_tag_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
+                        </group>
+                        <group>
+                            <field name="ks_due_date"/>
+                            <field name="ks_purchase_id"/>
+                            <field name="ks_product_qty"/>
+                            <field name="ks_price"/>
+                            <field name="ks_total_price" readonly="1"/>
+                            <field name="discount_item"/>
+                            <field name="net_price"/>
+                            <field name="xml_type"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!--Tree view for exam-->
+    <record id="nfe_xml_items_tree_view" model="ir.ui.view">
+        <field name="name">nfe.xml.items.list.view</field>
+        <field name="model">nfe.xml.items</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="soc_xml_id"/>
+                <field name="ks_partner_id"/>
+                <field name="vendor_id"/>
+                <field name="customer_id"/>
+                <field name="ks_purchase_id"/>
+                <field name="ks_product_barcode"/>
+                <field name="ks_product_id"/>
+                <field name="ks_product_name"/>
+                <field name="ks_product_qty"/>
+                <field name="ks_price"/>
+                <field name="ks_total_price"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="nfe_xml_items_kanban_views" model="ir.ui.view">
+        <field name="name">nfe.xml.items.kanban</field>
+        <field name="model">nfe.xml.items</field>
+        <field name="arch" type="xml">
+            <kanban class="o_kanban_small_column" sample="1">
+                <templates>
+                    <t t-name="card">
+                        <div>
+                            <strong>Xml Id: </strong><field name="soc_xml_id"/>
+                        </div>
+                        <div>
+                            <strong>Product name: </strong><field name="ks_product_name"/>
+                        </div>
+                        <div>
+                            <strong>Partner: </strong><field name="ks_partner_id"/>
+                        </div>
+                        <div>
+                            <strong>xml date: </strong><field name="ks_xml_date"/>
+                        </div>
+                        <div class="d-flex justify-content-between mt-3">
+                            <div>
+                                <strong><span>Total price: </span></strong>
+                                <field name="ks_total_price"/>
+                            </div>
+                            <div>
+                                <strong><span>Net price: </span></strong>
+                                <field name="net_price"/>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+     <record id="view_nfe_xml_items_graph" model="ir.ui.view">
+        <field name="name">view.nfe.xml.items.graph</field>
+        <field name="model">nfe.xml.items</field>
+        <field name="arch" type="xml">
+            <graph string="Nfe XMl items">
+                <field name="ks_partner_id" />
+                <field name="net_price" type="measure" />
+                <field name="ks_total_price" type="measure" />
+            </graph>
+        </field>
+    </record>
+
+    <record id="view_nfe_xml_items_pivot" model="ir.ui.view">
+        <field name="name">view.nfe.xml.items.pivot</field>
+        <field name="model">nfe.xml.items</field>
+        <field name="arch" type="xml">
+            <pivot string="Nfe XML Items">
+                <field name="create_date" type="row"/>
+                <field name="net_price" type="measure"/>
+                <field name="ks_total_price" type="measure" />
+            </pivot>
+        </field>
+    </record>
+
+    <record id="view_nfe_items_search" model="ir.ui.view">
+        <field name="name">nfe.xml.items.search</field>
+        <field name="model">nfe.xml.items</field>
+        <field name="arch" type="xml">
+            <search string="Search">
+                <field name="ks_product_id"/>
+                <field name="soc_xml_id"/>
+                <field name="ks_due_date"/>
+                <field name="ks_xml_date"/>
+                <filter string="Product" domain="[('ks_product_id','!=', False)]" help="Product Set" name="ks_product_id_set"/>
+                <filter string="XML Reference" domain="[('soc_xml_id','!=', False)]" help="XML Id Set" name="soc_xml_id_set"/>
+                <filter string="Purchase Order" domain="[('ks_purchase_id','!=', False)]" help="Purchase Order Set" name="ks_purchase_id_set"/>
+                <group>
+                    <filter name="group_by_partner" string="Partner" context="{'group_by':'ks_partner_id'}"
+                            help="NFe items by Partn er"/>
+                    <filter name="group_by_product" string="Product" context="{'group_by':'ks_product_id'}"
+                            help="NFe items by Product"/>
+                    <filter name="group_by_xml_id" string="XML Reference" context="{'group_by':'soc_xml_id'}"
+                            help="NFe items by XML Id"/>
+                    <filter name="group_by_due_date" string="Due Date" context="{'group_by':'ks_due_date'}"
+                            help="NFe items by Due Date"/>
+                    <filter name="group_by_xml_date" string="XML Date" context="{'group_by':'ks_xml_date'}"
+                            help="NFe items by XML Date"/>
+                    <filter name="company_id" string="Company" context="{'group_by':'company_id'}"/>
+                    <filter name="team_id" string="Sales Team" context="{'group_by':'team_id'}"/>
+                    <filter name="group_by_purchase_id" string="Purchase Order" context="{'group_by':'ks_purchase_id'}"
+                            help="NFe items by Purchase Order"/>
+                    <filter name="group_by_cfop_id" string="CFOP" context="{'group_by':'ks_cfop_id'}"
+                            help="NFe items by CFOP"/>
+                    <filter name="group_tags" string="Tags" context="{'group_by': 'nfe_tag_ids'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="NFeXmlItemsMenu" model="ir.actions.act_window">
+        <field name="name">NFe Items</field>
+        <field name="res_model">nfe.xml.items</field>
+        <field name="view_mode">list,form,kanban,pivot,graph</field>
+    </record>
+    <menuitem id="nfe_xml_item_menu" name="NFe Items" action="NFeXmlItemsMenu"
+              parent="liber_nfe_xml.menu_nfe_xml_panel" sequence="2"/>
+</odoo>

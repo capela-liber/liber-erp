@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- The royalty accounting settings, in Settings > Copyright instead of
+         buried in the company form. They stay per-company: the fields are
+         related to res.company, so the company selector at the top of Settings
+         decides which company you are configuring. -->
+    <record id="res_config_settings_view_form_analytics" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.copyright.analytics</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="liber_copyright_contracts.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//block[@name='copyright_contracts_block']" position="after">
+                <block title="Royalty Accounting" name="copyright_analytics_block">
+                    <setting string="Analytic plan"
+                             help="Plan under which the analytic accounts created from contracts are placed.">
+                        <field name="contract_analytic_group_id"/>
+                    </setting>
+                    <setting string="Expense account"
+                             help="Account recorded on royalty analytic lines still inside the operational window.">
+                        <field name="contract_royalty_general_account_id"/>
+                    </setting>
+                    <setting string="Liability account"
+                             help="Account used once a royalty is overdue beyond the threshold: no longer an operational expense.">
+                        <field name="contract_royalty_liability_account_id"/>
+                    </setting>
+                    <setting string="Reclassify as liability after"
+                             help="A royalty overdue by longer than this moves from the expense account to the liability account. 0 disables it.">
+                        <div class="content-group">
+                            <div class="mt8">
+                                <field name="contract_royalty_liability_months" class="o_light_label"/>
+                                <span class="ms-2">months overdue</span>
+                            </div>
+                        </div>
+                    </setting>
+                </block>
+                <block title="Special Sales" name="copyright_special_sales_block">
+                    <setting string="Special sales teams"
+                             help="Sales from these teams always compute royalties on the net invoiced amount, never on the cover price, whatever the royalty line says.">
+                        <field name="contract_special_sales_team_ids" widget="many2many_tags"/>
+                    </setting>
+                    <setting string="Minimum discount"
+                             help="How much a line must be discounted for a sale from those teams to count as a special sale. 0 means any discount qualifies.">
+                        <div class="content-group">
+                            <div class="mt8">
+                                <field name="contract_special_min_discount" class="o_light_label"/>
+                                <span class="ms-2">% off</span>
+                            </div>
+                        </div>
+                    </setting>
+                </block>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

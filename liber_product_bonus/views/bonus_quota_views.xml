@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_bonus_quota_list" model="ir.ui.view">
+        <field name="name">product.bonus.quota.list</field>
+        <field name="model">product.bonus.quota</field>
+        <field name="arch" type="xml">
+            <list editable="bottom">
+                <field name="product_id"/>
+                <field name="bucket"/>
+                <field name="print_run"/>
+                <field name="pct_allowed" string="% permitido"/>
+                <field name="qty_allowed" string="= exemplares"/>
+                <field name="qty_given"/>
+                <field name="qty_remaining"
+                       decoration-danger="qty_remaining == 0"
+                       decoration-success="qty_remaining &gt; 0"/>
+                <field name="pct_given" string="% já doado"/>
+                <field name="company_id" column_invisible="1"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="action_bonus_quota" model="ir.actions.act_window">
+        <field name="name">Metas</field>
+        <field name="res_model">product.bonus.quota</field>
+        <field name="view_mode">list</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Nada aqui, e está tudo bem.</p>
+            <p>A porcentagem padrão da casa fica em <b>Definições &gt; Bonificações</b>
+               e já vale para todos os títulos. Esta tela é só para a
+               <b>exceção</b>: o livro que merece uma meta diferente.</p>
+            <p>A tiragem não se cadastra — ela é o estoque (a soma das entradas).</p>
+        </field>
+    </record>
+</odoo>

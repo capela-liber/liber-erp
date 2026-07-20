@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_partner_form_bonus" model="ir.ui.view">
+        <field name="name">res.partner.form.bonus</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <!-- O historico aparece onde a pessoa ja vai estar: abrir o
+                 jornalista e ver os livros que ele ja recebeu. -->
+            <div name="button_box" position="inside">
+                <button name="action_view_bonuses" type="object"
+                        class="oe_stat_button" icon="fa-gift"
+                        invisible="bonus_count == 0">
+                    <field name="bonus_count" widget="statinfo" string="Bonificações"/>
+                </button>
+            </div>
+            <xpath expr="//page[@name='internal_notes']" position="before">
+                <page string="Bonificações" name="bonus">
+                    <group>
+                        <group string="Histórico">
+                            <field name="is_bonus_recipient"/>
+                            <field name="bonus_partner_type"/>
+                            <field name="bonus_bio"
+                                   placeholder="Crítica literária da Folha, booktuber, poeta..."/>
+                            <field name="bonus_count"/>
+                            <field name="bonus_list_count"/>
+                            <field name="bonus_list_names" widget="text"/>
+                            <field name="bonus_last_date"/>
+                            <field name="bonus_lifetime_cost"/>
+                            <field name="bonus_outcome_rate" string="Avaliação"/>
+                        </group>
+                        <group string="Score">
+                            <!-- A nota tem que ser AUDITÁVEL, não um oráculo:
+                                 ao lado dela ficam a fração crua e o histórico
+                                 inteiro, logo abaixo, que a gerou. -->
+                            <field name="bonus_rating_html" string="Score" widget="html"/>
+                            <field name="bonus_rating_band" string="Situação"/>
+                            <div class="text-muted" colspan="2">
+                                Média dos resultados ponderada por recência,
+                                encolhida para a média da casa enquanto há pouco
+                                histórico. Os pontos e os cortes ficam em
+                                Definições &gt; Bonificações.
+                            </div>
+                        </group>
+                    </group>
+                    <field name="bonus_ids" readonly="1">
+                        <list>
+                            <field name="name"/>
+                            <field name="date"/>
+                            <field name="reason_id"/>
+                            <field name="campaign"/>
+                            <field name="quantity"/>
+                            <field name="state" widget="badge"/>
+                            <field name="outcome" widget="badge"
+                                   decoration-success="outcome == 'great'"
+                                   decoration-info="outcome == 'good'"
+                                   decoration-warning="outcome == 'weak'"
+                                   decoration-muted="outcome == 'silence'"/>
+                            <field name="outcome_link" widget="url"/>
+                        </list>
+                    </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Quem está em quantas listas.
+         A pergunta é sempre ordenada ("quem está em lista demais?"), então a
+         tela abre ordenada por isso, não por nome. Serve para dois usos que
+         parecem um só: achar a pessoa que recebe tudo (e talvez não devesse) e
+         achar as listas redundantes, que se denunciam quando as mesmas trinta
+         pessoas aparecem juntas em oito delas. -->
+    <record id="view_partner_list_bonus_lists" model="ir.ui.view">
+        <field name="name">res.partner.list.bonus.lists</field>
+        <field name="model">res.partner</field>
+        <field name="arch" type="xml">
+            <list string="Contatos por lista" create="false"
+                  default_order="bonus_list_count desc, name">
+                <field name="display_name" string="Contato"/>
+                <field name="email" optional="show"/>
+                <field name="bonus_partner_type" string="Tipo" optional="show"/>
+                <field name="bonus_bio" string="Nota" optional="show"/>
+                <field name="bonus_list_count" string="Listas" width="90px"
+                       class="text-center"/>
+                <field name="bonus_list_names" string="Em quais listas"
+                       width="380px"/>
+                <field name="bonus_count" string="Bonificações" width="120px"
+                       class="text-center" optional="show"/>
+                <field name="bonus_rating_html" string="Score" widget="html"
+                       width="80px" class="text-center" optional="show"/>
+                <field name="bonus_last_date" string="Último" optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_partner_search_bonus_lists" model="ir.ui.view">
+        <field name="name">res.partner.search.bonus.lists</field>
+        <field name="model">res.partner</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name" string="Contato"/>
+                <field name="email"/>
+                <!-- A busca por nome de lista vai pelo vínculo, não pelo campo
+                     de exibição: bonus_list_names é calculado e não tem coluna,
+                     então não se pesquisa nele. -->
+                <field name="bonus_list_member_ids" string="Nome da lista"
+                       filter_domain="[('bonus_list_member_ids.list_id.name', 'ilike', self)]"/>
+                <!-- Buscar pela nota é buscar por QUEM A PESSOA É ("psicanalista",
+                     "booktuber", "Folha"): é o jeito de montar uma lista nova a
+                     partir do que a pesquisa descobriu. -->
+                <field name="bonus_bio" string="Nota"/>
+                <filter name="in_any_list" string="Em alguma lista"
+                        domain="[('bonus_list_count', '&gt;', 0)]"/>
+                <filter name="in_many_lists" string="Em 5 ou mais listas"
+                        domain="[('bonus_list_count', '&gt;=', 5)]"/>
+                <filter name="in_no_list" string="Fora de qualquer lista"
+                        domain="[('bonus_list_count', '=', 0)]"/>
+                <separator/>
+                <filter name="recipients" string="Bonificados"
+                        domain="[('is_bonus_recipient', '=', True)]"/>
+                <separator/>
+                <filter name="g_count" string="Nº de listas"
+                        context="{'group_by': 'bonus_list_count'}"/>
+                <filter name="g_type" string="Tipo"
+                        context="{'group_by': 'bonus_partner_type'}"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_partner_bonus_lists" model="ir.actions.act_window">
+        <field name="name">Contatos por lista</field>
+        <field name="res_model">res.partner</field>
+        <field name="view_mode">list,form</field>
+        <field name="view_id" ref="view_partner_list_bonus_lists"/>
+        <field name="search_view_id" ref="view_partner_search_bonus_lists"/>
+        <!-- Abre em quem está em alguma lista: a base tem dezenas de milhares
+             de contatos e uma tela de zeros não é relatório. O filtro "Fora de
+             qualquer lista" está lá para quem quiser o contrário. -->
+        <field name="context">{'search_default_in_any_list': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Ninguém em lista ainda</p>
+            <p>Quando houver listas com membros, esta tela mostra cada contato
+               e em quantas listas ele está.</p>
+        </field>
+    </record>
+</odoo>

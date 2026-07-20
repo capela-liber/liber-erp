@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Os dois campos do edoo_invoice_paid, na mesma casa onde produção os
+         tem: o formulário da posição fiscal. -->
+    <record id="view_fiscal_position_form_remessa" model="ir.ui.view">
+        <field name="name">account.fiscal.position.form.remessa</field>
+        <field name="model">account.fiscal.position</field>
+        <field name="inherit_id" ref="account.view_account_position_form"/>
+        <field name="arch" type="xml">
+            <field name="active" position="after">
+                <field name="auto_invoice_paid"/>
+                <field name="auto_invoice_paid_account_id"
+                       invisible="not auto_invoice_paid"
+                       required="auto_invoice_paid"/>
+            </field>
+        </field>
+    </record>
+</odoo>

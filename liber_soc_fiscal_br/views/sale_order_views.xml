@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Num Pedido C, "Criar fatura" é um beco: não há o que faturar (a
+         consignação não é venda) e o assistente morre em "quantia da entrada
+         deve ser positiva". A porta certa é a nota de remessa. -->
+    <record id="view_order_form_consignment_note" model="ir.ui.view">
+        <field name="name">sale.order.form.consignment.note</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//button[@id='create_invoice']" position="attributes">
+                <attribute name="invisible">invoice_status != 'to invoice' or is_consignment</attribute>
+            </xpath>
+            <xpath expr="//button[@id='create_invoice_percentage']" position="attributes">
+                <attribute name="invisible">invoice_status != 'no' or state != 'sale' or is_consignment</attribute>
+            </xpath>
+            <xpath expr="//button[@id='create_invoice_percentage']" position="after">
+                <field name="remessa_note_move_id" invisible="1"/>
+                <button name="action_generate_remessa_note" type="object"
+                        string="Gerar nota" class="btn-primary"
+                        invisible="not is_consignment or state != 'sale' or remessa_note_move_id"/>
+            </xpath>
+            <div name="button_box" position="inside">
+                <button name="action_view_remessa_note" type="object"
+                        class="oe_stat_button" icon="fa-book"
+                        invisible="not is_consignment">
+                    <div class="o_stat_info">
+                        <field name="remessa_note_label" widget="statinfo"
+                               nolabel="1" class="o_stat_value"/>
+                        <span class="o_stat_text">Nota</span>
+                    </div>
+                </button>
+            </div>
+        </field>
+    </record>
+
+    <!-- O filtro da nossa origem no menu Remessas do financeiro. -->
+    <record id="view_nfe_remessa_search_consignment" model="ir.ui.view">
+        <field name="name">account.move.search.remessa.consignment</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="liber_nfe_remessa.view_nfe_remessa_search"/>
+        <field name="arch" type="xml">
+            <field name="invoice_origin" position="after">
+                <filter name="filter_consignment" string="Consignações"
+                        domain="[('remessa_origin', '=', 'consignment')]"/>
+            </field>
+        </field>
+    </record>
+
+    <!-- A trava do meio-termo: a posição fiscal de um pedido gerado por acerto
+         é ditada pela operação, então ela fica VISÍVEL (quem emite precisa
+         conferir antes da nota sair) e editável só pelo Administrador de
+         faturamento. Esconder seria pior: o erro só apareceria na nota. -->
+    <record id="view_order_form_consignment_fiscal_lock" model="ir.ui.view">
+        <field name="name">sale.order.form.consignment.fiscal.lock</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <field name="fiscal_position_id" position="before">
+                <field name="consignment_fiscal_locked" invisible="1"/>
+            </field>
+            <field name="fiscal_position_id" position="attributes">
+                <attribute name="readonly">consignment_fiscal_locked</attribute>
+            </field>
+        </field>
+    </record>
+</odoo>

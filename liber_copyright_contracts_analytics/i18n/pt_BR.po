@@ -1,0 +1,814 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* liber_copyright_contracts_analytics
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0-20260630\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-07-08 12:18+0000\n"
+"PO-Revision-Date: 2026-07-08 12:18+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: liber_copyright_contracts_analytics
+#. odoo-python
+#: code:addons/liber_copyright_contracts_analytics/models/royalty_line.py:0
+msgid "%s royalty line(s) added."
+msgstr "%s linha(s) de royalty adicionada(s)."
+
+#. module: liber_copyright_contracts_analytics
+#: model:ir.model.fields,help:liber_copyright_contracts_analytics.field_res_company__contract_royalty_liability_months
+msgid ""
+"A royalty overdue by more than this many months is reclassified from the "
+"expense account to the liability account. 0 disables it."
+msgstr ""
+"Um royalty vencido há mais meses do que este valor é reclassificado da conta"
+" de despesa para a conta de passivo. 0 desativa."
+
+#. module: liber_copyright_contracts_analytics
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_analytics.view_royalty_debt_search
+msgid "Accrued (royalties)"
+msgstr "Provisionado (royalties)"
+
+#. module: liber_copyright_contracts_analytics
+#. odoo-python
+#: code:addons/liber_copyright_contracts_analytics/models/royalty_line.py:0
+msgid "Advance"
+msgstr "Adiantamento"
+
+#. module: liber_copyright_contracts_analytics
+#: model:ir.model.fields,field_description:liber_copyright_contracts_analytics.field_edlab_contract_analytic_wizard_line__analytic_account_id
+#: model:ir.model.fields,field_description:liber_copyright_contracts_analytics.field_edlab_contract_royalty_line__analytic_account_id
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_analytics.view_royalty_debt_search
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_analytics.view_royalty_debt_tree
+msgid "Analytic Account"
+msgstr "Conta Analítica"
+
+#. module: liber_copyright_contracts_analytics
+#: model:ir.actions.act_window,name:liber_copyright_contracts_analytics.action_edlab_analytic_accounts
+#: model:ir.ui.menu,name:liber_copyright_contracts_analytics.menu_edlab_analytic_accounts
+msgid "Analytic Accounts"
+msgstr "Contas Analíticas"
+
+#. module: liber_copyright_contracts_analytics
+#: model:ir.model,name:liber_copyright_contracts_analytics.model_account_analytic_line
+msgid "Analytic Line"
+msgstr "Linha analítica"
+
+#. module: liber_copyright_contracts_analytics
+#: model:ir.model.fields,field_description:liber_copyright_contracts_analytics.field_edlab_contract_royalty_line__analytic_name
+msgid "Analytic Name"
+msgstr "Nome Analítico"
+
+#. module: liber_copyright_contracts_analytics
+#: model:ir.model.fields,field_description:liber_copyright_contracts_analytics.field_res_company__contract_analytic_group_id
+msgid "Analytic Plan"
+msgstr "Grupo Analítico"
+
+#. module: liber_copyright_contracts_analytics
+#: model:ir.model.fields,help:liber_copyright_contracts_analytics.field_edlab_contract_royalty_line__analytic_account_id
+msgid "Analytic account tracking this work/beneficiary pair."
+msgstr "Conta analítica que acompanha este par obra/beneficiário."
+
+#. module: liber_copyright_contracts_analytics
+#: model_terms:ir.actions.act_window,help:liber_copyright_contracts_analytics.action_edlab_analytic_accounts
+msgid "Analytic accounts created from copyright contracts appear here."
+msgstr ""
+"As contas analíticas criadas a partir de contratos de direitos autorais "
+"aparecem aqui."
+
+#. module: liber_copyright_contracts_analytics
+#: model:ir.model.fields,help:liber_copyright_contracts_analytics.field_res_company__contract_analytic_group_id
+msgid ""
+"Analytic plan under which the analytic accounts created from copyright "
+"contracts are placed."
+msgstr ""
+"Grupo analítico sob o qual são colocadas as contas analíticas criadas a "
+"partir de contratos de direitos autorais."
+
+#. module: liber_copyright_contracts_analytics
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_analytics.view_company_form_copyrights
+msgid "Analytics"
+msgstr "Analítico"
+
+#. module: liber_copyright_contracts_analytics
+#: model:ir.model.fields,field_description:liber_copyright_contracts_analytics.field_edlab_contract_analytic_wizard_line__to_apply
+msgid "Apply"
+msgstr "Aplicar"
+
+#. module: liber_copyright_contracts_analytics
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_analytics.view_royalty_debt_pivot
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_analytics.view_royalty_debt_tree
+msgid "Balance"
+msgstr "Saldo"
+
+#. module: liber_copyright_contracts_analytics
+#: model:ir.model.fields,field_description:liber_copyright_contracts_analytics.field_edlab_contract_analytic_wizard__line_ids
+msgid "Beneficiaries"
+msgstr "Beneficiários"
+
+#. module: liber_copyright_contracts_analytics
+#: model:ir.model.fields,field_description:liber_copyright_contracts_analytics.field_edlab_contract_analytic_wizard_line__partner_id
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_analytics.view_royalty_debt_search
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_analytics.view_royalty_debt_tree
+msgid "Beneficiary"
+msgstr "Beneficiário"
+
+#. module: liber_copyright_contracts_analytics
+#. odoo-python
+#: code:addons/liber_copyright_contracts_analytics/models/royalty_line.py:0
+msgid "Bill"
+msgstr "Fatura"
+
+#. module: liber_copyright_contracts_analytics
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_analytics.view_analytic_wizard_form
+msgid "Cancel"
+msgstr "Cancelar"
+
+#. module: liber_copyright_contracts_analytics
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_analytics.view_royalty_debt_tree
+msgid "Charged"
+msgstr "Provisionado"
+
+#. module: liber_copyright_contracts_analytics
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_analytics.view_royalty_debt_search
+msgid "Charged (owed)"
+msgstr "Provisionado (devido)"
+
+#. module: liber_copyright_contracts_analytics
+#: model:ir.model,name:liber_copyright_contracts_analytics.model_res_company
+msgid "Companies"
+msgstr "Empresas"
+
+#. module: liber_copyright_contracts_analytics
+#: model:ir.model.fields,help:liber_copyright_contracts_analytics.field_edlab_contract_royalty_line__on_sales_price
+msgid ""
+"Compute this line's royalties on the gross sales price (cover price, i.e. "
+"the invoice unit price before the discount) instead of the net invoiced "
+"amount."
+msgstr ""
+"Calcular os royalties desta linha sobre o preço de venda bruto (preço de "
+"capa, ou seja, o preço unitário da fatura antes do desconto) em vez do valor"
+" líquido faturado."
+
+#. module: liber_copyright_contracts_analytics
+#: model:ir.model,name:liber_copyright_contracts_analytics.model_res_partner
+msgid "Contact"
+msgstr "Contato"
+
+#. module: liber_copyright_contracts_analytics
+#: model:ir.model.fields,field_description:liber_copyright_contracts_analytics.field_edlab_contract_analytic_wizard__contract_id
+msgid "Contract"
+msgstr "Contrato"
+
+#. module: liber_copyright_contracts_analytics
+#: model:ir.model,name:liber_copyright_contracts_analytics.model_edlab_contract
+msgid "Copyright Contract"
+msgstr "Contrato de Direitos Autorais"
+
+#. module: liber_copyright_contracts_analytics
+#: model:ir.actions.server,name:liber_copyright_contracts_analytics.ir_cron_reclassify_royalty_accounts_ir_actions_server
+msgid "Copyright: reclassify royalty accounts (expense/liability)"
+msgstr ""
+"Direitos Autorais: reclassificar contas de royalties (despesa/passivo)"
+
+#. module: liber_copyright_contracts_analytics
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_analytics.view_company_form_copyrights
+msgid "Copyrights"
+msgstr "Direitos Autorais"
+
+#. module: liber_copyright_contracts_analytics
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_analytics.view_analytic_wizard_form
+msgid "Create"
+msgstr "Criar"
+
+#. module: liber_copyright_contracts_analytics
+#. odoo-python
+#: code:addons/liber_copyright_contracts_analytics/models/contract.py:0
+#: model:ir.actions.server,name:liber_copyright_contracts_analytics.action_server_analytic_wizard
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_analytics.view_analytic_wizard_form
+msgid "Create Analytic Accounts"
+msgstr "Criar Contas Analíticas"
+
+#. module: liber_copyright_contracts_analytics
+#: model:ir.model,name:liber_copyright_contracts_analytics.model_edlab_contract_analytic_wizard_line
+msgid "Create Analytic Accounts - Beneficiary Line"
+msgstr "Criar Contas Analíticas - Linha de Beneficiário"
+
+#. module: liber_copyright_contracts_analytics
+#: model:ir.model,name:liber_copyright_contracts_analytics.model_edlab_contract_analytic_wizard
+msgid "Create Analytic Accounts for Contract Beneficiaries"
+msgstr "Criar Contas Analíticas para os Beneficiários do Contrato"
+
+#. module: liber_copyright_contracts_analytics
+#: model:ir.model.fields,field_description:liber_copyright_contracts_analytics.field_edlab_contract_analytic_wizard__create_uid
+#: model:ir.model.fields,field_description:liber_copyright_contracts_analytics.field_edlab_contract_analytic_wizard_line__create_uid
+msgid "Created by"
+msgstr "Criado por"
+
+#. module: liber_copyright_contracts_analytics
+#: model:ir.model.fields,field_description:liber_copyright_contracts_analytics.field_edlab_contract_analytic_wizard__create_date
+#: model:ir.model.fields,field_description:liber_copyright_contracts_analytics.field_edlab_contract_analytic_wizard_line__create_date
+msgid "Created on"
+msgstr "Criado em"
+
+#. module: liber_copyright_contracts_analytics
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_analytics.view_royalty_debt_search
+msgid "Date"
+msgstr "Data"
+
+#. module: liber_copyright_contracts_analytics
+#: model:ir.model.fields,help:liber_copyright_contracts_analytics.field_edlab_contract_royalty_line__last_payment_date
+msgid ""
+"Date of the last royalty payment. Editable by Contracts Administrators only."
+msgstr ""
+"Data do último pagamento de royalties. Editável apenas por Administradores "
+"de Contratos."
+
+#. module: liber_copyright_contracts_analytics
+#: model:ir.model.fields,field_description:liber_copyright_contracts_analytics.field_account_analytic_line__display_name
+#: model:ir.model.fields,field_description:liber_copyright_contracts_analytics.field_account_move__display_name
+#: model:ir.model.fields,field_description:liber_copyright_contracts_analytics.field_edlab_contract__display_name
+#: model:ir.model.fields,field_description:liber_copyright_contracts_analytics.field_edlab_contract_analytic_wizard__display_name
+#: model:ir.model.fields,field_description:liber_copyright_contracts_analytics.field_edlab_contract_analytic_wizard_line__display_name
+#: model:ir.model.fields,field_description:liber_copyright_contracts_analytics.field_edlab_contract_royalty_line__display_name
+#: model:ir.model.fields,field_description:liber_copyright_contracts_analytics.field_res_company__display_name
+#: model:ir.model.fields,field_description:liber_copyright_contracts_analytics.field_res_partner__display_name
+msgid "Display Name"
+msgstr "Nome exibido"
+
+#. module: liber_copyright_contracts_analytics
+#: model:ir.model.fields,field_description:liber_copyright_contracts_analytics.field_res_company__contract_royalty_general_account_id
+msgid "Expense Account"
+msgstr "Conta de Despesa"
+
+#. module: liber_copyright_contracts_analytics
+#: model:ir.model.fields,help:liber_copyright_contracts_analytics.field_res_company__contract_royalty_general_account_id
+msgid ""
+"Expense account recorded on royalty analytic lines while they are still "
+"within the operational window (not yet overdue as a liability)."
+msgstr ""
+"Conta de despesa registrada nas linhas analíticas de royalties enquanto "
+"ainda estão dentro da janela operacional (ainda não vencidas como passivo)."
+
+#. module: liber_copyright_contracts_analytics
+#: model:ir.actions.server,name:liber_copyright_contracts_analytics.action_server_fill_royalty_lines
+msgid "Fill Royalty Lines"
+msgstr "Preencher Linhas de Royalties"
+
+#. module: liber_copyright_contracts_analytics
+#: model:ir.model.fields,field_description:liber_copyright_contracts_analytics.field_account_analytic_line__general_account_id
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_analytics.view_royalty_debt_search
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_analytics.view_royalty_debt_tree
+msgid "Financial Account"
+msgstr "Conta Financeira"
+
+#. module: liber_copyright_contracts_analytics
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_analytics.view_analytic_wizard_form
+msgid ""
+"For each beneficiary, leave the analytic account empty to\n"
+"                    create a new one with the suggested name, or pick an existing\n"
+"                    account to link instead. Untick \"Apply\" to skip a line."
+msgstr ""
+"Para cada beneficiário, deixe a conta analítica vazia para\n"
+"                    criar uma nova com o nome sugerido, ou escolha uma conta existente\n"
+"                    para vincular. Desmarque \"Aplicar\" para pular uma linha."
+
+#. module: liber_copyright_contracts_analytics
+#: model:ir.actions.server,name:liber_copyright_contracts_analytics.action_server_generate_royalty_lines
+msgid "Generate Royalty Analytic Lines"
+msgstr "Gerar Linhas Analíticas de Royalties"
+
+#. module: liber_copyright_contracts_analytics
+#: model_terms:ir.actions.act_window,help:liber_copyright_contracts_analytics.action_edlab_royalty_debts
+msgid "Generate them from Contracts › Action › Fill Royalty Lines."
+msgstr "Gere-as em Contratos › Ação › Preencher Linhas de Royalties."
+
+#. module: liber_copyright_contracts_analytics
+#: model:ir.model.fields,field_description:liber_copyright_contracts_analytics.field_account_analytic_line__id
+#: model:ir.model.fields,field_description:liber_copyright_contracts_analytics.field_account_move__id
+#: model:ir.model.fields,field_description:liber_copyright_contracts_analytics.field_edlab_contract__id
+#: model:ir.model.fields,field_description:liber_copyright_contracts_analytics.field_edlab_contract_analytic_wizard__id
+#: model:ir.model.fields,field_description:liber_copyright_contracts_analytics.field_edlab_contract_analytic_wizard_line__id
+#: model:ir.model.fields,field_description:liber_copyright_contracts_analytics.field_edlab_contract_royalty_line__id
+#: model:ir.model.fields,field_description:liber_copyright_contracts_analytics.field_res_company__id
+#: model:ir.model.fields,field_description:liber_copyright_contracts_analytics.field_res_partner__id
+msgid "ID"
+msgstr "ID"
+
+#. module: liber_copyright_contracts_analytics
+#: model:ir.model.fields,help:liber_copyright_contracts_analytics.field_account_analytic_line__edlab_source_move_line_id
+msgid ""
+"Invoice line this royalty analytic line was generated from. Used to avoid "
+"booking the same royalty twice."
+msgstr ""
+"Linha de fatura a partir da qual esta linha analítica de royalty foi gerada."
+" Usada para evitar lançar o mesmo royalty duas vezes."
+
+#. module: liber_copyright_contracts_analytics
+#: model:ir.model,name:liber_copyright_contracts_analytics.model_account_move
+msgid "Journal Entry"
+msgstr "Lançamento de diário"
+
+#. module: liber_copyright_contracts_analytics
+#: model:ir.model.fields,field_description:liber_copyright_contracts_analytics.field_edlab_contract_royalty_line__last_payment_date
+msgid "Last Payment Date"
+msgstr "Data do Último Pagamento"
+
+#. module: liber_copyright_contracts_analytics
+#: model:ir.model.fields,field_description:liber_copyright_contracts_analytics.field_edlab_contract_analytic_wizard__write_uid
+#: model:ir.model.fields,field_description:liber_copyright_contracts_analytics.field_edlab_contract_analytic_wizard_line__write_uid
+msgid "Last Updated by"
+msgstr "Última Atualização por"
+
+#. module: liber_copyright_contracts_analytics
+#: model:ir.model.fields,field_description:liber_copyright_contracts_analytics.field_edlab_contract_analytic_wizard__write_date
+#: model:ir.model.fields,field_description:liber_copyright_contracts_analytics.field_edlab_contract_analytic_wizard_line__write_date
+msgid "Last Updated on"
+msgstr "Última Atualização em"
+
+#. module: liber_copyright_contracts_analytics
+#: model:ir.model.fields,help:liber_copyright_contracts_analytics.field_edlab_contract_analytic_wizard_line__analytic_account_id
+msgid ""
+"Leave empty to create a new account with the suggested name, or pick an "
+"existing account to link instead."
+msgstr ""
+"Deixe vazio para criar uma nova conta com o nome sugerido, ou escolha uma "
+"conta existente para vincular."
+
+#. module: liber_copyright_contracts_analytics
+#: model:ir.model.fields,field_description:liber_copyright_contracts_analytics.field_res_company__contract_royalty_liability_account_id
+msgid "Liability Account"
+msgstr "Conta de Passivo"
+
+#. module: liber_copyright_contracts_analytics
+#: model:ir.model.fields,field_description:liber_copyright_contracts_analytics.field_res_company__contract_royalty_liability_months
+msgid "Liability After (months)"
+msgstr "Passivo Após (meses)"
+
+#. module: liber_copyright_contracts_analytics
+#: model:ir.model.fields,help:liber_copyright_contracts_analytics.field_res_company__contract_royalty_liability_account_id
+msgid ""
+"Liability account used on royalty analytic lines that are overdue beyond the"
+" threshold below (no longer an operational expense)."
+msgstr ""
+"Conta de passivo usada nas linhas analíticas de royalties vencidas além do "
+"limite abaixo (não mais uma despesa operacional)."
+
+#. module: liber_copyright_contracts_analytics
+#: model:ir.model.fields,help:liber_copyright_contracts_analytics.field_res_company__contract_special_min_discount
+msgid ""
+"Minimum invoice-line discount for a sale from the special sales team to "
+"count as a special sale (computed on the net amount). 0 means any discount "
+"qualifies."
+msgstr ""
+"Desconto mínimo na linha da fatura para que uma venda da equipe de vendas "
+"especiais conte como venda especial (calculada sobre o líquido). 0 significa"
+" que qualquer desconto qualifica."
+
+#. module: liber_copyright_contracts_analytics
+#: model:ir.model.fields,help:liber_copyright_contracts_analytics.field_account_analytic_line__edlab_amount_charged
+msgid "Negative side of the amount: royalty accrued/owed."
+msgstr "Lado negativo do valor: royalty provisionado/devido."
+
+#. module: liber_copyright_contracts_analytics
+#. odoo-python
+#: code:addons/liber_copyright_contracts_analytics/models/royalty_line.py:0
+msgid "New"
+msgstr "Novo"
+
+#. module: liber_copyright_contracts_analytics
+#: model:ir.model.fields,field_description:liber_copyright_contracts_analytics.field_edlab_contract_analytic_wizard_line__analytic_name
+msgid "New Account Name"
+msgstr "Nome da Nova Conta"
+
+#. module: liber_copyright_contracts_analytics
+#: model_terms:ir.actions.act_window,help:liber_copyright_contracts_analytics.action_edlab_analytic_accounts
+msgid "No analytic accounts yet"
+msgstr "Ainda não há contas analíticas"
+
+#. module: liber_copyright_contracts_analytics
+#: model_terms:ir.actions.act_window,help:liber_copyright_contracts_analytics.action_edlab_royalty_debts
+msgid "No royalty debts yet"
+msgstr "Ainda não há dívidas de royalties"
+
+#. module: liber_copyright_contracts_analytics
+#: model:ir.model.fields,field_description:liber_copyright_contracts_analytics.field_edlab_contract_royalty_line__on_sales_price
+msgid "On Sales Price"
+msgstr "Sobre o Preço de Venda"
+
+#. module: liber_copyright_contracts_analytics
+#. odoo-python
+#: code:addons/liber_copyright_contracts_analytics/models/royalty_line.py:0
+msgid "Only a Contracts Administrator can change the last payment date."
+msgstr "Apenas um Administrador de Contratos pode alterar a data do último pagamento."
+
+#. module: liber_copyright_contracts_analytics
+#. odoo-python
+#: code:addons/liber_copyright_contracts_analytics/models/royalty_line.py:0
+msgid "Only a Contracts Administrator can set the last payment date."
+msgstr "Apenas um Administrador de Contratos pode definir a data do último pagamento."
+
+#. module: liber_copyright_contracts_analytics
+#: model:ir.model.fields,field_description:liber_copyright_contracts_analytics.field_edlab_contract__edlab_royalty_balance
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_analytics.view_edlab_contract_tree_analytics
+msgid "Open Royalties"
+msgstr "Royalties em Aberto"
+
+#. module: liber_copyright_contracts_analytics
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_analytics.view_royalty_debt_tree
+msgid "Paid"
+msgstr "Pago"
+
+#. module: liber_copyright_contracts_analytics
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_analytics.view_royalty_debt_search
+msgid "Paid (payments)"
+msgstr "Pago (pagamentos)"
+
+#. module: liber_copyright_contracts_analytics
+#. odoo-python
+#: code:addons/liber_copyright_contracts_analytics/models/royalty_line.py:0
+msgid "Payment"
+msgstr "Pagamento"
+
+#. module: liber_copyright_contracts_analytics
+#: model:ir.model.fields,field_description:liber_copyright_contracts_analytics.field_account_analytic_line__edlab_payment_cutoff_line_id
+msgid "Payment Cutoff Of"
+msgstr "Corte de Pagamento De"
+
+#. module: liber_copyright_contracts_analytics
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_analytics.view_royalty_debt_search
+msgid "Payments/Cutoffs"
+msgstr "Pagamentos/Cortes"
+
+#. module: liber_copyright_contracts_analytics
+#: model:ir.model.fields,help:liber_copyright_contracts_analytics.field_account_analytic_line__edlab_amount_paid
+msgid "Positive side of the amount: payments/settlements."
+msgstr "Lado positivo do valor: pagamentos/liquidações."
+
+#. module: liber_copyright_contracts_analytics
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_analytics.view_royalty_debt_tree
+msgid "Quantity"
+msgstr "Quantidade"
+
+#. module: liber_copyright_contracts_analytics
+#: model:ir.model.fields,field_description:liber_copyright_contracts_analytics.field_account_analytic_line__edlab_advance_line_id
+msgid "Recoupable Advance Of"
+msgstr "Adiantamento Descontável De"
+
+#. module: liber_copyright_contracts_analytics
+#. odoo-python
+#: code:addons/liber_copyright_contracts_analytics/models/royalty_line.py:0
+msgid "Recoupable advance"
+msgstr "Adiantamento descontável"
+
+#. module: liber_copyright_contracts_analytics
+#: model:ir.ui.menu,name:liber_copyright_contracts_analytics.menu_edlab_reports
+msgid "Reports"
+msgstr "Relatórios"
+
+#. module: liber_copyright_contracts_analytics
+#: model:ir.model.fields,field_description:liber_copyright_contracts_analytics.field_account_analytic_line__edlab_royalty_percentage
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_analytics.view_royalty_debt_tree
+msgid "Royalty %"
+msgstr "% de royalty"
+
+#. module: liber_copyright_contracts_analytics
+#: model:ir.model.fields,field_description:liber_copyright_contracts_analytics.field_account_analytic_line__edlab_amount_charged
+msgid "Royalty Charged"
+msgstr "Royalty Provisionado"
+
+#. module: liber_copyright_contracts_analytics
+#: model:ir.actions.act_window,name:liber_copyright_contracts_analytics.action_edlab_royalty_debts
+#: model:ir.ui.menu,name:liber_copyright_contracts_analytics.menu_edlab_royalty_debts
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_analytics.view_royalty_debt_pivot
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_analytics.view_royalty_debt_search
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_analytics.view_royalty_debt_tree
+msgid "Royalty Debts"
+msgstr "Dívidas de Royalties"
+
+#. module: liber_copyright_contracts_analytics
+#: model:ir.model.fields,field_description:liber_copyright_contracts_analytics.field_edlab_contract_analytic_wizard_line__royalty_line_id
+msgid "Royalty Line"
+msgstr "Linha de Royalty"
+
+#. module: liber_copyright_contracts_analytics
+#: model:ir.model,name:liber_copyright_contracts_analytics.model_edlab_contract_royalty_line
+msgid "Royalty Line (beneficiary x work)"
+msgstr "Linha de Royalty (beneficiário x obra)"
+
+#. module: liber_copyright_contracts_analytics
+#: model:ir.model.fields,field_description:liber_copyright_contracts_analytics.field_account_analytic_line__edlab_amount_paid
+msgid "Royalty Paid"
+msgstr "Royalty Pago"
+
+#. module: liber_copyright_contracts_analytics
+#. odoo-python
+#: code:addons/liber_copyright_contracts_analytics/models/royalty_line.py:0
+msgid "Royalty analytic lines"
+msgstr "Linhas analíticas de royalty"
+
+#. module: liber_copyright_contracts_analytics
+#: model:ir.model.fields,help:liber_copyright_contracts_analytics.field_account_analytic_line__edlab_royalty_percentage
+msgid ""
+"Royalty percentage applied, taken from the tier of the cumulative quantity "
+"of the work sold up to this invoice."
+msgstr ""
+"Percentual de royalty aplicado, obtido da faixa da quantidade cumulativa da "
+"obra vendida até esta fatura."
+
+#. module: liber_copyright_contracts_analytics
+#: model:ir.model.fields,field_description:liber_copyright_contracts_analytics.field_account_bank_statement_line__team_id
+#: model:ir.model.fields,field_description:liber_copyright_contracts_analytics.field_account_move__team_id
+msgid "Sales Team"
+msgstr "Equipe de Vendas"
+
+#. module: liber_copyright_contracts_analytics
+#: model:ir.model.fields,help:liber_copyright_contracts_analytics.field_res_company__contract_special_sales_team_ids
+msgid ""
+"Sales from these teams are treated as special sales: their royalties are "
+"always computed on the net invoiced amount (the invoice), never on the "
+"sales/cover price, no matter the royalty line's 'On Sales Price' setting. "
+"Requires the minimum discount below."
+msgstr ""
+"Vendas destas equipes são tratadas como vendas especiais: seus royalties são"
+" sempre calculados sobre o valor líquido faturado (a nota), nunca sobre o "
+"preço de venda/capa, independentemente da opção 'Sobre o Preço de Venda' da "
+"linha de royalty. Requer o desconto mínimo abaixo."
+
+#. module: liber_copyright_contracts_analytics
+#: model:ir.model.fields,help:liber_copyright_contracts_analytics.field_account_bank_statement_line__team_id
+#: model:ir.model.fields,help:liber_copyright_contracts_analytics.field_account_move__team_id
+msgid ""
+"Sales team of this invoice. Sales from the company's special sales teams "
+"(with a qualifying discount) have their royalties computed on the net "
+"invoiced amount."
+msgstr ""
+"Equipe de vendas desta fatura. Vendas das equipes de vendas especiais da "
+"empresa (com desconto qualificado) têm seus royalties calculados sobre o "
+"valor líquido faturado."
+
+#. module: liber_copyright_contracts_analytics
+#: model:ir.model.fields,help:liber_copyright_contracts_analytics.field_account_analytic_line__edlab_payment_cutoff_line_id
+msgid ""
+"Set on the compensating entry that settles the royalty debt accrued up to "
+"the beneficiary's last payment date. Stands in for the bill that will settle"
+" it once the payment module exists."
+msgstr ""
+"Definido no lançamento de compensação que liquida a dívida de royalty "
+"provisionada até a data do último pagamento do beneficiário. Substitui a "
+"fatura que a liquidará quando o módulo de pagamento existir."
+
+#. module: liber_copyright_contracts_analytics
+#: model:ir.model.fields,help:liber_copyright_contracts_analytics.field_account_analytic_line__edlab_advance_line_id
+msgid ""
+"Set on the opening entry that books this royalty line's recoupable advance "
+"(already paid to the beneficiary) as a positive amount, recouped as "
+"royalties accrue."
+msgstr "Definido no lançamento de abertura que registra o adiantamento descontável desta linha de royalty (já pago ao favorecido) como valor positivo, recuperado à medida que os direitos autorais são apurados."
+
+#. module: liber_copyright_contracts_analytics
+#. odoo-python
+#: code:addons/liber_copyright_contracts_analytics/models/royalty_line.py:0
+msgid "Set the beneficiary and the work first."
+msgstr "Defina primeiro o favorecido e a obra."
+
+#. module: liber_copyright_contracts_analytics
+#: model:ir.model.fields,field_description:liber_copyright_contracts_analytics.field_account_analytic_line__edlab_source_move_line_id
+msgid "Source Invoice Line"
+msgstr "Linha de Fatura de Origem"
+
+#. module: liber_copyright_contracts_analytics
+#. odoo-python
+#: code:addons/liber_copyright_contracts_analytics/models/contract.py:0
+#: code:addons/liber_copyright_contracts_analytics/models/res_company.py:0
+#: code:addons/liber_copyright_contracts_analytics/models/res_partner.py:0
+#: model:ir.model.fields,field_description:liber_copyright_contracts_analytics.field_edlab_contract__special_sales_count
+#: model:ir.model.fields,field_description:liber_copyright_contracts_analytics.field_res_company__special_sales_count
+#: model:ir.model.fields,field_description:liber_copyright_contracts_analytics.field_res_partner__special_sales_count
+#: model:ir.model.fields,field_description:liber_copyright_contracts_analytics.field_res_users__special_sales_count
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_analytics.view_company_form_copyrights
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_analytics.res_config_settings_view_form_analytics
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_analytics.view_edlab_contract_form_analytics
+msgid "Special Sales"
+msgstr "Vendas Especiais"
+
+#. module: liber_copyright_contracts_analytics
+#: model:ir.model.fields,field_description:liber_copyright_contracts_analytics.field_res_company__contract_special_min_discount
+msgid "Special Sales Min. Discount (%)"
+msgstr "Desconto Mínimo Venda Especial (%)"
+
+#. module: liber_copyright_contracts_analytics
+#: model:ir.model.fields,field_description:liber_copyright_contracts_analytics.field_res_company__contract_special_sales_team_ids
+msgid "Special Sales Teams"
+msgstr "Equipes de Vendas Especiais"
+
+#. module: liber_copyright_contracts_analytics
+#: model:ir.model.fields,help:liber_copyright_contracts_analytics.field_edlab_contract_analytic_wizard_line__analytic_name
+#: model:ir.model.fields,help:liber_copyright_contracts_analytics.field_edlab_contract_royalty_line__analytic_name
+msgid ""
+"Suggested analytic account name: contract number, product internal "
+"reference, product name and beneficiary name."
+msgstr ""
+"Nome sugerido para a conta analítica: número do contrato, referência interna"
+" do produto, nome do produto e nome do beneficiário."
+
+#. module: liber_copyright_contracts_analytics
+#: model:ir.model.fields,help:liber_copyright_contracts_analytics.field_edlab_contract__edlab_royalty_balance
+msgid ""
+"Sum of the analytic balances of this contract's beneficiaries: the royalties"
+" still owed (paid periods are settled by the cutoff compensations, so they "
+"no longer count here)."
+msgstr ""
+"Soma dos saldos analíticos dos beneficiários deste contrato: os royalties "
+"ainda devidos (os períodos pagos são liquidados pelas compensações de corte,"
+" então não contam mais aqui)."
+
+#. module: liber_copyright_contracts_analytics
+#: model:ir.model.fields,field_description:liber_copyright_contracts_analytics.field_edlab_contract_analytic_wizard_line__wizard_id
+msgid "Wizard"
+msgstr "Assistente"
+
+#. module: liber_copyright_contracts_analytics
+#: model:ir.model.fields,field_description:liber_copyright_contracts_analytics.field_edlab_contract_analytic_wizard_line__product_id
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_analytics.view_royalty_debt_search
+msgid "Work"
+msgstr "Obra"
+
+#. module: liber_copyright_contracts_analytics
+#. odoo-python
+#: code:addons/liber_copyright_contracts_analytics/models/royalty_line.py:0
+msgid ""
+"No royalty line has an analytic account, so there is nowhere to book. Create "
+"the analytic accounts first (%s line(s) waiting)."
+msgstr ""
+"Nenhuma linha de royalty tem conta analítica, então não há onde lançar. Crie "
+"as contas analíticas primeiro (%s linha(s) esperando)."
+
+#. module: liber_copyright_contracts_analytics
+#. odoo-python
+#: code:addons/liber_copyright_contracts_analytics/models/royalty_line.py:0
+msgid ""
+"No PAID customer invoice to book from. Royalties are only booked on invoices "
+"that are posted AND paid, so an invoice that is merely posted still counts "
+"for nothing here."
+msgstr ""
+"Nenhuma fatura de cliente PAGA para lançar. Os royalties só são lançados "
+"sobre faturas lançadas E pagas — uma fatura apenas lançada ainda não conta "
+"aqui."
+
+#. module: liber_copyright_contracts_analytics
+#. odoo-python
+#: code:addons/liber_copyright_contracts_analytics/models/royalty_line.py:0
+msgid ""
+"No new lines: none of the %(n)s contracted work(s) appears in a paid invoice, "
+"so no royalty has accrued yet."
+msgstr ""
+"Nenhuma linha nova: nenhuma das %(n)s obra(s) contratada(s) aparece em fatura "
+"paga, então ainda não há royalty apurado."
+
+#. module: liber_copyright_contracts_analytics
+#. odoo-python
+#: code:addons/liber_copyright_contracts_analytics/models/royalty_line.py:0
+msgid ""
+"No new lines: every paid invoice selling a contracted work is already booked "
+"(%(inv)s invoice(s) checked)."
+msgstr ""
+"Nenhuma linha nova: toda fatura paga que vende uma obra contratada já está "
+"lançada (%(inv)s fatura(s) verificada(s))."
+
+#. module: liber_copyright_contracts_analytics
+#. odoo-python
+#: code:addons/liber_copyright_contracts_analytics/models/royalty_line.py:0
+msgid ""
+"No new lines: no royalty line has a percentage tier, so nothing can be "
+"computed. Set the tiers first (%s line(s) waiting)."
+msgstr ""
+"Nenhuma linha nova: nenhuma linha de royalty tem faixa de percentual, então "
+"não há o que calcular. Defina as faixas primeiro (%s linha(s) esperando)."
+
+#. module: liber_copyright_contracts_analytics
+#. odoo-python
+#: code:addons/liber_copyright_contracts_analytics/models/royalty_line.py:0
+msgid " %s work(s) under contract have not been sold yet."
+msgstr " %s obra(s) sob contrato ainda não foram vendidas."
+
+#. module: liber_copyright_contracts_analytics
+#. odoo-python
+#: code:addons/liber_copyright_contracts_analytics/models/royalty_line.py:0
+msgid ""
+" %s royalty line(s) have no analytic account and were skipped."
+msgstr " %s linha(s) de royalty não têm conta analítica e foram ignoradas."
+
+#. module: liber_copyright_contracts_analytics
+#. odoo-python
+#: code:addons/liber_copyright_contracts_analytics/models/royalty_line.py:0
+msgid " %s royalty line(s) have no percentage tier and were skipped."
+msgstr " %s linha(s) de royalty não têm faixa de percentual e foram ignoradas."
+
+#. module: liber_copyright_contracts_analytics
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_analytics.res_config_settings_view_form_analytics
+msgid "Royalty Accounting"
+msgstr "Contabilização de Royalties"
+
+#. module: liber_copyright_contracts_analytics
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_analytics.res_config_settings_view_form_analytics
+msgid "Plan under which the analytic accounts created from contracts are placed."
+msgstr "Plano sob o qual ficam as contas analíticas criadas a partir dos contratos."
+
+#. module: liber_copyright_contracts_analytics
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_analytics.res_config_settings_view_form_analytics
+msgid "Account recorded on royalty analytic lines still inside the operational window."
+msgstr "Conta lançada nas linhas analíticas de royalty ainda dentro da janela operacional."
+
+#. module: liber_copyright_contracts_analytics
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_analytics.res_config_settings_view_form_analytics
+msgid "Account used once a royalty is overdue beyond the threshold: no longer an operational expense."
+msgstr "Conta usada quando o royalty vence além do limite: deixa de ser despesa operacional."
+
+#. module: liber_copyright_contracts_analytics
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_analytics.res_config_settings_view_form_analytics
+msgid "Reclassify as liability after"
+msgstr "Reclassificar como passivo após"
+
+#. module: liber_copyright_contracts_analytics
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_analytics.res_config_settings_view_form_analytics
+msgid "A royalty overdue by longer than this moves from the expense account to the liability account. 0 disables it."
+msgstr "Um royalty vencido há mais que isso passa da conta de despesa para a de passivo. 0 desativa."
+
+#. module: liber_copyright_contracts_analytics
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_analytics.res_config_settings_view_form_analytics
+msgid "months overdue"
+msgstr "meses em atraso"
+
+#. module: liber_copyright_contracts_analytics
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_analytics.res_config_settings_view_form_analytics
+msgid "Special sales teams"
+msgstr "Times de vendas especiais"
+
+#. module: liber_copyright_contracts_analytics
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_analytics.res_config_settings_view_form_analytics
+msgid "Sales from these teams always compute royalties on the net invoiced amount, never on the cover price, whatever the royalty line says."
+msgstr "Vendas desses times sempre calculam royalty sobre o valor líquido faturado, nunca sobre o preço de capa, independentemente do que diz a linha de royalty."
+
+#. module: liber_copyright_contracts_analytics
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_analytics.res_config_settings_view_form_analytics
+msgid "Minimum discount"
+msgstr "Desconto mínimo"
+
+#. module: liber_copyright_contracts_analytics
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_analytics.res_config_settings_view_form_analytics
+msgid "How much a line must be discounted for a sale from those teams to count as a special sale. 0 means any discount qualifies."
+msgstr "Quanto a linha precisa de desconto para uma venda desses times contar como venda especial. 0 significa qualquer desconto."
+
+#. module: liber_copyright_contracts_analytics
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_analytics.res_config_settings_view_form_analytics
+msgid "% off"
+msgstr "% de desconto"
+
+#. module: liber_copyright_contracts_analytics
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_analytics.res_config_settings_view_form_analytics
+msgid "Analytic plan"
+msgstr "Plano analítico"
+
+#. module: liber_copyright_contracts_analytics
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_analytics.res_config_settings_view_form_analytics
+msgid "Expense account"
+msgstr "Conta de despesa"
+
+#. module: liber_copyright_contracts_analytics
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_analytics.res_config_settings_view_form_analytics
+msgid "Liability account"
+msgstr "Conta de passivo"
+
+#. module: liber_copyright_contracts_analytics
+#. odoo-python
+#: code:addons/liber_copyright_contracts_analytics/models/royalty_line.py:0
+msgid ""
+"No new lines: all %(n)s sale(s) of the contracted work(s) fall outside the "
+"contract term, so they accrue no royalty. A contract only earns on what was "
+"sold while it was in force."
+msgstr ""
+"Nenhuma linha nova: todas as %(n)s venda(s) da(s) obra(s) contratada(s) estão "
+"fora do prazo do contrato, então não geram royalty. Um contrato só ganha "
+"sobre o que foi vendido enquanto estava em vigor."
+
+#. module: liber_copyright_contracts_analytics
+#. odoo-python
+#: code:addons/liber_copyright_contracts_analytics/models/royalty_line.py:0
+msgid ""
+" %s invoice line(s) fall outside the contract term (sold before it was signed "
+"or after it expired) and accrue no royalty."
+msgstr ""
+" %s linha(s) de fatura estão fora do prazo do contrato (vendidas antes da "
+"assinatura ou depois do vencimento) e não geram royalty."
+
+#. module: liber_copyright_contracts_analytics
+#: model:account.analytic.plan,name:liber_copyright_contracts_analytics.analytic_plan_copyright
+msgid "Copyright Contracts"
+msgstr "Direitos Autorais"

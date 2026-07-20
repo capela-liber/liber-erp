@@ -1,0 +1,1080 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* liber_soc_audit
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0-20260630\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-07-08 14:28+0000\n"
+"PO-Revision-Date: 2026-07-08 14:28+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+"Language: pt_BR\n"
+
+#. module: liber_soc_audit
+#. odoo-python
+#: code:addons/liber_soc_audit/models/consignment_audit.py:0
+msgid ""
+"%d divergent line(s) are still unresolved. Accept them (fiscal/map/manual) "
+"or use one of the 'Accept all' buttons."
+msgstr "%d linha(s) divergente(s) ainda sem resolução. Resolva-as (XML/Mapa/Manual) ou use um dos botões 'Aceitar'."
+
+#. module: liber_soc_audit
+#. odoo-python
+#: code:addons/liber_soc_audit/models/consignment_audit.py:0
+msgid ""
+"%d title(s) had a negative fiscal balance (sales exceed shipments -- likely "
+"missing shipment XMLs or an opening balance). Their shelf was floored at "
+"zero: %s"
+msgstr "%d título(s) tiveram saldo fiscal negativo (vendas maiores que remessas -- provavelmente faltam XMLs de remessa ou um saldo de abertura). A prateleira foi limitada a zero: %s"
+
+#. module: liber_soc_audit
+#. odoo-python
+#: code:addons/liber_soc_audit/models/consignment_audit.py:0
+msgid ""
+"%s has no active consignment shelf. Activate the agreement before "
+"adjusting/initialising the map."
+msgstr "%s não tem prateleira de consignação ativa. Ative o contrato antes de ajustar/inicializar o mapa."
+
+#. module: liber_soc_audit
+#: model_terms:ir.ui.view,arch_db:liber_soc_audit.view_consignment_audit_form
+msgid "<span class=\"o_stat_text ms-2\">Adjustment</span>"
+msgstr "<span class=\"o_stat_text ms-2\">Ajuste</span>"
+
+#. module: liber_soc_audit
+#: model_terms:ir.ui.view,arch_db:liber_soc_audit.view_consignment_audit_form
+msgid "<span class=\"o_stat_text ms-2\">Shelf</span>"
+msgstr "<span class=\"o_stat_text ms-2\">Prateleira</span>"
+
+#. module: liber_soc_audit
+#: model_terms:ir.ui.view,arch_db:liber_soc_audit.view_consignment_audit_form
+msgid "<strong>Notes without a CFOP:</strong>"
+msgstr "<strong>Notas sem CFOP:</strong>"
+
+#. module: liber_soc_audit
+#: model_terms:ir.ui.view,arch_db:liber_soc_audit.view_consignment_audit_form
+msgid "<strong>Unmapped CFOPs found on this customer's notes:</strong>"
+msgstr "<strong>CFOPs não mapeados nas notas deste cliente:</strong>"
+
+#. module: liber_soc_audit
+#: model_terms:ir.ui.view,arch_db:liber_soc_audit.view_consignment_audit_form
+msgid "<strong>Unmatched fiscal items:</strong>"
+msgstr "<strong>Itens fiscais sem produto:</strong>"
+
+#. module: liber_soc_audit
+#. odoo-python
+#: code:addons/liber_soc_audit/models/consignment_move.py:0
+msgid ""
+"A done consignment adjustment cannot be cancelled -- it has already moved "
+"stock and posted its value. Post an opposite adjustment instead."
+msgstr "Um ajuste de consignação concluído não pode ser cancelado -- ele já movimentou estoque e lançou o valor. Faça um ajuste oposto no lugar."
+
+#. module: liber_soc_audit
+#: model_terms:ir.ui.view,arch_db:liber_soc_audit.view_consignment_audit_form
+msgid "Accept & Adjust"
+msgstr "Aceitar e Ajustar"
+
+#. module: liber_soc_audit
+#: model:ir.model.fields.selection,name:liber_soc_audit.selection__consignment_audit_line__resolution__accept_map
+#: model_terms:ir.ui.view,arch_db:liber_soc_audit.view_consignment_audit_form
+msgid "Accept Map"
+msgstr "Aceitar Mapa"
+
+#. module: liber_soc_audit
+#: model:ir.model.fields.selection,name:liber_soc_audit.selection__consignment_audit_line__resolution__accept_fiscal
+#: model_terms:ir.ui.view,arch_db:liber_soc_audit.view_consignment_audit_form
+msgid "Accept XML"
+msgstr "Aceitar XML"
+
+#. module: liber_soc_audit
+#: model:ir.model.fields,field_description:liber_soc_audit.field_consignment_audit_line__accepted_qty
+#: model:ir.model.fields.selection,name:liber_soc_audit.selection__consignment_audit__state__accepted
+#: model:ir.model.fields.selection,name:liber_soc_audit.selection__consignment_audit_line__line_state__accepted
+#: model_terms:ir.ui.view,arch_db:liber_soc_audit.view_consignment_audit_search
+msgid "Accepted"
+msgstr "Aceito"
+
+#. module: liber_soc_audit
+#: model:ir.model.fields,help:liber_soc_audit.field_consignment_audit_line__adjustment_delta
+msgid "Accepted - map: what the adjustment movement will apply."
+msgstr "Aceito - mapa: o que o movimento de ajuste vai aplicar."
+
+#. module: liber_soc_audit
+#: model:ir.model.fields,field_description:liber_soc_audit.field_consignment_audit__message_needaction
+msgid "Action Needed"
+msgstr "Ação Necessária"
+
+#. module: liber_soc_audit
+#: model:ir.model.fields,field_description:liber_soc_audit.field_consignment_audit__activity_ids
+msgid "Activities"
+msgstr "Atividades"
+
+#. module: liber_soc_audit
+#: model:ir.model.fields,field_description:liber_soc_audit.field_consignment_audit__activity_exception_decoration
+msgid "Activity Exception Decoration"
+msgstr "Decoração de Exceção de Atividade"
+
+#. module: liber_soc_audit
+#: model:ir.model.fields,field_description:liber_soc_audit.field_consignment_audit__activity_state
+msgid "Activity State"
+msgstr "Estado da Atividade"
+
+#. module: liber_soc_audit
+#: model:ir.model.fields,field_description:liber_soc_audit.field_consignment_audit__activity_type_icon
+msgid "Activity Type Icon"
+msgstr "Ícone do Tipo de Atividade"
+
+#. module: liber_soc_audit
+#. odoo-python
+#: code:addons/liber_soc_audit/models/consignment_audit.py:0
+#: model:ir.model.fields,field_description:liber_soc_audit.field_consignment_audit__adjustment_move_id
+#: model:ir.model.fields,field_description:liber_soc_audit.field_consignment_audit_line__adjustment_delta
+#: model:ir.model.fields,field_description:liber_soc_audit.field_consignment_move_line__adjustment_delta
+#: model:ir.model.fields.selection,name:liber_soc_audit.selection__consignment_move__move_kind__adjustment
+msgid "Adjustment"
+msgstr "Ajuste"
+
+#. module: liber_soc_audit
+#: model_terms:ir.ui.view,arch_db:liber_soc_audit.res_config_settings_view_form_soc_audit
+msgid "Adjustment account"
+msgstr "Conta de ajuste"
+
+#. module: liber_soc_audit
+#: model_terms:ir.ui.view,arch_db:liber_soc_audit.res_config_settings_view_form_soc_audit
+msgid "Adjustment location"
+msgstr "Local de ajuste"
+
+#. module: liber_soc_audit
+#: model:ir.model.fields,field_description:liber_soc_audit.field_consignment_audit__agreement_id
+msgid "Agreement"
+msgstr "Contrato"
+
+#. module: liber_soc_audit
+#. odoo-python
+#: code:addons/liber_soc_audit/models/consignment_move.py:0
+msgid "Agreement %s has no shelf. Activate it first."
+msgstr "O contrato %s não tem prateleira. Ative-o primeiro."
+
+#. module: liber_soc_audit
+#: model:ir.model.fields,field_description:liber_soc_audit.field_consignment_audit__message_attachment_count
+msgid "Attachment Count"
+msgstr "Contagem de Anexos"
+
+#. module: liber_soc_audit
+#: model:ir.model.fields,field_description:liber_soc_audit.field_consignment_audit_line__audit_id
+#: model:ir.model.fields,field_description:liber_soc_audit.field_consignment_move__audit_id
+msgid "Audit"
+msgstr "Auditoria"
+
+#. module: liber_soc_audit
+#: model_terms:ir.actions.act_window,help:liber_soc_audit.action_consignment_audit
+msgid "Audit a customer's shelf against the fiscal truth"
+msgstr "Audite a prateleira de um cliente contra a verdade fiscal"
+
+#. module: liber_soc_audit
+#. odoo-python
+#: code:addons/liber_soc_audit/models/consignment_audit.py:0
+msgid ""
+"Audit accepted with no shelf change (map already matches the accepted "
+"balance)."
+msgstr "Auditoria aceita sem alteração de prateleira (o mapa já bate com o saldo aceito)."
+
+#. module: liber_soc_audit
+#. odoo-python
+#: code:addons/liber_soc_audit/models/consignment_audit.py:0
+msgid ""
+"Audit computed: %(panels)s NFes, %(lines)s products, %(diffs)s divergences."
+msgstr "Auditoria calculada: %(panels)s NFes, %(lines)s produtos, %(diffs)s divergências."
+
+#. module: liber_soc_audit
+#: model:ir.actions.act_window,name:liber_soc_audit.action_consignment_audit
+#: model:ir.ui.menu,name:liber_soc_audit.menu_consignment_audit
+msgid "Audits"
+msgstr "Auditorias"
+
+#. module: liber_soc_audit
+#: model:ir.model,name:liber_soc_audit.model_nfe_cfop
+msgid "CFOP"
+msgstr "CFOP"
+
+#. module: liber_soc_audit
+#: model:ir.actions.act_window,name:liber_soc_audit.action_nfe_cfop_effect
+#: model:ir.ui.menu,name:liber_soc_audit.menu_soc_audit_cfop_effects
+msgid "CFOP Effects"
+msgstr "Efeitos de CFOP"
+
+#. module: liber_soc_audit
+#: model:ir.model.fields,help:liber_soc_audit.field_consignment_audit__unmapped_cfop_ids
+msgid ""
+"CFOPs found on this customer's notes in the period that have no consignment "
+"effect configured. Map them (Settings > CFOP) if any is a consignment "
+"movement, then recompute."
+msgstr "CFOPs encontrados nas notas deste cliente no período que não têm efeito de consignação configurado. Mapeie-os (Configurações > CFOP) se algum for movimento de consignação e recalcule."
+
+#. module: liber_soc_audit
+#: model_terms:ir.ui.view,arch_db:liber_soc_audit.view_consignment_audit_form
+msgid "Cancel"
+msgstr "Cancelar"
+
+#. module: liber_soc_audit
+#: model:ir.model.fields.selection,name:liber_soc_audit.selection__consignment_audit__state__cancel
+msgid "Cancelled"
+msgstr "Cancelado"
+
+#. module: liber_soc_audit
+#: model_terms:ir.actions.act_window,help:liber_soc_audit.action_nfe_cfop_effect
+msgid "Classify CFOPs for the consignment audit"
+msgstr "Classifique os CFOPs para a auditoria de consignação"
+
+#. module: liber_soc_audit
+#: model:ir.model,name:liber_soc_audit.model_res_company
+msgid "Companies"
+msgstr "Empresas"
+
+#. module: liber_soc_audit
+#: model:ir.model.fields,field_description:liber_soc_audit.field_consignment_audit__company_id
+#: model:ir.model.fields,field_description:liber_soc_audit.field_consignment_audit_line__company_id
+msgid "Company"
+msgstr "Empresa"
+
+#. module: liber_soc_audit
+#: model:ir.model.fields.selection,name:liber_soc_audit.selection__consignment_audit__coverage_status__complete
+msgid "Complete"
+msgstr "Completa"
+
+#. module: liber_soc_audit
+#: model_terms:ir.ui.view,arch_db:liber_soc_audit.view_consignment_audit_form
+msgid "Compute"
+msgstr "Calcular"
+
+#. module: liber_soc_audit
+#. odoo-python
+#: code:addons/liber_soc_audit/models/consignment_audit.py:0
+msgid "Compute the audit before accepting it."
+msgstr "Calcule a auditoria antes de aceitá-la."
+
+#. module: liber_soc_audit
+#: model:ir.model.fields.selection,name:liber_soc_audit.selection__consignment_audit__state__computed
+#: model_terms:ir.ui.view,arch_db:liber_soc_audit.view_consignment_audit_search
+msgid "Computed"
+msgstr "Calculada"
+
+#. module: liber_soc_audit
+#: model:ir.model,name:liber_soc_audit.model_res_config_settings
+msgid "Config Settings"
+msgstr "Configurações"
+
+#. module: liber_soc_audit
+#. odoo-python
+#: code:addons/liber_soc_audit/models/res_company.py:0
+msgid "Consignment Adjustment"
+msgstr "Ajuste de Consignação"
+
+#. module: liber_soc_audit
+#: model:ir.model.fields,field_description:liber_soc_audit.field_res_company__consignment_adjustment_account_id
+#: model:ir.model.fields,field_description:liber_soc_audit.field_res_config_settings__consignment_adjustment_account_id
+msgid "Consignment Adjustment Account"
+msgstr "Conta de Ajuste de Consignação"
+
+#. module: liber_soc_audit
+#: model:ir.model.fields,field_description:liber_soc_audit.field_res_company__consignment_adjustment_location_id
+#: model:ir.model.fields,field_description:liber_soc_audit.field_res_config_settings__consignment_adjustment_location_id
+msgid "Consignment Adjustment Location"
+msgstr "Local de Ajuste de Consignação"
+
+#. module: liber_soc_audit
+#: model_terms:ir.ui.view,arch_db:liber_soc_audit.res_config_settings_view_form_soc_audit
+msgid "Consignment Audit"
+msgstr "Auditoria de Consignação"
+
+#. module: liber_soc_audit
+#: model:ir.model,name:liber_soc_audit.model_consignment_audit
+msgid "Consignment Audit (XML vs Map)"
+msgstr "Auditoria de Consignação (XML × Mapa)"
+
+#. module: liber_soc_audit
+#: model:ir.model,name:liber_soc_audit.model_consignment_audit_line
+msgid "Consignment Audit Line"
+msgstr "Linha da Auditoria de Consignação"
+
+#. module: liber_soc_audit
+#: model_terms:ir.ui.view,arch_db:liber_soc_audit.view_nfe_cfop_effect_search
+msgid "Consignment CFOPs"
+msgstr "CFOPs de Consignação"
+
+#. module: liber_soc_audit
+#: model:ir.model.fields,field_description:liber_soc_audit.field_nfe_cfop__consignment_effect
+msgid "Consignment Effect"
+msgstr "Efeito na Consignação"
+
+#. module: liber_soc_audit
+#: model:ir.model,name:liber_soc_audit.model_consignment_move
+msgid "Consignment Movement"
+msgstr "Movimento de Consignação"
+
+#. module: liber_soc_audit
+#: model:ir.model,name:liber_soc_audit.model_consignment_move_line
+msgid "Consignment Movement Line"
+msgstr "Linha de Movimento de Consignação"
+
+#. module: liber_soc_audit
+#. odoo-python
+#: code:addons/liber_soc_audit/models/consignment_move.py:0
+msgid "Consignment audit adjustment %s"
+msgstr "Ajuste de auditoria de consignação %s"
+
+#. module: liber_soc_audit
+#: model:ir.model.fields,field_description:liber_soc_audit.field_consignment_audit__create_uid
+#: model:ir.model.fields,field_description:liber_soc_audit.field_consignment_audit_line__create_uid
+msgid "Created by"
+msgstr "Criado por"
+
+#. module: liber_soc_audit
+#: model:ir.model.fields,field_description:liber_soc_audit.field_consignment_audit__create_date
+#: model:ir.model.fields,field_description:liber_soc_audit.field_consignment_audit_line__create_date
+msgid "Created on"
+msgstr "Criado em"
+
+#. module: liber_soc_audit
+#: model:ir.model.fields,field_description:liber_soc_audit.field_consignment_audit__currency_id
+msgid "Currency"
+msgstr "Moeda"
+
+#. module: liber_soc_audit
+#: model:ir.model.fields,help:liber_soc_audit.field_consignment_audit_line__qty_map
+msgid "Current on-shelf balance (the map)."
+msgstr "Saldo atual na prateleira (o mapa)."
+
+#. module: liber_soc_audit
+#: model:ir.model.fields,field_description:liber_soc_audit.field_consignment_audit__partner_id
+#: model_terms:ir.ui.view,arch_db:liber_soc_audit.view_consignment_audit_search
+msgid "Customer"
+msgstr "Cliente"
+
+#. module: liber_soc_audit
+#. odoo-python
+#: code:addons/liber_soc_audit/models/consignment_move.py:0
+msgid "Customer %s has no consignment agreement."
+msgstr "O cliente %s não tem contrato de consignação."
+
+#. module: liber_soc_audit
+#: model:ir.model.fields,field_description:liber_soc_audit.field_consignment_audit__location_id
+msgid "Customer Shelf"
+msgstr "Prateleira do Cliente"
+
+#. module: liber_soc_audit
+#: model:ir.model.fields,field_description:liber_soc_audit.field_consignment_audit_line__qty_diff
+msgid "Difference"
+msgstr "Diferença"
+
+#. module: liber_soc_audit
+#: model:ir.model.fields,field_description:liber_soc_audit.field_consignment_audit__display_name
+#: model:ir.model.fields,field_description:liber_soc_audit.field_consignment_audit_line__display_name
+#: model:ir.model.fields,field_description:liber_soc_audit.field_consignment_move__display_name
+#: model:ir.model.fields,field_description:liber_soc_audit.field_consignment_move_line__display_name
+#: model:ir.model.fields,field_description:liber_soc_audit.field_nfe_cfop__display_name
+#: model:ir.model.fields,field_description:liber_soc_audit.field_res_company__display_name
+#: model:ir.model.fields,field_description:liber_soc_audit.field_res_config_settings__display_name
+msgid "Display Name"
+msgstr "Exibir nome"
+
+#. module: liber_soc_audit
+#: model:ir.model.fields,field_description:liber_soc_audit.field_consignment_audit__diff_count
+#: model_terms:ir.ui.view,arch_db:liber_soc_audit.view_consignment_audit_list
+msgid "Divergences"
+msgstr "Divergências"
+
+#. module: liber_soc_audit
+#: model:ir.model.fields.selection,name:liber_soc_audit.selection__consignment_audit_line__line_state__divergent
+msgid "Divergent"
+msgstr "Divergente"
+
+#. module: liber_soc_audit
+#: model:ir.model.fields.selection,name:liber_soc_audit.selection__consignment_audit__state__draft
+#: model_terms:ir.ui.view,arch_db:liber_soc_audit.view_consignment_audit_search
+msgid "Draft"
+msgstr "Rascunho"
+
+#. module: liber_soc_audit
+#: model_terms:ir.actions.act_window,help:liber_soc_audit.action_nfe_cfop_effect
+msgid ""
+"Each CFOP tells the audit how a fiscal item moves the shelf:\n"
+"                shipment (+), effective sale (−), return (−) or ignore. Customers\n"
+"                often use the wrong CFOP, so this mapping is data you can edit."
+msgstr ""
+
+#. module: liber_soc_audit
+#: model_terms:ir.ui.view,arch_db:liber_soc_audit.view_nfe_cfop_effect_search
+msgid "Effect"
+msgstr "Efeito"
+
+#. module: liber_soc_audit
+#: model:ir.model.fields.selection,name:liber_soc_audit.selection__nfe_cfop__consignment_effect__sale
+msgid "Effective sale (- shelf)"
+msgstr "Venda efetivada (- prateleira)"
+
+#. module: liber_soc_audit
+#: model:ir.model.fields,field_description:liber_soc_audit.field_consignment_audit_line__qty_expected
+msgid "Expected"
+msgstr "Esperado"
+
+#. module: liber_soc_audit
+#: model:ir.model.fields,help:liber_soc_audit.field_consignment_audit_line__qty_diff
+msgid ""
+"Expected (fiscal) - map. Positive: fiscal says more is on the shelf than the"
+" map; negative: the opposite (shrinkage)."
+msgstr "Esperado (fiscal) - mapa. Positivo: o fiscal diz que há mais na prateleira do que o mapa; negativo: o contrário (quebra/perda)."
+
+#. module: liber_soc_audit
+#: model:ir.model.fields,field_description:liber_soc_audit.field_consignment_audit_line__panel_ids
+msgid "Fiscal Documents"
+msgstr "Documentos Fiscais"
+
+#. module: liber_soc_audit
+#. odoo-python
+#: code:addons/liber_soc_audit/models/consignment_audit.py:0
+msgid "Fiscal Documents of %s"
+msgstr "Documentos Fiscais de %s"
+
+#. module: liber_soc_audit
+#: model:ir.model.fields,help:liber_soc_audit.field_consignment_audit__unmatched_item_count
+msgid ""
+"Fiscal items whose product could not be matched (EAN outside the catalogue)."
+" They are NOT counted in any line -- resolve them (alias/catalogue) and "
+"recompute."
+msgstr "Itens fiscais cujo produto não pôde ser casado (EAN fora do catálogo). Eles NÃO são contados em nenhuma linha -- resolva-os (alias/catálogo) e recalcule."
+
+#. module: liber_soc_audit
+#: model:ir.model.fields,help:liber_soc_audit.field_consignment_audit_line__qty_expected
+msgid "Fiscal shelf balance = opening + shipped - sold - returned."
+msgstr "Saldo fiscal da prateleira = abertura + remetido - vendido - devolvido."
+
+#. module: liber_soc_audit
+#: model:ir.model.fields,field_description:liber_soc_audit.field_consignment_audit__message_follower_ids
+msgid "Followers"
+msgstr "Seguidores"
+
+#. module: liber_soc_audit
+#: model:ir.model.fields,field_description:liber_soc_audit.field_consignment_audit__message_partner_ids
+msgid "Followers (Partners)"
+msgstr "Seguidores (Parceiros)"
+
+#. module: liber_soc_audit
+#: model:ir.model.fields,help:liber_soc_audit.field_consignment_audit__activity_type_icon
+msgid "Font awesome icon e.g. fa-tasks"
+msgstr "Ícone Font Awesome, ex.: fa-tasks"
+
+#. module: liber_soc_audit
+#: model:ir.model.fields,field_description:liber_soc_audit.field_consignment_audit__date_from
+msgid "From"
+msgstr "De"
+
+#. module: liber_soc_audit
+#: model_terms:ir.ui.view,arch_db:liber_soc_audit.view_consignment_audit_form
+msgid ""
+"Generate the shelf adjustment for the accepted balances? This moves stock."
+msgstr "Gerar o ajuste de prateleira para os saldos aceitos? Isso movimenta estoque."
+
+#. module: liber_soc_audit
+#: model:ir.model.fields,field_description:liber_soc_audit.field_consignment_audit__has_message
+msgid "Has Message"
+msgstr "Tem Mensagem"
+
+#. module: liber_soc_audit
+#: model:ir.model.fields,help:liber_soc_audit.field_nfe_cfop__consignment_effect
+msgid ""
+"How an item carrying this CFOP moves the expected shelf balance when rebuilding it from the fiscal history:\n"
+"- Shipment: adds to the shelf (remessa em consignação).\n"
+"- Effective sale: removes from the shelf (venda efetivada).\n"
+"- Return / recall: removes from the shelf (devolução/retorno).\n"
+"- Ignore: not a consignment movement.\n"
+"Empty means the CFOP is not mapped -- its items land in the audit's 'unmapped CFOP' bucket."
+msgstr ""
+
+#. module: liber_soc_audit
+#: model:ir.model.fields,field_description:liber_soc_audit.field_consignment_audit__id
+#: model:ir.model.fields,field_description:liber_soc_audit.field_consignment_audit_line__id
+#: model:ir.model.fields,field_description:liber_soc_audit.field_consignment_move__id
+#: model:ir.model.fields,field_description:liber_soc_audit.field_consignment_move_line__id
+#: model:ir.model.fields,field_description:liber_soc_audit.field_nfe_cfop__id
+#: model:ir.model.fields,field_description:liber_soc_audit.field_res_company__id
+#: model:ir.model.fields,field_description:liber_soc_audit.field_res_config_settings__id
+msgid "ID"
+msgstr ""
+
+#. module: liber_soc_audit
+#: model:ir.model.fields,field_description:liber_soc_audit.field_consignment_audit__activity_exception_icon
+msgid "Icon"
+msgstr "Ícone"
+
+#. module: liber_soc_audit
+#: model:ir.model.fields,help:liber_soc_audit.field_consignment_audit__activity_exception_icon
+msgid "Icon to indicate an exception activity."
+msgstr "Ícone para indicar uma atividade de exceção."
+
+#. module: liber_soc_audit
+#: model:ir.model.fields,help:liber_soc_audit.field_consignment_audit__message_needaction
+msgid "If checked, new messages require your attention."
+msgstr "Se marcado, novas mensagens exigem sua atenção."
+
+#. module: liber_soc_audit
+#: model:ir.model.fields,help:liber_soc_audit.field_consignment_audit__message_has_error
+#: model:ir.model.fields,help:liber_soc_audit.field_consignment_audit__message_has_sms_error
+msgid "If checked, some messages have a delivery error."
+msgstr "Se marcado, algumas mensagens têm erro de entrega."
+
+#. module: liber_soc_audit
+#: model:ir.model.fields.selection,name:liber_soc_audit.selection__nfe_cfop__consignment_effect__ignore
+msgid "Ignore"
+msgstr "Ignorar"
+
+#. module: liber_soc_audit
+#: model:ir.model.fields,help:liber_soc_audit.field_consignment_audit__location_id
+msgid ""
+"Internal location that holds our stock physically placed at this customer. "
+"Created automatically when the agreement is activated."
+msgstr "Local interno que guarda nosso estoque fisicamente colocado neste cliente. Criado automaticamente quando o contrato é ativado."
+
+#. module: liber_soc_audit
+#: model_terms:ir.ui.view,arch_db:liber_soc_audit.res_config_settings_view_form_soc_audit
+msgid ""
+"Inventory location the audit adjustments move stock to/from. Created "
+"automatically on first use; its valuation accounts are kept in sync with the"
+" account above."
+msgstr "Local de inventário para onde/de onde os ajustes da auditoria movem estoque. Criado automaticamente no primeiro uso; suas contas de valoração são mantidas em sincronia com a conta acima."
+
+#. module: liber_soc_audit
+#: model:ir.model.fields,help:liber_soc_audit.field_res_company__consignment_adjustment_location_id
+#: model:ir.model.fields,help:liber_soc_audit.field_res_config_settings__consignment_adjustment_location_id
+msgid ""
+"Inventory-type location the audit adjustments move stock to/from so the "
+"quantity correction is recorded in the stock history. Created automatically "
+"on first use. The value posting is a separate journal entry, so this "
+"location needs no valuation account."
+msgstr "Local do tipo inventário para onde/de onde os ajustes da auditoria movem estoque, para que a correção de quantidade fique registrada no histórico. Criado automaticamente no primeiro uso. O lançamento de valor é um lançamento contábil à parte, então este local não precisa de conta de valoração."
+
+#. module: liber_soc_audit
+#: model:ir.model.fields,field_description:liber_soc_audit.field_consignment_audit__message_is_follower
+msgid "Is Follower"
+msgstr "É Seguidor"
+
+#. module: liber_soc_audit
+#: model:ir.model.fields,help:liber_soc_audit.field_consignment_move__account_move_id
+msgid "Journal entry that posted the value of an adjustment."
+msgstr "Lançamento contábil que registrou o valor de um ajuste."
+
+#. module: liber_soc_audit
+#: model_terms:ir.ui.view,arch_db:liber_soc_audit.view_consignment_audit_form
+msgid "Keep the current map on every line?"
+msgstr "Manter o mapa atual em todas as linhas?"
+
+#. module: liber_soc_audit
+#: model:ir.model.fields,help:liber_soc_audit.field_consignment_audit_line__qty_opening
+msgid ""
+"Known shelf balance before the fiscal series starts. Use it when the "
+"imported series begins after the real relationship did."
+msgstr "Saldo de prateleira conhecido antes do início da série fiscal. Use quando a série importada começa depois do início real da relação."
+
+#. module: liber_soc_audit
+#: model:ir.model.fields,field_description:liber_soc_audit.field_consignment_audit__write_uid
+#: model:ir.model.fields,field_description:liber_soc_audit.field_consignment_audit_line__write_uid
+msgid "Last Updated by"
+msgstr "Última Atualização por"
+
+#. module: liber_soc_audit
+#: model:ir.model.fields,field_description:liber_soc_audit.field_consignment_audit__write_date
+#: model:ir.model.fields,field_description:liber_soc_audit.field_consignment_audit_line__write_date
+msgid "Last Updated on"
+msgstr "Última Atualização em"
+
+#. module: liber_soc_audit
+#: model:ir.model.fields,field_description:liber_soc_audit.field_consignment_audit__line_ids
+msgid "Lines"
+msgstr "Linhas"
+
+#. module: liber_soc_audit
+#: model:ir.model.fields.selection,name:liber_soc_audit.selection__consignment_audit_line__resolution__manual
+msgid "Manual"
+msgstr "Manual"
+
+#. module: liber_soc_audit
+#: model:ir.model.fields,field_description:liber_soc_audit.field_consignment_audit_line__qty_map
+msgid "Map"
+msgstr "Mapa"
+
+#. module: liber_soc_audit
+#: model_terms:ir.ui.view,arch_db:liber_soc_audit.view_consignment_audit_form
+msgid ""
+"Map them (Configuration &gt; CFOP Effects) if any is a\n"
+"                        consignment movement, then recompute."
+msgstr ""
+
+#. module: liber_soc_audit
+#: model:ir.model.fields.selection,name:liber_soc_audit.selection__consignment_audit_line__line_state__match
+msgid "Match"
+msgstr "Confere"
+
+#. module: liber_soc_audit
+#: model:ir.model.fields,field_description:liber_soc_audit.field_consignment_audit__message_has_error
+msgid "Message Delivery error"
+msgstr "Erro de Entrega de Mensagem"
+
+#. module: liber_soc_audit
+#: model:ir.model.fields,field_description:liber_soc_audit.field_consignment_audit__message_ids
+msgid "Messages"
+msgstr "Mensagens"
+
+#. module: liber_soc_audit
+#: model:ir.model.fields,field_description:liber_soc_audit.field_consignment_audit__my_activity_date_deadline
+msgid "My Activity Deadline"
+msgstr "Prazo da Minha Atividade"
+
+#. module: liber_soc_audit
+#: model_terms:ir.ui.view,arch_db:liber_soc_audit.view_consignment_audit_form
+msgid "NFes"
+msgstr "NFes"
+
+#. module: liber_soc_audit
+#: model:ir.model.fields,field_description:liber_soc_audit.field_consignment_audit__panel_count
+msgid "NFes Considered"
+msgstr "NFes Consideradas"
+
+#. module: liber_soc_audit
+#. odoo-python
+#: code:addons/liber_soc_audit/models/consignment_audit.py:0
+msgid "New"
+msgstr "Novo"
+
+#. module: liber_soc_audit
+#: model:ir.model.fields,field_description:liber_soc_audit.field_consignment_audit__activity_date_deadline
+msgid "Next Activity Deadline"
+msgstr "Prazo da Próxima Atividade"
+
+#. module: liber_soc_audit
+#: model:ir.model.fields,field_description:liber_soc_audit.field_consignment_audit__activity_summary
+msgid "Next Activity Summary"
+msgstr "Resumo da Próxima Atividade"
+
+#. module: liber_soc_audit
+#: model:ir.model.fields,field_description:liber_soc_audit.field_consignment_audit__activity_type_id
+msgid "Next Activity Type"
+msgstr "Tipo da Próxima Atividade"
+
+#. module: liber_soc_audit
+#. odoo-python
+#: code:addons/liber_soc_audit/models/res_company.py:0
+msgid "No stock or general journal configured for company %s."
+msgstr "Nenhum diário de estoque ou geral configurado para a empresa %s."
+
+#. module: liber_soc_audit
+#: model:ir.model.fields,help:liber_soc_audit.field_consignment_audit__panel_count
+msgid "Non-cancelled consignment NFes that fed this audit."
+msgstr "NFes de consignação não canceladas que alimentaram esta auditoria."
+
+#. module: liber_soc_audit
+#: model:ir.model.fields,field_description:liber_soc_audit.field_consignment_audit_line__note
+msgid "Note"
+msgstr "Obs."
+
+#. module: liber_soc_audit
+#: model:ir.model.fields,field_description:liber_soc_audit.field_consignment_audit__note
+#: model_terms:ir.ui.view,arch_db:liber_soc_audit.view_consignment_audit_form
+msgid "Notes"
+msgstr "Notas"
+
+#. module: liber_soc_audit
+#: model:ir.model.fields,field_description:liber_soc_audit.field_consignment_audit__no_cfop_panel_count
+msgid "Notes Without CFOP"
+msgstr "Notas sem CFOP"
+
+#. module: liber_soc_audit
+#: model:ir.model.fields,help:liber_soc_audit.field_consignment_audit__no_cfop_panel_count
+msgid ""
+"Notes in the period whose CFOP is not recorded (not parsed, or the CFOP code"
+" is missing from the CFOP table). They are NOT counted -- seed the CFOP and "
+"relink, then recompute."
+msgstr "Notas no período cujo CFOP não está registrado (não lido, ou o código não existe na tabela de CFOP). Elas NÃO são contadas -- cadastre o CFOP e revincule, depois recalcule."
+
+#. module: liber_soc_audit
+#. odoo-python
+#: code:addons/liber_soc_audit/models/consignment_move.py:0
+msgid "Nothing to adjust: every delta is zero."
+msgstr "Nada a ajustar: todos os deltas são zero."
+
+#. module: liber_soc_audit
+#: model:ir.model.fields,field_description:liber_soc_audit.field_consignment_audit__message_needaction_counter
+msgid "Number of Actions"
+msgstr "Número de Ações"
+
+#. module: liber_soc_audit
+#: model:ir.model.fields,field_description:liber_soc_audit.field_consignment_audit__message_has_error_counter
+msgid "Number of errors"
+msgstr "Número de erros"
+
+#. module: liber_soc_audit
+#: model:ir.model.fields,help:liber_soc_audit.field_consignment_audit__message_needaction_counter
+msgid "Number of messages requiring action"
+msgstr "Número de mensagens que exigem ação"
+
+#. module: liber_soc_audit
+#: model:ir.model.fields,help:liber_soc_audit.field_consignment_audit__message_has_error_counter
+msgid "Number of messages with delivery error"
+msgstr "Número de mensagens com erro de entrega"
+
+#. module: liber_soc_audit
+#: model:ir.model.fields,field_description:liber_soc_audit.field_consignment_audit_line__qty_opening
+msgid "Opening"
+msgstr "Abertura"
+
+#. module: liber_soc_audit
+#: model:ir.model.fields,help:liber_soc_audit.field_res_config_settings__consignment_adjustment_account_id
+#: model_terms:ir.ui.view,arch_db:liber_soc_audit.res_config_settings_view_form_soc_audit
+msgid ""
+"P&L account that receives the value difference when an audit adjustment "
+"corrects the shelf (shrinkage or found stock)."
+msgstr "Conta de resultado que recebe a diferença de valor quando um ajuste da auditoria corrige a prateleira (quebra ou estoque encontrado)."
+
+#. module: liber_soc_audit
+#: model:ir.model.fields,help:liber_soc_audit.field_res_company__consignment_adjustment_account_id
+msgid ""
+"P&L account that receives the value difference when an audit adjustment "
+"corrects the shelf: shrinkage (debit) or found stock (credit), balanced "
+"against the Consignment Stock Account."
+msgstr "Conta de resultado que recebe a diferença de valor quando um ajuste da auditoria corrige a prateleira: quebra (débito) ou estoque encontrado (crédito), contrapartida da Conta de Estoque em Consignação."
+
+#. module: liber_soc_audit
+#: model:ir.model.fields,field_description:liber_soc_audit.field_consignment_audit_line__panel_count
+msgid "Panel Count"
+msgstr "Contagem de NFes"
+
+#. module: liber_soc_audit
+#: model:ir.model.fields.selection,name:liber_soc_audit.selection__consignment_audit__coverage_status__partial
+msgid "Partial"
+msgstr "Parcial"
+
+#. module: liber_soc_audit
+#: model_terms:ir.actions.act_window,help:liber_soc_audit.action_consignment_audit
+msgid ""
+"Pick a customer and a period, then Compute: the audit rebuilds\n"
+"                the expected shelf balance from every consignment NFe (shipments,\n"
+"                sales, returns) and confronts it with the current map. Accept the\n"
+"                difference item by item or in toto — accepting generates a shelf\n"
+"                adjustment that corrects (or initialises) the map."
+msgstr ""
+
+#. module: liber_soc_audit
+#: model:ir.model.fields,field_description:liber_soc_audit.field_consignment_audit_line__product_id
+msgid "Product"
+msgstr "Produto"
+
+#. module: liber_soc_audit
+#: model:ir.model.fields,field_description:liber_soc_audit.field_consignment_audit__line_count
+msgid "Products"
+msgstr "Produtos"
+
+#. module: liber_soc_audit
+#: model_terms:ir.ui.view,arch_db:liber_soc_audit.view_consignment_audit_form
+msgid "Reconciliation"
+msgstr "Reconciliação"
+
+#. module: liber_soc_audit
+#: model:ir.model.fields,field_description:liber_soc_audit.field_consignment_audit__name
+msgid "Reference"
+msgstr "Referência"
+
+#. module: liber_soc_audit
+#: model_terms:ir.ui.view,arch_db:liber_soc_audit.view_consignment_audit_form
+msgid "Reset to Draft"
+msgstr "Voltar a Rascunho"
+
+#. module: liber_soc_audit
+#: model:ir.model.fields,field_description:liber_soc_audit.field_consignment_audit_line__resolution
+msgid "Resolution"
+msgstr "Resolução"
+
+#. module: liber_soc_audit
+#: model:ir.model.fields,help:liber_soc_audit.field_consignment_audit__agreement_id
+msgid ""
+"Resolved from the customer (one agreement per customer). Only a reference --"
+" the audit does not live inside the contract."
+msgstr "Resolvido a partir do cliente (um contrato por cliente). Apenas uma referência -- a auditoria não vive dentro do contrato."
+
+#. module: liber_soc_audit
+#: model:ir.model.fields,field_description:liber_soc_audit.field_consignment_audit__activity_user_id
+msgid "Responsible User"
+msgstr "Usuário Responsável"
+
+#. module: liber_soc_audit
+#: model:ir.model.fields.selection,name:liber_soc_audit.selection__nfe_cfop__consignment_effect__return
+msgid "Return / recall (- shelf)"
+msgstr "Devolução / retorno (- prateleira)"
+
+#. module: liber_soc_audit
+#: model:ir.model.fields,field_description:liber_soc_audit.field_consignment_audit_line__qty_returned_xml
+msgid "Returned"
+msgstr "Devolvido"
+
+#. module: liber_soc_audit
+#: model:ir.model.fields,field_description:liber_soc_audit.field_consignment_audit__message_has_sms_error
+msgid "SMS Delivery error"
+msgstr "Erro de Entrega de SMS"
+
+#. module: liber_soc_audit
+#: model:ir.model.fields,field_description:liber_soc_audit.field_consignment_audit__coverage_status
+msgid "Series Coverage"
+msgstr "Cobertura da Série"
+
+#. module: liber_soc_audit
+#: model_terms:ir.ui.view,arch_db:liber_soc_audit.view_consignment_audit_form
+msgid "Set every line to the fiscal (XML) balance?"
+msgstr "Definir todas as linhas para o saldo fiscal (XML)?"
+
+#. module: liber_soc_audit
+#. odoo-python
+#: code:addons/liber_soc_audit/models/consignment_audit.py:0
+msgid "Shelf Stock"
+msgstr "Estoque da Prateleira"
+
+#. module: liber_soc_audit
+#. odoo-python
+#: code:addons/liber_soc_audit/models/consignment_audit.py:0
+msgid ""
+"Shelf adjusted from audit: movement <a href=# data-oe-model=consignment.move"
+" data-oe-id=%(id)d>%(name)s</a> (%(n)d product(s))."
+msgstr "Prateleira ajustada pela auditoria: movimento <a href=# data-oe-model=consignment.move data-oe-id=%(id)d>%(name)s</a> (%(n)d produto(s))."
+
+#. module: liber_soc_audit
+#. odoo-python
+#: code:addons/liber_soc_audit/models/consignment_audit.py:0
+msgid "Shelf adjustment from audit %s"
+msgstr "Ajuste de prateleira da auditoria %s"
+
+#. module: liber_soc_audit
+#: model:ir.model.fields,help:liber_soc_audit.field_consignment_audit_line__accepted_qty
+msgid "Shelf balance to settle on when the audit is accepted."
+msgstr "Saldo de prateleira a assumir quando a auditoria for aceita."
+
+#. module: liber_soc_audit
+#. odoo-python
+#: code:addons/liber_soc_audit/models/consignment_move.py:0
+msgid ""
+"Shelf quantity adjusted, but the value entry was skipped: set both the "
+"Consignment Adjustment Account and the Consignment Stock Account in "
+"Settings, then post the value manually."
+msgstr "Quantidade da prateleira ajustada, mas o lançamento de valor foi pulado: defina a Conta de Ajuste de Consignação e a Conta de Estoque em Consignação em Configurações e lance o valor manualmente."
+
+#. module: liber_soc_audit
+#: model:ir.model.fields.selection,name:liber_soc_audit.selection__nfe_cfop__consignment_effect__ship
+msgid "Shipment (+ shelf)"
+msgstr "Remessa (+ prateleira)"
+
+#. module: liber_soc_audit
+#: model:ir.model.fields,field_description:liber_soc_audit.field_consignment_audit_line__qty_shipped_xml
+msgid "Shipped"
+msgstr "Remetido"
+
+#. module: liber_soc_audit
+#: model:ir.model.fields,help:liber_soc_audit.field_consignment_move_line__adjustment_delta
+msgid ""
+"Signed shelf correction for an 'adjustment' movement: positive adds units to"
+" the shelf (found stock), negative removes them (shrinkage). Ignored for the"
+" other movement kinds."
+msgstr "Correção de prateleira com sinal para um movimento de 'ajuste': positivo soma unidades à prateleira (estoque encontrado), negativo remove (quebra). Ignorado nos demais tipos de movimento."
+
+#. module: liber_soc_audit
+#: model:ir.model.fields,field_description:liber_soc_audit.field_consignment_audit_line__qty_sold_xml
+msgid "Sold"
+msgstr "Vendido"
+
+#. module: liber_soc_audit
+#: model:ir.model.fields,help:liber_soc_audit.field_consignment_audit__date_from
+msgid ""
+"Start of the fiscal series. Leave empty to go back to the very first NFe of "
+"this customer."
+msgstr "Início da série fiscal. Deixe vazio para voltar até a primeira NFe deste cliente."
+
+#. module: liber_soc_audit
+#: model:ir.model.fields,field_description:liber_soc_audit.field_consignment_audit_line__line_state
+msgid "State"
+msgstr "Situação"
+
+#. module: liber_soc_audit
+#: model:ir.model.fields,field_description:liber_soc_audit.field_consignment_audit__state
+#: model_terms:ir.ui.view,arch_db:liber_soc_audit.view_consignment_audit_search
+msgid "Status"
+msgstr "Situação"
+
+#. module: liber_soc_audit
+#: model:ir.model.fields,help:liber_soc_audit.field_consignment_audit__activity_state
+msgid ""
+"Status based on activities\n"
+"Overdue: Due date is already passed\n"
+"Today: Activity date is today\n"
+"Planned: Future activities."
+msgstr "Situação baseada nas atividades\nAtrasado: a data de vencimento já passou\nHoje: a data da atividade é hoje\nPlanejado: atividades futuras."
+
+#. module: liber_soc_audit
+#: model:ir.model.fields,help:liber_soc_audit.field_consignment_audit_line__panel_ids
+msgid "The NFes that fed this line -- the audit trail."
+msgstr "As NFes que alimentaram esta linha -- a trilha de auditoria."
+
+#. module: liber_soc_audit
+#: model:ir.model.fields,help:liber_soc_audit.field_consignment_move__audit_id
+msgid "The audit that generated this adjustment."
+msgstr "A auditoria que gerou este ajuste."
+
+#. module: liber_soc_audit
+#. odoo-python
+#: code:addons/liber_soc_audit/models/consignment_audit.py:0
+msgid "This audit is already accepted. Reset it to draft to recompute."
+msgstr "Esta auditoria já está aceita. Volte-a a rascunho para recalcular."
+
+#. module: liber_soc_audit
+#: model:ir.model.fields,field_description:liber_soc_audit.field_consignment_audit__date_to
+msgid "To"
+msgstr "Até"
+
+#. module: liber_soc_audit
+#: model:ir.model.fields,field_description:liber_soc_audit.field_consignment_move__move_kind
+msgid "Type"
+msgstr "Tipo"
+
+#. module: liber_soc_audit
+#: model:ir.model.fields,help:liber_soc_audit.field_consignment_audit__activity_exception_decoration
+msgid "Type of the exception activity on record."
+msgstr "Tipo da atividade de exceção no registro."
+
+#. module: liber_soc_audit
+#: model:ir.model.fields.selection,name:liber_soc_audit.selection__consignment_audit__state__under_review
+msgid "Under Review"
+msgstr "Em Revisão"
+
+#. module: liber_soc_audit
+#: model:ir.model.fields.selection,name:liber_soc_audit.selection__consignment_audit__coverage_status__unknown
+msgid "Unknown"
+msgstr "Desconhecida"
+
+#. module: liber_soc_audit
+#: model_terms:ir.ui.view,arch_db:liber_soc_audit.view_nfe_cfop_effect_search
+msgid "Unmapped"
+msgstr "Não mapeados"
+
+#. module: liber_soc_audit
+#: model:ir.model.fields,field_description:liber_soc_audit.field_consignment_audit__unmapped_cfop_ids
+msgid "Unmapped CFOPs"
+msgstr "CFOPs não mapeados"
+
+#. module: liber_soc_audit
+#: model:ir.model.fields,field_description:liber_soc_audit.field_consignment_audit__unmatched_item_count
+msgid "Unmatched Items"
+msgstr "Itens sem produto"
+
+#. module: liber_soc_audit
+#: model:ir.model.fields,field_description:liber_soc_audit.field_consignment_audit__unmatched_qty
+msgid "Unmatched Qty"
+msgstr "Qtd sem produto"
+
+#. module: liber_soc_audit
+#: model:ir.model.fields,field_description:liber_soc_audit.field_consignment_move__account_move_id
+msgid "Value Entry"
+msgstr "Lançamento de Valor"
+
+#. module: liber_soc_audit
+#. odoo-python
+#: code:addons/liber_soc_audit/models/consignment_move.py:0
+msgid "Value entry %(entry)s posted: %(amt).2f (Dr %(dr)s / Cr %(cr)s)."
+msgstr "Lançamento de valor %(entry)s registrado: %(amt).2f (Déb %(dr)s / Créd %(cr)s)."
+
+#. module: liber_soc_audit
+#: model_terms:ir.ui.view,arch_db:liber_soc_audit.view_consignment_audit_form
+msgid "View fiscal documents"
+msgstr "Ver documentos fiscais"
+
+#. module: liber_soc_audit
+#: model:ir.model.fields,field_description:liber_soc_audit.field_consignment_audit__website_message_ids
+msgid "Website Messages"
+msgstr "Mensagens do Site"
+
+#. module: liber_soc_audit
+#: model:ir.model.fields,help:liber_soc_audit.field_consignment_audit__website_message_ids
+msgid "Website communication history"
+msgstr "Histórico de comunicação do site"
+
+#. module: liber_soc_audit
+#: model:ir.model.fields,help:liber_soc_audit.field_consignment_audit__coverage_status
+msgid ""
+"Whether ALL of the customer's consignment NFes are imported. The audit only "
+"closes reliably on a complete series -- set this once the gaps below are "
+"reviewed."
+msgstr "Se TODAS as NFes de consignação do cliente estão importadas. A auditoria só fecha com confiança em uma série completa -- marque isto depois de revisar as lacunas abaixo."
+
+#. module: liber_soc_audit
+#: model_terms:ir.ui.view,arch_db:liber_soc_audit.view_consignment_audit_search
+msgid "With divergences"
+msgstr "Com divergências"
+
+#. module: liber_soc_audit
+#: model_terms:ir.ui.view,arch_db:liber_soc_audit.view_consignment_audit_form
+msgid ""
+"item(s)\n"
+"                        ("
+msgstr "item(ns) ("
+
+#. module: liber_soc_audit
+#. odoo-python
+#: code:addons/liber_soc_audit/models/consignment_audit.py:0
+msgid "location_id"
+msgstr "location_id"
+
+#. module: liber_soc_audit
+#: model_terms:ir.ui.view,arch_db:liber_soc_audit.view_consignment_audit_form
+msgid ""
+"note(s)\n"
+"                        in the period have no CFOP recorded (not parsed, or the code\n"
+"                        is missing from the CFOP table) and are NOT counted. Seed the\n"
+"                        CFOP (Configuration &gt; CFOP Effects) and relink, then recompute."
+msgstr ""
+
+#. module: liber_soc_audit
+#: model_terms:ir.ui.view,arch_db:liber_soc_audit.view_consignment_audit_form
+msgid ""
+"units) could\n"
+"                        not be matched to a product and are NOT counted. Fix the\n"
+"                        catalogue/alias and recompute."
+msgstr "unidades) não puderam ser casadas a um produto e NÃO são contadas. Corrija o catálogo/alias e recalcule."
+
+
+#. module: liber_soc_audit
+#: model:ir.model.fields.selection,name:liber_soc_audit.selection__consignment_audit_line__shelf_status__attention
+msgid "Attention"
+msgstr "Atenção"
+
+#. module: liber_soc_audit
+#: model:ir.model.fields.selection,name:liber_soc_audit.selection__consignment_audit_line__shelf_status__critical
+msgid "Critical"
+msgstr "Crítico"
+
+#. module: liber_soc_audit
+#: model:ir.model.fields.selection,name:liber_soc_audit.selection__consignment_audit_line__shelf_status__no_return
+msgid "No Return"
+msgstr "Sem retorno"
+
+#. module: liber_soc_audit
+#: model:ir.model.fields,field_description:liber_soc_audit.field_consignment_audit_line__shelf_status
+msgid "Shelf Status"
+msgstr "Situação"
+
+#. module: liber_soc_audit
+#: model:ir.model.fields,field_description:liber_soc_audit.field_consignment_audit_line__last_settlement_date
+msgid "Last Settlement"
+msgstr "Último Acerto"
+
+#. module: liber_soc_audit
+#: model:ir.model.fields,field_description:liber_soc_audit.field_consignment_audit_line__days_since_settlement
+msgid "Days Since Settlement"
+msgstr "Dias Desde o Acerto"

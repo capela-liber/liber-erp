@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Tax settings after the Beneficiary Payments section -->
+    <record id="view_company_form_copyright_taxes" model="ir.ui.view">
+        <field name="name">res.company.form.copyright.taxes</field>
+        <field name="model">res.company</field>
+        <field name="inherit_id"
+               ref="liber_copyright_contracts_payments.view_company_form_copyright_payments"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='contract_payment_days']" position="after">
+                <separator string="Taxes (IRRF)" colspan="2"/>
+                <field name="contract_tax_partner_id"/>
+                <field name="contract_tax_account_id"/>
+                <field name="contract_tax_journal_id"/>
+                <field name="contract_tax_due_day"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

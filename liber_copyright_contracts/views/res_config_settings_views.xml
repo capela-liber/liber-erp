@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="res_config_settings_view_form" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.copyright.contracts</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="base_setup.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form" position="inside">
+                <app string="Copyright" name="liber_copyright_contracts"
+                     logo="/base/static/description/settings.png">
+                    <block title="Contracts" name="copyright_contracts_block">
+                        <setting string="Expiry reminder window"
+                                 help="Days before expiration to remind the responsible user.">
+                            <div class="content-group">
+                                <div class="mt8">
+                                    <field name="contract_expiry_reminder_days" class="o_light_label"/>
+                                    <span class="ms-2">days before expiration</span>
+                                </div>
+                            </div>
+                        </setting>
+                    </block>
+                </app>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="action_copyright_contracts_settings" model="ir.actions.act_window">
+        <field name="name">Settings</field>
+        <field name="res_model">res.config.settings</field>
+        <field name="view_mode">form</field>
+        <field name="target">current</field>
+        <field name="context">{'module': 'liber_copyright_contracts'}</field>
+    </record>
+
+    <!-- "Settings" section: groups all configuration (other modules add here) -->
+    <menuitem id="menu_copyright_contracts_settings"
+              name="Settings"
+              parent="menu_copyright_contracts_root"
+              groups="liber_copyright_contracts.group_contract_manager"
+              sequence="90"/>
+    <!-- The section itself carries no action (keep it clean on upgrades too). -->
+    <record id="menu_copyright_contracts_settings" model="ir.ui.menu">
+        <field name="action" eval="False"/>
+    </record>
+    <menuitem id="menu_copyright_contracts_settings_general"
+              name="Preferences"
+              parent="menu_copyright_contracts_settings"
+              action="action_copyright_contracts_settings"
+              groups="liber_copyright_contracts.group_contract_manager"
+              sequence="10"/>
+</odoo>

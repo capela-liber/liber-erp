@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_company_form_copyrights" model="ir.ui.view">
+        <field name="name">res.company.form.copyrights</field>
+        <field name="model">res.company</field>
+        <field name="inherit_id" ref="base.view_company_form"/>
+        <field name="arch" type="xml">
+
+            <!-- Smart button at the top of the form (standard position) -->
+            <xpath expr="//field[@name='logo']" position="before">
+                <div class="oe_button_box" name="button_box"
+                     groups="liber_copyright_contracts.group_contract_manager">
+                    <button name="action_view_special_sales" type="object"
+                            class="oe_stat_button" icon="fa-star"
+                            invisible="special_sales_count == 0">
+                        <field name="special_sales_count" widget="statinfo"
+                               string="Special Sales"/>
+                    </button>
+                </div>
+            </xpath>
+
+            <xpath expr="//page[@name='general_info']" position="after">
+                <page string="Copyrights" name="copyrights"
+                      groups="liber_copyright_contracts.group_contract_manager">
+                    <group>
+                        <separator string="Analytics" colspan="2"/>
+                        <field name="contract_analytic_group_id"/>
+                        <field name="contract_royalty_general_account_id"/>
+                        <field name="contract_royalty_liability_account_id"/>
+                        <field name="contract_royalty_liability_months"/>
+                        <separator string="Special Sales" colspan="2"/>
+                        <field name="contract_special_sales_team_ids"
+                               widget="many2many_tags"/>
+                        <field name="contract_special_min_discount"/>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

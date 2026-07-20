@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!--
+          A campaign needs an identity, and its name is not one: soc_dev has two
+          campaigns called "Orides" and two called "Que horas são?". The log says
+          "applied to CO/2026/00029" and nobody can tell WHICH "Orides" it landed
+          on. A code is short, unique, sortable and speakable, like AC / CO / CR.
+        -->
+        <record id="seq_consignment_campaign" model="ir.sequence">
+            <field name="name">Consignment Campaign</field>
+            <field name="code">consignment.campaign</field>
+            <field name="prefix">CP/%(year)s/</field>
+            <field name="padding">4</field>
+            <field name="company_id" eval="False"/>
+        </record>
+    </data>
+</odoo>

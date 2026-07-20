@@ -1,0 +1,8 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_nfe_xml_panel,access_nfe_xml_panel,model_nfe_xml_panel,base.group_user,1,1,1,1
+access_nfe_xml_cancel_event,access_nfe_xml_cancel_event,model_nfe_xml_cancel_event,base.group_user,1,1,1,1
+access_nfe_xml_items,access_nfe_xml_items,model_nfe_xml_items,base.group_user,1,1,1,1
+access_import_xml_file,access_import_xml_file,model_import_xml_file,base.group_user,1,1,1,1
+access_nfe_xml_tags,access_nfe_xml_tags,model_nfe_xml_tags,base.group_user,1,1,1,1
+access_nfe_cfop,access_nfe_cfop,model_nfe_cfop,base.group_user,1,1,1,1
+access_nfe_sefaz_sweep,access_nfe_sefaz_sweep,model_nfe_sefaz_sweep,base.group_user,1,1,1,1

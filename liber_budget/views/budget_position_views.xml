@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="budget_position_view_list" model="ir.ui.view">
+        <field name="name">budget.position.list</field>
+        <field name="model">budget.position</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="account_count" string="# Accounts"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="budget_position_view_form" model="ir.ui.view">
+        <field name="name">budget.position.form</field>
+        <field name="model">budget.position</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="name" placeholder="e.g. Funcionarios"/></h1>
+                    </div>
+                    <group>
+                        <field name="company_id" groups="base.group_multi_company"/>
+                    </group>
+                    <field name="account_ids">
+                        <list>
+                            <field name="code"/>
+                            <field name="name"/>
+                            <field name="account_type"/>
+                        </list>
+                    </field>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="budget_position_action" model="ir.actions.act_window">
+        <field name="name">Budgetary Positions</field>
+        <field name="res_model">budget.position</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Create a budgetary position</p>
+            <p>Agrupe contas do plano de contas (ex.: todas as de "funcionario").
+               Orcamentos que usam a posicao leem o realizado direto do Razao,
+               inclusive de periodos passados.</p>
+        </field>
+    </record>
+
+    <menuitem id="menu_budget_config" parent="menu_budget_root"
+              name="Configuration" sequence="90"/>
+    <menuitem id="menu_budget_position" parent="menu_budget_config"
+              action="budget_position_action" sequence="10"/>
+
+</odoo>

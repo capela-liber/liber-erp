@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <!-- Author-facing template: body written in pt-BR on purpose. The
+             period and net amount come from the sending wizard through the
+             rendering context (`ctx`). The subject is an inline template
+             ({{ }}); the body_html field renders with QWeb (t-out). -->
+        <record id="mail_template_royalty_statement" model="mail.template">
+            <field name="name">Copyright Contracts: Royalty Statement</field>
+            <field name="model_id" ref="base.model_res_partner"/>
+            <field name="subject">Prestação de contas de direitos autorais — {{ ctx.get('edlab_period_label', '') }}</field>
+            <field name="body_html" type="html">
+<div style="margin: 0px; padding: 0px; font-size: 13px;">
+    <p>Olá, <t t-out="object.name"/>,</p>
+    <p>
+        Segue em anexo a prestação de contas dos seus direitos autorais
+        referente ao período <t t-out="ctx.get('edlab_period_label', '')"/>.
+    </p>
+    <p>
+        Valor a receber no período: <strong t-out="ctx.get('edlab_net_label', '')"/>.
+    </p>
+    <p>
+        Em caso de dúvida sobre os valores ou os dados cadastrais, basta
+        responder este e-mail.
+    </p>
+    <p>Atenciosamente,<br/><t t-out="user.company_id.name"/></p>
+</div>
+            </field>
+            <field name="auto_delete" eval="False"/>
+        </record>
+
+    </data>
+</odoo>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!-- Official 2026 values (accountant's CALCULO IRRF 2026 + Receita
+             Federal tables; progressive table unchanged since May 2025,
+             reducer per Lei 15.270/2025). -->
+        <record id="irrf_table_2026" model="edlab.irrf.table">
+            <field name="name">IRRF 2026 (Lei 15.270/2025)</field>
+            <field name="date_from">2026-01-01</field>
+            <field name="simplified_discount">607.20</field>
+            <field name="no_withholding_limit">5000.00</field>
+            <field name="reducer_a">978.62</field>
+            <field name="reducer_b">0.133145</field>
+            <field name="reducer_cap_limit">7350.00</field>
+        </record>
+
+        <record id="irrf_2026_bracket_1" model="edlab.irrf.bracket">
+            <field name="table_id" ref="irrf_table_2026"/>
+            <field name="amount_to">2428.80</field>
+            <field name="rate">0</field>
+            <field name="deductible">0</field>
+        </record>
+        <record id="irrf_2026_bracket_2" model="edlab.irrf.bracket">
+            <field name="table_id" ref="irrf_table_2026"/>
+            <field name="amount_to">2826.65</field>
+            <field name="rate">7.5</field>
+            <field name="deductible">182.16</field>
+        </record>
+        <record id="irrf_2026_bracket_3" model="edlab.irrf.bracket">
+            <field name="table_id" ref="irrf_table_2026"/>
+            <field name="amount_to">3751.05</field>
+            <field name="rate">15</field>
+            <field name="deductible">394.16</field>
+        </record>
+        <record id="irrf_2026_bracket_4" model="edlab.irrf.bracket">
+            <field name="table_id" ref="irrf_table_2026"/>
+            <field name="amount_to">4664.68</field>
+            <field name="rate">22.5</field>
+            <field name="deductible">675.49</field>
+        </record>
+        <record id="irrf_2026_bracket_5" model="edlab.irrf.bracket">
+            <field name="table_id" ref="irrf_table_2026"/>
+            <field name="amount_to">0</field>
+            <field name="rate">27.5</field>
+            <field name="deductible">908.73</field>
+        </record>
+    </data>
+</odoo>

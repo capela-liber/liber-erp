@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_edlab_royalty_statement_wizard_user,edlab.royalty.statement.wizard user,model_edlab_royalty_statement_wizard,liber_copyright_contracts.group_contract_user,1,1,1,1

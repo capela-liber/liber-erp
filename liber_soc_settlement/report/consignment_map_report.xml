@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="action_report_consignment_map" model="ir.actions.report">
+        <field name="name">Mapa de Consignação</field>
+        <field name="model">consignment.settlement</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">liber_soc_settlement.report_consignment_map</field>
+        <field name="report_file">liber_soc_settlement.report_consignment_map</field>
+        <field name="print_report_name">'Mapa de Consignacao - %s' % (object.partner_id.name or '')</field>
+        <!-- No cog/Print binding: the form has a "Print Map" header button. -->
+        <field name="binding_model_id" eval="False"/>
+    </record>
+
+    <!-- Reusable table for an operation (return / sale / replenishment). The map
+         itself has a different table below (it shows shelf position, not lines). -->
+    <template id="report_consignment_op_table">
+        <h4 style="margin-top:18px; margin-bottom:2px;" t-out="op_title"/>
+        <p style="font-size:11px; color:#666; margin:0 0 4px 0;" t-out="op_desc"/>
+        <table style="width:100%; border-collapse:collapse; font-size:11px;">
+            <thead>
+                <tr style="background-color:#2c3e50; color:#ffffff;">
+                    <th style="text-align:left; padding:6px 10px; font-weight:600;">Título</th>
+                    <th style="text-align:right; padding:6px 10px; font-weight:600;">Qtd.</th>
+                    <th style="text-align:right; padding:6px 10px; font-weight:600;">Preço unit.</th>
+                    <th t-if="op_show_discount" style="text-align:right; padding:6px 10px; font-weight:600;">Desc.%</th>
+                    <th style="text-align:right; padding:6px 10px; font-weight:600;">Subtotal</th>
+                </tr>
+            </thead>
+            <tbody>
+                <t t-set="op_total" t-value="0"/>
+                <tr t-foreach="op_lines" t-as="line"
+                    t-att-style="'border-bottom:1px solid #e6e6e6; background-color:' + ('#f7f9fa' if line_index % 2 else '#ffffff') + ';'">
+                    <t t-set="op_total" t-value="op_total + line.price_subtotal"/>
+                    <td style="padding:6px 10px;"><span t-field="line.product_id"/></td>
+                    <td style="text-align:right; padding:6px 10px;"><span t-out="int(line.product_uom_qty)"/></td>
+                    <td style="text-align:right; padding:6px 10px;">
+                        <span t-field="line.price_unit"
+                              t-options="{'widget': 'monetary', 'display_currency': op_currency}"/>
+                    </td>
+                    <td t-if="op_show_discount" style="text-align:right; padding:6px 10px;">
+                        <span t-field="line.discount"/>%</td>
+                    <td style="text-align:right; padding:6px 10px;">
+                        <span t-field="line.price_subtotal"
+                              t-options="{'widget': 'monetary', 'display_currency': op_currency}"/>
+                    </td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr style="border-top:2px solid #2c3e50; background-color:#f0f3f5; font-weight:bold;">
+                    <td t-att-colspan="4 if op_show_discount else 3"
+                        style="text-align:right; padding:8px 10px;">Total</td>
+                    <td style="text-align:right; padding:8px 10px;">
+                        <span t-out="op_total"
+                              t-options="{'widget': 'monetary', 'display_currency': op_currency}"/>
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+    </template>
+
+    <template id="report_consignment_map">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <h2 class="mt-2">Mapa de Consignação — <span t-field="doc.name"/></h2>
+                        <div class="row mb-3">
+                            <div class="col-6">
+                                <div><strong>Cliente:</strong> <span t-field="doc.partner_id"/></div>
+                                <div><strong>Contrato:</strong> <span t-field="doc.agreement_id.name"/></div>
+                            </div>
+                            <div class="col-6 text-end">
+                                <div><strong>Data:</strong> <span t-field="doc.date"/></div>
+                                <div><strong>Empresa:</strong> <span t-field="doc.company_id"/></div>
+                            </div>
+                        </div>
+
+                        <div t-if="doc.company_id.consignment_map_text"
+                             t-out="doc.company_id.consignment_map_text"/>
+
+                        <!-- (a) Devolução -->
+                        <t t-if="doc.return_move_id">
+                            <t t-call="liber_soc_settlement.report_consignment_op_table">
+                                <t t-set="op_title">Devolução</t>
+                                <t t-set="op_desc">Itens sem venda que pedimos que você nos devolva, retornando ao nosso estoque.</t>
+                                <t t-set="op_lines" t-value="doc.return_move_id.line_ids"/>
+                                <t t-set="op_currency" t-value="doc.return_move_id.currency_id"/>
+                                <t t-set="op_show_discount" t-value="False"/>
+                            </t>
+                        </t>
+
+                        <!-- (b) Acerto (venda) -->
+                        <t t-if="doc.sale_order_id">
+                            <t t-call="liber_soc_settlement.report_consignment_op_table">
+                                <t t-set="op_title">Acerto (venda)</t>
+                                <t t-set="op_desc">Itens que você informou como vendidos no período. É sobre eles que emitimos a nota de venda.</t>
+                                <t t-set="op_lines" t-value="doc.sale_order_id.order_line.filtered(lambda l: not l.display_type)"/>
+                                <t t-set="op_currency" t-value="doc.sale_order_id.currency_id"/>
+                                <t t-set="op_show_discount" t-value="True"/>
+                            </t>
+                        </t>
+
+                        <!-- (c) Pedido (reposição) -->
+                        <t t-if="doc.replenishment_order_id">
+                            <t t-call="liber_soc_settlement.report_consignment_op_table">
+                                <t t-set="op_title">Pedido (reposição)</t>
+                                <t t-set="op_desc">Novos itens que enviaremos para repor a sua prateleira.</t>
+                                <t t-set="op_lines" t-value="doc.replenishment_order_id.order_line.filtered(lambda l: not l.display_type)"/>
+                                <t t-set="op_currency" t-value="doc.replenishment_order_id.currency_id"/>
+                                <t t-set="op_show_discount" t-value="False"/>
+                            </t>
+                        </t>
+
+                        <!-- (d) Mapa da prateleira -->
+                        <h4 style="margin-top:18px; margin-bottom:2px;">Mapa da prateleira</h4>
+                        <p style="font-size:11px; color:#666; margin:0 0 4px 0;">Posição atual da mercadoria em consignação na sua loja.</p>
+                        <table style="width:100%; border-collapse:collapse; font-size:11px;">
+                            <thead>
+                                <tr style="background-color:#2c3e50; color:#ffffff;">
+                                    <th style="text-align:left; padding:7px 10px; font-weight:600;">Título</th>
+                                    <th style="text-align:right; padding:7px 10px; font-weight:600;">Em prateleira</th>
+                                    <th style="text-align:right; padding:7px 10px; font-weight:600;">Preço unit.</th>
+                                    <th style="text-align:right; padding:7px 10px; font-weight:600;">Desc.%</th>
+                                    <th style="text-align:right; padding:7px 10px; font-weight:600;">Subtotal</th>
+                                    <th style="text-align:center; padding:7px 10px; font-weight:600;">Dias sem acerto</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-set="grand_total" t-value="0"/>
+                                <tr t-foreach="doc.line_ids" t-as="line"
+                                    t-att-style="'border-bottom:1px solid #e6e6e6; background-color:' + ('#f7f9fa' if line_index % 2 else '#ffffff') + ';'">
+                                    <t t-set="line_val" t-value="line.qty_on_shelf * line.price_unit * (1 - (line.discount or 0) / 100.0)"/>
+                                    <t t-set="grand_total" t-value="grand_total + line_val"/>
+                                    <td style="padding:6px 10px;"><span t-field="line.product_id"/></td>
+                                    <td style="text-align:right; padding:6px 10px;"><span t-field="line.qty_on_shelf"/></td>
+                                    <td style="text-align:right; padding:6px 10px;">
+                                        <span t-field="line.price_unit"
+                                              t-options="{'widget': 'monetary', 'display_currency': doc.currency_id}"/>
+                                    </td>
+                                    <td style="text-align:right; padding:6px 10px;"><span t-field="line.discount"/>%</td>
+                                    <td style="text-align:right; padding:6px 10px;">
+                                        <span t-out="line_val"
+                                              t-options="{'widget': 'monetary', 'display_currency': doc.currency_id}"/>
+                                    </td>
+                                    <td style="text-align:center; padding:6px 10px; color:#555;">
+                                        <t t-if="line.shelf_status"><span t-out="line.days_since_settlement"/></t>
+                                    </td>
+                                </tr>
+                            </tbody>
+                            <tfoot>
+                                <tr style="border-top:2px solid #2c3e50; background-color:#f0f3f5; font-weight:bold;">
+                                    <td colspan="5" style="text-align:right; padding:8px 10px;">Total</td>
+                                    <td style="text-align:right; padding:8px 10px;">
+                                        <span t-out="grand_total"
+                                              t-options="{'widget': 'monetary', 'display_currency': doc.currency_id}"/>
+                                    </td>
+                                </tr>
+                            </tfoot>
+                        </table>
+
+                        <p style="margin-top:24px; font-size:12px;">
+                            Ficou com alguma dúvida sobre este acerto? Basta
+                            <strong>responder este e-mail</strong> e retornamos com mais informações.
+                        </p>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+    <record id="mail_template_consignment_map" model="mail.template">
+        <field name="name">Consignment Map</field>
+        <field name="model_id" ref="model_consignment_settlement"/>
+        <field name="subject">Mapa de Consignação - {{ object.name }}</field>
+        <field name="email_from">{{ (object.company_id.email_formatted or user.email_formatted) }}</field>
+        <field name="partner_to">{{ ','.join(str(i) for i in ([object.partner_id.id] + object.agreement_id.report_contact_ids.ids)) }}</field>
+        <!-- Honour partner_to (customer + the contract's report contacts); without
+             this Odoo defaults to the customer only and drops the report contacts. -->
+        <field name="use_default_to" eval="False"/>
+        <field name="report_template_ids" eval="[(4, ref('action_report_consignment_map'))]"/>
+        <field name="lang">{{ object.partner_id.lang }}</field>
+        <field name="auto_delete" eval="False"/>
+        <field name="body_html" type="html">
+            <div style="font-size: 13px;">
+                <p>Prezados,</p>
+                <p>Segue em anexo o <strong>Mapa de Consignação</strong>
+                   <t t-out="object.name or ''"/>, com o resumo desta operação —
+                   devolução, acerto (venda) e pedido de reposição, quando houver.</p>
+                <p>Ficou com alguma dúvida? Basta <strong>responder este e-mail</strong>
+                   e retornamos com mais informações.</p>
+                <p>Atenciosamente,<br/><t t-out="object.company_id.name or ''"/></p>
+            </div>
+        </field>
+    </record>
+
+</odoo>

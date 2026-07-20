@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Todas as notas de movimentação juntas — bonificação, consignação,
+         futuros eventos — num lugar só do financeiro, separadas das INVs. -->
+    <record id="view_nfe_remessa_list" model="ir.ui.view">
+        <field name="name">account.move.list.remessa</field>
+        <field name="model">account.move</field>
+        <field name="arch" type="xml">
+            <list default_order="name desc">
+                <field name="name"/>
+                <field name="invoice_date"/>
+                <field name="partner_id"/>
+                <field name="remessa_origin"/>
+                <field name="invoice_origin" string="Source document"/>
+                <field name="amount_total" sum="Total"/>
+                <field name="state"/>
+            </list>
+        </field>
+    </record>
+    <record id="view_nfe_remessa_search" model="ir.ui.view">
+        <field name="name">account.move.search.remessa</field>
+        <field name="model">account.move</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="partner_id"/>
+                <field name="invoice_origin"/>
+                <!-- Cada módulo que adiciona uma origem adiciona aqui o seu
+                     filtro (product_bonus: Bonificações; soc: Consignações). -->
+                <group>
+                    <filter name="group_origin" string="Origin"
+                            context="{'group_by': 'remessa_origin'}"/>
+                    <filter name="group_partner" string="Recipient"
+                            context="{'group_by': 'partner_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+    <record id="action_nfe_remessa" model="ir.actions.act_window">
+        <field name="name">Remessas</field>
+        <field name="res_model">account.move</field>
+        <field name="view_mode">list,form</field>
+        <field name="view_id" ref="view_nfe_remessa_list"/>
+        <field name="search_view_id" ref="view_nfe_remessa_search"/>
+        <field name="domain">[('journal_id.is_remessa', '=', True), ('move_type', 'in', ['out_invoice', 'out_refund'])]</field>
+        <field name="context">{'default_move_type': 'out_invoice'}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">No remessa note yet</p>
+            <p>Fiscal notes for movements — bonus copies, consignment, events —
+               that never generate payment. They are born from the documents
+               that coordinate them (B000, C000), not from here.</p>
+        </field>
+    </record>
+    <menuitem id="menu_nfe_remessa" name="Remessas"
+              parent="account.menu_finance_receivables"
+              action="action_nfe_remessa" sequence="25"/>
+</odoo>

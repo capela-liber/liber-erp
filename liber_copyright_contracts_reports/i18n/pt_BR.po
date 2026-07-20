@@ -1,0 +1,663 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* liber_copyright_contracts_reports
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0-20260630\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-07-08 12:19+0000\n"
+"PO-Revision-Date: 2026-07-08 12:19+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: liber_copyright_contracts_reports
+#: model:ir.actions.report,print_report_name:liber_copyright_contracts_reports.action_report_royalty_statement
+msgid "'Prestação de contas - %s' % (object.name)"
+msgstr "'Prestação de contas - %s' % (object.name)"
+
+#. module: liber_copyright_contracts_reports
+#: model:mail.template,body_html:liber_copyright_contracts_reports.mail_template_royalty_statement
+msgid ""
+"<div style=\"margin: 0px; padding: 0px; font-size: 13px;\">\n"
+"    <p>Olá, <t t-out=\"object.name\"/>,</p>\n"
+"    <p>\n"
+"        Segue em anexo a prestação de contas dos seus direitos autorais\n"
+"        referente ao período <t t-out=\"ctx.get('edlab_period_label', '')\"/>.\n"
+"    </p>\n"
+"    <p>\n"
+"        Valor a receber no período: <strong t-out=\"ctx.get('edlab_net_label', '')\"/>.\n"
+"    </p>\n"
+"    <p>\n"
+"        Em caso de dúvida sobre os valores ou os dados cadastrais, basta\n"
+"        responder este e-mail.\n"
+"    </p>\n"
+"    <p>Atenciosamente,<br/><t t-out=\"user.company_id.name\"/></p>\n"
+"</div>\n"
+"            "
+msgstr ""
+"<div style=\"margin: 0px; padding: 0px; font-size: 13px;\">\n"
+"    <p>Olá, <t t-out=\"object.name\"/>,</p>\n"
+"    <p>\n"
+"        Segue em anexo a prestação de contas dos seus direitos autorais\n"
+"        referente ao período <t t-out=\"ctx.get('edlab_period_label', '')\"/>.\n"
+"    </p>\n"
+"    <p>\n"
+"        Valor a receber no período: <strong t-out=\"ctx.get('edlab_net_label', '')\"/>.\n"
+"    </p>\n"
+"    <p>\n"
+"        Em caso de dúvida sobre os valores ou os dados cadastrais, basta\n"
+"        responder este e-mail.\n"
+"    </p>\n"
+"    <p>Atenciosamente,<br/><t t-out=\"user.company_id.name\"/></p>\n"
+"</div>\n"
+"            "
+
+#. module: liber_copyright_contracts_reports
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_reports.report_royalty_statement
+msgid "<em>Nenhum direito autoral em aberto.</em>"
+msgstr "<em>Nenhum direito autoral em aberto.</em>"
+
+#. module: liber_copyright_contracts_reports
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_reports.report_royalty_statement
+msgid ""
+"<em>O adiantamento descontável já foi pago ao autor e é recuperado à medida "
+"que os direitos autorais são apurados.</em>"
+msgstr ""
+"<em>O adiantamento descontável já foi pago ao autor e é recuperado à medida "
+"que os direitos autorais são apurados.</em>"
+
+#. module: liber_copyright_contracts_reports
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_reports.report_royalty_statement
+msgid "<em>Sem dados bancários cadastrados.</em>"
+msgstr "<em>Sem dados bancários cadastrados.</em>"
+
+#. module: liber_copyright_contracts_reports
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_reports.report_royalty_statement
+msgid "<strong>A deduzir (IRRF)</strong>"
+msgstr "<strong>A deduzir (IRRF)</strong>"
+
+#. module: liber_copyright_contracts_reports
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_reports.report_royalty_statement
+msgid "<strong>A receber</strong>"
+msgstr "<strong>A receber</strong>"
+
+#. module: liber_copyright_contracts_reports
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_reports.report_royalty_statement
+msgid "<strong>Agência</strong>"
+msgstr "<strong>Agência</strong>"
+
+#. module: liber_copyright_contracts_reports
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_reports.report_royalty_statement
+msgid "<strong>Banco</strong>"
+msgstr "<strong>Banco</strong>"
+
+#. module: liber_copyright_contracts_reports
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_reports.report_royalty_statement
+msgid "<strong>CPF</strong>"
+msgstr "<strong>CPF</strong>"
+
+#. module: liber_copyright_contracts_reports
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_reports.report_royalty_statement
+msgid "<strong>Conta corrente</strong>"
+msgstr "<strong>Conta corrente</strong>"
+
+#. module: liber_copyright_contracts_reports
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_reports.report_royalty_statement
+msgid "<strong>Data de nascimento</strong>"
+msgstr "<strong>Data de nascimento</strong>"
+
+#. module: liber_copyright_contracts_reports
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_reports.report_royalty_statement
+msgid "<strong>E-mail</strong>"
+msgstr "<strong>E-mail</strong>"
+
+#. module: liber_copyright_contracts_reports
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_reports.report_royalty_statement
+msgid "<strong>Endereço</strong>"
+msgstr "<strong>Endereço</strong>"
+
+#. module: liber_copyright_contracts_reports
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_reports.report_royalty_statement
+msgid "<strong>Nacionalidade</strong>"
+msgstr "<strong>Nacionalidade</strong>"
+
+#. module: liber_copyright_contracts_reports
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_reports.report_royalty_statement
+msgid "<strong>Nome completo</strong>"
+msgstr "<strong>Nome completo</strong>"
+
+#. module: liber_copyright_contracts_reports
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_reports.report_royalty_statement
+msgid "<strong>PIS</strong>"
+msgstr "<strong>PIS</strong>"
+
+#. module: liber_copyright_contracts_reports
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_reports.report_royalty_statement
+msgid "<strong>Período</strong>"
+msgstr "<strong>Período</strong>"
+
+#. module: liber_copyright_contracts_reports
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_reports.report_royalty_statement
+msgid "<strong>RG</strong>"
+msgstr "<strong>RG</strong>"
+
+#. module: liber_copyright_contracts_reports
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_reports.report_royalty_statement
+msgid "<strong>Valor total</strong>"
+msgstr "<strong>Valor total</strong>"
+
+#. module: liber_copyright_contracts_reports
+#: model:product.template,name:liber_copyright_contracts_reports.book_divina
+msgid "A Divina Comédia"
+msgstr "A Divina Comédia"
+
+#. module: liber_copyright_contracts_reports
+#: model_terms:ir.actions.act_window,help:liber_copyright_contracts_reports.action_edlab_authors
+msgid ""
+"A contact becomes a beneficiary as soon as a contract royalty\n"
+"                line names them."
+msgstr "Um contato torna-se favorecido assim que uma linha de royalty de contrato o indica."
+
+#. module: liber_copyright_contracts_reports
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_reports.report_royalty_statement
+msgid "Adiantamento descontável"
+msgstr "Adiantamento descontável"
+
+#. module: liber_copyright_contracts_reports
+#: model:ir.model.fields,field_description:liber_copyright_contracts_reports.field_account_setup_bank_manual_config__edlab_agency
+#: model:ir.model.fields,field_description:liber_copyright_contracts_reports.field_res_partner_bank__edlab_agency
+msgid "Agency"
+msgstr "Agência"
+
+#. module: liber_copyright_contracts_reports
+#: model:ir.model,name:liber_copyright_contracts_reports.model_res_partner_bank
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_reports.view_partner_form_edlab_author
+msgid "Bank Accounts"
+msgstr "Contas bancárias"
+
+#. module: liber_copyright_contracts_reports
+#: model:ir.model.fields,help:liber_copyright_contracts_reports.field_account_setup_bank_manual_config__edlab_agency
+#: model:ir.model.fields,help:liber_copyright_contracts_reports.field_res_partner_bank__edlab_agency
+msgid "Bank branch (agência) printed on the royalty statement."
+msgstr "Agência bancária impressa na prestação de contas."
+
+#. module: liber_copyright_contracts_reports
+#: model:ir.actions.act_window,name:liber_copyright_contracts_reports.action_edlab_authors
+#: model:ir.model.fields,field_description:liber_copyright_contracts_reports.field_edlab_royalty_statement_wizard__partner_ids
+#: model:ir.ui.menu,name:liber_copyright_contracts_reports.menu_edlab_authors
+msgid "Beneficiaries"
+msgstr "Favorecidos"
+
+#. module: liber_copyright_contracts_reports
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_reports.view_partner_form_edlab_author
+msgid "Beneficiary"
+msgstr "Favorecido"
+
+#. module: liber_copyright_contracts_reports
+#: model:ir.model.fields,field_description:liber_copyright_contracts_reports.field_res_partner__edlab_birthdate
+#: model:ir.model.fields,field_description:liber_copyright_contracts_reports.field_res_users__edlab_birthdate
+msgid "Birth Date"
+msgstr "Data de nascimento"
+
+#. module: liber_copyright_contracts_reports
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_reports.view_royalty_statement_wizard_form
+msgid "Cancel"
+msgstr "Cancelar"
+
+#. module: liber_copyright_contracts_reports
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_reports.report_royalty_statement
+msgid "Cliente"
+msgstr "Cliente"
+
+#. module: liber_copyright_contracts_reports
+#: model:ir.model,name:liber_copyright_contracts_reports.model_res_partner
+msgid "Contact"
+msgstr "Contato"
+
+#. module: liber_copyright_contracts_reports
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_reports.view_partner_form_edlab_author
+msgid "Contracts"
+msgstr "Contratos"
+
+#. module: liber_copyright_contracts_reports
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_reports.report_royalty_statement
+msgid "Contrato"
+msgstr "Contrato"
+
+#. module: liber_copyright_contracts_reports
+#: model:mail.template,name:liber_copyright_contracts_reports.mail_template_royalty_statement
+msgid "Copyright Contracts: Royalty Statement"
+msgstr "Contratos de Direitos Autorais: Prestação de Contas"
+
+#. module: liber_copyright_contracts_reports
+#: model:ir.model.fields,field_description:liber_copyright_contracts_reports.field_edlab_royalty_statement_wizard__create_uid
+msgid "Created by"
+msgstr "Criado por"
+
+#. module: liber_copyright_contracts_reports
+#: model:ir.model.fields,field_description:liber_copyright_contracts_reports.field_edlab_royalty_statement_wizard__create_date
+msgid "Created on"
+msgstr "Criado em"
+
+#. module: liber_copyright_contracts_reports
+#: model:product.template,name:liber_copyright_contracts_reports.book_crime
+msgid "Crime e Castigo"
+msgstr "Crime e Castigo"
+
+#. module: liber_copyright_contracts_reports
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_reports.report_royalty_statement
+msgid "Data"
+msgstr "Data"
+
+#. module: liber_copyright_contracts_reports
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_reports.report_royalty_statement
+msgid "Desconto"
+msgstr "Desconto"
+
+#. module: liber_copyright_contracts_reports
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_reports.report_royalty_statement
+msgid "Direito autoral"
+msgstr "Direito autoral"
+
+#. module: liber_copyright_contracts_reports
+#: model:ir.model.fields,field_description:liber_copyright_contracts_reports.field_edlab_contract_royalty_line__display_name
+#: model:ir.model.fields,field_description:liber_copyright_contracts_reports.field_edlab_royalty_statement_wizard__display_name
+#: model:ir.model.fields,field_description:liber_copyright_contracts_reports.field_report_copyright_contracts_reports_report_royalty_statement__display_name
+#: model:ir.model.fields,field_description:liber_copyright_contracts_reports.field_res_partner__display_name
+#: model:ir.model.fields,field_description:liber_copyright_contracts_reports.field_res_partner_bank__display_name
+msgid "Display Name"
+msgstr "Nome exibido"
+
+#. module: liber_copyright_contracts_reports
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_reports.report_royalty_statement
+msgid "Documento"
+msgstr "Documento"
+
+#. module: liber_copyright_contracts_reports
+#: model:product.template,name:liber_copyright_contracts_reports.book_quixote
+msgid "Dom Quixote"
+msgstr "Dom Quixote"
+
+#. module: liber_copyright_contracts_reports
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_reports.report_royalty_statement
+msgid "Em aberto"
+msgstr "Em aberto"
+
+#. module: liber_copyright_contracts_reports
+#: model:ir.model.fields,field_description:liber_copyright_contracts_reports.field_edlab_royalty_statement_wizard__date_to
+msgid "End Date"
+msgstr "Data final"
+
+#. module: liber_copyright_contracts_reports
+#: model:ir.model.fields,help:liber_copyright_contracts_reports.field_res_partner__edlab_last_statement_date
+#: model:ir.model.fields,help:liber_copyright_contracts_reports.field_res_users__edlab_last_statement_date
+msgid ""
+"End date of the period covered by the last royalty statement emailed to this"
+" author."
+msgstr "Data final do período coberto pela última prestação de contas enviada por e-mail a este autor."
+
+#. module: liber_copyright_contracts_reports
+#: model:ir.model.fields,help:liber_copyright_contracts_reports.field_edlab_royalty_statement_wizard__date_to
+msgid ""
+"End of the period covered by the statement: only royalties accrued up to "
+"this date are included."
+msgstr "Fim do período coberto pela prestação: apenas os direitos autorais apurados até esta data são incluídos."
+
+#. module: liber_copyright_contracts_reports
+#: model:product.template,name:liber_copyright_contracts_reports.book_hamlet
+msgid "Hamlet"
+msgstr "Hamlet"
+
+#. module: liber_copyright_contracts_reports
+#: model:ir.model.fields,field_description:liber_copyright_contracts_reports.field_edlab_contract_royalty_line__id
+#: model:ir.model.fields,field_description:liber_copyright_contracts_reports.field_edlab_royalty_statement_wizard__id
+#: model:ir.model.fields,field_description:liber_copyright_contracts_reports.field_report_copyright_contracts_reports_report_royalty_statement__id
+#: model:ir.model.fields,field_description:liber_copyright_contracts_reports.field_res_partner__id
+#: model:ir.model.fields,field_description:liber_copyright_contracts_reports.field_res_partner_bank__id
+msgid "ID"
+msgstr "ID"
+
+#. module: liber_copyright_contracts_reports
+#: model:ir.model.fields,field_description:liber_copyright_contracts_reports.field_res_partner__edlab_irrf_percentage
+#: model:ir.model.fields,field_description:liber_copyright_contracts_reports.field_res_users__edlab_irrf_percentage
+msgid "IRRF (%)"
+msgstr "IRRF (%)"
+
+#. module: liber_copyright_contracts_reports
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_reports.view_partner_form_edlab_author
+msgid "Identification"
+msgstr "Identificação"
+
+#. module: liber_copyright_contracts_reports
+#: model:product.template,name:liber_copyright_contracts_reports.book_iliada
+msgid "Ilíada"
+msgstr "Ilíada"
+
+#. module: liber_copyright_contracts_reports
+#: model:ir.model.fields,field_description:liber_copyright_contracts_reports.field_res_partner__is_edlab_author
+#: model:ir.model.fields,field_description:liber_copyright_contracts_reports.field_res_users__is_edlab_author
+msgid "Is Beneficiary"
+msgstr "É favorecido"
+
+#. module: liber_copyright_contracts_reports
+#: model:ir.model.fields,field_description:liber_copyright_contracts_reports.field_res_partner__edlab_last_statement_date
+#: model:ir.model.fields,field_description:liber_copyright_contracts_reports.field_res_users__edlab_last_statement_date
+msgid "Last Statement Sent"
+msgstr "Última prestação enviada"
+
+#. module: liber_copyright_contracts_reports
+#: model:ir.model.fields,field_description:liber_copyright_contracts_reports.field_edlab_royalty_statement_wizard__write_uid
+msgid "Last Updated by"
+msgstr "Última atualização por"
+
+#. module: liber_copyright_contracts_reports
+#: model:ir.model.fields,field_description:liber_copyright_contracts_reports.field_edlab_royalty_statement_wizard__write_date
+msgid "Last Updated on"
+msgstr "Última atualização em"
+
+#. module: liber_copyright_contracts_reports
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_reports.report_royalty_statement
+msgid "Livros vendidos"
+msgstr "Livros vendidos"
+
+#. module: liber_copyright_contracts_reports
+#: model:product.template,name:liber_copyright_contracts_reports.book_moby
+msgid "Moby Dick"
+msgstr "Moby Dick"
+
+#. module: liber_copyright_contracts_reports
+#: model:ir.model.fields,field_description:liber_copyright_contracts_reports.field_res_partner__edlab_nationality
+#: model:ir.model.fields,field_description:liber_copyright_contracts_reports.field_res_users__edlab_nationality
+msgid "Nationality"
+msgstr "Nacionalidade"
+
+#. module: liber_copyright_contracts_reports
+#: model_terms:ir.actions.act_window,help:liber_copyright_contracts_reports.action_edlab_authors
+msgid "No beneficiaries yet"
+msgstr "Ainda não há favorecidos"
+
+#. module: liber_copyright_contracts_reports
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_reports.report_royalty_statement
+msgid "Não descontável"
+msgstr "Não descontável"
+
+#. module: liber_copyright_contracts_reports
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_reports.report_royalty_statement
+msgid "Obra"
+msgstr "Obra"
+
+#. module: liber_copyright_contracts_reports
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_reports.report_royalty_statement
+msgid "Obra / Canal"
+msgstr "Obra / Canal"
+
+#. module: liber_copyright_contracts_reports
+#: model:product.template,name:liber_copyright_contracts_reports.book_odisseia
+msgid "Odisseia"
+msgstr "Odisseia"
+
+#. module: liber_copyright_contracts_reports
+#: model:ir.model.fields,field_description:liber_copyright_contracts_reports.field_edlab_contract_royalty_line__edlab_open_balance
+#: model:ir.model.fields,field_description:liber_copyright_contracts_reports.field_res_partner__edlab_royalty_balance
+#: model:ir.model.fields,field_description:liber_copyright_contracts_reports.field_res_users__edlab_royalty_balance
+msgid "Open Royalties"
+msgstr "Direitos autorais em aberto"
+
+#. module: liber_copyright_contracts_reports
+#: model:product.template,name:liber_copyright_contracts_reports.book_orgulho
+msgid "Orgulho e Preconceito"
+msgstr "Orgulho e Preconceito"
+
+#. module: liber_copyright_contracts_reports
+#: model:product.template,name:liber_copyright_contracts_reports.book_lusiadas
+msgid "Os Lusíadas"
+msgstr "Os Lusíadas"
+
+#. module: liber_copyright_contracts_reports
+#: model:ir.model.fields,field_description:liber_copyright_contracts_reports.field_res_partner__edlab_pis
+#: model:ir.model.fields,field_description:liber_copyright_contracts_reports.field_res_users__edlab_pis
+msgid "PIS"
+msgstr "PIS"
+
+#. module: liber_copyright_contracts_reports
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_reports.report_royalty_statement
+msgid "Prestação de contas de direitos autorais"
+msgstr "Prestação de contas de direitos autorais"
+
+#. module: liber_copyright_contracts_reports
+#: model:mail.template,subject:liber_copyright_contracts_reports.mail_template_royalty_statement
+msgid ""
+"Prestação de contas de direitos autorais — {{ ctx.get('edlab_period_label', "
+"'') }}"
+msgstr ""
+"Prestação de contas de direitos autorais — {{ ctx.get('edlab_period_label', "
+"'') }}"
+
+#. module: liber_copyright_contracts_reports
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_reports.view_royalty_statement_wizard_form
+msgid "Print"
+msgstr "Imprimir"
+
+#. module: liber_copyright_contracts_reports
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_reports.report_royalty_statement
+msgid "Quantidade"
+msgstr "Quantidade"
+
+#. module: liber_copyright_contracts_reports
+#: model:ir.model.fields,field_description:liber_copyright_contracts_reports.field_res_partner__edlab_rg
+#: model:ir.model.fields,field_description:liber_copyright_contracts_reports.field_res_users__edlab_rg
+msgid "RG"
+msgstr "RG"
+
+#. module: liber_copyright_contracts_reports
+#: model:product.template,name:liber_copyright_contracts_reports.book_romeu
+msgid "Romeu e Julieta"
+msgstr "Romeu e Julieta"
+
+#. module: liber_copyright_contracts_reports
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_reports.view_partner_form_edlab_author
+msgid "Royalties"
+msgstr "Direitos autorais"
+
+#. module: liber_copyright_contracts_reports
+#: model:ir.model.fields,help:liber_copyright_contracts_reports.field_edlab_contract_royalty_line__edlab_open_balance
+msgid "Royalties still owed on this line."
+msgstr "Direitos autorais ainda devidos nesta linha."
+
+#. module: liber_copyright_contracts_reports
+#: model:ir.model.fields,help:liber_copyright_contracts_reports.field_res_partner__edlab_royalty_balance
+#: model:ir.model.fields,help:liber_copyright_contracts_reports.field_res_users__edlab_royalty_balance
+msgid "Royalties still owed to this author, all contracts combined."
+msgstr "Direitos autorais ainda devidos a este autor, somando todos os contratos."
+
+#. module: liber_copyright_contracts_reports
+#: model:ir.model.fields,field_description:liber_copyright_contracts_reports.field_edlab_contract_royalty_line__edlab_currency_id
+#: model:ir.model.fields,field_description:liber_copyright_contracts_reports.field_res_partner__edlab_currency_id
+#: model:ir.model.fields,field_description:liber_copyright_contracts_reports.field_res_users__edlab_currency_id
+msgid "Royalty Currency"
+msgstr "Moeda do royalty"
+
+#. module: liber_copyright_contracts_reports
+#: model:ir.model,name:liber_copyright_contracts_reports.model_edlab_contract_royalty_line
+msgid "Royalty Line (beneficiary x work)"
+msgstr "Linha de Royalty (beneficiário x obra)"
+
+#. module: liber_copyright_contracts_reports
+#: model:ir.model.fields,field_description:liber_copyright_contracts_reports.field_res_partner__edlab_royalty_line_ids
+#: model:ir.model.fields,field_description:liber_copyright_contracts_reports.field_res_users__edlab_royalty_line_ids
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_reports.view_partner_form_edlab_author
+msgid "Royalty Lines"
+msgstr "Linhas de royalty"
+
+#. module: liber_copyright_contracts_reports
+#. odoo-python
+#: code:addons/liber_copyright_contracts_reports/models/res_partner.py:0
+#: model:ir.actions.report,name:liber_copyright_contracts_reports.action_report_royalty_statement
+#: model:ir.actions.server,name:liber_copyright_contracts_reports.action_server_royalty_statement
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_reports.view_royalty_statement_wizard_form
+msgid "Royalty Statement"
+msgstr "Prestação de contas"
+
+#. module: liber_copyright_contracts_reports
+#: model:ir.model,name:liber_copyright_contracts_reports.model_report_copyright_contracts_reports_report_royalty_statement
+msgid "Royalty Statement Report"
+msgstr "Relatório de prestação de contas"
+
+#. module: liber_copyright_contracts_reports
+#: model:ir.model,name:liber_copyright_contracts_reports.model_edlab_royalty_statement_wizard
+msgid "Royalty Statement Wizard"
+msgstr "Assistente de prestação de contas"
+
+#. module: liber_copyright_contracts_reports
+#: model:ir.model.fields,help:liber_copyright_contracts_reports.field_res_partner__edlab_royalty_line_ids
+#: model:ir.model.fields,help:liber_copyright_contracts_reports.field_res_users__edlab_royalty_line_ids
+msgid ""
+"Royalty lines (across all contracts) where this contact is the beneficiary."
+msgstr "Linhas de royalty (de todos os contratos) em que este contato é o favorecido."
+
+#. module: liber_copyright_contracts_reports
+#. odoo-python
+#: code:addons/liber_copyright_contracts_reports/wizard/statement_wizard.py:0
+msgid "Royalty statement (%s) sent to %s."
+msgstr "Prestação de contas (%s) enviada para %s."
+
+#. module: liber_copyright_contracts_reports
+#. odoo-python
+#: code:addons/liber_copyright_contracts_reports/wizard/statement_wizard.py:0
+msgid "Royalty statement - %s - %s.pdf"
+msgstr "Prestação de contas - %s - %s.pdf"
+
+#. module: liber_copyright_contracts_reports
+#. odoo-python
+#: code:addons/liber_copyright_contracts_reports/wizard/statement_wizard.py:0
+msgid "Royalty statements"
+msgstr "Prestações de contas"
+
+#. module: liber_copyright_contracts_reports
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_reports.view_royalty_statement_wizard_form
+msgid "Send by Email"
+msgstr "Enviar por e-mail"
+
+#. module: liber_copyright_contracts_reports
+#. odoo-python
+#: code:addons/liber_copyright_contracts_reports/wizard/statement_wizard.py:0
+msgid "Set an email address first for: %s"
+msgstr "Defina primeiro um endereço de e-mail para: %s"
+
+#. module: liber_copyright_contracts_reports
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_reports.report_royalty_statement
+msgid "Situação"
+msgstr "Situação"
+
+#. module: liber_copyright_contracts_reports
+#. odoo-python
+#: code:addons/liber_copyright_contracts_reports/wizard/statement_wizard.py:0
+msgid "Statement sent to %s author(s)."
+msgstr "Prestação enviada para %s autor(es)."
+
+#. module: liber_copyright_contracts_reports
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_reports.view_royalty_statement_wizard_form
+msgid ""
+"The statement covers each author's open royalties since\n"
+"                    their last payment, matching their open payment bill."
+msgstr "A prestação cobre os direitos autorais em aberto de cada autor desde o seu último pagamento, correspondendo à sua fatura de pagamento em aberto."
+
+#. module: liber_copyright_contracts_reports
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_reports.report_royalty_statement
+msgid "Total"
+msgstr "Total"
+
+#. module: liber_copyright_contracts_reports
+#: model:ir.model.fields,help:liber_copyright_contracts_reports.field_res_partner__is_edlab_author
+#: model:ir.model.fields,help:liber_copyright_contracts_reports.field_res_users__is_edlab_author
+msgid ""
+"True when this contact is the beneficiary of at least one royalty line."
+msgstr "Verdadeiro quando este contato é o favorecido de pelo menos uma linha de royalty."
+
+#. module: liber_copyright_contracts_reports
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_reports.report_royalty_statement
+msgid "Valor"
+msgstr "Valor"
+
+#. module: liber_copyright_contracts_reports
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_reports.report_royalty_statement
+msgid "Valor base"
+msgstr "Valor base"
+
+#. module: liber_copyright_contracts_reports
+#: model:ir.model.fields,help:liber_copyright_contracts_reports.field_res_partner__edlab_irrf_percentage
+#: model:ir.model.fields,help:liber_copyright_contracts_reports.field_res_users__edlab_irrf_percentage
+msgid ""
+"Withholding income tax percentage deducted from the royalty statement total."
+" Leave 0 when no withholding applies."
+msgstr "Percentual de imposto de renda retido na fonte deduzido do total da prestação de contas. Deixe 0 quando não houver retenção."
+
+#. module: liber_copyright_contracts_reports
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_reports.report_royalty_statement
+msgid "adiantamentos"
+msgstr "adiantamentos"
+
+#. module: liber_copyright_contracts_reports
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_reports.report_royalty_statement
+msgid "beneficiário"
+msgstr "beneficiário"
+
+#. module: liber_copyright_contracts_reports
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_reports.report_royalty_statement
+msgid "dados bancários"
+msgstr "dados bancários"
+
+#. module: liber_copyright_contracts_reports
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_reports.report_royalty_statement
+msgid "direitos autorais"
+msgstr "direitos autorais"
+
+#. module: liber_copyright_contracts_reports
+#. odoo-python
+#: code:addons/liber_copyright_contracts_reports/models/res_partner.py:0
+msgid "in payment"
+msgstr "em pagamento"
+
+#. module: liber_copyright_contracts_reports
+#. odoo-python
+#: code:addons/liber_copyright_contracts_reports/models/res_partner.py:0
+msgid "open"
+msgstr "em aberto"
+
+#. module: liber_copyright_contracts_reports
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_reports.report_royalty_statement
+msgid "ordem de pagamento"
+msgstr "ordem de pagamento"
+
+#. module: liber_copyright_contracts_reports
+#. odoo-python
+#: code:addons/liber_copyright_contracts_reports/models/res_partner.py:0
+msgid "partially paid"
+msgstr "parcialmente pago"
+
+#. module: liber_copyright_contracts_reports
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_reports.report_royalty_statement
+msgid "resumo"
+msgstr "resumo"
+
+#. module: liber_copyright_contracts_reports
+#. odoo-python
+#: code:addons/liber_copyright_contracts_reports/models/res_partner.py:0
+msgid "since the beginning –%s"
+msgstr "desde o início –%s"
+
+#. module: liber_copyright_contracts_reports
+#. odoo-python
+#: code:addons/liber_copyright_contracts_reports/models/res_partner.py:0
+msgid "variable"
+msgstr "variável"
+
+#. module: liber_copyright_contracts_reports
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_reports.report_royalty_statement
+msgid "vendas especiais"
+msgstr "vendas especiais"

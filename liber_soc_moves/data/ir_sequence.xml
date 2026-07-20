@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <record id="seq_consignment_move" model="ir.sequence">
+        <field name="name">Consignment Return (CR)</field>
+        <field name="code">consignment.move</field>
+        <field name="prefix">CR/%(year)s/</field>
+        <field name="padding">5</field>
+        <field name="company_id" eval="False"/>
+    </record>
+
+    <!-- Consignment Pedido = a sale.order flagged is_consignment; it gets the
+         "C" code instead of the sale "S". Logistics move above keeps CM/. -->
+    <record id="seq_consignment_order" model="ir.sequence">
+        <field name="name">Consignment Order (Pedido)</field>
+        <field name="code">sale.order.consignment</field>
+        <field name="prefix">C</field>
+        <field name="padding">5</field>
+        <field name="company_id" eval="False"/>
+    </record>
+</odoo>

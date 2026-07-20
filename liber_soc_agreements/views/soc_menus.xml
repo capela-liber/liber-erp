@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="menu_consignment_root"
+              name="Consignment"
+              sequence="31"
+              groups="group_soc_user"/>
+
+    <!-- Between Reports (25) and Campaigns (40): the contract is not a daily
+         operation, it is set up once and read rarely. It was sitting first, in
+         front of the work. -->
+    <menuitem id="menu_consignment_agreements"
+              name="Agreements"
+              parent="menu_consignment_root"
+              action="action_consignment_agreement"
+              sequence="30"/>
+</odoo>

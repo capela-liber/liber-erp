@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Surface the consignment flag/agreement on the sale order form -->
+    <record id="view_order_form_consignment" model="ir.ui.view">
+        <field name="name">sale.order.form.consignment</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <field name="partner_id" position="after">
+                <field name="is_consignment" invisible="1"/>
+                <field name="consignment_type"
+                       invisible="not is_consignment"
+                       required="is_consignment"/>
+                <field name="consignment_agreement_id"
+                       invisible="not is_consignment"
+                       readonly="1"/>
+            </field>
+        </field>
+    </record>
+
+    <!-- Keep consignment Pedidos (C) OUT of the Sales app order/quotation lists.
+         AND-ed with each action's existing domain so we don't lose their filters. -->
+    <record id="sale.action_orders" model="ir.actions.act_window">
+        <field name="domain">[('is_consignment', '=', False)]</field>
+    </record>
+    <record id="sale.action_quotations" model="ir.actions.act_window">
+        <field name="domain">[('is_consignment', '=', False)]</field>
+    </record>
+    <record id="sale.action_quotations_with_onboarding" model="ir.actions.act_window">
+        <field name="domain">[('is_consignment', '=', False)]</field>
+    </record>
+    <record id="sale.action_quotations_salesteams" model="ir.actions.act_window">
+        <field name="domain">[('is_consignment', '=', False)]</field>
+    </record>
+    <record id="sale.action_orders_salesteams" model="ir.actions.act_window">
+        <field name="domain">['&amp;', ('state', 'not in', ('draft', 'sent', 'cancel')), ('is_consignment', '=', False)]</field>
+    </record>
+    <record id="sale.action_orders_to_invoice" model="ir.actions.act_window">
+        <field name="domain">['&amp;', ('invoice_status', '=', 'to invoice'), ('is_consignment', '=', False)]</field>
+    </record>
+    <record id="sale.action_orders_to_invoice_salesteams" model="ir.actions.act_window">
+        <field name="domain">['&amp;', ('invoice_status', '=', 'to invoice'), ('is_consignment', '=', False)]</field>
+    </record>
+    <record id="sale.action_orders_upselling" model="ir.actions.act_window">
+        <field name="domain">['&amp;', ('invoice_status', '=', 'upselling'), ('is_consignment', '=', False)]</field>
+    </record>
+
+    <!-- Consignment Pedidos: same sale.order model/views, filtered to consignment -->
+    <record id="action_consignment_sale_order" model="ir.actions.act_window">
+        <field name="name">Orders</field>
+        <field name="res_model">sale.order</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('is_consignment', '=', True)]</field>
+        <field name="context">{'default_is_consignment': True, 'default_consignment_type': 'opening'}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Create your first consignment order</p>
+            <p>The Order (C) is a commercial order — same flow as a sale, but
+               it is not a sale: it stays out of Sales reports and only becomes
+               revenue at Settlement.</p>
+        </field>
+    </record>
+
+</odoo>

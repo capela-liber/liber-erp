@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- O Score é armazenado (para poder ser ordenado) mas depende do TEMPO:
+         ele pondera por recência, e a média da casa muda quando outras pessoas
+         são avaliadas. Nada disso toca os registros de um contato específico,
+         então sem este cron o campo envelheceria calado — quem esfriou
+         continuaria aparecendo quente até receber outro livro, que é
+         exatamente o que não vai acontecer. -->
+    <record id="cron_bonus_rating" model="ir.cron">
+        <field name="name">Bonificações: recalcular Score dos contatos</field>
+        <field name="model_id" ref="base.model_res_partner"/>
+        <field name="state">code</field>
+        <field name="code">model._cron_recompute_bonus_rating()</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="active" eval="True"/>
+    </record>
+</odoo>

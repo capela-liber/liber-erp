@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="res_config_settings_view_form_soc_fiscal" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.soc.fiscal.br</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="liber_soc_settlement.res_config_settings_view_form_soc"/>
+        <field name="arch" type="xml">
+            <xpath expr="//app[@name='liber_soc_agreements']" position="inside">
+                <block title="Consignment Accounting" name="soc_fiscal_accounting">
+                    <setting id="soc_consignment_stock_account_setting"
+                             string="Consignment stock account"
+                             help="Asset account (e.g. 115000) that holds the value of goods consigned at customers. Shelves re-qualify their value into it instead of Inventory.">
+                        <div class="content-group">
+                            <div class="row">
+                                <field name="consignment_stock_account_id"
+                                       class="col-lg-6"
+                                       options="{'no_create': True}"/>
+                            </div>
+                            <div class="mt8">
+                                <button name="action_wire_consignment_shelves"
+                                        type="object" string="Wire consignment shelves"
+                                        class="btn-link" icon="fa-magic"/>
+                                <span class="text-muted ms-2">Backfill the account on existing shelves.</span>
+                            </div>
+                        </div>
+                    </setting>
+                </block>
+                <block title="Consignment Fiscal (CFOP / Fiscal Position)" name="soc_fiscal_cfop">
+                    <setting string="Shipment (Order C)"
+                             help="One fiscal position (same inside/outside the state); CFOP 5917 internal / 6917 interstate.">
+                        <field name="consignment_shipment_fiscal_position_id" options="{'no_create': True}"/>
+                        <field name="consignment_shipment_cfop_in_id"/>
+                        <field name="consignment_shipment_cfop_out_id"/>
+                    </setting>
+                    <setting string="Settlement (Sale S)"
+                             help="Sale generated at settlement; CFOP 5114 internal / 6114 interstate.">
+                        <field name="consignment_sale_fiscal_position_id" options="{'no_create': True}"/>
+                        <field name="consignment_sale_cfop_in_id"/>
+                        <field name="consignment_sale_cfop_out_id"/>
+                    </setting>
+                    <setting string="Return"
+                             help="Consignment return; CFOP 5918 internal / 6918 interstate.">
+                        <field name="consignment_return_fiscal_position_id" options="{'no_create': True}"/>
+                        <field name="consignment_return_cfop_in_id"/>
+                        <field name="consignment_return_cfop_out_id"/>
+                    </setting>
+                </block>
+                <block title="Consignment Warehouse Operations" name="soc_operation_types">
+                    <setting string="Operation types"
+                             help="Consignment has its own warehouse operation types, separate from sales (so the warehouse can prioritise sales). Auto-created on first use: COM/ (shipment) and RET/ (return).">
+                        <field name="consignment_shipment_operation_type_id" options="{'no_create': True}"/>
+                        <field name="consignment_return_operation_type_id" options="{'no_create': True}"/>
+                    </setting>
+                </block>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

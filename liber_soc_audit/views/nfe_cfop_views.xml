@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_nfe_cfop_effect_list" model="ir.ui.view">
+        <field name="name">nfe.cfop.effect.list</field>
+        <field name="model">nfe.cfop</field>
+        <field name="arch" type="xml">
+            <list editable="bottom">
+                <field name="code"/>
+                <field name="name"/>
+                <field name="consignment_effect"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_nfe_cfop_effect_search" model="ir.ui.view">
+        <field name="name">nfe.cfop.effect.search</field>
+        <field name="model">nfe.cfop</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="code"/>
+                <field name="name"/>
+                <filter string="Consignment CFOPs" name="f_consignment"
+                        domain="[('consignment_effect', 'in', ('ship', 'sale', 'return'))]"/>
+                <filter string="Unmapped" name="f_unmapped"
+                        domain="[('consignment_effect', '=', False)]"/>
+                <group>
+                    <filter string="Effect" name="g_effect"
+                            context="{'group_by': 'consignment_effect'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_nfe_cfop_effect" model="ir.actions.act_window">
+        <field name="name">CFOP Effects</field>
+        <field name="res_model">nfe.cfop</field>
+        <field name="view_mode">list</field>
+        <field name="search_view_id" ref="view_nfe_cfop_effect_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Classify CFOPs for the consignment audit
+            </p>
+            <p>
+                Each CFOP tells the audit how a fiscal item moves the shelf:
+                shipment (+), effective sale (−), return (−) or ignore. Customers
+                often use the wrong CFOP, so this mapping is data you can edit.
+            </p>
+        </field>
+    </record>
+
+</odoo>

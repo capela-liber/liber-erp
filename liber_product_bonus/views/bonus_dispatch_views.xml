@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_bonus_dispatch_list" model="ir.ui.view">
+        <field name="name">product.bonus.dispatch.list</field>
+        <field name="model">product.bonus.dispatch</field>
+        <field name="arch" type="xml">
+            <list decoration-muted="state == 'cancelled'">
+                <field name="name"/>
+                <field name="date"/>
+                <field name="product_id"/>
+                <field name="reason_id"/>
+                <field name="bucket" optional="show"/>
+                <field name="list_ids" widget="many2many_tags" optional="show"/>
+                <field name="campaign"/>
+                <field name="bonus_count" string="Envios" class="text-center"/>
+                <field name="outcome_rate" string="Avaliação"/>
+                <field name="outcome_summary" optional="show"/>
+                <field name="total_cost" widget="monetary" sum="Custo"/>
+                <field name="currency_id" column_invisible="1"/>
+                <field name="user_id" optional="hide"/>
+                <field name="state" widget="badge"
+                       decoration-success="state == 'sent'"
+                       decoration-info="state == 'approved'"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_bonus_dispatch_form" model="ir.ui.view">
+        <field name="name">product.bonus.dispatch.form</field>
+        <field name="model">product.bonus.dispatch</field>
+        <field name="arch" type="xml">
+            <!-- A triagem. Tela cheia, nao modal (U1): 128 linhas nao cabem num
+                 modal confortavel. -->
+            <form string="Enviar bonificação">
+                <header>
+                    <button name="action_check" type="object" string="Conferir"
+                            class="btn-primary" invisible="state != 'draft'"/>
+                    <button name="action_approve" type="object"
+                            string="Aprovar" class="btn-primary"
+                            invisible="state != 'draft' or not checked"/>
+                    <button name="action_send_all" type="object"
+                            string="Enviar tudo" class="btn-primary"
+                            invisible="state != 'approved'"/>
+                    <button name="action_save_as_list" type="object"
+                            string="Salvar seleção como lista"
+                            invisible="state != 'draft'"/>
+                    <button name="action_cancel" type="object" string="Cancelar"
+                            invisible="state in ('cancelled', 'sent')"/>
+                    <button name="action_reset" type="object" string="Voltar à triagem"
+                            invisible="state != 'cancelled'"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,approved,sent"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_bonuses" type="object"
+                                class="oe_stat_button" icon="fa-envelope"
+                                invisible="bonus_count == 0">
+                            <field name="bonus_count" widget="statinfo" string="Bonificações"/>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <h1><field name="name" readonly="1"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="product_id" options="{'no_create': True}"
+                                   readonly="state != 'draft'"/>
+                            <field name="quantity" readonly="state != 'draft'"/>
+                            <field name="campaign" placeholder="Lançamento, feira, ação..."/>
+                            <field name="print_run" readonly="1"/>
+                        </group>
+                        <group>
+                            <field name="reason_id" options="{'no_create': True}"
+                                   readonly="state != 'draft'"/>
+                            <field name="bucket" readonly="1"/>
+                            <field name="date"/>
+                            <field name="user_id"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                    </group>
+
+                    <!-- A selecao e a parte crucial. As quatro fontes SOMAM:
+                         nao sao um radio. "A lista de imprensa mais os
+                         jornalistas de SP que nao estao nela mais o Fulano que
+                         pediu" e um pedido normal. -->
+                    <group string="De onde vem esta gente" invisible="state != 'draft'"
+                           col="2">
+                        <field name="list_ids" string="Listas"
+                               widget="many2many_tags" options="{'no_create': True}"
+                               placeholder="Imprensa literária, Influencers..."/>
+                        <field name="source_dispatch_ids" string="BO"
+                               widget="many2many_tags" options="{'no_create': True}"
+                               placeholder="Quem recebeu o livro anterior"/>
+                        <field name="category_id" string="Etiquetas"
+                               widget="many2many_tags"
+                               placeholder="jornalista, influencer..."/>
+                        <field name="manual_partner_ids" string="Contatos"
+                               widget="many2many_tags"
+                               placeholder="O autor pediu mais um"/>
+                    </group>
+                    <!-- Mostrar a conta: quatro fontes que somam so ficam
+                         claras se der para ver somando, e o dedup e trabalho
+                         invisivel. -->
+                    <field name="sources_html" nolabel="1" readonly="1"/>
+
+                    <!-- O FREIO. Aparece enquanto se escolhe, nunca so ao
+                         salvar: meta que so bloqueia no fim e punicao, e faz a
+                         pessoa parar de mandar livro. -->
+                    <field name="counter_html" nolabel="1" readonly="1"/>
+
+                    <div class="mt-2 mb-2" invisible="state != 'draft'">
+                        <button name="action_select_all" type="object"
+                                string="Marcar todos" class="btn-link"/>
+                        <button name="action_select_none" type="object"
+                                string="Desmarcar" class="btn-link"/>
+                        <button name="action_reload" type="object"
+                                string="Recarregar" class="btn-link"/>
+                    </div>
+
+                    <field name="line_ids" nolabel="1" readonly="state != 'draft'">
+                        <list editable="bottom" create="false" delete="false"
+                              decoration-warning="has_title">
+                            <field name="selected" widget="boolean_toggle" string=" "
+                                   width="60px" class="text-center"/>
+                            <field name="partner_id"/>
+                            <field name="partner_type" string="Tipo"
+                                   width="110px" optional="show" readonly="1"/>
+                            <!-- Quem é a pessoa, na linha da decisão: "vai ou
+                                 não vai?" fica respondível sem abrir cadastro.
+                                 Largura fixa pelo mesmo motivo da Origem. -->
+                            <field name="partner_bio" string="Notas"
+                                   width="240px" optional="show" readonly="1"/>
+                            <!-- A coluna que estava engolindo a tabela: ela
+                                 carrega nomes de lista concatenados e não tem
+                                 largura máxima, então espremia as vizinhas a
+                                 ponto de "Duplicado" virar "Dupl…". Largura
+                                 fixa aqui é o único jeito — encurtar o rótulo
+                                 não resolvia porque o rótulo nunca foi o
+                                 problema. -->
+                            <field name="origin" string="Origem"
+                                   width="180px" optional="show"/>
+                            <!-- As colunas SAO a decisao: cada uma responde um
+                                 "vai ou nao vai?" em menos de um segundo.
+                                 Do Duplicado para a direita é tudo dado curto
+                                 (checkbox, número, data): largura no osso para
+                                 o Score não sair da tela — foi o que o print
+                                 dele mostrou. -->
+                            <field name="has_title" string="Duplicado" width="80px" class="text-center"/>
+                            <field name="received_count" string="Envios" width="70px"
+                                   class="text-center"/>
+                            <!-- A nota primeiro: é ela que se lê. A fração fica
+                                 do lado como o dado cru que a sustenta. -->
+                            <field name="rating_html" string="Score" widget="html"
+                                   width="70px" class="text-center"
+                                   decoration-success="rating_band in ('warm', 'steady')"
+                                   decoration-warning="rating_band == 'fading'"
+                                   decoration-danger="rating_band == 'cold'"
+                                   decoration-muted="rating_band in ('new', 'testing')"/>
+                            <field name="rating_band" column_invisible="1"/>
+                            <field name="last_date" string="Último" width="90px"/>
+                            <field name="address_ok" string="End." width="50px" class="text-center"/>
+                        </list>
+                    </field>
+
+                    <group string="Avaliação da campanha" invisible="state != 'sent'"
+                           col="2">
+                        <field name="outcome_rate" readonly="1"/>
+                        <field name="outcome_summary" readonly="1"/>
+                    </group>
+
+                    <field name="checked" invisible="1"/>
+                    <field name="fits" invisible="1"/>
+
+                    <div invisible="not checked" class="mt-3 p-3"
+                         style="border:1px solid #ddd;border-radius:6px;background:#fbfbfb;">
+                        <h4>Conferência</h4>
+                        <field name="check_html" nolabel="1" readonly="1"/>
+                    </div>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_bonus_dispatch" model="ir.actions.act_window">
+        <field name="name">Disparos</field>
+        <field name="res_model">product.bonus.dispatch</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Dispare uma bonificação.</p>
+            <p>O BO é o disparo: uma decisão de marketing. Ele gera uma ficha B
+               para cada pessoa — porque cada uma tem endereço, pacote e nota
+               próprios.</p>
+        </field>
+    </record>
+
+</odoo>

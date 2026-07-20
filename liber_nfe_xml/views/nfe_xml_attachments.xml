@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="ir_action_download_attachment_xml" model="ir.actions.server">
+        <field name="name">Download NFe XMLs</field>
+        <field name="type">ir.actions.server</field>
+        <field name="model_id" ref="liber_nfe_xml.model_nfe_xml_panel"/>
+        <field name="state">code</field>
+        <field name="code">
+            if records:
+            action = records.action_download_nfe_xml_attachment()
+        </field>
+        <field name="binding_model_id" ref="liber_nfe_xml.model_nfe_xml_panel"/>
+    </record>
+    <record id="ir_action_download_danfe_attachment_xml" model="ir.actions.server">
+        <field name="name">Download Danfe</field>
+        <field name="type">ir.actions.server</field>
+        <field name="model_id" ref="liber_nfe_xml.model_nfe_xml_panel"/>
+        <field name="state">code</field>
+        <field name="code">
+            if records:
+            action = records.action_download_nfe_danfe_attachment()
+        </field>
+        <field name="binding_model_id" ref="liber_nfe_xml.model_nfe_xml_panel"/>
+    </record>
+    <!-- LAB FORK: the SOC Leads (crm.lead) smart-button view was removed
+         with the crm dependency. -->
+</odoo>

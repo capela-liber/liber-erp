@@ -1,0 +1,1755 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* liber_nfe_xml
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0-20260630\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-07-19 18:25+0000\n"
+"PO-Revision-Date: 2026-07-19 18:25+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: liber_nfe_xml
+#. odoo-python
+#: code:addons/liber_nfe_xml/models/account_move.py:0
+msgid ""
+"%(dup)s already uses the NFe access key %(key)s. Two non-cancelled moves of "
+"the same type cannot come from the same NFe."
+msgstr ""
+
+#. module: liber_nfe_xml
+#. odoo-python
+#: code:addons/liber_nfe_xml/models/nfe_xml.py:0
+msgid ""
+"%(type)s has been created from this XML file : <a href=# data-oe-"
+"model=account.move data-oe-id=%(id)d>%(name)s</a>"
+msgstr ""
+
+#. module: liber_nfe_xml
+#: model:ir.actions.report,print_report_name:liber_nfe_xml.report_nfe_panel
+msgid "'%s - NFe-XML - %s' % (object.id, object.partner_id.name)"
+msgstr ""
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields,help:liber_nfe_xml.field_nfe_xml_cancel_event__tp_evento
+msgid "110111 Cancelamento / 110112 Cancelamento por Substituicao."
+msgstr ""
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields,help:liber_nfe_xml.field_nfe_xml_panel__key
+msgid ""
+"44-digit NFe access key (chave de acesso). This is the business key that "
+"links the XML to the invoices/bills created from it."
+msgstr ""
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields,help:liber_nfe_xml.field_nfe_xml_cancel_event__key
+msgid "44-digit access key (chNFe) of the cancelled NFe."
+msgstr "Chave de acesso (chNFe) de 44 dígitos da NFe cancelada."
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields,help:liber_nfe_xml.field_account_bank_statement_line__nfe_key
+#: model:ir.model.fields,help:liber_nfe_xml.field_account_move__nfe_key
+msgid ""
+"44-digit access key (chave de acesso) of the NFe this invoice/bill was "
+"created from. This key - not the database id - is what links the move to its"
+" NFe XML panel record."
+msgstr ""
+
+#. module: liber_nfe_xml
+#: model_terms:ir.ui.view,arch_db:liber_nfe_xml.nfe_xml_items_kanban_views
+msgid "<strong><span>Net price: </span></strong>"
+msgstr "<strong><span>Preço líquido: </span></strong>"
+
+#. module: liber_nfe_xml
+#: model_terms:ir.ui.view,arch_db:liber_nfe_xml.nfe_xml_items_kanban_views
+msgid "<strong><span>Total price: </span></strong>"
+msgstr "<strong><span>Preço total: </span></strong>"
+
+#. module: liber_nfe_xml
+#: model_terms:ir.ui.view,arch_db:liber_nfe_xml.nfe_xml_items_kanban_views
+msgid "<strong>Partner: </strong>"
+msgstr "<strong>Parceiro: </strong>"
+
+#. module: liber_nfe_xml
+#: model_terms:ir.ui.view,arch_db:liber_nfe_xml.nfe_xml_items_kanban_views
+msgid "<strong>Product name: </strong>"
+msgstr "<strong>Nome do produto: </strong>"
+
+#. module: liber_nfe_xml
+#: model_terms:ir.ui.view,arch_db:liber_nfe_xml.nfe_xml_items_kanban_views
+msgid "<strong>Xml Id: </strong>"
+msgstr "<strong>XML: </strong>"
+
+#. module: liber_nfe_xml
+#: model_terms:ir.ui.view,arch_db:liber_nfe_xml.nfe_xml_items_kanban_views
+msgid "<strong>xml date: </strong>"
+msgstr "<strong>Data do XML: </strong>"
+
+#. module: liber_nfe_xml
+#. odoo-python
+#: code:addons/liber_nfe_xml/models/nfe_xml.py:0
+msgid ""
+"A bill for this NFe key already exists: <a href=# data-oe-model=account.move"
+" data-oe-id=%d>%s</a>"
+msgstr ""
+
+#. module: liber_nfe_xml
+#: model:ir.model.constraint,message:liber_nfe_xml.constraint_nfe_xml_cancel_event_key_uniq
+msgid "A cancellation event for this NFe key already exists!"
+msgstr "Já existe um evento de cancelamento para esta chave de NFe!"
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_res_company__sefaz_cert_pfx
+msgid "A1 Certificate (.pfx)"
+msgstr "Certificado A1 (.pfx)"
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields,help:liber_nfe_xml.field_res_company__sefaz_cert_pfx
+msgid ""
+"A1 digital certificate of this company's CNPJ, used for the mutual-TLS "
+"authentication against SEFAZ."
+msgstr ""
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_nfe_xml_panel__access_warning
+msgid "Access warning"
+msgstr ""
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_nfe_xml_panel__message_needaction
+msgid "Action Needed"
+msgstr ""
+
+#. module: liber_nfe_xml
+#: model_terms:ir.ui.view,arch_db:liber_nfe_xml.view_soc_xml_panel_search
+msgid "Active NFe"
+msgstr "NFe ativa"
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_nfe_xml_panel__activity_ids
+msgid "Activities"
+msgstr ""
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_nfe_xml_panel__activity_exception_decoration
+msgid "Activity Exception Decoration"
+msgstr ""
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_nfe_xml_panel__activity_state
+msgid "Activity State"
+msgstr ""
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_nfe_xml_panel__activity_type_icon
+msgid "Activity Type Icon"
+msgstr ""
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields,help:liber_nfe_xml.field_nfe_xml_panel__source
+msgid "Adapter that ingested this XML."
+msgstr ""
+
+#. module: liber_nfe_xml
+#: model:ir.model.constraint,message:liber_nfe_xml.constraint_nfe_xml_panel_nfe_key_uniq
+msgid "An NFe XML with this access key already exists!"
+msgstr "Já existe um NFe XML com esta chave de acesso!"
+
+#. module: liber_nfe_xml
+#. odoo-python
+#: code:addons/liber_nfe_xml/models/nfe_xml.py:0
+msgid ""
+"An invoice for this NFe key already exists: <a href=# data-oe-"
+"model=account.move data-oe-id=%d>%s</a>"
+msgstr ""
+
+#. module: liber_nfe_xml
+#: model:ir.actions.act_url,name:liber_nfe_xml.action_nfe_xml_painel
+#: model:ir.ui.menu,name:liber_nfe_xml.menu_nfe_xml_painel_analitico
+msgid "Analytics Panel (XML)"
+msgstr "Painel analítico (XML)"
+
+#. module: liber_nfe_xml
+#: model_terms:ir.ui.view,arch_db:liber_nfe_xml.view_soc_xml_panel_form
+msgid "Attach XML File"
+msgstr "Anexar arquivo XML"
+
+#. module: liber_nfe_xml
+#: model_terms:ir.ui.view,arch_db:liber_nfe_xml.view_soc_xml_panel_form
+msgid "Attach XML Items"
+msgstr "Itens do XML"
+
+#. module: liber_nfe_xml
+#: model:ir.model,name:liber_nfe_xml.model_ir_attachment
+msgid "Attachment"
+msgstr "Anexo"
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_nfe_xml_panel__message_attachment_count
+msgid "Attachment Count"
+msgstr "Número de anexos"
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields.selection,name:liber_nfe_xml.selection__nfe_xml_panel__source__attachment
+msgid "Attachment Cron"
+msgstr "Cron de anexos"
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_nfe_xml_panel__related_attachment_id
+msgid "Attachment ID"
+msgstr "ID do anexo"
+
+#. module: liber_nfe_xml
+#. odoo-python
+#: code:addons/liber_nfe_xml/models/soc_xml_attachment.py:0
+msgid ""
+"Attachment of XML File : <a href=# data-oe-model=ir.attachment data-oe-"
+"id=%d>%s</a>"
+msgstr ""
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields.selection,name:liber_nfe_xml.selection__nfe_cfop__document_kind__event_return
+msgid "Back from an event"
+msgstr "Volta de evento"
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_nfe_xml_items__ks_product_barcode
+msgid "Barcode"
+msgstr "Código de barras"
+
+#. module: liber_nfe_xml
+#. odoo-python
+#: code:addons/liber_nfe_xml/models/nfe_xml.py:0
+msgid "Bill"
+msgstr "Fatura de fornecedor"
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_nfe_xml_panel__invoice_id
+msgid "Bill/Invoice"
+msgstr "Fatura"
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields.selection,name:liber_nfe_xml.selection__nfe_cfop__document_kind__bonus
+msgid "Bonus / gift (leaves stock, never revenue)"
+msgstr "Bonificação / brinde (sai do estoque, nunca receita)"
+
+#. module: liber_nfe_xml
+#: model:ir.model,name:liber_nfe_xml.model_nfe_cfop
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_nfe_xml_items__ks_cfop_id
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_nfe_xml_panel__cfop_id
+#: model_terms:ir.ui.view,arch_db:liber_nfe_xml.view_nfe_items_search
+#: model_terms:ir.ui.view,arch_db:liber_nfe_xml.view_soc_xml_panel_search
+msgid "CFOP"
+msgstr ""
+
+#. module: liber_nfe_xml
+#: model_terms:ir.ui.view,arch_db:liber_nfe_xml.view_soc_xml_panel_search
+msgid "CFOP Set"
+msgstr "Por CFOP"
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_nfe_sefaz_sweep__n_calls
+msgid "Calls"
+msgstr "Chamadas"
+
+#. module: liber_nfe_xml
+#: model_terms:ir.ui.view,arch_db:liber_nfe_xml.view_soc_xml_panel_form
+msgid "Cancellation"
+msgstr "Cancelamento"
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_nfe_xml_panel__cancel_date
+msgid "Cancellation Date"
+msgstr "Data do cancelamento"
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_nfe_xml_panel__cancel_event_ids
+msgid "Cancellation Events"
+msgstr "Eventos de cancelamento"
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_nfe_xml_panel__cancel_protocol
+msgid "Cancellation Protocol"
+msgstr "Protocolo de cancelamento"
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_nfe_xml_panel__cancel_reason
+msgid "Cancellation Reason"
+msgstr "Motivo do cancelamento"
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_nfe_xml_cancel_event__file
+#: model_terms:ir.ui.view,arch_db:liber_nfe_xml.view_nfe_xml_cancel_event_form
+msgid "Cancellation XML"
+msgstr "XML de cancelamento"
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields,help:liber_nfe_xml.field_nfe_sefaz_sweep__n_events
+msgid "Cancellation events registered (110111/110112)."
+msgstr ""
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_nfe_sefaz_sweep__n_events
+msgid "Cancellations"
+msgstr "Cancelamentos"
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_nfe_xml_panel__is_cancelled
+#: model:ir.model.fields.selection,name:liber_nfe_xml.selection__nfe_xml_panel__status__cancelled
+#: model_terms:ir.ui.view,arch_db:liber_nfe_xml.view_soc_xml_panel_form
+#: model_terms:ir.ui.view,arch_db:liber_nfe_xml.view_soc_xml_panel_search
+msgid "Cancelled"
+msgstr "Cancelada"
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_nfe_xml_cancel_event__nfe_id
+#: model_terms:ir.ui.view,arch_db:liber_nfe_xml.view_soc_xml_panel_search
+msgid "Cancelled NFe"
+msgstr "NFe cancelada"
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_res_company__sefaz_cert_pfx_name
+msgid "Certificate File Name"
+msgstr "Nome do arquivo do certificado"
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_res_company__sefaz_cert_password
+msgid "Certificate Password"
+msgstr "Senha do certificado"
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_nfe_xml_panel__partner_id
+#: model_terms:ir.ui.view,arch_db:liber_nfe_xml.view_soc_xml_panel_search
+#: model_terms:ir.ui.view,arch_db:liber_nfe_xml.view_soc_xml_panel_tree
+msgid "Client"
+msgstr "Cliente"
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_nfe_cfop__code
+msgid "Code"
+msgstr "Código"
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_nfe_xml_tags__color
+msgid "Color"
+msgstr "Cor"
+
+#. module: liber_nfe_xml
+#: model:ir.model,name:liber_nfe_xml.model_res_company
+msgid "Companies"
+msgstr "Empresas"
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_import_xml_file__company_id
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_nfe_sefaz_sweep__company_id
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_nfe_xml_cancel_event__company_id
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_nfe_xml_items__company_id
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_nfe_xml_panel__company_id
+#: model_terms:ir.ui.view,arch_db:liber_nfe_xml.view_nfe_items_search
+#: model_terms:ir.ui.view,arch_db:liber_nfe_xml.view_nfe_xml_cancel_event_search
+#: model_terms:ir.ui.view,arch_db:liber_nfe_xml.view_soc_xml_panel_search
+msgid "Company"
+msgstr "Empresa"
+
+#. module: liber_nfe_xml
+#: model_terms:ir.ui.view,arch_db:liber_nfe_xml.view_soc_xml_panel_search
+msgid "Company Set"
+msgstr "Por empresa"
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_nfe_cfop__consignment_effect
+msgid "Consignment Effect"
+msgstr "Efeito na consignação"
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields.selection,name:liber_nfe_xml.selection__nfe_cfop__document_kind__consignment_return
+msgid "Consignment return"
+msgstr "Devolução de consignação"
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields.selection,name:liber_nfe_xml.selection__nfe_cfop__document_kind__settlement
+msgid "Consignment settlement (Acerto)"
+msgstr "Acerto de consignação"
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields.selection,name:liber_nfe_xml.selection__nfe_cfop__document_kind__consignment
+msgid "Consignment shipment (Pedido C)"
+msgstr "Remessa de consignação (Pedido C)"
+
+#. module: liber_nfe_xml
+#: model:ir.model,name:liber_nfe_xml.model_res_partner
+msgid "Contact"
+msgstr "Contato"
+
+#. module: liber_nfe_xml
+#: model:ir.actions.server,name:liber_nfe_xml.action_create_bill
+msgid "Create Bill"
+msgstr "Criar fatura de fornecedor"
+
+#. module: liber_nfe_xml
+#. odoo-python
+#: code:addons/liber_nfe_xml/models/nfe_xml.py:0
+#: model:ir.actions.server,name:liber_nfe_xml.action_create_invoice
+msgid "Create Invoice"
+msgstr "Criar fatura de cliente"
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_import_xml_file__create_uid
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_nfe_cfop__create_uid
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_nfe_sefaz_sweep__create_uid
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_nfe_xml_cancel_event__create_uid
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_nfe_xml_items__create_uid
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_nfe_xml_panel__create_uid
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_nfe_xml_tags__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: liber_nfe_xml
+#. odoo-python
+#: code:addons/liber_nfe_xml/models/nfe_xml.py:0
+msgid "Created from NFe XML file"
+msgstr "Criado a partir do arquivo NFe XML"
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_import_xml_file__create_date
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_nfe_cfop__create_date
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_nfe_sefaz_sweep__create_date
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_nfe_xml_cancel_event__create_date
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_nfe_xml_items__create_date
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_nfe_xml_panel__create_date
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_nfe_xml_tags__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: liber_nfe_xml
+#: model_terms:ir.ui.view,arch_db:liber_nfe_xml.view_attachment_search_soc_inherit
+msgid "Cron Status"
+msgstr "Situação do cron"
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_nfe_xml_panel__current_company_id
+msgid "Current Company"
+msgstr "Empresa atual"
+
+#. module: liber_nfe_xml
+#: model_terms:ir.ui.view,arch_db:liber_nfe_xml.view_soc_xml_panel_search
+msgid "Customer"
+msgstr "Cliente"
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields,help:liber_nfe_xml.field_nfe_xml_panel__access_url
+msgid "Customer Portal URL"
+msgstr ""
+
+#. module: liber_nfe_xml
+#: model_terms:ir.ui.view,arch_db:liber_nfe_xml.view_soc_xml_panel_search
+msgid "Customer Set"
+msgstr "Por cliente"
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_account_bank_statement_line__nfe_danfe_no
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_account_move__nfe_danfe_no
+msgid "DANFE No."
+msgstr "Nº da DANFE"
+
+#. module: liber_nfe_xml
+#: model_terms:ir.ui.view,arch_db:liber_nfe_xml.view_soc_xml_panel_form
+msgid "Dados Fiscais (Emitente / Destinatário)"
+msgstr ""
+
+#. module: liber_nfe_xml
+#: model_terms:ir.ui.view,arch_db:liber_nfe_xml.view_soc_xml_panel_search
+msgid "Danfe"
+msgstr "DANFE"
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_nfe_xml_panel__danfe_no
+msgid "Danfe No."
+msgstr "Nº da DANFE"
+
+#. module: liber_nfe_xml
+#: model_terms:ir.ui.view,arch_db:liber_nfe_xml.view_soc_xml_panel_search
+msgid "Danfe Set"
+msgstr "Por DANFE"
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_nfe_xml_panel__danfe_value
+msgid "Danfe Value"
+msgstr "Valor da DANFE"
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_res_company__nfe_xml_partner_id
+msgid "Default Customer from Model 65"
+msgstr "Cliente padrão do modelo 65"
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_nfe_cfop__name
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_nfe_xml_cancel_event__desc_evento
+msgid "Description"
+msgstr "Descrição"
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_nfe_xml_panel__nfe_direction
+#: model_terms:ir.ui.view,arch_db:liber_nfe_xml.view_soc_xml_panel_search
+msgid "Direction"
+msgstr "Direção"
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_nfe_xml_items__discount_item
+msgid "Discount"
+msgstr "Desconto"
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_account_move__display_name
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_import_xml_file__display_name
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_ir_actions_report__display_name
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_ir_attachment__display_name
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_nfe_cfop__display_name
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_nfe_sefaz_sweep__display_name
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_nfe_xml_cancel_event__display_name
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_nfe_xml_items__display_name
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_nfe_xml_panel__display_name
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_nfe_xml_tags__display_name
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_res_company__display_name
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_res_partner__display_name
+msgid "Display Name"
+msgstr "Nome exibido"
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_nfe_cfop__document_kind
+msgid "Document"
+msgstr "Documento"
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_nfe_sefaz_sweep__n_docs
+msgid "Documents"
+msgstr "Documentos"
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields.selection,name:liber_nfe_xml.selection__nfe_sefaz_sweep__status__done
+msgid "Done"
+msgstr "Concluída"
+
+#. module: liber_nfe_xml
+#: model:ir.actions.server,name:liber_nfe_xml.ir_action_download_danfe_attachment_xml
+msgid "Download Danfe"
+msgstr "Baixar DANFE"
+
+#. module: liber_nfe_xml
+#: model:ir.actions.server,name:liber_nfe_xml.ir_action_download_attachment_xml
+msgid "Download NFe XMLs"
+msgstr "Baixar XMLs de NFe"
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields.selection,name:liber_nfe_xml.selection__ir_attachment__status__draft
+msgid "Draft"
+msgstr "Rascunho"
+
+#. module: liber_nfe_xml
+#: model_terms:ir.ui.view,arch_db:liber_nfe_xml.view_nfe_items_search
+msgid "Due Date"
+msgstr "Vencimento"
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_nfe_xml_panel__file_excel_name
+msgid "EXCEL File Name"
+msgstr "Nome do arquivo Excel"
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields.selection,name:liber_nfe_xml.selection__nfe_cfop__consignment_effect__sale
+msgid "Effective sale (- shelf)"
+msgstr "Venda efetiva (- estante)"
+
+#. module: liber_nfe_xml
+#: model_terms:ir.actions.act_window,help:liber_nfe_xml.action_nfe_sefaz_sweep
+msgid ""
+"Enable \"SEFAZ DFe Sync\" and load the A1 certificate on each\n"
+"               company, then use \"Sync Now\" (or wait for the daily cron).\n"
+"               Downloaded NFes land in the regular NFe XML panel; this log\n"
+"               only shows what each sweep brought."
+msgstr ""
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields.selection,name:liber_nfe_xml.selection__nfe_sefaz_sweep__status__error
+#: model:ir.model.fields.selection,name:liber_nfe_xml.selection__nfe_xml_panel__status__error
+msgid "Error"
+msgstr "Erro"
+
+#. module: liber_nfe_xml
+#. odoo-python
+#: code:addons/liber_nfe_xml/wizard/import_xml_file.py:0
+msgid "Error importing XML file."
+msgstr "Erro ao importar o arquivo XML."
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_nfe_xml_cancel_event__event_date
+#: model_terms:ir.ui.view,arch_db:liber_nfe_xml.view_nfe_xml_cancel_event_search
+msgid "Event Date"
+msgstr "Data do evento"
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_nfe_xml_cancel_event__tp_evento
+msgid "Event Type"
+msgstr "Tipo de evento"
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields,help:liber_nfe_xml.field_nfe_xml_panel__move_ids
+msgid "Every invoice or bill linked to this XML through the NFe access key."
+msgstr ""
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_nfe_xml_panel__file_excel
+msgid "Excel File"
+msgstr "Arquivo Excel"
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields.selection,name:liber_nfe_xml.selection__nfe_xml_panel__nfe_direction__external
+msgid "External"
+msgstr "Externa"
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields.selection,name:liber_nfe_xml.selection__nfe_xml_panel__xml_type__external
+msgid "External Type"
+msgstr "Tipo externo"
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_import_xml_file__file
+msgid "File"
+msgstr "Arquivo"
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_import_xml_file__file_name
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_nfe_xml_cancel_event__file_name
+msgid "File Name"
+msgstr "Nome do arquivo"
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_nfe_xml_panel__message_follower_ids
+msgid "Followers"
+msgstr ""
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_nfe_xml_panel__message_partner_ids
+msgid "Followers (Partners)"
+msgstr ""
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields,help:liber_nfe_xml.field_nfe_xml_panel__activity_type_icon
+msgid "Font awesome icon e.g. fa-tasks"
+msgstr ""
+
+#. module: liber_nfe_xml
+#: model_terms:ir.ui.view,arch_db:liber_nfe_xml.view_account_move_filter_nfe_xml
+msgid "From NFe XML"
+msgstr "Do NFe XML"
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields,help:liber_nfe_xml.field_nfe_sefaz_sweep__n_nfe
+msgid "Full NFe XMLs that became new NFe XML panel records."
+msgstr ""
+
+#. module: liber_nfe_xml
+#: model_terms:ir.ui.view,arch_db:liber_nfe_xml.view_soc_xml_panel_search
+msgid "Generated by System"
+msgstr "Gerado pelo sistema"
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_nfe_xml_panel__has_message
+msgid "Has Message"
+msgstr ""
+
+#. module: liber_nfe_xml
+#. odoo-python
+#: code:addons/liber_nfe_xml/models/soc_xml_attachment.py:0
+msgid ""
+"Hi... <br>\n"
+"                                                                        New XML file is Arrived : %s <br>\n"
+"                                                                        <b>Customer : %s <br> </b>"
+msgstr ""
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields,help:liber_nfe_xml.field_nfe_cfop__consignment_effect
+msgid ""
+"How an item carrying this CFOP moves the expected shelf balance when rebuilding it from the fiscal history:\n"
+"- Shipment: adds to the shelf (remessa em consignação).\n"
+"- Effective sale: removes from the shelf (venda efetivada).\n"
+"- Return / recall: removes from the shelf (devolução/retorno).\n"
+"- Ignore: not a consignment movement.\n"
+"Empty means the CFOP is not mapped -- its items land in the audit's 'unmapped CFOP' bucket."
+msgstr ""
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_account_move__id
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_import_xml_file__id
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_ir_actions_report__id
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_ir_attachment__id
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_nfe_cfop__id
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_nfe_sefaz_sweep__id
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_nfe_xml_cancel_event__id
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_nfe_xml_items__id
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_nfe_xml_panel__id
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_nfe_xml_tags__id
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_res_company__id
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_res_partner__id
+msgid "ID"
+msgstr ""
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_nfe_xml_panel__activity_exception_icon
+msgid "Icon"
+msgstr ""
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields,help:liber_nfe_xml.field_nfe_xml_panel__activity_exception_icon
+msgid "Icon to indicate an exception activity."
+msgstr ""
+
+#. module: liber_nfe_xml
+#: model_terms:ir.ui.view,arch_db:liber_nfe_xml.view_soc_xml_panel_form
+msgid "Identification"
+msgstr "Identificação"
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_res_partner__identification_no
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_res_users__identification_no
+msgid "Identification No."
+msgstr "Nº de identificação"
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields,help:liber_nfe_xml.field_nfe_xml_panel__message_needaction
+msgid "If checked, new messages require your attention."
+msgstr ""
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields,help:liber_nfe_xml.field_nfe_xml_panel__message_has_error
+#: model:ir.model.fields,help:liber_nfe_xml.field_nfe_xml_panel__message_has_sms_error
+msgid "If checked, some messages have a delivery error."
+msgstr ""
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields.selection,name:liber_nfe_xml.selection__nfe_cfop__consignment_effect__ignore
+msgid "Ignore"
+msgstr "Ignorar"
+
+#. module: liber_nfe_xml
+#: model_terms:ir.ui.view,arch_db:liber_nfe_xml.import_xml_wizard_view
+msgid "Import"
+msgstr "Importar"
+
+#. module: liber_nfe_xml
+#: model:ir.actions.act_window,name:liber_nfe_xml.xml_import_wizard
+#: model:ir.model,name:liber_nfe_xml.model_import_xml_file
+#: model:ir.ui.menu,name:liber_nfe_xml.xml_wizard_import
+#: model_terms:ir.ui.view,arch_db:liber_nfe_xml.import_xml_wizard_view
+msgid "Import XML File"
+msgstr "Importar arquivo XML"
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields.selection,name:liber_nfe_xml.selection__nfe_xml_panel__status__imported
+msgid "Imported"
+msgstr "Importada"
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_nfe_sefaz_sweep__panel_ids
+#: model_terms:ir.ui.view,arch_db:liber_nfe_xml.view_nfe_sefaz_sweep_form
+msgid "Imported NFes"
+msgstr "NFe importadas"
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields,help:liber_nfe_xml.field_nfe_xml_panel__status
+msgid ""
+"Imported: raw XML, not parsed yet. Valid: parsed and standing. Cancelled: a "
+"cancellation event exists. Error: parsing failed."
+msgstr ""
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields,help:liber_nfe_xml.field_res_company__sefaz_dfe_enabled
+msgid ""
+"Include this company in the daily SEFAZ document sweep (NFeDistribuicaoDFe)."
+" Requires the A1 certificate below."
+msgstr ""
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields.selection,name:liber_nfe_xml.selection__nfe_xml_panel__nfe_direction__in
+#: model_terms:ir.ui.view,arch_db:liber_nfe_xml.view_soc_xml_panel_search
+msgid "Incoming"
+msgstr "Entrada"
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields.selection,name:liber_nfe_xml.selection__nfe_xml_panel__nfe_direction__internal
+msgid "Internal"
+msgstr "Interna"
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields.selection,name:liber_nfe_xml.selection__nfe_xml_panel__xml_type__internal
+msgid "Internal Type"
+msgstr "Tipo interno"
+
+#. module: liber_nfe_xml
+#. odoo-python
+#: code:addons/liber_nfe_xml/report/nfe_panel_report.py:0
+msgid ""
+"Invalid file!\n"
+" Unable to Create Danfe.Please check your File"
+msgstr ""
+
+#. module: liber_nfe_xml
+#. odoo-python
+#: code:addons/liber_nfe_xml/models/nfe_xml.py:0
+msgid "Invoice"
+msgstr "Fatura de cliente"
+
+#. module: liber_nfe_xml
+#: model_terms:ir.ui.view,arch_db:liber_nfe_xml.view_soc_xml_panel_search
+msgid "Invoice/Bill created"
+msgstr "Fatura criada"
+
+#. module: liber_nfe_xml
+#: model_terms:ir.ui.view,arch_db:liber_nfe_xml.view_soc_xml_panel_search
+msgid "Invoiced"
+msgstr "Faturado"
+
+#. module: liber_nfe_xml
+#. odoo-python
+#: code:addons/liber_nfe_xml/models/nfe_xml.py:0
+msgid "Invoices from NFe XML"
+msgstr ""
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_nfe_xml_panel__move_ids
+#: model_terms:ir.ui.view,arch_db:liber_nfe_xml.view_soc_xml_panel_form
+msgid "Invoices/Bills"
+msgstr "Faturas"
+
+#. module: liber_nfe_xml
+#. odoo-python
+#: code:addons/liber_nfe_xml/models/soc_xml_panel.py:0
+msgid "Invoices/Bills of %s"
+msgstr ""
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_nfe_xml_panel__message_is_follower
+msgid "Is Follower"
+msgstr ""
+
+#. module: liber_nfe_xml
+#. odoo-python
+#: code:addons/liber_nfe_xml/models/nfe_xml.py:0
+msgid "Issue while creating the Bill: %s"
+msgstr ""
+
+#. module: liber_nfe_xml
+#. odoo-python
+#: code:addons/liber_nfe_xml/models/nfe_xml.py:0
+msgid "Issue while creating the Invoice: %s"
+msgstr ""
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_nfe_xml_panel__vendor_cnpj
+msgid "Issuer CNPJ"
+msgstr "CNPJ do emitente"
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_nfe_xml_panel__vendor_name
+msgid "Issuer Name"
+msgstr "Nome do emitente"
+
+#. module: liber_nfe_xml
+#. odoo-python
+#: code:addons/liber_nfe_xml/models/nfe_xml.py:0
+msgid "Issues with products : "
+msgstr ""
+
+#. module: liber_nfe_xml
+#: model:ir.model,name:liber_nfe_xml.model_account_move
+msgid "Journal Entry"
+msgstr "Lançamento de diário"
+
+#. module: liber_nfe_xml
+#: model_terms:ir.ui.view,arch_db:liber_nfe_xml.view_nfe_xml_cancel_event_form
+msgid "Justification"
+msgstr ""
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_res_company__sefaz_last_nsu
+msgid "Last NSU"
+msgstr "Último NSU"
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_import_xml_file__write_uid
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_nfe_cfop__write_uid
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_nfe_sefaz_sweep__write_uid
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_nfe_xml_cancel_event__write_uid
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_nfe_xml_items__write_uid
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_nfe_xml_panel__write_uid
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_nfe_xml_tags__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_import_xml_file__write_date
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_nfe_cfop__write_date
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_nfe_sefaz_sweep__write_date
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_nfe_xml_cancel_event__write_date
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_nfe_xml_items__write_date
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_nfe_xml_panel__write_date
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_nfe_xml_tags__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: liber_nfe_xml
+#: model_terms:ir.ui.view,arch_db:liber_nfe_xml.view_nfe_xml_cancel_event_search
+msgid "Linked to NFe"
+msgstr ""
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields.selection,name:liber_nfe_xml.selection__nfe_xml_panel__source__manual
+msgid "Manual Upload"
+msgstr "Envio manual"
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_nfe_sefaz_sweep__max_nsu
+msgid "Max NSU (SEFAZ)"
+msgstr "NSU máximo (SEFAZ)"
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_nfe_sefaz_sweep__message
+msgid "Message"
+msgstr ""
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_nfe_xml_panel__message_has_error
+msgid "Message Delivery error"
+msgstr ""
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_nfe_xml_panel__message_ids
+msgid "Messages"
+msgstr ""
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_nfe_xml_panel__move_count
+msgid "Move Count"
+msgstr ""
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_nfe_xml_panel__my_activity_date_deadline
+msgid "My Activity Deadline"
+msgstr ""
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_account_bank_statement_line__nfe_key
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_account_move__nfe_key
+msgid "NFe Access Key"
+msgstr ""
+
+#. module: liber_nfe_xml
+#: model:ir.model,name:liber_nfe_xml.model_nfe_xml_cancel_event
+#: model_terms:ir.ui.view,arch_db:liber_nfe_xml.view_nfe_xml_cancel_event_form
+msgid "NFe Cancellation Event"
+msgstr ""
+
+#. module: liber_nfe_xml
+#: model_terms:ir.ui.view,arch_db:liber_nfe_xml.view_nfe_xml_cancel_event_list
+msgid "NFe Cancellation Events"
+msgstr ""
+
+#. module: liber_nfe_xml
+#: model:ir.actions.act_window,name:liber_nfe_xml.action_nfe_xml_cancel_event
+#: model:ir.ui.menu,name:liber_nfe_xml.nfe_xml_cancel_event_menu
+msgid "NFe Cancellations"
+msgstr "Cancelamentos de NFe"
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_nfe_sefaz_sweep__n_nfe
+msgid "NFe Imported"
+msgstr "NFe importadas"
+
+#. module: liber_nfe_xml
+#: model:ir.actions.act_window,name:liber_nfe_xml.NFeXmlItemsMenu
+#: model:ir.ui.menu,name:liber_nfe_xml.nfe_xml_item_menu
+msgid "NFe Items"
+msgstr "Itens de NFe"
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_nfe_xml_cancel_event__key
+msgid "NFe Key"
+msgstr "Chave da NFe"
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_nfe_xml_items__nfe_tag_ids
+#: model:ir.ui.menu,name:liber_nfe_xml.nfe_xml_tags_menu
+#: model_terms:ir.ui.view,arch_db:liber_nfe_xml.nfe_xml_tags_view_form
+#: model_terms:ir.ui.view,arch_db:liber_nfe_xml.nfe_xml_tags_view_tree
+msgid "NFe Tags"
+msgstr "Etiquetas de NFe"
+
+#. module: liber_nfe_xml
+#. odoo-python
+#: code:addons/liber_nfe_xml/models/account_move.py:0
+#: model:ir.actions.act_window,name:liber_nfe_xml.action_ssoc_xml_panel
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_account_bank_statement_line__nfe_xml_panel_id
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_account_move__nfe_xml_panel_id
+#: model:ir.ui.menu,name:liber_nfe_xml.menu_nfe_xml_panel
+#: model:ir.ui.menu,name:liber_nfe_xml.nfe_xml_panel_menu
+msgid "NFe XML"
+msgstr ""
+
+#. module: liber_nfe_xml
+#: model:ir.actions.server,name:liber_nfe_xml.cron_process_nfe_xml_content_ir_actions_server
+msgid "NFe XML - Process File Content"
+msgstr "NFe XML - Processar conteúdo dos arquivos"
+
+#. module: liber_nfe_xml
+#: model:ir.actions.server,name:liber_nfe_xml.cron_nfe_sefaz_sweep_ir_actions_server
+msgid "NFe XML - SEFAZ DFe Daily Sweep"
+msgstr "NFe XML - Varredura diária SEFAZ DFe"
+
+#. module: liber_nfe_xml
+#. odoo-python
+#: code:addons/liber_nfe_xml/models/res_partner.py:0
+msgid "NFe XML Files"
+msgstr ""
+
+#. module: liber_nfe_xml
+#: model:ir.model,name:liber_nfe_xml.model_nfe_xml_items
+msgid "NFe XML Items"
+msgstr ""
+
+#. module: liber_nfe_xml
+#: model:ir.model,name:liber_nfe_xml.model_nfe_xml_panel
+#: model_terms:ir.ui.view,arch_db:liber_nfe_xml.view_soc_xml_panel_form
+msgid "NFe XML Panel"
+msgstr ""
+
+#. module: liber_nfe_xml
+#: model_terms:ir.ui.view,arch_db:liber_nfe_xml.view_soc_xml_panel_tree
+msgid "NFe XML Panel Details"
+msgstr "Detalhes do painel NFe XML"
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_ir_attachment__nfe_xml_processed
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_product_document__nfe_xml_processed
+msgid "NFe XML Processed"
+msgstr "NFe XML processado"
+
+#. module: liber_nfe_xml
+#: model:ir.actions.act_window,name:liber_nfe_xml.nfe_xml_tags_action
+#: model:ir.model,name:liber_nfe_xml.model_nfe_xml_tags
+msgid "NFe XML Tags"
+msgstr ""
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields,help:liber_nfe_xml.field_account_bank_statement_line__nfe_xml_panel_id
+#: model:ir.model.fields,help:liber_nfe_xml.field_account_move__nfe_xml_panel_id
+msgid ""
+"NFe XML panel record holding the source XML. Resolved by the NFe access key;"
+" to unlink a move that has a key, clear the key itself."
+msgstr ""
+
+#. module: liber_nfe_xml
+#. odoo-python
+#: code:addons/liber_nfe_xml/models/soc_xml_panel.py:0
+msgid "NFe cancelled (protocol %s). Reason: %s"
+msgstr ""
+
+#. module: liber_nfe_xml
+#: model_terms:ir.ui.view,arch_db:liber_nfe_xml.view_nfe_items_search
+msgid "NFe items by CFOP"
+msgstr ""
+
+#. module: liber_nfe_xml
+#: model_terms:ir.ui.view,arch_db:liber_nfe_xml.view_nfe_items_search
+msgid "NFe items by Due Date"
+msgstr ""
+
+#. module: liber_nfe_xml
+#: model_terms:ir.ui.view,arch_db:liber_nfe_xml.view_nfe_items_search
+msgid "NFe items by Partn er"
+msgstr ""
+
+#. module: liber_nfe_xml
+#: model_terms:ir.ui.view,arch_db:liber_nfe_xml.view_nfe_items_search
+msgid "NFe items by Product"
+msgstr ""
+
+#. module: liber_nfe_xml
+#: model_terms:ir.ui.view,arch_db:liber_nfe_xml.view_nfe_items_search
+msgid "NFe items by Purchase Order"
+msgstr ""
+
+#. module: liber_nfe_xml
+#: model_terms:ir.ui.view,arch_db:liber_nfe_xml.view_nfe_items_search
+msgid "NFe items by XML Date"
+msgstr ""
+
+#. module: liber_nfe_xml
+#: model_terms:ir.ui.view,arch_db:liber_nfe_xml.view_nfe_items_search
+msgid "NFe items by XML Id"
+msgstr ""
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields,help:liber_nfe_xml.field_nfe_xml_cancel_event__nfe_id
+msgid "NFe panel record whose access key matches this cancellation event."
+msgstr ""
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_nfe_sefaz_sweep__nsu_start
+msgid "NSU From"
+msgstr "NSU inicial"
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_nfe_sefaz_sweep__nsu_end
+msgid "NSU To"
+msgstr "NSU final"
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_nfe_xml_items__net_price
+msgid "Net Price"
+msgstr "Preço líquido"
+
+#. module: liber_nfe_xml
+#. odoo-python
+#: code:addons/liber_nfe_xml/models/soc_xml_attachment.py:0
+msgid "New XML File!!"
+msgstr ""
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_nfe_xml_panel__activity_date_deadline
+msgid "Next Activity Deadline"
+msgstr ""
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_nfe_xml_panel__activity_summary
+msgid "Next Activity Summary"
+msgstr ""
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_nfe_xml_panel__activity_type_id
+msgid "Next Activity Type"
+msgstr ""
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_nfe_xml_panel__key
+msgid "Nfe Key"
+msgstr "Chave da NFe"
+
+#. module: liber_nfe_xml
+#: model_terms:ir.ui.view,arch_db:liber_nfe_xml.view_nfe_xml_items_pivot
+msgid "Nfe XML Items"
+msgstr ""
+
+#. module: liber_nfe_xml
+#: model_terms:ir.ui.view,arch_db:liber_nfe_xml.view_nfe_xml_pivot
+msgid "Nfe XML panel"
+msgstr ""
+
+#. module: liber_nfe_xml
+#: model_terms:ir.ui.view,arch_db:liber_nfe_xml.view_nfe_xml_graph
+msgid "Nfe XMl Panel"
+msgstr ""
+
+#. module: liber_nfe_xml
+#: model_terms:ir.ui.view,arch_db:liber_nfe_xml.view_nfe_xml_items_graph
+msgid "Nfe XMl items"
+msgstr ""
+
+#. module: liber_nfe_xml
+#: model_terms:ir.actions.act_window,help:liber_nfe_xml.action_nfe_sefaz_sweep
+msgid "No SEFAZ sweep yet"
+msgstr "Nenhuma varredura da SEFAZ ainda"
+
+#. module: liber_nfe_xml
+#. odoo-python
+#: code:addons/liber_nfe_xml/models/nfe_xml.py:0
+msgid ""
+"No invoice created - %s record(s) skipped (already processed or with issues;"
+" see their chatter)."
+msgstr ""
+
+#. module: liber_nfe_xml
+#: model_terms:ir.ui.view,arch_db:liber_nfe_xml.view_soc_xml_panel_search
+msgid "Not Cancelled"
+msgstr "Não cancelada"
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_nfe_xml_panel__message_needaction_counter
+msgid "Number of Actions"
+msgstr ""
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_nfe_xml_panel__message_has_error_counter
+msgid "Number of errors"
+msgstr ""
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields,help:liber_nfe_xml.field_nfe_xml_panel__message_needaction_counter
+msgid "Number of messages requiring action"
+msgstr ""
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields,help:liber_nfe_xml.field_nfe_xml_panel__message_has_error_counter
+msgid "Number of messages with delivery error"
+msgstr ""
+
+#. module: liber_nfe_xml
+#. odoo-python
+#: code:addons/liber_nfe_xml/wizard/import_xml_file.py:0
+msgid "One of the uploaded files is not a valid ZIP archive."
+msgstr "Um dos arquivos enviados não é um ZIP válido."
+
+#. module: liber_nfe_xml
+#: model_terms:ir.ui.view,arch_db:liber_nfe_xml.view_soc_xml_panel_form
+msgid "Original Danfe"
+msgstr "DANFE original"
+
+#. module: liber_nfe_xml
+#: model_terms:ir.ui.view,arch_db:liber_nfe_xml.view_nfe_xml_cancel_event_search
+msgid "Orphan (no NFe)"
+msgstr "Órfã (sem NFe)"
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields.selection,name:liber_nfe_xml.selection__nfe_cfop__document_kind__other
+msgid "Other"
+msgstr "Outros"
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields.selection,name:liber_nfe_xml.selection__nfe_xml_panel__nfe_direction__out
+#: model_terms:ir.ui.view,arch_db:liber_nfe_xml.view_soc_xml_panel_search
+msgid "Outgoing"
+msgstr "Saída"
+
+#. module: liber_nfe_xml
+#: model_terms:ir.ui.view,arch_db:liber_nfe_xml.view_soc_xml_panel_search
+msgid "Outgoing / Incoming"
+msgstr "Saída / Entrada"
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields,help:liber_nfe_xml.field_nfe_xml_panel__nfe_direction
+msgid ""
+"Outgoing: issued by one of our companies (we sold/shipped). Incoming: "
+"addressed to one of our companies (we received). Internal: between two of "
+"our companies. External: neither side is one of our companies."
+msgstr ""
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_res_partner__po_tag
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_res_users__po_tag
+msgid "PO XML tag"
+msgstr "Tag XML do pedido de compra"
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_nfe_xml_panel__panel_items
+#: model_terms:ir.ui.view,arch_db:liber_nfe_xml.nfe_xml_items_form_view
+msgid "Panel Items"
+msgstr "Itens do painel"
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_nfe_xml_items__ks_partner_id
+#: model_terms:ir.ui.view,arch_db:liber_nfe_xml.view_nfe_items_search
+msgid "Partner"
+msgstr "Parceiro"
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields,help:liber_nfe_xml.field_res_company__sefaz_cert_password
+msgid ""
+"Password of the .pfx file. Stored in the database; restrict access to "
+"company settings accordingly."
+msgstr ""
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields.selection,name:liber_nfe_xml.selection__nfe_cfop__document_kind__transfer
+msgid "Plain shipment (undecided)"
+msgstr "Remessa simples (indefinida)"
+
+#. module: liber_nfe_xml
+#. odoo-python
+#: code:addons/liber_nfe_xml/wizard/import_xml_file.py:0
+msgid "Please attach at least one ZIP file to import."
+msgstr "Anexe pelo menos um arquivo ZIP para importar."
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_nfe_xml_panel__access_url
+msgid "Portal Access URL"
+msgstr ""
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_nfe_xml_items__ks_price
+msgid "Price"
+msgstr "Preço"
+
+#. module: liber_nfe_xml
+#: model:ir.actions.report,name:liber_nfe_xml.report_nfe_panel
+#: model_terms:ir.ui.view,arch_db:liber_nfe_xml.view_soc_xml_panel_form
+msgid "Print Danfe"
+msgstr "Imprimir DANFE"
+
+#. module: liber_nfe_xml
+#: model:ir.actions.server,name:liber_nfe_xml.update_nfe_xml
+msgid "Process XML File"
+msgstr "Processar arquivo XML"
+
+#. module: liber_nfe_xml
+#: model_terms:ir.ui.view,arch_db:liber_nfe_xml.view_soc_xml_panel_form
+msgid "Process Xml File"
+msgstr "Processar arquivo XML"
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_nfe_xml_items__ks_product_id
+#: model_terms:ir.ui.view,arch_db:liber_nfe_xml.view_nfe_items_search
+msgid "Product"
+msgstr "Produto"
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_nfe_xml_items__ks_product_name
+msgid "Product Name"
+msgstr "Nome do produto"
+
+#. module: liber_nfe_xml
+#: model_terms:ir.ui.view,arch_db:liber_nfe_xml.view_nfe_items_search
+msgid "Product Set"
+msgstr "Por produto"
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_nfe_xml_cancel_event__protocol
+msgid "Protocol"
+msgstr "Protocolo"
+
+#. module: liber_nfe_xml
+#: model_terms:ir.ui.view,arch_db:liber_nfe_xml.view_soc_xml_panel_search
+msgid "Purchase Id"
+msgstr "Pedido de compra"
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_nfe_xml_items__ks_purchase_id
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_nfe_xml_panel__po_id
+#: model_terms:ir.ui.view,arch_db:liber_nfe_xml.view_nfe_items_search
+msgid "Purchase Order"
+msgstr "Pedido de compra"
+
+#. module: liber_nfe_xml
+#: model_terms:ir.ui.view,arch_db:liber_nfe_xml.view_nfe_items_search
+msgid "Purchase Order Set"
+msgstr "Por pedido de compra"
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_nfe_xml_items__ks_product_qty
+msgid "Quantity"
+msgstr "Quantidade"
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields.selection,name:liber_nfe_xml.selection__nfe_sefaz_sweep__status__rate_limited
+msgid "Rate Limited"
+msgstr "Limite de consultas"
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_nfe_xml_cancel_event__reason
+msgid "Reason"
+msgstr "Motivo"
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_nfe_xml_items__customer_id
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_nfe_xml_panel__customer_id
+msgid "Receiver Name"
+msgstr "Nome do recebedor"
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_nfe_xml_panel__customer_cnpj
+msgid "Recipient CNPJ"
+msgstr "CNPJ do destinatário"
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_nfe_xml_panel__customer_name
+msgid "Recipient Name"
+msgstr "Nome do destinatário"
+
+#. module: liber_nfe_xml
+#. odoo-python
+#: code:addons/liber_nfe_xml/models/soc_xml_attachment.py:0
+msgid "Record of XML File : <a href=# data-oe-model=%s data-oe-id=%d>%s</a>"
+msgstr "Registro do arquivo XML: <a href=# data-oe-model=%s data-oe-id=%d>%s</a>"
+
+#. module: liber_nfe_xml
+#: model:ir.model,name:liber_nfe_xml.model_ir_actions_report
+msgid "Report Action"
+msgstr "Ação de relatório"
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_nfe_xml_panel__related_res_id
+msgid "Resource ID"
+msgstr ""
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_nfe_xml_panel__related_res_model
+msgid "Resource Model"
+msgstr ""
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_nfe_xml_panel__activity_user_id
+msgid "Responsible User"
+msgstr ""
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields.selection,name:liber_nfe_xml.selection__nfe_cfop__consignment_effect__return
+msgid "Return / recall (- shelf)"
+msgstr "Retorno / recolhimento (- estante)"
+
+#. module: liber_nfe_xml
+#: model_terms:ir.ui.view,arch_db:liber_nfe_xml.view_soc_xml_panel_search
+msgid "Return Orders"
+msgstr "Pedidos de devolução"
+
+#. module: liber_nfe_xml
+#: model_terms:ir.ui.view,arch_db:liber_nfe_xml.view_nfe_sefaz_sweep_list
+msgid "Run the SEFAZ sweep now for every company with sync enabled?"
+msgstr ""
+"Rodar a varredura da SEFAZ agora para todas as empresas com sincronização "
+"ativa?"
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields.selection,name:liber_nfe_xml.selection__nfe_sefaz_sweep__status__running
+msgid "Running"
+msgstr "Executando"
+
+#. module: liber_nfe_xml
+#: model:ir.actions.act_window,name:liber_nfe_xml.action_nfe_sefaz_sweep
+#: model:ir.ui.menu,name:liber_nfe_xml.menu_nfe_sefaz_sweep
+msgid "SEFAZ"
+msgstr ""
+
+#. module: liber_nfe_xml
+#: model_terms:ir.ui.view,arch_db:liber_nfe_xml.view_company_form_sefaz
+msgid "SEFAZ (DFe)"
+msgstr ""
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields.selection,name:liber_nfe_xml.selection__nfe_xml_panel__source__sefaz
+msgid "SEFAZ DFe"
+msgstr ""
+
+#. module: liber_nfe_xml
+#: model:ir.model,name:liber_nfe_xml.model_nfe_sefaz_sweep
+msgid "SEFAZ DFe Sweep"
+msgstr "Varredura SEFAZ DFe"
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_res_company__sefaz_dfe_enabled
+msgid "SEFAZ DFe Sync"
+msgstr "Sincronização SEFAZ DFe"
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_nfe_xml_panel__message_has_sms_error
+msgid "SMS Delivery error"
+msgstr ""
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields.selection,name:liber_nfe_xml.selection__nfe_cfop__document_kind__sale
+msgid "Sale"
+msgstr "Venda"
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_nfe_xml_panel__order_id
+msgid "Sale Order"
+msgstr "Pedido de venda"
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_nfe_xml_items__team_id
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_nfe_xml_panel__team_id
+#: model_terms:ir.ui.view,arch_db:liber_nfe_xml.view_nfe_items_search
+#: model_terms:ir.ui.view,arch_db:liber_nfe_xml.view_soc_xml_panel_search
+msgid "Sales Team"
+msgstr "Equipe de vendas"
+
+#. module: liber_nfe_xml
+#: model_terms:ir.ui.view,arch_db:liber_nfe_xml.view_nfe_items_search
+#: model_terms:ir.ui.view,arch_db:liber_nfe_xml.view_nfe_xml_cancel_event_search
+#: model_terms:ir.ui.view,arch_db:liber_nfe_xml.view_soc_xml_panel_search
+msgid "Search"
+msgstr "Pesquisar"
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_nfe_xml_panel__access_token
+msgid "Security Token"
+msgstr ""
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_nfe_xml_items__vendor_id
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_nfe_xml_panel__vendor_id
+msgid "Sender Name"
+msgstr "Nome do remetente"
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields,help:liber_nfe_xml.field_nfe_xml_panel__is_cancelled
+msgid "Set when a cancellation event exists for this NFe access key."
+msgstr "Marcado quando existe evento de cancelamento para esta chave de acesso."
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields.selection,name:liber_nfe_xml.selection__nfe_cfop__consignment_effect__ship
+msgid "Shipment (+ shelf)"
+msgstr "Remessa (+ estante)"
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_nfe_xml_panel__shipping_price
+msgid "Shipping Price"
+msgstr "Frete"
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_nfe_sefaz_sweep__n_skipped
+msgid "Skipped (Duplicates)"
+msgstr "Ignoradas (duplicadas)"
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_nfe_xml_panel__source
+msgid "Source"
+msgstr "Origem"
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_nfe_sefaz_sweep__date_start
+msgid "Started At"
+msgstr "Início"
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_ir_attachment__status
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_nfe_sefaz_sweep__status
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_nfe_xml_panel__status
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_product_document__status
+#: model_terms:ir.ui.view,arch_db:liber_nfe_xml.view_soc_xml_panel_search
+msgid "Status"
+msgstr "Situação"
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields,help:liber_nfe_xml.field_nfe_xml_panel__activity_state
+msgid ""
+"Status based on activities\n"
+"Overdue: Due date is already passed\n"
+"Today: Activity date is today\n"
+"Planned: Future activities."
+msgstr ""
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields,help:liber_nfe_xml.field_nfe_sefaz_sweep__n_other
+msgid ""
+"Summaries (resNFe/resEvento) and non-cancellation events: nothing to import,"
+" kept for the tally."
+msgstr ""
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_nfe_sefaz_sweep__n_other
+msgid "Summaries/Other"
+msgstr "Resumos/outros"
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields,help:liber_nfe_xml.field_res_company__sefaz_last_nsu
+msgid ""
+"Sweep cursor: last NSU already received from SEFAZ for this company. Reset "
+"to 0 to re-download the full window (~90 days)."
+msgstr ""
+
+#. module: liber_nfe_xml
+#: model_terms:ir.ui.view,arch_db:liber_nfe_xml.view_nfe_sefaz_sweep_list
+msgid "Sync Now"
+msgstr "Sincronizar agora"
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_nfe_xml_panel__system_generated
+msgid "System generated"
+msgstr "Gerado pelo sistema"
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_nfe_xml_tags__name
+msgid "Tag Name"
+msgstr "Nome da etiqueta"
+
+#. module: liber_nfe_xml
+#: model:ir.model.constraint,message:liber_nfe_xml.constraint_nfe_xml_tags_name_uniq
+msgid "Tag name already exists !"
+msgstr "Já existe uma etiqueta com esse nome!"
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_nfe_xml_panel__nfe_tag_ids
+#: model_terms:ir.ui.view,arch_db:liber_nfe_xml.view_nfe_items_search
+#: model_terms:ir.ui.view,arch_db:liber_nfe_xml.view_soc_xml_panel_search
+msgid "Tags"
+msgstr "Etiquetas"
+
+#. module: liber_nfe_xml
+#. odoo-python
+#: code:addons/liber_nfe_xml/models/account_move.py:0
+msgid "The NFe access key must have exactly 44 digits (got %r)."
+msgstr "A chave de acesso da NFe deve ter exatamente 44 dígitos (recebido %r)."
+
+#. module: liber_nfe_xml
+#. odoo-python
+#: code:addons/liber_nfe_xml/models/nfe_xml.py:0
+msgid "The partner on this record (%s) is not a party on the NFe XML."
+msgstr "O parceiro deste registro (%s) não é parte no NFe XML."
+
+#. module: liber_nfe_xml
+#. odoo-python
+#: code:addons/liber_nfe_xml/models/soc_xml_attachment.py:0
+msgid "This record created from NFe XML Cron"
+msgstr "Registro criado pelo cron do NFe XML"
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields.selection,name:liber_nfe_xml.selection__nfe_cfop__document_kind__event_out
+msgid "To an event (comes back)"
+msgstr "Para evento (volta)"
+
+#. module: liber_nfe_xml
+#: model_terms:ir.ui.view,arch_db:liber_nfe_xml.view_nfe_sefaz_sweep_list
+msgid "Total"
+msgstr "Total"
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_nfe_xml_items__ks_total_price
+msgid "Total Price"
+msgstr "Preço total"
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_nfe_xml_items__xml_type
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_nfe_xml_panel__xml_type
+msgid "Type"
+msgstr "Tipo"
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields,help:liber_nfe_xml.field_nfe_xml_panel__activity_exception_decoration
+msgid "Type of the exception activity on record."
+msgstr ""
+
+#. module: liber_nfe_xml
+#. odoo-python
+#: code:addons/liber_nfe_xml/models/soc_xml_panel.py:0
+msgid "Unclassified CFOP %s (found in an imported NFe)"
+msgstr "CFOP %s sem classificação (encontrado em NFe importada)"
+
+#. module: liber_nfe_xml
+#: model:ir.actions.server,name:liber_nfe_xml.action_update_team_id
+msgid "Update Sales Team"
+msgstr "Atualizar equipe de vendas"
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields.selection,name:liber_nfe_xml.selection__nfe_xml_panel__status__valid
+msgid "Valid"
+msgstr "Válida"
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_nfe_xml_panel__vendor_order
+#: model_terms:ir.ui.view,arch_db:liber_nfe_xml.view_soc_xml_panel_search
+msgid "Vendor Order"
+msgstr "Pedido do fornecedor"
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_res_partner__vendor_tag
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_res_users__vendor_tag
+msgid "Vendor Order XML tag"
+msgstr "Tag XML do pedido do fornecedor"
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_nfe_xml_panel__purchase_id
+msgid "Vendor Purchase Order"
+msgstr "Pedido de compra do fornecedor"
+
+#. module: liber_nfe_xml
+#: model_terms:ir.ui.view,arch_db:liber_nfe_xml.inherit_res_partner_form_id
+msgid "Vendor XML"
+msgstr "XML do fornecedor"
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_nfe_xml_panel__website_message_ids
+msgid "Website Messages"
+msgstr ""
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields,help:liber_nfe_xml.field_nfe_xml_panel__website_message_ids
+msgid "Website communication history"
+msgstr ""
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields,help:liber_nfe_xml.field_nfe_cfop__document_kind
+msgid ""
+"Which document this operation is, in Odoo. It is the CFOP that decides: a "
+"consignment shipment becomes a Pedido C (the goods stay ours, on the "
+"customer's shelf); a bonus is not a Pedido C at all (the goods are given "
+"away -- they leave the stock and never become revenue); an event shipment is"
+" an internal transfer that comes back. Empty means undecided, and the "
+"operation lands in the unmapped bucket instead of guessing."
+msgstr ""
+
+#. module: liber_nfe_xml
+#: model_terms:ir.ui.view,arch_db:liber_nfe_xml.view_soc_xml_panel_search
+msgid "XML Create Date"
+msgstr "Data de criação do XML"
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_nfe_xml_items__ks_xml_date
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_nfe_xml_panel__file_create_date
+#: model_terms:ir.ui.view,arch_db:liber_nfe_xml.view_nfe_items_search
+#: model_terms:ir.ui.view,arch_db:liber_nfe_xml.view_soc_xml_panel_search
+msgid "XML Date"
+msgstr "Data do XML"
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_nfe_xml_items__ks_due_date
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_nfe_xml_panel__due_date
+msgid "XML Due Date"
+msgstr "Vencimento do XML"
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_nfe_xml_panel__file
+msgid "XML File"
+msgstr "Arquivo XML"
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_nfe_xml_panel__file_name
+msgid "XML File Name"
+msgstr "Nome do arquivo XML"
+
+#. module: liber_nfe_xml
+#: model_terms:ir.ui.view,arch_db:liber_nfe_xml.view_nfe_items_search
+msgid "XML Id Set"
+msgstr "Por XML"
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_nfe_xml_items__soc_xml_id
+#: model_terms:ir.ui.view,arch_db:liber_nfe_xml.view_nfe_items_search
+msgid "XML Reference"
+msgstr "Referência do XML"
+
+#. module: liber_nfe_xml
+#: model_terms:ir.ui.view,arch_db:liber_nfe_xml.view_soc_xml_panel_search
+msgid "XML by Date"
+msgstr "XML por data"
+
+#. module: liber_nfe_xml
+#: model_terms:ir.ui.view,arch_db:liber_nfe_xml.view_soc_xml_panel_search
+msgid "Xml Date Set"
+msgstr "Por data do XML"
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_import_xml_file__attachment_ids
+#: model_terms:ir.ui.view,arch_db:liber_nfe_xml.import_xml_wizard_view
+msgid "ZIP Files"
+msgstr "Arquivos ZIP"
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields.selection,name:liber_nfe_xml.selection__ir_attachment__status__done
+msgid "done"
+msgstr ""
+
+#. module: liber_nfe_xml
+#. odoo-python
+#: code:addons/liber_nfe_xml/models/nfe_xml.py:0
+msgid "id"
+msgstr ""
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields.selection,name:liber_nfe_xml.selection__ir_attachment__status__issue
+msgid "issue"
+msgstr ""

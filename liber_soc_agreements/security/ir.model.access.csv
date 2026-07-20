@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_consignment_agreement_user,consignment.agreement.user,model_consignment_agreement,group_soc_user,1,1,1,0
+access_consignment_agreement_manager,consignment.agreement.manager,model_consignment_agreement,group_soc_manager,1,1,1,1

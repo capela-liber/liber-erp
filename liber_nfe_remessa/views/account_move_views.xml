@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Na nota, o caminho para a baixa que a quitou (e nada mais: o resto é
+         o formulário padrão de fatura, que é o ponto do desenho). -->
+    <record id="view_move_form_remessa" model="ir.ui.view">
+        <field name="name">account.move.form.remessa</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form"/>
+        <field name="arch" type="xml">
+            <!-- "o Pago causa uma certa estranheza. Precisa mesmo?" Não. Uma
+                 simples remessa nunca será paga porque nunca houve dívida. O
+                 razão diz 'paid' (o recebível foi baixado); a tela diz o que a
+                 nota É. -->
+            <!-- 'title' é proibido como seletor de herança; a âncora é o
+                 invisible exato do ribbon Paid do core (se o core mudar, a
+                 view quebra ALTO no upgrade, que é o comportamento certo). -->
+            <xpath expr="//widget[@name='web_ribbon'][@invisible=&quot;payment_state != 'paid' or move_type not in ('out_invoice', 'out_refund', 'in_invoice', 'in_refund', 'out_receipt', 'in_receipt')&quot;]" position="attributes">
+                <attribute name="invisible">payment_state != 'paid' or move_type not in ('out_invoice', 'out_refund', 'in_invoice', 'in_refund', 'out_receipt', 'in_receipt') or is_remessa_note</attribute>
+            </xpath>
+            <xpath expr="//widget[@name='web_ribbon'][@invisible=&quot;payment_state != 'paid' or move_type not in ('out_invoice', 'out_refund', 'in_invoice', 'in_refund', 'out_receipt', 'in_receipt') or is_remessa_note&quot;]" position="before">
+                <field name="is_remessa_note" invisible="1"/>
+                <widget name="web_ribbon" title="Simples remessa"
+                        bg_color="text-bg-info"
+                        invisible="not is_remessa_note or state != 'posted'"/>
+            </xpath>
+            <div name="button_box" position="inside">
+                <button name="action_view_remessa_settlement" type="object"
+                        class="oe_stat_button" icon="fa-exchange"
+                        invisible="not remessa_settle_move_id">
+                    <div class="o_stat_info">
+                        <span class="o_stat_text">Auto</span>
+                        <span class="o_stat_text">settlement</span>
+                    </div>
+                </button>
+            </div>
+        </field>
+    </record>
+
+    <!-- Faturas fica só com venda de verdade: o diário de remessa sai. -->
+    <record id="account.action_move_out_invoice_type" model="ir.actions.act_window">
+        <field name="domain">[('move_type', 'in', ['out_invoice', 'out_refund', 'out_receipt']), ('journal_id.is_remessa', '=', False)]</field>
+    </record>
+</odoo>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_generate_wizard_form" model="ir.ui.view">
+        <field name="name">consignment.settlement.generate.wizard.form</field>
+        <field name="model">consignment.settlement.generate.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Generate Operations">
+                <p>
+                    Opens one <strong>consignment operation (CO)</strong> per
+                    open consignment for the month (active agreement with shelf balance),
+                    <strong>skipping</strong> those that already have a draft operation.
+                </p>
+                <group>
+                    <field name="open_count"/>
+                    <field name="existing_draft_count"/>
+                    <field name="to_create_count"/>
+                </group>
+                <!-- Nothing to create is a RESULT, not a failure. The wizard used
+                     to simply hide its own button and leave a mute dialog with a
+                     lone "Cancel", which reads as broken. Say what happened, and
+                     offer the way out: the drafts are already there, waiting. -->
+                <div class="alert alert-info" role="alert"
+                     invisible="to_create_count > 0 or open_count == 0">
+                    <strong>Nothing to create.</strong>
+                    Every open consignment already has a draft operation waiting to
+                    be run. Open them and settle, or run them and generate again
+                    next month.
+                </div>
+
+                <div class="alert alert-warning" role="alert"
+                     invisible="open_count > 0">
+                    <strong>No open consignment.</strong>
+                    No active agreement has stock on the shelf, so there is nothing
+                    to settle. Ship first, then come back.
+                </div>
+
+                <footer>
+                    <button name="action_confirm" type="object" string="Confirm"
+                            class="btn-primary" invisible="to_create_count == 0"/>
+                    <button name="action_view_drafts" type="object"
+                            string="Open the drafts" class="btn-primary"
+                            invisible="existing_draft_count == 0 or to_create_count > 0"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_generate_wizard" model="ir.actions.act_window">
+        <field name="name">Generate Operations</field>
+        <field name="res_model">consignment.settlement.generate.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+</odoo>

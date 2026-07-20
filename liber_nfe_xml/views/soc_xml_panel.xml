@@ -1,0 +1,342 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="view_soc_xml_panel_form" model="ir.ui.view">
+            <field name="name">nfe.xml.panel.form</field>
+            <field name="model">nfe.xml.panel</field>
+            <field name="arch" type="xml">
+                <form string="NFe XML Panel">
+                    <header>
+                        <button name="action_import_xml_file" type="object" class="btn-primary" string="Process Xml File" invisible="status not in ('imported', 'error')"/>
+                        <field name="status" widget="statusbar" statusbar_visible="imported,valid"/>
+                    </header>
+                    <sheet>
+                        <widget name="web_ribbon" title="Cancelled" bg_color="text-bg-danger"
+                                invisible="not is_cancelled"/>
+                        <field name="is_cancelled" invisible="1"/>
+                        <div class="oe_button_box" name="button_box">
+                            <button name="action_view_moves" type="object" class="oe_stat_button" icon="fa-pencil-square-o"
+                                    invisible="move_count == 0">
+                                <field name="move_count" widget="statinfo" string="Invoices/Bills"/>
+                            </button>
+                            <button name="action_preview_meta_danfe_nfe" type="object" class="oe_stat_button" icon="fa-file-pdf-o"
+                                            string="Original Danfe"
+                                            invisible="not file_name">
+                            </button>
+                            <button name="action_preview_nfe" type="object" class="oe_stat_button" icon="fa-file-pdf-o"
+                                            string="Print Danfe"
+                                            invisible="not file_name">
+                            </button>
+                        </div>
+                        <group>
+                            <group string="Identification">
+                                <field name="nfe_direction" widget="badge"
+                                       decoration-success="nfe_direction == 'out'"
+                                       decoration-info="nfe_direction == 'in'"/>
+                                <field name="company_id"/>
+                                <field name="partner_id"/>
+                                <field name="key"/>
+                            </group>
+                            <group>
+                                <field name="create_date"/>
+                                <field name="order_id" invisible="1"/>
+                                <field name="invoice_id" readonly="1"/>
+                                <field name="team_id" readonly="0" domain="[('company_id', '=', current_company_id)]"/>
+                                <field name="current_company_id" invisible="1"/>
+                                <field name="nfe_tag_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
+                            </group>
+                        </group>
+                        <group string="Dados Fiscais (Emitente / Destinatário)">
+                            <group>
+                                <field name="vendor_name"/>
+                                <field name="vendor_cnpj"/>
+                                <field name="vendor_id" invisible="1"/>
+                            </group>
+                            <group>
+                                <field name="customer_name"/>
+                                <field name="customer_cnpj"/>
+                                <field name="customer_id" invisible="1"/>
+                                <field name="xml_type" invisible="1"/>
+                            </group>
+                        </group>
+                        <group string="Cancellation" invisible="not is_cancelled">
+                            <group>
+                                <field name="cancel_date"/>
+                                <field name="cancel_protocol"/>
+                            </group>
+                            <group>
+                                <field name="cancel_reason"/>
+                            </group>
+                            <field name="cancel_event_ids" colspan="2" nolabel="1" readonly="1">
+                                <list>
+                                    <field name="event_date"/>
+                                    <field name="protocol"/>
+                                    <field name="reason"/>
+                                    <field name="tp_evento"/>
+                                    <field name="file" filename="file_name"/>
+                                    <field name="file_name" column_invisible="1"/>
+                                </list>
+                            </field>
+                        </group>
+                        <group string="Attach XML File">
+                            <group>
+                                <field name="file" filename="file_name"/>
+                                <field name="file_name" invisible="1"/>
+                                 <field name="cfop_id"/>
+                            </group>
+                            <group>
+                                <field name="file_create_date"/>
+                                <field name="danfe_no"/>
+                                <field name="danfe_value"/>
+                            </group>
+                            <group>
+                                <field name="purchase_id"/>
+                                <field name="vendor_order"/>
+                            </group>
+                        </group>
+                        <group string="Attach XML Items">
+                            <group>
+                                <field name="due_date" readonly="1"/>
+                                <field name="shipping_price" readonly="1"/>
+                            </group>
+                            <field name="panel_items" readonly="1">
+                                <list editable="bottom">
+                                    <field name="soc_xml_id" column_invisible="1"/>
+                                    <field name="ks_product_barcode"/>
+                                    <field name="ks_product_id"/>
+                                    <field name="ks_product_name"/>
+                                    <field name="ks_product_qty"/>
+                                    <field name="discount_item"/>
+                                    <field name="net_price"/>
+                                    <field name="ks_price"/>
+                                    <field name="ks_total_price"/>
+                                </list>
+                                <form>
+                                    <group>
+                                        <group>
+                                            <field name="company_id"/>
+                                            <field name="soc_xml_id" invisible="1"/>
+                                            <field name="ks_product_barcode"/>
+                                            <field name="ks_product_id"/>
+                                            <field name="ks_product_name"/>
+                                            <field name="team_id"/>
+                                            <field name="vendor_id"/>
+                                            <field name="customer_id"/>
+                                            <field name="nfe_tag_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
+                                        </group>
+                                        <group>
+                                            <field name="discount_item"/>
+                                            <field name="ks_product_qty"/>
+                                            <field name="ks_price"/>
+                                            <field name="ks_total_price"/>
+                                            <field name="net_price"/>
+                                            <field name="xml_type"/>
+                                        </group>
+                                    </group>
+                                </form>
+                            </field>
+                        </group>
+                    </sheet>
+                    <chatter/>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_soc_xml_panel_tree">
+            <field name="name">nfe.xml.panel.list</field>
+            <field name="model">nfe.xml.panel</field>
+            <field name="arch" type="xml">
+                <list string="NFe XML Panel Details" multi_edit="1" decoration-danger="is_cancelled">
+                    <field name="is_cancelled" column_invisible="1"/>
+                    <field name="nfe_direction" optional="show" widget="badge"
+                           decoration-success="nfe_direction == 'out'"
+                           decoration-info="nfe_direction == 'in'"/>
+                    <field name="company_id" optional="show"/>
+                    <field name="cancel_reason" optional="hide"/>
+                    <field name="cancel_date" optional="hide"/>
+                    <field name="key"/>
+                    <field name="file_create_date"/>
+                    <field name="partner_id" readonly="1" string="Client"/>
+                    <field name="team_id" readonly="0"/>
+                    <field name="danfe_no" readonly="1"/>
+                    <field name="due_date" readonly="1"/>
+                    <field name="shipping_price" readonly="1"/>
+                    <field name="danfe_value" readonly="1"/>
+                    <field name="purchase_id"/>
+                    <field name="invoice_id" readonly="1" optional="show"/>
+                    <field name="vendor_order"/>
+                    <field name="create_date"/>
+                    <field name="company_id"/>
+                    <field name="status" readonly="1"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="nfe_xml_panel_kanban_views" model="ir.ui.view">
+            <field name="name">nfe.xml.panel.kanban</field>
+            <field name="model">nfe.xml.panel</field>
+            <field name="arch" type="xml">
+                <kanban class="o_kanban_small_column" sample="1">
+                    <templates>
+                        <t t-name="card">
+                            <div>
+                                <strong><field name="key"/></strong>
+                            </div>
+                            <div>
+                                <strong><field name="partner_id"/></strong>
+                            </div>
+                            <div class="d-flex justify-content-between mt-3">
+                                <field name="file_create_date"/>
+                                <field name="status" widget="badge"/>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+        <record id="view_nfe_xml_graph" model="ir.ui.view">
+            <field name="name">view.nfe.xml.graph</field>
+            <field name="model">nfe.xml.panel</field>
+            <field name="arch" type="xml">
+                <graph string="Nfe XMl Panel">
+                    <field name="vendor_id" />
+                    <field name="danfe_value" type="measure" />
+                    <field name="shipping_price" type="measure" />
+                </graph>
+            </field>
+        </record>
+
+        <record id="view_nfe_xml_pivot" model="ir.ui.view">
+            <field name="name">view.nfe.xml.pivot</field>
+            <field name="model">nfe.xml.panel</field>
+            <field name="arch" type="xml">
+                <pivot string="Nfe XML panel">
+                    <field name="create_date" type="row"/>
+                    <field name="danfe_value" type="measure"/>
+                    <field name="shipping_price" type="measure" />
+                </pivot>
+            </field>
+        </record>
+
+        <record id="view_soc_xml_panel_search" model="ir.ui.view">
+            <field name="name">nfe.xml.panel.search</field>
+            <field name="model">nfe.xml.panel</field>
+            <field name="arch" type="xml">
+                <search string="Search">
+                    <field name="key"/>
+                    <field name="partner_id"/>
+                    <field name="danfe_no"/>
+                    <field name="file_name"/>
+                    <field name="company_id"/>
+                    <field name="purchase_id"/>
+                    <field name="invoice_id"/>
+                    <field name="vendor_order"/>
+                    <filter name="Return XMLs" string="Return Orders" domain="['|', ('cfop_id','like','5918'),
+                                                                              ('cfop_id','like','6918')
+                                                                                ]"/>
+                    <filter string="Customer" domain="[('partner_id','!=', False)]" help="Customer Set" name="partner_set"/>
+                    <filter string="Company" domain="[('company_id','!=', False)]" help="Company Set" name="company_set"/>
+                    <filter string="CFOP" domain="[('cfop_id','!=', False)]" help="CFOP Set" name="cfop_id_set"/>
+                    <filter string="Danfe" domain="[('danfe_no','!=', False)]" help="Danfe Set" name="danfe_set"/>
+                    <filter string="Invoiced" domain="[('invoice_id','!=', False)]" help="Invoice/Bill created" name="invoiced_set"/>
+                    <filter string="XML Create Date" domain="[('file_create_date','!=', False)]" help="Xml Date Set" name="file_create_date_set"/>
+                    <separator/>
+                    <filter string="Cancelled" domain="[('is_cancelled','=', True)]" help="Cancelled NFe" name="cancelled_set"/>
+                    <filter string="Not Cancelled" domain="[('is_cancelled','=', False)]" help="Active NFe" name="not_cancelled_set"/>
+                    <separator/>
+                    <filter string="Outgoing" domain="[('nfe_direction','=', 'out')]" name="direction_out"/>
+                    <filter string="Incoming" domain="[('nfe_direction','=', 'in')]" name="direction_in"/>
+                    <group>
+                        <filter name="group_by_file_create_date" string="XML Date" context="{'group_by':'file_create_date'}" help="XML by Date"/>
+                        <filter name="group_by_direction" string="Direction" context="{'group_by':'nfe_direction'}" help="Outgoing / Incoming"/>
+                        <filter name="group_by_company" string="Company" context="{'group_by':'company_id'}" help="Company"/>
+                        <filter name="group_by_partner_id" string="Client" context="{'group_by':'partner_id'}" help="Client"/>
+                        <filter name="group_by_team_id" string="Sales Team" context="{'group_by':'team_id'}" help="Sales Team"/>
+                        <filter name="group_by_status" string="Status" context="{'group_by':'status'}" help="Status"/>
+                        <filter name="group_by_cfop_id" string="CFOP" context="{'group_by':'cfop_id'}" help="CFOP"/>
+                        <filter name="group_by_danfe_id" string="Danfe" context="{'group_by':'danfe_no'}" help="Danfe"/>
+                        <filter name="group_purchase_id" string="Purchase Id" context="{'group_by': 'purchase_id'}"/>
+                        <filter name="group_vendor_order" string="Vendor Order" context="{'group_by': 'vendor_order'}"/>
+                        <filter name="group_system_generated" string="Generated by System" context="{'group_by': 'system_generated'}" help="Generated by System"/>
+                        <filter name="group_tags" string="Tags" context="{'group_by': 'nfe_tag_ids'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+
+        <!--        ACTION-->
+        <record model="ir.actions.act_window" id="action_ssoc_xml_panel">
+            <field name="name">NFe XML</field>
+            <field name="res_model">nfe.xml.panel</field>
+            <field name="view_mode">list,form,kanban,graph,pivot</field>
+            <field name="search_view_id" ref="liber_nfe_xml.view_soc_xml_panel_search"/>
+            <field name="domain">[]</field>
+            <field name="context">{"search_default_group_by_date":1}</field>
+        </record>
+
+        <!-- LAB FORK: parented on the Invoicing root (production hangs this
+             under Accounting > Entries, which Community hides behind the
+             "Show Full Accounting Features" group / paid Accounting app). -->
+        <menuitem id="menu_nfe_xml_panel"
+                  name="NFe XML"
+                  parent="account.menu_finance"
+                  sequence="5"/>
+        <menuitem id="nfe_xml_panel_menu"
+                  name="NFe XML"
+                  parent="liber_nfe_xml.menu_nfe_xml_panel"
+                  action="action_ssoc_xml_panel"
+                  sequence="1"/>
+
+        <!-- LAB FORK / Odoo 19: the Create SSOC / Create RPO / Create SO /
+             Create PO server actions were removed together with the order
+             flows (they depended on the missing soc.type model). Only the
+             invoice/bill flows remain. -->
+
+        <!-- Action to create BILL from xml panel -->
+        <record id="action_create_bill" model="ir.actions.server">
+            <field name="name">Create Bill</field>
+            <field name="model_id" ref="model_nfe_xml_panel"/>
+            <field name="binding_model_id" ref="model_nfe_xml_panel"/>
+            <field name="state">code</field>
+            <field name="code">
+                if records:
+                    action = records.bill_import_ail()
+            </field>
+        </record>
+
+        <!-- Action to create INVOICE from xml panel -->
+        <record id="action_create_invoice" model="ir.actions.server">
+            <field name="name">Create Invoice</field>
+            <field name="model_id" ref="model_nfe_xml_panel"/>
+            <field name="binding_model_id" ref="model_nfe_xml_panel"/>
+            <field name="state">code</field>
+            <field name="code">
+                if records:
+                    action = records.invoice_import_ail()
+            </field>
+        </record>
+
+    </data>
+
+    <record id="update_nfe_xml" model="ir.actions.server">
+        <field name="name">Process XML File</field>
+        <field name="model_id" ref="liber_nfe_xml.model_nfe_xml_panel"/>
+        <field name="binding_model_id" ref="liber_nfe_xml.model_nfe_xml_panel"/>
+        <field name="binding_view_types">list</field>
+        <field name="state">code</field>
+        <field name="code">action = records.action_import_xml_file()</field>
+    </record>
+
+    <record id="action_update_team_id" model="ir.actions.server">
+        <field name="name">Update Sales Team</field>
+        <field name="model_id" ref="model_nfe_xml_panel"/>
+        <field name="binding_model_id" ref="model_nfe_xml_panel"/>
+        <field name="state">code</field>
+        <field name="code">
+            if records:
+                action = records.action_update_team_id()
+        </field>
+    </record>
+</odoo>

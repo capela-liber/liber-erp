@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <record id="seq_consignment_agreement" model="ir.sequence">
+        <field name="name">Consignment Agreement</field>
+        <field name="code">consignment.agreement</field>
+        <field name="prefix">AC/%(year)s/</field>
+        <field name="padding">4</field>
+        <field name="company_id" eval="False"/>
+    </record>
+</odoo>

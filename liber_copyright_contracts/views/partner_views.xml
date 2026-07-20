@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_partner_form_copyright_contracts" model="ir.ui.view">
+        <field name="name">res.partner.form.edlab.contracts</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+
+            <div name="button_box" position="inside">
+                <button type="object" name="action_view_copyright_contracts"
+                        class="oe_stat_button" icon="fa-file-text-o"
+                        groups="liber_copyright_contracts.group_contract_user"
+                        invisible="edlab_contract_count == 0">
+                    <field name="edlab_contract_count" widget="statinfo"
+                           string="Contracts"/>
+                </button>
+            </div>
+
+            <notebook position="inside">
+                <page string="Copyright Contracts" name="copyright_contracts"
+                      groups="liber_copyright_contracts.group_contract_user"
+                      invisible="edlab_contract_count == 0">
+                    <field name="edlab_contract_ids" readonly="1">
+                        <list>
+                            <field name="name"/>
+                            <field name="signature_date"/>
+                            <field name="expiration_date"/>
+                            <field name="product_ids" widget="many2many_tags"
+                                   string="Works"/>
+                            <field name="state" widget="badge"
+                                   decoration-success="state == 'valid'"
+                                   decoration-warning="state == 'renewed'"
+                                   decoration-danger="state == 'expired'"
+                                   decoration-muted="state == 'cancelled'"/>
+                        </list>
+                    </field>
+                </page>
+            </notebook>
+
+        </field>
+    </record>
+
+</odoo>

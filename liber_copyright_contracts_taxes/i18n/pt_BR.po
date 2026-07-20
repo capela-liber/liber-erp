@@ -1,0 +1,527 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* liber_copyright_contracts_taxes
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0-20260630\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-07-08 12:19+0000\n"
+"PO-Revision-Date: 2026-07-08 12:19+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: liber_copyright_contracts_taxes
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_taxes.view_move_form_edlab_taxes
+msgid ""
+"<span class=\"o_stat_text\">IRRF</span>\n"
+"                        <span class=\"o_stat_text\">Tax Bill</span>"
+msgstr ""
+"<span class=\"o_stat_text\">IRRF</span>\n"
+"                        <span class=\"o_stat_text\">Fatura de Imposto</span>"
+
+#. module: liber_copyright_contracts_taxes
+#: model:ir.model.fields,help:liber_copyright_contracts_taxes.field_account_bank_statement_line__edlab_is_tax_bill
+#: model:ir.model.fields,help:liber_copyright_contracts_taxes.field_account_move__edlab_is_tax_bill
+msgid ""
+"Accumulator vendor bill that gathers the IRRF withheld from the author "
+"payment bills (one line per work)."
+msgstr ""
+"Fatura de fornecedor acumuladora que reúne o IRRF retido das faturas de "
+"pagamento dos autores (uma linha por obra)."
+
+#. module: liber_copyright_contracts_taxes
+#. odoo-python
+#: code:addons/liber_copyright_contracts_taxes/models/account_move.py:0
+#: model:ir.model.fields,field_description:liber_copyright_contracts_taxes.field_account_bank_statement_line__edlab_tax_origin_count
+#: model:ir.model.fields,field_description:liber_copyright_contracts_taxes.field_account_move__edlab_tax_origin_count
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_taxes.view_move_form_edlab_taxes
+msgid "Author Bills"
+msgstr "Faturas de Autores"
+
+#. module: liber_copyright_contracts_taxes
+#. odoo-python
+#: code:addons/liber_copyright_contracts_taxes/models/account_move.py:0
+msgid ""
+"Author bill %s was cancelled or deleted after this tax batch was posted - "
+"manual adjustment needed."
+msgstr "A fatura do autor %s foi cancelada ou excluída após o lançamento deste lote de impostos - ajuste manual necessário."
+
+#. module: liber_copyright_contracts_taxes
+#: model:ir.model.fields,help:liber_copyright_contracts_taxes.field_account_move_line__edlab_tax_source_move_id
+msgid "Author payment bill whose withheld IRRF this tax bill line carries."
+msgstr ""
+"Fatura de pagamento do autor cujo IRRF retido esta linha da fatura de "
+"imposto carrega."
+
+#. module: liber_copyright_contracts_taxes
+#: model:ir.model.fields,field_description:liber_copyright_contracts_taxes.field_edlab_irrf_bracket__amount_to
+msgid "Base Up To"
+msgstr "Base Até"
+
+#. module: liber_copyright_contracts_taxes
+#. odoo-python
+#: code:addons/liber_copyright_contracts_taxes/models/account_move.py:0
+msgid "Bills: %s"
+msgstr "Faturas: %s"
+
+#. module: liber_copyright_contracts_taxes
+#: model:ir.model.fields,field_description:liber_copyright_contracts_taxes.field_edlab_irrf_table__bracket_ids
+msgid "Brackets"
+msgstr "Faixas"
+
+#. module: liber_copyright_contracts_taxes
+#: model:ir.model,name:liber_copyright_contracts_taxes.model_res_company
+msgid "Companies"
+msgstr "Empresas"
+
+#. module: liber_copyright_contracts_taxes
+#: model:ir.model,name:liber_copyright_contracts_taxes.model_res_partner
+msgid "Contact"
+msgstr "Contato"
+
+#. module: liber_copyright_contracts_taxes
+#. odoo-python
+#: code:addons/liber_copyright_contracts_taxes/models/account_move.py:0
+msgid "Contracts: %s"
+msgstr "Contratos: %s"
+
+#. module: liber_copyright_contracts_taxes
+#: model:ir.model,name:liber_copyright_contracts_taxes.model_edlab_contract
+msgid "Copyright Contract"
+msgstr "Contrato de Direitos Autorais"
+
+#. module: liber_copyright_contracts_taxes
+#: model_terms:ir.actions.act_window,help:liber_copyright_contracts_taxes.action_edlab_irrf_tables
+msgid ""
+"Create the progressive table in force; the newest table whose\n"
+"               start date has passed is applied to each bill."
+msgstr ""
+"Crie a tabela progressiva em vigor; a tabela mais recente cuja data de "
+"início já passou é aplicada a cada fatura."
+
+#. module: liber_copyright_contracts_taxes
+#: model:ir.model.fields,field_description:liber_copyright_contracts_taxes.field_edlab_irrf_bracket__create_uid
+#: model:ir.model.fields,field_description:liber_copyright_contracts_taxes.field_edlab_irrf_table__create_uid
+msgid "Created by"
+msgstr "Criado por"
+
+#. module: liber_copyright_contracts_taxes
+#: model:ir.model.fields,field_description:liber_copyright_contracts_taxes.field_edlab_irrf_bracket__create_date
+#: model:ir.model.fields,field_description:liber_copyright_contracts_taxes.field_edlab_irrf_table__create_date
+msgid "Created on"
+msgstr "Criado em"
+
+#. module: liber_copyright_contracts_taxes
+#: model:ir.model.fields,help:liber_copyright_contracts_taxes.field_res_company__contract_tax_due_day
+msgid "Day of the following month when the withheld IRRF is due (DARF)."
+msgstr "Dia do mês seguinte em que o IRRF retido vence (DARF)."
+
+#. module: liber_copyright_contracts_taxes
+#: model:ir.model.fields,field_description:liber_copyright_contracts_taxes.field_edlab_irrf_bracket__deductible
+msgid "Deductible"
+msgstr "Parcela a Deduzir"
+
+#. module: liber_copyright_contracts_taxes
+#: model:ir.model.fields,field_description:liber_copyright_contracts_taxes.field_account_move__display_name
+#: model:ir.model.fields,field_description:liber_copyright_contracts_taxes.field_account_move_line__display_name
+#: model:ir.model.fields,field_description:liber_copyright_contracts_taxes.field_edlab_contract__display_name
+#: model:ir.model.fields,field_description:liber_copyright_contracts_taxes.field_edlab_irrf_bracket__display_name
+#: model:ir.model.fields,field_description:liber_copyright_contracts_taxes.field_edlab_irrf_table__display_name
+#: model:ir.model.fields,field_description:liber_copyright_contracts_taxes.field_res_company__display_name
+#: model:ir.model.fields,field_description:liber_copyright_contracts_taxes.field_res_partner__display_name
+msgid "Display Name"
+msgstr "Nome exibido"
+
+#. module: liber_copyright_contracts_taxes
+#: model:ir.model.fields.selection,name:liber_copyright_contracts_taxes.selection__res_partner__edlab_irrf_mode__none
+msgid "Exempt"
+msgstr "Isento"
+
+#. module: liber_copyright_contracts_taxes
+#: model:ir.model.fields,help:liber_copyright_contracts_taxes.field_edlab_irrf_bracket__deductible
+msgid "Fixed amount subtracted after applying the rate (parcela a deduzir)."
+msgstr "Valor fixo subtraído após aplicar a alíquota (parcela a deduzir)."
+
+#. module: liber_copyright_contracts_taxes
+#: model:ir.model.fields,help:liber_copyright_contracts_taxes.field_edlab_irrf_table__simplified_discount
+msgid ""
+"Fixed amount subtracted from the monthly income to obtain the tax base "
+"(accountant's method - no dependent deduction)."
+msgstr ""
+"Valor fixo subtraído da renda mensal para obter a base de cálculo (método do"
+" contador - sem dedução por dependentes)."
+
+#. module: liber_copyright_contracts_taxes
+#: model:ir.model.fields,help:liber_copyright_contracts_taxes.field_res_company__contract_tax_partner_id
+msgid ""
+"Government contact that receives the accumulated IRRF vendor bill. "
+"Withholding is only computed when this and the account below are set."
+msgstr ""
+"Contato do governo que recebe a fatura acumulada de IRRF. A retenção só é "
+"calculada quando este campo e a conta abaixo estão configurados."
+
+#. module: liber_copyright_contracts_taxes
+#: model:ir.model.fields,help:liber_copyright_contracts_taxes.field_res_partner__edlab_irrf_mode
+#: model:ir.model.fields,help:liber_copyright_contracts_taxes.field_res_users__edlab_irrf_mode
+msgid ""
+"How the withholding tax on this beneficiary's royalty payments is computed: "
+"by the official progressive table (default), by the fixed manual percentage "
+"below, or not at all (e.g. companies)."
+msgstr ""
+"Como o imposto retido dos pagamentos de royalties deste beneficiário é "
+"calculado: pela tabela progressiva oficial (padrão), pelo percentual manual "
+"fixo abaixo, ou isento (ex.: empresas)."
+
+#. module: liber_copyright_contracts_taxes
+#: model:ir.model.fields,field_description:liber_copyright_contracts_taxes.field_account_move__id
+#: model:ir.model.fields,field_description:liber_copyright_contracts_taxes.field_account_move_line__id
+#: model:ir.model.fields,field_description:liber_copyright_contracts_taxes.field_edlab_contract__id
+#: model:ir.model.fields,field_description:liber_copyright_contracts_taxes.field_edlab_irrf_bracket__id
+#: model:ir.model.fields,field_description:liber_copyright_contracts_taxes.field_edlab_irrf_table__id
+#: model:ir.model.fields,field_description:liber_copyright_contracts_taxes.field_res_company__id
+#: model:ir.model.fields,field_description:liber_copyright_contracts_taxes.field_res_partner__id
+msgid "ID"
+msgstr "ID"
+
+#. module: liber_copyright_contracts_taxes
+#. odoo-python
+#: code:addons/liber_copyright_contracts_taxes/models/account_move.py:0
+msgid "IRRF - %s - %s"
+msgstr "IRRF - %s - %s"
+
+#. module: liber_copyright_contracts_taxes
+#: model:ir.model.fields,field_description:liber_copyright_contracts_taxes.field_res_company__contract_tax_account_id
+msgid "IRRF Liability Account"
+msgstr "Conta de IRRF a Recolher"
+
+#. module: liber_copyright_contracts_taxes
+#: model:ir.model.fields,field_description:liber_copyright_contracts_taxes.field_res_partner__edlab_irrf_mode
+#: model:ir.model.fields,field_description:liber_copyright_contracts_taxes.field_res_users__edlab_irrf_mode
+msgid "IRRF Mode"
+msgstr "Modo de IRRF"
+
+#. module: liber_copyright_contracts_taxes
+#: model:ir.model,name:liber_copyright_contracts_taxes.model_edlab_irrf_table
+msgid "IRRF Progressive Table"
+msgstr "Tabela Progressiva de IRRF"
+
+#. module: liber_copyright_contracts_taxes
+#: model:ir.model,name:liber_copyright_contracts_taxes.model_edlab_irrf_bracket
+msgid "IRRF Table Bracket"
+msgstr "Faixa da Tabela de IRRF"
+
+#. module: liber_copyright_contracts_taxes
+#: model:ir.actions.act_window,name:liber_copyright_contracts_taxes.action_edlab_irrf_tables
+#: model:ir.ui.menu,name:liber_copyright_contracts_taxes.menu_edlab_irrf_tables
+msgid "IRRF Tables"
+msgstr "Tabelas de IRRF"
+
+#. module: liber_copyright_contracts_taxes
+#: model:ir.model.fields,field_description:liber_copyright_contracts_taxes.field_account_bank_statement_line__edlab_is_tax_bill
+#: model:ir.model.fields,field_description:liber_copyright_contracts_taxes.field_account_bank_statement_line__edlab_tax_move_id
+#: model:ir.model.fields,field_description:liber_copyright_contracts_taxes.field_account_move__edlab_is_tax_bill
+#: model:ir.model.fields,field_description:liber_copyright_contracts_taxes.field_account_move__edlab_tax_move_id
+msgid "IRRF Tax Bill"
+msgstr "Fatura de IRRF"
+
+#. module: liber_copyright_contracts_taxes
+#: model:ir.model.fields,field_description:liber_copyright_contracts_taxes.field_account_move_line__edlab_irrf_withholding
+msgid "IRRF Withholding Line"
+msgstr "Linha de Retenção de IRRF"
+
+#. module: liber_copyright_contracts_taxes
+#: model:account.account,name:liber_copyright_contracts_taxes.account_irrf_to_pay
+msgid "IRRF a Recolher"
+msgstr "IRRF a Recolher"
+
+#. module: liber_copyright_contracts_taxes
+#. odoo-python
+#: code:addons/liber_copyright_contracts_taxes/models/contract.py:0
+msgid "IRRF withheld - %s"
+msgstr "IRRF retido - %s"
+
+#. module: liber_copyright_contracts_taxes
+#: model:ir.model,name:liber_copyright_contracts_taxes.model_account_move
+msgid "Journal Entry"
+msgstr "Lançamento de diário"
+
+#. module: liber_copyright_contracts_taxes
+#: model:ir.model,name:liber_copyright_contracts_taxes.model_account_move_line
+msgid "Journal Item"
+msgstr "Item de diário"
+
+#. module: liber_copyright_contracts_taxes
+#: model:ir.model.fields,field_description:liber_copyright_contracts_taxes.field_edlab_irrf_bracket__write_uid
+#: model:ir.model.fields,field_description:liber_copyright_contracts_taxes.field_edlab_irrf_table__write_uid
+msgid "Last Updated by"
+msgstr "Última atualização por"
+
+#. module: liber_copyright_contracts_taxes
+#: model:ir.model.fields,field_description:liber_copyright_contracts_taxes.field_edlab_irrf_bracket__write_date
+#: model:ir.model.fields,field_description:liber_copyright_contracts_taxes.field_edlab_irrf_table__write_date
+msgid "Last Updated on"
+msgstr "Última atualização em"
+
+#. module: liber_copyright_contracts_taxes
+#: model:ir.model.fields,help:liber_copyright_contracts_taxes.field_res_company__contract_tax_account_id
+msgid ""
+"Liability account ('IRRF to pay') used both on the negative withholding line"
+" of the author's bill and on the government bill lines, so the liability is "
+"born at withholding and cleared when the tax is paid."
+msgstr ""
+"Conta de passivo ('IRRF a Recolher') usada tanto na linha negativa de "
+"retenção da fatura do autor quanto nas linhas da fatura do governo — o "
+"passivo nasce na retenção e é baixado quando o imposto é pago."
+
+#. module: liber_copyright_contracts_taxes
+#: model:ir.model.fields.selection,name:liber_copyright_contracts_taxes.selection__res_partner__edlab_irrf_mode__manual
+msgid "Manual Percentage"
+msgstr "Percentual Manual"
+
+#. module: liber_copyright_contracts_taxes
+#: model:ir.model.fields,help:liber_copyright_contracts_taxes.field_edlab_irrf_table__no_withholding_limit
+msgid ""
+"Monthly income up to this amount is NOT withheld at all (hard cutoff, "
+"computed before anything else)."
+msgstr ""
+"Renda mensal até este valor NÃO sofre retenção (corte direto, avaliado antes"
+" de tudo)."
+
+#. module: liber_copyright_contracts_taxes
+#: model:ir.model.fields,field_description:liber_copyright_contracts_taxes.field_edlab_irrf_table__name
+msgid "Name"
+msgstr "Nome"
+
+#. module: liber_copyright_contracts_taxes
+#: model_terms:ir.actions.act_window,help:liber_copyright_contracts_taxes.action_edlab_irrf_tables
+msgid "No IRRF table yet"
+msgstr "Ainda não há tabela de IRRF"
+
+#. module: liber_copyright_contracts_taxes
+#: model:ir.model.fields,field_description:liber_copyright_contracts_taxes.field_edlab_irrf_table__no_withholding_limit
+msgid "No Withholding Up To"
+msgstr "Sem Retenção Até"
+
+#. module: liber_copyright_contracts_taxes
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_taxes.view_edlab_irrf_table_form
+msgid "Progressive Brackets"
+msgstr "Faixas Progressivas"
+
+#. module: liber_copyright_contracts_taxes
+#: model:ir.model.fields.selection,name:liber_copyright_contracts_taxes.selection__res_partner__edlab_irrf_mode__table
+msgid "Progressive Table"
+msgstr "Tabela Progressiva"
+
+#. module: liber_copyright_contracts_taxes
+#: model:ir.model.fields,help:liber_copyright_contracts_taxes.field_res_company__contract_tax_journal_id
+msgid ""
+"Purchase journal of the IRRF vendor bill. Empty = company default purchase "
+"journal."
+msgstr ""
+"Diário de compras da fatura de IRRF. Vazio = diário de compras padrão da "
+"empresa."
+
+#. module: liber_copyright_contracts_taxes
+#: model:ir.model.fields,field_description:liber_copyright_contracts_taxes.field_edlab_irrf_bracket__rate
+msgid "Rate (%)"
+msgstr "Alíquota (%)"
+
+#. module: liber_copyright_contracts_taxes
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_taxes.view_edlab_irrf_table_form
+msgid "Reducer (Lei 15.270/2025)"
+msgstr "Redutor (Lei 15.270/2025)"
+
+#. module: liber_copyright_contracts_taxes
+#: model:ir.model.fields,field_description:liber_copyright_contracts_taxes.field_edlab_irrf_table__reducer_a
+msgid "Reducer Constant (A)"
+msgstr "Constante do Redutor (A)"
+
+#. module: liber_copyright_contracts_taxes
+#: model:ir.model.fields,field_description:liber_copyright_contracts_taxes.field_edlab_irrf_table__reducer_b
+msgid "Reducer Factor (B)"
+msgstr "Fator do Redutor (B)"
+
+#. module: liber_copyright_contracts_taxes
+#: model:ir.model.fields,field_description:liber_copyright_contracts_taxes.field_edlab_irrf_table__reducer_cap_limit
+msgid "Reducer Up To"
+msgstr "Redutor Até"
+
+#. module: liber_copyright_contracts_taxes
+#: model:ir.model.fields,help:liber_copyright_contracts_taxes.field_edlab_irrf_table__reducer_a
+#: model:ir.model.fields,help:liber_copyright_contracts_taxes.field_edlab_irrf_table__reducer_b
+msgid "Reducer formula: A - B x income (Lei 15.270/2025)."
+msgstr "Fórmula do redutor: A - B x renda (Lei 15.270/2025)."
+
+#. module: liber_copyright_contracts_taxes
+#: model:ir.model.fields,help:liber_copyright_contracts_taxes.field_account_move_line__edlab_tax_royalty_line_id
+msgid "Royalty line (work x beneficiary) this tax bill line refers to."
+msgstr ""
+"Linha de royalty (obra x beneficiário) a que esta linha da fatura de imposto"
+" se refere."
+
+#. module: liber_copyright_contracts_taxes
+#: model:ir.model.fields,help:liber_copyright_contracts_taxes.field_account_move_line__edlab_irrf_withholding
+msgid ""
+"Set on the negative line of the author's bill that withholds the IRRF "
+"(payable becomes net)."
+msgstr ""
+"Definido na linha negativa da fatura do autor que retém o IRRF (o valor a "
+"pagar torna-se líquido)."
+
+#. module: liber_copyright_contracts_taxes
+#: model:ir.model.fields,field_description:liber_copyright_contracts_taxes.field_edlab_irrf_table__simplified_discount
+msgid "Simplified Discount"
+msgstr "Desconto Simplificado"
+
+#. module: liber_copyright_contracts_taxes
+#: model:ir.model.fields,field_description:liber_copyright_contracts_taxes.field_edlab_irrf_bracket__table_id
+msgid "Table"
+msgstr "Tabela"
+
+#. module: liber_copyright_contracts_taxes
+#: model:ir.model.fields,field_description:liber_copyright_contracts_taxes.field_res_company__contract_tax_partner_id
+msgid "Tax Authority"
+msgstr "Órgão Arrecadador"
+
+#. module: liber_copyright_contracts_taxes
+#: model:ir.model.fields,field_description:liber_copyright_contracts_taxes.field_res_company__contract_tax_journal_id
+msgid "Tax Bill Journal"
+msgstr "Diário da Fatura de Imposto"
+
+#. module: liber_copyright_contracts_taxes
+#: model:ir.model.fields,field_description:liber_copyright_contracts_taxes.field_res_company__contract_tax_due_day
+msgid "Tax Due Day"
+msgstr "Dia de Vencimento do Imposto"
+
+#. module: liber_copyright_contracts_taxes
+#: model:ir.model.fields,field_description:liber_copyright_contracts_taxes.field_account_move_line__edlab_tax_royalty_line_id
+msgid "Tax Royalty Line"
+msgstr "Linha de Royalty do Imposto"
+
+#. module: liber_copyright_contracts_taxes
+#: model:ir.model.fields,field_description:liber_copyright_contracts_taxes.field_account_move_line__edlab_tax_source_move_id
+msgid "Tax Source Bill"
+msgstr "Fatura de Origem do Imposto"
+
+#. module: liber_copyright_contracts_taxes
+#: model:ir.model.fields,help:liber_copyright_contracts_taxes.field_account_bank_statement_line__edlab_tax_move_id
+#: model:ir.model.fields,help:liber_copyright_contracts_taxes.field_account_move__edlab_tax_move_id
+msgid ""
+"Tax bill (batch) carrying the IRRF withheld from this author payment bill."
+msgstr ""
+"Fatura de imposto (lote) que carrega o IRRF retido desta fatura de pagamento"
+" do autor."
+
+#. module: liber_copyright_contracts_taxes
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_taxes.view_company_form_copyright_taxes
+msgid "Taxes (IRRF)"
+msgstr "Impostos (IRRF)"
+
+#. module: liber_copyright_contracts_taxes
+#: model:ir.model.fields,help:liber_copyright_contracts_taxes.field_edlab_irrf_table__reducer_cap_limit
+msgid ""
+"The reducer applies to incomes up to this amount; above it the table value "
+"is final."
+msgstr ""
+"O redutor aplica-se a rendas até este valor; acima dele o valor da tabela é "
+"final."
+
+#. module: liber_copyright_contracts_taxes
+#: model:ir.model.fields,help:liber_copyright_contracts_taxes.field_edlab_irrf_table__date_from
+msgid ""
+"The table applies to bills dated on or after this date (until a more recent "
+"table starts)."
+msgstr ""
+"A tabela aplica-se a faturas datadas a partir desta data (até que uma tabela"
+" mais recente entre em vigor)."
+
+#. module: liber_copyright_contracts_taxes
+#: model:ir.model.fields,help:liber_copyright_contracts_taxes.field_edlab_irrf_bracket__amount_to
+msgid ""
+"Upper bound of the tax base for this bracket. 0 = no limit (top bracket)."
+msgstr ""
+"Limite superior da base de cálculo desta faixa. 0 = sem limite (faixa "
+"máxima)."
+
+#. module: liber_copyright_contracts_taxes
+#: model:ir.model.fields,field_description:liber_copyright_contracts_taxes.field_edlab_irrf_table__date_from
+msgid "Valid From"
+msgstr "Vigente a Partir de"
+
+#. module: liber_copyright_contracts_taxes
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_taxes.view_edlab_irrf_table_form
+msgid "Validity and Base"
+msgstr "Vigência e Base"
+
+#. module: liber_copyright_contracts_taxes
+#: model:ir.model.fields,field_description:liber_copyright_contracts_taxes.field_account_bank_statement_line__edlab_tax_origin_bill_ids
+#: model:ir.model.fields,field_description:liber_copyright_contracts_taxes.field_account_move__edlab_tax_origin_bill_ids
+msgid "Withheld From"
+msgstr "Retido De"
+
+#. module: liber_copyright_contracts_taxes
+#. odoo-python
+#: code:addons/liber_copyright_contracts_taxes/models/account_move.py:0
+msgid "draft"
+msgstr "rascunho"
+
+#. module: liber_copyright_contracts_taxes
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_taxes.view_edlab_irrf_table_form
+msgid "e.g. IRRF 2026"
+msgstr "ex.: IRRF 2026"
+
+#. module: liber_copyright_contracts_taxes
+#. odoo-python
+#: code:addons/liber_copyright_contracts_taxes/models/account_move.py:0
+msgid "edlab_tax_move_id"
+msgstr "edlab_tax_move_id"
+
+#. module: liber_copyright_contracts_taxes
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_taxes.res_config_settings_view_form_taxes
+msgid "Withholding (IRRF)"
+msgstr "Retenção (IRRF)"
+
+#. module: liber_copyright_contracts_taxes
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_taxes.res_config_settings_view_form_taxes
+msgid "Tax authority"
+msgstr "Órgão arrecadador"
+
+#. module: liber_copyright_contracts_taxes
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_taxes.res_config_settings_view_form_taxes
+msgid "Contact that receives the accumulated IRRF bill. Withholding is only computed when this and the account below are both set."
+msgstr "Contato que recebe a fatura acumulada de IRRF. A retenção só é calculada quando este campo e a conta abaixo estão preenchidos."
+
+#. module: liber_copyright_contracts_taxes
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_taxes.res_config_settings_view_form_taxes
+msgid "IRRF liability account"
+msgstr "Conta de passivo do IRRF"
+
+#. module: liber_copyright_contracts_taxes
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_taxes.res_config_settings_view_form_taxes
+msgid "'IRRF to pay': the liability is born when the tax is withheld from the author and cleared when it is paid to the government."
+msgstr "'IRRF a recolher': o passivo nasce quando o imposto é retido do autor e é baixado quando recolhido ao governo."
+
+#. module: liber_copyright_contracts_taxes
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_taxes.res_config_settings_view_form_taxes
+msgid "Tax bill journal"
+msgstr "Diário da fatura de imposto"
+
+#. module: liber_copyright_contracts_taxes
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_taxes.res_config_settings_view_form_taxes
+msgid "Purchase journal of the IRRF bill. Leave empty to use the company's default purchase journal."
+msgstr "Diário de compras da fatura de IRRF. Deixe vazio para usar o diário de compras padrão da empresa."
+
+#. module: liber_copyright_contracts_taxes
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_taxes.res_config_settings_view_form_taxes
+msgid "Tax due day"
+msgstr "Dia de vencimento do imposto"
+
+#. module: liber_copyright_contracts_taxes
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_taxes.res_config_settings_view_form_taxes
+msgid "of the following month"
+msgstr "do mês seguinte"

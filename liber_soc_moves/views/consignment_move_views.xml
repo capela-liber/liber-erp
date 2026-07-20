@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_consignment_move_list" model="ir.ui.view">
+        <field name="name">consignment.move.list</field>
+        <field name="model">consignment.move</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="date"/>
+                <field name="agreement_id"/>
+                <field name="partner_id" optional="show"/>
+                <field name="move_kind"/>
+                <field name="picking_state" optional="hide"/>
+                <field name="state" widget="badge"
+                       decoration-info="state == 'draft'"
+                       decoration-warning="state == 'waiting'"
+                       decoration-success="state in ('confirmed', 'done')"
+                       decoration-muted="state == 'cancel'"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_consignment_move_form" model="ir.ui.view">
+        <field name="name">consignment.move.form</field>
+        <field name="model">consignment.move</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_confirm" type="object" string="Confirm"
+                            class="btn-primary" invisible="state != 'draft'"/>
+                    <button name="action_release" type="object"
+                            string="Release to Logistics"
+                            class="btn-primary" invisible="state != 'waiting'"/>
+                    <button name="action_cancel" type="object" string="Cancel"
+                            invisible="state in ('done', 'cancel')"/>
+                    <button name="action_draft" type="object" string="Reset to Draft"
+                            invisible="state not in ('waiting', 'cancel')"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,waiting,confirmed"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_agreement" type="object"
+                                class="oe_stat_button" icon="fa-handshake-o"
+                                invisible="not agreement_id">
+                            <div class="o_stat_info">
+                                <span class="o_stat_text ms-2">Agreement</span>
+                            </div>
+                        </button>
+                        <button name="action_view_picking" type="object"
+                                class="oe_stat_button" icon="fa-truck"
+                                invisible="not picking_id">
+                            <div class="o_stat_info">
+                                <span class="o_stat_text ms-2">Transfer</span>
+                            </div>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <h1><field name="name" readonly="1"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="partner_id" readonly="state != 'draft'"/>
+                            <field name="agreement_id"/>
+                            <field name="location_id"/>
+                        </group>
+                        <group>
+                            <field name="move_kind" readonly="state != 'draft'"/>
+                            <field name="template_id" readonly="state != 'draft'"
+                                   invisible="move_kind == 'symbolic_renewal'"/>
+                            <field name="date"/>
+                            <field name="is_physical" invisible="1"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Products" name="lines"
+                              invisible="move_kind == 'symbolic_renewal'">
+                            <button name="action_apply_template" type="object"
+                                    string="Load from Campaign" class="btn-secondary mb-2"
+                                    invisible="not template_id or state != 'draft'"/>
+                            <field name="line_ids" readonly="state not in ('draft',)">
+                                <list editable="bottom">
+                                    <field name="product_id"/>
+                                    <field name="product_uom_qty"/>
+                                    <field name="product_uom" groups="uom.group_uom"/>
+                                    <field name="price_unit"/>
+                                    <field name="price_subtotal"/>
+                                    <field name="currency_id" column_invisible="1"/>
+                                </list>
+                            </field>
+                            <group class="oe_subtotal_footer">
+                                <field name="amount_total"/>
+                            </group>
+                        </page>
+                        <page string="Notes" name="notes">
+                            <field name="note"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_consignment_move_search" model="ir.ui.view">
+        <field name="name">consignment.move.search</field>
+        <field name="model">consignment.move</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="agreement_id"/>
+                <field name="partner_id"/>
+                <filter string="Renewals" name="f_renew" domain="[('move_kind', '=', 'symbolic_renewal')]"/>
+                <separator/>
+                <filter string="Draft" name="f_draft" domain="[('state', '=', 'draft')]"/>
+                <filter string="Waiting" name="f_waiting" domain="[('state', '=', 'waiting')]"/>
+                <filter string="Done" name="f_done" domain="[('state', '=', 'done')]"/>
+                <group>
+                    <filter string="Customer" name="g_partner" context="{'group_by': 'partner_id'}"/>
+                    <filter string="Type" name="g_kind" context="{'group_by': 'move_kind'}"/>
+                    <filter string="Status" name="g_state" context="{'group_by': 'state'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_consignment_move" model="ir.actions.act_window">
+        <field name="name">Returns</field>
+        <field name="res_model">consignment.move</field>
+        <field name="view_mode">list,activity,form</field>
+        <field name="search_view_id" ref="view_consignment_move_search"/>
+        <!-- Returns only. The model also holds the inventory ADJUSTMENTS the audit
+             writes when its differences are accepted (6 of them here), and those
+             are not returns: no deadline, no transfer, nothing to chase. They were
+             sitting in this list pretending to be. -->
+        <field name="domain">[('move_kind', '=', 'return')]</field>
+        <field name="context">{'create': False, 'default_move_kind': 'return'}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No movements yet
+            </p>
+            <p>
+                This is the movement ledger. Shipments, replenishments, returns
+                and symbolic renewals are originated from an Operation, not here.
+                Warehouse processing (confirm/validate the transfer) happens on
+                each record.
+            </p>
+        </field>
+    </record>
+
+</odoo>

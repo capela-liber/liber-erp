@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Painel de Notas Fiscais (XML)</title>
+<style>
+:root{--bg:#f4f1ea;--card:#fff;--ink:#22201c;--muted:#7a7468;--line:#e4ddcf;
+--teal:#1f6f6b;--terra:#c0563a;--gold:#c79a3a;--green:#3a7d44;--red:#b23b3b;--blue:#3a6ea5;--sel:#eef5f4}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font:15px/1.5 -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--ink)}
+.wrap{max-width:1240px;margin:0 auto;padding:20px 18px 80px}
+h1{font-size:25px;font-weight:800;letter-spacing:-.5px}
+.sub{color:var(--muted);font-size:13px;margin-top:2px}
+.kpis{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin:16px 0}
+.kpi{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px}
+.kpi .v{font-size:19px;font-weight:800;letter-spacing:-.5px}
+.kpi .l{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.3px;margin-top:2px}
+nav{display:flex;gap:6px;margin:14px 0;flex-wrap:wrap;position:sticky;top:0;background:var(--bg);padding:8px 0;z-index:6}
+nav button{font:inherit;font-weight:600;font-size:13px;border:1px solid var(--line);background:var(--card);color:var(--muted);padding:8px 14px;border-radius:20px;cursor:pointer}
+nav button.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+.filterbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 12px;margin-bottom:16px}
+.filterbar label{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.3px;margin-right:4px}
+select,input[type=number],input[type=text]{font:inherit;font-size:13px;border:1px solid var(--line);border-radius:8px;padding:6px 8px;background:#fdfcfa;color:var(--ink)}
+.btn{font:inherit;font-size:12.5px;font-weight:600;border:1px solid var(--line);background:var(--card);color:var(--ink);padding:6px 12px;border-radius:8px;cursor:pointer}
+.btn:hover{background:var(--sel)}.btn.p{background:var(--teal);color:#fff;border-color:var(--teal)}.btn.mini{padding:2px 7px;font-size:11px}
+.btn.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+section{display:none}section.on{display:block}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;margin-bottom:16px}
+.card h2{font-size:16px;margin-bottom:3px}.card .note{font-size:12.5px;color:var(--muted);margin-bottom:12px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+@media(max-width:860px){.kpis{grid-template-columns:repeat(2,1fr)}.grid2,.grid3{grid-template-columns:1fr}.md{grid-template-columns:1fr!important}}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th,td{text-align:left;padding:6px 8px;border-bottom:1px solid var(--line)}
+th{font-size:11px;text-transform:uppercase;letter-spacing:.3px;color:var(--muted)}
+th.s{cursor:pointer;user-select:none}th.s:hover{color:var(--ink)}
+td.n,th.n{text-align:right;font-variant-numeric:tabular-nums}
+tr:hover td{background:#faf8f3}
+.scroll{max-height:460px;overflow:auto;border:1px solid var(--line);border-radius:10px}
+.scroll table th{position:sticky;top:0;background:var(--card);z-index:1}
+.bar{height:9px;border-radius:5px;background:var(--teal)}
+.tag{display:inline-block;font-size:11px;font-weight:700;padding:2px 8px;border-radius:10px;white-space:nowrap}
+.danger{background:#f7e3e0;color:var(--red)}.warn{background:#f6edd6;color:#9a7b1e}.ok{background:#e1efe3;color:var(--green)}.mut2{background:#eee9df;color:#6b665b}
+.flag{background:#fff6e9;border:1px solid #f0d9af;border-radius:10px;padding:11px 13px;font-size:13px;margin-bottom:14px}
+.flag b{color:var(--terra)}
+.big{font-size:28px;font-weight:800;letter-spacing:-1px}
+.legend{display:flex;gap:12px;flex-wrap:wrap;font-size:12px;margin-top:6px}
+.legend i{width:11px;height:11px;border-radius:3px;display:inline-block;margin-right:5px;vertical-align:-1px}
+.mut{color:var(--muted)}.teal{color:var(--teal)}.terra{color:var(--terra)}.clk{cursor:pointer;border-bottom:1px dotted #bbb}.clk:hover{color:var(--teal)}
+.mono{font-family:ui-monospace,Menlo,monospace;font-size:11px;color:#555;background:#f6f2ea;padding:1px 5px;border-radius:5px;word-break:break-all}
+details{margin-top:10px}details summary{cursor:pointer;font-weight:600;font-size:13px;color:var(--teal);padding:6px 0}
+.toolbar{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:10px}
+.md{display:grid;grid-template-columns:310px 1fr;gap:16px}
+.booklist{max-height:540px;overflow:auto;border:1px solid var(--line);border-radius:10px}
+.bookitem{padding:8px 10px;cursor:pointer;border-bottom:1px solid var(--line)}
+.bookitem:hover{background:#faf8f3}.bookitem.sel{background:var(--sel);box-shadow:inset 3px 0 0 var(--teal)}
+.bookitem .t{font-size:13px;font-weight:600;line-height:1.25}.bookitem .m{font-size:11.5px;color:var(--muted)}
+.bookitem .mini{height:5px;border-radius:3px;background:var(--gold);margin-top:4px}
+.chip{display:inline-block;background:var(--sel);border-radius:8px;padding:4px 9px;font-size:12px;margin:0 6px 6px 0}
+.ov{display:none;position:fixed;inset:0;background:rgba(20,18,15,.45);z-index:20;align-items:flex-start;justify-content:center;padding:34px 16px;overflow:auto}
+.ov.on{display:flex}
+.modal{background:var(--card);border-radius:16px;max-width:740px;width:100%;padding:22px}
+.modal .x{float:right;cursor:pointer;font-size:20px;color:var(--muted);border:none;background:none}
+#ov2{z-index:30}
+#cmtip{display:none;position:fixed;z-index:50;background:#fff;border:1px solid var(--line);border-radius:9px;box-shadow:0 6px 24px rgba(0,0,0,.16);padding:8px 10px;font-size:11.5px;max-width:300px;pointer-events:none;line-height:1.5}
+footer{color:var(--muted);font-size:12px;text-align:center;margin-top:26px}
+</style></head><body><div class="wrap">
+<header><h1>📚 Painel de Notas Fiscais (XML)</h1><div class="sub" id="sub"></div></header>
+<div class="filterbar" id="fb"></div>
+<div class="kpis" id="kpis"></div>
+<nav id="nav"></nav>
+<section id="s-geral" class="on"></section>
+<section id="s-clientes"></section>
+<section id="s-consig"></section>
+<section id="s-produtos"></section>
+<section id="s-sazon"></section>
+<section id="s-consighist"></section>
+<section id="s-checagem"></section>
+<footer>Visão XML (conferência/migração) — não substitui os registros do Odoo · Receita = VENDA + ACERTO de consignação (CFOP genérico 5949/6949 = remessa simples, fora da receita) · <b>Valores LÍQUIDOS</b> (bruto = preço de capa) · Clique em nomes <span class="clk">sublinhados</span> para abrir extrato e notas fiscais.</footer>
+</div>
+<div class="ov" id="ov"><div class="modal" id="modal"></div></div>
+<div class="ov" id="ov2"><div class="modal" id="modal2"></div></div>
+<div id="cmtip"></div>
+<script>
+const P=__PAYLOAD__;
+const OWNS=new Set([].concat(P.meta.own)),CLI=P.cli,PROD=P.prod,IT=P.itens,M=P.months,CANAIS=P.canais,CATS=P.cats,NOTES=P.notes,CFOPS=P.cfops,UNIDS=P.unids||['Matriz','Filial'];
+const catI=Object.fromEntries(CATS.map((c,i)=>[c,i]));
+const _M=0,_U=1,_D=2,_PR=3,_Q=4,_V=5,_C=6,_CA=7,_R=8,_N=9,_CF=10,_VG=11,_VD=12; // _V=líquido, _VG=bruto/capa, _VD=desconto
+const CFOPCAT={};IT.forEach(it=>{const cf=CFOPS[it[_CF]];if(!CFOPCAT[cf])CFOPCAT[cf]=CATS[it[_C]];});
+const CFOPLIST=[...CFOPS].sort();
+const internal=di=>OWNS.has(CLI[di][0].slice(0,8)), nomeOf=di=>CLI[di][1]||'(sem nome)', ufOf=di=>CLI[di][2]||'??', grpOf=di=>CLI[di][0].slice(0,8), docOf=di=>CLI[di][0];
+const docDi={};CLI.forEach((c,i)=>docDi[c[0]]=i);
+const brl=v=>'R$ '+(+v||0).toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});
+const brlk=v=>Math.abs(v)>=1e6?'R$ '+(v/1e6).toFixed(2)+'M':Math.abs(v)>=1e3?'R$ '+(v/1e3).toFixed(0)+'k':'R$ '+(+v).toFixed(0);
+const num=v=>(+v||0).toLocaleString('pt-BR');
+const esc=s=>(s||'').replace(/[&<>"'`]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;','`':'&#96;'}[c]));
+const _dP=s=>new Date(s+'T00:00:00Z');const dayDiff=(a,b)=>Math.round((_dP(b)-_dP(a))/864e5);const dayDiffRef=d=>Math.round((_dP(P.meta.ref)-_dP(d))/864e5);
+let F={m0:0,m1:M.length-1,u:'all',uf:'all',ca:'all',cf:'all'};
+const UFS=[...new Set(IT.filter(i=>!internal(i[_D])).map(i=>ufOf(i[_D])))].filter(x=>x&&x!=='??').sort();
+const passS=it=>it[_M]>=F.m0&&it[_M]<=F.m1&&(F.u==='all'||it[_U]==+F.u)&&(F.uf==='all'||ufOf(it[_D])===F.uf)&&(F.cf==='all'||CFOPS[it[_CF]]===F.cf);
+const pass=it=>passS(it)&&(F.ca==='all'||it[_CA]==+F.ca);
+const revItems=()=>IT.filter(it=>it[_R]===1&&!internal(it[_D])&&pass(it));
+
+// ---------- charts ----------
+function hbars(rows,lab,val,color,money){const mx=Math.max(...rows.map(val),1);
+return `<table>${rows.map(r=>{const v=val(r);return `<tr><td>${lab(r)}</td><td style="width:40%"><div class="bar" style="width:${Math.max(2,100*v/mx)}%;background:${color||'var(--teal)'}"></div></td><td class="n">${money===false?num(Math.round(v)):brl(v)}</td></tr>`;}).join('')}</table>`;}
+function donut(rows,lab,val,colors){const tot=rows.reduce((s,r)=>s+val(r),0)||1;let a=-Math.PI/2;
+const segs=rows.map((r,i)=>{const f=val(r)/tot,a2=a+f*2*Math.PI,x1=120+90*Math.cos(a),y1=120+90*Math.sin(a),x2=120+90*Math.cos(a2),y2=120+90*Math.sin(a2),big=f>.5?1:0;const p=`<path d="M${x1.toFixed(1)},${y1.toFixed(1)} A90,90 0 ${big} 1 ${x2.toFixed(1)},${y2.toFixed(1)}" fill="none" stroke="${colors[i%colors.length]}" stroke-width="32"><title>${esc(lab(r))}: ${brl(val(r))} (${(f*100).toFixed(1)}%)</title></path>`;a=a2;return p;}).join('');
+const leg=rows.map((r,i)=>`<div><i style="background:${colors[i%colors.length]}"></i>${esc(lab(r))} <span class="mut">${(100*val(r)/tot).toFixed(1)}%</span></div>`).join('');
+return `<div style="display:flex;gap:16px;align-items:center;flex-wrap:wrap"><svg viewBox="0 0 240 240" style="width:190px">${segs}<text x="120" y="116" text-anchor="middle" font-size="12" fill="#7a7468">Receita</text><text x="120" y="138" text-anchor="middle" font-size="16" font-weight="800">${brlk(tot)}</text></svg><div class="legend" style="flex-direction:column">${leg}</div></div>`;}
+function groupedBars(labels,series){const w=1000,h=250,pL=46,pR=10,pB=30,pT=8,n=labels.length,g=series.length;
+const mx=Math.max(...series.flatMap(s=>s.data),1),gw=(w-pL-pR)/n,bw=gw*0.8/g,Y=v=>pT+(h-pT-pB)*(1-v/mx);
+let bars='';labels.forEach((l,i)=>series.forEach((s,j)=>{const x=pL+i*gw+gw*0.1+j*bw,y=Y(s.data[i]);bars+=`<rect x="${x.toFixed(1)}" y="${y.toFixed(1)}" width="${(bw*0.9).toFixed(1)}" height="${Math.max(0,h-pB-y).toFixed(1)}" fill="${s.color}" rx="1"><title>${l} · ${s.name}: ${brl(s.data[i])}</title></rect>`;}));
+const gl=[0,.25,.5,.75,1].map(f=>{const y=Y(mx*f);return `<line x1="${pL}" x2="${w-pR}" y1="${y.toFixed(1)}" y2="${y.toFixed(1)}" stroke="#f0ebe0"/><text x="${pL-5}" y="${(y+3).toFixed(1)}" font-size="9" fill="#7a7468" text-anchor="end">${brlk(mx*f)}</text>`;}).join('');
+const xl=labels.map((l,i)=>`<text x="${(pL+i*gw+gw/2).toFixed(1)}" y="${h-pB+14}" font-size="9" fill="#7a7468" text-anchor="middle">${l.slice(2)}</text>`).join('');
+const leg=series.map(s=>`<span style="font-size:12.5px;margin-right:14px"><i style="background:${s.color};width:11px;height:11px;display:inline-block;border-radius:3px;vertical-align:-1px;margin-right:5px"></i>${s.name}</span>`).join('');
+return `<div style="margin-bottom:6px">${leg}</div><svg viewBox="0 0 ${w} ${h}" style="width:100%;height:auto">${gl}${bars}${xl}</svg>`;}
+function pareto(vals){vals=[...vals].sort((a,b)=>b-a);const tot=vals.reduce((a,b)=>a+b,0)||1;
+const n=Math.min(vals.length,30),top=vals.slice(0,n),mx=top[0]||1,w=560,h=210,pL=8,pR=34,pB=26,pT=8;
+let c=0;const cumAll=vals.map(v=>(c+=v)/tot*100);const cum=cumAll.slice(0,n);
+const bw=(w-pL-pR)/n,Yb=v=>pT+(h-pT-pB)*(1-v/mx),Yc=p=>pT+(h-pT-pB)*(1-p/100);
+const bars=top.map((v,i)=>`<rect x="${(pL+i*bw).toFixed(1)}" y="${Yb(v).toFixed(1)}" width="${(bw*0.78).toFixed(1)}" height="${(h-pB-Yb(v)).toFixed(1)}" fill="#d9cba6"/>`).join('');
+const X=i=>pL+i*bw+bw*0.39;
+const line=cum.map((p,i)=>`${i?'L':'M'}${X(i).toFixed(1)},${Yc(p).toFixed(1)}`).join(' ');
+const dots=cum.map((p,i)=>`<circle cx="${X(i).toFixed(1)}" cy="${Yc(p).toFixed(1)}" r="2" fill="var(--terra)"><title>top ${i+1}: ${p.toFixed(1)}% acumulado</title></circle>`).join('');
+const guides=[80,95].map(p=>`<line x1="${pL}" x2="${w-pR}" y1="${Yc(p).toFixed(1)}" y2="${Yc(p).toFixed(1)}" stroke="#e4ddcf" stroke-dasharray="3"/><text x="${w-pR+2}" y="${(Yc(p)+3).toFixed(1)}" font-size="9" fill="#7a7468">${p}%</text>`).join('');
+return `<svg viewBox="0 0 ${w} ${h}" style="width:100%;height:auto">${guides}${bars}<path d="${line}" fill="none" stroke="var(--terra)" stroke-width="2"/>${dots}<text x="${pL}" y="${h-6}" font-size="9.5" fill="#7a7468">Itens ranqueados por receita (top ${n}) · barras = receita · linha = % acumulado</text></svg>`;}
+const PAL=['#1f6f6b','#c0563a','#c79a3a','#3a6ea5','#3a7d44','#9a5ba6','#b23b3b','#5a8f8b','#d08c4a','#7a7468'];
+// fluxo mensal de consignação: barras agrupadas remessa/acerto/devolução, clicáveis (abre as notas do mês/tipo)
+function flowChart(months,sr,sa,sd){const w=1400,h=290,pL=52,pR=8,pB=30,pT=14,n=months.length;
+const mx=Math.max(...sr,...sa,...sd,1),gw=(w-pL-pR)/n,bw=gw*0.86/3,Y=v=>pT+(h-pT-pB)*(1-v/mx);
+const ser=[['#1f6f6b',sr,'Remessa'],['#c79a3a',sa,'Acerto'],['#b23b3b',sd,'Devolução']];
+let bars='',hits='';
+for(let i=0;i<n;i++)ser.forEach((s,j)=>{const v=s[1][i],x=pL+i*gw+gw*0.07+j*bw;
+  if(v>0){const y=Y(v);bars+=`<rect x="${x.toFixed(1)}" y="${y.toFixed(1)}" width="${bw.toFixed(1)}" height="${(h-pB-y).toFixed(1)}" fill="${s[0]}" rx="0.6"/>`;}
+  hits+=`<rect x="${x.toFixed(1)}" y="${pT}" width="${bw.toFixed(1)}" height="${(h-pB-pT).toFixed(1)}" fill="transparent" style="cursor:pointer" onmouseover="this.style.fill='rgba(0,0,0,.05)'" onmouseout="this.style.fill='transparent'" onclick="chBar(${i},${j})"><title>${months[i]} · ${s[2]}: ${brl(v)}${v>0?' · clique p/ ver as notas':''}</title></rect>`;});
+const ysep=months.map((m,i)=>m.slice(5)==='01'?`<line x1="${(pL+i*gw).toFixed(1)}" x2="${(pL+i*gw).toFixed(1)}" y1="${pT}" y2="${h-pB}" stroke="#ece5d5"/>`:'').join('');
+const gl=[0,.5,1].map(f=>{const y=Y(mx*f);return `<line x1="${pL}" x2="${w-pR}" y1="${y.toFixed(1)}" y2="${y.toFixed(1)}" stroke="#f0ebe0"/><text x="${pL-6}" y="${(y+3).toFixed(1)}" font-size="10" fill="#7a7468" text-anchor="end">${brlk(mx*f)}</text>`;}).join('');
+const xl=months.map((m,i)=>(m.slice(5)==='01'||i===0)?`<text x="${(pL+i*gw+gw/2).toFixed(1)}" y="${h-pB+17}" font-size="11" fill="#5a554c" text-anchor="middle" font-weight="600">${m.slice(0,4)}</text>`:'').join('');
+const leg=ser.map(s=>`<span style="font-size:12.5px;margin-right:14px"><i style="background:${s[0]};width:12px;height:12px;display:inline-block;border-radius:3px;vertical-align:-2px;margin-right:5px"></i>${s[2]}</span>`).join('');
+return `<div style="margin-bottom:5px">${leg}<span class="mut" style="font-size:11.5px">— clique numa barra para ver as notas</span></div><svg viewBox="0 0 ${w} ${h}" style="width:100%;height:auto">${ysep}${gl}${bars}${hits}${xl}</svg>`;}
+// saldo acumulado em consignação (remessa - acerto - devolução, acumulado)
+function saldoChart(months,sr,sa,sd){const w=1400,h=150,pL=48,pR=8,pB=24,pT=8,n=months.length;
+let cum=[],c=0;for(let i=0;i<n;i++){c+=sr[i]-sa[i]-sd[i];cum.push(c);}
+const mx=Math.max(...cum,1),mn=Math.min(...cum,0),X=i=>pL+i*(w-pL-pR)/Math.max(1,n-1),Y=v=>pT+(h-pT-pB)*(1-(v-mn)/((mx-mn)||1));
+const d=cum.map((v,i)=>`${i?'L':'M'}${X(i).toFixed(1)},${Y(v).toFixed(1)}`).join(' ');
+const area=d+` L${X(n-1).toFixed(1)},${Y(mn).toFixed(1)} L${X(0).toFixed(1)},${Y(mn).toFixed(1)} Z`;
+const gl=[mx,(mx+mn)/2,mn].map(v=>`<line x1="${pL}" x2="${w-pR}" y1="${Y(v).toFixed(1)}" y2="${Y(v).toFixed(1)}" stroke="#f0ebe0"/><text x="${pL-5}" y="${(Y(v)+3).toFixed(1)}" font-size="9" fill="#7a7468" text-anchor="end">${brlk(v)}</text>`).join('');
+const xl=months.map((m,i)=>(m.slice(5)==='01'||i===0)?`<text x="${X(i).toFixed(1)}" y="${h-pB+15}" font-size="9.5" fill="#7a7468" text-anchor="middle">${m.slice(0,4)}</text>`:'').join('');
+const dots=cum.map((v,i)=>`<circle cx="${X(i).toFixed(1)}" cy="${Y(v).toFixed(1)}" r="6" fill="transparent"><title>${months[i]}: saldo ${brl(v)}</title></circle>`).join('');
+return `<svg viewBox="0 0 ${w} ${h}" style="width:100%;height:auto">${gl}<path d="${area}" fill="rgba(192,86,58,.12)"/><path d="${d}" fill="none" stroke="var(--terra)" stroke-width="2"/>${dots}${xl}</svg>`;}
+// linha de receita mensal do cliente, com TODOS os meses no rodapé e picos destacados
+function clientChart(pts,labels,peaks){const w=1000,h=176,pL=8,pR=8,pB=26,pT=10,mx=Math.max(...pts,1);
+const X=i=>pL+i*(w-pL-pR)/Math.max(1,pts.length-1),Y=v=>pT+(h-pT-pB)*(1-v/mx);
+const d=pts.map((v,i)=>`${i?'L':'M'}${X(i).toFixed(1)},${Y(v).toFixed(1)}`).join(' ');
+const area=d+` L${X(pts.length-1).toFixed(1)},${(h-pB).toFixed(1)} L${pL},${(h-pB).toFixed(1)} Z`;
+const pmark=peaks.map(i=>`<line x1="${X(i).toFixed(1)}" x2="${X(i).toFixed(1)}" y1="${Y(pts[i]).toFixed(1)}" y2="${(h-pB).toFixed(1)}" stroke="var(--terra)" stroke-dasharray="3" opacity=".55"/>`).join('');
+const dots=pts.map((v,i)=>{const pk=peaks.includes(i);return `<circle cx="${X(i).toFixed(1)}" cy="${Y(v).toFixed(1)}" r="${pk?4:2}" fill="${pk?'var(--terra)':'var(--teal)'}"/>`;}).join('');
+const hits=pts.map((v,i)=>`<circle cx="${X(i).toFixed(1)}" cy="${Y(v).toFixed(1)}" r="14" fill="transparent" style="cursor:pointer" onmouseover="cmTip(event,${i})" onmousemove="cmTip(event,${i})" onmouseout="cmHide()" onclick="cmOpen(${i})"/>`).join('');
+const lbl=labels.map((l,i)=>`<text x="${X(i).toFixed(1)}" y="${h-8}" font-size="8.5" fill="${peaks.includes(i)?'#c0563a':'#9a9486'}" text-anchor="middle"${peaks.includes(i)?' font-weight="700"':''}>${l.slice(2)}</text>`).join('');
+return `<svg viewBox="0 0 ${w} ${h}" style="width:100%;height:auto"><path d="${area}" fill="rgba(31,111,107,.12)"/><path d="${d}" fill="none" stroke="var(--teal)" stroke-width="2"/>${pmark}${dots}${lbl}${hits}</svg>`;}
+
+// ---------- aggregation + tables ----------
+function aggBy(items,keyf){const m=new Map();for(const it of items){const k=keyf(it);let e=m.get(k);if(!e){e={k,v:0,q:0,vg:0,vd:0,notes:new Set(),di:it[_D]};m.set(k,e);}e.v+=it[_V];e.q+=it[_Q];e.vg+=it[_VG];e.vd+=it[_VD];e.notes.add(it[_N]);}return [...m.values()];}
+function abc(entries){const s=[...entries].sort((a,b)=>b.v-a.v),tot=s.reduce((a,e)=>a+e.v,0)||1;let c=0,A=0,B=0,C=0;for(const e of s){c+=e.v;const p=c/tot*100;if(p<=80){e.cls='A';A++;}else if(p<=95){e.cls='B';B++;}else{e.cls='C';C++;}}return {s,A,B,C,tot,clsOf:Object.fromEntries(s.map(e=>[e.k,e.cls]))};}
+const csvDL=(name,rows)=>{if(!rows||!rows.length)return;const cols=Object.keys(rows[0]);const csv=[cols.join(';')].concat(rows.map(r=>cols.map(c=>`"${String(r[c]).replace(/"/g,'""')}"`).join(';'))).join('\n');const a=document.createElement('a');a.href=URL.createObjectURL(new Blob(['﻿'+csv],{type:'text/csv'}));a.download=name;a.click();};
+const TBL={};
+function mkTable(id,rows,cols,sort,desc,limit){TBL[id]={all:rows,rows,cols,sort,desc:desc!==false,limit:limit||0};drawTable(id);}
+function drawTable(id){const t=TBL[id];const s=[...t.rows].sort((a,b)=>{const c=t.cols[t.sort];const va=c.get(a),vb=c.get(b);let r=c.num?((+vb||0)-(+va||0)):String(vb).localeCompare(String(va),'pt');return t.desc?r:-r;});
+const vis=t.limit&&s.length>t.limit?s.slice(0,t.limit):s;
+const head='<tr>'+t.cols.map((c,i)=>`<th class="s ${c.num?'n':''}" onclick="tsort('${id}',${i})">${c.h}${i===t.sort?(t.desc?' ▾':' ▴'):''}</th>`).join('')+'</tr>';
+const body=vis.map(r=>'<tr>'+t.cols.map(c=>`<td class="${c.num?'n':''}">${c.fmt?c.fmt(c.get(r),r):esc(String(c.get(r)))}</td>`).join('')+'</tr>').join('');
+document.getElementById(id).innerHTML='<div class="scroll"><table>'+head+body+'</table></div><div class="note">'+(t.limit&&s.length>t.limit?('mostrando '+t.limit+' de '+s.length+' — exporte o CSV p/ a lista completa'):(s.length+' linhas'))+'</div>';}
+function tsort(id,i){const t=TBL[id];if(t.sort===i)t.desc=!t.desc;else{t.sort=i;t.desc=true;}drawTable(id);}
+function tsearch(id,q){const t=TBL[id];q=(q||'').toLowerCase();t.rows=q?t.all.filter(r=>(r._s||'').toLowerCase().includes(q)):t.all;drawTable(id);}
+function tfilter(id,fn,btn){const t=TBL[id];t.rows=fn?t.all.filter(fn):t.all;drawTable(id);if(btn){btn.parentNode.querySelectorAll('.btn').forEach(b=>b.classList.remove('on'));btn.classList.add('on');}}
+function texport(id,fn){const t=TBL[id];const rows=t.rows.map(r=>Object.fromEntries(t.cols.map(c=>[c.k||c.h,c.raw?c.raw(r):c.get(r)])));csvDL(fn,rows);}
+
+// ---------- fonte da verdade (notas) ----------
+function srcNotes(items){const m=new Map();items.forEach(it=>{const ni=it[_N];let e=m.get(ni);if(!e){e={ni,v:0,cats:{}};m.set(ni,e);}e.v+=it[_V];e.cats[CATS[it[_C]]]=1;});
+return [...m.values()].map(e=>{const nt=NOTES[e.ni];return {chave:nt[0],nNF:nt[1],data:nt[2],path:nt[3],v:e.v,op:Object.keys(e.cats).join(', ').replace(/_/g,' ')};}).sort((a,b)=>a.data<b.data?1:-1);}
+function notesDetails(items){const rows=srcNotes(items);
+return `<details><summary>📄 Notas fiscais que sustentam estes números (${rows.length}) — fonte da verdade</summary>
+<div class="note">A <b>chave de acesso</b> (44 díg.) identifica a NFe na SEFAZ (consulte em nfe.fazenda.gov.br).</div>
+<div class="scroll"><table><tr><th>Nº NF</th><th>Data</th><th>Operação</th><th class="n">Valor</th><th>Chave de acesso</th></tr>
+${rows.slice(0,120).map(r=>`<tr><td>${esc(r.nNF)}</td><td>${r.data}</td><td style="font-size:11.5px">${esc(r.op)}</td><td class="n">${brl(r.v)}</td><td><span class="mono">${r.chave}</span> <button class="btn mini" onclick="navigator.clipboard&&navigator.clipboard.writeText('${r.chave}')">copiar</button></td></tr>`).join('')}</table></div>
+${rows.length>120?`<div class="note">Mostrando 120 de ${rows.length}.</div>`:''}</details>`;}
+
+// ================= RENDER =================
+function renderHeader(){const ri=revItems(),rec=ri.reduce((a,i)=>a+i[_V],0),qt=ri.reduce((a,i)=>a+i[_Q],0);
+const notes=new Set(ri.map(i=>i[_N])).size,clis=new Set(ri.map(i=>grpOf(i[_D]))).size;
+const parado=Object.values(P.precons).reduce((a,e)=>a+Math.max(0,e.saldo),0);
+document.getElementById('sub').textContent=`Período ${P.meta.periodo[0]} a ${P.meta.periodo[1]} · ${num(P.meta.n_notas)} notas · ${num(new Set(CLI.filter(c=>!OWNS.has(c[0].slice(0,8))).map(c=>c[0].slice(0,8))).size)} clientes · ${PROD.length} títulos`;
+const kp=[['Receita líquida',brlk(rec)],['Notas de venda',num(notes)],['Clientes',num(clis)],['Livros vendidos',num(Math.round(qt))],['Ticket médio (líq.)',brlk(notes?rec/notes:0)],['Parado em consignação',brlk(parado)]];
+document.getElementById('kpis').innerHTML=kp.map(([l,v])=>`<div class="kpi"><div class="v">${v}</div><div class="l">${l}</div></div>`).join('');}
+
+function renderGeral(){
+const rem=Array(M.length).fill(0),ace=Array(M.length).fill(0),ven=Array(M.length).fill(0);
+IT.forEach(i=>{if(internal(i[_D])||!passS(i))return;const c=CATS[i[_C]];if(c==='REMESSA_CONSIGNACAO')rem[i[_M]]+=i[_V];else if(c==='ACERTO_CONSIGNACAO')ace[i[_M]]+=i[_V];else if(i[_R]===1)ven[i[_M]]+=i[_V];});
+const sl=a=>a.slice(F.m0,F.m1+1),labs=M.slice(F.m0,F.m1+1);
+const ri=revItems();
+const bru=ri.reduce((a,i)=>a+i[_VG],0),des=ri.reduce((a,i)=>a+i[_VD],0),liq=bru-des;
+const can=Array(CANAIS.length).fill(0);ri.forEach(i=>{if(i[_CA]>=0)can[i[_CA]]+=i[_V];});
+const canR=CANAIS.map((c,i)=>({c,v:can[i]})).filter(r=>r.v>0).sort((a,b)=>b.v-a.v);
+const g=aggBy(ri,it=>grpOf(it[_D])).sort((a,b)=>b.v-a.v);
+const tot=g.reduce((a,e)=>a+e.v,0)||1;let c=0,n50=0,n80=0;for(let k=0;k<g.length;k++){c+=g[k].v;if(!n50&&c>=.5*tot)n50=k+1;if(!n80&&c>=.8*tot){n80=k+1;break;}}
+document.getElementById('s-geral').innerHTML=`
+<div class="card"><h2>Receita — bruto, desconto e líquido</h2><div class="note">"Bruto" = preço de capa (vProd). O cliente paga o líquido (já com o desconto de trade). <b>Todos os valores do painel são LÍQUIDOS.</b></div>
+<div class="grid3"><div class="kpi"><div class="l mut">RECEITA BRUTA (capa)</div><div class="v mut" style="font-size:24px">${brlk(bru)}</div></div><div class="kpi"><div class="l mut">DESCONTO</div><div class="v" style="font-size:24px;color:var(--terra)">${bru?(100*des/bru).toFixed(1):0}%</div><div class="note" style="margin:0">${brlk(des)}</div></div><div class="kpi"><div class="l mut">RECEITA LÍQUIDA</div><div class="v teal" style="font-size:24px">${brlk(liq)}</div></div></div></div>
+<div class="card"><h2>Consignado × Acertado × Vendido direto — mês a mês</h2><div class="note">Valores LÍQUIDOS. Consignado = remessa enviada (estoque) · Acertado = consignação faturada · Venda direta = vendas fora de consignação. (Responde a período/unidade/UF/CFOP; não ao filtro de canal.)</div>
+${groupedBars(labs,[{name:'Consignado (remessa)',color:'var(--teal)',data:sl(rem)},{name:'Acertado',color:'var(--gold)',data:sl(ace)},{name:'Venda direta',color:'var(--terra)',data:sl(ven)}])}</div>
+<div class="grid2">
+<div class="card"><h2>Receita por canal</h2><div class="note">Como as vendas chegam</div>${donut(canR,r=>r.c,r=>r.v,PAL)}</div>
+<div class="card"><h2>Top 10 grupos econômicos</h2><div class="note">Por raiz de CNPJ — clique para extrato + notas</div>${hbars(g.slice(0,10),r=>`<span class="clk" onclick="openClient(${r.di})">${esc(nomeOf(r.di))}</span>`,r=>r.v,'var(--teal)')}</div></div>
+<div class="flag">${g.length?`⚠️ <b>Concentração:</b> ${n50} grupo(s) = 50% e ${n80} grupos = 80% da receita filtrada. Líder: <b>${esc(nomeOf(g[0].di))}</b> (${(100*g[0].v/tot).toFixed(1)}%).`:'Sem vendas no filtro selecionado (este CFOP/canal pode não ser de receita — ex.: remessa em consignação). O gráfico acima mostra a movimentação mesmo assim.'}</div>`;}
+
+function renderClientes(){const ri=revItems();
+const byGrp=aggBy(ri,it=>grpOf(it[_D])).sort((a,b)=>b.v-a.v);
+const uf=new Map();ri.forEach(i=>{const u=ufOf(i[_D]);let e=uf.get(u)||{v:0,c:new Set()};e.v+=i[_V];e.c.add(i[_D]);uf.set(u,e);});
+const ufR=[...uf.entries()].map(([u,e])=>({u,v:e.v,c:e.c.size})).sort((a,b)=>b.v-a.v);
+const y25=new Set(),y26=new Set();ri.forEach(i=>{(M[i[_M]]<'2026'?y25:y26).add(grpOf(i[_D]));});
+const ab=abc(byGrp.map(e=>({...e})));
+const rows=byGrp.map(e=>({di:e.di,nome:nomeOf(e.di),uf:ufOf(e.di),v:e.v,q:e.q,nf:e.notes.size,desc:e.vg?100*e.vd/e.vg:0,cls:ab.clsOf[e.k],_s:nomeOf(e.di)+' '+ufOf(e.di)}));
+document.getElementById('s-clientes').innerHTML=`
+<div class="card"><div class="toolbar"><h2 style="margin:0">Melhores clientes — completo (grupo econômico)</h2><input type="text" placeholder="🔎 buscar cliente..." oninput="tsearch('tblCli',this.value)" style="flex:1;min-width:160px"><button class="btn p" onclick="texport('tblCli','clientes.csv')">⬇ CSV</button></div>
+<div class="note">Todos os clientes do período. Clique no nome para extrato + notas fiscais.</div><div id="tblCli"></div></div>
+<div class="grid2">
+<div class="card"><h2>Receita por estado</h2>${hbars(ufR.slice(0,12),r=>`${r.u} <span class=mut>(${r.c} cli)</span>`,r=>r.v,'var(--blue)')}</div>
+<div class="card"><h2>Curva ABC de clientes (Pareto)</h2><div class="note">Poucos clientes concentram a maior parte da receita</div>${pareto(byGrp.map(e=>e.v))}
+<div class="grid3" style="margin-top:10px"><div class="kpi"><div class="v teal">${ab.A}</div><div class="l">A · 80% receita</div></div><div class="kpi"><div class="v" style="color:var(--gold)">${ab.B}</div><div class="l">B · 80–95%</div></div><div class="kpi"><div class="v mut">${ab.C}</div><div class="l">C · cauda</div></div></div></div></div>
+<div class="card"><h2>Base de clientes (no filtro)</h2><div class="grid3">
+<div class="kpi"><div class="v">${y25.size}</div><div class="l">Ativos 2025</div></div><div class="kpi"><div class="v">${y26.size}</div><div class="l">Ativos 2026*</div></div><div class="kpi"><div class="v">${[...y25].filter(x=>y26.has(x)).length}</div><div class="l">Retidos</div></div></div>
+<p class="note" style="margin-top:8px"><span class="terra">* 2026 parcial.</span> ${[...y26].filter(x=>!y25.has(x)).length} novos em 2026 · ${[...y25].filter(x=>!y26.has(x)).length} de 2025 sem recompra.</p></div>`;
+mkTable('tblCli',rows,[
+{h:'Cliente',get:r=>r.nome,fmt:(v,r)=>`<span class="clk" onclick="openClient(${r.di})">${esc(v)}</span>`,k:'cliente'},
+{h:'UF',get:r=>r.uf},
+{h:'Receita líq.',get:r=>r.v,num:true,fmt:v=>brl(v),k:'receita_liquida'},
+{h:'Desc.%',get:r=>r.desc,num:true,fmt:v=>v.toFixed(0)+'%',k:'desconto_pct'},
+{h:'Notas',get:r=>r.nf,num:true,k:'notas'},
+{h:'Livros',get:r=>Math.round(r.q),num:true,fmt:v=>num(v),k:'livros'},
+{h:'ABC',get:r=>r.cls,fmt:v=>`<span class="tag ${v==='A'?'ok':v==='B'?'warn':'mut2'}">${v}</span>`}],2,true);}
+
+function consStatus(r){if(r.saldo<=1)return['Quitado','mut2'];if(r.never)return['Nunca acertou','danger'];if(r.days>180)return['Crítico','danger'];if(r.days>90||r.conv<25)return['Atenção','warn'];return['Em dia','ok'];}
+function renderConsig(){
+const rows=Object.entries(P.precons).map(([doc,e])=>{const di=docDi[doc];const conv=e.rem?100*e.ace/e.rem:0;const[st,cl]=consStatus({...e,conv});return {doc,di,nome:nomeOf(di),uf:ufOf(di),rem:e.rem,ace:e.ace,ret:e.ret,saldo:e.saldo,saldoq:e.saldoq,conv,lastA:e.lastA,days:e.days,never:e.never,st,cl,_s:nomeOf(di)+' '+ufOf(di)};});
+const parado=rows.reduce((a,e)=>a+Math.max(0,e.saldo),0),rem=rows.reduce((a,e)=>a+e.rem,0),ace=rows.reduce((a,e)=>a+e.ace,0);
+const bom=rows.filter(r=>r.st==='Em dia'||r.st==='Quitado').length,aten=rows.filter(r=>r.st==='Atenção').length,crit=rows.filter(r=>r.st==='Crítico'||r.st==='Nunca acertou').length;
+const aging={'0-90':0,'91-180':0,'181-365':0,'>365':0};rows.forEach(r=>{if(r.saldo<=1)return;const d=r.days;aging[d<=90?'0-90':d<=180?'91-180':d<=365?'181-365':'>365']+=r.saldo;});
+document.getElementById('s-consig').innerHTML=`
+<div class="flag">📦 <b>Consignação:</b> a editora envia livros (remessa) e só fatura no <b>acerto</b>. Retrato atual (não usa o filtro de período). Conversão = quanto da remessa já virou venda.</div>
+<div class="grid3">
+<div class="card" style="text-align:center"><div class="l mut">PARADO EM CONSIGNAÇÃO</div><div class="big terra">${brlk(parado)}</div><div class="note">${rows.filter(r=>r.saldo>1).length} clientes com saldo</div></div>
+<div class="card" style="text-align:center"><div class="l mut">CONVERSÃO REMESSA→ACERTO</div><div class="big teal">${(100*ace/rem).toFixed(1)}%</div><div class="note">Remessa ${brlk(rem)} → Acerto ${brlk(ace)}</div></div>
+<div class="card" style="text-align:center"><div class="l mut">SAÚDE DA CARTEIRA</div><div style="margin-top:8px"><span class="tag ok">${bom} em dia</span> <span class="tag warn">${aten} atenção</span> <span class="tag danger">${crit} crítico</span></div></div></div>
+<div class="card"><div class="toolbar"><h2 style="margin:0">Todos os clientes com consignação ativa</h2>
+<input type="text" placeholder="🔎 buscar..." oninput="tsearch('tblCons',this.value)" style="flex:1;min-width:140px">
+<button class="btn on" onclick="tfilter('tblCons',null,this)">Todos</button>
+<button class="btn" onclick="tfilter('tblCons',r=>r.st==='Em dia'||r.st==='Quitado',this)">Bons</button>
+<button class="btn" onclick="tfilter('tblCons',r=>r.st==='Atenção',this)">Atenção</button>
+<button class="btn" onclick="tfilter('tblCons',r=>r.st==='Crítico'||r.st==='Nunca acertou',this)">Críticos</button>
+<button class="btn p" onclick="texport('tblCons','consignacao.csv')">⬇ CSV</button></div>
+<div class="note">Bons e ruins. Clique no nome para extrato + notas. Ordene pelos cabeçalhos.</div><div id="tblCons"></div></div>
+<div class="card"><h2>Aging do valor parado</h2>${hbars(Object.entries(aging).map(([k,v])=>({k,v})),r=>r.k+' dias',r=>r.v,'var(--terra)')}</div>`;
+mkTable('tblCons',rows,[
+{h:'Cliente',get:r=>r.nome,fmt:(v,r)=>`<span class="clk" onclick="openClient(${r.di})">${esc(v)}</span>`,k:'cliente'},
+{h:'UF',get:r=>r.uf},
+{h:'Remessa',get:r=>r.rem,num:true,fmt:v=>brl(v),k:'remessa'},
+{h:'Acerto',get:r=>r.ace,num:true,fmt:v=>brl(v),k:'acerto'},
+{h:'Saldo parado',get:r=>r.saldo,num:true,fmt:v=>brl(v),k:'saldo_parado'},
+{h:'Livros',get:r=>r.saldoq,num:true,fmt:v=>num(v),k:'livros_parados'},
+{h:'Conv.%',get:r=>r.conv,num:true,fmt:v=>v.toFixed(0)+'%',k:'conversao_pct'},
+{h:'Últ. acerto',get:r=>r.lastA,k:'ultimo_acerto'},
+{h:'Dias',get:r=>r.days,num:true,fmt:(v,r)=>`<span class="tag ${v>180?'danger':v>90?'warn':'ok'}">${v}d</span>`,k:'dias_sem_acerto'},
+{h:'Status',get:r=>r.st,fmt:(v,r)=>`<span class="tag ${r.cl}">${v}</span>`,k:'status'}],4,true);}
+
+let bookSel=null;
+function prodUniverse(){const pu=new Map();IT.forEach(it=>{if(internal(it[_D]))return;const pr=it[_PR];let e=pu.get(pr);if(!e){e={pr,tit:PROD[pr][1],v:0,q:0,vg:0,vd:0,cl:new Set(),lastMi:-1,remq:0,aceq:0,retq:0};pu.set(pr,e);}const c=CATS[it[_C]];if(it[_R]===1){e.v+=it[_V];e.q+=it[_Q];e.vg+=it[_VG];e.vd+=it[_VD];e.cl.add(grpOf(it[_D]));if(it[_M]>e.lastMi)e.lastMi=it[_M];}if(c==='REMESSA_CONSIGNACAO')e.remq+=it[_Q];else if(c==='ACERTO_CONSIGNACAO')e.aceq+=it[_Q];else if(c==='RETORNO_CONSIGNACAO')e.retq+=it[_Q];});return [...pu.values()];}
+function prodStatus(p){const stuck=Math.max(0,p.remq-p.aceq-p.retq);if(p.lastMi<0)return['Sem vendas','danger'];const mss=(M.length-1)-p.lastMi;if(mss>=6)return[`Inativo ${mss}m`,'danger'];if(p.q<50&&p.v<2000)return['Cauda','warn'];if(stuck>p.q&&stuck>30)return['Consignado parado','warn'];return['Ativo','ok'];}
+function renderProdutos(){const ri=revItems();
+const byP=aggBy(ri,it=>it[_PR]).map(e=>({...e,pr:e.k,tit:PROD[e.k][1]})).sort((a,b)=>b.v-a.v);
+const climap={};ri.forEach(i=>{(climap[i[_PR]]=climap[i[_PR]]||new Set()).add(grpOf(i[_D]));});
+byP.forEach(e=>e.cli=(climap[e.pr]||new Set()).size);
+const ab=abc(byP.map(e=>({...e})));
+let ev=0,fv=0;const isEb=pr=>{const t=(PROD[pr][1]||'').toUpperCase();return t.includes('EBOOK')||t.includes('E-BOOK');};
+ri.forEach(i=>{if(isEb(i[_PR]))ev+=i[_V];else fv+=i[_V];});
+if(bookSel===null||!byP.find(e=>e.pr===bookSel))bookSel=byP.length?byP[0].pr:null;
+const pu=prodUniverse();const abAll=abc(pu.map(e=>({...e})));
+const prows=pu.map(p=>{const[st,cl]=prodStatus(p);const stuck=Math.max(0,p.remq-p.aceq-p.retq);return {pr:p.pr,tit:p.tit,v:p.v,q:Math.round(p.q),cli:p.cl.size,pm:p.q?p.v/p.q:0,desc:p.vg?100*p.vd/p.vg:0,last:p.lastMi>=0?M[p.lastMi]:'—',stuck:Math.round(stuck),cls:abAll.clsOf[p.pr],st,cl,_s:p.tit};});
+document.getElementById('s-produtos').innerHTML=`
+<div class="grid2">
+<div class="card"><h2>Top 12 por receita (período filtrado)</h2>${hbars(byP.slice(0,12),r=>esc(r.tit),r=>r.v,'var(--gold)')}</div>
+<div class="card"><h2>Curva ABC de títulos (Pareto)</h2><div class="note">Cauda longa: a maioria vende pouco</div>${pareto(byP.map(e=>e.v))}<div class="grid3" style="margin-top:8px"><div class="kpi"><div class="v teal">${ab.A}</div><div class="l">A</div></div><div class="kpi"><div class="v" style="color:var(--gold)">${ab.B}</div><div class="l">B</div></div><div class="kpi"><div class="v mut">${ab.C}</div><div class="l">C</div></div></div></div></div>
+<div class="flag">📕 Físico ${brl(fv)} (${(100*fv/(fv+ev||1)).toFixed(1)}%) vs e-book ${brl(ev)}. No catálogo: <b>${prows.filter(p=>p.st.startsWith('Inativo')||p.st==='Sem vendas').length} títulos sem venda recente</b> (candidatos a sair) e <b>${prows.filter(p=>p.st==='Consignado parado').length} com estoque consignado parado</b> (rever).</div>
+<div class="card"><div class="toolbar"><h2 style="margin:0">📚 Catálogo completo — ${prows.length} títulos</h2><input type="text" placeholder="🔎 buscar título..." oninput="tsearch('tblProd',this.value)" style="flex:1;min-width:160px">
+<button class="btn on" onclick="tfilter('tblProd',null,this)">Todos</button>
+<button class="btn" onclick="tfilter('tblProd',r=>r.st==='Ativo',this)">Ativos</button>
+<button class="btn" onclick="tfilter('tblProd',r=>r.st.startsWith('Inativo')||r.st==='Sem vendas',this)">Inativos</button>
+<button class="btn" onclick="tfilter('tblProd',r=>r.st==='Cauda',this)">Cauda</button>
+<button class="btn" onclick="tfilter('tblProd',r=>r.st==='Consignado parado',this)">Consig. parado</button>
+<button class="btn p" onclick="texport('tblProd','catalogo.csv')">⬇ CSV</button></div>
+<div class="note">Todo o período. Clique no título para detalhe + notas fiscais. Use os status para decidir o que sai do catálogo ou é retrabalhado.</div><div id="tblProd"></div></div>
+<div class="card"><h2>📖 Quais livros vendem em quais clientes</h2><div class="note">Escolha um título à esquerda. Clique num cliente para o extrato.</div>
+<div class="md"><div><input type="text" id="bsearch" placeholder="🔎 buscar título..." style="width:100%;margin-bottom:6px" oninput="filterBooks(this.value)"><div class="booklist" id="booklist"></div></div><div id="bookdetail"></div></div></div>`;
+mkTable('tblProd',prows,[
+{h:'Título',get:r=>r.tit,fmt:(v,r)=>`<span class="clk" onclick="openProduct(${r.pr})">${esc(v)}</span>`,k:'titulo'},
+{h:'Qtd vend.',get:r=>r.q,num:true,fmt:v=>num(v),k:'qtd_vendida'},
+{h:'Receita líq.',get:r=>r.v,num:true,fmt:v=>brl(v),k:'receita_liquida'},
+{h:'Desc.%',get:r=>r.desc,num:true,fmt:v=>v.toFixed(0)+'%',k:'desconto_pct'},
+{h:'Clientes',get:r=>r.cli,num:true,k:'clientes'},
+{h:'Preço méd. líq.',get:r=>r.pm,num:true,fmt:v=>brl(v),k:'preco_medio_liquido'},
+{h:'Últ. venda',get:r=>r.last,k:'ultima_venda'},
+{h:'Consig. parado',get:r=>r.stuck,num:true,fmt:v=>num(v),k:'consignado_parado_qtd'},
+{h:'ABC',get:r=>r.cls,fmt:v=>`<span class="tag ${v==='A'?'ok':v==='B'?'warn':'mut2'}">${v}</span>`},
+{h:'Status',get:r=>r.st,fmt:(v,r)=>`<span class="tag ${r.cl}">${v}</span>`,k:'status'}],2,true);
+buildBookList(byP);renderBookDetail(byP);}
+function buildBookList(byP){const mx=byP.length?byP[0].v:1;
+document.getElementById('booklist').innerHTML=byP.slice(0,120).map(e=>`<div class="bookitem ${e.pr===bookSel?'sel':''}" data-pr="${e.pr}" data-t="${esc((e.tit||'').toLowerCase())}" onclick="bookSel=${e.pr};renderProdutos2()"><div class="t">${esc(e.tit)}</div><div class="m">${brlk(e.v)} · ${num(Math.round(e.q))} un · ${e.cli} clientes</div><div class="mini" style="width:${Math.max(4,100*e.v/mx)}%"></div></div>`).join('');}
+function filterBooks(q){q=q.toLowerCase();document.querySelectorAll('#booklist .bookitem').forEach(el=>{el.style.display=el.dataset.t.includes(q)?'':'none';});}
+function renderProdutos2(){const ri=revItems();const byP=aggBy(ri,it=>it[_PR]).map(e=>({...e,pr:e.k,tit:PROD[e.k][1]})).sort((a,b)=>b.v-a.v);
+document.querySelectorAll('#booklist .bookitem').forEach(el=>el.classList.toggle('sel',+el.dataset.pr===bookSel));renderBookDetail(byP);}
+function renderBookDetail(byP){const d=document.getElementById('bookdetail');if(bookSel===null){d.innerHTML='';return;}
+const ri=revItems().filter(i=>i[_PR]===bookSel);const tot=ri.reduce((a,i)=>a+i[_V],0),qt=ri.reduce((a,i)=>a+i[_Q],0);
+const byc=aggBy(ri,it=>grpOf(it[_D])).sort((a,b)=>b.v-a.v);const mx=byc.length?byc[0].v:1;
+d.innerHTML=`<div style="border:1px solid var(--line);border-radius:10px;padding:14px;height:100%">
+<div style="font-size:17px;font-weight:800;margin-bottom:2px">${esc(PROD[bookSel][1])} <button class="btn mini" onclick="openProduct(${bookSel})">detalhe + notas</button></div>
+<div class="legend" style="margin:6px 0 12px"><span class="chip">${brl(tot)}</span><span class="chip">${num(Math.round(qt))} un</span><span class="chip">${byc.length} clientes</span><span class="chip">preço méd. ${brl(qt?tot/qt:0)}</span></div>
+<div class="note">Maiores compradores deste título:</div>
+<table>${byc.slice(0,12).map(e=>`<tr><td><span class="clk" onclick="openClient(${e.di})">${esc(nomeOf(e.di))}</span> <span class="mut">${ufOf(e.di)}</span></td><td style="width:36%"><div class="bar" style="width:${Math.max(3,100*e.v/mx)}%;background:var(--gold)"></div></td><td class="n">${brl(e.v)}</td><td class="n mut">${(100*e.v/tot).toFixed(0)}%</td></tr>`).join('')}</table></div>`;}
+
+function renderSazon(){const ri=revItems();
+const mm={},yrs={};ri.forEach(i=>{const mo=M[i[_M]].slice(5,7);mm[mo]=(mm[mo]||0)+i[_V];(yrs[mo]=yrs[mo]||new Set()).add(M[i[_M]].slice(0,4));});
+const NM=['','Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];const sz=[];
+for(let k=1;k<=12;k++){const mo=String(k).padStart(2,'0');sz.push({mo:NM[k],v:(mm[mo]||0)/((yrs[mo]?yrs[mo].size:1)||1)});}
+const od=Object.entries(P.precli).filter(([d,e])=>e.overdue).map(([d,e])=>({d,di:docDi[d],...e}));
+od.sort((a,b)=>(b.dlast-b.avg)-(a.dlast-a.avg));
+const rows=od.map(r=>({di:r.di,nome:nomeOf(r.di),uf:ufOf(r.di),n:r.n,avg:r.avg,dlast:r.dlast,last:r.last,_s:nomeOf(r.di)+' '+ufOf(r.di)}));
+document.getElementById('s-sazon').innerHTML=`
+<div class="card"><h2>Sazonalidade — receita média por mês do ano</h2><div class="note">Média entre os anos. Ajuda a antecipar picos.</div>${hbars(sz,r=>r.mo,r=>r.v,'var(--blue)')}</div>
+<div class="card"><div class="toolbar"><h2 style="margin:0">🔁 Clientes em atraso de recompra</h2><input type="text" placeholder="🔎 buscar..." oninput="tsearch('tblRec',this.value)" style="flex:1;min-width:140px"><button class="btn p" onclick="texport('tblRec','recompra.csv')">⬇ CSV</button></div>
+<div class="note">Compraram ≥2× e passaram de 1,5× o próprio intervalo médio sem recomprar. Clique para extrato.</div><div id="tblRec"></div></div>`;
+mkTable('tblRec',rows,[
+{h:'Cliente',get:r=>r.nome,fmt:(v,r)=>`<span class="clk" onclick="openClient(${r.di})">${esc(v)}</span>`,k:'cliente'},
+{h:'UF',get:r=>r.uf},
+{h:'Compras',get:r=>r.n,num:true,k:'compras'},
+{h:'Interv. médio',get:r=>r.avg,num:true,fmt:v=>v+'d',k:'intervalo_medio_dias'},
+{h:'Dias desde última',get:r=>r.dlast,num:true,fmt:(v,r)=>`<span class="tag ${v>r.avg*3?'danger':'warn'}">${v}d</span>`,k:'dias_desde_ultima'},
+{h:'Última compra',get:r=>r.last,k:'ultima_compra'}],4,true);}
+
+// ---------- drill-down ----------
+function openClient(di){const root=grpOf(di);const allRev=IT.filter(i=>i[_R]===1&&grpOf(i[_D])===root&&!internal(i[_D]));const allAny=IT.filter(i=>grpOf(i[_D])===root);
+const gdocs=[...new Set(allAny.map(i=>docOf(i[_D])))];let gnome='';allAny.forEach(i=>{const n=nomeOf(i[_D]);if(n.length>gnome.length)gnome=n;});
+const subtitle=(gdocs.length>1?`${gdocs.length} CNPJs · raiz ${root}`:esc(gdocs[0]||CLI[di][0]))+' · '+ufOf(di);
+const tot=allRev.reduce((a,i)=>a+i[_V],0),qt=allRev.reduce((a,i)=>a+i[_Q],0),notes=new Set(allRev.map(i=>i[_N])).size,bru=allRev.reduce((a,i)=>a+i[_VG],0),des=allRev.reduce((a,i)=>a+i[_VD],0);
+const ms=Array(M.length).fill(0);allRev.forEach(i=>ms[i[_M]]+=i[_V]);
+window.CMdi=di;window.CMname=gnome;window.CM=M.map((_,mi)=>{const it=allRev.filter(x=>x[_M]===mi);const total=it.reduce((a,x)=>a+x[_V],0);const books=aggBy(it,x=>x[_PR]).map(e=>({pr:e.k,tit:PROD[e.k][1],v:e.v,q:e.q})).sort((a,b)=>b.v-a.v);const can={};it.forEach(x=>{if(x[_CA]>=0)can[CANAIS[x[_CA]]]=(can[CANAIS[x[_CA]]]||0)+x[_V];});return {total,books,canal:Object.entries(can).sort((a,b)=>b[1]-a[1])};});
+const lastMof={};allRev.forEach(i=>{if((lastMof[i[_PR]]==null?-1:lastMof[i[_PR]])<i[_M])lastMof[i[_PR]]=i[_M];});
+const byPall=aggBy(allRev,it=>it[_PR]).map(e=>({...e,tit:PROD[e.k][1],lm:lastMof[e.k]})).sort((a,b)=>b.v-a.v);
+const byP=byPall.slice(0,8);
+let cR=0,cA=0,cRet=0,cS=0,cSq=0,cLast=null;gdocs.forEach(d=>{const c=P.precons[d];if(c){cR+=c.rem;cA+=c.ace;cRet+=c.ret;cS+=c.saldo;cSq+=c.saldoq;if(c.lastA&&c.lastA!=='NUNCA'&&(!cLast||c.lastA>cLast))cLast=c.lastA;}});
+let cons='<span class="mut">Sem consignação registrada.</span>';
+if(cR>0){const cd=cLast?dayDiffRef(cLast):null;cons=`Remessa ${brl(cR)} · Acerto ${brl(cA)} · <b>Saldo parado ${brl(cS)}</b> (${num(cSq)} livros) · últ. acerto ${cLast||'NUNCA'}${cd!=null?` (${cd}d)`:''} · conversão ${(cR?100*cA/cR:0).toFixed(0)}%`;}
+const gdates=[...new Set(allRev.map(i=>NOTES[i[_N]][2]))].sort();let rch='';
+if(gdates.length>=2){let s=0;for(let k=1;k<gdates.length;k++)s+=dayDiff(gdates[k-1],gdates[k]);const avg=s/(gdates.length-1),dl=dayDiffRef(gdates[gdates.length-1]),od=dl>avg*1.5;rch=`Compra a cada ~${avg.toFixed(1)} dias · última há ${dl}d ${od?'<span class="tag danger">em atraso</span>':'<span class="tag ok">em dia</span>'}`;}
+const active=ms.filter(v=>v>0),avgM=active.length?active.reduce((a,b)=>a+b,0)/active.length:0;
+const peaks=ms.map((v,i)=>[v,i]).filter(o=>o[0]>0&&o[0]>=avgM*1.7).sort((a,b)=>b[0]-a[0]).slice(0,2).map(o=>o[1]).sort((a,b)=>a-b);
+const peakHtml=peaks.length?`<div class="l mut" style="margin-top:6px">O QUE GEROU O${peaks.length>1?'S':''} PICO${peaks.length>1?'S':''}</div>`+peaks.map(pk=>{const mi=allRev.filter(i=>i[_M]===pk);const bp=aggBy(mi,it=>it[_PR]).sort((a,b)=>b.v-a.v).slice(0,3);const bc={};mi.forEach(i=>{if(i[_CA]>=0)bc[CANAIS[i[_CA]]]=(bc[CANAIS[i[_CA]]]||0)+i[_V];});const ct=Object.entries(bc).sort((a,b)=>b[1]-a[1])[0];return `<div style="font-size:12.5px;margin-top:3px"><b class="terra">▲ ${M[pk]}: ${brl(ms[pk])}</b> — ${bp.map(e=>esc(PROD[e.k][1])+' ('+brl(e.v)+')').join(', ')}${ct?` · <span class="mut">via ${esc(ct[0])}</span>`:''}</div>`;}).join(''):'';
+document.getElementById('modal').innerHTML=`<button class="x" onclick="closeOv()">×</button>
+<div style="font-size:18px;font-weight:800">${esc(gnome)}</div><div class="mut" style="font-size:12.5px;margin-bottom:10px">${subtitle}</div>
+<div class="grid3"><div class="kpi"><div class="v">${brlk(tot)}</div><div class="l">Receita líquida</div></div><div class="kpi"><div class="v">${notes}</div><div class="l">Notas venda</div></div><div class="kpi"><div class="v">${num(Math.round(qt))}</div><div class="l">Livros</div></div></div>
+<div class="note" style="margin:6px 0 0">Bruto (capa) ${brl(bru)} · Desconto <b class="terra">${bru?(100*des/bru).toFixed(0):0}%</b> (${brl(des)}) · Líquido <b>${brl(tot)}</b></div>
+<div class="card" style="margin:12px 0 10px;padding:12px"><div class="l mut">CONSIGNAÇÃO</div><div style="font-size:13px;margin-top:4px">${cons}</div>${rch?`<div class="l mut" style="margin-top:8px">RECOMPRA</div><div style="font-size:13px">${rch}</div>`:''}</div>
+<div class="l mut">RECEITA MENSAL</div>${clientChart(ms,M,peaks)}${peakHtml}
+<div class="l mut" style="margin-top:8px">LIVROS MAIS COMPRADOS${byPall.length>8?` (top 8 de ${byPall.length})`:''}</div>${hbars(byP,r=>`<span class="clk" onclick="openProduct(${r.k})">${esc(r.tit)}</span>`,r=>r.v,'var(--teal)')}
+${byPall.length?`<details><summary>📚 Todos os ${byPall.length} títulos comprados por este cliente</summary><div class="scroll"><table><tr><th>Título</th><th class="n">Qtd</th><th class="n">Receita</th><th class="n">% cliente</th><th>Últ. compra</th></tr>${byPall.map(r=>`<tr><td><span class="clk" onclick="openProduct(${r.k})">${esc(r.tit)}</span></td><td class="n">${num(Math.round(r.q))}</td><td class="n">${brl(r.v)}</td><td class="n mut">${(100*r.v/tot).toFixed(1)}%</td><td>${r.lm>=0?M[r.lm]:'—'}</td></tr>`).join('')}</table></div></details>`:''}
+${notesDetails(allAny)}`;
+document.getElementById('ov').classList.add('on');}
+
+function openProduct(pr){const allRev=IT.filter(i=>i[_R]===1&&i[_PR]===pr&&!internal(i[_D]));const allAny=IT.filter(i=>i[_PR]===pr);
+const tot=allRev.reduce((a,i)=>a+i[_V],0),qt=allRev.reduce((a,i)=>a+i[_Q],0),bru=allRev.reduce((a,i)=>a+i[_VG],0),des=allRev.reduce((a,i)=>a+i[_VD],0);
+let remq=0,aceq=0,retq=0,lastMi=-1;allAny.forEach(i=>{const c=CATS[i[_C]];if(c==='REMESSA_CONSIGNACAO')remq+=i[_Q];else if(c==='ACERTO_CONSIGNACAO')aceq+=i[_Q];else if(c==='RETORNO_CONSIGNACAO')retq+=i[_Q];if(i[_R]===1&&i[_M]>lastMi)lastMi=i[_M];});
+const stuck=Math.max(0,remq-aceq-retq);
+const byc=aggBy(allRev,it=>grpOf(it[_D])).sort((a,b)=>b.v-a.v);const mx=byc.length?byc[0].v:1;
+document.getElementById('modal').innerHTML=`<button class="x" onclick="closeOv()">×</button>
+<div style="font-size:18px;font-weight:800">${esc(PROD[pr][1])}</div><div class="mut" style="font-size:12.5px;margin-bottom:10px">código ${esc(PROD[pr][0])}</div>
+<div class="grid3"><div class="kpi"><div class="v">${brlk(tot)}</div><div class="l">Receita líquida</div></div><div class="kpi"><div class="v">${num(Math.round(qt))}</div><div class="l">Vendidos</div></div><div class="kpi"><div class="v">${byc.length}</div><div class="l">Clientes</div></div></div>
+<div class="note" style="margin:6px 0 0">Bruto (capa) ${brl(bru)} · Desconto <b class="terra">${bru?(100*des/bru).toFixed(0):0}%</b> · Líquido <b>${brl(tot)}</b></div>
+<div class="card" style="margin:12px 0 10px;padding:12px"><div style="font-size:13px">Preço médio <b>${brl(qt?tot/qt:0)}</b> · última venda <b>${lastMi>=0?M[lastMi]:'—'}</b> · consignado parado <b>${num(Math.round(stuck))}</b> livros</div></div>
+<div class="l mut">MAIORES COMPRADORES</div><table>${byc.slice(0,12).map(e=>`<tr><td><span class="clk" onclick="openClient(${e.di})">${esc(nomeOf(e.di))}</span> <span class="mut">${ufOf(e.di)}</span></td><td style="width:34%"><div class="bar" style="width:${Math.max(3,100*e.v/mx)}%;background:var(--gold)"></div></td><td class="n">${brl(e.v)}</td></tr>`).join('')}</table>
+${notesDetails(allAny)}`;
+document.getElementById('ov').classList.add('on');}
+function closeOv(){document.getElementById('ov').classList.remove('on');}
+document.getElementById('ov').onclick=e=>{if(e.target.id==='ov')closeOv();};
+// tooltip + drill por mês no gráfico RECEITA MENSAL do cliente
+function cmTip(ev,mi){const tip=document.getElementById('cmtip');const m=window.CM&&window.CM[mi];if(!m||m.total<=0){tip.style.display='none';return;}
+const cn=m.canal.length?m.canal[0][0]:'';
+tip.innerHTML=`<div style="font-weight:700;margin-bottom:2px">${M[mi]} · ${brl(m.total)}</div>`+m.books.slice(0,4).map(b=>`<div style="display:flex;justify-content:space-between;gap:12px"><span>${esc(b.tit)}</span><span class="mut">${brl(b.v)}</span></div>`).join('')+(m.books.length>4?`<div class="mut">+${m.books.length-4} título(s)…</div>`:'')+(cn?`<div class="mut" style="margin-top:3px">via ${esc(cn)} · clique p/ ver todos</div>`:'');
+tip.style.display='block';const tw=tip.offsetWidth,th=tip.offsetHeight;
+tip.style.left=Math.min(ev.clientX+14,window.innerWidth-tw-12)+'px';tip.style.top=Math.max(8,Math.min(ev.clientY+14,window.innerHeight-th-12))+'px';}
+function cmHide(){document.getElementById('cmtip').style.display='none';}
+function cmOpen(mi){const m=window.CM&&window.CM[mi];if(!m||m.total<=0)return;cmHide();const tot=m.total;
+const canHtml=m.canal.map(([c,v])=>`<span class="chip">${esc(c)}: ${brl(v)}</span>`).join('');
+document.getElementById('modal2').innerHTML=`<button class="x" onclick="closeOv2()">×</button>
+<div style="font-size:17px;font-weight:800">${M[mi]} · ${brl(tot)}</div>
+<div class="mut" style="font-size:12.5px;margin-bottom:8px">${esc(window.CMname||nomeOf(window.CMdi))} · ${m.books.length} título(s) neste mês</div>
+<div style="margin-bottom:6px">${canHtml}</div>
+<div class="scroll"><table><tr><th>Título</th><th class="n">Qtd</th><th class="n">Receita</th><th class="n">%</th></tr>${m.books.map(b=>`<tr><td><span class="clk" onclick="closeOv2();openProduct(${b.pr})">${esc(b.tit)}</span></td><td class="n">${num(Math.round(b.q))}</td><td class="n">${brl(b.v)}</td><td class="n mut">${(100*b.v/tot).toFixed(1)}%</td></tr>`).join('')}</table></div>`;
+document.getElementById('ov2').classList.add('on');}
+function closeOv2(){document.getElementById('ov2').classList.remove('on');}
+document.getElementById('ov2').onclick=e=>{if(e.target.id==='ov2')closeOv2();};
+
+// ---------- filtros + abas ----------
+function buildFilter(){const mo=M.map((m,i)=>`<option value="${i}">${m}</option>`).join('');
+document.getElementById('fb').innerHTML=`<label>Período</label><select id="f-m0">${mo}</select><span class="mut">até</span><select id="f-m1">${mo}</select>
+<label style="margin-left:6px">Unidade</label><select id="f-u"><option value="all">Todas</option>${UNIDS.map((u,i)=>`<option value="${i}">${esc(u)}</option>`).join('')}</select>
+<label style="margin-left:6px">UF</label><select id="f-uf"><option value="all">Todas</option>${UFS.map(u=>`<option>${u}</option>`).join('')}</select>
+<label style="margin-left:6px">Canal</label><select id="f-ca"><option value="all">Todos</option>${CANAIS.map((c,i)=>`<option value="${i}">${c}</option>`).join('')}</select>
+<label style="margin-left:6px">CFOP</label><select id="f-cf"><option value="all">Todos</option>${CFOPLIST.map(c=>`<option value="${c}">${c} · ${(CFOPCAT[c]||'').replace(/_/g,' ')}</option>`).join('')}</select>
+<button class="btn" onclick="resetF()">limpar</button>`;
+document.getElementById('f-m1').value=M.length-1;
+['f-m0','f-m1','f-u','f-uf','f-ca','f-cf'].forEach(id=>document.getElementById(id).onchange=applyF);}
+function applyF(){F.m0=+document.getElementById('f-m0').value;F.m1=+document.getElementById('f-m1').value;if(F.m1<F.m0){F.m1=F.m0;document.getElementById('f-m1').value=F.m0;}F.u=document.getElementById('f-u').value;F.uf=document.getElementById('f-uf').value;F.ca=document.getElementById('f-ca').value;F.cf=document.getElementById('f-cf').value;renderAll();}
+function resetF(){F={m0:0,m1:M.length-1,u:'all',uf:'all',ca:'all',cf:'all'};buildFilter();renderAll();}
+const tabs=[['geral','Visão Geral'],['clientes','Clientes'],['consig','Consignação / Acerto'],['produtos','Produtos'],['sazon','Sazonalidade & Recompra'],['consighist','Consignação histórica'],['checagem','Rotina de checagem']];
+function buildNav(){document.getElementById('nav').innerHTML=tabs.map((t,i)=>`<button class="${i==0?'on':''}" data-t="${t[0]}">${t[1]}</button>`).join('');
+document.querySelectorAll('nav button').forEach(b=>b.onclick=()=>{document.querySelectorAll('nav button').forEach(x=>x.classList.remove('on'));b.classList.add('on');document.querySelectorAll('section').forEach(s=>s.classList.remove('on'));document.getElementById('s-'+b.dataset.t).classList.add('on');window.scrollTo(0,0);});}
+// ---------- Consignação histórica (base separada das Novas Notas) ----------
+function renderConsigHist(){const CH=P.consigHist;const el=document.getElementById('s-consighist');
+if(!CH){el.innerHTML='<div class="card"><h2>Consignação histórica</h2><div class="note">Sem dados históricos carregados (pasta consig_historico/ vazia).</div></div>';return;}
+const m=CH.meta;
+if(window.chSel==null||!CH.clients.find(c=>c.doc===window.chSel))window.chSel=CH.clients.length?CH.clients[0].doc:null;
+el.innerHTML=`
+<div class="flag">📦 <b>Histórico de consignação ${m.periodo[0]} → ${m.periodo[1]} (${CH.months.length} meses).</b> Base SEPARADA (Novas Notas) — só movimentação de consignação (remessa/acerto/devolução). NÃO entra na receita das outras abas.</div>
+<div class="grid3">
+<div class="card" style="text-align:center"><div class="l mut">REMESSA TOTAL</div><div class="big teal">${brlk(m.rem)}</div><div class="note">${m.n_clientes} clientes</div></div>
+<div class="card" style="text-align:center"><div class="l mut">ACERTO TOTAL</div><div class="big" style="color:var(--gold)">${brlk(m.ace)}</div><div class="note">conversão ${m.conv}% · devolução ${brlk(m.ret)}</div></div>
+<div class="card" style="text-align:center"><div class="l mut">SALDO EM CONSIGNAÇÃO</div><div class="big terra">${brlk(m.rem-m.ace-m.ret)}</div><div class="note">estoque em poder de terceiros · alguns clientes têm saldo ≤ 0 (acerto/devolução &gt; remessa rastreada, drift desde 2020)</div></div></div>
+<div class="card"><h2>Linha do tempo de consignação por cliente</h2><div class="note">Selecione um cliente. Barras = remessa / acerto / devolução por mês; linha = saldo acumulado.</div>
+<div class="md"><div><input type="text" id="chsearch" placeholder="🔎 buscar cliente..." style="width:100%;margin-bottom:6px" oninput="chFilter(this.value)"><div class="booklist" id="chlist"></div></div><div id="chdetail"></div></div></div>`;
+chBuildList();chDetail();}
+function chBuildList(){const CH=P.consigHist,mx=CH.clients.length?Math.max(...CH.clients.map(c=>c.saldo),1):1;
+document.getElementById('chlist').innerHTML=CH.clients.map(c=>`<div class="bookitem ${c.doc===window.chSel?'sel':''}" data-d="${c.doc}" data-t="${esc((c.nome||'').toLowerCase())}" onclick="window.chSel='${c.doc}';chDetailSel()"><div class="t">${esc(c.nome)} <span class="mut">${c.uf}</span></div><div class="m">saldo ${brlk(c.saldo)} · rem ${brlk(c.R)} · conv ${c.conv}%</div><div class="mini" style="width:${Math.max(4,100*Math.max(0,c.saldo)/mx)}%;background:var(--terra)"></div></div>`).join('');}
+function chFilter(q){q=q.toLowerCase();document.querySelectorAll('#chlist .bookitem').forEach(el=>el.style.display=el.dataset.t.includes(q)?'':'none');}
+function chDetailSel(){document.querySelectorAll('#chlist .bookitem').forEach(el=>el.classList.toggle('sel',el.dataset.d===window.chSel));chDetail();}
+function chDetail(){const CH=P.consigHist,d=document.getElementById('chdetail'),c=CH.clients.find(x=>x.doc===window.chSel);if(!c){d.innerHTML='';return;}
+d.innerHTML=`<div style="border:1px solid var(--line);border-radius:10px;padding:14px">
+<div style="font-size:17px;font-weight:800">${esc(c.nome)} <span class="mut" style="font-size:12px">${c.uf} · raiz ${c.doc}</span></div>
+<div class="legend" style="margin:6px 0 10px"><span class="chip">Remessa ${brl(c.R)}</span><span class="chip">Acerto ${brl(c.A)}</span><span class="chip">Devolução ${brl(c.D)}</span><span class="chip" style="background:#f7e3e0">Saldo ${brl(c.saldo)}</span><span class="chip">conv ${c.conv}%</span>${c.lastA?`<span class="chip">últ. acerto ${c.lastA}</span>`:''}</div>
+<div class="l mut">FLUXO MENSAL (remessa / acerto / devolução)</div>${flowChart(CH.months,c.sr,c.sa,c.sd)}
+<div class="l mut" style="margin-top:8px">SALDO ACUMULADO EM CONSIGNAÇÃO</div>${saldoChart(CH.months,c.sr,c.sa,c.sd)}
+<div class="toolbar" style="margin-top:12px"><div class="l mut" style="margin:0">TÍTULOS CONSIGNADOS NESTE CLIENTE (${c.tit.length})</div><input type="text" placeholder="🔎 título..." oninput="tsearch('chTit',this.value)" style="flex:1;min-width:120px"><button class="btn" onclick="texport('chTit','titulos_${c.doc}.csv')">⬇ CSV</button></div><div class="note" style="margin:0 0 6px">Saldo = remessa − acerto − devolução (un. ainda em poder do cliente). "Esquecido" = sem nenhum movimento há &gt;1 ano.</div><div id="chTit"></div>
+${notesDetailsCH(c)}</div>`;chTitTable(c);}
+function notesDetailsCH(c){const ns=[...(c.notes||[])].sort((a,b)=>a[2]<b[2]?1:-1),cn=['Remessa','Acerto','Devolução'],tg=['ok','warn','danger'];
+return `<details><summary>📄 Notas fiscais que sustentam estes números (${(c.notes||[]).length}) — fonte da verdade</summary>
+<div class="note">A chave de acesso (44 díg.) identifica a NFe na SEFAZ (nfe.fazenda.gov.br). Ou clique numa barra do gráfico para filtrar por mês/tipo.</div>
+<div class="scroll"><table><tr><th>Nº NF</th><th>Data</th><th>Tipo</th><th class="n">Valor</th><th>Chave de acesso</th></tr>
+${ns.slice(0,200).map(n=>`<tr><td>${esc(n[1])}</td><td>${n[2]}</td><td><span class="tag ${tg[n[3]]}">${cn[n[3]]}</span></td><td class="n">${brl(n[4])}</td><td><span class="mono">${n[0]}</span> <button class="btn mini" onclick="navigator.clipboard&&navigator.clipboard.writeText('${n[0]}')">copiar</button></td></tr>`).join('')}</table></div>${ns.length>200?`<div class="note">Mostrando 200 de ${ns.length}.</div>`:''}</details>`;}
+function chBar(mi,cat){const CH=P.consigHist,c=CH.clients.find(x=>x.doc===window.chSel);if(!c)return;
+const mo=CH.months[mi],cn=['Remessa','Acerto','Devolução'],tg=['ok','warn','danger'];
+const ns=(c.notes||[]).filter(n=>n[2].slice(0,7)===mo&&n[3]===cat).sort((a,b)=>a[2]<b[2]?-1:1);
+if(!ns.length)return;const tot=ns.reduce((a,n)=>a+n[4],0);
+document.getElementById('modal2').innerHTML=`<button class="x" onclick="closeOv2()">×</button>
+<div style="font-size:17px;font-weight:800"><span class="tag ${tg[cat]}">${cn[cat]}</span> ${mo}</div>
+<div class="mut" style="font-size:12.5px;margin:5px 0 10px">${esc(c.nome)} · ${ns.length} nota(s) · ${brl(tot)}</div>
+<div class="scroll"><table><tr><th>Nº NF</th><th>Data</th><th class="n">Valor</th><th>Chave de acesso</th></tr>
+${ns.map(n=>`<tr><td>${esc(n[1])}</td><td>${n[2]}</td><td class="n">${brl(n[4])}</td><td><span class="mono">${n[0]}</span> <button class="btn mini" onclick="navigator.clipboard&&navigator.clipboard.writeText('${n[0]}')">copiar</button></td></tr>`).join('')}</table></div>`;
+document.getElementById('ov2').classList.add('on');}
+function chStatus(sq,gap){if(sq<=0)return['Quitado','mut2'];if(gap>=12)return['Esquecido','danger'];if(gap>=6)return['Parado','warn'];return['Ativo','ok'];}
+function chTitTable(c){const CH=P.consigHist,T=CH.titles,refMi=CH.months.length-1;
+const rows=c.tit.map(t=>{const ti=t[0],rq=t[1],aq=t[2],dq=t[3],sv=t[4],lm=t[5],la=t[6],sq=rq-aq-dq,gap=lm<0?999:refMi-lm,st=chStatus(sq,gap);return {tit:T[ti][1],rq,aq,sq,sv,la:la>=0?CH.months[la]:'NUNCA',st:st[0],cl:st[1],_s:T[ti][1]};});
+mkTable('chTit',rows,[
+{h:'Título',get:r=>r.tit,k:'titulo'},
+{h:'Remessa',get:r=>r.rq,num:true,fmt:v=>num(v),k:'remessa_un'},
+{h:'Acerto',get:r=>r.aq,num:true,fmt:v=>num(v),k:'acerto_un'},
+{h:'Saldo un',get:r=>r.sq,num:true,fmt:v=>num(v),k:'saldo_un'},
+{h:'Valor parado',get:r=>r.sv,num:true,fmt:v=>brl(v),k:'valor_parado'},
+{h:'Últ. acerto',get:r=>r.la,k:'ultimo_acerto'},
+{h:'Status',get:r=>r.st,fmt:(v,r)=>`<span class="tag ${r.cl}">${v}</span>`,k:'status'}],3,true);}
+function goConsigClient(doc){window.chSel=doc;const b=[...document.querySelectorAll('nav button')].find(x=>x.dataset.t==='consighist');if(b)b.click();chDetailSel();}
+function renderCheckagem(){const CH=P.consigHist,el=document.getElementById('s-checagem');
+if(!CH){el.innerHTML='<div class="card"><h2>Rotina de checagem</h2><div class="note">Sem dados de consignação histórica.</div></div>';return;}
+const T=CH.titles,refMi=CH.months.length-1,rows=[];let totV=0,nEsq=0,esqV=0;
+CH.clients.forEach(c=>c.tit.forEach(t=>{const ti=t[0],rq=t[1],aq=t[2],dq=t[3],sv=t[4],lm=t[5],sq=rq-aq-dq;if(sq<=0)return;const gap=lm<0?999:refMi-lm,st=chStatus(sq,gap);
+rows.push({cli:c.nome,uf:c.uf,doc:c.doc,tit:T[ti][1],sq,sv,rq,aq,la:t[6]>=0?CH.months[t[6]]:'NUNCA',gap,st:st[0],cl:st[1],_s:c.nome+' '+T[ti][1]});totV+=sv;if(st[0]==='Esquecido'){nEsq++;esqV+=sv;}}));
+el.innerHTML=`<div class="flag">🔔 <b>Rotina de checagem de consignação</b> — cada linha é um título parado em um cliente (saldo &gt; 0). Use para conferir estoque, cobrar acerto ou pedir devolução. Base: histórico 2020-2026. "Esquecido" = sem nenhum movimento há &gt;1 ano.</div>
+<div class="grid3">
+<div class="card" style="text-align:center"><div class="l mut">ITENS A CHECAR</div><div class="big terra">${num(rows.length)}</div><div class="note">cliente × título com saldo</div></div>
+<div class="card" style="text-align:center"><div class="l mut">VALOR PARADO TOTAL</div><div class="big" style="color:var(--gold)">${brlk(totV)}</div></div>
+<div class="card" style="text-align:center"><div class="l mut">ESQUECIDOS (&gt;1 ANO)</div><div class="big" style="color:var(--red)">${num(nEsq)}</div><div class="note">${brlk(esqV)} parados</div></div></div>
+<div class="card"><div class="toolbar"><h2 style="margin:0">Itens a checar</h2>
+<input type="text" placeholder="🔎 cliente ou título..." oninput="tsearch('tblChk',this.value)" style="flex:1;min-width:160px">
+<button class="btn on" onclick="tfilter('tblChk',null,this)">Todos</button>
+<button class="btn" onclick="tfilter('tblChk',r=>r.st==='Esquecido',this)">Esquecidos</button>
+<button class="btn" onclick="tfilter('tblChk',r=>r.st==='Parado',this)">Parados</button>
+<button class="btn" onclick="tfilter('tblChk',r=>r.st==='Ativo',this)">Ativos</button>
+<button class="btn p" onclick="texport('tblChk','rotina_checagem.csv')">⬇ Exportar (visão atual)</button></div>
+<div class="note">Ordene por "Valor parado" ou "Meses parado". Clique no cliente para abrir o histórico dele. Busque um título para ver onde ele está parado.</div><div id="tblChk"></div></div>`;
+mkTable('tblChk',rows,[
+{h:'Cliente',get:r=>r.cli,fmt:(v,r)=>`<span class="clk" onclick="goConsigClient('${r.doc}')">${esc(v)}</span>`,k:'cliente'},
+{h:'UF',get:r=>r.uf},
+{h:'Título',get:r=>r.tit,k:'titulo'},
+{h:'Saldo un',get:r=>r.sq,num:true,fmt:v=>num(v),k:'saldo_un'},
+{h:'Valor parado',get:r=>r.sv,num:true,fmt:v=>brl(v),k:'valor_parado'},
+{h:'Remessa',get:r=>r.rq,num:true,fmt:v=>num(v),k:'remessa_un'},
+{h:'Acerto',get:r=>r.aq,num:true,fmt:v=>num(v),k:'acerto_un'},
+{h:'Últ. acerto',get:r=>r.la,k:'ultimo_acerto'},
+{h:'Meses parado',get:r=>r.gap,num:true,k:'meses_parado'},
+{h:'Status',get:r=>r.st,fmt:(v,r)=>`<span class="tag ${r.cl}">${v}</span>`,k:'status'}],4,true,600);}
+function renderAll(){renderHeader();renderGeral();renderClientes();renderConsig();renderProdutos();renderSazon();renderConsigHist();renderCheckagem();}
+buildFilter();buildNav();renderAll();
+</script></body></html>

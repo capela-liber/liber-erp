@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Government contact receiving the IRRF bill -->
+    <record id="partner_receita_federal" model="res.partner">
+        <field name="name">Receita Federal do Brasil</field>
+        <field name="is_company" eval="True"/>
+        <field name="edlab_irrf_mode">none</field>
+        <field name="country_id" ref="base.br"/>
+    </record>
+
+    <!-- 'IRRF to pay' liability account -->
+    <record id="account_irrf_to_pay" model="account.account">
+        <field name="name">IRRF a Recolher</field>
+        <field name="code">211500</field>
+        <field name="account_type">liability_current</field>
+        <field name="company_ids" eval="[(4, ref('base.main_company'))]"/>
+    </record>
+
+    <!-- Wire the company settings -->
+    <record id="base.main_company" model="res.company">
+        <field name="contract_tax_partner_id" ref="partner_receita_federal"/>
+        <field name="contract_tax_account_id" ref="account_irrf_to_pay"/>
+        <field name="contract_tax_due_day">20</field>
+    </record>
+
+</odoo>

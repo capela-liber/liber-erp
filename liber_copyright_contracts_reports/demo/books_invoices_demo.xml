@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ============================================================
+         Vendas de exemplo dos livros: faturas de cliente postadas e
+         pagas, contas analíticas e royalties contabilizados, para que
+         os analíticos dos contratos já nasçam populados no banco demo.
+         Feito em Python (helper abaixo) porque as variantes dos livros
+         não têm xmlid para referenciar aqui.
+         ============================================================ -->
+
+    <function model="account.move" name="_edlab_load_demo_book_sales"/>
+
+</odoo>

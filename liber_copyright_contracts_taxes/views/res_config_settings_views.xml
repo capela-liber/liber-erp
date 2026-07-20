@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- IRRF withholding settings in Settings > Copyright. Withholding only
+         happens when the tax authority AND the liability account are both set,
+         so leaving these invisible on the company form meant the feature could
+         be silently off with nobody knowing where to turn it on. -->
+    <record id="res_config_settings_view_form_taxes" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.copyright.taxes</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="liber_copyright_contracts.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//app[@name='liber_copyright_contracts']" position="inside">
+                <block title="Withholding (IRRF)" name="copyright_taxes_block">
+                    <setting string="Tax authority"
+                             help="Contact that receives the accumulated IRRF bill. Withholding is only computed when this and the account below are both set.">
+                        <field name="contract_tax_partner_id"/>
+                    </setting>
+                    <setting string="IRRF liability account"
+                             help="'IRRF to pay': the liability is born when the tax is withheld from the author and cleared when it is paid to the government.">
+                        <field name="contract_tax_account_id"/>
+                    </setting>
+                    <setting string="Tax bill journal"
+                             help="Purchase journal of the IRRF bill. Leave empty to use the company's default purchase journal.">
+                        <field name="contract_tax_journal_id"/>
+                    </setting>
+                    <setting string="Tax due day"
+                             help="Day of the following month when the withheld IRRF is due (DARF).">
+                        <div class="content-group">
+                            <div class="mt8">
+                                <field name="contract_tax_due_day" class="o_light_label"/>
+                                <span class="ms-2">of the following month</span>
+                            </div>
+                        </div>
+                    </setting>
+                </block>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

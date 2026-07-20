@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!--
+      Coverage: the balance a campaign never showed. A target of 10 per shelf is
+      not a plan until you know how many shelves it lands on and what stock backs
+      it. "100 on hand, target 10, 20 customers" is only serving half of them,
+      and the manager needs to see that BEFORE the ruptura, not after. Netted
+      against inbound purchases (forecast), so a title on its way is not a shortage.
+    -->
+
+    <record id="view_coverage_list" model="ir.ui.view">
+        <field name="name">consignment.coverage.list</field>
+        <field name="model">consignment.template.line</field>
+        <field name="arch" type="xml">
+            <list string="Cobertura" create="false" edit="false" delete="false"
+                  default_order="coverage_short desc">
+                <field name="template_id" string="Campanha"/>
+                <field name="team_id" string="Canal" optional="show"/>
+                <field name="product_id" string="Título" width="320px"/>
+                <field name="isbn" string="ISBN" optional="hide"/>
+                <field name="product_uom_qty" string="Alvo"/>
+                <field name="coverage_shelves" string="Prateleiras"/>
+                <field name="coverage_needed" string="Precisa" sum="Precisa"/>
+                <field name="coverage_on_hand" string="Estoque"/>
+                <field name="coverage_incoming" string="A caminho" sum="A caminho"
+                       optional="show"/>
+                <field name="coverage_shelves_served" string="Atende prat."/>
+                <field name="coverage_pct" string="Cobre %"
+                       widget="progressbar"/>
+                <field name="coverage_short" string="Faltará" sum="Faltará"
+                       decoration-bf="1" decoration-danger="coverage_short &gt; 0"/>
+                <field name="is_running" column_invisible="1"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_coverage_search" model="ir.ui.view">
+        <field name="name">consignment.coverage.search</field>
+        <field name="model">consignment.template.line</field>
+        <field name="arch" type="xml">
+            <search string="Coverage">
+                <field name="product_id" string="Título"/>
+                <field name="template_id" string="Campanha"/>
+                <field name="team_id" string="Canal"/>
+                <filter name="f_running" string="Campanhas em curso"
+                        domain="[('is_running', '=', True)]"/>
+                <filter name="f_will_short" string="Vai faltar"
+                        domain="[('coverage_short', '&gt;', 0)]"/>
+                <separator/>
+                <group>
+                    <filter name="g_campaign" string="Campanha" domain="[]"
+                            context="{'group_by': 'template_id'}"/>
+                    <filter name="g_team" string="Canal" domain="[]"
+                            context="{'group_by': 'team_id'}"/>
+                    <filter name="g_product" string="Título" domain="[]"
+                            context="{'group_by': 'product_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_coverage" model="ir.actions.act_window">
+        <field name="name">Cobertura</field>
+        <field name="res_model">consignment.template.line</field>
+        <field name="view_mode">list</field>
+        <field name="search_view_id" ref="view_coverage_search"/>
+        <field name="domain">[('template_id.is_running', '=', True)]</field>
+        <field name="context">{'search_default_f_running': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">No running campaign to cover</p>
+            <p>Per title of each running campaign: the target per shelf, how many
+               shelves it must reach, the stock and inbound purchases behind it,
+               and how much it will fall short. Read it before running the
+               campaigns, to buy or reprint in time.</p>
+        </field>
+    </record>
+
+    <menuitem id="menu_coverage"
+              name="Cobertura"
+              parent="liber_soc_moves.menu_consignment_stock_root"
+              action="action_coverage"
+              sequence="35"/>
+
+</odoo>

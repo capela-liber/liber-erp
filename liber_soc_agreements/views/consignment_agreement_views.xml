@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_consignment_agreement_list" model="ir.ui.view">
+        <field name="name">consignment.agreement.list</field>
+        <field name="model">consignment.agreement</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="partner_id"/>
+                <field name="user_id" optional="show"/>
+                <field name="team_id" optional="show"/>
+                <field name="settlement_frequency" optional="show"/>
+                <field name="on_shelf_qty" optional="show"/>
+                <field name="date_start" optional="hide"/>
+                <field name="state" widget="badge"
+                       decoration-info="state == 'draft'"
+                       decoration-success="state == 'active'"
+                       decoration-warning="state == 'suspended'"
+                       decoration-muted="state == 'closed'"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_consignment_agreement_form" model="ir.ui.view">
+        <field name="name">consignment.agreement.form</field>
+        <field name="model">consignment.agreement</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_activate" type="object" string="Activate"
+                            class="btn-primary" invisible="state != 'draft'"/>
+                    <button name="action_suspend" type="object" string="Suspend"
+                            invisible="state != 'active'"/>
+                    <button name="action_reactivate" type="object" string="Reactivate"
+                            class="btn-primary" invisible="state != 'suspended'"/>
+                    <button name="action_close" type="object" string="Close"
+                            invisible="state not in ('active', 'suspended')"/>
+                    <button name="action_draft" type="object" string="Reset to Draft"
+                            invisible="state != 'suspended'"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,active,closed"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_shelf" type="object"
+                                class="oe_stat_button" icon="fa-cubes"
+                                invisible="not location_id">
+                            <field name="on_shelf_qty" widget="statinfo" string="On shelf"/>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <h1><field name="name" readonly="1"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="partner_id"
+                                   readonly="state not in ('draft',)"/>
+                            <field name="user_id"/>
+                            <field name="team_id"/>
+                            <field name="pricelist_id"/>
+                            <field name="discount"/>
+                            <field name="report_contact_ids" widget="many2many_tags"
+                                   options="{'no_quick_create': True}"/>
+                        </group>
+                        <group>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                            <field name="settlement_frequency"/>
+                            <field name="replenishment_policy"/>
+                            <field name="location_id" readonly="1"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group>
+                            <field name="date_start"/>
+                            <field name="date_end"/>
+                        </group>
+                        <group>
+                            <field name="on_shelf_product_count"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Notes" name="notes">
+                            <field name="note" placeholder="Internal notes..."/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_consignment_agreement_search" model="ir.ui.view">
+        <field name="name">consignment.agreement.search</field>
+        <field name="model">consignment.agreement</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="partner_id"/>
+                <field name="user_id"/>
+                <field name="location_id"/>
+                <filter string="Active" name="f_active" domain="[('state', '=', 'active')]"/>
+                <filter string="Draft" name="f_draft" domain="[('state', '=', 'draft')]"/>
+                <filter string="Suspended" name="f_suspended" domain="[('state', '=', 'suspended')]"/>
+                <separator/>
+                <filter string="Archived" name="f_inactive" domain="[('active', '=', False)]"/>
+                <group>
+                    <filter string="Customer" name="g_partner" context="{'group_by': 'partner_id'}"/>
+                    <filter string="Commercial Agent" name="g_user" context="{'group_by': 'user_id'}"/>
+                    <filter string="Sales Team" name="g_team" context="{'group_by': 'team_id'}"/>
+                    <filter string="Status" name="g_state" context="{'group_by': 'state'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_consignment_agreement" model="ir.actions.act_window">
+        <field name="name">Agreements</field>
+        <field name="res_model">consignment.agreement</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_consignment_agreement_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create your first consignment agreement
+            </p>
+            <p>
+                An agreement links a customer to a shelf that holds our stock at
+                their premises. Activate it to create the shelf.
+            </p>
+        </field>
+    </record>
+
+</odoo>

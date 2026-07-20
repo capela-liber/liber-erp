@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--
+      Consignment CFOP taxonomy for the audit.
+
+      NOT noupdate: the shelf effect is set on every consignment CFOP (including
+      the ones seeded by nfe_xml) so an upgrade re-applies the classification.
+      The two effectuation/return CFOPs missing from nfe_xml's seed are created
+      here, keeping the audit self-contained ("sem inchar os módulos atuais").
+
+        ship   : + shelf   (remessa em consignação)          5917/6917
+        sale   : - shelf   (venda efetivada de consignação)  5114/6114
+        return : - shelf   (devolução / retorno)             5918/6918 · 5919/6919
+    -->
+
+    <!-- Effect on the CFOPs already seeded by nfe_xml -->
+    <record id="liber_nfe_xml.cfop_5917" model="nfe.cfop">
+        <field name="consignment_effect">ship</field>
+    </record>
+    <record id="liber_nfe_xml.cfop_6917" model="nfe.cfop">
+        <field name="consignment_effect">ship</field>
+    </record>
+    <record id="liber_nfe_xml.cfop_5918" model="nfe.cfop">
+        <field name="consignment_effect">return</field>
+    </record>
+    <record id="liber_nfe_xml.cfop_6918" model="nfe.cfop">
+        <field name="consignment_effect">return</field>
+    </record>
+
+    <!-- Effectuation of the sale of OWN production remitted in consignment.
+         This is the CFOP a publisher uses when its consigned books sell
+         (5114/6114 below are the "third-party goods" variant). -->
+    <record id="cfop_5113" model="nfe.cfop">
+        <field name="code">5113</field>
+        <field name="name">Venda de produção do estabelecimento, remetida anteriormente em consignação mercantil</field>
+        <field name="consignment_effect">sale</field>
+    </record>
+    <record id="cfop_6113" model="nfe.cfop">
+        <field name="code">6113</field>
+        <field name="name">Venda de produção do estabelecimento, remetida anteriormente em consignação mercantil (interestadual)</field>
+        <field name="consignment_effect">sale</field>
+    </record>
+
+    <!-- Effectuation of the sale of third-party goods remitted in consignment -->
+    <record id="cfop_5114" model="nfe.cfop">
+        <field name="code">5114</field>
+        <field name="name">Venda de mercadoria de terceiro remetida anteriormente em consignação mercantil</field>
+        <field name="consignment_effect">sale</field>
+    </record>
+    <record id="cfop_6114" model="nfe.cfop">
+        <field name="code">6114</field>
+        <field name="name">Venda de mercadoria de terceiro remetida anteriormente em consignação mercantil (interestadual)</field>
+        <field name="consignment_effect">sale</field>
+    </record>
+
+    <!-- Return / symbolic return of consignment stock already sold -->
+    <record id="cfop_5919" model="nfe.cfop">
+        <field name="code">5919</field>
+        <field name="name">Devolução simbólica de mercadoria vendida ou utilizada em processo industrial, remetida em consignação mercantil</field>
+        <field name="consignment_effect">return</field>
+    </record>
+    <record id="cfop_6919" model="nfe.cfop">
+        <field name="code">6919</field>
+        <field name="name">Devolução simbólica de mercadoria vendida ou utilizada em processo industrial, remetida em consignação mercantil (interestadual)</field>
+        <field name="consignment_effect">return</field>
+    </record>
+
+    <!--
+      Goods that physically reach the customer's shelf under a CFOP that is not
+      the textbook "remessa em consignação". They were invisible: the code is in
+      the XML, but it was not in this table, so the import left cfop_id NULL and
+      the note vanished from the ledger and from the audit, silently.
+
+      The publisher's own words about these: the goods go out and "muitas vezes
+      não voltam. É literalmente para colocar no carro e ir embora". So they
+      land on the shelf like any other shipment, and the return often never
+      comes. Treating them as 'ship' is what keeps the shelf honest.
+    -->
+    <record id="cfop_5914" model="nfe.cfop">
+        <field name="code">5914</field>
+        <field name="name">Remessa de mercadoria ou bem para exposição ou feira</field>
+        <field name="consignment_effect">ship</field>
+    </record>
+    <record id="cfop_5949" model="nfe.cfop">
+        <field name="code">5949</field>
+        <field name="name">Outra saída de mercadoria ou prestação de serviço não especificado</field>
+        <field name="consignment_effect">ship</field>
+    </record>
+    <record id="cfop_6949" model="nfe.cfop">
+        <field name="code">6949</field>
+        <field name="name">Outra saída de mercadoria ou prestação de serviço não especificado (interestadual)</field>
+        <field name="consignment_effect">ship</field>
+    </record>
+</odoo>

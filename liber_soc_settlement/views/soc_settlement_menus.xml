@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="menu_consignment_settlements"
+              name="Consignments"
+              parent="liber_soc_agreements.menu_consignment_root"
+              sequence="12"/>
+
+    <menuitem id="menu_consignment_board"
+              name="Operations"
+              parent="menu_consignment_settlements"
+              action="action_consignment_settlement"
+              sequence="1"/>
+
+    <!-- Gear prefix flags these as actions (wizards that RUN), not views. -->
+    <menuitem id="menu_generate_monthly_settlements"
+              name="⚙️ Generate Operations"
+              parent="menu_consignment_settlements"
+              action="action_generate_wizard"
+              sequence="2"/>
+
+    <menuitem id="menu_map_run"
+              name="⚙️ Consignment Map"
+              parent="menu_consignment_settlements"
+              action="action_map_run_wizard"
+              sequence="3"/>
+
+    <!-- Top-level "Acertos", sibling to Orders (15) and Returns (20), closing
+         the Orders · Settlements · Returns trio. -->
+    <menuitem id="menu_consignment_acertos"
+              name="Settlements"
+              parent="liber_soc_agreements.menu_consignment_root"
+              action="action_consignment_acerto"
+              sequence="18"/>
+
+    <!-- Under Reports, next to On Shelf and Inventory: it is an analysis, not an
+         operation. (Parent lives in soc_moves, which this module depends on.) -->
+    <menuitem id="menu_consignment_ledger"
+              name="Shelf Ledger"
+              parent="liber_soc_moves.menu_consignment_stock_root"
+              action="action_consignment_ledger"
+              sequence="30"/>
+
+    <menuitem id="menu_soc_config"
+              name="Configuration"
+              parent="liber_soc_agreements.menu_consignment_root"
+              sequence="90"
+              groups="base.group_system"/>
+
+    <menuitem id="menu_soc_settings"
+              name="Settings"
+              parent="menu_soc_config"
+              action="action_soc_config_settings"
+              sequence="10"
+              groups="base.group_system"/>
+
+    <menuitem id="menu_soc_stages"
+              name="Stages"
+              parent="menu_soc_config"
+              action="action_settlement_stage"
+              sequence="20"/>
+</odoo>

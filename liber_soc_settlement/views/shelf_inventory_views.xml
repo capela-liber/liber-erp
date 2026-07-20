@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!--
+      Target on the Inventory (count) report.
+
+      The manager counts the shelf here; putting Target beside On Hand tells them,
+      title by title, how far the shelf is from what the running campaigns asked
+      for, without leaving the screen. And a pivot ("sheet") so the same two
+      numbers can be read as measures, per customer and title.
+
+      Target only shows for titles that HAVE a quant: this is the physical count,
+      so a title never placed (no quant, no row) is not here. That is the On Shelf
+      universe, a different report.
+    -->
+
+    <!-- On Hand | Target, in the editable count grid. Only in the consignment
+         inventory (context flag set by liber_soc_moves.action_shelf_inventory). -->
+    <record id="view_stock_quant_inventory_target_soc" model="ir.ui.view">
+        <field name="name">stock.quant.inventory.list.target.soc</field>
+        <field name="model">stock.quant</field>
+        <field name="inherit_id" ref="stock.view_stock_quant_tree_inventory_editable"/>
+        <field name="arch" type="xml">
+            <field name="quantity" position="after">
+                <field name="qty_target" optional="show"
+                       column_invisible="not context.get('consignment_inventory')"/>
+            </field>
+        </field>
+    </record>
+
+    <!-- The "sheet": On Hand and Target as measures, per customer and title. -->
+    <record id="view_shelf_inventory_pivot" model="ir.ui.view">
+        <field name="name">stock.quant.shelf.inventory.pivot</field>
+        <field name="model">stock.quant</field>
+        <field name="arch" type="xml">
+            <pivot string="Inventory" sample="1">
+                <field name="consignment_partner_id" type="row"/>
+                <field name="product_id" type="row"/>
+                <field name="quantity" type="measure"/>
+                <field name="qty_target" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <!-- Search: a filter to see only the titles a running campaign asks for
+         (Target > 0), plus the axes to read the shelf by. -->
+    <record id="view_shelf_inventory_search" model="ir.ui.view">
+        <field name="name">stock.quant.shelf.inventory.search</field>
+        <field name="model">stock.quant</field>
+        <field name="arch" type="xml">
+            <search string="Inventory">
+                <field name="product_id"/>
+                <field name="consignment_partner_id"/>
+                <field name="location_id"/>
+                <filter name="f_has_campaign" string="With campaign"
+                        domain="[('qty_target', '&gt;', 0)]"/>
+                <filter name="f_on_shelf" string="On shelf now"
+                        domain="[('quantity', '!=', 0)]"/>
+                <group>
+                    <filter name="g_customer" string="Customer"
+                            context="{'group_by': 'consignment_partner_id'}"/>
+                    <filter name="g_product" string="Title"
+                            context="{'group_by': 'product_id'}"/>
+                    <filter name="g_location" string="Location"
+                            context="{'group_by': 'location_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Add a pivot mode to the existing Inventory report. view_id is cleared and
+         both views are bound explicitly, so the editable count list is kept AND
+         the pivot is OUR view (with Target), not the generic stock.quant pivot. -->
+    <record id="liber_soc_moves.action_shelf_inventory" model="ir.actions.act_window">
+        <field name="view_mode">list,pivot</field>
+        <field name="view_id" eval="False"/>
+        <field name="search_view_id" ref="view_shelf_inventory_search"/>
+    </record>
+
+    <record id="act_shelf_inventory_list" model="ir.actions.act_window.view">
+        <field name="sequence">10</field>
+        <field name="view_mode">list</field>
+        <field name="view_id" ref="stock.view_stock_quant_tree_inventory_editable"/>
+        <field name="act_window_id" ref="liber_soc_moves.action_shelf_inventory"/>
+    </record>
+
+    <record id="act_shelf_inventory_pivot" model="ir.actions.act_window.view">
+        <field name="sequence">20</field>
+        <field name="view_mode">pivot</field>
+        <field name="view_id" ref="view_shelf_inventory_pivot"/>
+        <field name="act_window_id" ref="liber_soc_moves.action_shelf_inventory"/>
+    </record>
+
+</odoo>

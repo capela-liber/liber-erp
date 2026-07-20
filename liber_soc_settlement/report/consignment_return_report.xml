@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!--
+      Solicitação de Devolução (CR).
+
+      The CR could already e-mail the customer, but the mail had nothing attached:
+      the SOC had exactly ONE report, and it belonged to the CO. So "sending the
+      PDF" never failed - there was no PDF to send.
+
+      A return is a physical act by a third party in their own shop: someone has
+      to walk the shelves with a list, box the copies and hand them over. A list
+      in the body of an e-mail is not that. This is the document that goes with
+      the boxes, and comes back signed.
+
+      In PT on purpose: it is a customer-facing document (see the i18n convention).
+    -->
+    <template id="report_consignment_return_document">
+        <t t-call="web.external_layout">
+            <t t-set="doc" t-value="doc.with_context(lang=doc.partner_id.lang or 'pt_BR')"/>
+            <div class="page">
+
+                <h2 style="margin-bottom:2px;">Solicitação de Devolução</h2>
+                <div style="color:#666; margin-bottom:14px;">
+                    <span t-field="doc.name"/>
+                </div>
+
+                <table style="width:100%; margin-bottom:16px; border-collapse:collapse;">
+                    <tr>
+                        <td style="width:50%; vertical-align:top;">
+                            <div><strong>Cliente</strong></div>
+                            <div t-field="doc.partner_id"
+                                 t-options="{'widget': 'contact', 'fields': ['name', 'address', 'vat'], 'no_marker': True}"/>
+                        </td>
+                        <td style="width:50%; vertical-align:top;">
+                            <div><strong>Data</strong>:
+                                <span t-field="doc.date" t-options="{'widget': 'date'}"/>
+                            </div>
+                            <div t-if="doc.agreement_id">
+                                <strong>Contrato</strong>: <span t-field="doc.agreement_id.name"/>
+                            </div>
+                            <div t-if="doc.return_due_date">
+                                <strong>Prazo para devolução</strong>:
+                                <span t-field="doc.return_due_date" t-options="{'widget': 'date'}"
+                                      style="font-weight:bold;"/>
+                            </div>
+                            <div t-if="doc.location_id">
+                                <strong>Prateleira</strong>: <span t-field="doc.location_id.display_name"/>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+
+                <p>
+                    Solicitamos a devolução dos títulos abaixo, hoje em consignação
+                    na sua loja. Confira as quantidades no ato da coleta e assine
+                    ao final.
+                </p>
+
+                <table class="table table-sm" style="width:100%; border-collapse:collapse;">
+                    <thead>
+                        <tr style="background-color:#f2f2f2;">
+                            <th style="text-align:left; padding:6px 10px;">ISBN</th>
+                            <th style="text-align:left; padding:6px 10px;">Título</th>
+                            <th style="text-align:right; padding:6px 10px;">Qtd. a devolver</th>
+                            <th style="text-align:center; padding:6px 10px;">Conferido</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr t-foreach="doc.line_ids" t-as="line"
+                            style="border-bottom:1px solid #eee;">
+                            <td style="padding:6px 10px;">
+                                <span t-field="line.product_id.default_code"/>
+                            </td>
+                            <td style="padding:6px 10px;">
+                                <span t-field="line.product_id.name"/>
+                            </td>
+                            <td style="text-align:right; padding:6px 10px; font-weight:bold;">
+                                <span t-field="line.product_uom_qty"/>
+                            </td>
+                            <!-- A box to tick while counting. The person doing this is
+                                 standing at a shelf, not at a screen. -->
+                            <td style="text-align:center; padding:6px 10px;">
+                                <span style="display:inline-block; width:14px; height:14px;
+                                             border:1px solid #999;"/>
+                            </td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr style="border-top:2px solid #333;">
+                            <td colspan="2" style="padding:6px 10px; font-weight:bold;">Total</td>
+                            <td style="text-align:right; padding:6px 10px; font-weight:bold;">
+                                <span t-esc="sum(doc.line_ids.mapped('product_uom_qty'))"/>
+                            </td>
+                            <td/>
+                        </tr>
+                    </tfoot>
+                </table>
+
+                <p t-if="doc.note" style="margin-top:12px;">
+                    <strong>Observações</strong>: <span t-field="doc.note"/>
+                </p>
+
+                <table style="width:100%; margin-top:48px;">
+                    <tr>
+                        <td style="width:50%; text-align:center;">
+                            <div style="border-top:1px solid #333; padding-top:4px;">
+                                Conferido pelo cliente
+                            </div>
+                        </td>
+                        <td style="width:50%; text-align:center;">
+                            <div style="border-top:1px solid #333; padding-top:4px;">
+                                Recebido pela editora
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+
+            </div>
+        </t>
+    </template>
+
+    <template id="report_consignment_return">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="liber_soc_settlement.report_consignment_return_document"/>
+            </t>
+        </t>
+    </template>
+
+    <record id="action_report_consignment_return" model="ir.actions.report">
+        <field name="name">Solicitação de Devolução</field>
+        <field name="model">consignment.move</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">liber_soc_settlement.report_consignment_return</field>
+        <field name="report_file">liber_soc_settlement.report_consignment_return</field>
+        <field name="binding_model_id" ref="liber_soc_moves.model_consignment_move"/>
+        <field name="binding_type">report</field>
+        <field name="print_report_name">'Devolucao - %s' % (object.name)</field>
+    </record>
+
+    <!-- And attach it to the e-mail the CR already sent empty-handed. -->
+    <record id="mail_template_return_request" model="mail.template">
+        <field name="report_template_ids"
+               eval="[(4, ref('action_report_consignment_return'))]"/>
+    </record>
+
+</odoo>

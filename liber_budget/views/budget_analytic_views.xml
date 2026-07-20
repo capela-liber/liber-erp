@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="budget_analytic_view_list" model="ir.ui.view">
+        <field name="name">budget.analytic.list</field>
+        <field name="model">budget.analytic</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="date_from"/>
+                <field name="date_to"/>
+                <field name="user_id"/>
+                <field name="group_id" optional="show"/>
+                <field name="tag_ids" widget="many2many_tags"
+                       options="{'color_field': 'color'}" optional="show"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+                <field name="state" widget="badge"
+                       decoration-info="state == 'draft'"
+                       decoration-success="state == 'confirmed'"
+                       decoration-muted="state in ('done', 'canceled')"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="budget_analytic_view_form" model="ir.ui.view">
+        <field name="name">budget.analytic.form</field>
+        <field name="model">budget.analytic</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_confirm" string="Confirm" type="object"
+                            class="oe_highlight" invisible="state != 'draft'"/>
+                    <button name="action_done" string="Mark as Done" type="object"
+                            invisible="state != 'confirmed'"/>
+                    <button name="action_create_revision" string="New Revision" type="object"
+                            invisible="state != 'confirmed'"/>
+                    <button name="action_set_draft" string="Reset to Draft" type="object"
+                            invisible="state not in ('confirmed', 'canceled')"/>
+                    <button name="action_cancel" string="Cancel" type="object"
+                            invisible="state in ('done', 'canceled')"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,confirmed,done"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_open_revisions" type="object"
+                                class="oe_stat_button" icon="fa-code-fork"
+                                invisible="revision_count == 0">
+                            <field name="revision_count" widget="statinfo" string="Revisions"/>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <h1><field name="name" placeholder="e.g. 2026 Marketing Budget"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="group_id"/>
+                            <field name="tag_ids" widget="many2many_tags"
+                                   options="{'color_field': 'color'}"/>
+                            <field name="user_id"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                        <group>
+                            <field name="date_from"/>
+                            <field name="date_to"/>
+                            <field name="parent_id" readonly="1" invisible="not parent_id"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Budget Lines" name="lines">
+                            <field name="budget_line_ids">
+                                <list editable="top" class="o_budget_lines"
+                                      decoration-danger="budget_amount and practical_amount &lt; budget_amount"
+                                      decoration-info="budget_amount and practical_amount &gt; budget_amount">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="position_id"/>
+                                    <field name="account_id" string="Analytic Account"
+                                           optional="show"/>
+                                    <!-- grupo PLANEJADO -->
+                                    <field name="budget_amount" sum="Planned"/>
+                                    <field name="theoritical_amount" sum="Theoretical"/>
+                                    <!-- grupo REALIZADO (separado por borda via CSS).
+                                         Programado = rascunho + postado; Prático = só
+                                         postado. Quem lança o futuro em rascunho quer o
+                                         Programado; quem quer o realizado de verdade,
+                                         não. Por isso ambos vão para o seletor de
+                                         colunas, e o Programado nasce escondido. -->
+                                    <field name="programmed_amount" sum="Programmed"
+                                           optional="hide"/>
+                                    <field name="practical_amount" sum="Practical"
+                                           optional="show"/>
+                                    <field name="practical_percentage" widget="percentage"/>
+                                    <button name="action_open_entries" type="object"
+                                            string="View" icon="fa-search-plus"
+                                            title="View Journal Items"/>
+                                    <field name="currency_id" column_invisible="1"/>
+                                    <field name="company_id" column_invisible="1"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="budget_analytic_view_search" model="ir.ui.view">
+        <field name="name">budget.analytic.search</field>
+        <field name="model">budget.analytic</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="user_id"/>
+                <field name="group_id"/>
+                <field name="tag_ids"/>
+                <filter name="filter_draft" string="Draft" domain="[('state', '=', 'draft')]"/>
+                <filter name="filter_open" string="Open" domain="[('state', '=', 'confirmed')]"/>
+                <separator/>
+                <filter name="filter_my" string="My Budgets" domain="[('user_id', '=', uid)]"/>
+                <separator/>
+                <filter name="group_state" string="Status" context="{'group_by': 'state'}"/>
+                <filter name="group_group" string="Group" context="{'group_by': 'group_id'}"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="budget_analytic_action" model="ir.actions.act_window">
+        <field name="name">Budgets</field>
+        <field name="res_model">budget.analytic</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Create your first budget</p>
+            <p>Defina valores previstos por conta analitica e acompanhe o realizado.</p>
+        </field>
+    </record>
+
+    <menuitem id="menu_budget_root" name="Budgets" sequence="95"
+              web_icon="liber_budget,static/description/icon.png"
+              groups="liber_budget.group_budget_user"/>
+    <menuitem id="menu_budget_analytic" parent="menu_budget_root"
+              action="budget_analytic_action" sequence="10"/>
+
+</odoo>

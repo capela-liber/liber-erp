@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Return request (CR). Sent as a follow-up nudge when a return hasn't
+         happened within the tolerable window: a return-only ask, distinct from
+         the full first map (CO). Rendered on consignment.move (kind return). -->
+    <record id="mail_template_return_request" model="mail.template">
+        <field name="name">Consignment Return Request</field>
+        <field name="model_id" ref="liber_soc_moves.model_consignment_move"/>
+        <field name="subject">Pedido de Devolução — Consignação {{ object.name }}</field>
+        <field name="email_from">{{ (object.company_id.email_formatted or user.email_formatted) }}</field>
+        <field name="partner_to">{{ ','.join(str(i) for i in ([object.partner_id.id] + object.agreement_id.report_contact_ids.ids)) }}</field>
+        <!-- Honour partner_to (customer + the contract's report contacts). With
+             use_default_to=True Odoo would ignore partner_to and mail only the
+             customer's default recipient. -->
+        <field name="use_default_to" eval="False"/>
+        <field name="lang">{{ object.partner_id.lang }}</field>
+        <field name="auto_delete" eval="False"/>
+        <field name="body_html" type="html">
+            <div style="font-size: 13px;">
+                <t t-if="object.company_id.return_request_text">
+                    <t t-out="object.company_id.return_request_text"/>
+                </t>
+                <t t-else="">
+                    <p>Prezados,</p>
+                    <p>Consta em nosso controle uma <strong>devolução de consignação
+                       pendente</strong> (<t t-out="object.name or ''"/>) referente aos
+                       títulos abaixo, que gentilmente pedimos que sejam
+                       <strong>separados e devolvidos</strong>:</p>
+                </t>
+                <table style="border-collapse: collapse; margin: 8px 0;">
+                    <tr>
+                        <th style="text-align: left; border-bottom: 1px solid #ccc; padding: 4px 12px 4px 0;">Título</th>
+                        <th style="text-align: right; border-bottom: 1px solid #ccc; padding: 4px 0;">Qtd.</th>
+                    </tr>
+                    <t t-foreach="object.line_ids" t-as="line">
+                        <tr>
+                            <td style="padding: 4px 12px 4px 0;"><t t-out="line.product_id.display_name or ''"/></td>
+                            <td style="text-align: right; padding: 4px 0;"><t t-out="line.product_uom_qty or 0"/></td>
+                        </tr>
+                    </t>
+                </table>
+                <p>Assim que possível, por favor <strong>responda este e-mail</strong>
+                   confirmando a devolução ou combinando a coleta.</p>
+                <p>Atenciosamente,<br/><t t-out="object.company_id.name or ''"/></p>
+            </div>
+        </field>
+    </record>
+</odoo>

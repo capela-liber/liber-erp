@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="cron_nfe_sefaz_sweep" model="ir.cron">
+            <field name="name">NFe XML - SEFAZ DFe Daily Sweep</field>
+            <field name="active" eval="True"/>
+            <field name="user_id" ref="base.user_admin"/>
+            <field name="model_id" ref="model_nfe_sefaz_sweep"/>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="state">code</field>
+            <field name="code">model.run_sweeps()</field>
+            <field name="priority" eval="10"/>
+        </record>
+    </data>
+</odoo>

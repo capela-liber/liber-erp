@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!--
+      Campaigns (coverage): what the running campaigns asked for against what
+      actually reached each customer. Opens on "Never received" grouped by
+      Customer, so the first thing you see is the unexplored universe: the books a
+      campaign wants and the customer has none of.
+    -->
+
+    <record id="view_consignment_coverage_list" model="ir.ui.view">
+        <field name="name">consignment.coverage.list</field>
+        <field name="model">consignment.coverage</field>
+        <field name="arch" type="xml">
+            <list string="Campaigns" create="0" edit="0" delete="0"
+                  default_order="qty_short desc">
+                <field name="partner_id"/>
+                <field name="campaign_id" optional="show"/>
+                <field name="team_id" optional="hide"/>
+                <field name="product_id" width="320px"/>
+                <field name="qty_target" sum="Target"/>
+                <field name="qty_on_shelf" sum="On Shelf"/>
+                <field name="qty_short" sum="Short" decoration-bf="1"
+                       decoration-warning="qty_short &gt; 0"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_consignment_coverage_pivot" model="ir.ui.view">
+        <field name="name">consignment.coverage.pivot</field>
+        <field name="model">consignment.coverage</field>
+        <field name="arch" type="xml">
+            <pivot string="Campaigns" sample="1">
+                <field name="partner_id" type="row"/>
+                <field name="product_id" type="row"/>
+                <field name="qty_target" type="measure"/>
+                <field name="qty_on_shelf" type="measure"/>
+                <field name="qty_short" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="view_consignment_coverage_graph" model="ir.ui.view">
+        <field name="name">consignment.coverage.graph</field>
+        <field name="model">consignment.coverage</field>
+        <field name="arch" type="xml">
+            <graph string="Campaigns" type="bar" sample="1">
+                <field name="partner_id"/>
+                <field name="qty_short" type="measure"/>
+            </graph>
+        </field>
+    </record>
+
+    <record id="view_consignment_coverage_search" model="ir.ui.view">
+        <field name="name">consignment.coverage.search</field>
+        <field name="model">consignment.coverage</field>
+        <field name="arch" type="xml">
+            <search string="Campaigns">
+                <field name="partner_id"/>
+                <field name="product_id"/>
+                <field name="campaign_id"/>
+                <field name="team_id"/>
+                <!-- The point of the report: a campaign title the customer has
+                     none of. Target wanted, shelf empty. -->
+                <filter name="f_never" string="Never received"
+                        domain="[('qty_target', '&gt;', 0), ('qty_on_shelf', '=', 0)]"/>
+                <filter name="f_short" string="Below target"
+                        domain="[('qty_short', '&gt;', 0)]"/>
+                <filter name="f_on_shelf" string="On shelf"
+                        domain="[('qty_on_shelf', '&gt;', 0)]"/>
+                <group>
+                    <filter name="g_customer" string="Customer"
+                            context="{'group_by': 'partner_id'}"/>
+                    <filter name="g_campaign" string="Campaign"
+                            context="{'group_by': 'campaign_id'}"/>
+                    <filter name="g_team" string="Sales Channel"
+                            context="{'group_by': 'team_id'}"/>
+                    <filter name="g_product" string="Title"
+                            context="{'group_by': 'product_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_consignment_coverage" model="ir.actions.act_window">
+        <field name="name">Campaigns</field>
+        <field name="res_model">consignment.coverage</field>
+        <field name="view_mode">list,pivot,graph</field>
+        <field name="search_view_id" ref="view_consignment_coverage_search"/>
+        <field name="context">{'search_default_f_never': 1, 'search_default_g_customer': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">No campaign gap</p>
+            <p>Every title a running campaign asks for, against what reached each
+               customer. Opens on <b>Never received</b>, grouped by Customer: the
+               books a campaign wants and the customer has none of — the universe
+               still to be explored. Remove the filter to see full coverage.</p>
+        </field>
+    </record>
+
+    <menuitem id="menu_consignment_coverage"
+              name="Campaigns"
+              parent="liber_soc_moves.menu_consignment_stock_root"
+              action="action_consignment_coverage"
+              sequence="55"/>
+
+</odoo>

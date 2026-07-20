@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="view_move_form_nfe_xml" model="ir.ui.view">
+        <field name="name">account.move.form.nfe.xml</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@id='other_tab']//field[@name='invoice_origin']" position="after">
+                <field name="nfe_key"/>
+                <field name="nfe_xml_panel_id" invisible="not nfe_key and not nfe_xml_panel_id"/>
+                <field name="nfe_danfe_no" invisible="not nfe_xml_panel_id"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_account_move_filter_nfe_xml" model="ir.ui.view">
+        <field name="name">account.move.search.nfe.xml</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_account_move_filter"/>
+        <field name="arch" type="xml">
+            <field name="journal_id" position="after">
+                <field name="nfe_key"/>
+            </field>
+            <filter name="posted" position="after">
+                <separator/>
+                <filter string="From NFe XML" name="from_nfe_xml"
+                        domain="[('nfe_xml_panel_id', '!=', False)]"/>
+            </filter>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="group_budget_user" model="res.groups">
+        <field name="name">Budget: User</field>
+    </record>
+    <record id="group_budget_manager" model="res.groups">
+        <field name="name">Budget: Manager</field>
+        <field name="implied_ids" eval="[(4, ref('liber_budget.group_budget_user'))]"/>
+        <!-- admin entra no grupo na instalação, senão o menu (restrito) fica invisível -->
+        <field name="user_ids" eval="[(4, ref('base.user_admin'))]"/>
+    </record>
+
+    <!-- Record rules multiempresa -->
+    <record id="budget_analytic_company_rule" model="ir.rule">
+        <field name="name">Budget: multi-company</field>
+        <field name="model_id" ref="model_budget_analytic"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+    </record>
+    <record id="budget_line_company_rule" model="ir.rule">
+        <field name="name">Budget Line: multi-company</field>
+        <field name="model_id" ref="model_budget_line"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+    </record>
+    <record id="budget_position_company_rule" model="ir.rule">
+        <field name="name">Budgetary Position: multi-company</field>
+        <field name="model_id" ref="model_budget_position"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+    </record>
+    <record id="budget_group_company_rule" model="ir.rule">
+        <field name="name">Budget Group: multi-company</field>
+        <field name="model_id" ref="model_budget_group"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+    </record>
+    <record id="budget_report_company_rule" model="ir.rule">
+        <field name="name">Budget Analysis: multi-company</field>
+        <field name="model_id" ref="model_budget_report"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+    </record>
+</odoo>

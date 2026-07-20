@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_analytic_wizard_form" model="ir.ui.view">
+        <field name="name">edlab.contract.analytic.wizard.form</field>
+        <field name="model">edlab.contract.analytic.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Create Analytic Accounts">
+                <field name="contract_id" invisible="1"/>
+                <p class="text-muted">
+                    For each beneficiary, leave the analytic account empty to
+                    create a new one with the suggested name, or pick an existing
+                    account to link instead. Untick "Apply" to skip a line.
+                </p>
+                <field name="line_ids" nolabel="1">
+                    <list editable="bottom" create="false" delete="false">
+                        <field name="partner_id" readonly="1"/>
+                        <field name="product_id" readonly="1"/>
+                        <field name="analytic_name" readonly="1"/>
+                        <field name="analytic_account_id"
+                               options="{'no_create': True}"/>
+                        <field name="to_apply"/>
+                    </list>
+                </field>
+                <footer>
+                    <button name="action_confirm" type="object" string="Create"
+                            class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+</odoo>

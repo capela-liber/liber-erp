@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Full screen, never a modal: a batch can hold hundreds of books and the
+         whole point is being able to read them before pressing send. -->
+    <record id="view_metabooks_export_batch_form" model="ir.ui.view">
+        <field name="name">metabooks.export.batch.form</field>
+        <field name="model">metabooks.export.batch</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_prepare" type="object"
+                            string="Buscar alterações" class="btn-primary"
+                            invisible="state not in ('draft', 'checked')"/>
+                    <button name="action_check" type="object"
+                            string="Verificar"
+                            invisible="state != 'draft' or not line_ids"/>
+                    <button name="action_generate" type="object"
+                            string="Gerar planilha" class="btn-primary"
+                            invisible="state not in ('draft', 'checked') or not line_ids"/>
+                    <button name="action_download" type="object"
+                            string="Baixar" class="btn-primary"
+                            invisible="state != 'generated'"/>
+                    <button name="action_mark_sent" type="object"
+                            string="Marcar como enviada"
+                            invisible="state != 'generated'"
+                            confirm="Confirma que a planilha foi entregue à Metabooks? Os livros saem da fila de pendências."/>
+                    <button name="action_select_all" type="object"
+                            string="Marcar todos"
+                            invisible="state in ('sent', 'cancel') or not line_ids"/>
+                    <button name="action_select_none" type="object"
+                            string="Desmarcar todos"
+                            invisible="state in ('sent', 'cancel') or not line_ids"/>
+                    <button name="action_reset" type="object" string="Reabrir"
+                            invisible="state not in ('checked', 'generated', 'cancel')"/>
+                    <button name="action_cancel" type="object" string="Cancelar"
+                            invisible="state in ('sent', 'cancel')"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,checked,generated,sent"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="name" readonly="1"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="task"
+                                   readonly="state in ('sent', 'cancel')"/>
+                            <field name="mb_id"
+                                   readonly="state in ('sent', 'cancel')"/>
+                            <field name="free_text"
+                                   readonly="state in ('sent', 'cancel')"/>
+                        </group>
+                        <group>
+                            <field name="selected_count" string="Livros marcados"/>
+                            <field name="change_count" string="Campos alterados"/>
+                            <field name="filename" invisible="not filename"/>
+                            <field name="attachment_id" invisible="1"/>
+                            <field name="generated_on" invisible="not generated_on"/>
+                            <field name="generated_by" invisible="not generated_by"/>
+                            <field name="sent_on" invisible="not sent_on"/>
+                            <field name="sent_by" invisible="not sent_by"/>
+                        </group>
+                    </group>
+                    <div class="alert alert-info" role="status"
+                         invisible="state != 'generated'">
+                        Baixe a planilha e envie à Metabooks. Só depois marque como
+                        enviada — é isso que tira os livros da fila. A confirmação
+                        deles chega por e-mail depois da meia-noite.
+                    </div>
+                    <notebook>
+                        <page string="Livros" name="books">
+                            <field name="line_ids" nolabel="1"
+                                   readonly="state in ('sent', 'cancel')">
+                                <list editable="bottom" create="false">
+                                    <field name="selected" widget="boolean_toggle"/>
+                                    <field name="gtin" readonly="1"/>
+                                    <field name="title" readonly="1"/>
+                                    <field name="change_count" string="Alterações"
+                                           readonly="1"/>
+                                    <field name="no_history" string="Sem histórico"
+                                           readonly="1" optional="show"/>
+                                    <field name="product_id" readonly="1"
+                                           optional="hide"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Alterações" name="changes">
+                            <!-- The de/para, flat. What is listed here is what
+                                 comes out red in the spreadsheet. -->
+                            <field name="change_ids" nolabel="1" readonly="1">
+                                <list create="false" delete="false" edit="false"
+                                      default_order="product_id, column">
+                                    <field name="product_id" string="Livro"/>
+                                    <field name="column" string="Coluna"/>
+                                    <field name="old_value" string="Antes"/>
+                                    <field name="new_value" string="Depois"/>
+                                    <field name="field_name" string="Campo"
+                                           optional="hide"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Observações" name="note">
+                            <field name="note" nolabel="1" placeholder="Por que este envio, o que foi decidido..."/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_metabooks_export_batch_list" model="ir.ui.view">
+        <field name="name">metabooks.export.batch.list</field>
+        <field name="model">metabooks.export.batch</field>
+        <field name="arch" type="xml">
+            <list decoration-muted="state == 'cancel'"
+                  decoration-success="state == 'sent'">
+                <field name="name"/>
+                <field name="task"/>
+                <field name="mb_id"/>
+                <field name="selected_count" string="Livros"/>
+                <field name="change_count" string="Alterações"/>
+                <field name="filename" optional="show"/>
+                <field name="generated_on" optional="hide"/>
+                <field name="sent_on" optional="show"/>
+                <field name="sent_by" optional="hide"/>
+                <field name="state" widget="badge"
+                       decoration-success="state == 'sent'"
+                       decoration-info="state == 'generated'"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_metabooks_export_batch_search" model="ir.ui.view">
+        <field name="name">metabooks.export.batch.search</field>
+        <field name="model">metabooks.export.batch</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="mb_id"/>
+                <field name="filename"/>
+                <filter name="open" string="Em aberto"
+                        domain="[('state', 'in', ('draft', 'checked', 'generated'))]"/>
+                <filter name="sent" string="Enviadas"
+                        domain="[('state', '=', 'sent')]"/>
+                <separator/>
+                <group>
+                    <filter name="group_state" string="Situação" domain="[]"
+                            context="{'group_by': 'state'}"/>
+                    <filter name="group_task" string="Tarefa" domain="[]"
+                            context="{'group_by': 'task'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_metabooks_export_batch" model="ir.actions.act_window">
+        <field name="name">Envios para a Metabooks</field>
+        <field name="res_model">metabooks.export.batch</field>
+        <field name="view_mode">list,form</field>
+        <field name="context">{'search_default_open': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Nenhum envio ainda</p>
+            <p>Crie um envio e clique em <b>Buscar alterações</b> para trazer os
+               livros que foram editados desde a última vez que falamos com a
+               Metabooks.</p>
+        </field>
+    </record>
+
+    <!-- The queue itself, straight off the products: what is waiting, without
+         having to open a batch to find out. -->
+    <record id="action_metabooks_pending_books" model="ir.actions.act_window">
+        <field name="name">Livros com alterações pendentes</field>
+        <field name="res_model">product.template</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('metabooks_export_pending', '=', True)]</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Nada pendente</p>
+            <p>Quando alguém editar um campo que a Metabooks conhece, o livro
+               aparece aqui.</p>
+        </field>
+    </record>
+
+    <record id="view_metabooks_export_change_list" model="ir.ui.view">
+        <field name="name">metabooks.export.change.list</field>
+        <field name="model">metabooks.export.change</field>
+        <field name="arch" type="xml">
+            <list create="false" delete="false" edit="false">
+                <field name="batch_id" optional="hide"/>
+                <field name="product_id"/>
+                <field name="column"/>
+                <field name="old_value" string="Antes"/>
+                <field name="new_value" string="Depois"/>
+                <field name="field_name" optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_metabooks_export_change_search" model="ir.ui.view">
+        <field name="name">metabooks.export.change.search</field>
+        <field name="model">metabooks.export.change</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="product_id"/>
+                <field name="column"/>
+                <field name="batch_id"/>
+                <filter name="sent" string="Efetivamente enviadas"
+                        domain="[('batch_id.state', '=', 'sent')]"/>
+                <separator/>
+                <group>
+                    <filter name="group_product" string="Livro" domain="[]"
+                            context="{'group_by': 'product_id'}"/>
+                    <filter name="group_column" string="Coluna" domain="[]"
+                            context="{'group_by': 'column'}"/>
+                    <filter name="group_batch" string="Envio" domain="[]"
+                            context="{'group_by': 'batch_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_metabooks_export_change" model="ir.actions.act_window">
+        <field name="name">Histórico de alterações enviadas</field>
+        <field name="res_model">metabooks.export.change</field>
+        <field name="view_mode">list</field>
+        <field name="context">{'search_default_group_product': 1}</field>
+    </record>
+
+    <menuitem id="menu_metabooks_exports"
+              name="Envios"
+              parent="menu_metabooks_root"
+              sequence="15"/>
+
+    <menuitem id="menu_metabooks_export_batch"
+              name="Envios para a Metabooks"
+              parent="menu_metabooks_exports"
+              action="action_metabooks_export_batch"
+              sequence="1"/>
+
+    <menuitem id="menu_metabooks_pending_books"
+              name="Alterações pendentes"
+              parent="menu_metabooks_exports"
+              action="action_metabooks_pending_books"
+              sequence="2"/>
+
+    <menuitem id="menu_metabooks_export_change"
+              name="Histórico"
+              parent="menu_metabooks_exports"
+              action="action_metabooks_export_change"
+              sequence="3"/>
+
+</odoo>

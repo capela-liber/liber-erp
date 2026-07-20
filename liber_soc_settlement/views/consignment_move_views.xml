@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Return dunning surfaced on the CR (return move): the clock the returns
+         team chases, plus a manual "Send return request" that the nightly cron
+         also fires. Only relevant for returns. -->
+    <record id="view_consignment_move_form_dunning" model="ir.ui.view">
+        <field name="name">consignment.move.form.dunning</field>
+        <field name="model">consignment.move</field>
+        <field name="inherit_id" ref="liber_soc_moves.view_consignment_move_form"/>
+        <field name="arch" type="xml">
+            <button name="action_cancel" position="before">
+                <button name="%(action_report_consignment_return)d" type="action"
+                        string="Print Return" class="btn-secondary"
+                        invisible="not line_ids"/>
+                <button name="action_send_return_request" type="object"
+                        string="Send Return Request"
+                        invisible="move_kind != 'return' or state == 'cancel'"/>
+            </button>
+            <field name="agreement_id" position="after">
+                <field name="user_id" widget="many2one_avatar_user"/>
+            </field>
+            <!-- This model is returns only (symbolic renewal moves to the CA
+                 fiscal doc); hide the Type selector entirely. Kept in the view,
+                 just invisible, because other rules still reference it. -->
+            <field name="move_kind" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </field>
+            <field name="date" position="after">
+                <field name="return_due_date" invisible="move_kind != 'return'"/>
+                <field name="dunning_stage" widget="badge"
+                       invisible="move_kind != 'return'"
+                       decoration-info="dunning_stage == '1'"
+                       decoration-warning="dunning_stage == '2'"
+                       decoration-danger="dunning_stage == '3'"/>
+            </field>
+        </field>
+    </record>
+
+    <!-- Show the deadline on the returns list, and paint overdue rows red. -->
+    <record id="view_consignment_move_list_dunning" model="ir.ui.view">
+        <field name="name">consignment.move.list.dunning</field>
+        <field name="model">consignment.move</field>
+        <field name="inherit_id" ref="liber_soc_moves.view_consignment_move_list"/>
+        <field name="arch" type="xml">
+            <list position="attributes">
+                <attribute name="decoration-danger">return_overdue</attribute>
+            </list>
+            <!-- Everything here is a Return; the Type column is redundant. -->
+            <field name="move_kind" position="attributes">
+                <attribute name="column_invisible">1</attribute>
+            </field>
+            <field name="move_kind" position="after">
+                <field name="return_due_date" optional="show"/>
+                <field name="return_overdue" column_invisible="1"/>
+                <field name="user_id" widget="many2one_avatar_user" optional="show"/>
+                <field name="dunning_stage" widget="badge" optional="show"
+                       decoration-info="dunning_stage == '1'"
+                       decoration-warning="dunning_stage == '2'"
+                       decoration-danger="dunning_stage == '3'"/>
+            </field>
+            <!-- Per-row alert clock: shows each CR's scheduled activities
+                 (overdue = red) right in the list. -->
+            <field name="state" position="after">
+                <field name="activity_ids" widget="list_activity" optional="show"/>
+            </field>
+        </field>
+    </record>
+
+    <!-- Activity view: see every CR by its alerts (overdue / today / planned),
+         reachable from the view switcher on the Devoluções screen. -->
+    <record id="view_consignment_move_activity" model="ir.ui.view">
+        <field name="name">consignment.move.activity</field>
+        <field name="model">consignment.move</field>
+        <field name="arch" type="xml">
+            <activity string="Devoluções">
+                <templates>
+                    <div t-name="activity-box">
+                        <field name="name" display="full"/>
+                        <field name="partner_id" muted="1" display="full"/>
+                        <field name="return_due_date"/>
+                    </div>
+                </templates>
+            </activity>
+        </field>
+    </record>
+
+    <!-- One-click "Overdue" filter (+ "In dunning" and a Return Due grouping). -->
+    <record id="view_consignment_move_search_dunning" model="ir.ui.view">
+        <field name="name">consignment.move.search.dunning</field>
+        <field name="model">consignment.move</field>
+        <field name="inherit_id" ref="liber_soc_moves.view_consignment_move_search"/>
+        <field name="arch" type="xml">
+            <!-- Same "Reply" filter the CO has: returns with a message nobody
+                 has read. On a CR this matters more, because the clock is running. -->
+            <filter name="f_renew" position="after">
+                <separator/>
+                <filter string="Reply" name="f_unread"
+                        domain="[('message_needaction', '=', True)]"
+                        help="Returns with a message you haven't read yet."/>
+                <separator/>
+                <filter string="Overdue" name="f_overdue"
+                        domain="[('return_overdue', '=', True)]"/>
+                <filter string="In dunning" name="f_dunning"
+                        domain="[('move_kind', '=', 'return'), ('dunning_step', '>', 0)]"/>
+            </filter>
+            <filter name="g_state" position="after">
+                <filter string="Return Due" name="g_return_due"
+                        context="{'group_by': 'return_due_date'}"/>
+            </filter>
+        </field>
+    </record>
+</odoo>

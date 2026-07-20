@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <!-- The bill lines that pay authors need a product, and without one the
+             module installs into a state where "Generate Royalty Bills" can only
+             ever fail. Ship the obvious default so the feature works out of the
+             box; the company setting still overrides it for anyone who wants to
+             book royalties on their own product. -->
+        <record id="product_royalty_payment" model="product.template">
+            <field name="name">Royalties</field>
+            <field name="type">service</field>
+            <field name="purchase_ok" eval="True"/>
+            <field name="sale_ok" eval="False"/>
+            <field name="list_price">0.0</field>
+            <field name="standard_price">0.0</field>
+            <field name="description_purchase">Royalties owed to the beneficiary under a copyright contract.</field>
+        </record>
+
+    </data>
+</odoo>

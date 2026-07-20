@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="budget_group_view_list" model="ir.ui.view">
+        <field name="name">budget.group.list</field>
+        <field name="model">budget.group</field>
+        <field name="arch" type="xml">
+            <list editable="bottom">
+                <field name="name"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="budget_group_action" model="ir.actions.act_window">
+        <field name="name">Budget Groups</field>
+        <field name="res_model">budget.group</field>
+        <field name="view_mode">list</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Create a budget group</p>
+            <p>Use grupos para organizar/classificar os orcamentos.</p>
+        </field>
+    </record>
+
+    <menuitem id="menu_budget_group" parent="menu_budget_config"
+              action="budget_group_action" sequence="20"/>
+
+</odoo>

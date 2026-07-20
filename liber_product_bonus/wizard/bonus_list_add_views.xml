@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_bonus_list_add_form" model="ir.ui.view">
+        <field name="name">product.bonus.list.add.form</field>
+        <field name="model">product.bonus.list.add</field>
+        <field name="arch" type="xml">
+            <form string="Adicionar contatos">
+                <field name="list_locked" invisible="1"/>
+                <!-- Vindo da ficha da lista: a lista é o título, não uma
+                     pergunta. Ver o porquê em bonus_list_add.py. -->
+                <div class="oe_title mb-3" invisible="not list_locked">
+                    <h2><field name="list_id" nolabel="1" readonly="1"
+                               options="{'no_open': True}"/></h2>
+                </div>
+                <group invisible="list_locked">
+                    <field name="list_id"
+                           placeholder="Escolha uma lista ou digite um nome novo..."/>
+                </group>
+                <!-- Editável de propósito: quem filtrou em Contatos quase
+                     sempre quer tirar dois ou três antes de confirmar. -->
+                <group>
+                    <field name="partner_ids" string="Contatos"
+                           widget="many2many_tags"
+                           options="{'no_create': True}"/>
+                    <field name="note" string="Nota"
+                           placeholder="por que este grupo entrou"/>
+                </group>
+                <field name="summary_html" nolabel="1" readonly="1"/>
+                <footer>
+                    <button name="action_add" type="object" string="Adicionar"
+                            class="btn-primary"/>
+                    <button string="Cancelar" special="cancel" class="btn-secondary"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_bonus_list_add" model="ir.actions.act_window">
+        <field name="name">Adicionar à lista VIP</field>
+        <field name="res_model">product.bonus.list.add</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="binding_model_id" ref="base.model_res_partner"/>
+        <field name="binding_view_types">list</field>
+    </record>
+</odoo>

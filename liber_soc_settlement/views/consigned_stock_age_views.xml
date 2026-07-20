@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- The On Shelf report (soc_moves) shows WHAT is on the shelf. It could not
+         show for how long, which is the number that decides a puxada. Added here
+         and not in soc_moves because the age is defined by the settlement (this
+         module): soc_moves knows nothing about acertos. -->
+    <record id="view_consigned_stock_list_age" model="ir.ui.view">
+        <field name="name">stock.quant.consigned.list.age</field>
+        <field name="model">stock.quant</field>
+        <field name="inherit_id" ref="liber_soc_moves.view_consigned_stock_list"/>
+        <field name="arch" type="xml">
+            <field name="quantity" position="after">
+                <field name="last_settlement_date" optional="hide"/>
+                <field name="days_since_settlement" width="70px"/>
+                <field name="shelf_status" widget="badge" width="110px"
+                       decoration-success="shelf_status == 'ok'"
+                       decoration-warning="shelf_status == 'attention'"
+                       decoration-danger="shelf_status == 'critical'"
+                       decoration-muted="shelf_status == 'no_return'"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="view_consigned_stock_search_age" model="ir.ui.view">
+        <field name="name">stock.quant.consigned.search.age</field>
+        <field name="model">stock.quant</field>
+        <field name="inherit_id" ref="liber_soc_moves.view_consigned_stock_search"/>
+        <field name="arch" type="xml">
+            <filter name="g_product" position="after">
+                <filter name="g_shelf_status" string="Shelf Status" domain="[]"
+                        context="{'group_by': 'shelf_status'}"/>
+            </filter>
+            <field name="location_id" position="after">
+                <filter name="f_critical" string="Critical"
+                        domain="[('shelf_status', '=', 'critical')]"/>
+                <filter name="f_no_return" string="No Return"
+                        domain="[('shelf_status', '=', 'no_return')]"/>
+                <filter name="f_overdue" string="Overdue"
+                        domain="[('shelf_status', 'in', ('critical', 'no_return'))]"/>
+                <separator/>
+            </field>
+        </field>
+    </record>
+
+</odoo>

@@ -1,0 +1,49 @@
+// CO line list tweaks.
+//
+// Mind the attribute names: the header carries data-name="..." while the cell
+// carries name="..." (t-att-name in list_renderer.xml). Using data-name for
+// both styles the label and leaves the cell behind.
+//
+// Odoo also builds the <th> class list itself (ListRenderer.getColumnClass) and
+// does NOT forward the arch's `class` attribute to it -- only the <td> gets it,
+// and even then only for formatter columns (a badge is not one). So both the
+// alignment and the tint below have to come from here.
+
+.o_list_table {
+
+    // 1. Shelf-status badge: centred, together with its own header label.
+    //    (The Days column beside it is an Integer, which Odoo already aligns
+    //    right in both header and cells -- nothing to do there.)
+    th[data-name="shelf_status"],
+    td[name="shelf_status"] {
+        text-align: center;
+    }
+
+    // The header label is a flex child with `flex-grow-1`; centring the <th>
+    // alone is not enough, the inner span has to centre its own text too.
+    th[data-name="shelf_status"] > div > span {
+        text-align: center;
+    }
+
+    // 2. The three columns the operator actually fills in during a settlement:
+    //    what the customer reported sold, what we resend, what we recall.
+    //    Everything else on the line is computed or read-only, so tint these so
+    //    the eye lands on the fields that expect input.
+    //    A translucent tint is used on purpose: it reads as a highlight over
+    //    both the white rows and the striped/selected ones.
+    th[data-name="qty_reported"],
+    th[data-name="qty_replenish"],
+    th[data-name="qty_return"],
+    td[name="qty_reported"],
+    td[name="qty_replenish"],
+    td[name="qty_return"] {
+        background-color: rgba(13, 110, 253, 0.06);
+    }
+
+    // Header of the same three: a touch stronger, so the group reads as a block.
+    th[data-name="qty_reported"],
+    th[data-name="qty_replenish"],
+    th[data-name="qty_return"] {
+        background-color: rgba(13, 110, 253, 0.12);
+    }
+}

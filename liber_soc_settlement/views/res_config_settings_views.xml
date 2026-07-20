@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="res_config_settings_view_form_soc" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.soc.settlement</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="base.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form" position="inside">
+                <app data-string="Consignment" string="Consignment"
+                     name="liber_soc_agreements">
+                    <block title="Settlement Analysis" name="soc_settlement_analysis">
+                        <setting id="soc_sales_window_setting"
+                                 string="Recent sales window"
+                                 help="Months used to total a title's recent sales in the settlement analysis column.">
+                            <div class="content-group">
+                                <div class="row">
+                                    <field name="soc_sales_window_months"
+                                           class="col-lg-3"/>
+                                    <span class="col-lg-3 o_form_label">months</span>
+                                </div>
+                            </div>
+                        </setting>
+                        <setting id="soc_shelf_status_setting"
+                                 string="Consigned title health"
+                                 help="Days since a title's last settlement (acerto) that flip its map tag Ok -> Attention -> Critical -> No Return.">
+                            <div class="content-group">
+                                <div class="row">
+                                    <!-- Labels written in pt_BR at source on purpose: Odoo
+                                         translates the <setting> string/help attributes from the
+                                         .po but NOT loose <span> text in this settings view, so
+                                         a pt_BR.po entry for these never lands. Names match the
+                                         map-tag states: Ok / Atenção / Crítico / Sem retorno. -->
+                                    <span class="col-lg-5 o_form_label">Ok até</span>
+                                    <field name="shelf_ok_days" class="col-lg-2"/>
+                                    <span class="col-lg-2 o_form_label">dias</span>
+                                </div>
+                                <div class="row">
+                                    <span class="col-lg-5 o_form_label">Atenção até</span>
+                                    <field name="shelf_attention_days" class="col-lg-2"/>
+                                    <span class="col-lg-2 o_form_label">dias</span>
+                                </div>
+                                <div class="row">
+                                    <span class="col-lg-5 o_form_label">Crítico até</span>
+                                    <field name="shelf_critical_days" class="col-lg-2"/>
+                                    <span class="col-lg-2 o_form_label">dias</span>
+                                </div>
+                            </div>
+                        </setting>
+                    </block>
+                    <block title="Ruptura (Stock-out)" name="soc_ruptura">
+                        <setting id="soc_campaign_stale_setting"
+                                 string="Overdue campaign target"
+                                 help="A running campaign's customer not settled (acerto) within this many days is flagged Overdue in the Ruptura report -- the target is being pursued by nobody. Checked nightly by a cron.">
+                            <div class="content-group">
+                                <div class="row">
+                                    <field name="campaign_stale_days"
+                                           class="col-lg-3"/>
+                                    <span class="col-lg-3 o_form_label">days</span>
+                                </div>
+                            </div>
+                        </setting>
+                    </block>
+                    <block title="Consignment Map (PDF)" name="soc_consignment_map">
+                        <setting id="soc_consignment_map_text_setting"
+                                 string="Standard map text"
+                                 help="Text printed at the top of the consignment map (CO) printed or e-mailed to the customer.">
+                            <field name="consignment_map_text" widget="html"/>
+                        </setting>
+                    </block>
+                    <block title="Settlement Movement" name="soc_settlement_movement">
+                        <setting id="soc_settlement_operation_type_setting"
+                                 string="Settlement baixa operation"
+                                 help="Operation type (and number prefix) for the acerto baixa that draws stock off the customer's shelf. Kept apart from the warehouse delivery orders (WH/OUT). Auto-created on first settlement.">
+                            <field name="consignment_settlement_operation_type_id"
+                                   options="{'no_create': True}"/>
+                        </setting>
+                    </block>
+                    <block title="Return Dunning (CR)" name="soc_return_dunning">
+                        <setting id="soc_return_dunning_enabled_setting"
+                                 string="Chase pending returns"
+                                 help="Master switch for the return-chasing ladder. Turn off to silence all nudges, calls, alerts and escalations.">
+                            <field name="return_dunning_enabled"/>
+                        </setting>
+                        <setting id="soc_return_sla_setting"
+                                 string="Tolerable return window"
+                                 invisible="not return_dunning_enabled"
+                                 help="How long a customer may take to send merchandise back before the return (CR) is overdue. The checkpoints below are a percentage of it.">
+                            <div class="content-group">
+                                <div class="row">
+                                    <field name="return_sla_days" class="col-lg-3"/>
+                                    <span class="col-lg-3 o_form_label">days</span>
+                                </div>
+                                <div class="row mt-2">
+                                    <span class="col-lg-4 o_form_label">Nudge at</span>
+                                    <field name="return_nudge_pct" class="col-lg-2"/>
+                                    <span class="col-lg-1 o_form_label">%</span>
+                                </div>
+                                <div class="row">
+                                    <span class="col-lg-4 o_form_label">Call due at</span>
+                                    <field name="return_call_pct" class="col-lg-2"/>
+                                    <span class="col-lg-1 o_form_label">%</span>
+                                </div>
+                                <div class="row">
+                                    <span class="col-lg-4 o_form_label">Broadcast at</span>
+                                    <field name="return_broadcast_pct" class="col-lg-2"/>
+                                    <span class="col-lg-1 o_form_label">%</span>
+                                </div>
+                            </div>
+                        </setting>
+                        <setting id="soc_return_manager_setting"
+                                 string="Escalation manager"
+                                 invisible="not return_dunning_enabled"
+                                 help="Notified when a return blows past its window (the last rung of the ladder).">
+                            <field name="return_escalation_manager_id"/>
+                        </setting>
+                        <setting id="soc_return_request_text_setting"
+                                 string="Return request e-mail text"
+                                 invisible="not return_dunning_enabled"
+                                 help="Intro text of the return-request e-mail (CR). Leave empty to use the built-in default.">
+                            <field name="return_request_text" widget="html"/>
+                        </setting>
+                    </block>
+                </app>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="action_soc_config_settings" model="ir.actions.act_window">
+        <field name="name">Settings</field>
+        <field name="res_model">res.config.settings</field>
+        <field name="view_mode">form</field>
+        <field name="target">current</field>
+        <field name="context">{'module': 'liber_soc_agreements'}</field>
+    </record>
+
+</odoo>

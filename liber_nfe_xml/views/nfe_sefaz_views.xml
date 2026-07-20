@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_nfe_sefaz_sweep_list" model="ir.ui.view">
+        <field name="name">nfe.sefaz.sweep.list</field>
+        <field name="model">nfe.sefaz.sweep</field>
+        <field name="arch" type="xml">
+            <list create="false" edit="false">
+                <header>
+                    <button name="action_sync_now" type="object" string="Sync Now"
+                            class="btn-primary" display="always"
+                            confirm="Run the SEFAZ sweep now for every company with sync enabled?"/>
+                </header>
+                <field name="date_start"/>
+                <field name="company_id"/>
+                <field name="status"
+                       decoration-success="status == 'done'"
+                       decoration-warning="status == 'rate_limited'"
+                       decoration-danger="status == 'error'"
+                       widget="badge"/>
+                <field name="nsu_start" optional="hide"/>
+                <field name="nsu_end"/>
+                <field name="max_nsu" optional="hide"/>
+                <field name="n_calls" optional="hide"/>
+                <field name="n_docs" sum="Total"/>
+                <field name="n_nfe" sum="Total"/>
+                <field name="n_events" sum="Total"/>
+                <field name="n_other" optional="show"/>
+                <field name="n_skipped" optional="show"/>
+                <field name="message" optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_nfe_sefaz_sweep_form" model="ir.ui.view">
+        <field name="name">nfe.sefaz.sweep.form</field>
+        <field name="model">nfe.sefaz.sweep</field>
+        <field name="arch" type="xml">
+            <form create="false" edit="false">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="company_id"/>
+                            <field name="date_start"/>
+                            <field name="status"/>
+                            <field name="message"/>
+                        </group>
+                        <group>
+                            <field name="nsu_start"/>
+                            <field name="nsu_end"/>
+                            <field name="max_nsu"/>
+                            <field name="n_calls"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group>
+                            <field name="n_docs"/>
+                            <field name="n_nfe"/>
+                            <field name="n_events"/>
+                        </group>
+                        <group>
+                            <field name="n_other"/>
+                            <field name="n_skipped"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Imported NFes">
+                            <field name="panel_ids" readonly="1">
+                                <list>
+                                    <field name="file_create_date"/>
+                                    <field name="partner_id"/>
+                                    <field name="company_id"/>
+                                    <field name="status"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_nfe_sefaz_sweep" model="ir.actions.act_window">
+        <field name="name">SEFAZ</field>
+        <field name="res_model">nfe.sefaz.sweep</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">No SEFAZ sweep yet</p>
+            <p>Enable "SEFAZ DFe Sync" and load the A1 certificate on each
+               company, then use "Sync Now" (or wait for the daily cron).
+               Downloaded NFes land in the regular NFe XML panel; this log
+               only shows what each sweep brought.</p>
+        </field>
+    </record>
+
+    <menuitem id="menu_nfe_sefaz_sweep"
+              name="SEFAZ"
+              parent="liber_nfe_xml.menu_nfe_xml_panel"
+              action="action_nfe_sefaz_sweep"
+              sequence="80"/>
+
+    <record id="view_company_form_sefaz" model="ir.ui.view">
+        <field name="name">res.company.form.sefaz</field>
+        <field name="model">res.company</field>
+        <field name="inherit_id" ref="base.view_company_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page string="SEFAZ (DFe)" name="sefaz_dfe">
+                    <group>
+                        <group>
+                            <field name="sefaz_dfe_enabled"/>
+                            <field name="sefaz_cert_pfx" filename="sefaz_cert_pfx_name"/>
+                            <field name="sefaz_cert_pfx_name" invisible="1"/>
+                            <field name="sefaz_cert_password" password="True"/>
+                        </group>
+                        <group>
+                            <field name="sefaz_last_nsu"/>
+                        </group>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>

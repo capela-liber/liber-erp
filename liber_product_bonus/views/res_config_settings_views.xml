@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_bonus_config_settings" model="ir.ui.view">
+        <field name="name">res.config.settings.bonus</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="base.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <form position="inside">
+                <app data-string="Bonificações" string="Bonificações" name="liber_product_bonus">
+                    <block title="Meta de doação" name="bonus_quota">
+                        <!-- Onde se define a porcentagem de doacoes. E aqui,
+                             uma vez, para a casa toda: "de uma tiragem de 3000
+                             quero doar 5%". Por titulo e excecao (Bonificacoes
+                             > Metas), nao o caminho normal.
+
+                             i18n: em res.config.settings o Odoo traduz string e
+                             help do <setting>, mas nao texto de <span> — por
+                             isso os spans ja vao em pt_BR na fonte. -->
+                        <setting string="Quanto da tiragem pode ser doado"
+                                 help="Percentual da tiragem que cada balde pode dar. Vale para todos os títulos; a exceção por título fica em Bonificações > Metas.">
+                            <div class="content-group mt-2">
+                                <div class="row">
+                                    <label for="bonus_pct_editorial" class="col-lg-4 o_light_label"/>
+                                    <field name="bonus_pct_editorial" class="oe_inline"/>
+                                    <span class="oe_inline ms-1">% da tiragem</span>
+                                </div>
+                                <div class="row">
+                                    <label for="bonus_pct_marketing" class="col-lg-4 o_light_label"/>
+                                    <field name="bonus_pct_marketing" class="oe_inline"/>
+                                    <span class="oe_inline ms-1">% da tiragem</span>
+                                </div>
+                                <div class="row">
+                                    <label for="bonus_pct_commercial" class="col-lg-4 o_light_label"/>
+                                    <field name="bonus_pct_commercial" class="oe_inline"/>
+                                    <span class="oe_inline ms-1">% da tiragem</span>
+                                </div>
+                                <div class="row mt-2">
+                                    <label for="bonus_pct_total" class="col-lg-4 o_light_label"/>
+                                    <field name="bonus_pct_total" class="oe_inline" readonly="1"/>
+                                    <span class="oe_inline ms-1">% da tiragem no total — numa tiragem de 3.000, é o teto de doação da casa</span>
+                                </div>
+                            </div>
+                        </setting>
+                    </block>
+                    <block title="Acompanhamento" name="bonus_followup">
+                        <setting string="Quando ligar para confirmar chegada"
+                                 help="Dias após a expedição para a bonificação aparecer na lista 'Retorno'. É um valor provisório — a data real de chegada (distância, transportadora) virá depois.">
+                            <div class="content-group mt-2">
+                                <div class="row">
+                                    <field name="bonus_days_to_call" class="oe_inline"/>
+                                    <span class="oe_inline ms-1">dias após enviar, ligamos</span>
+                                </div>
+                            </div>
+                        </setting>
+                    </block>
+                    <block title="Score do parceiro" name="bonus_rating">
+                        <setting string="Quanto vale cada resultado"
+                                 help="O score é a média destes pontos ponderada por recência. Fibonacci de propósito: os saltos crescem, então uma cobertura excelente vale muito mais que proporcionalmente mais — que é como funciona de verdade.">
+                            <div class="content-group mt-2">
+                                <div class="row">
+                                    <label for="bonus_points_silence" class="col-lg-5 o_light_label"/>
+                                    <field name="bonus_points_silence"/>
+                                </div>
+                                <div class="row">
+                                    <label for="bonus_points_weak" class="col-lg-5 o_light_label"/>
+                                    <field name="bonus_points_weak"/>
+                                </div>
+                                <div class="row">
+                                    <label for="bonus_points_good" class="col-lg-5 o_light_label"/>
+                                    <field name="bonus_points_good"/>
+                                </div>
+                                <div class="row">
+                                    <label for="bonus_points_great" class="col-lg-5 o_light_label"/>
+                                    <field name="bonus_points_great"/>
+                                </div>
+                            </div>
+                        </setting>
+                        <setting string="Etapa de testes"
+                                 help="Abaixo deste número de avaliações a pessoa aparece como 'em teste', sem score: uma amostra de 1 não é avaliação, é sorte. Acima dele o score nasce puxada para a média da casa e vai se soltando conforme o histórico cresce.">
+                            <field name="bonus_rating_test_size"/>
+                            <span class="oe_inline ms-1">avaliações</span>
+                        </setting>
+                        <setting string="Peso do tempo"
+                                 help="Meses até uma avaliação valer metade. Faz o 'divulgou bem em 2019' parar de sustentar quem sumiu desde então.">
+                            <field name="bonus_rating_half_life"/>
+                            <span class="oe_inline ms-1">meses até valer metade</span>
+                        </setting>
+                    </block>
+                    <block title="Configuração fiscal" name="bonus_fiscal">
+                        <setting string="Posição fiscal da nota de remessa"
+                                 help="A nota de bonificação é uma remessa (CFOP 5910): sai no diário REM/, com valor, e é baixada automaticamente ao lançar — nunca gera pagamento. A posição fiscal precisa ter o Auto Invoice Paid e sua conta; o mapeamento de contas dela decide onde o valor aterrissa.">
+                            <div class="content-group mt-2">
+                                <div class="row">
+                                    <label for="bonus_fiscal_position_id" class="col-lg-5 o_light_label"/>
+                                    <field name="bonus_fiscal_position_id"/>
+                                </div>
+                                <div class="row">
+                                    <label for="bonus_cfop_id" class="col-lg-5 o_light_label"/>
+                                    <field name="bonus_cfop_id"/>
+                                </div>
+                            </div>
+                        </setting>
+                    </block>
+                </app>
+            </form>
+        </field>
+    </record>
+    <!-- A porta no menu do proprio modulo.
+
+         A tela existia e renderizava, mas so pelo Definicoes global: quem esta
+         em Bonificacoes tinha que sair do app, achar "Bonificacoes" na barra
+         lateral do Definicoes e voltar. Ele procurou duas vezes e nao achou —
+         nao porque estava escondida, mas porque estava no lugar certo pela
+         convencao do Odoo e no lugar errado para quem usa. -->
+    <record id="action_bonus_config" model="ir.actions.act_window">
+        <field name="name">Definições de bonificação</field>
+        <field name="res_model">res.config.settings</field>
+        <field name="view_mode">form</field>
+        <field name="context">{'module': 'liber_product_bonus', 'bin_size': False}</field>
+    </record>
+</odoo>

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Fold the beneficiary data into the single "Beneficiary" tab
+         (renaming the base "Copyright Contracts" tab) instead of a 2nd tab. -->
+    <record id="view_partner_form_edlab_author" model="ir.ui.view">
+        <field name="name">res.partner.form.edlab.beneficiary</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="liber_copyright_contracts.view_partner_form_copyright_contracts"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//page[@name='copyright_contracts']" position="attributes">
+                <attribute name="string">Beneficiary</attribute>
+            </xpath>
+
+            <xpath expr="//page[@name='copyright_contracts']/field[@name='edlab_contract_ids']"
+                   position="before">
+                <group>
+                    <group string="Identification">
+                        <field name="edlab_birthdate"/>
+                        <field name="edlab_nationality"/>
+                        <field name="edlab_rg"/>
+                        <field name="edlab_pis"/>
+                    </group>
+                    <group string="Royalties">
+                        <field name="edlab_irrf_percentage"/>
+                        <field name="edlab_currency_id" invisible="1"/>
+                        <field name="edlab_royalty_balance"/>
+                        <field name="edlab_last_statement_date"/>
+                    </group>
+                </group>
+                <separator string="Bank Accounts"/>
+                <field name="bank_ids">
+                    <list editable="bottom">
+                        <field name="bank_id"/>
+                        <field name="edlab_agency"/>
+                        <field name="acc_number"/>
+                    </list>
+                </field>
+                <separator string="Royalty Lines"/>
+                <field name="edlab_royalty_line_ids" readonly="1">
+                    <list>
+                        <field name="contract_id"/>
+                        <field name="product_id"/>
+                        <field name="last_payment_date"/>
+                        <field name="edlab_currency_id" invisible="1"/>
+                        <field name="edlab_open_balance"/>
+                    </list>
+                </field>
+                <separator string="Contracts"/>
+            </xpath>
+
+        </field>
+    </record>
+
+    <!-- Statement in the Action menu (replaces the in-form button):
+         opens the period wizard -> print PDF or email via template. -->
+    <record id="action_server_royalty_statement" model="ir.actions.server">
+        <field name="name">Royalty Statement</field>
+        <field name="model_id" ref="base.model_res_partner"/>
+        <field name="binding_model_id" ref="base.model_res_partner"/>
+        <field name="binding_view_types">list,form</field>
+        <field name="group_ids" eval="[(4, ref('liber_copyright_contracts.group_contract_user'))]"/>
+        <field name="state">code</field>
+        <field name="code">action = records.action_open_royalty_statement_wizard()</field>
+    </record>
+
+</odoo>

@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_bonus_vip_list" model="ir.ui.view">
+        <field name="name">product.bonus.list.list</field>
+        <field name="model">product.bonus.list</field>
+        <field name="arch" type="xml">
+            <list multi_edit="1">
+                <field name="name"/>
+                <field name="tag_ids" widget="many2many_tags"
+                       options="{'color_field': 'color'}"/>
+                <field name="user_id"/>
+                <field name="member_count" string="Membros" class="text-center"/>
+                <!-- Coluna numérica encolhe até o conteúdo: "Bonificações"
+                     sobre um "67" truncava mesmo cabendo em 12 caracteres.
+                     E o rótulo desta fração é "Avaliação", a palavra que o
+                     módulo passou a usar em toda tela ("Taxa de retorno" e
+                     "Rendeu" foram sinônimos que sobraram pelo caminho). -->
+                <field name="bonus_count" string="Envios" class="text-center"/>
+                <field name="spent" widget="monetary" sum="Gasto"/>
+                <field name="outcome_rate" string="Avaliação"/>
+                <field name="outcome_pct" string="Aval. %"
+                       class="text-center" optional="hide"/>
+                <field name="quota_qty" string="Meta"/>
+                <field name="last_shipment_on" string="Último envio"/>
+                <field name="currency_id" column_invisible="1"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_bonus_vip_form" model="ir.ui.view">
+        <field name="name">product.bonus.list.form</field>
+        <field name="model">product.bonus.list</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_open_triage" type="object"
+                            string="Enviar bonificação" class="btn-primary"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_members" type="object"
+                                class="oe_stat_button" icon="fa-users">
+                            <field name="member_count" widget="statinfo" string="Membros"/>
+                        </button>
+                        <button name="action_view_bonuses" type="object"
+                                class="oe_stat_button" icon="fa-gift">
+                            <field name="bonus_count" widget="statinfo" string="Bonificações"/>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <h1><field name="name" placeholder="Imprensa literária"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="user_id"/>
+                            <field name="tag_ids" widget="many2many_tags"
+                                   options="{'color_field': 'color'}"
+                                   placeholder="imprensa, poesia, SP..."/>
+                            <field name="quota_qty" string="Meta"/>
+                            <field name="spent" widget="monetary"/>
+                            <field name="currency_id" invisible="1"/>
+                        </group>
+                        <group>
+                            <field name="built_by_id"/>
+                            <field name="built_on"/>
+                            <field name="last_shipment_on" string="Último envio"/>
+                            <field name="outcome_rate"/>
+                            <field name="active" widget="boolean_toggle"/>
+                            <field name="combine_mode" invisible="not combine_mode"
+                                   readonly="1"/>
+                            <field name="source_list_ids" widget="many2many_tags"
+                                   invisible="not source_list_ids" readonly="1"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Membros">
+                            <div class="mb-2">
+                                <button name="action_open_add_members"
+                                        type="object" class="btn-link"
+                                        icon="fa-users"
+                                        string="Adicionar vários contatos"/>
+                                <button name="action_open_import"
+                                        type="object" class="btn-link"
+                                        icon="fa-upload"
+                                        string="Importar planilha"/>
+                                <span class="text-muted ms-2">
+                                    ou filtre em Contatos e use Ação &gt;
+                                    Adicionar à lista VIP
+                                </span>
+                            </div>
+                            <!-- Membro e um modelo, nao um m2m: um m2m sabe quem
+                                 esta na lista hoje; a lista tem historia. -->
+                            <field name="member_ids">
+                                <list editable="bottom" decoration-muted="not active">
+                                    <field name="partner_id"/>
+                                    <field name="partner_bio" string="Quem é"
+                                           optional="show" readonly="1"/>
+                                    <!-- Curar a lista sem ver o retorno é
+                                         escolher no escuro e descobrir depois. -->
+                                    <field name="rating_html" string="Score" widget="html" readonly="1" class="text-center"
+                                           decoration-success="rating_band in ('warm', 'steady')"
+                                           decoration-warning="rating_band == 'fading'"
+                                           decoration-danger="rating_band == 'cold'"
+                                           decoration-muted="rating_band in ('new', 'testing')"/>
+                                    <field name="rating_band" column_invisible="1"/>
+                                    <field name="joined_on"/>
+                                    <field name="added_by_id"/>
+                                    <field name="left_on"/>
+                                    <field name="note"/>
+                                    <field name="active" widget="boolean_toggle"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Notas">
+                            <field name="note" placeholder="Para que serve esta lista?"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_bonus_vip_search" model="ir.ui.view">
+        <field name="name">product.bonus.list.search</field>
+        <field name="model">product.bonus.list</field>
+        <field name="arch" type="xml">
+            <!-- Com centenas de listas, achar vem antes de combinar. -->
+            <search>
+                <field name="name"/>
+                <field name="tag_ids"/>
+                <field name="user_id"/>
+                <field name="member_ids"/>
+                <filter name="f_mine" string="Minhas"
+                        domain="[('user_id', '=', uid)]"/>
+                <filter name="f_used" string="Já usadas"
+                        domain="[('bonus_count', '&gt;', 0)]"/>
+                <separator/>
+                <filter name="f_archived" string="Arquivadas"
+                        domain="[('active', '=', False)]"/>
+                <group>
+                    <filter name="g_tag" string="Etiqueta"
+                            context="{'group_by': 'tag_ids'}"/>
+                    <filter name="g_user" string="Dono"
+                            context="{'group_by': 'user_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="view_bonus_list_tag_list" model="ir.ui.view">
+        <field name="name">product.bonus.list.tag.list</field>
+        <field name="model">product.bonus.list.tag</field>
+        <field name="arch" type="xml">
+            <list editable="bottom">
+                <field name="name"/>
+                <field name="color" widget="color_picker"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="action_bonus_list_tag" model="ir.actions.act_window">
+        <field name="name">Etiquetas de lista</field>
+        <field name="res_model">product.bonus.list.tag</field>
+        <field name="view_mode">list</field>
+    </record>
+
+    <record id="action_bonus_vip_list" model="ir.actions.act_window">
+        <field name="name">Listas</field>
+        <field name="res_model">product.bonus.list</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Crie uma lista.</p>
+            <p>Uma lista VIP não é uma tag em contatos: ela tem dono, orçamento
+               e história — quem montou, o que gastou, quem entrou e quando.</p>
+            <p>Marque várias e use <b>Ação &gt; Combinar em nova lista</b> para
+               unir, cruzar ou subtrair. Mas repare: para <i>mandar</i> uma
+               campanha para três listas, não precisa criar lista nenhuma — o
+               disparo aceita várias de uma vez e não duplica ninguém.</p>
+        </field>
+    </record>
+
+    <record id="view_bonus_member_list" model="ir.ui.view">
+        <field name="name">product.bonus.list.member.list</field>
+        <field name="model">product.bonus.list.member</field>
+        <field name="arch" type="xml">
+            <list editable="bottom" decoration-muted="not active">
+                <field name="list_id"/>
+                <field name="partner_id"/>
+                <field name="joined_on"/>
+                <field name="added_by_id"/>
+                <field name="left_on"/>
+                <field name="active" widget="boolean_toggle"/>
+                <button name="action_leave" type="object" string="Saiu"
+                        class="btn-link" invisible="not active"/>
+            </list>
+        </field>
+    </record>
+    <!-- O cruzamento autor × lista não precisa de modelo novo: o membro da
+         lista JÁ é a linha que liga os dois. Pivô sobre ele responde "em
+         quais listas está fulano" e "quem se repete entre duas listas" — e
+         clicar numa célula abre exatamente aqueles vínculos, de onde se vai
+         para a lista.
+
+         Abre com UMA linha por lista, fechada. Antes eram contatos nas linhas
+         e listas nas colunas: a tela nascia com a matriz inteira montada —
+         dezenas de milhares de contatos × todas as listas — e demorava a
+         abrir para mostrar de saída a visão que quase ninguém quer. Fechada,
+         a consulta é um group by e a expansão é escolha de quem olha:
+         expandir uma lista por Contato responde "quem está nela"; expandir
+         nas colunas por Lista responde "quem se repete entre duas". -->
+    <record id="view_bonus_member_pivot" model="ir.ui.view">
+        <field name="name">product.bonus.list.member.pivot</field>
+        <field name="model">product.bonus.list.member</field>
+        <field name="arch" type="xml">
+            <pivot string="Sobreposição de listas" sample="1">
+                <field name="list_id" type="row"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="view_bonus_member_search" model="ir.ui.view">
+        <field name="name">product.bonus.list.member.search</field>
+        <field name="model">product.bonus.list.member</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="partner_id" string="Contato"/>
+                <field name="list_id" string="Lista"/>
+                <filter name="m_active" string="Na lista hoje"
+                        domain="[('active', '=', True)]"/>
+                <filter name="m_left" string="Já saíram"
+                        domain="[('active', '=', False)]"/>
+                <group>
+                    <filter name="g_partner" string="Contato"
+                            context="{'group_by': 'partner_id'}"/>
+                    <filter name="g_list" string="Lista"
+                            context="{'group_by': 'list_id'}"/>
+                    <filter name="g_type" string="Tipo de parceiro"
+                            context="{'group_by': 'partner_type'}"/>
+                    <filter name="g_joined" string="Entrou em"
+                            context="{'group_by': 'joined_on'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_bonus_member_pivot" model="ir.actions.act_window">
+        <field name="name">Sobreposição de listas</field>
+        <field name="res_model">product.bonus.list.member</field>
+        <field name="view_mode">pivot,list,form</field>
+        <field name="search_view_id" ref="view_bonus_member_search"/>
+        <field name="context">{'search_default_m_active': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Nenhum vínculo ainda</p>
+            <p>Cada lista é uma linha, fechada. Abra uma por <b>Contato</b> para
+               ver quem está nela; abra as colunas por <b>Lista</b> para ver quem
+               se repete entre duas. Clique numa célula para ver os vínculos por
+               trás dela.</p>
+        </field>
+    </record>
+</odoo>

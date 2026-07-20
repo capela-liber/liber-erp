@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!-- Um cadastro de motivos finos, cada um apontando para UM dos tres
+             baldes. E no balde que a meta trava.
+             A janela de retorno mora aqui: influencer posta em uma semana ou
+             nunca; critico de jornal leva tres meses. Janela unica faria o
+             Estadao virar "silencio". -->
+
+        <record id="reason_author" model="product.bonus.reason">
+            <field name="name">Author copies</field>
+            <field name="bucket">editorial</field>
+            <field name="sequence">1</field>
+            <field name="requires_approval" eval="False"/>
+            <field name="consumes_contract" eval="True"/>
+            <field name="return_window_days">0</field>
+        </record>
+
+        <record id="reason_press" model="product.bonus.reason">
+            <field name="name">Press</field>
+            <field name="bucket">marketing</field>
+            <field name="sequence">10</field>
+            <field name="return_window_days">120</field>
+        </record>
+
+        <record id="reason_influencer" model="product.bonus.reason">
+            <field name="name">Influencer</field>
+            <field name="bucket">marketing</field>
+            <field name="sequence">11</field>
+            <field name="return_window_days">21</field>
+        </record>
+
+        <record id="reason_launch" model="product.bonus.reason">
+            <field name="name">Launch</field>
+            <field name="bucket">marketing</field>
+            <field name="sequence">12</field>
+            <field name="return_window_days">45</field>
+        </record>
+
+        <record id="reason_sample" model="product.bonus.reason">
+            <field name="name">Bookshop sample</field>
+            <field name="bucket">commercial</field>
+            <field name="sequence">20</field>
+            <field name="return_window_days">60</field>
+        </record>
+    </data>
+</odoo>

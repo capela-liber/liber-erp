@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <!-- The royalty analytic accounts need a plan of their own. Without one,
+             the fallback in action_create_analytic_account took "the first plan
+             it could find" (in practice the Project plan), so the royalty
+             accounts were born among the project ones, and the Copyright menu
+             listed both as if they were the same thing. -->
+        <record id="analytic_plan_copyright" model="account.analytic.plan">
+            <field name="name">Copyright Contracts</field>
+        </record>
+
+    </data>
+</odoo>
