@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_liber_cloud_account_form_dropbox" model="ir.ui.view">
+        <field name="name">liber.cloud.account.form.inherit.dropbox</field>
+        <field name="model">liber.cloud.account</field>
+        <field name="inherit_id"
+               ref="liber_cloud_files.view_liber_cloud_account_form"/>
+        <field name="arch" type="xml">
+            <group name="credentials" position="inside">
+                <field name="dropbox_app_key"
+                       invisible="provider != 'dropbox'"/>
+                <field name="dropbox_app_secret" password="True"
+                       invisible="provider != 'dropbox'"/>
+                <field name="dropbox_refresh_token" password="True"
+                       invisible="provider != 'dropbox'"/>
+            </group>
+        </field>
+    </record>
+
+</odoo>

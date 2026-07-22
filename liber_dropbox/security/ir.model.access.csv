@@ -1,9 +1,0 @@
-id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_liber_dropbox_folder_user,liber.dropbox.folder user,model_liber_dropbox_folder,group_liber_dropbox_user,1,0,0,0
-access_liber_dropbox_folder_manager,liber.dropbox.folder manager,model_liber_dropbox_folder,group_liber_dropbox_manager,1,0,0,0
-access_liber_dropbox_folder_admin,liber.dropbox.folder admin,model_liber_dropbox_folder,base.group_system,1,1,1,1
-access_liber_dropbox_file_user,liber.dropbox.file user,model_liber_dropbox_file,group_liber_dropbox_user,1,1,0,0
-access_liber_dropbox_file_manager,liber.dropbox.file manager,model_liber_dropbox_file,group_liber_dropbox_manager,1,1,1,1
-access_liber_dropbox_upload_user,liber.dropbox.upload user,model_liber_dropbox_upload,group_liber_dropbox_user,1,1,1,0
-access_liber_dropbox_tag_user,liber.dropbox.tag user,model_liber_dropbox_tag,group_liber_dropbox_user,1,0,0,0
-access_liber_dropbox_tag_manager,liber.dropbox.tag manager,model_liber_dropbox_tag,group_liber_dropbox_manager,1,1,1,1

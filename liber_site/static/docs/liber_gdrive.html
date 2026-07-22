@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Arquivos no Google Drive — Manuais do Liber</title>
+<link rel="icon" type="image/png" href="../logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;600;700&display=swap">
+<link rel="stylesheet" href="docs.css">
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="../index.html"><img src="../logo.png" alt="">liber<span>.</span></a>
+    <span class="doc-tag">Manuais</span>
+    <nav><a href="index.html">Índice</a><a href="../index.html">Site</a></nav>
+  </div>
+</header>
+<div class="wrap">
+  <div class="layout">
+    <aside class="sidebar" id="sidebar"></aside>
+    <article class="doc">
+      <div class="breadcrumb"><a href="index.html">Manuais</a><span class="sep">›</span>Arquivos<span class="sep">›</span>Arquivos no Google Drive</div>
+      <h1>Arquivos no Google Drive</h1>
+      <p class="lead">O mesmo porteiro do Dropbox, agora na frente do Drive: leitura e escrita
+      decididas pasta a pasta no Odoo, download conferido byte a byte, compartilhamento com prazo
+      e assinatura — para a equipe que vive na planilha e no documento do Google.</p>
+
+      <h2 id="visao-geral">Visão geral</h2>
+      <p>Este app é um corpo do chassi <em>Cloud Files</em> — o mesmo do
+      <a href="liber_dropbox.html">Dropbox</a> e do <a href="liber_github.html">GitHub</a>.
+      Toda a disciplina é herdada e idêntica: pastas mapeadas por empresa, grupos de
+      <span class="field">Leitura</span> e <span class="field">Escrita</span> por pasta, espelho só
+      de metadados, envio que nunca sobrescreve, tags, vínculos com contatos e produtos, e a regra
+      de ouro — <strong>mapear pastas é de administrador; escrever exige grupo de escrita, seja quem
+      for</strong>. O que muda aqui é só o jeito do Drive:</p>
+      <ul>
+        <li><strong>Pasta é ID, não caminho.</strong> Abra a pasta no navegador e copie o ID da URL
+        (<span class="field">drive.google.com/drive/folders/&lt;ID&gt;</span>) para o campo
+        <span class="field">ID externo</span> do mapeamento.</li>
+        <li><strong>O download passa pelo Odoo.</strong> O Drive não tem link anônimo de quatro
+        horas; o arquivo desce pela porta <span class="field">/liber_cloud/download</span>, com o
+        portão conferido antes do primeiro byte — a credencial nunca sai do servidor.</li>
+        <li><strong>Miniatura de quase tudo</strong>, inclusive PDF — aqui o Drive é mais generoso
+        que o Dropbox.</li>
+      </ul>
+      <figure class="shot"><img src="img/doc-liber_gdrive-files.png" alt="Lista de arquivos do app Drive com o painel de pastas à esquerda e as colunas de tags, contatos e produto."><figcaption>A mesma tela de Arquivos do Dropbox, agora sobre o Drive: quem usa um aprendeu o outro.</figcaption></figure>
+
+      <h2 id="configuracao">Configuração</h2>
+      <ol class="steps">
+        <li>No <span class="field">console.cloud.google.com</span>, crie um projeto, ative a
+        <em>Google Drive API</em> e gere uma credencial OAuth (tipo <em>Desktop app</em>). O passo a
+        passo com o comando que troca o código pelo <span class="field">refresh token</span> está no
+        <span class="field">NOTES.md</span> do módulo.</li>
+        <li>Preencha <span class="menupath">Drive<i>‣</i>Configuração<i>‣</i>Conta</span> — Client ID,
+        Client Secret, Refresh Token — e use <span class="field">Testar conexão</span>. Uma conta por
+        empresa.</li>
+        <li>Como administrador, mapeie as pastas em
+        <span class="menupath">Drive<i>‣</i>Configuração<i>‣</i>Pastas</span>: nome, o
+        <span class="field">ID externo</span> da pasta no Drive, grupos de leitura e escrita.</li>
+      </ol>
+      <div class="callout warn"><span class="title">Atenção</span><p>Expiração de link compartilhado
+      no Drive é recurso de Google Workspace pago. Em conta gratuita a criação do link com prazo é
+      recusada com o erro explicado — zere o prazo na Conta ou faça upgrade.</p></div>
+
+      <h2 id="dia-a-dia">O dia a dia</h2>
+      <p>Igual ao Dropbox, de propósito: sincronizar (botão, após cada envio, e o robô diário de
+      madrugada), baixar, enviar pelo menu <span class="menupath">Drive<i>‣</i>Enviar</span>,
+      compartilhar com confirmação e prazo, classificar com tags e vincular a contatos e títulos —
+      o vocabulário de tags é o mesmo da casa inteira, e os botões nas fichas de contato e produto
+      somam os arquivos de todas as estantes.</p>
+      <figure class="shot"><img src="img/doc-liber_gdrive-folder.png" alt="Formulário de uma pasta do Drive com o campo ID externo preenchido e os grupos de leitura e escrita."><figcaption>O mapeamento no Drive: o ID no lugar do caminho, e a mesma decisão de sempre — quem lê, quem escreve.</figcaption></figure>
+
+      <h2 id="limitacoes">Limitações conhecidas</h2>
+      <ul>
+        <li><strong>Arquivos nativos do Google</strong> (Docs, Sheets) aparecem no espelho, mas o
+        download cru deles depende de exportação — fase futura; abra-os pelo link compartilhado.</li>
+        <li><strong>Expiração de link</strong> exige Workspace pago.</li>
+        <li><strong>Drives compartilhados</strong> (Shared Drives) ainda não são varridos — mapeie
+        pastas de "Meu Drive" por enquanto.</li>
+      </ul>
+
+      <div class="seealso">
+        <strong>Ver também</strong>
+        <ul>
+          <li><a href="liber_dropbox.html">Arquivos no Dropbox</a> — o mesmo portão, na estante do Dropbox, e a explicação completa da mecânica.</li>
+          <li><a href="liber_github.html">Arquivos no GitHub</a> — o corpo do GitHub, onde enviar é commitar.</li>
+        </ul>
+      </div>
+
+      <nav class="pager" id="pager"></nav>
+    </article>
+  </div>
+</div>
+<script src="docs.js"></script>
+</body>
+</html>

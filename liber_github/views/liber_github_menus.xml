@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="action_liber_github_file" model="ir.actions.act_window">
+        <field name="name">Files</field>
+        <field name="res_model">liber.cloud.file</field>
+        <field name="view_mode">list,kanban,form</field>
+        <field name="domain">[('provider', '=', 'github')]</field>
+        <field name="context">{'default_provider': 'github'}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No files here yet
+            </p>
+            <p>
+                Files appear when a repository you have access to is synced.
+            </p>
+        </field>
+    </record>
+
+    <record id="action_liber_github_folder" model="ir.actions.act_window">
+        <field name="name">Repositories</field>
+        <field name="res_model">liber.cloud.folder</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('provider', '=', 'github')]</field>
+        <field name="context">{'default_provider': 'github'}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Map a repository
+            </p>
+            <p>
+                Fill the External ID as owner/repository, pick the branch,
+                name who reads and who writes, and press Sync.
+            </p>
+        </field>
+    </record>
+
+    <record id="action_liber_github_upload" model="ir.actions.act_window">
+        <field name="name">Upload to GitHub</field>
+        <field name="res_model">liber.cloud.upload</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="context">{'default_provider': 'github'}</field>
+    </record>
+
+    <record id="action_liber_github_account" model="ir.actions.act_window">
+        <field name="name">Account</field>
+        <field name="res_model">liber.cloud.account</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('provider', '=', 'github')]</field>
+        <field name="context">{'default_provider': 'github'}</field>
+    </record>
+
+    <menuitem id="menu_liber_github_root" name="GitHub"
+              sequence="75"
+              web_icon="liber_github,static/description/icon.png"
+              groups="liber_github.group_liber_github_user"/>
+
+    <menuitem id="menu_liber_github_files" name="Files"
+              parent="menu_liber_github_root"
+              action="action_liber_github_file" sequence="10"/>
+
+    <menuitem id="menu_liber_github_upload" name="Upload"
+              parent="menu_liber_github_root"
+              action="action_liber_github_upload" sequence="20"/>
+
+    <menuitem id="menu_liber_github_config" name="Configuration"
+              parent="menu_liber_github_root" sequence="90"
+              groups="liber_github.group_liber_github_manager"/>
+
+    <menuitem id="menu_liber_github_folders" name="Repositories"
+              parent="menu_liber_github_config"
+              action="action_liber_github_folder" sequence="10"/>
+
+    <menuitem id="menu_liber_github_tags" name="Tags"
+              parent="menu_liber_github_config"
+              action="liber_cloud_files.action_liber_cloud_tag" sequence="20"/>
+
+    <menuitem id="menu_liber_github_account" name="Account"
+              parent="menu_liber_github_config"
+              action="action_liber_github_account" sequence="30"/>
+
+</odoo>

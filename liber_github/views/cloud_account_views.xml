@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_liber_cloud_account_form_github" model="ir.ui.view">
+        <field name="name">liber.cloud.account.form.inherit.github</field>
+        <field name="model">liber.cloud.account</field>
+        <field name="inherit_id"
+               ref="liber_cloud_files.view_liber_cloud_account_form"/>
+        <field name="arch" type="xml">
+            <group name="credentials" position="inside">
+                <field name="github_token" password="True"
+                       invisible="provider != 'github'"/>
+            </group>
+        </field>
+    </record>
+
+</odoo>

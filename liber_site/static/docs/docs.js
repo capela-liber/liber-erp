@@ -28,8 +28,10 @@ var DOCS = [
   { area: "Divulgação", desc: "Exemplares de cortesia com dono, motivo e custo.", items: [
     { slug: "liber_product_bonus", title: "Bonificação", desc: "Campanhas, listas de destinatários e custo por título." },
   ]},
-  { area: "Arquivos", desc: "O acervo da editora no Dropbox, com o Odoo de porteiro.", items: [
+  { area: "Arquivos", desc: "O acervo da editora nas nuvens, com o Odoo de porteiro — mesma disciplina em três estantes.", items: [
     { slug: "liber_dropbox", title: "Arquivos no Dropbox", desc: "Leitura e escrita por pasta, envio, links com prazo e vínculos a autores e títulos." },
+    { slug: "liber_gdrive", title: "Arquivos no Google Drive", desc: "O mesmo portão na frente do Drive: pastas por ID, download conferido, miniaturas até de PDF." },
+    { slug: "liber_github", title: "Arquivos no GitHub", desc: "Repositório vira pasta, envio vira commit, e o link compartilhado não fura o portão." },
   ]},
   { area: "Gestão", desc: "Orçamento e controle de acesso.", items: [
     { slug: "liber_budget", title: "Orçamento", desc: "Orçado × realizado sobre a contabilidade analítica." },

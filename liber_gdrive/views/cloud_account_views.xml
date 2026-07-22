@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_liber_cloud_account_form_gdrive" model="ir.ui.view">
+        <field name="name">liber.cloud.account.form.inherit.gdrive</field>
+        <field name="model">liber.cloud.account</field>
+        <field name="inherit_id"
+               ref="liber_cloud_files.view_liber_cloud_account_form"/>
+        <field name="arch" type="xml">
+            <group name="credentials" position="inside">
+                <field name="gdrive_client_id"
+                       invisible="provider != 'gdrive'"/>
+                <field name="gdrive_client_secret" password="True"
+                       invisible="provider != 'gdrive'"/>
+                <field name="gdrive_refresh_token" password="True"
+                       invisible="provider != 'gdrive'"/>
+            </group>
+        </field>
+    </record>
+
+</odoo>

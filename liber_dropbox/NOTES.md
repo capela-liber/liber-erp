@@ -32,8 +32,10 @@ cura tags e credenciais — mas não configura a estante nem escreve sem ACL.
      ```
    - Guardar o `refresh_token` da resposta (não expira; o access token é
      derivado dele a cada operação e nunca é armazenado).
-4. Preencher **Settings → Dropbox** (App Key, App Secret, Refresh Token) e
-   usar **Test Connection**.
+4. Preencher **Dropbox → Configuração → Conta** (App Key, App Secret,
+   Refresh Token) e usar **Testar conexão**. Uma conta **por empresa** —
+   o módulo é um corpo do chassi `liber_cloud_files`, multiempresa por
+   construção, o mesmo chassi do Drive e do GitHub.
 
 ## Limites assumidos (fase 0)
 
@@ -42,7 +44,7 @@ cura tags e credenciais — mas não configura a estante nem escreve sem ACL.
 - **Link compartilhado fura o portão** — é a natureza dele. Por isso criar o
   link exige ACL de escrita, pede confirmação, assina quem pediu
   (`shared_by`, `shared_on`) e **nasce com prazo**: padrão 30 dias
-  (Settings → Dropbox → Link Expiration; 0 = sem prazo). Compartilhar de
+  (na Conta, "Links compartilhados expiram após"; 0 = sem prazo). Compartilhar de
   novo renova o prazo. Atenção: o Dropbox só honra expiração de link em
   plano pago (Plus/Professional/Business); em conta gratuita a API recusa
   e o erro sai explicado. Revogação manual/senha do link: fase 1.

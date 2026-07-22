@@ -1,0 +1,10 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_liber_cloud_folder_user,liber.cloud.folder user,model_liber_cloud_folder,group_liber_cloud_user,1,0,0,0
+access_liber_cloud_folder_admin,liber.cloud.folder admin,model_liber_cloud_folder,base.group_system,1,1,1,1
+access_liber_cloud_file_user,liber.cloud.file user,model_liber_cloud_file,group_liber_cloud_user,1,1,0,0
+access_liber_cloud_file_manager,liber.cloud.file manager,model_liber_cloud_file,group_liber_cloud_manager,1,1,1,1
+access_liber_cloud_tag_user,liber.cloud.tag user,model_liber_cloud_tag,group_liber_cloud_user,1,0,0,0
+access_liber_cloud_tag_manager,liber.cloud.tag manager,model_liber_cloud_tag,group_liber_cloud_manager,1,1,1,1
+access_liber_cloud_account_manager,liber.cloud.account manager,model_liber_cloud_account,group_liber_cloud_manager,1,1,1,0
+access_liber_cloud_account_admin,liber.cloud.account admin,model_liber_cloud_account,base.group_system,1,1,1,1
+access_liber_cloud_upload_user,liber.cloud.upload user,model_liber_cloud_upload,group_liber_cloud_user,1,1,1,0

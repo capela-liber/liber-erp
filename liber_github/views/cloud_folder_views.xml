@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_liber_cloud_folder_form_github" model="ir.ui.view">
+        <field name="name">liber.cloud.folder.form.inherit.github</field>
+        <field name="model">liber.cloud.folder</field>
+        <field name="inherit_id"
+               ref="liber_cloud_files.view_liber_cloud_folder_form"/>
+        <field name="arch" type="xml">
+            <field name="external_id" position="after">
+                <field name="github_branch"
+                       invisible="provider != 'github'"/>
+            </field>
+        </field>
+    </record>
+
+</odoo>

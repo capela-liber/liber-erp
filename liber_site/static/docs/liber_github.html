@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Arquivos no GitHub — Manuais do Liber</title>
+<link rel="icon" type="image/png" href="../logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;600;700&display=swap">
+<link rel="stylesheet" href="docs.css">
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="../index.html"><img src="../logo.png" alt="">liber<span>.</span></a>
+    <span class="doc-tag">Manuais</span>
+    <nav><a href="index.html">Índice</a><a href="../index.html">Site</a></nav>
+  </div>
+</header>
+<div class="wrap">
+  <div class="layout">
+    <aside class="sidebar" id="sidebar"></aside>
+    <article class="doc">
+      <div class="breadcrumb"><a href="index.html">Manuais</a><span class="sep">›</span>Arquivos<span class="sep">›</span>Arquivos no GitHub</div>
+      <h1>Arquivos no GitHub</h1>
+      <p class="lead">O mesmo porteiro, na estante onde a produção versiona os originais: um
+      repositório vira pasta, cada envio vira commit, cada revisão tem SHA — e o link compartilhado,
+      pela primeira vez, não fura o portão.</p>
+
+      <h2 id="visao-geral">Visão geral</h2>
+      <p>Este app é um corpo do chassi <em>Cloud Files</em> — o mesmo do
+      <a href="liber_dropbox.html">Dropbox</a> e do <a href="liber_gdrive.html">Drive</a>. A
+      disciplina é herdada e idêntica: acesso por grupos pasta a pasta, multiempresa, espelho de
+      metadados, tags e vínculos, <strong>mapear é de administrador, escrever exige grupo de
+      escrita</strong>. O que muda é o vocabulário, traduzido do Git:</p>
+      <div class="tablewrap"><table>
+        <thead><tr><th>No Liber</th><th>No GitHub</th></tr></thead>
+        <tbody>
+          <tr><td>Pasta</td><td>Um repositório (<span class="field">ID externo</span> = <span class="field">dono/repositório</span>), com subpasta opcional no campo Caminho e <span class="field">Branch</span> (vazio = a padrão).</td></tr>
+          <tr><td>Enviar</td><td>Um commit <span class="field">liber: arquivo.pdf</span> na branch da pasta. Nunca sobrescreve: nome repetido vira <span class="field">arquivo (1).ext</span>.</td></tr>
+          <tr><td>Revisão</td><td>O SHA do blob — versionamento de graça, mudou o conteúdo, mudou o SHA.</td></tr>
+          <tr><td>Link compartilhado</td><td>A página do arquivo no GitHub — <strong>só abre para quem enxerga o repositório</strong>. Por isso não expira: a ficha registra honestamente "sem validade".</td></tr>
+        </tbody>
+      </table></div>
+      <figure class="shot"><img src="img/doc-liber_github-folder.png" alt="Formulário de um repositório mapeado, com dono/repositório no ID externo, a branch e os grupos de leitura e escrita."><figcaption>O repositório como pasta: dono/repositório, branch, e a mesma decisão de sempre — quem lê, quem escreve.</figcaption></figure>
+
+      <h2 id="configuracao">Configuração</h2>
+      <ol class="steps">
+        <li>Na conta GitHub da empresa, gere um <em>fine-grained personal access token</em> com
+        acesso aos repositórios que serão mapeados e permissão <span class="field">Contents:
+        Read and write</span> (roteiro no <span class="field">NOTES.md</span> do módulo).</li>
+        <li>Preencha <span class="menupath">GitHub<i>‣</i>Configuração<i>‣</i>Conta</span> e use
+        <span class="field">Testar conexão</span>. Uma conta por empresa.</li>
+        <li>Como administrador, mapeie em
+        <span class="menupath">GitHub<i>‣</i>Configuração<i>‣</i>Repositórios</span>: o
+        <span class="field">ID externo</span> como <span class="field">dono/repositório</span>, a
+        subpasta (Caminho, <span class="field">/</span> para a raiz), a branch e os grupos.</li>
+      </ol>
+
+      <h2 id="dia-a-dia">O dia a dia</h2>
+      <p>Sincronizar espelha a árvore da branch (a subpasta mapeada, recursiva ou não); baixar
+      desce pelo Odoo com o portão conferido; enviar commita pelo menu
+      <span class="menupath">GitHub<i>‣</i>Enviar</span>. Tags e vínculos com contatos e produtos
+      são os mesmos da casa — um contrato no Dropbox e seus originais no GitHub apontam para o
+      mesmo autor e o mesmo título.</p>
+      <figure class="shot"><img src="img/doc-liber_github-files.png" alt="Lista de arquivos de um repositório espelhado, com o SHA na coluna de revisão."><figcaption>O espelho do repositório: cada arquivo com seu SHA — mudou o conteúdo, o sync denuncia.</figcaption></figure>
+
+      <h2 id="limitacoes">Limitações conhecidas</h2>
+      <ul>
+        <li><strong>Sem miniaturas</strong> — baixar cada imagem só para encolher não vale a banda
+        num host de código.</li>
+        <li><strong>Sem data de modificação por arquivo</strong> no espelho (seria uma chamada de
+        API por arquivo; o SHA já denuncia mudança).</li>
+        <li><strong>Arquivos em LFS</strong> aparecem com o tamanho do ponteiro, não do conteúdo.</li>
+      </ul>
+
+      <div class="seealso">
+        <strong>Ver também</strong>
+        <ul>
+          <li><a href="liber_dropbox.html">Arquivos no Dropbox</a> — a explicação completa da mecânica compartilhada.</li>
+          <li><a href="liber_gdrive.html">Arquivos no Google Drive</a> — o corpo do Drive, para a equipe das planilhas.</li>
+        </ul>
+      </div>
+
+      <nav class="pager" id="pager"></nav>
+    </article>
+  </div>
+</div>
+<script src="docs.js"></script>
+</body>
+</html>

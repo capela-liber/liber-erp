@@ -50,7 +50,12 @@
       e permissões — é ato de administrador do sistema</strong>, não do gerente. E escrever no Dropbox
       (enviar, compartilhar) exige estar num grupo de escrita da pasta, <em>seja quem for</em>:
       configurar a estante é um poder, enchê-la é outro.</p>
-      <p><strong>Conta do Dropbox</strong> (uma vez só, pelo gerente):</p>
+      <p><strong>Multiempresa por construção:</strong> cada empresa da base tem a sua conta do
+      Dropbox, as suas pastas e as suas tags — quem é de uma empresa não vê as estantes da outra,
+      antes mesmo de qualquer grupo entrar na conversa. O Dropbox é um dos corpos do chassi
+      <em>Cloud Files</em>, o mesmo que serve o Google Drive e o GitHub: o portão, os vínculos e a
+      disciplina são idênticos nos três apps.</p>
+      <p><strong>Conta do Dropbox</strong> (uma vez por empresa, pelo gerente):</p>
       <ol class="steps">
         <li>Crie um app <em>Scoped access</em> em <span class="field">dropbox.com/developers/apps</span>,
         com as permissões de leitura e escrita de arquivos e de compartilhamento
@@ -58,10 +63,11 @@
         <span class="field">NOTES.md</span> do módulo).</li>
         <li>Autorize o app logado na conta da editora e troque o código pelo
         <span class="field">refresh token</span> — é ele que não expira.</li>
-        <li>Preencha <span class="menupath">Configurações<i>‣</i>Dropbox</span>: App Key, App Secret,
-        Refresh Token — e use <span class="field">Testar conexão</span>.</li>
+        <li>Preencha <span class="menupath">Dropbox<i>‣</i>Configuração<i>‣</i>Conta</span>: App Key,
+        App Secret, Refresh Token — e use <span class="field">Testar conexão</span>. Em base
+        multiempresa, uma conta para cada empresa.</li>
       </ol>
-      <p><strong>Prazo dos links:</strong> no mesmo bloco de configurações,
+      <p><strong>Prazo dos links:</strong> na mesma Conta,
       <span class="field">Links compartilhados expiram após (dias)</span> — padrão 30.
       Compartilhar de novo renova o prazo; 0 cria links sem validade.</p>
       <div class="callout warn"><span class="title">Atenção</span><p>O Dropbox só honra expiração de

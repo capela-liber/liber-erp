@@ -12,7 +12,7 @@ URLs das páginas (site publicado ou instância local):
 - Local: `http://localhost:8069/liber_site/static/docs/<página>`
 - Índice: `http://localhost:8069/liber_site/static/docs/index.html`
 
-Total de capturas: 37 · Feitas: marque a caixa ao concluir.
+Total de capturas: 41 · Feitas: marque a caixa ao concluir.
 
 
 ## Acordos de consignação — `liber_soc_agreements.html`
@@ -209,6 +209,30 @@ Página: `/liber_site/static/docs/liber_dropbox.html`
 - [x] **`doc-liber_dropbox-partner.png`**
   - O que capturar: Ficha de um contato com o botão inteligente do Dropbox mostrando a contagem de arquivos vinculados
   - Legenda no manual: No contato do autor: os contratos dele no Dropbox, a um clique — contados conforme a permissão de quem olha.
+
+
+## Arquivos no Google Drive — `liber_gdrive.html`
+
+Página: `/liber_site/static/docs/liber_gdrive.html`
+
+- [ ] **`doc-liber_gdrive-files.png`**
+  - O que capturar: Lista de Arquivos do app Drive com o painel de pastas à esquerda e as colunas de tags, contatos e produto (precisa de uma conta Drive configurada e uma pasta sincronizada)
+  - Legenda no manual: A mesma tela de Arquivos do Dropbox, agora sobre o Drive: quem usa um aprendeu o outro.
+- [ ] **`doc-liber_gdrive-folder.png`**
+  - O que capturar: Formulário de uma pasta do Drive com o campo ID externo preenchido e os grupos de Leitura e Escrita
+  - Legenda no manual: O mapeamento no Drive: o ID no lugar do caminho, e a mesma decisão de sempre — quem lê, quem escreve.
+
+
+## Arquivos no GitHub — `liber_github.html`
+
+Página: `/liber_site/static/docs/liber_github.html`
+
+- [ ] **`doc-liber_github-folder.png`**
+  - O que capturar: Formulário de um repositório mapeado, com dono/repositório no ID externo, a branch e os grupos de Leitura e Escrita
+  - Legenda no manual: O repositório como pasta: dono/repositório, branch, e a mesma decisão de sempre — quem lê, quem escreve.
+- [ ] **`doc-liber_github-files.png`**
+  - O que capturar: Lista de arquivos de um repositório espelhado, com a coluna de revisão (SHA) visível
+  - Legenda no manual: O espelho do repositório: cada arquivo com seu SHA — mudou o conteúdo, o sync denuncia.
 
 
 ## Papéis de acesso — `liber_roles.html`

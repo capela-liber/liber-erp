@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_partner_form_liber_cloud" model="ir.ui.view">
+        <field name="name">res.partner.form.inherit.liber.cloud</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button name="action_view_cloud_files" type="object"
+                        class="oe_stat_button" icon="fa-cloud"
+                        groups="liber_cloud_files.group_liber_cloud_user"
+                        invisible="not cloud_file_count">
+                    <field name="cloud_file_count" widget="statinfo"
+                           string="Files"/>
+                </button>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

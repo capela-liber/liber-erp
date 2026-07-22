@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0-20260630\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-22 11:31+0000\n"
-"PO-Revision-Date: 2026-07-22 11:31+0000\n"
+"POT-Creation-Date: 2026-07-22 15:43+0000\n"
+"PO-Revision-Date: 2026-07-22 15:43+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -16,101 +16,40 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: liber_dropbox
-#. odoo-python
-#: code:addons/liber_dropbox/models/dropbox_file.py:0
-msgid "%(url)s — the link dies on %(date)s."
-msgstr ""
+#: model:ir.actions.act_window,name:liber_dropbox.action_liber_dropbox_account
+#: model:ir.ui.menu,name:liber_dropbox.menu_liber_dropbox_account
+msgid "Account"
+msgstr "Conta"
 
 #. module: liber_dropbox
-#: model_terms:ir.ui.view,arch_db:liber_dropbox.view_liber_dropbox_folder_form
-msgid "/Editorial/Covers"
-msgstr ""
-
-#. module: liber_dropbox
-#: model_terms:ir.ui.view,arch_db:liber_dropbox.view_liber_dropbox_file_kanban
-msgid "<i class=\"fa fa-book me-1\" title=\"Product\"/>"
-msgstr ""
-
-#. module: liber_dropbox
-#: model_terms:ir.ui.view,arch_db:liber_dropbox.view_liber_dropbox_file_kanban
-msgid "<i class=\"fa fa-file-o fa-3x text-muted\" title=\"File\"/>"
-msgstr ""
-
-#. module: liber_dropbox
-#: model_terms:ir.ui.view,arch_db:liber_dropbox.view_liber_dropbox_file_kanban
-msgid "<i class=\"fa fa-user me-1\" title=\"Contact\"/>"
-msgstr ""
-
-#. module: liber_dropbox
-#: model_terms:ir.ui.view,arch_db:liber_dropbox.view_liber_dropbox_file_form
-msgid ""
-"A shared link is public: anyone holding it reaches the file without Odoo. "
-"Create it?"
-msgstr ""
-
-#. module: liber_dropbox
-#: model:ir.model.fields,field_description:liber_dropbox.field_liber_dropbox_file__active
-#: model:ir.model.fields,field_description:liber_dropbox.field_liber_dropbox_folder__active
-#: model:ir.model.fields,field_description:liber_dropbox.field_liber_dropbox_tag__active
-msgid "Active"
-msgstr "Ativo"
-
-#. module: liber_dropbox
-#: model:ir.model.fields,field_description:liber_dropbox.field_res_config_settings__liber_dropbox_app_key
+#: model:ir.model.fields,field_description:liber_dropbox.field_liber_cloud_account__dropbox_app_key
 msgid "App Key"
-msgstr ""
+msgstr "App Key"
 
 #. module: liber_dropbox
-#: model:ir.model.fields,field_description:liber_dropbox.field_res_config_settings__liber_dropbox_app_secret
+#: model:ir.model.fields,field_description:liber_dropbox.field_liber_cloud_account__dropbox_app_secret
 msgid "App Secret"
+msgstr "App Secret"
+
+#. module: liber_dropbox
+#: model:ir.model,name:liber_dropbox.model_liber_cloud_folder
+msgid "Cloud Folder"
+msgstr "Pasta na nuvem"
+
+#. module: liber_dropbox
+#: model:ir.model,name:liber_dropbox.model_liber_cloud_account
+msgid "Cloud Storage Account"
+msgstr "Conta de armazenamento na nuvem"
+
+#. module: liber_dropbox
+#: model:ir.model,name:liber_dropbox.model_liber_cloud_provider
+msgid "Cloud Storage Provider Registry"
 msgstr ""
-
-#. module: liber_dropbox
-#. odoo-python
-#: code:addons/liber_dropbox/models/res_config_settings.py:0
-msgid "Authenticated as %(name)s (%(email)s)."
-msgstr "Autenticado como %(name)s (%(email)s)."
-
-#. module: liber_dropbox
-#: model_terms:ir.ui.view,arch_db:liber_dropbox.view_liber_dropbox_upload_form
-msgid "Cancel"
-msgstr "Cancelar"
-
-#. module: liber_dropbox
-#: model:ir.model.fields,field_description:liber_dropbox.field_liber_dropbox_tag__color
-msgid "Color"
-msgstr ""
-
-#. module: liber_dropbox
-#: model_terms:ir.ui.view,arch_db:liber_dropbox.res_config_settings_view_form
-msgid "Company Account"
-msgstr "Conta da empresa"
-
-#. module: liber_dropbox
-#: model:ir.model,name:liber_dropbox.model_res_config_settings
-msgid "Config Settings"
-msgstr "Configurações"
 
 #. module: liber_dropbox
 #: model:ir.ui.menu,name:liber_dropbox.menu_liber_dropbox_config
 msgid "Configuration"
 msgstr "Configuração"
-
-#. module: liber_dropbox
-#: model:ir.model,name:liber_dropbox.model_res_partner
-#: model_terms:ir.ui.view,arch_db:liber_dropbox.view_liber_dropbox_file_search
-msgid "Contact"
-msgstr "Contato"
-
-#. module: liber_dropbox
-#: model:ir.model.fields,field_description:liber_dropbox.field_liber_dropbox_file__partner_ids
-msgid "Contacts"
-msgstr "Contatos"
-
-#. module: liber_dropbox
-#: model:ir.model.fields,field_description:liber_dropbox.field_liber_dropbox_file__content_hash
-msgid "Content Hash"
-msgstr "Hash do conteúdo"
 
 #. module: liber_dropbox
 #. odoo-python
@@ -119,82 +58,20 @@ msgid "Could not reach Dropbox: %s"
 msgstr "Não foi possível alcançar o Dropbox: %s"
 
 #. module: liber_dropbox
-#: model_terms:ir.ui.view,arch_db:liber_dropbox.view_liber_dropbox_folder_form
-msgid "Covers"
-msgstr "Capas"
-
-#. module: liber_dropbox
-#: model:ir.model,website_form_label:liber_dropbox.model_res_partner
-msgid "Create a Customer"
-msgstr "Criar um cliente"
-
-#. module: liber_dropbox
-#: model:ir.model.fields,field_description:liber_dropbox.field_liber_dropbox_file__create_uid
-#: model:ir.model.fields,field_description:liber_dropbox.field_liber_dropbox_folder__create_uid
-#: model:ir.model.fields,field_description:liber_dropbox.field_liber_dropbox_tag__create_uid
-#: model:ir.model.fields,field_description:liber_dropbox.field_liber_dropbox_upload__create_uid
-msgid "Created by"
-msgstr ""
-
-#. module: liber_dropbox
-#: model:ir.model.fields,field_description:liber_dropbox.field_liber_dropbox_file__create_date
-#: model:ir.model.fields,field_description:liber_dropbox.field_liber_dropbox_folder__create_date
-#: model:ir.model.fields,field_description:liber_dropbox.field_liber_dropbox_tag__create_date
-#: model:ir.model.fields,field_description:liber_dropbox.field_liber_dropbox_upload__create_date
-msgid "Created on"
-msgstr ""
-
-#. module: liber_dropbox
-#: model:ir.model.fields,field_description:liber_dropbox.field_liber_dropbox_upload__data
-msgid "Data"
-msgstr ""
-
-#. module: liber_dropbox
-#: model:ir.model.fields,field_description:liber_dropbox.field_liber_dropbox_file__display_name
-#: model:ir.model.fields,field_description:liber_dropbox.field_liber_dropbox_folder__display_name
-#: model:ir.model.fields,field_description:liber_dropbox.field_liber_dropbox_tag__display_name
-#: model:ir.model.fields,field_description:liber_dropbox.field_liber_dropbox_upload__display_name
-#: model:ir.model.fields,field_description:liber_dropbox.field_product_template__display_name
-#: model:ir.model.fields,field_description:liber_dropbox.field_res_config_settings__display_name
-#: model:ir.model.fields,field_description:liber_dropbox.field_res_partner__display_name
+#: model:ir.model.fields,field_description:liber_dropbox.field_liber_cloud_account__display_name
+#: model:ir.model.fields,field_description:liber_dropbox.field_liber_cloud_folder__display_name
+#: model:ir.model.fields,field_description:liber_dropbox.field_liber_cloud_provider__display_name
+#: model:ir.model.fields,field_description:liber_dropbox.field_liber_cloud_upload__display_name
 msgid "Display Name"
-msgstr "Nome exibido"
+msgstr ""
 
 #. module: liber_dropbox
-#: model_terms:ir.ui.view,arch_db:liber_dropbox.view_liber_dropbox_file_form
-#: model_terms:ir.ui.view,arch_db:liber_dropbox.view_liber_dropbox_file_kanban
-#: model_terms:ir.ui.view,arch_db:liber_dropbox.view_liber_dropbox_file_list
-msgid "Download"
-msgstr "Baixar"
-
-#. module: liber_dropbox
+#: model:ir.model.fields.selection,name:liber_dropbox.selection__liber_cloud_account__provider__dropbox
+#: model:ir.model.fields.selection,name:liber_dropbox.selection__liber_cloud_folder__provider__dropbox
+#: model:ir.model.fields.selection,name:liber_dropbox.selection__liber_cloud_upload__provider__dropbox
 #: model:ir.ui.menu,name:liber_dropbox.menu_liber_dropbox_root
-#: model_terms:ir.ui.view,arch_db:liber_dropbox.res_config_settings_view_form
 msgid "Dropbox"
 msgstr ""
-
-#. module: liber_dropbox
-#: model_terms:ir.ui.view,arch_db:liber_dropbox.res_config_settings_view_form
-msgid "Dropbox App"
-msgstr "App do Dropbox"
-
-#. module: liber_dropbox
-#: model:ir.model,name:liber_dropbox.model_liber_dropbox_file
-msgid "Dropbox File"
-msgstr "Arquivo do Dropbox"
-
-#. module: liber_dropbox
-#: model:ir.model.fields,field_description:liber_dropbox.field_product_product__dropbox_file_count
-#: model:ir.model.fields,field_description:liber_dropbox.field_product_template__dropbox_file_count
-#: model:ir.model.fields,field_description:liber_dropbox.field_res_partner__dropbox_file_count
-#: model:ir.model.fields,field_description:liber_dropbox.field_res_users__dropbox_file_count
-msgid "Dropbox File Count"
-msgstr "Total de arquivos no Dropbox"
-
-#. module: liber_dropbox
-#: model:ir.model,name:liber_dropbox.model_liber_dropbox_tag
-msgid "Dropbox File Tag"
-msgstr "Tag de arquivo do Dropbox"
 
 #. module: liber_dropbox
 #: model:ir.module.category,name:liber_dropbox.module_category_liber_dropbox
@@ -203,41 +80,10 @@ msgid "Dropbox Files"
 msgstr "Arquivos Dropbox"
 
 #. module: liber_dropbox
-#: model:ir.model,name:liber_dropbox.model_liber_dropbox_folder
-msgid "Dropbox Folder"
-msgstr "Pasta do Dropbox"
-
-#. module: liber_dropbox
 #. odoo-python
 #: code:addons/liber_dropbox/services/dropbox_api.py:0
 msgid "Dropbox call %(endpoint)s failed (HTTP %(code)s): %(body)s"
 msgstr "Chamada %(endpoint)s ao Dropbox falhou (HTTP %(code)s): %(body)s"
-
-#. module: liber_dropbox
-#. odoo-python
-#: code:addons/liber_dropbox/models/res_config_settings.py:0
-msgid "Dropbox connected"
-msgstr "Dropbox conectado"
-
-#. module: liber_dropbox
-#. odoo-python
-#: code:addons/liber_dropbox/services/dropbox_api.py:0
-msgid ""
-"Dropbox is not configured. Fill in the app key, app secret and refresh token"
-" in Settings (see the module's NOTES.md for the one-time setup)."
-msgstr ""
-
-#. module: liber_dropbox
-#: model:ir.model.fields,help:liber_dropbox.field_liber_dropbox_file__share_expires
-msgid ""
-"Dropbox kills the link at this moment; sharing the file again renews the "
-"deadline."
-msgstr ""
-
-#. module: liber_dropbox
-#: model:ir.model.fields,help:liber_dropbox.field_liber_dropbox_folder__path
-msgid "Dropbox path from the account root, e.g. /Editorial/Covers."
-msgstr "Caminho no Dropbox a partir da raiz da conta, ex.: /Editorial/Capas."
 
 #. module: liber_dropbox
 #. odoo-python
@@ -252,57 +98,16 @@ msgid "Dropbox reported an existing shared link for %s but did not return it."
 msgstr "O Dropbox informou que já existe um link compartilhado para %s, mas não o devolveu."
 
 #. module: liber_dropbox
-#: model:ir.model.fields,help:liber_dropbox.field_liber_dropbox_file__content_hash
-msgid ""
-"Dropbox's own block-wise hash, not a plain sha256; equal hashes mean equal "
-"content."
-msgstr ""
-
-#. module: liber_dropbox
-#: model:ir.model.fields,help:liber_dropbox.field_res_config_settings__liber_dropbox_share_ttl_days
-msgid ""
-"Every shared link created from Odoo dies after this many days; sharing again"
-" renews the deadline. 0 creates links that never expire. Expiration requires"
-" a paid Dropbox plan."
-msgstr ""
-
-#. module: liber_dropbox
-#: model:ir.model.fields,field_description:liber_dropbox.field_liber_dropbox_folder__file_ids
-msgid "File"
-msgstr "Arquivo"
-
-#. module: liber_dropbox
-#: model:ir.model.fields,field_description:liber_dropbox.field_liber_dropbox_folder__file_count
-msgid "File Count"
-msgstr "Total de arquivos"
-
-#. module: liber_dropbox
-#: model:ir.model.fields,field_description:liber_dropbox.field_liber_dropbox_upload__file_name
-msgid "File Name"
-msgstr "Nome do arquivo"
-
-#. module: liber_dropbox
 #: model:ir.actions.act_window,name:liber_dropbox.action_liber_dropbox_file
 #: model:ir.ui.menu,name:liber_dropbox.menu_liber_dropbox_files
-#: model_terms:ir.ui.view,arch_db:liber_dropbox.product_template_form_liber_dropbox
-#: model_terms:ir.ui.view,arch_db:liber_dropbox.view_liber_dropbox_folder_form
-#: model_terms:ir.ui.view,arch_db:liber_dropbox.view_liber_dropbox_folder_list
-#: model_terms:ir.ui.view,arch_db:liber_dropbox.view_partner_form_liber_dropbox
 msgid "Files"
 msgstr "Arquivos"
 
 #. module: liber_dropbox
 #: model_terms:ir.actions.act_window,help:liber_dropbox.action_liber_dropbox_file
-msgid "Files appear when a folder you have access to is synced."
+msgid "Files appear when a Dropbox folder you have access to is synced."
 msgstr ""
 "Os arquivos aparecem quando uma pasta a que você tem acesso é sincronizada."
-
-#. module: liber_dropbox
-#: model:ir.model.fields,field_description:liber_dropbox.field_liber_dropbox_file__folder_id
-#: model:ir.model.fields,field_description:liber_dropbox.field_liber_dropbox_upload__folder_id
-#: model_terms:ir.ui.view,arch_db:liber_dropbox.view_liber_dropbox_file_search
-msgid "Folder"
-msgstr "Pasta"
 
 #. module: liber_dropbox
 #: model:ir.actions.act_window,name:liber_dropbox.action_liber_dropbox_folder
@@ -311,68 +116,15 @@ msgid "Folders"
 msgstr "Pastas"
 
 #. module: liber_dropbox
-#: model:ir.model.fields,help:liber_dropbox.field_liber_dropbox_folder__write_group_ids
-msgid ""
-"Groups that also upload into this folder and create shared links. Writing "
-"implies reading."
-msgstr ""
-
-#. module: liber_dropbox
-#: model:ir.model.fields,help:liber_dropbox.field_liber_dropbox_folder__read_group_ids
-msgid ""
-"Groups that see this folder and download its files. Leave empty to keep the "
-"folder visible to managers only."
-msgstr ""
-
-#. module: liber_dropbox
-#: model:ir.model.fields,field_description:liber_dropbox.field_liber_dropbox_file__id
-#: model:ir.model.fields,field_description:liber_dropbox.field_liber_dropbox_folder__id
-#: model:ir.model.fields,field_description:liber_dropbox.field_liber_dropbox_tag__id
-#: model:ir.model.fields,field_description:liber_dropbox.field_liber_dropbox_upload__id
-#: model:ir.model.fields,field_description:liber_dropbox.field_product_template__id
-#: model:ir.model.fields,field_description:liber_dropbox.field_res_config_settings__id
-#: model:ir.model.fields,field_description:liber_dropbox.field_res_partner__id
+#: model:ir.model.fields,field_description:liber_dropbox.field_liber_cloud_account__id
+#: model:ir.model.fields,field_description:liber_dropbox.field_liber_cloud_folder__id
+#: model:ir.model.fields,field_description:liber_dropbox.field_liber_cloud_provider__id
+#: model:ir.model.fields,field_description:liber_dropbox.field_liber_cloud_upload__id
 msgid "ID"
 msgstr ""
 
 #. module: liber_dropbox
-#: model:ir.model.fields,field_description:liber_dropbox.field_liber_dropbox_folder__recursive
-msgid "Include Subfolders"
-msgstr "Incluir subpastas"
-
-#. module: liber_dropbox
-#: model:ir.model.fields,field_description:liber_dropbox.field_liber_dropbox_file__client_modified
-msgid "Last Modified"
-msgstr "Última alteração"
-
-#. module: liber_dropbox
-#: model:ir.model.fields,field_description:liber_dropbox.field_liber_dropbox_folder__last_sync
-msgid "Last Sync"
-msgstr "Última sincronização"
-
-#. module: liber_dropbox
-#: model:ir.model.fields,field_description:liber_dropbox.field_liber_dropbox_file__write_uid
-#: model:ir.model.fields,field_description:liber_dropbox.field_liber_dropbox_folder__write_uid
-#: model:ir.model.fields,field_description:liber_dropbox.field_liber_dropbox_tag__write_uid
-#: model:ir.model.fields,field_description:liber_dropbox.field_liber_dropbox_upload__write_uid
-msgid "Last Updated by"
-msgstr ""
-
-#. module: liber_dropbox
-#: model:ir.model.fields,field_description:liber_dropbox.field_liber_dropbox_file__write_date
-#: model:ir.model.fields,field_description:liber_dropbox.field_liber_dropbox_folder__write_date
-#: model:ir.model.fields,field_description:liber_dropbox.field_liber_dropbox_tag__write_date
-#: model:ir.model.fields,field_description:liber_dropbox.field_liber_dropbox_upload__write_date
-msgid "Last Updated on"
-msgstr ""
-
-#. module: liber_dropbox
-#: model_terms:ir.ui.view,arch_db:liber_dropbox.res_config_settings_view_form
-msgid "Link Expiration"
-msgstr "Validade do link"
-
-#. module: liber_dropbox
-#: model:ir.model.fields,help:liber_dropbox.field_res_config_settings__liber_dropbox_refresh_token
+#: model:ir.model.fields,help:liber_dropbox.field_liber_cloud_account__dropbox_refresh_token
 msgid ""
 "Long-lived token from the one-time authorization flow; see the module's "
 "NOTES.md for the two curl calls that mint it."
@@ -389,32 +141,9 @@ msgid "Map a Dropbox folder"
 msgstr "Mapeie uma pasta do Dropbox"
 
 #. module: liber_dropbox
-#: model:ir.model.fields,field_description:liber_dropbox.field_liber_dropbox_file__name
-#: model:ir.model.fields,field_description:liber_dropbox.field_liber_dropbox_folder__name
-#: model:ir.model.fields,field_description:liber_dropbox.field_liber_dropbox_tag__name
-msgid "Name"
-msgstr "Nome"
-
-#. module: liber_dropbox
 #: model_terms:ir.actions.act_window,help:liber_dropbox.action_liber_dropbox_file
 msgid "No files here yet"
 msgstr "Nenhum arquivo por aqui ainda"
-
-#. module: liber_dropbox
-#: model_terms:ir.ui.view,arch_db:liber_dropbox.view_liber_dropbox_file_search
-msgid "Not Linked Yet"
-msgstr "Ainda sem vínculo"
-
-#. module: liber_dropbox
-#: model_terms:ir.ui.view,arch_db:liber_dropbox.view_liber_dropbox_file_form
-msgid "Open Shared Link"
-msgstr "Abrir link compartilhado"
-
-#. module: liber_dropbox
-#: model:ir.model.fields,field_description:liber_dropbox.field_liber_dropbox_file__path
-#: model:ir.model.fields,field_description:liber_dropbox.field_liber_dropbox_folder__path
-msgid "Path"
-msgstr "Caminho"
 
 #. module: liber_dropbox
 #: model_terms:ir.actions.act_window,help:liber_dropbox.action_liber_dropbox_folder
@@ -424,198 +153,51 @@ msgid ""
 msgstr ""
 
 #. module: liber_dropbox
-#: model:ir.model,name:liber_dropbox.model_product_template
-#: model:ir.model.fields,field_description:liber_dropbox.field_liber_dropbox_file__product_tmpl_id
-#: model_terms:ir.ui.view,arch_db:liber_dropbox.view_liber_dropbox_file_search
-msgid "Product"
-msgstr "Produto"
+#: model:ir.model.fields,field_description:liber_dropbox.field_liber_cloud_account__provider
+#: model:ir.model.fields,field_description:liber_dropbox.field_liber_cloud_folder__provider
+#: model:ir.model.fields,field_description:liber_dropbox.field_liber_cloud_upload__provider
+msgid "Provider"
+msgstr "Provedor"
 
 #. module: liber_dropbox
-#: model:ir.model.fields,help:liber_dropbox.field_liber_dropbox_file__shared_link
-msgid ""
-"Public Dropbox link. Anyone holding it reaches the file without Odoo -- "
-"create it knowingly."
-msgstr ""
-
-#. module: liber_dropbox
-#: model:ir.model.fields,field_description:liber_dropbox.field_liber_dropbox_folder__read_group_ids
-msgid "Read Access"
-msgstr "Leitura"
-
-#. module: liber_dropbox
-#: model:ir.model.fields,field_description:liber_dropbox.field_res_config_settings__liber_dropbox_refresh_token
+#: model:ir.model.fields,field_description:liber_dropbox.field_liber_cloud_account__dropbox_refresh_token
 msgid "Refresh Token"
-msgstr ""
+msgstr "Refresh Token"
 
 #. module: liber_dropbox
-#: model:ir.model.fields,field_description:liber_dropbox.field_liber_dropbox_file__rev
-msgid "Rev"
-msgstr "Revisão"
-
-#. module: liber_dropbox
-#: model_terms:ir.ui.view,arch_db:liber_dropbox.res_config_settings_view_form
-msgid ""
-"Scoped app credentials from the Dropbox App Console; the refresh token comes"
-" from the one-time authorization described in the module's NOTES.md."
-msgstr ""
-
-#. module: liber_dropbox
-#: model_terms:ir.ui.view,arch_db:liber_dropbox.view_liber_dropbox_file_form
-#: model_terms:ir.ui.view,arch_db:liber_dropbox.view_liber_dropbox_file_kanban
-#: model_terms:ir.ui.view,arch_db:liber_dropbox.view_liber_dropbox_file_list
-msgid "Share"
-msgstr "Compartilhar"
-
-#. module: liber_dropbox
-#: model:ir.model.fields,field_description:liber_dropbox.field_liber_dropbox_file__share_expires
-msgid "Share Expires"
-msgstr "Link expira em"
-
-#. module: liber_dropbox
-#: model_terms:ir.ui.view,arch_db:liber_dropbox.view_liber_dropbox_file_search
-msgid "Shared"
-msgstr "Compartilhados"
-
-#. module: liber_dropbox
-#: model:ir.model.fields,field_description:liber_dropbox.field_liber_dropbox_file__shared_by_id
-msgid "Shared By"
-msgstr "Compartilhado por"
-
-#. module: liber_dropbox
-#: model:ir.model.fields,field_description:liber_dropbox.field_liber_dropbox_file__shared_link
-msgid "Shared Link"
-msgstr "Link compartilhado"
-
-#. module: liber_dropbox
-#: model:ir.model.fields,field_description:liber_dropbox.field_res_config_settings__liber_dropbox_share_ttl_days
-msgid "Shared Links Expire After (days)"
-msgstr "Links compartilhados expiram após (dias)"
-
-#. module: liber_dropbox
-#: model:ir.model.fields,field_description:liber_dropbox.field_liber_dropbox_file__shared_on
-msgid "Shared On"
-msgstr "Compartilhado em"
+#: model:ir.ui.menu,name:liber_dropbox.menu_liber_dropbox_tags
+msgid "Tags"
+msgstr "Tags"
 
 #. module: liber_dropbox
 #. odoo-python
-#: code:addons/liber_dropbox/models/dropbox_file.py:0
-msgid "Shared link created"
-msgstr "Link compartilhado criado"
-
-#. module: liber_dropbox
-#: model_terms:ir.ui.view,arch_db:liber_dropbox.res_config_settings_view_form
+#: code:addons/liber_dropbox/services/dropbox_api.py:0
 msgid ""
-"Shared links die after this many days; sharing again renews the deadline. 0 "
-"means the link never expires. Dropbox only honours expiration on paid plans."
+"The Dropbox account of %s is not configured. Fill in the app key, app secret"
+" and refresh token (see the module's NOTES.md for the one-time setup)."
 msgstr ""
-
-#. module: liber_dropbox
-#: model_terms:ir.ui.view,arch_db:liber_dropbox.res_config_settings_view_form
-msgid "Sharing"
-msgstr "Compartilhamento"
-
-#. module: liber_dropbox
-#: model:ir.model.fields,field_description:liber_dropbox.field_liber_dropbox_file__size
-msgid "Size"
-msgstr "Tamanho"
-
-#. module: liber_dropbox
-#: model_terms:ir.ui.view,arch_db:liber_dropbox.view_liber_dropbox_file_form
-#: model_terms:ir.ui.view,arch_db:liber_dropbox.view_liber_dropbox_file_list
-msgid "Size (bytes)"
-msgstr "Tamanho (bytes)"
-
-#. module: liber_dropbox
-#: model:ir.model.fields,help:liber_dropbox.field_liber_dropbox_file__thumbnail
-msgid ""
-"Small preview rendered by Dropbox during sync; the only bytes of the file "
-"that ever enter Odoo."
-msgstr ""
-
-#. module: liber_dropbox
-#: model_terms:ir.ui.view,arch_db:liber_dropbox.view_liber_dropbox_folder_form
-msgid "Sync"
-msgstr "Sincronizar"
-
-#. module: liber_dropbox
-#: model:ir.model.fields,help:liber_dropbox.field_liber_dropbox_folder__recursive
-msgid ""
-"Sync also mirrors every subfolder, under this folder's access groups. A "
-"subfolder that is mapped on its own is skipped: its own (usually stricter) "
-"groups stay in charge."
-msgstr ""
-
-#. module: liber_dropbox
-#: model_terms:ir.ui.view,arch_db:liber_dropbox.view_liber_dropbox_file_search
-msgid "Tag"
-msgstr ""
-
-#. module: liber_dropbox
-#: model:ir.actions.act_window,name:liber_dropbox.action_liber_dropbox_tag
-#: model:ir.model.fields,field_description:liber_dropbox.field_liber_dropbox_file__tag_ids
-#: model:ir.ui.menu,name:liber_dropbox.menu_liber_dropbox_tags
-msgid "Tags"
-msgstr ""
-
-#. module: liber_dropbox
-#: model_terms:ir.ui.view,arch_db:liber_dropbox.res_config_settings_view_form
-msgid "Test Connection"
-msgstr "Testar conexão"
 
 #. module: liber_dropbox
 #. odoo-python
 #: code:addons/liber_dropbox/services/dropbox_api.py:0
 msgid ""
 "The Dropbox plan of the company account does not allow links with an "
-"expiration date. Upgrade the plan, or set the period to 0 in Settings to "
+"expiration date. Upgrade the plan, or set the period to 0 on the account to "
 "create links that never expire."
 msgstr ""
 
 #. module: liber_dropbox
-#. odoo-python
-#: code:addons/liber_dropbox/models/dropbox_folder.py:0
-msgid ""
-"The path must start with '/' and not end with one, e.g. /Editorial/Covers."
-msgstr ""
-
-#. module: liber_dropbox
-#: model:ir.model.fields,help:liber_dropbox.field_liber_dropbox_file__partner_ids
-msgid ""
-"The people or companies this file is about -- all the authors of the "
-"contract, the supplier of the quote."
-msgstr ""
-
-#. module: liber_dropbox
-#: model:ir.model.fields,help:liber_dropbox.field_liber_dropbox_file__product_tmpl_id
-msgid ""
-"The title this file belongs to -- its cover, its contract, its print files."
-msgstr ""
-
-#. module: liber_dropbox
-#: model:ir.model.constraint,message:liber_dropbox.constraint_liber_dropbox_folder_path_uniq
-msgid "This Dropbox folder is already mapped."
-msgstr "Esta pasta do Dropbox já está mapeada."
-
-#. module: liber_dropbox
-#: model:ir.model.constraint,message:liber_dropbox.constraint_liber_dropbox_tag_name_uniq
-msgid "This tag already exists."
-msgstr "Esta tag já existe."
-
-#. module: liber_dropbox
-#: model:ir.model.fields,field_description:liber_dropbox.field_liber_dropbox_file__thumbnail
-msgid "Thumbnail"
-msgstr "Miniatura"
-
-#. module: liber_dropbox
 #: model:ir.ui.menu,name:liber_dropbox.menu_liber_dropbox_upload
-#: model_terms:ir.ui.view,arch_db:liber_dropbox.view_liber_dropbox_folder_form
-#: model_terms:ir.ui.view,arch_db:liber_dropbox.view_liber_dropbox_upload_form
 msgid "Upload"
 msgstr "Enviar"
 
 #. module: liber_dropbox
+#: model:ir.model,name:liber_dropbox.model_liber_cloud_upload
+msgid "Upload to Cloud Storage"
+msgstr "Enviar ao armazenamento na nuvem"
+
+#. module: liber_dropbox
 #: model:ir.actions.act_window,name:liber_dropbox.action_liber_dropbox_upload
-#: model:ir.model,name:liber_dropbox.model_liber_dropbox_upload
 msgid "Upload to Dropbox"
 msgstr "Enviar ao Dropbox"
 
@@ -625,12 +207,13 @@ msgid "User"
 msgstr "Usuário"
 
 #. module: liber_dropbox
-#: model:ir.model.fields,field_description:liber_dropbox.field_liber_dropbox_folder__write_group_ids
-msgid "Write Access"
-msgstr "Escrita"
+#: model:ir.model.fields,help:liber_dropbox.field_liber_cloud_folder__provider
+msgid ""
+"Which storage holds this folder. Provider modules add their entry here."
+msgstr ""
 
 #. module: liber_dropbox
-#. odoo-python
-#: code:addons/liber_dropbox/models/dropbox_folder.py:0
-msgid "You do not have %(mode)s access to the Dropbox folder %(folder)s."
-msgstr "Você não tem acesso de %(mode)s à pasta do Dropbox %(folder)s."
+#: model:ir.model.fields,help:liber_dropbox.field_liber_cloud_account__provider
+msgid ""
+"Which storage this credential opens. Provider modules add their entry here."
+msgstr ""

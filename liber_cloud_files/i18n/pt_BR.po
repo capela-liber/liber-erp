@@ -1,0 +1,594 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* liber_cloud_files
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0-20260630\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-07-22 15:43+0000\n"
+"PO-Revision-Date: 2026-07-22 15:43+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: liber_cloud_files
+#. odoo-python
+#: code:addons/liber_cloud_files/models/cloud_file.py:0
+msgid "%(url)s — the link dies on %(date)s."
+msgstr ""
+
+#. module: liber_cloud_files
+#: model_terms:ir.ui.view,arch_db:liber_cloud_files.view_liber_cloud_folder_form
+msgid "/Editorial/Covers"
+msgstr ""
+
+#. module: liber_cloud_files
+#: model_terms:ir.ui.view,arch_db:liber_cloud_files.view_liber_cloud_file_kanban
+msgid "<i class=\"fa fa-book me-1\" title=\"Product\"/>"
+msgstr ""
+
+#. module: liber_cloud_files
+#: model_terms:ir.ui.view,arch_db:liber_cloud_files.view_liber_cloud_file_kanban
+msgid "<i class=\"fa fa-file-o fa-3x text-muted\" title=\"File\"/>"
+msgstr ""
+
+#. module: liber_cloud_files
+#: model_terms:ir.ui.view,arch_db:liber_cloud_files.view_liber_cloud_file_kanban
+msgid "<i class=\"fa fa-user me-1\" title=\"Contact\"/>"
+msgstr ""
+
+#. module: liber_cloud_files
+#: model_terms:ir.ui.view,arch_db:liber_cloud_files.view_liber_cloud_file_form
+msgid ""
+"A shared link may open outside Odoo's gate — check the provider's manual. "
+"Create it?"
+msgstr ""
+
+#. module: liber_cloud_files
+#: model:ir.model.fields,field_description:liber_cloud_files.field_liber_cloud_account__active
+#: model:ir.model.fields,field_description:liber_cloud_files.field_liber_cloud_file__active
+#: model:ir.model.fields,field_description:liber_cloud_files.field_liber_cloud_folder__active
+#: model:ir.model.fields,field_description:liber_cloud_files.field_liber_cloud_tag__active
+msgid "Active"
+msgstr ""
+
+#. module: liber_cloud_files
+#. odoo-python
+#: code:addons/liber_cloud_files/models/cloud_account.py:0
+msgid "Authenticated as %(name)s (%(email)s)."
+msgstr "Autenticado como %(name)s (%(email)s)."
+
+#. module: liber_cloud_files
+#: model_terms:ir.ui.view,arch_db:liber_cloud_files.view_liber_cloud_upload_form
+msgid "Cancel"
+msgstr "Cancelar"
+
+#. module: liber_cloud_files
+#: model:ir.model,name:liber_cloud_files.model_liber_cloud_file
+msgid "Cloud File"
+msgstr "Arquivo na nuvem"
+
+#. module: liber_cloud_files
+#: model:ir.model.fields,field_description:liber_cloud_files.field_product_product__cloud_file_count
+#: model:ir.model.fields,field_description:liber_cloud_files.field_product_template__cloud_file_count
+#: model:ir.model.fields,field_description:liber_cloud_files.field_res_partner__cloud_file_count
+#: model:ir.model.fields,field_description:liber_cloud_files.field_res_users__cloud_file_count
+msgid "Cloud File Count"
+msgstr "Total de arquivos na nuvem"
+
+#. module: liber_cloud_files
+#: model:ir.model,name:liber_cloud_files.model_liber_cloud_tag
+msgid "Cloud File Tag"
+msgstr "Tag de arquivo na nuvem"
+
+#. module: liber_cloud_files
+#: model:ir.module.category,name:liber_cloud_files.module_category_liber_cloud
+#: model:res.groups.privilege,name:liber_cloud_files.privilege_liber_cloud
+msgid "Cloud Files"
+msgstr ""
+
+#. module: liber_cloud_files
+#: model:ir.actions.server,name:liber_cloud_files.cron_liber_cloud_sync_ir_actions_server
+msgid "Cloud Files: daily folder sync"
+msgstr ""
+
+#. module: liber_cloud_files
+#: model:ir.model,name:liber_cloud_files.model_liber_cloud_folder
+msgid "Cloud Folder"
+msgstr "Pasta na nuvem"
+
+#. module: liber_cloud_files
+#: model:ir.model,name:liber_cloud_files.model_liber_cloud_account
+msgid "Cloud Storage Account"
+msgstr "Conta de armazenamento na nuvem"
+
+#. module: liber_cloud_files
+#: model:ir.model,name:liber_cloud_files.model_liber_cloud_provider
+msgid "Cloud Storage Provider Registry"
+msgstr ""
+
+#. module: liber_cloud_files
+#: model:ir.model.fields,field_description:liber_cloud_files.field_liber_cloud_tag__color
+msgid "Color"
+msgstr ""
+
+#. module: liber_cloud_files
+#: model:ir.model.fields,field_description:liber_cloud_files.field_liber_cloud_account__company_id
+#: model:ir.model.fields,field_description:liber_cloud_files.field_liber_cloud_file__company_id
+#: model:ir.model.fields,field_description:liber_cloud_files.field_liber_cloud_folder__company_id
+#: model:ir.model.fields,field_description:liber_cloud_files.field_liber_cloud_tag__company_id
+msgid "Company"
+msgstr ""
+
+#. module: liber_cloud_files
+#. odoo-python
+#: code:addons/liber_cloud_files/models/cloud_folder.py:0
+msgid "Company %(company)s has no %(provider)s account configured yet."
+msgstr "A empresa %(company)s ainda não tem conta de %(provider)s configurada."
+
+#. module: liber_cloud_files
+#. odoo-python
+#: code:addons/liber_cloud_files/models/cloud_account.py:0
+msgid "Connected"
+msgstr "Conectado"
+
+#. module: liber_cloud_files
+#: model:ir.model,name:liber_cloud_files.model_res_partner
+#: model_terms:ir.ui.view,arch_db:liber_cloud_files.view_liber_cloud_file_search
+msgid "Contact"
+msgstr "Contato"
+
+#. module: liber_cloud_files
+#: model:ir.model.fields,field_description:liber_cloud_files.field_liber_cloud_file__partner_ids
+msgid "Contacts"
+msgstr "Contatos"
+
+#. module: liber_cloud_files
+#: model:ir.model.fields,field_description:liber_cloud_files.field_liber_cloud_file__content_hash
+msgid "Content Hash"
+msgstr ""
+
+#. module: liber_cloud_files
+#: model_terms:ir.ui.view,arch_db:liber_cloud_files.view_liber_cloud_folder_form
+msgid "Covers"
+msgstr ""
+
+#. module: liber_cloud_files
+#: model:ir.model,website_form_label:liber_cloud_files.model_res_partner
+msgid "Create a Customer"
+msgstr "Criar um cliente"
+
+#. module: liber_cloud_files
+#: model:ir.model.fields,field_description:liber_cloud_files.field_liber_cloud_account__create_uid
+#: model:ir.model.fields,field_description:liber_cloud_files.field_liber_cloud_file__create_uid
+#: model:ir.model.fields,field_description:liber_cloud_files.field_liber_cloud_folder__create_uid
+#: model:ir.model.fields,field_description:liber_cloud_files.field_liber_cloud_tag__create_uid
+#: model:ir.model.fields,field_description:liber_cloud_files.field_liber_cloud_upload__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: liber_cloud_files
+#: model:ir.model.fields,field_description:liber_cloud_files.field_liber_cloud_account__create_date
+#: model:ir.model.fields,field_description:liber_cloud_files.field_liber_cloud_file__create_date
+#: model:ir.model.fields,field_description:liber_cloud_files.field_liber_cloud_folder__create_date
+#: model:ir.model.fields,field_description:liber_cloud_files.field_liber_cloud_tag__create_date
+#: model:ir.model.fields,field_description:liber_cloud_files.field_liber_cloud_upload__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: liber_cloud_files
+#: model_terms:ir.ui.view,arch_db:liber_cloud_files.view_liber_cloud_account_form
+msgid "Credentials"
+msgstr ""
+
+#. module: liber_cloud_files
+#: model:ir.model.fields,field_description:liber_cloud_files.field_liber_cloud_upload__data
+msgid "Data"
+msgstr ""
+
+#. module: liber_cloud_files
+#: model:ir.model.fields,field_description:liber_cloud_files.field_liber_cloud_account__display_name
+#: model:ir.model.fields,field_description:liber_cloud_files.field_liber_cloud_file__display_name
+#: model:ir.model.fields,field_description:liber_cloud_files.field_liber_cloud_folder__display_name
+#: model:ir.model.fields,field_description:liber_cloud_files.field_liber_cloud_provider__display_name
+#: model:ir.model.fields,field_description:liber_cloud_files.field_liber_cloud_tag__display_name
+#: model:ir.model.fields,field_description:liber_cloud_files.field_liber_cloud_upload__display_name
+#: model:ir.model.fields,field_description:liber_cloud_files.field_product_template__display_name
+#: model:ir.model.fields,field_description:liber_cloud_files.field_res_partner__display_name
+msgid "Display Name"
+msgstr "Nome exibido"
+
+#. module: liber_cloud_files
+#: model:ir.model.fields,help:liber_cloud_files.field_liber_cloud_folder__path
+msgid ""
+"Display path from the account root, starting with '/'. For providers "
+"addressed by ID (Drive) or by repository (GitHub) this is the human name; "
+"the machine identity goes in the External ID."
+msgstr ""
+
+#. module: liber_cloud_files
+#: model_terms:ir.ui.view,arch_db:liber_cloud_files.view_liber_cloud_file_form
+#: model_terms:ir.ui.view,arch_db:liber_cloud_files.view_liber_cloud_file_kanban
+#: model_terms:ir.ui.view,arch_db:liber_cloud_files.view_liber_cloud_file_list
+msgid "Download"
+msgstr "Baixar"
+
+#. module: liber_cloud_files
+#: model:ir.model.fields,help:liber_cloud_files.field_liber_cloud_account__share_ttl_days
+msgid ""
+"Every shared link created from Odoo dies after this many days; sharing again"
+" renews the deadline. 0 creates links that never expire. Providers that "
+"cannot expire links ignore or refuse this -- each manual says which."
+msgstr ""
+
+#. module: liber_cloud_files
+#: model:ir.model.fields,field_description:liber_cloud_files.field_liber_cloud_file__external_id
+msgid "External"
+msgstr ""
+
+#. module: liber_cloud_files
+#: model:ir.model.fields,field_description:liber_cloud_files.field_liber_cloud_folder__external_id
+msgid "External ID"
+msgstr "ID externo"
+
+#. module: liber_cloud_files
+#: model:ir.model.fields,field_description:liber_cloud_files.field_liber_cloud_folder__file_ids
+msgid "File"
+msgstr ""
+
+#. module: liber_cloud_files
+#: model:ir.model.fields,field_description:liber_cloud_files.field_liber_cloud_folder__file_count
+msgid "File Count"
+msgstr "Total de arquivos"
+
+#. module: liber_cloud_files
+#: model:ir.model.fields,field_description:liber_cloud_files.field_liber_cloud_upload__file_name
+msgid "File Name"
+msgstr ""
+
+#. module: liber_cloud_files
+#: model:ir.actions.act_window,name:liber_cloud_files.action_liber_cloud_file
+#: model_terms:ir.ui.view,arch_db:liber_cloud_files.product_template_form_liber_cloud
+#: model_terms:ir.ui.view,arch_db:liber_cloud_files.view_liber_cloud_folder_form
+#: model_terms:ir.ui.view,arch_db:liber_cloud_files.view_liber_cloud_folder_list
+#: model_terms:ir.ui.view,arch_db:liber_cloud_files.view_partner_form_liber_cloud
+msgid "Files"
+msgstr "Arquivos"
+
+#. module: liber_cloud_files
+#: model_terms:ir.actions.act_window,help:liber_cloud_files.action_liber_cloud_file
+msgid "Files appear when a folder you have access to is synced."
+msgstr "Os arquivos aparecem quando uma pasta a que você tem acesso é sincronizada."
+
+#. module: liber_cloud_files
+#: model:ir.model.fields,field_description:liber_cloud_files.field_liber_cloud_file__folder_id
+#: model:ir.model.fields,field_description:liber_cloud_files.field_liber_cloud_upload__folder_id
+#: model_terms:ir.ui.view,arch_db:liber_cloud_files.view_liber_cloud_file_search
+msgid "Folder"
+msgstr "Pasta"
+
+#. module: liber_cloud_files
+#: model:ir.model.fields,help:liber_cloud_files.field_liber_cloud_folder__write_group_ids
+msgid ""
+"Groups that also upload into this folder and create shared links. Writing "
+"implies reading."
+msgstr ""
+
+#. module: liber_cloud_files
+#: model:ir.model.fields,help:liber_cloud_files.field_liber_cloud_folder__read_group_ids
+msgid ""
+"Groups that see this folder and download its files. Leave empty to keep the "
+"folder visible to managers only."
+msgstr ""
+
+#. module: liber_cloud_files
+#: model:ir.model.fields,field_description:liber_cloud_files.field_liber_cloud_account__id
+#: model:ir.model.fields,field_description:liber_cloud_files.field_liber_cloud_file__id
+#: model:ir.model.fields,field_description:liber_cloud_files.field_liber_cloud_folder__id
+#: model:ir.model.fields,field_description:liber_cloud_files.field_liber_cloud_provider__id
+#: model:ir.model.fields,field_description:liber_cloud_files.field_liber_cloud_tag__id
+#: model:ir.model.fields,field_description:liber_cloud_files.field_liber_cloud_upload__id
+#: model:ir.model.fields,field_description:liber_cloud_files.field_product_template__id
+#: model:ir.model.fields,field_description:liber_cloud_files.field_res_partner__id
+msgid "ID"
+msgstr ""
+
+#. module: liber_cloud_files
+#: model:ir.model.fields,field_description:liber_cloud_files.field_liber_cloud_folder__recursive
+msgid "Include Subfolders"
+msgstr "Incluir subpastas"
+
+#. module: liber_cloud_files
+#: model:ir.model.fields,field_description:liber_cloud_files.field_liber_cloud_file__client_modified
+msgid "Last Modified"
+msgstr "Última alteração"
+
+#. module: liber_cloud_files
+#: model:ir.model.fields,field_description:liber_cloud_files.field_liber_cloud_folder__last_sync
+msgid "Last Sync"
+msgstr "Última sincronização"
+
+#. module: liber_cloud_files
+#: model:ir.model.fields,field_description:liber_cloud_files.field_liber_cloud_account__write_uid
+#: model:ir.model.fields,field_description:liber_cloud_files.field_liber_cloud_file__write_uid
+#: model:ir.model.fields,field_description:liber_cloud_files.field_liber_cloud_folder__write_uid
+#: model:ir.model.fields,field_description:liber_cloud_files.field_liber_cloud_tag__write_uid
+#: model:ir.model.fields,field_description:liber_cloud_files.field_liber_cloud_upload__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: liber_cloud_files
+#: model:ir.model.fields,field_description:liber_cloud_files.field_liber_cloud_account__write_date
+#: model:ir.model.fields,field_description:liber_cloud_files.field_liber_cloud_file__write_date
+#: model:ir.model.fields,field_description:liber_cloud_files.field_liber_cloud_folder__write_date
+#: model:ir.model.fields,field_description:liber_cloud_files.field_liber_cloud_tag__write_date
+#: model:ir.model.fields,field_description:liber_cloud_files.field_liber_cloud_upload__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: liber_cloud_files
+#: model:ir.model.fields,help:liber_cloud_files.field_liber_cloud_tag__company_id
+msgid "Leave empty to share the tag with every company."
+msgstr ""
+
+#. module: liber_cloud_files
+#: model:res.groups,name:liber_cloud_files.group_liber_cloud_manager
+msgid "Manager (any provider)"
+msgstr "Gerente (qualquer provedor)"
+
+#. module: liber_cloud_files
+#: model:ir.model.fields,field_description:liber_cloud_files.field_liber_cloud_file__name
+#: model:ir.model.fields,field_description:liber_cloud_files.field_liber_cloud_folder__name
+#: model:ir.model.fields,field_description:liber_cloud_files.field_liber_cloud_tag__name
+msgid "Name"
+msgstr ""
+
+#. module: liber_cloud_files
+#: model_terms:ir.actions.act_window,help:liber_cloud_files.action_liber_cloud_file
+msgid "No files here yet"
+msgstr "Nenhum arquivo por aqui ainda"
+
+#. module: liber_cloud_files
+#: model_terms:ir.ui.view,arch_db:liber_cloud_files.view_liber_cloud_file_search
+msgid "Not Linked Yet"
+msgstr "Ainda sem vínculo"
+
+#. module: liber_cloud_files
+#: model_terms:ir.ui.view,arch_db:liber_cloud_files.view_liber_cloud_file_form
+msgid "Open Shared Link"
+msgstr "Abrir link compartilhado"
+
+#. module: liber_cloud_files
+#: model:ir.model.fields,field_description:liber_cloud_files.field_liber_cloud_file__path
+#: model:ir.model.fields,field_description:liber_cloud_files.field_liber_cloud_folder__path
+msgid "Path"
+msgstr "Caminho"
+
+#. module: liber_cloud_files
+#: model:ir.model,name:liber_cloud_files.model_product_template
+#: model:ir.model.fields,field_description:liber_cloud_files.field_liber_cloud_file__product_tmpl_id
+#: model_terms:ir.ui.view,arch_db:liber_cloud_files.view_liber_cloud_file_search
+msgid "Product"
+msgstr "Produto"
+
+#. module: liber_cloud_files
+#: model:ir.model.fields,field_description:liber_cloud_files.field_liber_cloud_account__provider
+#: model:ir.model.fields,field_description:liber_cloud_files.field_liber_cloud_file__provider
+#: model:ir.model.fields,field_description:liber_cloud_files.field_liber_cloud_folder__provider
+#: model:ir.model.fields,field_description:liber_cloud_files.field_liber_cloud_upload__provider
+msgid "Provider"
+msgstr "Provedor"
+
+#. module: liber_cloud_files
+#: model:ir.model.fields,field_description:liber_cloud_files.field_liber_cloud_folder__read_group_ids
+msgid "Read Access"
+msgstr "Leitura"
+
+#. module: liber_cloud_files
+#: model:ir.model.fields,field_description:liber_cloud_files.field_liber_cloud_file__rev
+msgid "Rev"
+msgstr ""
+
+#. module: liber_cloud_files
+#: model_terms:ir.ui.view,arch_db:liber_cloud_files.view_liber_cloud_file_form
+#: model_terms:ir.ui.view,arch_db:liber_cloud_files.view_liber_cloud_file_kanban
+#: model_terms:ir.ui.view,arch_db:liber_cloud_files.view_liber_cloud_file_list
+msgid "Share"
+msgstr "Compartilhar"
+
+#. module: liber_cloud_files
+#: model:ir.model.fields,field_description:liber_cloud_files.field_liber_cloud_file__share_expires
+msgid "Share Expires"
+msgstr "Link expira em"
+
+#. module: liber_cloud_files
+#: model_terms:ir.ui.view,arch_db:liber_cloud_files.view_liber_cloud_file_search
+msgid "Shared"
+msgstr "Compartilhados"
+
+#. module: liber_cloud_files
+#: model:ir.model.fields,field_description:liber_cloud_files.field_liber_cloud_file__shared_by_id
+msgid "Shared By"
+msgstr "Compartilhado por"
+
+#. module: liber_cloud_files
+#: model:ir.model.fields,field_description:liber_cloud_files.field_liber_cloud_file__shared_link
+msgid "Shared Link"
+msgstr "Link compartilhado"
+
+#. module: liber_cloud_files
+#: model:ir.model.fields,field_description:liber_cloud_files.field_liber_cloud_account__share_ttl_days
+msgid "Shared Links Expire After (days)"
+msgstr "Links compartilhados expiram após (dias)"
+
+#. module: liber_cloud_files
+#: model:ir.model.fields,field_description:liber_cloud_files.field_liber_cloud_file__shared_on
+msgid "Shared On"
+msgstr "Compartilhado em"
+
+#. module: liber_cloud_files
+#. odoo-python
+#: code:addons/liber_cloud_files/models/cloud_file.py:0
+msgid "Shared link created"
+msgstr "Link compartilhado criado"
+
+#. module: liber_cloud_files
+#: model:ir.model.fields,field_description:liber_cloud_files.field_liber_cloud_file__size
+msgid "Size"
+msgstr ""
+
+#. module: liber_cloud_files
+#: model_terms:ir.ui.view,arch_db:liber_cloud_files.view_liber_cloud_file_form
+#: model_terms:ir.ui.view,arch_db:liber_cloud_files.view_liber_cloud_file_list
+msgid "Size (bytes)"
+msgstr "Tamanho (bytes)"
+
+#. module: liber_cloud_files
+#: model:ir.model.fields,help:liber_cloud_files.field_liber_cloud_file__thumbnail
+msgid ""
+"Small preview rendered by the provider during sync; the only bytes of the "
+"file that ever enter Odoo."
+msgstr ""
+
+#. module: liber_cloud_files
+#: model_terms:ir.ui.view,arch_db:liber_cloud_files.view_liber_cloud_folder_form
+msgid "Sync"
+msgstr "Sincronizar"
+
+#. module: liber_cloud_files
+#: model:ir.model.fields,help:liber_cloud_files.field_liber_cloud_folder__recursive
+msgid ""
+"Sync also mirrors every subfolder, under this folder's access groups. A "
+"subfolder that is mapped on its own is skipped: its own (usually stricter) "
+"groups stay in charge."
+msgstr ""
+
+#. module: liber_cloud_files
+#: model_terms:ir.ui.view,arch_db:liber_cloud_files.view_liber_cloud_file_search
+msgid "Tag"
+msgstr "Tag"
+
+#. module: liber_cloud_files
+#: model:ir.actions.act_window,name:liber_cloud_files.action_liber_cloud_tag
+#: model:ir.model.fields,field_description:liber_cloud_files.field_liber_cloud_file__tag_ids
+msgid "Tags"
+msgstr "Tags"
+
+#. module: liber_cloud_files
+#: model_terms:ir.ui.view,arch_db:liber_cloud_files.view_liber_cloud_account_form
+msgid "Test Connection"
+msgstr "Testar conexão"
+
+#. module: liber_cloud_files
+#. odoo-python
+#: code:addons/liber_cloud_files/models/cloud_folder.py:0
+msgid ""
+"The path must start with '/' and not end with one, e.g. /Editorial/Covers."
+msgstr ""
+
+#. module: liber_cloud_files
+#: model:ir.model.fields,help:liber_cloud_files.field_liber_cloud_file__partner_ids
+msgid ""
+"The people or companies this file is about -- all the authors of the "
+"contract, the supplier of the quote."
+msgstr ""
+
+#. module: liber_cloud_files
+#: model:ir.model.fields,help:liber_cloud_files.field_liber_cloud_file__share_expires
+msgid ""
+"The provider kills the link at this moment; sharing the file again renews "
+"the deadline."
+msgstr ""
+
+#. module: liber_cloud_files
+#: model:ir.model.fields,help:liber_cloud_files.field_liber_cloud_file__content_hash
+msgid ""
+"The provider's own content fingerprint; equal hashes mean equal content "
+"within the same provider."
+msgstr ""
+
+#. module: liber_cloud_files
+#: model:ir.model.fields,help:liber_cloud_files.field_liber_cloud_file__shared_link
+msgid ""
+"The provider's shared link. What it opens for depends on the provider -- "
+"public for Dropbox and Drive, restricted to the repository's members for "
+"GitHub."
+msgstr ""
+
+#. module: liber_cloud_files
+#: model:ir.model.fields,help:liber_cloud_files.field_liber_cloud_folder__external_id
+msgid ""
+"The provider-side identity when a path is not enough: the Drive folder ID, "
+"the GitHub owner/repo. Providers that resolve by path leave it empty."
+msgstr ""
+
+#. module: liber_cloud_files
+#: model:ir.model.fields,help:liber_cloud_files.field_liber_cloud_file__product_tmpl_id
+msgid ""
+"The title this file belongs to -- its cover, its contract, its print files."
+msgstr ""
+
+#. module: liber_cloud_files
+#: model:ir.model.constraint,message:liber_cloud_files.constraint_liber_cloud_account_provider_company_uniq
+msgid "This company already has an account for this provider."
+msgstr "Esta empresa já tem uma conta deste provedor."
+
+#. module: liber_cloud_files
+#: model:ir.model.constraint,message:liber_cloud_files.constraint_liber_cloud_folder_path_uniq
+msgid "This folder is already mapped for this company."
+msgstr "Esta pasta já está mapeada para esta empresa."
+
+#. module: liber_cloud_files
+#: model:ir.model.constraint,message:liber_cloud_files.constraint_liber_cloud_tag_name_company_uniq
+msgid "This tag already exists."
+msgstr "Esta tag já existe."
+
+#. module: liber_cloud_files
+#: model:ir.model.fields,field_description:liber_cloud_files.field_liber_cloud_file__thumbnail
+msgid "Thumbnail"
+msgstr "Miniatura"
+
+#. module: liber_cloud_files
+#: model:ir.actions.act_window,name:liber_cloud_files.action_liber_cloud_upload
+#: model_terms:ir.ui.view,arch_db:liber_cloud_files.view_liber_cloud_folder_form
+#: model_terms:ir.ui.view,arch_db:liber_cloud_files.view_liber_cloud_upload_form
+msgid "Upload"
+msgstr "Enviar"
+
+#. module: liber_cloud_files
+#: model:ir.model,name:liber_cloud_files.model_liber_cloud_upload
+msgid "Upload to Cloud Storage"
+msgstr "Enviar ao armazenamento na nuvem"
+
+#. module: liber_cloud_files
+#: model:res.groups,name:liber_cloud_files.group_liber_cloud_user
+msgid "User (any provider)"
+msgstr "Usuário (qualquer provedor)"
+
+#. module: liber_cloud_files
+#: model:ir.model.fields,help:liber_cloud_files.field_liber_cloud_file__provider
+#: model:ir.model.fields,help:liber_cloud_files.field_liber_cloud_folder__provider
+msgid ""
+"Which storage holds this folder. Provider modules add their entry here."
+msgstr ""
+
+#. module: liber_cloud_files
+#: model:ir.model.fields,help:liber_cloud_files.field_liber_cloud_account__provider
+msgid ""
+"Which storage this credential opens. Provider modules add their entry here."
+msgstr ""
+
+#. module: liber_cloud_files
+#: model:ir.model.fields,field_description:liber_cloud_files.field_liber_cloud_folder__write_group_ids
+msgid "Write Access"
+msgstr "Escrita"
+
+#. module: liber_cloud_files
+#. odoo-python
+#: code:addons/liber_cloud_files/models/cloud_folder.py:0
+msgid "You do not have %(mode)s access to the folder %(folder)s."
+msgstr "Você não tem acesso de %(mode)s à pasta %(folder)s."

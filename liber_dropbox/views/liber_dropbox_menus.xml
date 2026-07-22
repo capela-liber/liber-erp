@@ -1,13 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
+    <record id="action_liber_dropbox_file" model="ir.actions.act_window">
+        <field name="name">Files</field>
+        <field name="res_model">liber.cloud.file</field>
+        <field name="view_mode">list,kanban,form</field>
+        <field name="domain">[('provider', '=', 'dropbox')]</field>
+        <field name="context">{'default_provider': 'dropbox'}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No files here yet
+            </p>
+            <p>
+                Files appear when a Dropbox folder you have access to is synced.
+            </p>
+        </field>
+    </record>
+
+    <record id="action_liber_dropbox_folder" model="ir.actions.act_window">
+        <field name="name">Folders</field>
+        <field name="res_model">liber.cloud.folder</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('provider', '=', 'dropbox')]</field>
+        <field name="context">{'default_provider': 'dropbox'}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Map a Dropbox folder
+            </p>
+            <p>
+                Pick a folder of the company Dropbox, name who reads and who
+                writes, and press Sync.
+            </p>
+        </field>
+    </record>
+
+    <record id="action_liber_dropbox_upload" model="ir.actions.act_window">
+        <field name="name">Upload to Dropbox</field>
+        <field name="res_model">liber.cloud.upload</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="context">{'default_provider': 'dropbox'}</field>
+    </record>
+
+    <record id="action_liber_dropbox_account" model="ir.actions.act_window">
+        <field name="name">Account</field>
+        <field name="res_model">liber.cloud.account</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('provider', '=', 'dropbox')]</field>
+        <field name="context">{'default_provider': 'dropbox'}</field>
+    </record>
+
     <menuitem id="menu_liber_dropbox_root" name="Dropbox"
               sequence="73"
               web_icon="liber_dropbox,static/description/icon.png"
               groups="liber_dropbox.group_liber_dropbox_user"/>
 
-    <!-- The one screen: files on the right, folders on the search panel.
-         Folder records themselves are configuration (paths, ACLs). -->
     <menuitem id="menu_liber_dropbox_files" name="Files"
               parent="menu_liber_dropbox_root"
               action="action_liber_dropbox_file" sequence="10"/>
@@ -23,5 +70,13 @@
     <menuitem id="menu_liber_dropbox_folders" name="Folders"
               parent="menu_liber_dropbox_config"
               action="action_liber_dropbox_folder" sequence="10"/>
+
+    <menuitem id="menu_liber_dropbox_tags" name="Tags"
+              parent="menu_liber_dropbox_config"
+              action="liber_cloud_files.action_liber_cloud_tag" sequence="20"/>
+
+    <menuitem id="menu_liber_dropbox_account" name="Account"
+              parent="menu_liber_dropbox_config"
+              action="action_liber_dropbox_account" sequence="30"/>
 
 </odoo>
