@@ -72,17 +72,25 @@ class LiberDropboxFolder(models.Model):
         explicit here because those operations run partly under sudo()
         (users cannot write file records), and sudo() walks straight
         through record rules.
+
+        Managers (and administrators) bypass only the READ side. Writing
+        into Dropbox -- upload, shared link -- demands membership in a
+        write group, whoever you are: configuring the shelf is one power,
+        filling it is another.
         """
         self.ensure_one()
-        if self.env.su or self.env.user.has_group(
-                'liber_dropbox.group_liber_dropbox_manager'):
+        if self.env.su:
             return
         # v19 keeps res.groups readable by admins only; comparing ACLs is an
         # internal permission check, so it may (and must) read them as sudo.
         folder = self.sudo()
-        allowed = folder.write_group_ids
         if mode == 'read':
-            allowed |= folder.read_group_ids
+            if self.env.user.has_group(
+                    'liber_dropbox.group_liber_dropbox_manager'):
+                return
+            allowed = folder.read_group_ids | folder.write_group_ids
+        else:
+            allowed = folder.write_group_ids
         if not (allowed & self.env.user.sudo().all_group_ids):
             raise AccessError(_(
                 "You do not have %(mode)s access to the Dropbox folder "

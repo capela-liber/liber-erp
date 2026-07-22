@@ -45,8 +45,11 @@
 
       <h2 id="configuracao">Configuração</h2>
       <p><strong>Grupos de acesso:</strong> o módulo cria <em>Dropbox Files / Usuário</em> (vê o app;
-      o que ele alcança é decidido pasta a pasta) e <em>Dropbox Files / Gerente</em> (configura pastas,
-      permissões, tags e as credenciais).</p>
+      o que ele alcança é decidido pasta a pasta) e <em>Dropbox Files / Gerente</em> (enxerga todas as
+      pastas e arquivos, cura as tags e as credenciais). <strong>Mapear pastas novas — e mudar caminhos
+      e permissões — é ato de administrador do sistema</strong>, não do gerente. E escrever no Dropbox
+      (enviar, compartilhar) exige estar num grupo de escrita da pasta, <em>seja quem for</em>:
+      configurar a estante é um poder, enchê-la é outro.</p>
       <p><strong>Conta do Dropbox</strong> (uma vez só, pelo gerente):</p>
       <ol class="steps">
         <li>Crie um app <em>Scoped access</em> em <span class="field">dropbox.com/developers/apps</span>,
@@ -67,8 +70,10 @@
 
       <h2 id="pastas">Pastas e permissões</h2>
       <ol class="steps">
-        <li>Abra <span class="menupath">Dropbox<i>‣</i>Configuração<i>‣</i>Pastas</span> e crie um mapeamento:
-        um nome e o caminho real no Dropbox (ex.: <span class="field">/Editorial/Capas</span>).</li>
+        <li>Como <strong>administrador do sistema</strong>, abra
+        <span class="menupath">Dropbox<i>‣</i>Configuração<i>‣</i>Pastas</span> e crie um mapeamento:
+        um nome e o caminho real no Dropbox (ex.: <span class="field">/Editorial/Capas</span>).
+        Gerentes veem as pastas, mas não as criam nem as alteram.</li>
         <li>Escolha os grupos de <span class="field">Leitura</span> e os de <span class="field">Escrita</span>.
         Escrever implica ler. <strong>Pasta sem grupo de leitura é visível só para gerentes</strong> —
         o padrão seguro.</li>
@@ -149,6 +154,9 @@
       Ou ele não tem o grupo <em>Dropbox Files / Usuário</em>, ou nenhum grupo dele está na
       <span class="field">Leitura</span>/<span class="field">Escrita</span> da pasta. Pasta sem grupos é
       só dos gerentes.</p>
+      <p><strong>Sou gerente (ou administrador) e o Compartilhar foi recusado.</strong><br>
+      Escrever no Dropbox exige estar num grupo de <span class="field">Escrita</span> da pasta —
+      o cargo não substitui a permissão. Peça ao administrador para incluir o seu grupo na pasta.</p>
       <p><strong>O upload dá erro de nome.</strong><br>
       O envio nunca sobrescreve: se o nome já existe, o Dropbox renomeia para
       <span class="field">arquivo (1).ext</span> — confira no próximo sync.</p>

@@ -98,6 +98,27 @@ class TestDropboxAccess(TransactionCase):
         self.assertIsNone(mock_share.call_args.kwargs['expires'])
         self.assertFalse(self.file_open.share_expires)
 
+    def test_manager_configures_but_does_not_write(self):
+        """Configuring the shelf is one power, filling it is another."""
+        manager = new_test_user(
+            self.env, 'dropbox_manager',
+            groups='base.group_user,liber_dropbox.group_liber_dropbox_manager')
+        # A manager reads every folder, ACL-restricted ones included...
+        both = self.folder_open + self.folder_closed
+        self.assertEqual(
+            self.env['liber.dropbox.folder'].with_user(manager)
+                .search_count([('id', 'in', both.ids)]), 2)
+        # ...but writing into Dropbox demands a write group, whoever you are.
+        with patch.object(DropboxClient, '__init__', _client_stub), \
+             patch.object(DropboxClient, 'create_shared_link',
+                          return_value='https://x'):
+            with self.assertRaises(AccessError):
+                self.file_open.with_user(manager).action_share()
+        # And mapping a new folder is an administrator's act, not a manager's.
+        with self.assertRaises(AccessError):
+            self.env['liber.dropbox.folder'].with_user(manager).create(
+                {'name': 'Forbidden', 'path': '/Forbidden'})
+
     def test_linking_needs_folder_write(self):
         partner = self.env['res.partner'].create({'name': 'Author'})
         with self.assertRaises(AccessError):

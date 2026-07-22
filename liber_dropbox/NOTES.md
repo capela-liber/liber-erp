@@ -7,6 +7,12 @@ editora), ninguém recebe credencial do Dropbox, e quem lê ou grava cada pasta
 é decidido pasta a pasta dentro do Odoo (record rules + checagem explícita em
 todo método que toca a API).
 
+Dois poderes deliberadamente separados: **mapear pastas** (criar/alterar/
+excluir mapeamentos) é só de administrador do sistema (`base.group_system`);
+**escrever no Dropbox** (enviar, compartilhar) exige grupo de escrita na
+pasta, mesmo para gerentes e administradores. O gerente do módulo vê tudo,
+cura tags e credenciais — mas não configura a estante nem escreve sem ACL.
+
 ## Setup único (uma vez por instância)
 
 1. **Criar o app** em https://www.dropbox.com/developers/apps
