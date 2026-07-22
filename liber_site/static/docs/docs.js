@@ -28,6 +28,9 @@ var DOCS = [
   { area: "Divulgação", desc: "Exemplares de cortesia com dono, motivo e custo.", items: [
     { slug: "liber_product_bonus", title: "Bonificação", desc: "Campanhas, listas de destinatários e custo por título." },
   ]},
+  { area: "Arquivos", desc: "O acervo da editora no Dropbox, com o Odoo de porteiro.", items: [
+    { slug: "liber_dropbox", title: "Arquivos no Dropbox", desc: "Leitura e escrita por pasta, envio, links com prazo e vínculos a autores e títulos." },
+  ]},
   { area: "Gestão", desc: "Orçamento e controle de acesso.", items: [
     { slug: "liber_budget", title: "Orçamento", desc: "Orçado × realizado sobre a contabilidade analítica." },
     { slug: "liber_roles", title: "Papéis de acesso", desc: "Perfis prontos por área e a conta de visitante somente-leitura." },

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="res_config_settings_view_form" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.liber.dropbox</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="base.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form" position="inside">
+                <app data-string="Dropbox" string="Dropbox" name="liber_dropbox"
+                     logo="/liber_dropbox/static/description/icon.png"
+                     groups="liber_dropbox.group_liber_dropbox_manager">
+                    <block title="Company Account" name="liber_dropbox_credentials">
+                        <setting string="Dropbox App"
+                                 help="Scoped app credentials from the Dropbox App Console; the refresh token comes from the one-time authorization described in the module's NOTES.md.">
+                            <div class="content-group">
+                                <div class="row mt8">
+                                    <label for="liber_dropbox_app_key" class="col-lg-4 o_light_label"/>
+                                    <field name="liber_dropbox_app_key"/>
+                                </div>
+                                <div class="row">
+                                    <label for="liber_dropbox_app_secret" class="col-lg-4 o_light_label"/>
+                                    <field name="liber_dropbox_app_secret" password="True"/>
+                                </div>
+                                <div class="row">
+                                    <label for="liber_dropbox_refresh_token" class="col-lg-4 o_light_label"/>
+                                    <field name="liber_dropbox_refresh_token" password="True"/>
+                                </div>
+                                <div class="mt8">
+                                    <button name="action_liber_dropbox_test" type="object"
+                                            string="Test Connection" class="btn-primary"/>
+                                </div>
+                            </div>
+                        </setting>
+                    </block>
+                    <block title="Sharing" name="liber_dropbox_sharing">
+                        <setting string="Link Expiration"
+                                 help="Shared links die after this many days; sharing again renews the deadline. 0 means the link never expires. Dropbox only honours expiration on paid plans.">
+                            <div class="content-group">
+                                <div class="row mt8">
+                                    <label for="liber_dropbox_share_ttl_days" class="col-lg-4 o_light_label"/>
+                                    <field name="liber_dropbox_share_ttl_days" class="col-lg-2"/>
+                                </div>
+                            </div>
+                        </setting>
+                    </block>
+                </app>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

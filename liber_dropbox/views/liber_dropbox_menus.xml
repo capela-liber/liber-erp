@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <menuitem id="menu_liber_dropbox_root" name="Dropbox"
+              sequence="73"
+              web_icon="liber_dropbox,static/description/icon.png"
+              groups="liber_dropbox.group_liber_dropbox_user"/>
+
+    <!-- The one screen: files on the right, folders on the search panel.
+         Folder records themselves are configuration (paths, ACLs). -->
+    <menuitem id="menu_liber_dropbox_files" name="Files"
+              parent="menu_liber_dropbox_root"
+              action="action_liber_dropbox_file" sequence="10"/>
+
+    <menuitem id="menu_liber_dropbox_upload" name="Upload"
+              parent="menu_liber_dropbox_root"
+              action="action_liber_dropbox_upload" sequence="20"/>
+
+    <menuitem id="menu_liber_dropbox_config" name="Configuration"
+              parent="menu_liber_dropbox_root" sequence="90"
+              groups="liber_dropbox.group_liber_dropbox_manager"/>
+
+    <menuitem id="menu_liber_dropbox_folders" name="Folders"
+              parent="menu_liber_dropbox_config"
+              action="action_liber_dropbox_folder" sequence="10"/>
+
+</odoo>

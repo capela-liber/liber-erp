@@ -1,0 +1,16 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_sale_order_visitante,sale.order leitura p/ visitante (acertos e campanhas embutem pedidos),sale.model_sale_order,group_visitante,1,0,0,0
+access_sale_order_line_visitante,sale.order.line leitura p/ visitante,sale.model_sale_order_line,group_visitante,1,0,0,0
+access_stock_picking_visitante,stock.picking leitura p/ visitante (remessas e acertos da consignação),stock.model_stock_picking,group_visitante,1,0,0,0
+access_stock_picking_type_visitante,stock.picking.type leitura p/ visitante,stock.model_stock_picking_type,group_visitante,1,0,0,0
+access_stock_move_visitante,stock.move leitura p/ visitante (a ficha do livro mostra o estoque),stock.model_stock_move,group_visitante,1,0,0,0
+access_stock_move_line_visitante,stock.move.line leitura p/ visitante,stock.model_stock_move_line,group_visitante,1,0,0,0
+access_stock_quant_visitante,stock.quant leitura p/ visitante,stock.model_stock_quant,group_visitante,1,0,0,0
+access_account_move_visitante,account.move leitura p/ visitante (o contato soma o faturado),account.model_account_move,group_visitante,1,0,0,0
+access_account_move_line_visitante,account.move.line leitura p/ visitante,account.model_account_move_line,group_visitante,1,0,0,0
+access_payment_provider_visitante,payment.provider leitura p/ visitante (Métodos de Pagamento lê provider_ids),payment.model_payment_provider,group_visitante,1,0,0,0
+access_project_role_visitante,project.role leitura p/ visitante (o To-do lê role_ids),project.model_project_role,group_visitante,1,0,0,0
+access_stock_orderpoint_visitante,stock.warehouse.orderpoint leitura p/ visitante (a ficha do livro embute a regra de estoque mínimo),stock.model_stock_warehouse_orderpoint,group_visitante,1,0,0,0
+access_purchase_order_visitante,purchase.order leitura p/ visitante (a aba Compras do contato),purchase.model_purchase_order,group_visitante,1,0,0,0
+access_purchase_order_line_visitante,purchase.order.line leitura p/ visitante,purchase.model_purchase_order_line,group_visitante,1,0,0,0
+access_account_journal_visitante,account.journal leitura p/ visitante (Remessas agrupa por diário),account.model_account_journal,group_visitante,1,0,0,0

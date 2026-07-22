@@ -169,18 +169,22 @@
     </record>
 
     <!-- ============================================================== -->
-    <!-- Visitante: a conta da apresentação pública. Vê o produto        -->
-    <!-- inteiro, não grava nada.                                       -->
+    <!-- Visitante: a conta da apresentação pública. Vê OS APPS DO      -->
+    <!-- LIBER em nível usuário, não grava nada.                        -->
     <!--                                                                -->
-    <!-- Aqui os grupos são generosos DE PROPÓSITO: como models/         -->
-    <!-- ir_model_access.py corta todo create/write/unlink deste grupo,  -->
-    <!-- o nível "gerente" não dá poder nenhum a mais: dá VISIBILIDADE.  -->
-    <!-- É a diferença entre demonstrar o sistema e demonstrar um        -->
-    <!-- sistema com metade dos menus faltando.                          -->
+    <!-- A v1 era generosa (gerente em tudo): demonstrava o Odoo        -->
+    <!-- inteiro, não o produto. Decisão de 20/07/2026: a demo mostra   -->
+    <!-- Consignação, Direitos autorais (Favorecidos), Bonificação e o  -->
+    <!-- Catálogo/Metabooks — e só. Faturamento, Orçamento, Compras,    -->
+    <!-- Projeto e o editor do Website ficam de fora do MENU; os        -->
+    <!-- documentos que essas telas embutem (pedido do acerto, remessa, -->
+    <!-- faturado do contato) entram em leitura crua pelo               -->
+    <!-- ir.model.access.csv ao lado — acesso sem menu, que é a         -->
+    <!-- diferença entre esconder um app e quebrar uma tela.            -->
     <!--                                                                -->
-    <!-- Duas ausências deliberadas:                                    -->
-    <!-- - account_manager: leitura basta para os relatórios contábeis; -->
-    <!--   o nível gerente só acrescentaria telas de configuração.      -->
+    <!-- Duas ausências que continuam deliberadas:                      -->
+    <!-- - a trava de escrita segue em models/ir_model_access.py: o     -->
+    <!--   nível dos grupos daqui é visibilidade, nunca poder.          -->
     <!-- - base.group_allow_export: a conta é pública e circula. Sem     -->
     <!--   escrita ela ainda poderia levar a base embora em .xlsx.       -->
     <!-- ============================================================== -->
@@ -188,17 +192,23 @@
         <field name="name">Visitante (demonstração)</field>
         <field name="privilege_id" ref="privilege_visitante"/>
         <field name="implied_ids" eval="[
+            (3, ref('account.group_account_readonly')),
+            (3, ref('liber_budget.group_budget_manager')),
+            (3, ref('sales_team.group_sale_manager')),
+            (3, ref('stock.group_stock_manager')),
+            (3, ref('project.group_project_user')),
+            (3, ref('website.group_website_restricted_editor')),
+            (3, ref('liber_soc_agreements.group_soc_manager')),
+            (3, ref('liber_copyright_contracts.group_contract_manager')),
+            (3, ref('liber_product_bonus.group_bonus_manager')),
             (4, ref('base.group_user')),
-            (4, ref('account.group_account_readonly')),
-            (4, ref('liber_budget.group_budget_manager')),
-            (4, ref('sales_team.group_sale_manager')),
-            (4, ref('liber_soc_agreements.group_soc_manager')),
-            (4, ref('liber_copyright_contracts.group_contract_manager')),
-            (4, ref('stock.group_stock_manager')),
-            (4, ref('project.group_project_user')),
-            (4, ref('website.group_website_restricted_editor')),
+            (4, ref('liber_soc_agreements.group_soc_user')),
+            (4, ref('liber_copyright_contracts.group_contract_user')),
+            (4, ref('liber_product_bonus.group_bonus_user')),
+            (4, ref('liber_metabooks_integration.metabooks_product_group')),
+            (4, ref('liber_metabooks_integration.metadata_group')),
         ]"/>
-        <field name="comment">Conta de demonstração pública: navega por todo o sistema, abre relatórios e escreve no chatter, mas não cria, altera nem apaga documento nenhum. A trava é no ORM, não no menu.</field>
+        <field name="comment">Conta de demonstração pública: percorre os apps do Liber (consignação, direitos autorais, bonificação, catálogo) em leitura, escreve só no chatter. A trava de escrita é no ORM, não no menu.</field>
     </record>
 
 </odoo>

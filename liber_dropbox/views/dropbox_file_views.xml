@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_liber_dropbox_file_kanban" model="ir.ui.view">
+        <field name="name">liber.dropbox.file.kanban</field>
+        <field name="model">liber.dropbox.file</field>
+        <field name="arch" type="xml">
+            <kanban sample="1" create="false">
+                <field name="thumbnail"/>
+                <templates>
+                    <t t-name="card" class="flex-row">
+                        <aside class="o_kanban_aside_full">
+                            <field t-if="record.thumbnail.raw_value"
+                                   name="thumbnail" widget="image"
+                                   class="o_kanban_image_fill w-100"
+                                   options="{'img_class': 'object-fit-cover'}"/>
+                            <div t-else=""
+                                 class="d-flex align-items-center justify-content-center w-100 h-100">
+                                <i class="fa fa-file-o fa-3x text-muted" title="File"/>
+                            </div>
+                        </aside>
+                        <main class="ps-2">
+                            <field name="name" class="fw-bold"/>
+                            <div class="text-muted small">
+                                <field name="folder_id"/>
+                            </div>
+                            <div class="text-muted small">
+                                <field name="client_modified"/>
+                            </div>
+                            <div t-if="record.partner_ids.raw_value.length"
+                                 class="text-muted small">
+                                <i class="fa fa-user me-1" title="Contact"/>
+                                <field name="partner_ids" widget="many2many_tags"/>
+                            </div>
+                            <div t-if="record.product_tmpl_id.raw_value"
+                                 class="text-muted small">
+                                <i class="fa fa-book me-1" title="Product"/>
+                                <field name="product_tmpl_id"/>
+                            </div>
+                            <field name="tag_ids" widget="many2many_tags"
+                                   options="{'color_field': 'color'}"/>
+                            <div class="mt-1">
+                                <button name="action_download" type="object"
+                                        class="btn btn-sm btn-secondary me-1"
+                                        title="Download">
+                                    <i class="fa fa-download"/>
+                                </button>
+                                <button name="action_share" type="object"
+                                        class="btn btn-sm btn-secondary"
+                                        title="Share">
+                                    <i class="fa fa-share-alt"/>
+                                </button>
+                            </div>
+                        </main>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="view_liber_dropbox_file_list" model="ir.ui.view">
+        <field name="name">liber.dropbox.file.list</field>
+        <field name="model">liber.dropbox.file</field>
+        <field name="arch" type="xml">
+            <list create="false" delete="false" multi_edit="1">
+                <field name="name"/>
+                <field name="tag_ids" widget="many2many_tags"
+                       options="{'color_field': 'color', 'no_create': True}"
+                       optional="show"/>
+                <field name="partner_ids" widget="many2many_tags"
+                       optional="show"/>
+                <field name="product_tmpl_id" optional="show"/>
+                <field name="folder_id" optional="hide"/>
+                <field name="path" optional="hide"/>
+                <field name="size" string="Size (bytes)" optional="show"/>
+                <field name="client_modified" optional="show"/>
+                <field name="shared_link" optional="hide"/>
+                <field name="share_expires" optional="hide"/>
+                <button name="action_download" type="object" icon="fa-download"
+                        title="Download"/>
+                <button name="action_share" type="object" icon="fa-share-alt"
+                        title="Share"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_liber_dropbox_file_form" model="ir.ui.view">
+        <field name="name">liber.dropbox.file.form</field>
+        <field name="model">liber.dropbox.file</field>
+        <field name="arch" type="xml">
+            <form create="false" delete="false">
+                <header>
+                    <button name="action_download" type="object"
+                            string="Download" class="btn-primary"/>
+                    <button name="action_share" type="object" string="Share"
+                            confirm="A shared link is public: anyone holding it reaches the file without Odoo. Create it?"/>
+                    <button name="action_open_shared_link" type="object"
+                            string="Open Shared Link"
+                            invisible="not shared_link"/>
+                </header>
+                <sheet>
+                    <field name="thumbnail" widget="image" class="oe_avatar"/>
+                    <div class="oe_title">
+                        <h1><field name="name"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="tag_ids" widget="many2many_tags"
+                                   options="{'color_field': 'color', 'no_create': True}"/>
+                            <field name="partner_ids" widget="many2many_tags"/>
+                            <field name="product_tmpl_id"/>
+                            <field name="folder_id"/>
+                            <field name="path"/>
+                            <field name="size" string="Size (bytes)"/>
+                            <field name="client_modified"/>
+                        </group>
+                        <group>
+                            <field name="rev"/>
+                            <field name="content_hash"/>
+                            <field name="shared_link"/>
+                            <field name="shared_by_id"/>
+                            <field name="shared_on"/>
+                            <field name="share_expires"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_liber_dropbox_file_search" model="ir.ui.view">
+        <field name="name">liber.dropbox.file.search</field>
+        <field name="model">liber.dropbox.file</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="folder_id"/>
+                <field name="tag_ids"/>
+                <field name="partner_ids"/>
+                <field name="product_tmpl_id"/>
+                <filter name="filter_shared" string="Shared"
+                        domain="[('shared_link', '!=', False)]"/>
+                <filter name="filter_unlinked" string="Not Linked Yet"
+                        domain="[('partner_ids', '=', False),
+                                 ('product_tmpl_id', '=', False)]"/>
+                <group name="group_by">
+                    <filter name="group_folder" string="Folder"
+                            context="{'group_by': 'folder_id'}"/>
+                    <filter name="group_tags" string="Tag"
+                            context="{'group_by': 'tag_ids'}"/>
+                    <filter name="group_partner" string="Contact"
+                            context="{'group_by': 'partner_ids'}"/>
+                    <filter name="group_product" string="Product"
+                            context="{'group_by': 'product_tmpl_id'}"/>
+                </group>
+                <searchpanel>
+                    <field name="folder_id" icon="fa-folder"
+                           enable_counters="1"/>
+                </searchpanel>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_liber_dropbox_file" model="ir.actions.act_window">
+        <field name="name">Files</field>
+        <field name="res_model">liber.dropbox.file</field>
+        <field name="view_mode">list,kanban,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No files here yet
+            </p>
+            <p>
+                Files appear when a folder you have access to is synced.
+            </p>
+        </field>
+    </record>
+
+</odoo>

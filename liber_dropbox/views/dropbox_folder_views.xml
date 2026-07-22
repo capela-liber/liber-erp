@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_liber_dropbox_folder_list" model="ir.ui.view">
+        <field name="name">liber.dropbox.folder.list</field>
+        <field name="model">liber.dropbox.folder</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="path"/>
+                <field name="recursive" optional="show"/>
+                <field name="read_group_ids" widget="many2many_tags" optional="show"/>
+                <field name="write_group_ids" widget="many2many_tags" optional="show"/>
+                <field name="file_count" string="Files"/>
+                <field name="last_sync" optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_liber_dropbox_folder_form" model="ir.ui.view">
+        <field name="name">liber.dropbox.folder.form</field>
+        <field name="model">liber.dropbox.folder</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_sync" type="object" string="Sync"
+                            class="btn-primary"/>
+                    <button name="%(action_liber_dropbox_upload)d" type="action"
+                            string="Upload" context="{'default_folder_id': id}"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_open_files" type="object"
+                                class="oe_stat_button" icon="fa-files-o">
+                            <field name="file_count" widget="statinfo"
+                                   string="Files"/>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <h1><field name="name" placeholder="Covers"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="path" placeholder="/Editorial/Covers"/>
+                            <field name="recursive"/>
+                            <field name="last_sync"/>
+                            <field name="active"/>
+                        </group>
+                        <group>
+                            <field name="read_group_ids" widget="many2many_tags"/>
+                            <field name="write_group_ids" widget="many2many_tags"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_liber_dropbox_folder" model="ir.actions.act_window">
+        <field name="name">Folders</field>
+        <field name="res_model">liber.dropbox.folder</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Map a Dropbox folder
+            </p>
+            <p>
+                Pick a folder of the company Dropbox, name who reads and who
+                writes, and press Sync.
+            </p>
+        </field>
+    </record>
+
+</odoo>
