@@ -1,8 +1,12 @@
 # -*- coding: utf-8 -*-
+import logging
+
 from odoo import api, fields, models, _
 from odoo.exceptions import AccessError, ValidationError
 
 from ..services.dropbox_api import DropboxClient, wants_thumbnail
+
+_logger = logging.getLogger(__name__)
 
 
 class LiberDropboxFolder(models.Model):
@@ -163,6 +167,21 @@ class LiberDropboxFolder(models.Model):
                 File.browse(gone).write({'active': False})
             folder.sudo().last_sync = fields.Datetime.now()
         return True
+
+    @api.model
+    def _cron_sync(self):
+        """Nightly mirror of every active folder.
+
+        One folder failing (renamed in Dropbox, token hiccup) must not
+        starve the others: log and move on. The manual Sync button stays
+        for when someone cannot wait until tomorrow.
+        """
+        for folder in self.search([]):
+            try:
+                folder.action_sync()
+            except Exception:
+                _logger.exception(
+                    "Daily Dropbox sync failed for %s", folder.path)
 
     def action_open_files(self):
         self.ensure_one()

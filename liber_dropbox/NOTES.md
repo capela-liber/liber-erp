@@ -46,7 +46,9 @@ cura tags e credenciais — mas não configura a estante nem escreve sem ACL.
   novo renova o prazo. Atenção: o Dropbox só honra expiração de link em
   plano pago (Plus/Professional/Business); em conta gratuita a API recusa
   e o erro sai explicado. Revogação manual/senha do link: fase 1.
-- **Sync é manual** (botão na pasta). Cron e webhook do Dropbox: fase 1.
+- **Sync diário automático** (ir.cron, uma vez por dia), mais o botão manual
+  na pasta e o sync imediato após cada envio. Webhook do Dropbox (aviso em
+  tempo real) exigiria uma URL pública alcançável pela internet: fase futura.
 - **Subpastas**: por padrão cada pasta mapeada é um nível; a flag
   "Incluir subpastas" espelha a árvore toda sob a ACL da pasta-mãe.
   Subpasta mapeada à parte é **pulada** pelo sync recursivo — a ACL

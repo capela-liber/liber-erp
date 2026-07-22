@@ -7,7 +7,7 @@ of which needs the network.
 """
 from unittest.mock import patch
 
-from odoo.exceptions import AccessError
+from odoo.exceptions import AccessError, UserError
 from odoo.tests import TransactionCase, new_test_user, tagged
 
 from odoo.addons.liber_dropbox.services.dropbox_api import DropboxClient
@@ -155,6 +155,13 @@ class TestDropboxAccess(TransactionCase):
 
     PNG_1PX = ('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJ'
                'AAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg==')
+
+    def test_cron_sync_survives_a_broken_folder(self):
+        """One folder failing must not starve the nightly run."""
+        with patch.object(DropboxClient, '__init__', _client_stub), \
+             patch.object(DropboxClient, 'list_folder',
+                          side_effect=UserError('Dropbox is down')):
+            self.env['liber.dropbox.folder']._cron_sync()  # must not raise
 
     def test_recursive_sync_skips_nested_mapping(self):
         """The wide mapping must not leak what the strict one protects."""

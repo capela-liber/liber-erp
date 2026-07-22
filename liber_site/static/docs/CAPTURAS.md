@@ -197,16 +197,16 @@ Página: `/liber_site/static/docs/liber_budget.html`
 
 Página: `/liber_site/static/docs/liber_dropbox.html`
 
-- [ ] **`doc-liber_dropbox-files.png`**
+- [x] **`doc-liber_dropbox-files.png`**
   - O que capturar: Lista de Arquivos com o painel de pastas à esquerda, colunas de tags, contatos e produto, e os botões de baixar e compartilhar por linha
   - Legenda no manual: A tela de Arquivos: pastas no painel à esquerda — cada pessoa só vê as suas —, vínculos nas colunas e as ações em cada linha.
-- [ ] **`doc-liber_dropbox-folder.png`**
+- [x] **`doc-liber_dropbox-folder.png`**
   - O que capturar: Formulário de uma pasta com caminho, a opção Incluir subpastas e os grupos de Leitura e Escrita preenchidos
   - Legenda no manual: O mapeamento da pasta: o caminho no Dropbox à esquerda, e à direita a decisão que importa — quem lê, quem escreve.
-- [ ] **`doc-liber_dropbox-share.png`**
+- [x] **`doc-liber_dropbox-share.png`**
   - O que capturar: Ficha de um arquivo compartilhado, com Link compartilhado, Compartilhado por, Compartilhado em e Link expira em preenchidos
   - Legenda no manual: O razão do compartilhamento: o link, quem pediu, quando — e a data em que ele morre.
-- [ ] **`doc-liber_dropbox-partner.png`**
+- [x] **`doc-liber_dropbox-partner.png`**
   - O que capturar: Ficha de um contato com o botão inteligente do Dropbox mostrando a contagem de arquivos vinculados
   - Legenda no manual: No contato do autor: os contratos dele no Dropbox, a um clique — contados conforme a permissão de quem olha.
 

@@ -20,6 +20,7 @@ is what a Dropbox shared link is. Creating one is a right, not a default.
     'depends': ['base_setup', 'product'],
     'external_dependencies': {'python': ['requests']},
     'data': [
+        'data/liber_dropbox_cron.xml',
         'security/liber_dropbox_security.xml',
         'security/ir.model.access.csv',
         'views/dropbox_file_views.xml',

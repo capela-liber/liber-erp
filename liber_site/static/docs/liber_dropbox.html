@@ -138,8 +138,9 @@
       <ul>
         <li><strong>Miniatura só de imagem</strong> — PDF não tem prévia; o Dropbox não a gera pela API.</li>
         <li><strong>Expiração de link exige plano pago</strong> do Dropbox.</li>
-        <li><strong>Sincronização manual</strong> — botão na pasta (e automática após cada envio).
-        Cron e webhook são a próxima fase.</li>
+        <li><strong>Sincronização uma vez por dia</strong> — automática, de madrugada, pasta a pasta;
+        o botão da pasta continua para quem não pode esperar, e cada envio sincroniza na hora.
+        Aviso em tempo real (webhook) exigiria expor o servidor à internet — fase futura.</li>
         <li><strong>Envio na raiz</strong> — o upload deposita na raiz da pasta mapeada, ainda sem
         escolher subpasta.</li>
       </ul>
