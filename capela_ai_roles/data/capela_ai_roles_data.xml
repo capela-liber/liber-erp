@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!--
+        Consulta é para todo mundo que opera: perguntar não move nada, e o ORM
+        já barra o que a pessoa não poderia ler com as próprias mãos. Propor
+        orçamento é só do comercial, porque é lá que S000 é assunto.
+    -->
+
+    <!-- ============ Direção: lê largo, não opera ============ -->
+    <record id="liber_roles.group_direcao" model="res.groups">
+        <field name="capela_ai_max_records">50</field>
+        <field name="capela_ai_tool_ids" eval="[
+            (4, ref('capela_ai.tool_query_search')),
+            (4, ref('capela_ai.tool_query_group_by')),
+        ]"/>
+    </record>
+
+    <!-- ============ Comercial ============ -->
+    <record id="liber_roles.group_comercial_assistente" model="res.groups">
+        <field name="capela_ai_max_records">10</field>
+        <field name="capela_ai_tool_ids" eval="[
+            (4, ref('capela_ai.tool_query_search')),
+            (4, ref('capela_ai.tool_query_group_by')),
+            (4, ref('capela_ai.tool_sale_plan_quotations')),
+        ]"/>
+    </record>
+    <record id="liber_roles.group_comercial_gerente" model="res.groups">
+        <field name="capela_ai_max_records">50</field>
+        <field name="capela_ai_tool_ids" eval="[
+            (4, ref('capela_ai.tool_query_search')),
+            (4, ref('capela_ai.tool_query_group_by')),
+            (4, ref('capela_ai.tool_sale_plan_quotations')),
+        ]"/>
+    </record>
+
+    <!-- ============ Financeiro ============ -->
+    <record id="liber_roles.group_financeiro_assistente" model="res.groups">
+        <field name="capela_ai_max_records">10</field>
+        <field name="capela_ai_tool_ids" eval="[
+            (4, ref('capela_ai.tool_query_search')),
+            (4, ref('capela_ai.tool_query_group_by')),
+        ]"/>
+    </record>
+    <record id="liber_roles.group_financeiro_gerente" model="res.groups">
+        <field name="capela_ai_max_records">50</field>
+        <field name="capela_ai_tool_ids" eval="[
+            (4, ref('capela_ai.tool_query_search')),
+            (4, ref('capela_ai.tool_query_group_by')),
+        ]"/>
+    </record>
+
+    <!-- ============ Editorial ============ -->
+    <record id="liber_roles.group_editorial_assistente" model="res.groups">
+        <field name="capela_ai_max_records">10</field>
+        <field name="capela_ai_tool_ids" eval="[
+            (4, ref('capela_ai.tool_query_search')),
+            (4, ref('capela_ai.tool_query_group_by')),
+        ]"/>
+    </record>
+    <record id="liber_roles.group_editorial_gerente" model="res.groups">
+        <field name="capela_ai_max_records">50</field>
+        <field name="capela_ai_tool_ids" eval="[
+            (4, ref('capela_ai.tool_query_search')),
+            (4, ref('capela_ai.tool_query_group_by')),
+        ]"/>
+    </record>
+
+    <!-- ============ Marketing ============ -->
+    <record id="liber_roles.group_marketing_assistente" model="res.groups">
+        <field name="capela_ai_max_records">10</field>
+        <field name="capela_ai_tool_ids" eval="[
+            (4, ref('capela_ai.tool_query_search')),
+            (4, ref('capela_ai.tool_query_group_by')),
+        ]"/>
+    </record>
+    <record id="liber_roles.group_marketing_gerente" model="res.groups">
+        <field name="capela_ai_max_records">50</field>
+        <field name="capela_ai_tool_ids" eval="[
+            (4, ref('capela_ai.tool_query_search')),
+            (4, ref('capela_ai.tool_query_group_by')),
+        ]"/>
+    </record>
+
+    <!--
+        O VISITANTE não recebe nada, e não está aqui.
+        Ele é a conta da apresentação pública: enxerga o sistema inteiro e
+        escreve no chatter, mas não grava documento nem pelo Odoo. Deixá-lo sem
+        teto (zero) faz `capela.ai.plan._check_cap` recusar antes de qualquer
+        proposta. Não conceder É a decisão -- não há linha a manter.
+    -->
+
+</odoo>

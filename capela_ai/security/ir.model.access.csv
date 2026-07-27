@@ -1,0 +1,9 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_capela_ai_agent_user,capela.ai.agent leitura p/ usuário,model_capela_ai_agent,base.group_user,1,0,0,0
+access_capela_ai_agent_system,capela.ai.agent config p/ administrador,model_capela_ai_agent,base.group_system,1,1,1,1
+access_capela_ai_tool_user,capela.ai.tool leitura p/ usuário,model_capela_ai_tool,base.group_user,1,0,0,0
+access_capela_ai_tool_system,capela.ai.tool -- espelho do Python: nem o admin cria ou apaga,model_capela_ai_tool,base.group_system,1,1,0,0
+access_capela_ai_plan_user,capela.ai.plan -- só os próprios (ver record rule),model_capela_ai_plan,base.group_user,1,1,1,0
+access_capela_ai_plan_system,capela.ai.plan p/ administrador,model_capela_ai_plan,base.group_system,1,1,1,0
+access_capela_ai_plan_line_user,capela.ai.plan.line -- criada junto com o plano e imutável depois,model_capela_ai_plan_line,base.group_user,1,0,1,0
+access_capela_ai_plan_line_system,capela.ai.plan.line p/ administrador,model_capela_ai_plan_line,base.group_system,1,0,1,0
