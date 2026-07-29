@@ -106,7 +106,10 @@ class GDriveClient:
         excluded_ids = {f.external_id for f in (exclude or [])
                         if f.external_id}
         entries = []
-        queue = [(folder.external_id, folder.path)]
+        # The mapped folder's own path only prefixes the display paths, so
+        # the root contributes nothing rather than a leading '//'.
+        queue = [(folder.external_id,
+                  '' if folder.path == '/' else folder.path)]
         while queue:
             parent_id, prefix = queue.pop(0)
             token = None

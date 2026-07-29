@@ -1,0 +1,79 @@
+<!-- GERADO por scripts/gen_module_descriptions.py a partir de
+     liber_site/static/docs/liber_gdrive.html -- não edite aqui.
+     O Odoo mostra este arquivo em Apps > Module Info. -->
+<div class="oe_container liber_manual" style="max-width:900px;margin:0 auto;padding:8px 4px 24px;color:#251d2b;background:transparent;font:15px/1.7 Inter,'Segoe UI',system-ui,sans-serif;"><h1 style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:32px;line-height:1.2;letter-spacing:-.015em;margin:0 0 10px;color:#251d2b;">Arquivos no Google Drive</h1>
+      <p class="lead" style="font-size:17.5px;color:#5d5266;margin:0 0 26px;max-width:62ch;">O mesmo porteiro do Dropbox, agora na frente do Drive: leitura e escrita
+      decididas pasta a pasta no Odoo, download conferido byte a byte, compartilhamento com prazo
+      e assinatura — para a equipe que vive na planilha e no documento do Google.</p>
+
+      <h2 id="visao-geral" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">Visão geral</h2>
+      <p style="margin:0 0 12px;">Este app é um corpo do chassi <em>Cloud Files</em> — o mesmo do
+      <a href="/liber_site/static/docs/liber_dropbox.html" target="_blank" rel="noopener" style="color:#6e2f91;">Dropbox</a> e do <a href="/liber_site/static/docs/liber_github.html" target="_blank" rel="noopener" style="color:#6e2f91;">GitHub</a>.
+      Toda a disciplina é herdada e idêntica: pastas mapeadas por empresa, grupos de
+      <span class="field" style="font-weight:600;color:#251d2b;">Leitura</span> e <span class="field" style="font-weight:600;color:#251d2b;">Escrita</span> por pasta, espelho só
+      de metadados, envio que nunca sobrescreve, tags, vínculos com contatos e produtos, e a regra
+      de ouro — <strong style="color:#251d2b;">mapear pastas é de administrador; escrever exige grupo de escrita, seja quem
+      for</strong>. O que muda aqui é só o jeito do Drive:</p>
+      <ul style="margin:0 0 14px 22px;padding:0;">
+        <li style="margin:0 0 7px;"><strong style="color:#251d2b;">Pasta é ID, não caminho.</strong> Abra a pasta no navegador e copie o ID da URL
+        (<span class="field" style="font-weight:600;color:#251d2b;">drive.google.com/drive/folders/&lt;ID&gt;</span>) para o campo
+        <span class="field" style="font-weight:600;color:#251d2b;">ID externo</span> do mapeamento. O <span class="field" style="font-weight:600;color:#251d2b;">Caminho</span>
+        continua obrigatório, mas aqui ele é só o rótulo humano que prefixa os caminhos de exibição
+        do espelho — para mapear a raiz da conta escreva <span class="field" style="font-weight:600;color:#251d2b;">/</span> sozinho, e
+        nada é prefixado.</li>
+        <li style="margin:0 0 7px;"><strong style="color:#251d2b;">O download passa pelo Odoo.</strong> O Drive não tem link anônimo de quatro
+        horas; o arquivo desce pela porta <span class="field" style="font-weight:600;color:#251d2b;">/liber_cloud/download</span>, com o
+        portão conferido antes do primeiro byte — a credencial nunca sai do servidor.</li>
+        <li style="margin:0 0 7px;"><strong style="color:#251d2b;">Miniatura de quase tudo</strong>, inclusive PDF — aqui o Drive é mais generoso
+        que o Dropbox.</li>
+      </ul>
+      <figure class="shot" style="margin:20px 0 24px;"><div style="border:2px dashed #e5dbee;border-radius:12px;background:#faf8fc;color:#5d5266;font-size:13px;text-align:center;padding:28px 20px;"><div style="font-size:24px;margin-bottom:6px;">📷</div><div>Tela a inserir: <code style="background:#f1eaf6;border:1px solid #e5dbee;border-radius:5px;padding:1px 6px;font-family:ui-monospace,Menlo,Consolas,monospace;">img/doc-liber_gdrive-files.png</code></div><div style="margin-top:6px;">Lista de arquivos do app Drive com o painel de pastas à esquerda e as colunas de tags, contatos e produto.</div></div><figcaption style="font-size:13px;color:#5d5266;margin-top:10px;text-align:center;">A mesma tela de Arquivos do Dropbox, agora sobre o Drive: quem usa um aprendeu o outro.</figcaption></figure>
+
+      <h2 id="configuracao" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">Configuração</h2>
+      <ol class="steps" style="margin:0 0 16px 22px;padding:0;">
+        <li style="margin:0 0 7px;">No <span class="field" style="font-weight:600;color:#251d2b;">console.cloud.google.com</span>, crie um projeto, ative a
+        <em>Google Drive API</em> e gere uma credencial OAuth (tipo <em>Desktop app</em>). O passo a
+        passo com o comando que troca o código pelo <span class="field" style="font-weight:600;color:#251d2b;">refresh token</span> está no
+        <span class="field" style="font-weight:600;color:#251d2b;">NOTES.md</span> do módulo.</li>
+        <li style="margin:0 0 7px;">Preencha <span class="menupath" style="display:inline-block;background:#f1eaf6;border:1px solid #e5dbee;border-radius:6px;padding:1px 8px;font-size:13.5px;color:#251d2b;white-space:nowrap;">Drive<i style="font-style:normal;color:#6e2f91;margin:0 4px;font-weight:700;">‣</i>Configuração<i style="font-style:normal;color:#6e2f91;margin:0 4px;font-weight:700;">‣</i>Conta</span> — Client ID,
+        Client Secret, Refresh Token — e use <span class="field" style="font-weight:600;color:#251d2b;">Testar conexão</span>. Uma conta por
+        empresa.</li>
+        <li style="margin:0 0 7px;">Como administrador, mapeie as pastas em
+        <span class="menupath" style="display:inline-block;background:#f1eaf6;border:1px solid #e5dbee;border-radius:6px;padding:1px 8px;font-size:13.5px;color:#251d2b;white-space:nowrap;">Drive<i style="font-style:normal;color:#6e2f91;margin:0 4px;font-weight:700;">‣</i>Configuração<i style="font-style:normal;color:#6e2f91;margin:0 4px;font-weight:700;">‣</i>Pastas</span>: nome,
+        <span class="field" style="font-weight:600;color:#251d2b;">Caminho</span> (o rótulo humano; <span class="field" style="font-weight:600;color:#251d2b;">/</span> para a
+        raiz da conta), o <span class="field" style="font-weight:600;color:#251d2b;">ID externo</span> da pasta no Drive, grupos de leitura
+        e escrita.</li>
+      </ol>
+      <div class="callout warn" style="border:1px solid #e5dbee;border-left:4px solid #6e2f91;border-radius:10px;padding:14px 18px;margin:0 0 16px;border-left-color:#b3831a;background:#faf3e3;border-color:#eddfba;"><span class="title" style="font-weight:700;font-size:12px;letter-spacing:.08em;text-transform:uppercase;display:block;margin:0 0 4px;color:#7a5a12;">Atenção</span><p style="margin:0 0 12px;">Expiração de link compartilhado
+      no Drive é recurso de Google Workspace pago. Em conta gratuita a criação do link com prazo é
+      recusada com o erro explicado — zere o prazo na Conta ou faça upgrade.</p></div>
+
+      <h2 id="dia-a-dia" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">O dia a dia</h2>
+      <p style="margin:0 0 12px;">Igual ao Dropbox, de propósito: sincronizar (botão, após cada envio, e o robô diário de
+      madrugada), baixar, enviar pelo menu <span class="menupath" style="display:inline-block;background:#f1eaf6;border:1px solid #e5dbee;border-radius:6px;padding:1px 8px;font-size:13.5px;color:#251d2b;white-space:nowrap;">Drive<i style="font-style:normal;color:#6e2f91;margin:0 4px;font-weight:700;">‣</i>Enviar</span>,
+      compartilhar com confirmação e prazo, classificar com tags e vincular a contatos e títulos —
+      o vocabulário de tags é o mesmo da casa inteira, e os botões nas fichas de contato e produto
+      somam os arquivos de todas as estantes.</p>
+      <p style="margin:0 0 12px;"><strong style="color:#251d2b;">O envio vai de braçada:</strong> o campo de arquivos do assistente aceita um ou
+      muitos de uma vez — escolhidos no seletor do sistema ou arrastados para dentro dele. Cada um
+      sobe com o seu próprio nome, nenhum sobrescreve nada (nome repetido vira
+      <span class="field" style="font-weight:600;color:#251d2b;">arquivo (1).ext</span>), o Odoo não guarda cópia depois do envio e o
+      espelho sincroniza na hora, sem esperar a madrugada.</p>
+      <figure class="shot" style="margin:20px 0 24px;"><div style="border:2px dashed #e5dbee;border-radius:12px;background:#faf8fc;color:#5d5266;font-size:13px;text-align:center;padding:28px 20px;"><div style="font-size:24px;margin-bottom:6px;">📷</div><div>Tela a inserir: <code style="background:#f1eaf6;border:1px solid #e5dbee;border-radius:5px;padding:1px 6px;font-family:ui-monospace,Menlo,Consolas,monospace;">img/doc-liber_gdrive-folder.png</code></div><div style="margin-top:6px;">Formulário de uma pasta do Drive com o campo ID externo preenchido e os grupos de leitura e escrita.</div></div><figcaption style="font-size:13px;color:#5d5266;margin-top:10px;text-align:center;">O mapeamento no Drive: o ID no lugar do caminho, e a mesma decisão de sempre — quem lê, quem escreve.</figcaption></figure>
+
+      <h2 id="limitacoes" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">Limitações conhecidas</h2>
+      <ul style="margin:0 0 14px 22px;padding:0;">
+        <li style="margin:0 0 7px;"><strong style="color:#251d2b;">Arquivos nativos do Google</strong> (Docs, Sheets) aparecem no espelho, mas o
+        download cru deles depende de exportação — fase futura; abra-os pelo link compartilhado.</li>
+        <li style="margin:0 0 7px;"><strong style="color:#251d2b;">Expiração de link</strong> exige Workspace pago.</li>
+        <li style="margin:0 0 7px;"><strong style="color:#251d2b;">Drives compartilhados</strong> (Shared Drives) ainda não são varridos — mapeie
+        pastas de "Meu Drive" por enquanto.</li>
+      </ul>
+
+      <div class="seealso" style="border:1px solid #e5dbee;border-radius:12px;background:#f1eaf6;padding:16px 20px;margin:32px 0 0;">
+        <strong style="font-weight:700;font-size:12px;letter-spacing:.08em;text-transform:uppercase;display:block;margin:0 0 8px;color:#5d5266;">Ver também</strong>
+        <ul style="margin:0 0 14px 22px;padding:0;">
+          <li style="margin:0 0 7px;"><a href="/liber_site/static/docs/liber_dropbox.html" target="_blank" rel="noopener" style="color:#6e2f91;">Arquivos no Dropbox</a> — o mesmo portão, na estante do Dropbox, e a explicação completa da mecânica.</li>
+          <li style="margin:0 0 7px;"><a href="/liber_site/static/docs/liber_github.html" target="_blank" rel="noopener" style="color:#6e2f91;">Arquivos no GitHub</a> — o corpo do GitHub, onde enviar é commitar.</li>
+        </ul>
+      </div><p style="margin:28px 0 0;padding-top:14px;border-top:1px solid #e5dbee;font-size:13px;color:#5d5266;">Manual completo, com busca e as demais páginas: <a href="/liber_site/static/docs/liber_gdrive.html" target="_blank" rel="noopener" style="color:#6e2f91;">Arquivos no Google Drive</a>.</p></div>

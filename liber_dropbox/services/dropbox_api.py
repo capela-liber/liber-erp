@@ -110,15 +110,21 @@ class DropboxClient:
         return {'name': account.get('name', {}).get('display_name', '?'),
                 'email': account.get('email', '?')}
 
+    @staticmethod
+    def _api_path(folder):
+        # Dropbox spells the account root as the empty string, not '/'.
+        return '' if folder.path == '/' else folder.path
+
     def list_folder(self, folder, exclude=None):
         # Dropbox nests by path, so mapped subtrees are excluded by their
         # path prefix (paths are case-insensitive there, hence lower()).
+        base = self._api_path(folder)
         excluded = tuple(
             f.path.lower() + '/' for f in (exclude or [])
-            if f.path.lower().startswith(folder.path.lower() + '/'))
+            if f.path.lower().startswith(base.lower() + '/'))
         entries = []
         result = self._call('/files/list_folder', {
-            'path': folder.path, 'recursive': folder.recursive,
+            'path': base, 'recursive': folder.recursive,
             'include_deleted': False, 'limit': 500,
         })
         while True:
@@ -157,7 +163,7 @@ class DropboxClient:
     def upload(self, folder, filename, data):
         """Upload bytes, never overwriting silently (autorename)."""
         return self._content_call('/files/upload', {
-            'path': f'{folder.path}/{filename}',
+            'path': f'{self._api_path(folder)}/{filename}',
             'mode': 'add', 'autorename': True, 'mute': True,
         }, data=data)
 

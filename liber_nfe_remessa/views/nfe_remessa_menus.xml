@@ -26,7 +26,7 @@
                 <field name="partner_id"/>
                 <field name="invoice_origin"/>
                 <!-- Cada módulo que adiciona uma origem adiciona aqui o seu
-                     filtro (product_bonus: Bonificações; soc: Consignações). -->
+                     filtro (bonificação: Bonificações; soc: Consignações). -->
                 <group>
                     <filter name="group_origin" string="Origin"
                             context="{'group_by': 'remessa_origin'}"/>

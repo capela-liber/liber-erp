@@ -46,7 +46,6 @@ menu, então vale também para RPC e URL colada. Ver models/ir_model_access.py.
         'liber_soc_agreements',
         'liber_copyright_contracts',
         'liber_budget',
-        'liber_product_bonus',
         'liber_metabooks_integration',
         'payment',
         'purchase',

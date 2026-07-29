@@ -12,7 +12,7 @@ class AccountMove(models.Model):
         'account.move', string="Remessa settlement", readonly=True, copy=False)
 
     # Who fired this remessa. Every module that generates remessa notes adds
-    # its value (selection_add): product_bonus adds 'bonus', soc adds
+    # its value (selection_add): the comp-copies module adds 'bonus', soc adds
     # 'consignment', the future events module adds 'event'. The Remessas menu
     # filters and groups on it -- one list, separable origins.
     remessa_origin = fields.Selection(

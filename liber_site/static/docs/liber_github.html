@@ -37,8 +37,8 @@
       <div class="tablewrap"><table>
         <thead><tr><th>No Liber</th><th>No GitHub</th></tr></thead>
         <tbody>
-          <tr><td>Pasta</td><td>Um repositório (<span class="field">ID externo</span> = <span class="field">dono/repositório</span>), com subpasta opcional no campo Caminho e <span class="field">Branch</span> (vazio = a padrão).</td></tr>
-          <tr><td>Enviar</td><td>Um commit <span class="field">liber: arquivo.pdf</span> na branch da pasta. Nunca sobrescreve: nome repetido vira <span class="field">arquivo (1).ext</span>.</td></tr>
+          <tr><td>Pasta</td><td>Um repositório (<span class="field">ID externo</span> = <span class="field">dono/repositório</span>), com subpasta opcional no campo Caminho (<span class="field">/</span> sozinho = a raiz) e <span class="field">Branch</span> (vazio = a padrão).</td></tr>
+          <tr><td>Enviar</td><td>Um commit <span class="field">liber: arquivo.pdf</span> na branch da pasta — <strong>um por arquivo</strong>: mandou cinco de uma vez, são cinco commits. Nunca sobrescreve: nome repetido vira <span class="field">arquivo (1).ext</span>.</td></tr>
           <tr><td>Revisão</td><td>O SHA do blob — versionamento de graça, mudou o conteúdo, mudou o SHA.</td></tr>
           <tr><td>Link compartilhado</td><td>A página do arquivo no GitHub — <strong>só abre para quem enxerga o repositório</strong>. Por isso não expira: a ficha registra honestamente "sem validade".</td></tr>
         </tbody>
@@ -47,9 +47,22 @@
 
       <h2 id="configuracao">Configuração</h2>
       <ol class="steps">
-        <li>Na conta GitHub da empresa, gere um <em>fine-grained personal access token</em> com
-        acesso aos repositórios que serão mapeados e permissão <span class="field">Contents:
-        Read and write</span> (roteiro no <span class="field">NOTES.md</span> do módulo).</li>
+        <li>Gere um <em>fine-grained personal access token</em>. Ele não nasce na organização — o
+        <span class="field">Developer settings</span> dela só tem OAuth Apps, GitHub Apps e
+        Publisher Verification. Nasce na conta <strong>pessoal</strong> de um membro da
+        organização: foto do perfil<i>‣</i><span class="field">Settings</span><i>‣</i>fim da barra
+        lateral<i>‣</i><span class="field">Developer settings</span><i>‣</i><span class="field">Personal
+        access tokens</span><i>‣</i><span class="field">Fine-grained tokens</span> (atalho:
+        <span class="field">github.com/settings/personal-access-tokens/new</span>).</li>
+        <li>No formulário do token, aponte a empresa: <span class="field">Resource owner</span> = a
+        <strong>organização</strong> (não a conta pessoal), <span class="field">Repository
+        access</span> nos repositórios que serão mapeados e
+        <span class="field">Contents: Read and write</span> nas permissões. Anote a validade — token
+        vencido para sync e envio até que se cole um novo na Conta. Se a organização aparecer
+        bloqueada ou o token ficar pendente, um <em>owner</em> libera em
+        <span class="menupath">Organização<i>‣</i>Settings<i>‣</i>Third-party Access<i>‣</i>Personal
+        access tokens</span> (roteiro completo no <span class="field">NOTES.md</span> do
+        módulo).</li>
         <li>Preencha <span class="menupath">GitHub<i>‣</i>Configuração<i>‣</i>Conta</span> e use
         <span class="field">Testar conexão</span>. Uma conta por empresa.</li>
         <li>Como administrador, mapeie em
@@ -64,6 +77,10 @@
       <span class="menupath">GitHub<i>‣</i>Enviar</span>. Tags e vínculos com contatos e produtos
       são os mesmos da casa — um contrato no Dropbox e seus originais no GitHub apontam para o
       mesmo autor e o mesmo título.</p>
+      <p><strong>O envio vai de braçada:</strong> o campo de arquivos do assistente aceita um ou
+      muitos de uma vez — escolhidos no seletor do sistema ou arrastados para dentro dele —, e cada
+      arquivo vira o seu próprio commit na branch da pasta. O Odoo não guarda cópia depois do envio
+      e o espelho sincroniza na hora, já com os SHAs novos.</p>
       <figure class="shot"><img src="img/doc-liber_github-files.png" alt="Lista de arquivos de um repositório espelhado, com o SHA na coluna de revisão."><figcaption>O espelho do repositório: cada arquivo com seu SHA — mudou o conteúdo, o sync denuncia.</figcaption></figure>
 
       <h2 id="limitacoes">Limitações conhecidas</h2>

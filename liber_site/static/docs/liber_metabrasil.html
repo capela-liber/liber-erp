@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Impressão sob demanda (Metabrasil) — Manuais do Liber</title>
+<link rel="icon" type="image/png" href="../logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;600;700&display=swap">
+<link rel="stylesheet" href="docs.css">
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="../index.html"><img src="../logo.png" alt="">liber<span>.</span></a>
+    <span class="doc-tag">Manuais</span>
+    <nav><a href="index.html">Índice</a><a href="../index.html">Site</a></nav>
+  </div>
+</header>
+<div class="wrap">
+  <div class="layout">
+    <aside class="sidebar" id="sidebar"></aside>
+    <article class="doc">
+      <div class="breadcrumb"><a href="index.html">Manuais</a><span class="sep">›</span>Produção<span class="sep">›</span>Impressão sob demanda</div>
+      <h1>Impressão sob demanda (Metabrasil)</h1>
+      <p class="lead">O pedido do cliente vira tiragem na gráfica e, se você quiser, caixa
+      despachada direto para a casa dele. O Liber conversa com a API PoD da Metabrasil para cotar
+      frete, guardar o preço de impressão por tiragem, enviar o pedido e acompanhar a produção até
+      a entrega — sem estoque parado.</p>
+
+      <div class="callout">
+        <strong>Estado de hoje.</strong> A conexão, a cotação de frete, a escada de preços, o envio
+        do pedido e o acompanhamento de status estão no ar e testados. Desde 27/07/2026, quando a
+        gráfica publicou a API de precificação e carregou o catálogo, <strong>411 dos 675 títulos
+        com ISBN já têm preço por tiragem</strong> — os demais ainda não estão no repositório PoD
+        dela. Veja <a href="#limitacoes">Limitações conhecidas</a>.
+      </div>
+
+      <h2 id="visao-geral">Visão geral</h2>
+      <p>Impressão sob demanda cruza dois eixos que valem ser separados, porque o Liber os trata
+      como coisas diferentes:</p>
+      <ul>
+        <li><strong>Quem imprime</strong> — a Metabrasil é um fornecedor como outro qualquer. Um
+        pedido de compra cujo fornecedor é ela <em>é</em> um pedido de impressão.</li>
+        <li><strong>Para onde vai</strong> — a tiragem pode chegar ao seu depósito e virar estoque
+        (<strong>PoD</strong>), ou sair da gráfica direto para o cliente final
+        (<strong>Dropship</strong>).</li>
+      </ul>
+      <p>Esse segundo eixo não é um campo a preencher: quem responde é a <strong>rota do título</strong>,
+      e o Liber a lê. O resultado aparece como uma <strong>faixa colorida no canto do documento</strong>:
+      verde <span class="field">PoD</span> no pedido de compra que abastece o depósito, laranja
+      <span class="field">Dropship</span> quando a caixa vai ao cliente — e a mesma faixa laranja no
+      pedido de venda que originou tudo, para que o par venda↔compra se reconheça de longe. A faixa
+      nasce junto com a solicitação de cotação, antes de qualquer confirmação.</p>
+
+      <figure class="shot"><img src="img/doc-liber_metabrasil-dropship.png" alt="Pedido de compra com a faixa laranja Dropship no canto superior direito e o cliente no campo Entregar para."><figcaption>A faixa no canto diz o destino da tiragem antes de qualquer confirmação: laranja quando vai direto ao cliente.</figcaption></figure>
+
+      <h2 id="configuracao">Configuração</h2>
+      <ol class="steps">
+        <li>Em <span class="menupath">Definições<i>‣</i>Metabrasil</span>, ligue
+        <span class="field">Metabrasil PoD</span> e informe as credenciais que a gráfica emitiu:
+        <span class="field">Chave de acesso</span> (a <em>chaveCliente</em>) e o par usuário/senha da
+        API.</li>
+        <li>Preencha as duas URLs base com
+        <span class="field">https://ws.umlivro.com.br:7081/pod-api</span>. A gráfica também atende
+        em <span class="field">http://…:7080</span>, com as mesmas respostas, mas ali a senha
+        trafega em claro — a porta <strong>7081, com TLS</strong>, é a que eles documentam e a que
+        se deve usar. Atenção ao par: <span class="field">https</span> só existe na 7081, e
+        <span class="field">http</span> só na 7080; trocar um sem o outro devolve um erro de SSL
+        enigmático.</li>
+        <li>Escolha o <span class="field">Modo</span>. Em <em>Produção</em> o envio de um pedido
+        gera tiragem de verdade; use com a consciência disso.</li>
+        <li>Aponte o <span class="field">Parceiro da gráfica</span> — é ele que transforma um pedido
+        de compra qualquer em pedido de impressão.</li>
+        <li>Clique em <span class="field">Testar conexão</span>. O teste faz apenas uma
+        <strong>cotação de frete</strong>, que é leitura pura: ele nunca encomenda nada, em modo
+        nenhum.</li>
+      </ol>
+      <div class="callout">
+        <strong>Não existe mais ambiente de homologação.</strong> O antigo endereço de sandbox saiu
+        do ar, então o teste de conexão fala com a produção — o que é seguro justamente porque ele
+        só cota frete.
+      </div>
+
+      <h2 id="precos">Preços de impressão por tiragem</h2>
+      <p>O preço de imprimir não é uma consulta que alguém faz na hora: ele já está no banco quando
+      você abre a cotação. Um processo agendado pergunta à gráfica quanto custa cada título em cada
+      tiragem e grava o resultado na <strong>lista de preços do fornecedor</strong> — o mecanismo
+      nativo do Odoo, com faixas por quantidade. A partir daí, digitar 50 numa linha de compra faz o
+      preço da faixa de 50 aparecer sozinho, sem rede, sem espera.</p>
+      <ul>
+        <li>As tiragens consultadas ficam em <span class="menupath">Definições<i>‣</i>Metabrasil<i>‣</i>Tiragens
+        consultadas</span> — algo como <span class="field">1,15,40,100</span>. É decisão comercial:
+        mude ali, não no código.</li>
+        <li><strong>Atualizar preços de impressão</strong> varre o catálogo inteiro. O trabalho corre
+        em segundo plano e você recebe a resposta na hora; um segundo clique não dispara uma segunda
+        varredura.</li>
+        <li>Para experimentar em poucos títulos, selecione-os na lista de produtos e use
+        <span class="menupath">Ações<i>‣</i>Atualizar preços de impressão da Metabrasil</span>.</li>
+        <li>Sozinho, o processo se repete <strong>a cada quinze dias</strong> — custo de produção é
+        contratado e muda devagar.</li>
+      </ul>
+      <p>Na lista de preços do fornecedor, a coluna <span class="field">Tiragem</span> diz a que
+      quantidade cada linha pertence, e a coluna <span class="field">Custo do produto</span> fica ao
+      lado do preço unitário. <strong>A linha inteira fica vermelha quando a gráfica cobra mais do
+      que o custo que você carrega no título</strong> — o momento em que imprimir sob demanda deixa
+      de compensar. Costuma acontecer nas tiragens de um exemplar, e é justamente aí que a decisão
+      muda.</p>
+      <figure class="shot"><img src="img/doc-liber_metabrasil-precos.png" alt="Lista de preços de fornecedor da Metabrasil com a coluna Tiragem, o custo do produto ao lado do preço unitário e linhas em vermelho."><figcaption>A escada de preços: uma linha por tiragem, o custo do título ao lado e, em vermelho, as faixas em que imprimir custa mais do que o livro vale.</figcaption></figure>
+
+      <p>Os títulos que a gráfica consegue cotar recebem uma <strong>etiqueta</strong> (por padrão
+      <span class="field">PoD</span>, configurável), e a perdem se a gráfica parar de cotá-los. Como
+      não existe endpoint para perguntar "este livro está no seu catálogo?", <em>um preço que volta é
+      a própria resposta</em> — e a etiqueta é onde ela fica guardada, pronta para filtrar.</p>
+
+      <h2 id="cotacao">O frete, e qual transportadora</h2>
+      <p>Frete tem uma conversa só, e ela é a do próprio Odoo. No pedido de venda:
+      <span class="menupath">Adicionar envio<i>‣</i>Dropship<i>‣</i>Obter preço</span>. O Liber
+      pergunta à gráfica quanto custa levar aquela caixa até o CEP do cliente e traz de volta
+      <strong>todos os serviços cotados</strong>, cada um com transportadora, preço e prazo, numa
+      lista para comparar.</p>
+      <p>Um deles já vem escolhido — o mais barato, ou o mais rápido, conforme a regra da forma de
+      entrega — e você troca à vontade no campo <span class="field">Transportadora</span>. Trocar
+      não consulta a gráfica de novo: os preços dela se mexem entre duas chamadas, e o número não
+      pode mudar debaixo da sua decisão. A transportadora que ficar escolhida viaja com o pedido
+      até a gráfica, nos códigos de que ela precisa para despachar.</p>
+      <p>Não existe janela paralela de cotação. Existiu, e ter duas janelas respondendo à mesma
+      pergunta significava que uma delas mentia sempre que a outra era usada.</p>
+
+      <h2 id="dropship">Dropship: a exceção, não a regra</h2>
+      <p>Dropship existe para quando o estoque está em baixa ou há uma urgência. A mecânica é a rota
+      de dropship do Odoo, aplicada ao livro — e vale conhecer o efeito dela:
+      <strong>enquanto o título estiver nessa rota, toda venda dele vai para a gráfica</strong>,
+      mesmo com exemplares na prateleira. Por isso o Liber não mexe em rota sozinho: quem coloca um
+      título em dropship é você, deliberadamente, e o lugar natural disso são os
+      <strong>títulos que nunca são estocados</strong>, só impressos quando alguém compra.</p>
+      <p>Um título em dropship mostra a faixa <span class="field">Dropship</span> no canto do
+      pedido, e o pedido de impressão que nascer dele aponta de volta para a venda — do lado da
+      venda, o botão <span class="field">Pedidos de impressão</span> leva até ele.</p>
+      <div class="callout">
+        <strong>Rota sem fornecedor não envia nada.</strong> Um título em dropship sem nenhum
+        fornecedor cadastrado confirma em silêncio: não há de quem comprar, então não nasce pedido
+        de impressão, não nasce entrega, não se move um exemplar — e o cliente segue faturado. O
+        Liber nomeia esses títulos numa faixa vermelha enquanto ainda é cotação e
+        <strong>recusa a confirmação</strong>. Dê um fornecedor ao título, ou tire-o da rota.
+      </div>
+
+      <h2 id="envio">Enviar o pedido de impressão</h2>
+      <p>Não há botão de "enviar": <strong>confirmar o pedido de compra é enviá-lo</strong>. Se a
+      gráfica aceitar, o pedido confirma normalmente e passa a ser acompanhado. Se ela recusar —
+      endereço incompleto, ISBN fora do repositório PoD —, a confirmação é <strong>bloqueada</strong>
+      com o motivo em português na tela, e o documento continua como solicitação de cotação. Corrija
+      a causa e confirme de novo; reconfirmar <em>é</em> o reenvio.</p>
+      <p>A consequência prática é que não existe pedido "confirmado porém recusado" para alguém
+      cuidar depois.</p>
+      <div class="callout">
+        <strong>Endereço.</strong> A Metabrasil exige o bairro de entrega. Sem os campos fiscais
+        brasileiros, o Liber lê o bairro do <span class="field">Complemento</span>
+        (<em>street2</em>) do contato — mantenha-o preenchido, ou o envio volta com erro.
+      </div>
+
+      <h2 id="acompanhamento">Acompanhamento até a entrega</h2>
+      <p>Um processo agendado espelha o andamento da gráfica no pedido de compra, numa barra de
+      status: <span class="field">Pedido incluído</span> ›
+      <span class="field">Impressão</span> › <span class="field">Expedido</span> ›
+      <span class="field">Entregue</span>. Junto com o status vêm o código e o link de rastreio, que
+      pousam no recebimento. Conforme os interruptores de <span class="menupath">Definições<i>‣</i>Metabrasil</span>,
+      o Liber ainda pode validar o recebimento sozinho, rascunhar a fatura do fornecedor e avisar o
+      cliente por e-mail quando a tiragem entra em produção e quando chega.</p>
+      <p>Pedidos que empacam — não aprovados em um dia, não expedidos na data prevista, não entregues
+      no prazo — geram uma atividade para o comprador, em vez de apodrecer em silêncio.</p>
+
+      <h2 id="limitacoes">Limitações conhecidas</h2>
+      <ul>
+        <li><strong>O título precisa estar no repositório PoD da gráfica.</strong> Cerca de 260
+        títulos ainda não estão, e para esses a resposta é "ISBN não encontrado no repositório do
+        cliente". Carregar os títulos é trabalho junto à Metabrasil, não configuração do Liber —
+        feito isso, os preços entram sozinhos na varredura seguinte.</li>
+        <li><strong>Valor zero não é livro grátis.</strong> Quando a gráfica reconhece o ISBN mas
+        ainda não configurou preço, ela responde zero. O Liber trata isso como <em>ausência de
+        preço</em> e não grava linha nenhuma — uma linha de compra a custo zero seria mentira pior
+        que preço velho.</li>
+        <li><strong>Sem ambiente de homologação.</strong> Todo teste que envia pedido acontece contra
+        a produção da gráfica; por isso o envio só ocorre na confirmação, deliberada.</li>
+        <li><strong>Sem emissão fiscal.</strong> O gancho para anexar a DANFE ao pedido existe, mas a
+        emissão em si não faz parte deste módulo.</li>
+      </ul>
+
+      <div class="seealso">
+        <strong>Ver também</strong>
+        <ul>
+          <li><a href="liber_metabooks_integration.html">Integração Metabooks</a> — de onde vêm os
+          metadados e o ISBN que a gráfica usa para reconhecer o título.</li>
+          <li><a href="liber_nfe_remessa.html">Notas de remessa</a> — a documentação das saídas sem
+          cobrança que acompanham a logística.</li>
+        </ul>
+      </div>
+
+      <nav class="pager" id="pager"></nav>
+    </article>
+  </div>
+</div>
+<script src="docs.js"></script>
+</body>
+</html>

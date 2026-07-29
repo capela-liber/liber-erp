@@ -186,11 +186,6 @@ msgid "Credentials"
 msgstr ""
 
 #. module: liber_cloud_files
-#: model:ir.model.fields,field_description:liber_cloud_files.field_liber_cloud_upload__data
-msgid "Data"
-msgstr ""
-
-#. module: liber_cloud_files
 #: model:ir.model.fields,field_description:liber_cloud_files.field_liber_cloud_account__display_name
 #: model:ir.model.fields,field_description:liber_cloud_files.field_liber_cloud_file__display_name
 #: model:ir.model.fields,field_description:liber_cloud_files.field_liber_cloud_folder__display_name
@@ -205,10 +200,15 @@ msgstr "Nome exibido"
 #. module: liber_cloud_files
 #: model:ir.model.fields,help:liber_cloud_files.field_liber_cloud_folder__path
 msgid ""
-"Display path from the account root, starting with '/'. For providers "
-"addressed by ID (Drive) or by repository (GitHub) this is the human name; "
-"the machine identity goes in the External ID."
+"Display path from the account root, starting with '/' and without a "
+"trailing one; '/' alone maps the root itself. For providers addressed by ID "
+"(Drive) or by repository (GitHub) this is the human name; the machine "
+"identity goes in the External ID."
 msgstr ""
+"Caminho de exibição a partir da raiz da conta, começando com '/' e sem "
+"barra no fim; '/' sozinho mapeia a própria raiz. Nos provedores endereçados "
+"por ID (Drive) ou por repositório (GitHub) este é o nome humano; a "
+"identidade de máquina vai no ID externo."
 
 #. module: liber_cloud_files
 #: model_terms:ir.ui.view,arch_db:liber_cloud_files.view_liber_cloud_file_form
@@ -246,11 +246,6 @@ msgid "File Count"
 msgstr "Total de arquivos"
 
 #. module: liber_cloud_files
-#: model:ir.model.fields,field_description:liber_cloud_files.field_liber_cloud_upload__file_name
-msgid "File Name"
-msgstr ""
-
-#. module: liber_cloud_files
 #: model:ir.actions.act_window,name:liber_cloud_files.action_liber_cloud_file
 #: model_terms:ir.ui.view,arch_db:liber_cloud_files.product_template_form_liber_cloud
 #: model_terms:ir.ui.view,arch_db:liber_cloud_files.view_liber_cloud_folder_form
@@ -258,6 +253,21 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:liber_cloud_files.view_partner_form_liber_cloud
 msgid "Files"
 msgstr "Arquivos"
+
+#. module: liber_cloud_files
+#: model:ir.model.fields,help:liber_cloud_files.field_liber_cloud_upload__attachment_ids
+msgid ""
+"One file or many: each travels to the folder on its own, and Odoo keeps no "
+"copy once they are sent."
+msgstr ""
+"Um arquivo ou vários: cada um viaja para a pasta por conta própria, e o Odoo "
+"não guarda cópia depois do envio."
+
+#. module: liber_cloud_files
+#. odoo-python
+#: code:addons/liber_cloud_files/wizard/cloud_upload.py:0
+msgid "Pick at least one file to send."
+msgstr "Escolha ao menos um arquivo para enviar."
 
 #. module: liber_cloud_files
 #: model_terms:ir.actions.act_window,help:liber_cloud_files.action_liber_cloud_file
@@ -487,8 +497,11 @@ msgstr "Testar conexão"
 #. odoo-python
 #: code:addons/liber_cloud_files/models/cloud_folder.py:0
 msgid ""
-"The path must start with '/' and not end with one, e.g. /Editorial/Covers."
+"The path must start with '/' and not end with one, e.g. /Editorial/Covers. "
+"Use '/' alone for the root."
 msgstr ""
+"O caminho precisa começar com '/' e não terminar com uma, por exemplo "
+"/Editorial/Capas. Para a raiz, use apenas '/'."
 
 #. module: liber_cloud_files
 #: model:ir.model.fields,help:liber_cloud_files.field_liber_cloud_file__partner_ids

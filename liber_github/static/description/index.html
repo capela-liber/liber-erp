@@ -1,0 +1,79 @@
+<!-- GERADO por scripts/gen_module_descriptions.py a partir de
+     liber_site/static/docs/liber_github.html -- não edite aqui.
+     O Odoo mostra este arquivo em Apps > Module Info. -->
+<div class="oe_container liber_manual" style="max-width:900px;margin:0 auto;padding:8px 4px 24px;color:#251d2b;background:transparent;font:15px/1.7 Inter,'Segoe UI',system-ui,sans-serif;"><h1 style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:32px;line-height:1.2;letter-spacing:-.015em;margin:0 0 10px;color:#251d2b;">Arquivos no GitHub</h1>
+      <p class="lead" style="font-size:17.5px;color:#5d5266;margin:0 0 26px;max-width:62ch;">O mesmo porteiro, na estante onde a produção versiona os originais: um
+      repositório vira pasta, cada envio vira commit, cada revisão tem SHA — e o link compartilhado,
+      pela primeira vez, não fura o portão.</p>
+
+      <h2 id="visao-geral" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">Visão geral</h2>
+      <p style="margin:0 0 12px;">Este app é um corpo do chassi <em>Cloud Files</em> — o mesmo do
+      <a href="/liber_site/static/docs/liber_dropbox.html" target="_blank" rel="noopener" style="color:#6e2f91;">Dropbox</a> e do <a href="/liber_site/static/docs/liber_gdrive.html" target="_blank" rel="noopener" style="color:#6e2f91;">Drive</a>. A
+      disciplina é herdada e idêntica: acesso por grupos pasta a pasta, multiempresa, espelho de
+      metadados, tags e vínculos, <strong style="color:#251d2b;">mapear é de administrador, escrever exige grupo de
+      escrita</strong>. O que muda é o vocabulário, traduzido do Git:</p>
+      <div class="tablewrap" style="overflow-x:auto;margin:0 0 16px;"><table style="border-collapse:collapse;width:100%;margin:0 0 16px;font-size:14px;">
+        <thead><tr><th style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;background:#f1eaf6;font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:13.5px;">No Liber</th><th style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;background:#f1eaf6;font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:13.5px;">No GitHub</th></tr></thead>
+        <tbody>
+          <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Pasta</td><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Um repositório (<span class="field" style="font-weight:600;color:#251d2b;">ID externo</span> = <span class="field" style="font-weight:600;color:#251d2b;">dono/repositório</span>), com subpasta opcional no campo Caminho (<span class="field" style="font-weight:600;color:#251d2b;">/</span> sozinho = a raiz) e <span class="field" style="font-weight:600;color:#251d2b;">Branch</span> (vazio = a padrão).</td></tr>
+          <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Enviar</td><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Um commit <span class="field" style="font-weight:600;color:#251d2b;">liber: arquivo.pdf</span> na branch da pasta — <strong style="color:#251d2b;">um por arquivo</strong>: mandou cinco de uma vez, são cinco commits. Nunca sobrescreve: nome repetido vira <span class="field" style="font-weight:600;color:#251d2b;">arquivo (1).ext</span>.</td></tr>
+          <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Revisão</td><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">O SHA do blob — versionamento de graça, mudou o conteúdo, mudou o SHA.</td></tr>
+          <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Link compartilhado</td><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">A página do arquivo no GitHub — <strong style="color:#251d2b;">só abre para quem enxerga o repositório</strong>. Por isso não expira: a ficha registra honestamente "sem validade".</td></tr>
+        </tbody>
+      </table></div>
+      <figure class="shot" style="margin:20px 0 24px;"><div style="border:2px dashed #e5dbee;border-radius:12px;background:#faf8fc;color:#5d5266;font-size:13px;text-align:center;padding:28px 20px;"><div style="font-size:24px;margin-bottom:6px;">📷</div><div>Tela a inserir: <code style="background:#f1eaf6;border:1px solid #e5dbee;border-radius:5px;padding:1px 6px;font-family:ui-monospace,Menlo,Consolas,monospace;">img/doc-liber_github-folder.png</code></div><div style="margin-top:6px;">Formulário de um repositório mapeado, com dono/repositório no ID externo, a branch e os grupos de leitura e escrita.</div></div><figcaption style="font-size:13px;color:#5d5266;margin-top:10px;text-align:center;">O repositório como pasta: dono/repositório, branch, e a mesma decisão de sempre — quem lê, quem escreve.</figcaption></figure>
+
+      <h2 id="configuracao" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">Configuração</h2>
+      <ol class="steps" style="margin:0 0 16px 22px;padding:0;">
+        <li style="margin:0 0 7px;">Gere um <em>fine-grained personal access token</em>. Ele não nasce na organização — o
+        <span class="field" style="font-weight:600;color:#251d2b;">Developer settings</span> dela só tem OAuth Apps, GitHub Apps e
+        Publisher Verification. Nasce na conta <strong style="color:#251d2b;">pessoal</strong> de um membro da
+        organização: foto do perfil<i>‣</i><span class="field" style="font-weight:600;color:#251d2b;">Settings</span><i>‣</i>fim da barra
+        lateral<i>‣</i><span class="field" style="font-weight:600;color:#251d2b;">Developer settings</span><i>‣</i><span class="field" style="font-weight:600;color:#251d2b;">Personal
+        access tokens</span><i>‣</i><span class="field" style="font-weight:600;color:#251d2b;">Fine-grained tokens</span> (atalho:
+        <span class="field" style="font-weight:600;color:#251d2b;">github.com/settings/personal-access-tokens/new</span>).</li>
+        <li style="margin:0 0 7px;">No formulário do token, aponte a empresa: <span class="field" style="font-weight:600;color:#251d2b;">Resource owner</span> = a
+        <strong style="color:#251d2b;">organização</strong> (não a conta pessoal), <span class="field" style="font-weight:600;color:#251d2b;">Repository
+        access</span> nos repositórios que serão mapeados e
+        <span class="field" style="font-weight:600;color:#251d2b;">Contents: Read and write</span> nas permissões. Anote a validade — token
+        vencido para sync e envio até que se cole um novo na Conta. Se a organização aparecer
+        bloqueada ou o token ficar pendente, um <em>owner</em> libera em
+        <span class="menupath" style="display:inline-block;background:#f1eaf6;border:1px solid #e5dbee;border-radius:6px;padding:1px 8px;font-size:13.5px;color:#251d2b;white-space:nowrap;">Organização<i style="font-style:normal;color:#6e2f91;margin:0 4px;font-weight:700;">‣</i>Settings<i style="font-style:normal;color:#6e2f91;margin:0 4px;font-weight:700;">‣</i>Third-party Access<i style="font-style:normal;color:#6e2f91;margin:0 4px;font-weight:700;">‣</i>Personal
+        access tokens</span> (roteiro completo no <span class="field" style="font-weight:600;color:#251d2b;">NOTES.md</span> do
+        módulo).</li>
+        <li style="margin:0 0 7px;">Preencha <span class="menupath" style="display:inline-block;background:#f1eaf6;border:1px solid #e5dbee;border-radius:6px;padding:1px 8px;font-size:13.5px;color:#251d2b;white-space:nowrap;">GitHub<i style="font-style:normal;color:#6e2f91;margin:0 4px;font-weight:700;">‣</i>Configuração<i style="font-style:normal;color:#6e2f91;margin:0 4px;font-weight:700;">‣</i>Conta</span> e use
+        <span class="field" style="font-weight:600;color:#251d2b;">Testar conexão</span>. Uma conta por empresa.</li>
+        <li style="margin:0 0 7px;">Como administrador, mapeie em
+        <span class="menupath" style="display:inline-block;background:#f1eaf6;border:1px solid #e5dbee;border-radius:6px;padding:1px 8px;font-size:13.5px;color:#251d2b;white-space:nowrap;">GitHub<i style="font-style:normal;color:#6e2f91;margin:0 4px;font-weight:700;">‣</i>Configuração<i style="font-style:normal;color:#6e2f91;margin:0 4px;font-weight:700;">‣</i>Repositórios</span>: o
+        <span class="field" style="font-weight:600;color:#251d2b;">ID externo</span> como <span class="field" style="font-weight:600;color:#251d2b;">dono/repositório</span>, a
+        subpasta (Caminho, <span class="field" style="font-weight:600;color:#251d2b;">/</span> para a raiz), a branch e os grupos.</li>
+      </ol>
+
+      <h2 id="dia-a-dia" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">O dia a dia</h2>
+      <p style="margin:0 0 12px;">Sincronizar espelha a árvore da branch (a subpasta mapeada, recursiva ou não); baixar
+      desce pelo Odoo com o portão conferido; enviar commita pelo menu
+      <span class="menupath" style="display:inline-block;background:#f1eaf6;border:1px solid #e5dbee;border-radius:6px;padding:1px 8px;font-size:13.5px;color:#251d2b;white-space:nowrap;">GitHub<i style="font-style:normal;color:#6e2f91;margin:0 4px;font-weight:700;">‣</i>Enviar</span>. Tags e vínculos com contatos e produtos
+      são os mesmos da casa — um contrato no Dropbox e seus originais no GitHub apontam para o
+      mesmo autor e o mesmo título.</p>
+      <p style="margin:0 0 12px;"><strong style="color:#251d2b;">O envio vai de braçada:</strong> o campo de arquivos do assistente aceita um ou
+      muitos de uma vez — escolhidos no seletor do sistema ou arrastados para dentro dele —, e cada
+      arquivo vira o seu próprio commit na branch da pasta. O Odoo não guarda cópia depois do envio
+      e o espelho sincroniza na hora, já com os SHAs novos.</p>
+      <figure class="shot" style="margin:20px 0 24px;"><div style="border:2px dashed #e5dbee;border-radius:12px;background:#faf8fc;color:#5d5266;font-size:13px;text-align:center;padding:28px 20px;"><div style="font-size:24px;margin-bottom:6px;">📷</div><div>Tela a inserir: <code style="background:#f1eaf6;border:1px solid #e5dbee;border-radius:5px;padding:1px 6px;font-family:ui-monospace,Menlo,Consolas,monospace;">img/doc-liber_github-files.png</code></div><div style="margin-top:6px;">Lista de arquivos de um repositório espelhado, com o SHA na coluna de revisão.</div></div><figcaption style="font-size:13px;color:#5d5266;margin-top:10px;text-align:center;">O espelho do repositório: cada arquivo com seu SHA — mudou o conteúdo, o sync denuncia.</figcaption></figure>
+
+      <h2 id="limitacoes" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">Limitações conhecidas</h2>
+      <ul style="margin:0 0 14px 22px;padding:0;">
+        <li style="margin:0 0 7px;"><strong style="color:#251d2b;">Sem miniaturas</strong> — baixar cada imagem só para encolher não vale a banda
+        num host de código.</li>
+        <li style="margin:0 0 7px;"><strong style="color:#251d2b;">Sem data de modificação por arquivo</strong> no espelho (seria uma chamada de
+        API por arquivo; o SHA já denuncia mudança).</li>
+        <li style="margin:0 0 7px;"><strong style="color:#251d2b;">Arquivos em LFS</strong> aparecem com o tamanho do ponteiro, não do conteúdo.</li>
+      </ul>
+
+      <div class="seealso" style="border:1px solid #e5dbee;border-radius:12px;background:#f1eaf6;padding:16px 20px;margin:32px 0 0;">
+        <strong style="font-weight:700;font-size:12px;letter-spacing:.08em;text-transform:uppercase;display:block;margin:0 0 8px;color:#5d5266;">Ver também</strong>
+        <ul style="margin:0 0 14px 22px;padding:0;">
+          <li style="margin:0 0 7px;"><a href="/liber_site/static/docs/liber_dropbox.html" target="_blank" rel="noopener" style="color:#6e2f91;">Arquivos no Dropbox</a> — a explicação completa da mecânica compartilhada.</li>
+          <li style="margin:0 0 7px;"><a href="/liber_site/static/docs/liber_gdrive.html" target="_blank" rel="noopener" style="color:#6e2f91;">Arquivos no Google Drive</a> — o corpo do Drive, para a equipe das planilhas.</li>
+        </ul>
+      </div><p style="margin:28px 0 0;padding-top:14px;border-top:1px solid #e5dbee;font-size:13px;color:#5d5266;">Manual completo, com busca e as demais páginas: <a href="/liber_site/static/docs/liber_github.html" target="_blank" rel="noopener" style="color:#6e2f91;">Arquivos no GitHub</a>.</p></div>

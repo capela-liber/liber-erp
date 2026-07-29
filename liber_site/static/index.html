@@ -211,9 +211,11 @@
       <a href="#consignacao">Consignação</a>
       <a href="#direitos">Direitos autorais</a>
       <a href="#metadados">Metadados</a>
+      <a href="#impressao">Impressão</a>
       <a href="#fiscal">Fiscal</a>
       <a href="#odoo">Odoo</a>
       <a href="docs/index.html">Manuais</a>
+      <a href="#duvidas">Dúvidas</a>
     </nav>
   </div>
 </header>
@@ -328,7 +330,7 @@
       <ul>
         <li><strong>Importação por ISBN</strong> ou por catálogo completo, com fila de importação e assistentes.</li>
         <li><strong>Padrão ONIX</strong> — tabelas de código do mercado do livro já embutidas.</li>
-        <li><strong>BookInfo</strong> (CBL) na sequência do roteiro, pela mesma arquitetura.</li>
+        <li><strong>BookInfo</strong> na sequência do roteiro, pela mesma arquitetura.</li>
       </ul>
     </div>
     <figure class="shot">
@@ -400,6 +402,31 @@
   </div>
 </section>
 
+<section class="feature" id="impressao">
+  <div class="wrap">
+    <div class="text">
+      <p class="kicker">Produção</p>
+      <h2>Impressão sob demanda e dropship</h2>
+      <p>O pedido do cliente vira tiragem na gráfica e, quando você quiser, caixa despachada direto
+      para a casa dele. Sem estoque parado, sem capital preso em livro que ainda não vendeu.</p>
+      <ul>
+        <li><strong>Preço por tiragem já no sistema</strong> — 1, 15, 40, 100 exemplares viram faixas
+        na lista do fornecedor, atualizadas sozinhas. Digitou a quantidade, o preço aparece.</li>
+        <li><strong>Alerta de margem</strong> — a faixa em que imprimir custa mais do que o livro
+        vale para você fica vermelha na tela.</li>
+        <li><strong>Frete cotado na hora</strong>, com as transportadoras da gráfica, e os dois
+        cenários — direto ao cliente ou ao seu depósito — lado a lado antes de decidir.</li>
+        <li><strong>Da produção à entrega</strong> — o status da gráfica, o código de rastreio e o
+        aviso ao cliente chegam sozinhos ao pedido.</li>
+      </ul>
+    </div>
+    <figure class="shot">
+      <img src="img/metabrasil-precos.png" alt="Lista de preços por tiragem da gráfica, com linhas em vermelho acima do custo">
+      <figcaption>A escada de preços por tiragem: em vermelho, onde imprimir deixa de compensar.</figcaption>
+    </figure>
+  </div>
+</section>
+
 <figure class="band">
   <img src="img/stock/livraria-poltronas.jpg" alt="Interior de livraria com poltronas" loading="lazy">
   <figcaption>Da prateleira da livraria ao balanço — sem planilhas no caminho.</figcaption>
@@ -445,8 +472,7 @@
     <p>O Liber está em desenvolvimento ativo e aberto. Estas são as próximas frentes:</p>
     <div class="grid">
       <div class="card"><div class="ic"><i class="fa-solid fa-file-invoice"></i></div><h3>Emissão de NF-e <span class="badge soon">em breve</span></h3><p>Emissão nativa junto à SEFAZ; hoje a emissão acontece por parceiros integrados.</p></div>
-      <div class="card"><div class="ic"><i class="fa-solid fa-book-open"></i></div><h3>BookInfo (CBL) <span class="badge soon">em breve</span></h3><p>Metadados também pela plataforma da Câmara Brasileira do Livro.</p></div>
-      <div class="card"><div class="ic"><i class="fa-solid fa-print"></i></div><h3>Impressão sob demanda <span class="badge soon">em breve</span></h3><p>Conexão com gráficas para impressão por demanda e dropship: o pedido vira impressão e entrega, sem estoque parado.</p></div>
+      <div class="card"><div class="ic"><i class="fa-solid fa-book-open"></i></div><h3>BookInfo <span class="badge soon">em breve</span></h3><p>Metadados, pedidos e monitoramento de preço pela plataforma da BookInfo.</p></div>
       <div class="card"><div class="ic"><i class="fa-solid fa-cart-shopping"></i></div><h3>Amazon Vendor <span class="badge soon">em breve</span></h3><p>Pedidos, notas e catálogo integrados ao programa Vendor da Amazon.</p></div>
     </div>
   </div>
@@ -472,6 +498,19 @@
       <code>demo</code> / <code>liber</code>. A conta percorre os módulos do Liber —
       consignação, direitos autorais, bonificação, catálogo — e não grava nada;
       os dados são de teste e podem ser reiniciados a qualquer momento.</p>
+  </div>
+</section>
+
+<section class="open" id="duvidas">
+  <div class="wrap">
+    <h2>Dúvidas?</h2>
+    <p>Pergunta de instalação, de configuração ou de como um módulo funciona vai para o fórum:
+    a resposta fica pública, pesquisável, e serve para quem chegar depois. Se for erro no
+    programa ou pedido de recurso, abra um chamado — assim cada coisa vai para o lugar certo.</p>
+    <div class="cta-row">
+      <a class="cta" href="https://github.com/capela-liber/liber-erp/discussions/categories/q-a" rel="noopener">Perguntar no fórum</a>
+      <a class="cta ghost" href="https://github.com/capela-liber/liber-erp/issues" rel="noopener">Relatar um erro</a>
+    </div>
   </div>
 </section>
 

@@ -18,9 +18,15 @@ msgstr ""
 #. module: liber_github
 #: model:ir.model.fields,help:liber_github.field_liber_cloud_account__github_token
 msgid ""
-"A fine-grained personal access token of the company's GitHub account, with "
+"A fine-grained personal access token, created on the personal GitHub account "
+"of an organization member (Settings > Developer settings > Personal access "
+"tokens > Fine-grained tokens), with the organization as Resource owner and "
 "Contents read/write on the mapped repositories; see the module's NOTES.md."
 msgstr ""
+"Um fine-grained personal access token, criado na conta GitHub pessoal de um "
+"membro da organização (Settings > Developer settings > Personal access "
+"tokens > Fine-grained tokens), com a organização em Resource owner e "
+"Contents read/write nos repositórios mapeados; veja o NOTES.md do módulo."
 
 #. module: liber_github
 #: model:ir.model.fields,field_description:liber_github.field_liber_cloud_account__github_token

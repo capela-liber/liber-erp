@@ -2,6 +2,7 @@
 <odoo>
     <menuitem id="menu_consignment_root"
               name="Consignment"
+              web_icon="liber_soc_agreements,static/description/icon.png"
               sequence="31"
               groups="group_soc_user"/>
 

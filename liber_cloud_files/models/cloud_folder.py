@@ -38,7 +38,8 @@ class LiberCloudFolder(models.Model):
         index=True)
     path = fields.Char(
         required=True, index=True,
-        help="Display path from the account root, starting with '/'. For "
+        help="Display path from the account root, starting with '/' and "
+             "without a trailing one; '/' alone maps the root itself. For "
              "providers addressed by ID (Drive) or by repository (GitHub) "
              "this is the human name; the machine identity goes in the "
              "External ID.")
@@ -82,10 +83,14 @@ class LiberCloudFolder(models.Model):
     @api.constrains('path')
     def _check_path(self):
         for record in self:
+            # '/' is the root itself: the one path that legitimately both
+            # starts and ends with the same single slash.
+            if record.path == '/':
+                continue
             if not record.path.startswith('/') or record.path.endswith('/'):
                 raise ValidationError(_(
                     "The path must start with '/' and not end with one, "
-                    "e.g. /Editorial/Covers."))
+                    "e.g. /Editorial/Covers. Use '/' alone for the root."))
 
     # ------------------------------------------------------------------
     # the gate

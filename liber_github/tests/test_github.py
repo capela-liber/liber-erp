@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 """The GitHub body on the chassis: registration, the tree walk, the share."""
+import base64
 from unittest.mock import patch
 
 from odoo.exceptions import UserError
@@ -69,6 +70,61 @@ class TestGitHub(TransactionCase):
             self.assertEqual([e['path'] for e in entries],
                              ['/originais/livro-a.pdf'],
                              "Non-recursive stops at the first level.")
+
+    def test_root_maps_the_whole_repository(self):
+        """Path '/' is the repository root: no prefix filters the tree,
+        and an upload commits at the top level."""
+        # Its own company: '/' is unique per provider and company, and a
+        # real mapped root may already hold the slot in this database.
+        company = self.env['res.company'].create({'name': 'Raiz Co'})
+        root = self.env['liber.cloud.folder'].create({
+            'name': 'Teste', 'path': '/', 'provider': 'github',
+            'company_id': company.id,
+            'external_id': 'edlab/teste', 'github_branch': 'main'})
+        tree = {'tree': [
+            {'type': 'blob', 'path': 'LEIA-ME.md', 'sha': 's1', 'size': 5},
+            {'type': 'blob', 'path': 'sub/livro.pdf', 'sha': 's2', 'size': 9},
+        ]}
+        with patch.object(GitHubClient, '__init__', _client_stub), \
+             patch.object(GitHubClient, '_request', return_value=tree):
+            client = GitHubClient(None)
+            entries = client.list_folder(root)
+            self.assertEqual([e['path'] for e in entries], ['/LEIA-ME.md'],
+                             "Non-recursive root stops at the top level.")
+            root.recursive = True
+            self.assertEqual(
+                sorted(e['path'] for e in client.list_folder(root)),
+                ['/LEIA-ME.md', '/sub/livro.pdf'])
+
+        with patch.object(GitHubClient, '__init__', _client_stub), \
+             patch.object(GitHubClient, '_branch', return_value='main'), \
+             patch.object(GitHubClient, '_exists', return_value=False), \
+             patch.object(GitHubClient, '_request', return_value={}) as call:
+            GitHubClient(None).upload(root, 'novo.md', b'x')
+        self.assertEqual(call.call_args[0][1],
+                         '/repos/edlab/teste/contents/novo.md',
+                         "No leading slash in the committed path.")
+
+    def test_upload_wizard_sends_every_picked_file(self):
+        """The wizard takes a whole selection, one commit each, and leaves
+        no copy of the bytes behind in Odoo."""
+        Attachment = self.env['ir.attachment']
+        picked = Attachment.create([
+            {'name': '01.png', 'datas': base64.b64encode(b'one')},
+            {'name': '02.png', 'datas': base64.b64encode(b'two')},
+        ])
+        wizard = self.env['liber.cloud.upload'].create({
+            'provider': 'github', 'folder_id': self.folder.id,
+            'attachment_ids': [(6, 0, picked.ids)]})
+        with patch.object(GitHubClient, '__init__', _client_stub), \
+             patch.object(GitHubClient, 'upload') as upload, \
+             patch.object(GitHubClient, 'list_folder', return_value=[]):
+            wizard.action_upload()
+        self.assertEqual([call.args[1:] for call in upload.call_args_list],
+                         [('01.png', b'one'), ('02.png', b'two')],
+                         "Every picked file travels, under its own name.")
+        self.assertFalse(picked.exists(),
+                         "The staged attachments are dropped after sending.")
 
     def test_share_is_the_blob_page_and_never_expires(self):
         record = self.env['liber.cloud.file'].create({

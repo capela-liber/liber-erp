@@ -1,76 +1,187 @@
-<!DOCTYPE html>
-<center>
-    <h1>Metabooks Integration</h1>
-</center>
+<!-- GERADO por scripts/gen_module_descriptions.py a partir de
+     liber_site/static/docs/liber_metabooks_integration.html -- não edite aqui.
+     O Odoo mostra este arquivo em Apps > Module Info. -->
+<div class="oe_container liber_manual" style="max-width:900px;margin:0 auto;padding:8px 4px 24px;color:#251d2b;background:transparent;font:15px/1.7 Inter,'Segoe UI',system-ui,sans-serif;"><h1 style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:32px;line-height:1.2;letter-spacing:-.015em;margin:0 0 10px;color:#251d2b;">Integração Metabooks</h1>
+      <p class="lead" style="font-size:17.5px;color:#5d5266;margin:0 0 26px;max-width:62ch;">Os metadados dos seus livros — título, autores, sinopse, preço, medidas, capa — entrando no sistema direto da Metabooks, por ISBN ou por catálogo inteiro, sem digitação.</p>
 
-<ul>
-    <li>
-        <strong>Metabooks Setting -> General Settings panel:</strong>
-        <p>Fill the form with Metabooks Username, password and provided code.</p>
-        <img src="1- metabooks Settings.png" class="oe_picture"/>
-    </li>
-    <li>
-        <strong>Metabooks Sync Processing Status inside Odoo</strong>
-        <p>Sync every one(1) day the metabooks data and creates a log inside <strong>Sales</strong> with the processing status.</p>
-        <img src="2- metabooks cron.png" class="oe_picture"/>  
-    </li>
-    <li>
-        <strong>Updating only one product metabooks</strong>
-        <p>This button allows the user to update only one book data instead of the hole metabooks database.</p>
-        <img src="3- updating each product metabooks.png" class="oe_picture"/>
-    </li>
-    <li>
-        <strong>Info from metabooks inside product</strong>
-        <p>Data that has been pulled from metabooks.</p>
-        <img src="4- data from metabooks inside product.png" class="oe_picture"/>
-    </li>
-    <li>
-        ISSUES
-        <ol>
-            <li>If processing takes to long(1-2 days), he will move from "processing" to "fail".</li>
-        </ol>
-    </li>
-</ul>
+      <h2 id="visao-geral" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">Visão geral</h2>
+      <p style="margin:0 0 12px;">A <b>Metabooks</b> é a plataforma brasileira de metadados do mercado editorial (da MVB): é nela que editoras cadastram seus títulos no padrão ONIX, e é dela que livrarias e distribuidores leem esses dados. Este módulo conecta o sistema à Metabooks em duas direções:</p>
+      <ul style="margin:0 0 14px 22px;padding:0;">
+        <li style="margin:0 0 7px;"><b>Importação</b> (madura, o dia a dia): busca os dados de um livro pelo ISBN, ou o catálogo completo de uma editora, e cria/atualiza os produtos correspondentes — ficha editorial, ficha técnica, capa e tudo.</li>
+        <li style="margin:0 0 7px;"><b>Envio</b> (em desenvolvimento): o caminho de volta — editar um livro aqui e mandar a alteração para a Metabooks por planilha, com conferência humana no meio.</li>
+      </ul>
+      <p style="margin:0 0 12px;">Cada livro importado vira um <b>produto</b> comum do sistema, com o ISBN como código interno e código de barras. É esse mesmo ISBN que casa o livro com os itens das notas fiscais importadas e com o resto da casa: a Metabooks alimenta o catálogo, e o catálogo alimenta a consignação, a bonificação e as vendas.</p>
+      <p style="margin:0 0 12px;">Tudo mora no aplicativo <b>Metabooks</b> do menu principal: <b>Livros</b> (os produtos importados), <b>Importações</b>, <b>Envios</b>, <b>Catálogo</b> (autores, códigos BISAC, disponibilidades, editoras) e <b>Configuração</b>.</p>
 
-<h2>Testes</h2>
-<ul>
-    <li>
-        <strong>Teste automático (sem credencial, sem rede)</strong>
-        <p>
+      <h2 id="configuracao" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">Configuração</h2>
+      <ol class="steps" style="margin:0 0 16px 22px;padding:0;">
+        <li style="margin:0 0 7px;">Abra <span class="menupath" style="display:inline-block;background:#f1eaf6;border:1px solid #e5dbee;border-radius:6px;padding:1px 8px;font-size:13.5px;color:#251d2b;white-space:nowrap;">Metabooks<i style="font-style:normal;color:#6e2f91;margin:0 4px;font-weight:700;">‣</i>Configuração<i style="font-style:normal;color:#6e2f91;margin:0 4px;font-weight:700;">‣</i>Configurações</span> (a mesma página existe em <span class="menupath" style="display:inline-block;background:#f1eaf6;border:1px solid #e5dbee;border-radius:6px;padding:1px 8px;font-size:13.5px;color:#251d2b;white-space:nowrap;">Definições<i style="font-style:normal;color:#6e2f91;margin:0 4px;font-weight:700;">‣</i>Metabooks</span>).</li>
+        <li style="margin:0 0 7px;">Preencha <span class="field" style="font-weight:600;color:#251d2b;">Usuário do Metabooks</span> e <span class="field" style="font-weight:600;color:#251d2b;">Senha do Metabooks</span> — as credenciais da sua conta no portal Metabooks.</li>
+        <li style="margin:0 0 7px;">Clique em <b>Testar conexão</b>. Se as credenciais estiverem certas, o sistema confirma e o campo <span class="field" style="font-weight:600;color:#251d2b;">Autorização do Metabooks</span> passa a guardar o código de acesso, renovado sozinho daí em diante — você não precisa mexer nele.</li>
+        <li style="margin:0 0 7px;">O campo <span class="field" style="font-weight:600;color:#251d2b;">Ids do Metabooks</span> é informativo, preenchido pela própria integração.</li>
+      </ol>
+      <p style="margin:0 0 12px;">Ainda nessa página, o bloco <b>Custom Product's Fields</b> permite escolher, em <span class="field" style="font-weight:600;color:#251d2b;">Product Fields</span>, quais campos do produto aparecem na página pública do livro no site.</p>
+      <p style="margin:0 0 12px;"><b>Acesso.</b> Os botões de sincronização no formulário do produto pedem o grupo <b>Acesso ao Metabooks</b> (em <span class="menupath" style="display:inline-block;background:#f1eaf6;border:1px solid #e5dbee;border-radius:6px;padding:1px 8px;font-size:13.5px;color:#251d2b;white-space:nowrap;">Definições<i style="font-style:normal;color:#6e2f91;margin:0 4px;font-weight:700;">‣</i>Usuários e empresas<i style="font-style:normal;color:#6e2f91;margin:0 4px;font-weight:700;">‣</i>Usuários</span>, seção Metabooks Access). Os menus de configuração são de administrador.</p>
+      <div class="callout note" style="border:1px solid #e5dbee;border-left:4px solid #6e2f91;border-radius:10px;background:#f1eaf6;padding:14px 18px;margin:0 0 16px;"><span class="title" style="font-weight:700;font-size:12px;letter-spacing:.08em;text-transform:uppercase;display:block;margin:0 0 4px;color:#6e2f91;">Nota</span>
+        <p style="margin:0 0 12px;">As credenciais valem para a conta toda — não há nada a configurar por empresa. Elas nunca entram em relatórios nem em testes; ficam guardadas nos parâmetros do sistema.</p>
+      </div>
+
+      <figure class="shot" style="margin:20px 0 24px;">
+        <img src="img/doc-liber_metabooks_integration-settings.png" alt="Página de configurações do Metabooks com usuário, senha, código de autorização e o botão Testar conexão" style="max-width:100%;display:block;margin:0 auto;border-radius:12px;border:1px solid #e5dbee;">
+        <figcaption style="font-size:13px;color:#5d5266;margin-top:10px;text-align:center;">Configurações da integração: credenciais do portal e o teste de conexão.</figcaption>
+      </figure>
+
+      <h2 id="importar-isbn" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">Importar livros por ISBN</h2>
+      <p style="margin:0 0 12px;">O caminho para poucos títulos — um lançamento, uma lista que chegou por e-mail:</p>
+      <ol class="steps" style="margin:0 0 16px 22px;padding:0;">
+        <li style="margin:0 0 7px;">Abra <span class="menupath" style="display:inline-block;background:#f1eaf6;border:1px solid #e5dbee;border-radius:6px;padding:1px 8px;font-size:13.5px;color:#251d2b;white-space:nowrap;">Metabooks<i style="font-style:normal;color:#6e2f91;margin:0 4px;font-weight:700;">‣</i>Importações<i style="font-style:normal;color:#6e2f91;margin:0 4px;font-weight:700;">‣</i>Importar por ISBN</span>.</li>
+        <li style="margin:0 0 7px;">Cole os ISBNs no campo <span class="field" style="font-weight:600;color:#251d2b;">ISBNs</span> — um por linha, ou separados por vírgula ou espaço. Com ou sem hífens, tanto faz.</li>
+        <li style="margin:0 0 7px;">Clique em <b>Importar</b>.</li>
+      </ol>
+      <p style="margin:0 0 12px;">Ao final, o sistema abre a lista dos livros trazidos e resume o resultado: quantos são <b>novos</b>, quantos foram <b>atualizados</b> e quantos <b>não foram encontrados</b> na Metabooks. A importação é segura de repetir: um livro que já existe (mesmo ISBN) é atualizado, nunca duplicado.</p>
+      <p style="margin:0 0 12px;">A importação por ISBN traz o registro completo: ficha editorial, autores com seus papéis, sinopse, preço de capa, capa e a ficha técnica inteira (medidas, peso, páginas, acabamento, NCM, idiomas).</p>
+
+      <h2 id="importar-catalogo" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">Importar o catálogo de uma editora</h2>
+      <p style="margin:0 0 12px;">Para trazer (ou ressincronizar) tudo de uma vez:</p>
+      <ol class="steps" style="margin:0 0 16px 22px;padding:0;">
+        <li style="margin:0 0 7px;">Abra <span class="menupath" style="display:inline-block;background:#f1eaf6;border:1px solid #e5dbee;border-radius:6px;padding:1px 8px;font-size:13.5px;color:#251d2b;white-space:nowrap;">Metabooks<i style="font-style:normal;color:#6e2f91;margin:0 4px;font-weight:700;">‣</i>Importações<i style="font-style:normal;color:#6e2f91;margin:0 4px;font-weight:700;">‣</i>Importar por ID da editora</span>.</li>
+        <li style="margin:0 0 7px;">Informe o <span class="field" style="font-weight:600;color:#251d2b;">ID da editora (MVB)</span> — o identificador da editora na Metabooks, por exemplo <code style="background:#f1eaf6;border:1px solid #e5dbee;border-radius:5px;padding:1px 6px;font-size:13px;font-family:ui-monospace,Menlo,Consolas,monospace;">BR0089701</code>.</li>
+        <li style="margin:0 0 7px;">Opcionalmente, use <span class="field" style="font-weight:600;color:#251d2b;">Limite</span> para um teste pequeno (0 importa o catálogo inteiro), e escolha se quer <span class="field" style="font-weight:600;color:#251d2b;">Baixar capas</span> e <span class="field" style="font-weight:600;color:#251d2b;">Baixar fichas técnicas</span>.</li>
+        <li style="margin:0 0 7px;">Clique em <b>Importar</b>. O sistema cria uma <b>importação de catálogo</b> e a processa em segundo plano, página a página.</li>
+      </ol>
+      <p style="margin:0 0 12px;">Acompanhe em <span class="menupath" style="display:inline-block;background:#f1eaf6;border:1px solid #e5dbee;border-radius:6px;padding:1px 8px;font-size:13.5px;color:#251d2b;white-space:nowrap;">Metabooks<i style="font-style:normal;color:#6e2f91;margin:0 4px;font-weight:700;">‣</i>Importações<i style="font-style:normal;color:#6e2f91;margin:0 4px;font-weight:700;">‣</i>Importações de catálogo</span>: cada registro mostra o tamanho do catálogo, quantos livros já entraram e a barra de progresso. O processamento salva o avanço a cada página — se for interrompido, retoma sozinho de onde parou. Os botões <b>Executar agora</b>, <b>Atualizar</b> e <b>Reexecutar</b> fazem o que dizem.</p>
+      <div class="callout tip" style="border:1px solid #e5dbee;border-left:4px solid #6e2f91;border-radius:10px;padding:14px 18px;margin:0 0 16px;border-left-color:#2e6e4e;background:#eef5f0;border-color:#d8e7dd;"><span class="title" style="font-weight:700;font-size:12px;letter-spacing:.08em;text-transform:uppercase;display:block;margin:0 0 4px;color:#2e6e4e;">Dica</span>
+        <p style="margin:0 0 12px;">O catálogo (feed) da Metabooks não carrega a ficha técnica — medidas, peso, páginas, acabamento e NCM só existem no registro individual de cada ISBN. Marcando <span class="field" style="font-weight:600;color:#251d2b;">Baixar fichas técnicas</span>, o sistema encadeia automaticamente um segundo trabalho que completa cada livro, um ISBN por vez, sem tocar em preço, nome, categoria nem capa. É mais lento; deixe correr em segundo plano.</p>
+      </div>
+      <p style="margin:0 0 12px;">Também dá para disparar do cadastro da editora: no contato, o grupo <b>Product</b> lista os IDs Metabooks da editora, cada um com o botão <b>Import Catalogue</b>.</p>
+
+      <figure class="shot" style="margin:20px 0 24px;">
+        <img src="img/doc-liber_metabooks_integration-job.png" alt="Registro de importação de catálogo com progresso, total de livros, páginas e situação Em execução" style="max-width:100%;display:block;margin:0 auto;border-radius:12px;border:1px solid #e5dbee;">
+        <figcaption style="font-size:13px;color:#5d5266;margin-top:10px;text-align:center;">A importação de catálogo roda em segundo plano e mostra o progresso ao vivo.</figcaption>
+      </figure>
+
+      <h2 id="o-que-vem" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">O que é importado</h2>
+      <div class="tablewrap" style="overflow-x:auto;margin:0 0 16px;"><table style="border-collapse:collapse;width:100%;margin:0 0 16px;font-size:14px;">
+        <thead><tr><th style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;background:#f1eaf6;font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:13.5px;">Na Metabooks</th><th style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;background:#f1eaf6;font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:13.5px;">No sistema</th></tr></thead>
+        <tbody>
+          <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Título, subtítulo e autores</td><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Nome do produto no formato "Título: Subtítulo (Autor; Autor)" — do jeito que a equipe procura o livro — mais os campos separados de título e subtítulo.</td></tr>
+          <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Contribuidores (autor, tradutor, organizador, ilustrador…)</td><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Cadastro de autores com papel, ordem e nota biográfica, ligado ao livro. Consultável em <span class="menupath" style="display:inline-block;background:#f1eaf6;border:1px solid #e5dbee;border-radius:6px;padding:1px 8px;font-size:13.5px;color:#251d2b;white-space:nowrap;">Metabooks<i style="font-style:normal;color:#6e2f91;margin:0 4px;font-weight:700;">‣</i>Catálogo<i style="font-style:normal;color:#6e2f91;margin:0 4px;font-weight:700;">‣</i>Autores</span>.</td></tr>
+          <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Preço de capa</td><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Preço de venda do produto.</td></tr>
+          <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Sinopse</td><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Campo Sinopse da aba Metabooks do produto.</td></tr>
+          <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Capa</td><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Imagem do produto.</td></tr>
+          <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Selo e coleção</td><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Categoria do produto, na árvore <b>Selo / Coleção</b> — selos e coleções nunca se misturam.</td></tr>
+          <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Palavras-chave e assuntos</td><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Marcadores do produto (somados aos que já existiam, nunca apagando os manuais).</td></tr>
+          <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Disponibilidade (ONIX)</td><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Situação legível ("Em estoque", "Esgotado"…), com filtros prontos de disponível/indisponível. Tabela em <span class="menupath" style="display:inline-block;background:#f1eaf6;border:1px solid #e5dbee;border-radius:6px;padding:1px 8px;font-size:13.5px;color:#251d2b;white-space:nowrap;">Metabooks<i style="font-style:normal;color:#6e2f91;margin:0 4px;font-weight:700;">‣</i>Catálogo<i style="font-style:normal;color:#6e2f91;margin:0 4px;font-weight:700;">‣</i>Disponibilidade</span>.</td></tr>
+          <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Ficha técnica ONIX</td><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Aba <b>Ficha técnica</b> do produto: formato, acabamento, altura, largura, lombada, peso, orelhas, sobrecapa, fitilho, páginas (miolo, pré e pós-textuais), ilustrações, edição, idiomas, NCM, cidade e país de publicação, status de publicação.</td></tr>
+          <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Tipo de produto</td><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Livro impresso, e-book ou audiolivro — com filtros prontos na busca. Impressos entram com controle de estoque ligado; digitais, sem.</td></tr>
+        </tbody>
+      </table></div>
+
+      <h2 id="no-produto" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">No formulário do livro</h2>
+      <p style="margin:0 0 12px;">Todo produto importado ganha duas abas — <b>Metabooks</b> (dados editoriais e comerciais) e <b>Ficha técnica</b> (a especificação física, a mesma de que uma gráfica orça) — e dois botões no topo, para quem tem o grupo de acesso:</p>
+      <ul style="margin:0 0 14px 22px;padding:0;">
+        <li style="margin:0 0 7px;"><b>Metabooks</b> — reimporta o registro completo deste livro, atualizando tudo;</li>
+        <li style="margin:0 0 7px;"><b>Atualizar ficha técnica</b> — busca só a parte física, sem tocar no resto.</li>
+      </ul>
+      <p style="margin:0 0 12px;">A busca de produtos também aprende com a integração: dá para procurar por <b>autor</b>, <b>editora</b>, <b>selo</b> e <b>tipo de livro</b>, e agrupar por qualquer um deles.</p>
+
+      <h2 id="envio" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">Envio para a Metabooks (o caminho de volta)</h2>
+
+      <div class="callout warn" style="border:1px solid #e5dbee;border-left:4px solid #6e2f91;border-radius:10px;padding:14px 18px;margin:0 0 16px;border-left-color:#b3831a;background:#faf3e3;border-color:#eddfba;"><span class="title" style="font-weight:700;font-size:12px;letter-spacing:.08em;text-transform:uppercase;display:block;margin:0 0 4px;color:#7a5a12;">Em desenvolvimento</span>
+        <p style="margin:0 0 12px;">Esta frente está funcional até a geração da planilha, mas <b>a entrega à Metabooks ainda é manual</b>: o sistema não sobe o arquivo sozinho (nem por FTP, nem por API — o transporte automático depende de liberação da própria Metabooks). Baixe a planilha gerada, envie pelo canal combinado com eles e só então marque o envio como concluído. As tarefas de arquivamento (X) e reativação (R) existem na tela, mas ainda não foram exercitadas em produção.</p>
+      </div>
+
+      <p style="margin:0 0 12px;">A lógica: quando alguém edita, em um livro, um campo que a Metabooks conhece (título, sinopse, preço, medidas, autores…), o livro entra numa <b>fila de pendências</b>. De tempos em tempos, alguém junta as pendências num <b>envio</b>, confere o antes/depois de cada alteração e gera a planilha no formato que a Metabooks aceita.</p>
+      <ol class="steps" style="margin:0 0 16px 22px;padding:0;">
+        <li style="margin:0 0 7px;">Veja o que está esperando em <span class="menupath" style="display:inline-block;background:#f1eaf6;border:1px solid #e5dbee;border-radius:6px;padding:1px 8px;font-size:13.5px;color:#251d2b;white-space:nowrap;">Metabooks<i style="font-style:normal;color:#6e2f91;margin:0 4px;font-weight:700;">‣</i>Envios<i style="font-style:normal;color:#6e2f91;margin:0 4px;font-weight:700;">‣</i>Alterações pendentes</span> — são os livros editados desde a última conversa com a Metabooks.</li>
+        <li style="margin:0 0 7px;">Abra <span class="menupath" style="display:inline-block;background:#f1eaf6;border:1px solid #e5dbee;border-radius:6px;padding:1px 8px;font-size:13.5px;color:#251d2b;white-space:nowrap;">Metabooks<i style="font-style:normal;color:#6e2f91;margin:0 4px;font-weight:700;">‣</i>Envios<i style="font-style:normal;color:#6e2f91;margin:0 4px;font-weight:700;">‣</i>Envios para a Metabooks</span> e crie um envio. Escolha a <span class="field" style="font-weight:600;color:#251d2b;">Tarefa</span>: <b>Alteração (V)</b> para atualizar títulos que a Metabooks já tem, <b>Cadastro novo (Z)</b> para títulos inéditos lá.</li>
+        <li style="margin:0 0 7px;">Clique em <b>Buscar alterações</b>. Cada livro pendente entra como uma linha, e a aba <b>Alterações</b> mostra o de/para de cada campo, lido do histórico do produto.</li>
+        <li style="margin:0 0 7px;">Desmarque o que não deve ir — um livro inteiro, ou um campo isolado de um livro. Campo desmarcado simplesmente não é escrito, e coluna que a Metabooks não recebe é coluna que ela não mexe.</li>
+        <li style="margin:0 0 7px;">Clique em <b>Verificar</b>. O sistema barra tudo o que a Metabooks recusaria: livro sem ISBN, ISBN que não tem 13 dígitos, dois livros com o mesmo ISBN, cadastro novo sem os campos obrigatórios, e campo que foi <b>apagado</b> aqui (apagar um dado lá exige uma marca especial que este envio ainda não escreve — a verificação explica o que fazer).</li>
+        <li style="margin:0 0 7px;">Clique em <b>Gerar planilha</b>. O arquivo <code style="background:#f1eaf6;border:1px solid #e5dbee;border-radius:5px;padding:1px 6px;font-size:13px;font-family:ui-monospace,Menlo,Consolas,monospace;">.xlsx</code> sai com o nome que a Metabooks espera (por exemplo <code style="background:#f1eaf6;border:1px solid #e5dbee;border-radius:5px;padding:1px 6px;font-size:13px;font-family:ui-monospace,Menlo,Consolas,monospace;">V_BR5108985_20260720_Alteracoes.xlsx</code>) e com <b>as células alteradas em vermelho</b> — a própria planilha é o documento de conferência: o que está vermelho é o que estamos pedindo para mudar.</li>
+        <li style="margin:0 0 7px;"><b>Baixe</b> a planilha e envie à Metabooks pelo canal combinado com o atendimento deles.</li>
+        <li style="margin:0 0 7px;">Só depois do upload dar certo, clique em <b>Marcar como enviada</b>. É esse passo — e não a geração do arquivo — que tira os livros da fila: se o upload falhar, nada se perde. A confirmação da Metabooks chega por e-mail consolidado, depois da meia-noite.</li>
+      </ol>
+      <p style="margin:0 0 12px;">O histórico fica: <span class="menupath" style="display:inline-block;background:#f1eaf6;border:1px solid #e5dbee;border-radius:6px;padding:1px 8px;font-size:13.5px;color:#251d2b;white-space:nowrap;">Metabooks<i style="font-style:normal;color:#6e2f91;margin:0 4px;font-weight:700;">‣</i>Envios<i style="font-style:normal;color:#6e2f91;margin:0 4px;font-weight:700;">‣</i>Histórico</span> lista, campo a campo, tudo o que já foi pedido à Metabooks, em qual envio e com qual antes/depois.</p>
+
+      <figure class="shot" style="margin:20px 0 24px;">
+        <img src="img/doc-liber_metabooks_integration-envio.png" alt="Formulário de um envio para a Metabooks com os botões Buscar alterações, Verificar e Gerar planilha, e a aba de alterações com colunas Antes e Depois" style="max-width:100%;display:block;margin:0 auto;border-radius:12px;border:1px solid #e5dbee;">
+        <figcaption style="font-size:13px;color:#5d5266;margin-top:10px;text-align:center;">Um envio em preparação: os livros pendentes, o de/para de cada campo e os botões do ciclo.</figcaption>
+      </figure>
+
+      <div class="callout note" style="border:1px solid #e5dbee;border-left:4px solid #6e2f91;border-radius:10px;background:#f1eaf6;padding:14px 18px;margin:0 0 16px;"><span class="title" style="font-weight:700;font-size:12px;letter-spacing:.08em;text-transform:uppercase;display:block;margin:0 0 4px;color:#6e2f91;">Nota</span>
+        <p style="margin:0 0 12px;">A atualização na Metabooks é <b>incremental</b>: a planilha leva só o ISBN, o título (para a linha ser legível) e as colunas que mudaram — o que não vai na planilha permanece intocado lá. Das 74 colunas do modelo oficial, o sistema sabe preencher as que de fato existem no cadastro daqui; as demais nunca são escritas.</p>
+      </div>
+
+      <h2 id="regras" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">Regras e guardas</h2>
+      <div class="tablewrap" style="overflow-x:auto;margin:0 0 16px;"><table style="border-collapse:collapse;width:100%;margin:0 0 16px;font-size:14px;">
+        <thead><tr><th style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;background:#f1eaf6;font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:13.5px;">Regra</th><th style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;background:#f1eaf6;font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:13.5px;">O que ela garante</th></tr></thead>
+        <tbody>
+          <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Um livro por ISBN</td><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Importar de novo atualiza, nunca duplica. O ISBN é a identidade do livro em todo o sistema.</td></tr>
+          <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Importação não gera pendência de envio</td><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Os dados que a própria Metabooks mandou não voltam para ela: só edições feitas por pessoas marcam o livro como pendente.</td></tr>
+          <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">O segundo envio leva só o que mudou</td><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Cada envio registra um marco no histórico do livro; o próximo parte dali. Editar e desfazer no meio do caminho não gera envio de nada.</td></tr>
+          <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Livro sem histórico legível vai completo</td><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Se não há como saber o que mudou (coluna <b>Sem histórico</b> na tela do envio), todas as colunas mapeadas são enviadas — melhor do que uma linha vazia.</td></tr>
+          <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Envio concluído é definitivo</td><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Um envio marcado como enviado não pode ser cancelado nem reaberto: ele é o registro do que foi pedido à Metabooks, e fica.</td></tr>
+          <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Marcadores e capas preservados</td><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">A importação soma marcadores sem apagar os manuais; a atualização de ficha técnica nunca toca preço, nome, categoria ou capa.</td></tr>
+        </tbody>
+      </table></div>
+
+      <h2 id="problemas" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">Solução de problemas</h2>
+      <p style="margin:0 0 12px;"><b>"Set the Metabooks username and password…" ao importar.</b> As credenciais não estão salvas. Volte a <a href="#configuracao" style="color:#6e2f91;">Configuração</a>, preencha usuário e senha e use <b>Testar conexão</b>.</p>
+      <p style="margin:0 0 12px;"><b>ISBN não encontrado.</b> O resumo da importação lista os ISBNs que a Metabooks não conhece. Confira a digitação; se o número estiver certo, o título ainda não foi cadastrado lá pela editora responsável.</p>
+      <p style="margin:0 0 12px;"><b>A importação de catálogo parou em "Falhou".</b> Abra o registro em <b>Importações de catálogo</b>: o campo <span class="field" style="font-weight:600;color:#251d2b;">Mensagem</span> traz o motivo (credencial expirada, ID de editora errado, instabilidade da API). Resolvida a causa, <b>Reexecutar</b> recomeça do zero com segurança — o que já entrou será apenas atualizado.</p>
+      <p style="margin:0 0 12px;"><b>Livros do catálogo vieram sem medidas ou sem autores.</b> É a limitação do feed: ele não carrega ficha técnica, e traz menos dados editoriais que o registro individual. Rode a importação com <span class="field" style="font-weight:600;color:#251d2b;">Baixar fichas técnicas</span> marcado, ou reimporte os títulos por ISBN.</p>
+      <p style="margin:0 0 12px;"><b>"Verificar" reclamou de um campo apagado.</b> Apagar um dado na Metabooks exige uma marca de exclusão que o envio ainda não escreve. Ou devolva o valor ao campo, ou deixe esse livro fora do envio e faça a exclusão diretamente no painel deles.</p>
+
+      <div class="seealso" style="border:1px solid #e5dbee;border-radius:12px;background:#f1eaf6;padding:16px 20px;margin:32px 0 0;">
+        <p style="margin:0 0 12px;"><b>Veja também</b></p>
+        <ul style="margin:0 0 14px 22px;padding:0;">
+          <li style="margin:0 0 7px;"><a href="/liber_site/static/docs/liber_nfe_xml.html" target="_blank" rel="noopener" style="color:#6e2f91;">Importação de XML de NF-e</a> — as notas importadas casam seus itens com os livros pelo mesmo ISBN que a Metabooks preenche.</li>
+          <li style="margin:0 0 7px;"><a href="/liber_site/static/docs/liber_soc_agreements.html" target="_blank" rel="noopener" style="color:#6e2f91;">Acordos de consignação</a> — o catálogo importado é o que abastece as prateleiras consignadas.</li>
+        </ul>
+      </div>
+
+      
+    
+<h2 style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">Testes</h2>
+<ul style="margin:0 0 14px 22px;padding:0;">
+    <li style="margin:0 0 7px;">
+        <strong style="color:#251d2b;">Teste automático (sem credencial, sem rede)</strong>
+        <p style="margin:0 0 12px;">
             A camada HTTP é mockada num único ponto:
-            <code>metabooks.connector._get_client</code> é substituído por um
+            <code style="background:#f1eaf6;border:1px solid #e5dbee;border-radius:5px;padding:1px 6px;font-size:13px;font-family:ui-monospace,Menlo,Consolas,monospace;">metabooks.connector._get_client</code> é substituído por um
             cliente falso, então nenhuma credencial de
-            <code>ir.config_parameter</code> é lida e nenhuma chamada de rede
+            <code style="background:#f1eaf6;border:1px solid #e5dbee;border-radius:5px;padding:1px 6px;font-size:13px;font-family:ui-monospace,Menlo,Consolas,monospace;">ir.config_parameter</code> é lida e nenhuma chamada de rede
             acontece. Verifica-se o parsing + upsert: dado um payload conhecido
-            da API, os campos <code>metabooks_*</code> corretos são gravados no
+            da API, os campos <code style="background:#f1eaf6;border:1px solid #e5dbee;border-radius:5px;padding:1px 6px;font-size:13px;font-family:ui-monospace,Menlo,Consolas,monospace;">metabooks_*</code> corretos são gravados no
             produto (import por ISBN, idempotência, "não encontrado" e import
             de catálogo de editora). Rodar:
         </p>
-        <pre>odoo -d copyright19 -u liber_metabooks_integration \
+        <pre style="background:#2b2233;color:#efe6f5;border-radius:12px;padding:16px 20px;overflow-x:auto;margin:0 0 16px;font-size:13px;line-height:1.6;">odoo -d copyright19 -u liber_metabooks_integration \
   --test-enable --test-tags '/liber_metabooks_integration:TestMetabooksSync' \
   --http-port=8072 --stop-after-init</pre>
     </li>
-    <li>
-        <strong>Smoke test manual (sync real de uma editora)</strong>
-        <p>
+    <li style="margin:0 0 7px;">
+        <strong style="color:#251d2b;">Smoke test manual (sync real de uma editora)</strong>
+        <p style="margin:0 0 12px;">
             Para exercitar a integração de ponta a ponta contra a API real —
-            por exemplo o catálogo da editora <code>BR0089701</code> (um id
+            por exemplo o catálogo da editora <code style="background:#f1eaf6;border:1px solid #e5dbee;border-radius:5px;padding:1px 6px;font-size:13px;font-family:ui-monospace,Menlo,Consolas,monospace;">BR0089701</code> (um id
             VL / mvbId, não um ISBN):
         </p>
-        <ol>
-            <li>Em Definições &rarr; Metabooks, preencha usuário e senha reais.
-                As credenciais ficam em <code>ir.config_parameter</code> e
-                <strong>nunca</strong> no código nem no repositório.</li>
-            <li>Use o assistente "Importar por editora" e informe
-                <code>BR0089701</code>, ou dispare um
-                <code>metabooks.import.job</code> para o catálogo completo
+        <ol style="margin:0 0 14px 22px;padding:0;">
+            <li style="margin:0 0 7px;">Em Definições &rarr; Metabooks, preencha usuário e senha reais.
+                As credenciais ficam em <code style="background:#f1eaf6;border:1px solid #e5dbee;border-radius:5px;padding:1px 6px;font-size:13px;font-family:ui-monospace,Menlo,Consolas,monospace;">ir.config_parameter</code> e
+                <strong style="color:#251d2b;">nunca</strong> no código nem no repositório.</li>
+            <li style="margin:0 0 7px;">Use o assistente "Importar por editora" e informe
+                <code style="background:#f1eaf6;border:1px solid #e5dbee;border-radius:5px;padding:1px 6px;font-size:13px;font-family:ui-monospace,Menlo,Consolas,monospace;">BR0089701</code>, ou dispare um
+                <code style="background:#f1eaf6;border:1px solid #e5dbee;border-radius:5px;padding:1px 6px;font-size:13px;font-family:ui-monospace,Menlo,Consolas,monospace;">metabooks.import.job</code> para o catálogo completo
                 (roda em segundo plano, retomável).</li>
-            <li>Confira que os produtos foram criados/atualizados com título,
+            <li style="margin:0 0 7px;">Confira que os produtos foram criados/atualizados com título,
                 editora, autores e dados técnicos, e que a capa baixou.</li>
         </ol>
-        <p>
+        <p style="margin:0 0 12px;">
             Este passo depende de credencial válida e de rede, por isso fica
             fora do teste automático — é uma verificação humana, sob demanda.
         </p>
     </li>
-</ul>
+</ul><p style="margin:28px 0 0;padding-top:14px;border-top:1px solid #e5dbee;font-size:13px;color:#5d5266;">Manual completo, com busca e as demais páginas: <a href="/liber_site/static/docs/liber_metabooks_integration.html" target="_blank" rel="noopener" style="color:#6e2f91;">Integração Metabooks</a>.</p></div>

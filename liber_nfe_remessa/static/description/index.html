@@ -1,0 +1,94 @@
+<!-- GERADO por scripts/gen_module_descriptions.py a partir de
+     liber_site/static/docs/liber_nfe_remessa.html -- não edite aqui.
+     O Odoo mostra este arquivo em Apps > Module Info. -->
+<div class="oe_container liber_manual" style="max-width:900px;margin:0 auto;padding:8px 4px 24px;color:#251d2b;background:transparent;font:15px/1.7 Inter,'Segoe UI',system-ui,sans-serif;"><h1 style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:32px;line-height:1.2;letter-spacing:-.015em;margin:0 0 10px;color:#251d2b;">Notas de remessa</h1>
+      <p class="lead" style="font-size:17.5px;color:#5d5266;margin:0 0 26px;max-width:62ch;">Notas fiscais que nunca geram cobrança — consignação, bonificação, material de feira — emitidas e baixadas automaticamente, sem jamais aparecerem como dívida de ninguém.</p>
+
+      <h2 id="visao-geral" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">Visão geral</h2>
+      <p style="margin:0 0 12px;">No Brasil, todo livro que sai do armazém precisa de nota fiscal — mesmo quando não há venda nenhuma. O lote consignado que vai para a livraria, os exemplares bonificados para divulgação, as caixas que viajam para uma feira: cada movimento desses exige uma nota, e nenhum deles é uma cobrança.</p>
+      <p style="margin:0 0 12px;">É para isso que existe a <b>nota de remessa</b>, o documento <b>REM/</b>. Ela é uma fatura de verdade — mesmo formulário, mesmos itens, mesmo valor — com duas diferenças:</p>
+      <ul style="margin:0 0 14px 22px;padding:0;">
+        <li style="margin:0 0 7px;">vive em um <b>diário próprio</b> (código REM), com numeração própria e contínua: REM/00001, REM/00002…;</li>
+        <li style="margin:0 0 7px;">ao ser confirmada, o valor a receber é <b>baixado automaticamente</b> contra uma conta-espelho configurada na posição fiscal — a nota nasce quitada, porque nunca houve dívida.</li>
+      </ul>
+      <p style="margin:0 0 12px;">Com isso, o menu <b>Faturas</b> fica só com as vendas de verdade (as que esperam pagamento e conciliação bancária), e as remessas ganham a sua própria lista, onde bonificação, consignação e eventos convivem separáveis pela origem.</p>
+
+      <div class="callout note" style="border:1px solid #e5dbee;border-left:4px solid #6e2f91;border-radius:10px;background:#f1eaf6;padding:14px 18px;margin:0 0 16px;"><span class="title" style="font-weight:700;font-size:12px;letter-spacing:.08em;text-transform:uppercase;display:block;margin:0 0 4px;color:#6e2f91;">Nota</span>
+        <p style="margin:0 0 12px;">Normalmente <b>você não cria uma remessa à mão</b>. Elas nascem dos documentos que coordenam cada operação — a campanha de bonificação, o pedido de consignação — e chegam aqui prontas. Este módulo é a casa fiscal delas: o diário, a numeração, a baixa automática e a lista para consulta.</p>
+      </div>
+
+      <figure class="shot" style="margin:20px 0 24px;">
+        <img src="img/doc-liber_nfe_remessa-lista.png" alt="Lista de remessas com número REM, data, destinatário, origem da remessa, documento de origem e total" style="max-width:100%;display:block;margin:0 auto;border-radius:12px;border:1px solid #e5dbee;">
+        <figcaption style="font-size:13px;color:#5d5266;margin-top:10px;text-align:center;">A lista de Remessas: cada linha diz de onde a nota veio (bonificação, consignação) e para quem foi.</figcaption>
+      </figure>
+
+      <h2 id="configuracao" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">Configuração</h2>
+
+      <h3 id="config-fpos" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:19px;line-height:1.25;margin:28px 0 10px;color:#251d2b;">A posição fiscal com baixa automática</h3>
+      <p style="margin:0 0 12px;">O que faz uma nota se quitar sozinha é a sua <b>posição fiscal</b>. Para cada tipo de remessa que a editora pratica (remessa em consignação, bonificação, feira…):</p>
+      <ol class="steps" style="margin:0 0 16px 22px;padding:0;">
+        <li style="margin:0 0 7px;">Abra <span class="menupath" style="display:inline-block;background:#f1eaf6;border:1px solid #e5dbee;border-radius:6px;padding:1px 8px;font-size:13.5px;color:#251d2b;white-space:nowrap;">Faturamento<i style="font-style:normal;color:#6e2f91;margin:0 4px;font-weight:700;">‣</i>Configuração<i style="font-style:normal;color:#6e2f91;margin:0 4px;font-weight:700;">‣</i>Posições fiscais</span> e crie (ou abra) a posição fiscal da operação.</li>
+        <li style="margin:0 0 7px;">Marque <span class="field" style="font-weight:600;color:#251d2b;">Baixa automática (Auto Invoice Paid)</span>.</li>
+        <li style="margin:0 0 7px;">Em <span class="field" style="font-weight:600;color:#251d2b;">Conta da baixa automática</span>, escolha a conta-espelho que recebe a contrapartida — por exemplo, uma conta "(-) Remessa de mercadoria".</li>
+        <li style="margin:0 0 7px;">Salve.</li>
+      </ol>
+      <p style="margin:0 0 12px;">Os nomes dos campos são os mesmos usados na configuração do sistema de produção antigo, de propósito: as posições fiscais já existentes lá (devoluções, feiras, remessas, bonificação) migram uma a uma, sem tradução.</p>
+
+      <h3 id="config-diario" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:19px;line-height:1.25;margin:28px 0 10px;color:#251d2b;">O diário REM</h3>
+      <p style="margin:0 0 12px;">Não há nada a criar: o diário de remessas (nome <b>Remessas</b>, código <b>REM</b>) é <b>criado automaticamente na primeira vez</b> que algum documento precisa dele, uma vez por empresa. É a marca "diário de remessa" nele — e não o código — que faz as notas dele sumirem de Faturas e aparecerem em Remessas.</p>
+
+      <div class="callout tip" style="border:1px solid #e5dbee;border-left:4px solid #6e2f91;border-radius:10px;padding:14px 18px;margin:0 0 16px;border-left-color:#2e6e4e;background:#eef5f0;border-color:#d8e7dd;"><span class="title" style="font-weight:700;font-size:12px;letter-spacing:.08em;text-transform:uppercase;display:block;margin:0 0 4px;color:#2e6e4e;">Dica</span>
+        <p style="margin:0 0 12px;">A numeração fiscal não fura. A baixa automática é lançada em um diário de operações diversas, nunca no REM — uma sequência fiscal com buracos (REM/00001, 00003…) pareceria ter notas faltando, e aqui cada número é de uma nota de verdade.</p>
+      </div>
+
+      <h2 id="confirmar" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">O que acontece ao confirmar uma remessa</h2>
+      <p style="margin:0 0 12px;">Quando uma nota do diário REM é confirmada:</p>
+      <ol class="steps" style="margin:0 0 16px 22px;padding:0;">
+        <li style="margin:0 0 7px;">A nota é lançada normalmente, com o próximo número REM/ da sequência.</li>
+        <li style="margin:0 0 7px;">No mesmo instante, o sistema cria um <b>lançamento de baixa</b>: o valor a receber é liquidado contra a <span class="field" style="font-weight:600;color:#251d2b;">Conta da baixa automática</span> da posição fiscal e as duas pontas são conciliadas.</li>
+        <li style="margin:0 0 7px;">A nota fica com saldo zero — quitada — e exibe a faixa azul <b>Simples remessa</b> em vez da faixa "Pago". Uma remessa nunca será "paga", porque nada jamais foi devido; a tela diz o que a nota <i>é</i>.</li>
+        <li style="margin:0 0 7px;">O botão <b>Baixa automática</b>, no topo do formulário, abre o lançamento de baixa correspondente: nota e baixa se enxergam mutuamente, como duas metades de um mesmo fato fiscal.</li>
+      </ol>
+
+      <figure class="shot" style="margin:20px 0 24px;">
+        <img src="img/doc-liber_nfe_remessa-form.png" alt="Formulário de uma nota de remessa confirmada, com a faixa Simples remessa e o botão que abre a baixa automática" style="max-width:100%;display:block;margin:0 auto;border-radius:12px;border:1px solid #e5dbee;">
+        <figcaption style="font-size:13px;color:#5d5266;margin-top:10px;text-align:center;">Nota confirmada: faixa "Simples remessa", saldo zero e o atalho para o lançamento de baixa.</figcaption>
+      </figure>
+
+      <div class="callout example" style="border:1px solid #e5dbee;border-left:4px solid #6e2f91;border-radius:10px;background:#f1eaf6;padding:14px 18px;margin:0 0 16px;border-left-color:#c76ae1;"><span class="title" style="font-weight:700;font-size:12px;letter-spacing:.08em;text-transform:uppercase;display:block;margin:0 0 4px;color:#8a4bad;">Exemplo</span>
+        <p style="margin:0 0 12px;">Uma campanha de divulgação envia 2 exemplares de R$ 25 para uma livraria. A nota REM/00007 é emitida por R$ 50, confirmada e imediatamente baixada contra a conta-espelho da bonificação. A livraria nunca aparece em nenhuma lista de cobrança, e o custo da campanha fica visível na conta-espelho.</p>
+      </div>
+
+      <h2 id="consultar" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">Consultar as remessas</h2>
+      <ol class="steps" style="margin:0 0 16px 22px;padding:0;">
+        <li style="margin:0 0 7px;">Abra <span class="menupath" style="display:inline-block;background:#f1eaf6;border:1px solid #e5dbee;border-radius:6px;padding:1px 8px;font-size:13.5px;color:#251d2b;white-space:nowrap;">Faturamento<i style="font-style:normal;color:#6e2f91;margin:0 4px;font-weight:700;">‣</i>Clientes<i style="font-style:normal;color:#6e2f91;margin:0 4px;font-weight:700;">‣</i>Remessas</span>.</li>
+        <li style="margin:0 0 7px;">A lista mostra número, data, destinatário, <span class="field" style="font-weight:600;color:#251d2b;">Origem da remessa</span> (bonificação, consignação, outra), o <span class="field" style="font-weight:600;color:#251d2b;">Documento</span> que a gerou e o total.</li>
+        <li style="margin:0 0 7px;">Use os agrupamentos <b>Origem</b> e <b>Destinatário</b> do filtro para responder "quanto saiu em bonificação este mês?" ou "o que já mandamos para esta livraria?".</li>
+      </ol>
+      <p style="margin:0 0 12px;">Cada módulo que gera remessas registra ali a sua origem — a bonificação marca as dela, a consignação as dela — então uma lista só serve a todas as operações sem misturá-las.</p>
+
+      <h2 id="regras" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">Regras e guardas</h2>
+      <div class="tablewrap" style="overflow-x:auto;margin:0 0 16px;"><table style="border-collapse:collapse;width:100%;margin:0 0 16px;font-size:14px;">
+        <thead><tr><th style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;background:#f1eaf6;font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:13.5px;">Regra</th><th style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;background:#f1eaf6;font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:13.5px;">O que ela garante</th></tr></thead>
+        <tbody>
+          <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Diário de remessa exige posição fiscal com baixa automática</td><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Confirmar uma nota no diário REM sem a posição fiscal configurada é <b>recusado com uma mensagem clara</b>. Sem essa trava, uma nota meio-configurada seria lançada em silêncio e, semanas depois, uma livraria seria cobrada por livros que nunca comprou.</td></tr>
+          <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">A baixa não consome números REM/</td><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">O lançamento de quitação é contabilidade interna, não documento fiscal: ele é numerado no diário de diversos e a sequência REM/ permanece contínua.</td></tr>
+          <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Nota e baixa não se separam</td><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Não é possível excluir uma nota cuja baixa continua lançada — seria deixar meia operação pendurada no razão. Estorne ou reabra a baixa primeiro.</td></tr>
+          <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Faturas só com vendas</td><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">A lista de Faturas de cliente exclui os diários de remessa; a lista de Remessas mostra só eles. Nenhum documento aparece nos dois lugares.</td></tr>
+          <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Vendas comuns não são tocadas</td><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">A baixa automática só age em notas do diário de remessa. Uma fatura normal continua em aberto até ser paga, como sempre.</td></tr>
+        </tbody>
+      </table></div>
+
+      <h2 id="faq" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">Perguntas frequentes</h2>
+      <p style="margin:0 0 12px;"><b>Por que o extrato contábil mostra a remessa como quitada?</b> Porque o valor a receber foi de fato baixado — essa é a mecânica que impede a cobrança. A faixa "Simples remessa" na tela existe justamente para que ninguém leia essa quitação como um pagamento: não houve dinheiro, houve uma contrapartida na conta-espelho, auditável pelo botão <b>Baixa automática</b>.</p>
+      <p style="margin:0 0 12px;"><b>Posso criar uma remessa manualmente?</b> Pode, para os casos que nenhum módulo cobre (um envio avulso de material, por exemplo): crie a nota pela lista de Remessas, no diário Remessas, com uma posição fiscal que tenha a baixa automática configurada. Ao confirmar, ela se comporta como qualquer outra. Mas o caminho normal é deixar que o documento da operação (campanha, pedido de consignação) a gere.</p>
+      <p style="margin:0 0 12px;"><b>Confirmei e recebi um erro sobre a posição fiscal.</b> É a guarda em ação: a nota está no diário de remessa, mas a posição fiscal escolhida não tem <span class="field" style="font-weight:600;color:#251d2b;">Baixa automática (Auto Invoice Paid)</span> marcada (ou está sem a conta de contrapartida). Configure a posição fiscal — ou, se a nota é uma venda de verdade, mova-a para um diário de vendas comum.</p>
+      <p style="margin:0 0 12px;"><b>E se a remessa foi emitida por engano?</b> Estorne ou redefina a baixa (pelo botão <b>Baixa automática</b>) e depois cancele a nota. A ordem importa: a trava de exclusão impede que a nota desapareça deixando a baixa órfã.</p>
+
+      <div class="seealso" style="border:1px solid #e5dbee;border-radius:12px;background:#f1eaf6;padding:16px 20px;margin:32px 0 0;">
+        <p style="margin:0 0 12px;"><b>Veja também</b></p>
+        <ul style="margin:0 0 14px 22px;padding:0;">
+          <li style="margin:0 0 7px;"><a href="/liber_site/static/docs/liber_soc_moves.html" target="_blank" rel="noopener" style="color:#6e2f91;">Remessas e retornos</a> — a logística da consignação, que gera notas de remessa ao despachar para as livrarias.</li>
+          <li style="margin:0 0 7px;"><a href="/liber_site/static/docs/liber_nfe_xml.html" target="_blank" rel="noopener" style="color:#6e2f91;">Importação de XML de NF-e</a> — o caminho inverso: as notas de terceiros (e as nossas) entrando no sistema pelo XML.</li>
+        </ul>
+      </div><p style="margin:28px 0 0;padding-top:14px;border-top:1px solid #e5dbee;font-size:13px;color:#5d5266;">Manual completo, com busca e as demais páginas: <a href="/liber_site/static/docs/liber_nfe_remessa.html" target="_blank" rel="noopener" style="color:#6e2f91;">Notas de remessa</a>.</p></div>

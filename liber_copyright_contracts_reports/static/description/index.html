@@ -1,0 +1,118 @@
+<!-- GERADO por scripts/gen_module_descriptions.py a partir de
+     liber_site/static/docs/liber_copyright_contracts_reports.html -- não edite aqui.
+     O Odoo mostra este arquivo em Apps > Module Info. -->
+<div class="oe_container liber_manual" style="max-width:900px;margin:0 auto;padding:8px 4px 24px;color:#251d2b;background:transparent;font:15px/1.7 Inter,'Segoe UI',system-ui,sans-serif;"><h1 style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:32px;line-height:1.2;letter-spacing:-.015em;margin:0 0 10px;color:#251d2b;">Prestação de contas</h1>
+      <p class="lead" style="font-size:17.5px;color:#5d5266;margin:0 0 26px;max-width:62ch;">Emita o extrato de direitos autorais de cada autor — obra por obra, com adiantamentos, IRRF e o líquido a receber — em PDF, para imprimir ou enviar por e-mail direto do sistema.</p>
+
+      <h2 id="visao-geral" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">Visão geral</h2>
+      <p style="margin:0 0 12px;">Este módulo é a face do sistema voltada ao autor. Ele acrescenta:</p>
+      <ul style="margin:0 0 14px 22px;padding:0;">
+        <li style="margin:0 0 7px;">O menu <span class="menupath" style="display:inline-block;background:#f1eaf6;border:1px solid #e5dbee;border-radius:6px;padding:1px 8px;font-size:13.5px;color:#251d2b;white-space:nowrap;">Direitos Autorais<i style="font-style:normal;color:#6e2f91;margin:0 4px;font-weight:700;">‣</i>Favorecidos</span> — os contatos que são favorecidos de pelo menos uma linha de royalty. Um contato entra (e sai) da lista sozinho, conforme os contratos o citam.</li>
+        <li style="margin:0 0 7px;">A aba <strong style="color:#251d2b;">Favorecido</strong> no cadastro do contato, reunindo os dados pessoais e bancários usados no extrato, as linhas de royalty de todos os contratos e o saldo em aberto.</li>
+        <li style="margin:0 0 7px;">A <strong style="color:#251d2b;">Prestação de contas</strong> em si: um relatório em PDF que consolida, por autor, os royalties do período em todos os seus contratos e obras, com um assistente para imprimir ou enviar por e-mail.</li>
+      </ul>
+      <p style="margin:0 0 12px;">Os números vêm do <a href="/liber_site/static/docs/liber_copyright_contracts_analytics.html" target="_blank" rel="noopener" style="color:#6e2f91;">Cálculo de royalties</a> e casam com as faturas do <a href="/liber_site/static/docs/liber_copyright_contracts_payments.html" target="_blank" rel="noopener" style="color:#6e2f91;">Pagamento de royalties</a>: <strong style="color:#251d2b;">o total do extrato é, por construção, o mesmo saldo em aberto que a fatura do autor paga</strong>. Com o módulo de <a href="/liber_site/static/docs/liber_copyright_contracts_taxes.html" target="_blank" rel="noopener" style="color:#6e2f91;">IRRF sobre direitos</a> instalado, a dedução de IRRF do extrato segue a tabela progressiva (ou o modo do favorecido).</p>
+
+      <h2 id="configuracao" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">Configuração</h2>
+      <p style="margin:0 0 12px;">O módulo não tem parâmetros próprios — mas o extrato só fica completo se o cadastro do autor estiver:</p>
+      <ol class="steps" style="margin:0 0 16px 22px;padding:0;">
+        <li style="margin:0 0 7px;">Abra o autor em <span class="menupath" style="display:inline-block;background:#f1eaf6;border:1px solid #e5dbee;border-radius:6px;padding:1px 8px;font-size:13.5px;color:#251d2b;white-space:nowrap;">Direitos Autorais<i style="font-style:normal;color:#6e2f91;margin:0 4px;font-weight:700;">‣</i>Favorecidos</span>.</li>
+        <li style="margin:0 0 7px;">Na aba <strong style="color:#251d2b;">Favorecido</strong>, seção <strong style="color:#251d2b;">Identificação</strong>, preencha <span class="field" style="font-weight:600;color:#251d2b;">Data de nascimento</span>, <span class="field" style="font-weight:600;color:#251d2b;">Nacionalidade</span>, <span class="field" style="font-weight:600;color:#251d2b;">RG</span> e <span class="field" style="font-weight:600;color:#251d2b;">PIS</span>. O CPF, o endereço e o e-mail vêm do cadastro geral do contato.</li>
+        <li style="margin:0 0 7px;">Na seção <strong style="color:#251d2b;">Royalties</strong>, o campo <span class="field" style="font-weight:600;color:#251d2b;">IRRF (%)</span> guarda o percentual fixo usado quando a retenção é manual (com o módulo de IRRF instalado, aparece antes dele o <span class="field" style="font-weight:600;color:#251d2b;">Modo de IRRF</span>).</li>
+        <li style="margin:0 0 7px;">Em <strong style="color:#251d2b;">Contas bancárias</strong>, cadastre <span class="field" style="font-weight:600;color:#251d2b;">Banco</span>, <span class="field" style="font-weight:600;color:#251d2b;">Agência</span> e o número da conta — a primeira conta da lista é a impressa no extrato.</li>
+        <li style="margin:0 0 7px;">Para o envio por e-mail, confira que o contato tem <strong style="color:#251d2b;">e-mail</strong> cadastrado.</li>
+      </ol>
+      <p style="margin:0 0 12px;">A mesma aba mostra, somente para consulta: as <strong style="color:#251d2b;">Linhas de royalty</strong> do autor em todos os contratos (com a <span class="field" style="font-weight:600;color:#251d2b;">Data do Último Pagamento</span> e o saldo de cada uma), os <span class="field" style="font-weight:600;color:#251d2b;">Direitos autorais em aberto</span> somados e a <span class="field" style="font-weight:600;color:#251d2b;">Última prestação enviada</span>.</p>
+      <figure class="shot" style="margin:20px 0 24px;"><img src="img/doc-liber_copyright_contracts_reports-author.png" alt="Aba Favorecido do contato: identificação, IRRF, contas bancárias e as linhas de royalty com saldo" style="max-width:100%;display:block;margin:0 auto;border-radius:12px;border:1px solid #e5dbee;"><figcaption style="font-size:13px;color:#5d5266;margin-top:10px;text-align:center;">A página do autor: tudo o que o extrato usa, num lugar só.</figcaption></figure>
+
+      <h2 id="emitir" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">Emitir a prestação de contas</h2>
+      <ol class="steps" style="margin:0 0 16px 22px;padding:0;">
+        <li style="margin:0 0 7px;">Abra o autor (ou selecione vários na lista de <span class="menupath" style="display:inline-block;background:#f1eaf6;border:1px solid #e5dbee;border-radius:6px;padding:1px 8px;font-size:13.5px;color:#251d2b;white-space:nowrap;">Direitos Autorais<i style="font-style:normal;color:#6e2f91;margin:0 4px;font-weight:700;">‣</i>Favorecidos</span>) e, no menu <strong style="color:#251d2b;">Ação</strong>, escolha <strong style="color:#251d2b;">Prestação de contas</strong>.</li>
+        <li style="margin:0 0 7px;">No assistente, confira os <span class="field" style="font-weight:600;color:#251d2b;">Favorecidos</span> e escolha a <span class="field" style="font-weight:600;color:#251d2b;">Data final</span> do período — entram no extrato apenas os royalties apurados <strong style="color:#251d2b;">até essa data</strong>. O início do período é automático: a data do último pagamento de cada autor (ou "desde o início", se nunca houve pagamento).</li>
+        <li style="margin:0 0 7px;">Clique em <strong style="color:#251d2b;">Imprimir</strong> para gerar o PDF na hora — um extrato por autor selecionado —, ou…</li>
+        <li style="margin:0 0 7px;">…clique em <strong style="color:#251d2b;">Enviar por e-mail</strong>: cada autor recebe uma mensagem em português com o período, o valor líquido e o PDF anexado.</li>
+      </ol>
+      <p style="margin:0 0 12px;">Ao enviar, o sistema ainda:</p>
+      <ul style="margin:0 0 14px 22px;padding:0;">
+        <li style="margin:0 0 7px;">registra a mensagem (com o anexo) no histórico do próprio autor;</li>
+        <li style="margin:0 0 7px;">anota em cada contrato envolvido: "Prestação de contas (<em>período</em>) enviada para <em>autor</em>.";</li>
+        <li style="margin:0 0 7px;">grava a <span class="field" style="font-weight:600;color:#251d2b;">Última prestação enviada</span> do autor com a data final do período.</li>
+      </ul>
+      <div class="callout warn" style="border:1px solid #e5dbee;border-left:4px solid #6e2f91;border-radius:10px;padding:14px 18px;margin:0 0 16px;border-left-color:#b3831a;background:#faf3e3;border-color:#eddfba;"><span class="title" style="font-weight:700;font-size:12px;letter-spacing:.08em;text-transform:uppercase;display:block;margin:0 0 4px;color:#7a5a12;">Atenção</span>
+        <p style="margin:0 0 12px;">O envio exige e-mail cadastrado: se algum dos selecionados não tiver, o assistente para com a mensagem "<em>Defina primeiro um endereço de e-mail para: …</em>" e nada é enviado até você completar o cadastro.</p>
+      </div>
+
+      <h2 id="conteudo" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">O que o PDF traz</h2>
+      <p style="margin:0 0 12px;">O documento sai com o cabeçalho e as cores da sua empresa (a paleta das tabelas é derivada da cor principal definida em <span class="menupath" style="display:inline-block;background:#f1eaf6;border:1px solid #e5dbee;border-radius:6px;padding:1px 8px;font-size:13.5px;color:#251d2b;white-space:nowrap;">Configurações<i style="font-style:normal;color:#6e2f91;margin:0 4px;font-weight:700;">‣</i>Configurar layout do documento</span>) e as datas por extenso em português. As seções:</p>
+      <div class="tablewrap" style="overflow-x:auto;margin:0 0 16px;"><table style="border-collapse:collapse;width:100%;margin:0 0 16px;font-size:14px;">
+        <tr><th style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;background:#f1eaf6;font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:13.5px;">Seção</th><th style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;background:#f1eaf6;font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:13.5px;">Conteúdo</th></tr>
+        <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;"><strong style="color:#251d2b;">Resumo</strong></td><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;"><span class="field" style="font-weight:600;color:#251d2b;">Período</span>, <span class="field" style="font-weight:600;color:#251d2b;">Valor total</span> (o que as obras renderam), <span class="field" style="font-weight:600;color:#251d2b;">A recuperar (adiantamento)</span> — mostrado só quando há adiantamento sendo recuperado —, <span class="field" style="font-weight:600;color:#251d2b;">A deduzir (IRRF)</span> e <span class="field" style="font-weight:600;color:#251d2b;">A receber</span> (o líquido).</td></tr>
+        <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;"><strong style="color:#251d2b;">Direitos autorais</strong></td><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Uma linha por obra/canal com saldo em aberto: <span class="field" style="font-weight:600;color:#251d2b;">Obra / Canal</span>, <span class="field" style="font-weight:600;color:#251d2b;">Contrato</span>, <span class="field" style="font-weight:600;color:#251d2b;">Livros vendidos</span>, <span class="field" style="font-weight:600;color:#251d2b;">Valor base</span>, <span class="field" style="font-weight:600;color:#251d2b;">%</span> (ou "variável", quando a faixa mudou dentro do período) e <span class="field" style="font-weight:600;color:#251d2b;">Direito autoral</span>.</td></tr>
+        <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;"><strong style="color:#251d2b;">Faturas em aberto</strong></td><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">As faturas de pagamento do autor ainda não pagas, com data, vencimento, valor e situação — o valor delas confere com o total do extrato.</td></tr>
+        <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;"><strong style="color:#251d2b;">Vendas especiais</strong></td><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Detalhe das vendas com desconto qualificado das obras do autor no período: cliente, documento, obra, quantidade, desconto e valor.</td></tr>
+        <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;"><strong style="color:#251d2b;">Adiantamentos</strong></td><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Os adiantamentos por obra, separando <span class="field" style="font-weight:600;color:#251d2b;">Adiantamento descontável</span> e <span class="field" style="font-weight:600;color:#251d2b;">Não descontável</span> — impresso quando existe algum.</td></tr>
+        <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;"><strong style="color:#251d2b;">Dados do autor</strong></td><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Nome completo, CPF, RG, PIS, data de nascimento, nacionalidade, endereço, e-mail e os dados bancários (banco, agência, conta corrente).</td></tr>
+      </table></div>
+      <figure class="shot" style="margin:20px 0 24px;"><img src="img/doc-liber_copyright_contracts_reports-pdf.png" alt="PDF da prestação de contas: resumo com período, valor total, IRRF e valor a receber, seguido da tabela de obras" style="max-width:100%;display:block;margin:0 auto;border-radius:12px;border:1px solid #e5dbee;"><figcaption style="font-size:13px;color:#5d5266;margin-top:10px;text-align:center;">O extrato do autor: resumo no topo, depois obra por obra, faturas, vendas especiais e adiantamentos.</figcaption></figure>
+
+      <h2 id="vendas-especiais" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">Vendas especiais</h2>
+      <p style="margin:0 0 12px;">Feiras, saldões e vendas diretas costumam sair com desconto grande — e o contrato do autor
+      muitas vezes é por <strong style="color:#251d2b;">preço de capa</strong>. Sem tratamento, o autor receberia royalty
+      sobre um preço que a editora não praticou. A <strong style="color:#251d2b;">venda especial</strong> resolve isso:
+      ela é sempre calculada <strong style="color:#251d2b;">sobre o valor líquido faturado</strong>, o que realmente entrou,
+      independentemente do modo da linha de royalty.</p>
+      <p style="margin:0 0 12px;">Uma venda conta como especial quando as duas condições valem ao mesmo tempo:</p>
+      <ul style="margin:0 0 14px 22px;padding:0;">
+        <li style="margin:0 0 7px;">a fatura veio de uma das <span class="field" style="font-weight:600;color:#251d2b;">Equipes de Vendas Especiais</span> configuradas
+        (por exemplo, a equipe de feiras e eventos); e</li>
+        <li style="margin:0 0 7px;">o desconto da linha atinge o <span class="field" style="font-weight:600;color:#251d2b;">Desconto Mínimo Venda Especial (%)</span> —
+        com o mínimo em <strong style="color:#251d2b;">0</strong>, qualquer desconto qualifica.</li>
+      </ul>
+      <ol class="steps" style="margin:0 0 16px 22px;padding:0;">
+        <li style="margin:0 0 7px;">Configure em <span class="menupath" style="display:inline-block;background:#f1eaf6;border:1px solid #e5dbee;border-radius:6px;padding:1px 8px;font-size:13.5px;color:#251d2b;white-space:nowrap;">Configurações<i style="font-style:normal;color:#6e2f91;margin:0 4px;font-weight:700;">‣</i>Definições</span>, seção
+        <strong style="color:#251d2b;">Vendas Especiais</strong>: escolha as equipes e o desconto mínimo.</li>
+        <li style="margin:0 0 7px;">Venda normalmente por essas equipes — nenhum passo extra na fatura.</li>
+        <li style="margin:0 0 7px;">No contrato, o botão inteligente <span class="field" style="font-weight:600;color:#251d2b;">Vendas Especiais</span> aparece quando
+        houver alguma, abrindo a lista das faturas qualificadas das obras daquele contrato.</li>
+        <li style="margin:0 0 7px;">No extrato, a seção <strong style="color:#251d2b;">Vendas especiais</strong> detalha cada uma — cliente, documento,
+        obra, quantidade, desconto e valor — com o total do período. O autor enxerga exatamente por que
+        aquelas vendas renderam sobre o líquido.</li>
+      </ol>
+      <div class="callout example" style="border:1px solid #e5dbee;border-left:4px solid #6e2f91;border-radius:10px;background:#f1eaf6;padding:14px 18px;margin:0 0 16px;border-left-color:#c76ae1;"><span class="title" style="font-weight:700;font-size:12px;letter-spacing:.08em;text-transform:uppercase;display:block;margin:0 0 4px;color:#8a4bad;">Exemplo</span>
+        <p style="margin:0 0 12px;">Contrato a 10% sobre preço de capa de R$ 60. Numa feira (equipe configurada), o livro sai
+        com 50% de desconto, faturado a R$ 30. Em vez de R$ 6 por exemplar (10% da capa), o autor
+        recebe R$ 3 (10% do líquido) — e o extrato mostra a venda, o desconto e o valor, sem surpresa
+        na prestação de contas.</p>
+      </div>
+      <div class="callout note" style="border:1px solid #e5dbee;border-left:4px solid #6e2f91;border-radius:10px;background:#f1eaf6;padding:14px 18px;margin:0 0 16px;"><span class="title" style="font-weight:700;font-size:12px;letter-spacing:.08em;text-transform:uppercase;display:block;margin:0 0 4px;color:#6e2f91;">Nota</span>
+        <p style="margin:0 0 12px;">A regra de cálculo vive no <a href="/liber_site/static/docs/liber_copyright_contracts_analytics.html" target="_blank" rel="noopener" style="color:#6e2f91;">Cálculo de
+        royalties</a>; esta página descreve como ela aparece para o autor. Em contratos que já apuram
+        sobre o valor líquido, a venda especial não muda o valor — só ganha o detalhamento próprio no
+        extrato.</p>
+      </div>
+
+      <h2 id="regras" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">Regras que garantem os números</h2>
+      <ul style="margin:0 0 14px 22px;padding:0;">
+        <li style="margin:0 0 7px;"><strong style="color:#251d2b;">O total do extrato é o saldo em aberto.</strong> O extrato soma o que foi apurado desde o último pagamento de cada linha até a data final — exatamente o que a fatura em aberto do autor paga. Extrato, saldo e fatura são o mesmo número.</li>
+        <li style="margin:0 0 7px;"><strong style="color:#251d2b;">O adiantamento reduz, mas nunca negativa.</strong> Quando o adiantamento ainda supera o que as obras renderam, o extrato mostra o rendimento e a recuperação limitada a ele: o valor a receber fica em <strong style="color:#251d2b;">zero</strong>, nunca negativo — o restante segue para os períodos seguintes.</li>
+        <li style="margin:0 0 7px;"><strong style="color:#251d2b;">Adiantamento não é descontado duas vezes.</strong> O que um pagamento anterior já quitou (adiantamento incluído) não volta a ser abatido no extrato seguinte.</li>
+        <li style="margin:0 0 7px;"><strong style="color:#251d2b;">Períodos fechados ficam fora.</strong> Royalties já quitados pela data de corte não reaparecem; o extrato seguinte começa de onde o anterior parou.</li>
+        <li style="margin:0 0 7px;"><strong style="color:#251d2b;">IRRF coerente com o pagamento.</strong> Com o módulo de IRRF, extrato e fatura calculam a retenção com a mesma tabela e o mesmo modo do favorecido; sem ele, vale o percentual fixo do campo <span class="field" style="font-weight:600;color:#251d2b;">IRRF (%)</span>.</li>
+      </ul>
+
+      <h2 id="faq" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">Perguntas frequentes</h2>
+      <p style="margin:0 0 12px;"><strong style="color:#251d2b;">O extrato veio "Nenhum direito autoral em aberto".</strong> O autor não tem saldo no período: ou as vendas ainda não foram apuradas (rode <strong style="color:#251d2b;">Preencher Linhas de Royalties</strong> no contrato), ou tudo já foi pago, ou o adiantamento ainda cobre o que as obras renderam.</p>
+      <p style="margin:0 0 12px;"><strong style="color:#251d2b;">Por que "A receber" é menor que "Valor total"?</strong> Pelas duas deduções que o próprio extrato mostra: a recuperação do adiantamento e o IRRF. O documento existe justamente para o autor ver essa conta.</p>
+      <p style="margin:0 0 12px;"><strong style="color:#251d2b;">Posso reemitir um extrato já enviado?</strong> Pode — imprimir não altera nada, e enviar de novo apenas gera outra mensagem e atualiza a <span class="field" style="font-weight:600;color:#251d2b;">Última prestação enviada</span>. Os valores só mudam se a apuração ou os pagamentos mudarem.</p>
+      <p style="margin:0 0 12px;"><strong style="color:#251d2b;">Consigo emitir para vários autores de uma vez?</strong> Sim: selecione-os na lista de Favorecidos e use a mesma ação — <strong style="color:#251d2b;">Imprimir</strong> gera um PDF com um extrato por autor; <strong style="color:#251d2b;">Enviar por e-mail</strong> manda a cada um somente o seu.</p>
+      <p style="margin:0 0 12px;"><strong style="color:#251d2b;">O período impresso começa "desde o início".</strong> É o esperado para quem nunca recebeu: sem data de último pagamento, o extrato cobre tudo desde a primeira venda apurada.</p>
+
+      <div class="seealso" style="border:1px solid #e5dbee;border-radius:12px;background:#f1eaf6;padding:16px 20px;margin:32px 0 0;">
+        <span class="title" style="font-weight:700;font-size:12px;letter-spacing:.08em;text-transform:uppercase;display:block;margin:0 0 4px;color:#5d5266;">Veja também</span>
+        <ul style="margin:0 0 14px 22px;padding:0;">
+          <li style="margin:0 0 7px;"><a href="/liber_site/static/docs/liber_copyright_contracts_analytics.html" target="_blank" rel="noopener" style="color:#6e2f91;">Cálculo de royalties</a> — de onde vêm os números do extrato.</li>
+          <li style="margin:0 0 7px;"><a href="/liber_site/static/docs/liber_copyright_contracts_payments.html" target="_blank" rel="noopener" style="color:#6e2f91;">Pagamento de royalties</a> — a fatura que o extrato acompanha.</li>
+          <li style="margin:0 0 7px;"><a href="/liber_site/static/docs/liber_copyright_contracts_taxes.html" target="_blank" rel="noopener" style="color:#6e2f91;">IRRF sobre direitos</a> — a dedução de imposto mostrada no resumo.</li>
+          <li style="margin:0 0 7px;"><a href="/liber_site/static/docs/liber_copyright_contracts.html" target="_blank" rel="noopener" style="color:#6e2f91;">Contratos de direitos autorais</a> — o módulo base da suíte.</li>
+        </ul>
+      </div><p style="margin:28px 0 0;padding-top:14px;border-top:1px solid #e5dbee;font-size:13px;color:#5d5266;">Manual completo, com busca e as demais páginas: <a href="/liber_site/static/docs/liber_copyright_contracts_reports.html" target="_blank" rel="noopener" style="color:#6e2f91;">Prestação de contas</a>.</p></div>

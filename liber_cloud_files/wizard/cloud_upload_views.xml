@@ -9,8 +9,8 @@
                 <group>
                     <field name="provider" invisible="1"/>
                     <field name="folder_id"/>
-                    <field name="data" filename="file_name"/>
-                    <field name="file_name"/>
+                    <field name="attachment_ids" widget="many2many_binary"
+                           string="Files"/>
                 </group>
                 <footer>
                     <button name="action_upload" type="object" string="Upload"

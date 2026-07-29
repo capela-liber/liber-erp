@@ -35,6 +35,18 @@ ressalvas honestas sobre o que ainda não está pronto.
 | `liber_soc_fiscal_br` | Valoriza o consignado em conta de ativo própria |
 | `liber_soc_audit` | Reconstrói o saldo esperado a partir dos XMLs e concilia com o mapa |
 
+### Arquivos na nuvem
+
+O chassi e as três estantes: a conta é por empresa e por provedor, as pastas
+são do administrador, e o Odoo é o porteiro de quem baixa o quê.
+
+| Módulo | O que faz |
+|---|---|
+| `liber_cloud_files` | O chassi sob Dropbox, Drive e GitHub: conta, pasta, ACL e vínculo |
+| `liber_dropbox` | A estante do Dropbox sobre o chassi |
+| `liber_gdrive` | A estante do Google Drive sobre o chassi |
+| `liber_github` | A estante do GitHub: repositório vira pasta, envio vira commit |
+
 ### Fiscal, catálogo e outros
 
 | Módulo | O que faz |
@@ -42,10 +54,12 @@ ressalvas honestas sobre o que ainda não está pronto.
 | `liber_nfe_xml` | Painel de NF-e a partir do XML importado (**não emite** — só importa) |
 | `liber_nfe_remessa` | Documentos fiscais que não geram cobrança (simples remessa) |
 | `liber_metabooks_integration` | Metadados de livros via Metabooks/MVB, exportação ONIX |
-| `liber_product_bonus` | Exemplares de cortesia com cota, histórico e devolução |
 | `liber_budget` | Orçamentos sobre a contabilidade analítica, sem Enterprise |
-| `liber_site` | Site de apresentação servido em `/liber` |
+| `liber_site` | Site de apresentação servido em `/liber`, com os manuais em `/liber/docs` |
 | `liber_roles` | Perfis por função da casa, e a conta `visitante` que vê tudo sem gravar |
+
+Cada módulo traz o próprio manual na tela **Aplicativos → Module Info** do Odoo,
+e os mesmos manuais ficam publicados pelo `liber_site`.
 
 ## Instalação
 

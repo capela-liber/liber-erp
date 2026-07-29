@@ -39,7 +39,10 @@
       <ul>
         <li><strong>Pasta é ID, não caminho.</strong> Abra a pasta no navegador e copie o ID da URL
         (<span class="field">drive.google.com/drive/folders/&lt;ID&gt;</span>) para o campo
-        <span class="field">ID externo</span> do mapeamento.</li>
+        <span class="field">ID externo</span> do mapeamento. O <span class="field">Caminho</span>
+        continua obrigatório, mas aqui ele é só o rótulo humano que prefixa os caminhos de exibição
+        do espelho — para mapear a raiz da conta escreva <span class="field">/</span> sozinho, e
+        nada é prefixado.</li>
         <li><strong>O download passa pelo Odoo.</strong> O Drive não tem link anônimo de quatro
         horas; o arquivo desce pela porta <span class="field">/liber_cloud/download</span>, com o
         portão conferido antes do primeiro byte — a credencial nunca sai do servidor.</li>
@@ -58,8 +61,10 @@
         Client Secret, Refresh Token — e use <span class="field">Testar conexão</span>. Uma conta por
         empresa.</li>
         <li>Como administrador, mapeie as pastas em
-        <span class="menupath">Drive<i>‣</i>Configuração<i>‣</i>Pastas</span>: nome, o
-        <span class="field">ID externo</span> da pasta no Drive, grupos de leitura e escrita.</li>
+        <span class="menupath">Drive<i>‣</i>Configuração<i>‣</i>Pastas</span>: nome,
+        <span class="field">Caminho</span> (o rótulo humano; <span class="field">/</span> para a
+        raiz da conta), o <span class="field">ID externo</span> da pasta no Drive, grupos de leitura
+        e escrita.</li>
       </ol>
       <div class="callout warn"><span class="title">Atenção</span><p>Expiração de link compartilhado
       no Drive é recurso de Google Workspace pago. Em conta gratuita a criação do link com prazo é
@@ -71,6 +76,11 @@
       compartilhar com confirmação e prazo, classificar com tags e vincular a contatos e títulos —
       o vocabulário de tags é o mesmo da casa inteira, e os botões nas fichas de contato e produto
       somam os arquivos de todas as estantes.</p>
+      <p><strong>O envio vai de braçada:</strong> o campo de arquivos do assistente aceita um ou
+      muitos de uma vez — escolhidos no seletor do sistema ou arrastados para dentro dele. Cada um
+      sobe com o seu próprio nome, nenhum sobrescreve nada (nome repetido vira
+      <span class="field">arquivo (1).ext</span>), o Odoo não guarda cópia depois do envio e o
+      espelho sincroniza na hora, sem esperar a madrugada.</p>
       <figure class="shot"><img src="img/doc-liber_gdrive-folder.png" alt="Formulário de uma pasta do Drive com o campo ID externo preenchido e os grupos de leitura e escrita."><figcaption>O mapeamento no Drive: o ID no lugar do caminho, e a mesma decisão de sempre — quem lê, quem escreve.</figcaption></figure>
 
       <h2 id="limitacoes">Limitações conhecidas</h2>

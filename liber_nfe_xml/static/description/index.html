@@ -1,0 +1,166 @@
+<!-- GERADO por scripts/gen_module_descriptions.py a partir de
+     liber_site/static/docs/liber_nfe_xml.html -- não edite aqui.
+     O Odoo mostra este arquivo em Apps > Module Info. -->
+<div class="oe_container liber_manual" style="max-width:900px;margin:0 auto;padding:8px 4px 24px;color:#251d2b;background:transparent;font:15px/1.7 Inter,'Segoe UI',system-ui,sans-serif;"><h1 style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:32px;line-height:1.2;letter-spacing:-.015em;margin:0 0 10px;color:#251d2b;">Importação de XML de NF-e</h1>
+      <p class="lead" style="font-size:17.5px;color:#5d5266;margin:0 0 26px;max-width:62ch;">Traga para dentro do sistema os XMLs das notas fiscais que a editora emitiu e recebeu — para consultar, conferir e transformar em faturas, sem digitar nada de novo.</p>
+
+      <h2 id="visao-geral" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">Visão geral</h2>
+      <p style="margin:0 0 12px;">Cada XML de NF-e importado vira um registro no painel <b>NFe XML</b>. O sistema lê o arquivo e extrai o que interessa: quem emitiu e quem recebeu, o número e o valor da DANFE, a data de emissão, o CFOP, o frete, o vencimento e a lista de itens — livro a livro, com quantidade, preço e desconto.</p>
+      <p style="margin:0 0 12px;">A identidade de cada nota é a sua <b>chave de acesso</b>, aquele número de 44 dígitos impresso na DANFE. É por ela que o sistema:</p>
+      <ul style="margin:0 0 14px 22px;padding:0;">
+        <li style="margin:0 0 7px;">reconhece uma nota já importada e <b>não a importa duas vezes</b>, venha ela de onde vier;</li>
+        <li style="margin:0 0 7px;">liga o XML à fatura criada a partir dele — o vínculo sobrevive a exportações e restaurações de banco, porque não depende de números internos;</li>
+        <li style="margin:0 0 7px;">reconhece o evento de <b>cancelamento</b> e marca a nota certa como cancelada.</li>
+      </ul>
+      <p style="margin:0 0 12px;">Os XMLs importados são também a matéria-prima de outros módulos: a <a href="/liber_site/static/docs/liber_soc_audit.html" target="_blank" rel="noopener" style="color:#6e2f91;">auditoria de consignação</a> reconstrói a prateleira de cada livraria a partir dessas notas, e o Painel analítico (XML) resume tudo em uma página só.</p>
+
+      <div class="callout warn" style="border:1px solid #e5dbee;border-left:4px solid #6e2f91;border-radius:10px;padding:14px 18px;margin:0 0 16px;border-left-color:#b3831a;background:#faf3e3;border-color:#eddfba;"><span class="title" style="font-weight:700;font-size:12px;letter-spacing:.08em;text-transform:uppercase;display:block;margin:0 0 4px;color:#7a5a12;">Atenção</span>
+        <p style="margin:0 0 12px;">Este módulo <b>somente importa</b> XMLs de notas já autorizadas. Ele não emite NF-e junto à SEFAZ — a emissão continua acontecendo na ferramenta que a editora já usa para isso. O que se faz aqui é trazer o resultado (o XML) para dentro do sistema.</p>
+      </div>
+
+      <figure class="shot" style="margin:20px 0 24px;">
+        <img src="img/doc-liber_nfe_xml-lista.png" alt="Lista do painel NFe XML com colunas de direção, chave de acesso, cliente, número e valor da DANFE e situação" style="max-width:100%;display:block;margin:0 auto;border-radius:12px;border:1px solid #e5dbee;">
+        <figcaption style="font-size:13px;color:#5d5266;margin-top:10px;text-align:center;">O painel NFe XML: cada linha é uma nota, com direção (entrada ou saída), chave de acesso, cliente e situação.</figcaption>
+      </figure>
+
+      <h3 id="direcao" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:19px;line-height:1.25;margin:28px 0 10px;color:#251d2b;">Entrada, saída e a empresa dona da nota</h3>
+      <p style="margin:0 0 12px;">Na importação, o sistema compara o CNPJ do emitente e o do destinatário com os CNPJs das empresas cadastradas no banco e classifica cada nota:</p>
+      <div class="tablewrap" style="overflow-x:auto;margin:0 0 16px;"><table style="border-collapse:collapse;width:100%;margin:0 0 16px;font-size:14px;">
+        <thead><tr><th style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;background:#f1eaf6;font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:13.5px;">Direção</th><th style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;background:#f1eaf6;font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:13.5px;">Significado</th></tr></thead>
+        <tbody>
+          <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;"><b>Saída</b></td><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Emitida por uma das nossas empresas — vendemos ou remetemos.</td></tr>
+          <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;"><b>Entrada</b></td><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Endereçada a uma das nossas empresas — recebemos.</td></tr>
+          <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;"><b>Interna</b></td><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Entre duas empresas nossas.</td></tr>
+          <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;"><b>Externa</b></td><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Nenhum dos lados é nosso.</td></tr>
+        </tbody>
+      </table></div>
+      <p style="margin:0 0 12px;">O outro lado da nota (a livraria, o fornecedor) vira o <span class="field" style="font-weight:600;color:#251d2b;">Cliente</span> do registro. Se esse CNPJ ainda não existe no cadastro de contatos, o contato é <b>criado automaticamente</b> com o nome e o CNPJ que constam no XML — e se já existe com um nome diferente, o nome é atualizado, porque a razão social da nota fiscal é a fonte oficial.</p>
+      <p style="margin:0 0 12px;">Cada usuário só enxerga as notas das empresas às quais tem acesso: a lista respeita o seletor de empresas no topo da tela.</p>
+
+      <h2 id="configuracao" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">Configuração</h2>
+      <p style="margin:0 0 12px;">Para importar por ZIP não é preciso configurar nada: instale o módulo e importe. Duas configurações são opcionais:</p>
+
+      <h3 id="config-sefaz" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:19px;line-height:1.25;margin:28px 0 10px;color:#251d2b;">Sincronização com a SEFAZ (opcional)</h3>
+      <p style="margin:0 0 12px;">O sistema pode baixar sozinho, todos os dias, as notas emitidas contra as suas empresas (o serviço de distribuição de documentos fiscais da SEFAZ). Para cada empresa que deve participar:</p>
+      <ol class="steps" style="margin:0 0 16px 22px;padding:0;">
+        <li style="margin:0 0 7px;">Abra <span class="menupath" style="display:inline-block;background:#f1eaf6;border:1px solid #e5dbee;border-radius:6px;padding:1px 8px;font-size:13.5px;color:#251d2b;white-space:nowrap;">Definições<i style="font-style:normal;color:#6e2f91;margin:0 4px;font-weight:700;">‣</i>Usuários e empresas<i style="font-style:normal;color:#6e2f91;margin:0 4px;font-weight:700;">‣</i>Empresas</span> e escolha a empresa.</li>
+        <li style="margin:0 0 7px;">Na aba <b>SEFAZ (DFe)</b>, marque <span class="field" style="font-weight:600;color:#251d2b;">SEFAZ DFe Sync</span>.</li>
+        <li style="margin:0 0 7px;">Carregue o <span class="field" style="font-weight:600;color:#251d2b;">Certificado A1 (.pfx)</span> da empresa e informe a <span class="field" style="font-weight:600;color:#251d2b;">Senha do certificado</span>.</li>
+        <li style="margin:0 0 7px;">Deixe o <span class="field" style="font-weight:600;color:#251d2b;">Último NSU</span> como está. Ele é o marcador de "até onde já baixamos"; zerá-lo faz o sistema baixar de novo toda a janela que a SEFAZ guarda (cerca de 90 dias).</li>
+      </ol>
+      <div class="callout note" style="border:1px solid #e5dbee;border-left:4px solid #6e2f91;border-radius:10px;background:#f1eaf6;padding:14px 18px;margin:0 0 16px;"><span class="title" style="font-weight:700;font-size:12px;letter-spacing:.08em;text-transform:uppercase;display:block;margin:0 0 4px;color:#6e2f91;">Nota</span>
+        <p style="margin:0 0 12px;">A senha do certificado fica gravada no banco de dados. Restrinja o acesso às configurações de empresa a quem realmente precisa.</p>
+      </div>
+
+      <h3 id="config-cfop" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:19px;line-height:1.25;margin:28px 0 10px;color:#251d2b;">Tabela de CFOP</h3>
+      <p style="margin:0 0 12px;">O módulo instala uma tabela de CFOPs e classifica os códigos mais comuns do dia a dia da editora (consignação, acerto, devolução, bonificação, feira, venda). Quando um XML chega com um CFOP que a tabela não conhece, o código é <b>criado automaticamente, sem classificação</b>, e fica aguardando que alguém diga o que ele significa — assim a nota nunca desaparece das análises por causa de um código novo.</p>
+
+      <h2 id="importar-zip" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">Importar um ZIP de XMLs</h2>
+      <p style="margin:0 0 12px;">É o caminho para carga em lote: os XMLs exportados do emissor, ou o histórico de anos, tudo de uma vez.</p>
+      <ol class="steps" style="margin:0 0 16px 22px;padding:0;">
+        <li style="margin:0 0 7px;">Abra <span class="menupath" style="display:inline-block;background:#f1eaf6;border:1px solid #e5dbee;border-radius:6px;padding:1px 8px;font-size:13.5px;color:#251d2b;white-space:nowrap;">Faturamento<i style="font-style:normal;color:#6e2f91;margin:0 4px;font-weight:700;">‣</i>NFe XML<i style="font-style:normal;color:#6e2f91;margin:0 4px;font-weight:700;">‣</i>Importar arquivo XML</span>.</li>
+        <li style="margin:0 0 7px;">Em <span class="field" style="font-weight:600;color:#251d2b;">Arquivos ZIP</span>, anexe um ou mais arquivos <code style="background:#f1eaf6;border:1px solid #e5dbee;border-radius:5px;padding:1px 6px;font-size:13px;font-family:ui-monospace,Menlo,Consolas,monospace;">.zip</code> contendo os XMLs.</li>
+        <li style="margin:0 0 7px;">Confira a <span class="field" style="font-weight:600;color:#251d2b;">Empresa</span> — as notas do ZIP serão arquivadas sob ela.</li>
+        <li style="margin:0 0 7px;">Clique em <b>Importar</b>.</li>
+      </ol>
+      <p style="margin:0 0 12px;">O que acontece com cada arquivo dentro do ZIP:</p>
+      <ul style="margin:0 0 14px 22px;padding:0;">
+        <li style="margin:0 0 7px;"><b>NF-e válida e inédita</b>: vira um registro novo, com situação <b>Importada</b>.</li>
+        <li style="margin:0 0 7px;"><b>Chave de acesso já conhecida</b>: é ignorada em silêncio — reimportar o mesmo ZIP não cria duplicatas.</li>
+        <li style="margin:0 0 7px;"><b>Evento de cancelamento</b>: é guardado e aplicado <b>depois</b> de todas as notas do ZIP, para funcionar mesmo quando o cancelamento vem no mesmo pacote da nota que ele cancela.</li>
+        <li style="margin:0 0 7px;"><b>Carta de correção</b> e arquivos que não são NF-e: são pulados.</li>
+      </ul>
+      <div class="callout tip" style="border:1px solid #e5dbee;border-left:4px solid #6e2f91;border-radius:10px;padding:14px 18px;margin:0 0 16px;border-left-color:#2e6e4e;background:#eef5f0;border-color:#d8e7dd;"><span class="title" style="font-weight:700;font-size:12px;letter-spacing:.08em;text-transform:uppercase;display:block;margin:0 0 4px;color:#2e6e4e;">Dica</span>
+        <p style="margin:0 0 12px;">Pode reimportar sem medo. A trava pela chave de acesso torna qualquer importação repetível: nada é duplicado, só o que ainda não existia entra.</p>
+      </div>
+
+      <h2 id="processar" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">Processar os XMLs importados</h2>
+      <p style="margin:0 0 12px;">Um registro recém-importado guarda o arquivo, mas ainda não foi lido em detalhe — a situação <b>Importada</b> indica isso. O processamento extrai os campos e a lista de itens e leva a nota para <b>Válida</b>.</p>
+      <ol class="steps" style="margin:0 0 16px 22px;padding:0;">
+        <li style="margin:0 0 7px;">Na lista <span class="menupath" style="display:inline-block;background:#f1eaf6;border:1px solid #e5dbee;border-radius:6px;padding:1px 8px;font-size:13.5px;color:#251d2b;white-space:nowrap;">Faturamento<i style="font-style:normal;color:#6e2f91;margin:0 4px;font-weight:700;">‣</i>NFe XML<i style="font-style:normal;color:#6e2f91;margin:0 4px;font-weight:700;">‣</i>NFe XML</span>, selecione as notas com situação <b>Importada</b> (ou abra uma delas).</li>
+        <li style="margin:0 0 7px;">Use o botão <b>Processar arquivo XML</b> — no topo do formulário, ou no menu de ações da lista.</li>
+      </ol>
+      <p style="margin:0 0 12px;">Não é obrigatório fazer isso à mão: um agendamento processa as notas pendentes <b>a cada 10 minutos</b>. O botão serve para quem não quer esperar.</p>
+      <p style="margin:0 0 12px;">Durante o processamento, os itens da nota são casados com os produtos do catálogo pelo <b>código interno ou código de barras</b> (na prática, o ISBN). Item sem produto correspondente gera um <b>produto novo</b> com o nome, o código e o preço que constam no XML. O texto "SEM GTIN", que a NF-e usa para item sem código de barras, é ignorado — ele nunca vira código de produto.</p>
+      <p style="margin:0 0 12px;">Se algo der errado com uma nota, só ela fica com situação <b>Erro</b>, com a explicação registrada no histórico de mensagens do próprio registro; as demais do lote seguem normalmente. Corrigida a causa, basta processá-la de novo.</p>
+
+      <figure class="shot" style="margin:20px 0 24px;">
+        <img src="img/doc-liber_nfe_xml-form.png" alt="Formulário de uma nota no painel NFe XML, com dados fiscais do emitente e destinatário, chave de acesso e a lista de itens extraída do XML" style="max-width:100%;display:block;margin:0 auto;border-radius:12px;border:1px solid #e5dbee;">
+        <figcaption style="font-size:13px;color:#5d5266;margin-top:10px;text-align:center;">A nota processada: identificação, dados fiscais de emitente e destinatário e os itens lidos do XML.</figcaption>
+      </figure>
+
+      <h2 id="sefaz" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">Baixar notas direto da SEFAZ</h2>
+      <p style="margin:0 0 12px;">Com a sincronização configurada (<a href="#config-sefaz" style="color:#6e2f91;">acima</a>), um agendamento diário consulta a SEFAZ para cada empresa habilitada e importa o que houver de novo. Para acompanhar ou disparar na hora:</p>
+      <ol class="steps" style="margin:0 0 16px 22px;padding:0;">
+        <li style="margin:0 0 7px;">Abra <span class="menupath" style="display:inline-block;background:#f1eaf6;border:1px solid #e5dbee;border-radius:6px;padding:1px 8px;font-size:13.5px;color:#251d2b;white-space:nowrap;">Faturamento<i style="font-style:normal;color:#6e2f91;margin:0 4px;font-weight:700;">‣</i>NFe XML<i style="font-style:normal;color:#6e2f91;margin:0 4px;font-weight:700;">‣</i>SEFAZ</span>.</li>
+        <li style="margin:0 0 7px;">Cada linha é uma varredura: quando rodou, para qual empresa, quantos documentos vieram, quantas NF-e novas entraram, quantos cancelamentos foram registrados e quantas eram repetidas.</li>
+        <li style="margin:0 0 7px;">Para não esperar o horário do agendamento, clique em <b>Sincronizar agora</b> no topo da lista.</li>
+      </ol>
+      <p style="margin:0 0 12px;">As notas baixadas entram no mesmo painel NFe XML das demais, com a mesma trava de duplicidade; a lista SEFAZ é só o diário de bordo da sincronização. A empresa dona de cada nota é deduzida do próprio XML, pelo CNPJ.</p>
+      <div class="callout note" style="border:1px solid #e5dbee;border-left:4px solid #6e2f91;border-radius:10px;background:#f1eaf6;padding:14px 18px;margin:0 0 16px;"><span class="title" style="font-weight:700;font-size:12px;letter-spacing:.08em;text-transform:uppercase;display:block;margin:0 0 4px;color:#6e2f91;">Nota</span>
+        <p style="margin:0 0 12px;">A SEFAZ limita a frequência de consultas. Se uma varredura terminar com a situação <b>Rate Limited</b>, é normal: o serviço pediu uma pausa, e a próxima varredura continua de onde parou — o marcador <span class="field" style="font-weight:600;color:#251d2b;">Último NSU</span> da empresa guarda o ponto.</p>
+      </div>
+
+      <figure class="shot" style="margin:20px 0 24px;">
+        <img src="img/doc-liber_nfe_xml-sefaz.png" alt="Lista de varreduras SEFAZ com data, empresa, situação e contadores de documentos, NF-e importadas e cancelamentos" style="max-width:100%;display:block;margin:0 auto;border-radius:12px;border:1px solid #e5dbee;">
+        <figcaption style="font-size:13px;color:#5d5266;margin-top:10px;text-align:center;">O diário das varreduras SEFAZ: cada linha diz o que a sincronização daquele dia trouxe.</figcaption>
+      </figure>
+
+      <h2 id="faturas" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">Criar faturas a partir do XML</h2>
+      <p style="margin:0 0 12px;">Uma nota processada pode virar fatura com os itens já preenchidos:</p>
+      <ol class="steps" style="margin:0 0 16px 22px;padding:0;">
+        <li style="margin:0 0 7px;">Na lista <span class="menupath" style="display:inline-block;background:#f1eaf6;border:1px solid #e5dbee;border-radius:6px;padding:1px 8px;font-size:13.5px;color:#251d2b;white-space:nowrap;">Faturamento<i style="font-style:normal;color:#6e2f91;margin:0 4px;font-weight:700;">‣</i>NFe XML<i style="font-style:normal;color:#6e2f91;margin:0 4px;font-weight:700;">‣</i>NFe XML</span>, selecione uma ou mais notas.</li>
+        <li style="margin:0 0 7px;">No menu de ações, escolha <b>Criar fatura de cliente</b> (nota de saída, alguém nos deve) ou <b>Criar fatura de fornecedor</b> (nota de entrada, devemos a alguém).</li>
+        <li style="margin:0 0 7px;">O sistema abre as faturas criadas, em rascunho, para conferência.</li>
+      </ol>
+      <p style="margin:0 0 12px;">A fatura nasce com:</p>
+      <ul style="margin:0 0 14px 22px;padding:0;">
+        <li style="margin:0 0 7px;">o <b>parceiro</b> da nota (que precisa ser de fato uma das partes do XML — o sistema confere o CNPJ);</li>
+        <li style="margin:0 0 7px;">a <b>data de emissão do XML</b> como data da fatura e o <b>número da DANFE</b> como referência;</li>
+        <li style="margin:0 0 7px;">uma linha por item cujo produto exista no catálogo, com quantidade, preço e desconto do XML;</li>
+        <li style="margin:0 0 7px;">a <b>chave de acesso</b> preenchida — é ela que mantém fatura e XML ligados.</li>
+      </ul>
+      <p style="margin:0 0 12px;">Guardas do lote: nota <b>cancelada</b> ou já ligada a uma fatura é pulada; se já existe uma fatura ativa com a mesma chave e o mesmo tipo, o sistema apenas aponta para ela em vez de criar outra; um problema em uma nota não derruba as demais — a explicação fica no histórico do registro.</p>
+      <div class="callout example" style="border:1px solid #e5dbee;border-left:4px solid #6e2f91;border-radius:10px;background:#f1eaf6;padding:14px 18px;margin:0 0 16px;border-left-color:#c76ae1;"><span class="title" style="font-weight:700;font-size:12px;letter-spacing:.08em;text-transform:uppercase;display:block;margin:0 0 4px;color:#8a4bad;">Exemplo</span>
+        <p style="margin:0 0 12px;">Na fatura, aba <b>Outras informações</b>, o campo <span class="field" style="font-weight:600;color:#251d2b;">Chave da NFe</span> mostra os 44 dígitos e, ao lado, o vínculo com o registro do XML e o número da DANFE. Na lista de faturas, o filtro <b>From NFe XML</b> separa o que nasceu de XML do que foi digitado.</p>
+      </div>
+
+      <h2 id="cancelamentos" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">Cancelamentos</h2>
+      <p style="margin:0 0 12px;">O cancelamento de uma NF-e é um documento próprio (um evento), separado da nota. Quando ele chega — por ZIP ou pela SEFAZ — o sistema localiza a nota pela chave de acesso e:</p>
+      <ul style="margin:0 0 14px 22px;padding:0;">
+        <li style="margin:0 0 7px;">muda a situação dela para <b>Cancelada</b> e aplica a faixa vermelha no formulário;</li>
+        <li style="margin:0 0 7px;">preenche <span class="field" style="font-weight:600;color:#251d2b;">Data do cancelamento</span>, <span class="field" style="font-weight:600;color:#251d2b;">Protocolo</span> e <span class="field" style="font-weight:600;color:#251d2b;">Motivo</span>, visíveis também como colunas e filtros na lista;</li>
+        <li style="margin:0 0 7px;">guarda o próprio XML do evento, anexado na seção <b>Cancelamento</b> da nota.</li>
+      </ul>
+      <p style="margin:0 0 12px;">Nota cancelada não entra nos lotes de criação de fatura. A carta de correção não cancela nada e é ignorada.</p>
+
+      <h2 id="painel" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">Painel analítico</h2>
+      <p style="margin:0 0 12px;">O menu <span class="menupath" style="display:inline-block;background:#f1eaf6;border:1px solid #e5dbee;border-radius:6px;padding:1px 8px;font-size:13.5px;color:#251d2b;white-space:nowrap;">Faturamento<i style="font-style:normal;color:#6e2f91;margin:0 4px;font-weight:700;">‣</i>NFe XML<i style="font-style:normal;color:#6e2f91;margin:0 4px;font-weight:700;">‣</i>Painel analítico (XML)</span> abre, em outra aba, uma página que resume todas as notas não canceladas das empresas ativas. Além dele, a lista do painel oferece as visões de gráfico e de tabela dinâmica do próprio Odoo, com valor da DANFE e frete como medidas.</p>
+
+      <h2 id="regras" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">Regras e guardas</h2>
+      <div class="tablewrap" style="overflow-x:auto;margin:0 0 16px;"><table style="border-collapse:collapse;width:100%;margin:0 0 16px;font-size:14px;">
+        <thead><tr><th style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;background:#f1eaf6;font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:13.5px;">Regra</th><th style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;background:#f1eaf6;font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:13.5px;">O que ela garante</th></tr></thead>
+        <tbody>
+          <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Chave de acesso única no painel</td><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Um XML por chave. Reimportar (ZIP, SEFAZ, anexo) nunca duplica.</td></tr>
+          <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Chave com exatamente 44 dígitos na fatura</td><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">O campo <span class="field" style="font-weight:600;color:#251d2b;">Chave da NFe</span> recusa qualquer outro formato.</td></tr>
+          <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Uma fatura ativa por chave e tipo</td><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">A mesma NF-e não gera duas faturas de cliente (nem duas de fornecedor). Faturas canceladas liberam a chave.</td></tr>
+          <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Parceiro conferido contra o XML</td><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">A fatura só é criada se o CNPJ do parceiro for o do emitente ou o do destinatário da nota.</td></tr>
+          <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">XML que não é NF-e é recusado</td><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Arquivos sem a chave de acesso ou fora do padrão da NF-e não entram.</td></tr>
+          <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">CFOP desconhecido é criado sem efeito</td><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">A nota aparece nas listas normalmente e o código fica aguardando classificação — nada some em silêncio.</td></tr>
+          <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Multiempresa</td><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Cada usuário vê apenas as notas das empresas às quais tem acesso.</td></tr>
+        </tbody>
+      </table></div>
+
+      <h2 id="problemas" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">Solução de problemas</h2>
+      <p style="margin:0 0 12px;"><b>A nota ficou com situação Erro.</b> Abra o registro e leia a última mensagem do histórico — ela diz o que travou (um XML truncado, um campo fora do padrão). Corrigida a causa, clique em <b>Processar arquivo XML</b> de novo; a situação Erro é reprocessável.</p>
+      <p style="margin:0 0 12px;"><b>Importei o ZIP e "faltam" notas.</b> Quase sempre são repetidas: a chave de acesso já existia e a importação as pulou. Procure pela chave no campo de busca da lista. Verifique também o seletor de empresas — nota de outra empresa não aparece.</p>
+      <p style="margin:0 0 12px;"><b>A fatura veio sem algum item.</b> Itens cujo produto não existe no catálogo (e cujo código não permitiu criar um) são pulados na criação da fatura, e a nota recebe no histórico a lista dos produtos com problema. Cadastre ou corrija o produto e crie a fatura outra vez.</p>
+      <p style="margin:0 0 12px;"><b>O cancelamento chegou antes da nota.</b> Dentro de um mesmo ZIP isso é resolvido automaticamente (as notas entram primeiro, os cancelamentos depois). Se o evento veio sozinho, ele fica guardado e a nota é marcada assim que for importada pela mesma chave.</p>
+
+      <div class="seealso" style="border:1px solid #e5dbee;border-radius:12px;background:#f1eaf6;padding:16px 20px;margin:32px 0 0;">
+        <p style="margin:0 0 12px;"><b>Veja também</b></p>
+        <ul style="margin:0 0 14px 22px;padding:0;">
+          <li style="margin:0 0 7px;"><a href="/liber_site/static/docs/liber_soc_audit.html" target="_blank" rel="noopener" style="color:#6e2f91;">Auditoria pelo XML</a> — usa as notas importadas aqui para conferir o saldo consignado de cada livraria.</li>
+          <li style="margin:0 0 7px;"><a href="/liber_site/static/docs/liber_nfe_remessa.html" target="_blank" rel="noopener" style="color:#6e2f91;">Notas de remessa</a> — o outro lado fiscal: os documentos que a casa gera e que nunca cobram ninguém.</li>
+        </ul>
+      </div><p style="margin:28px 0 0;padding-top:14px;border-top:1px solid #e5dbee;font-size:13px;color:#5d5266;">Manual completo, com busca e as demais páginas: <a href="/liber_site/static/docs/liber_nfe_xml.html" target="_blank" rel="noopener" style="color:#6e2f91;">Importação de XML de NF-e</a>.</p></div>

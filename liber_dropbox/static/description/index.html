@@ -1,0 +1,157 @@
+<!-- GERADO por scripts/gen_module_descriptions.py a partir de
+     liber_site/static/docs/liber_dropbox.html -- não edite aqui.
+     O Odoo mostra este arquivo em Apps > Module Info. -->
+<div class="oe_container liber_manual" style="max-width:900px;margin:0 auto;padding:8px 4px 24px;color:#251d2b;background:transparent;font:15px/1.7 Inter,'Segoe UI',system-ui,sans-serif;"><h1 style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:32px;line-height:1.2;letter-spacing:-.015em;margin:0 0 10px;color:#251d2b;">Arquivos no Dropbox</h1>
+      <p class="lead" style="font-size:17.5px;color:#5d5266;margin:0 0 26px;max-width:62ch;">Os PDFs da editora — contratos, capas, miolos — continuam morando no Dropbox.
+      O que muda é o porteiro: o Odoo decide quem lê e quem grava cada pasta, compartilha com prazo
+      de validade, e liga cada arquivo aos autores, aos títulos e a tags livres.</p>
+
+      <h2 id="visao-geral" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">Visão geral</h2>
+      <p style="margin:0 0 12px;">O Dropbox tem uma credencial só — a conta da editora — e por isso não sabe dizer
+      "o marketing lê, o editorial grava". Este módulo resolve exatamente isso:</p>
+      <ul style="margin:0 0 14px 22px;padding:0;">
+        <li style="margin:0 0 7px;"><strong style="color:#251d2b;">O Dropbox é a estante.</strong> Nenhum arquivo é copiado para o Odoo; o espelho
+        guarda só metadados (nome, tamanho, revisão) e, para imagens, uma miniatura pequena.</li>
+        <li style="margin:0 0 7px;"><strong style="color:#251d2b;">O Odoo é o porteiro.</strong> Cada pasta mapeada nomeia os grupos que
+        <em>leem</em> e os que <em>escrevem</em>. A trava é no servidor — regra de registro no ORM —,
+        não um menu escondido. Ninguém recebe a senha do Dropbox.</li>
+        <li style="margin:0 0 7px;"><strong style="color:#251d2b;">Compartilhar é um ato deliberado.</strong> O link público do Dropbox fura
+        qualquer portão (quem tem o link, acessa) — por isso criá-lo exige permissão de escrita,
+        pede confirmação, fica assinado (quem, quando) e nasce com prazo de validade.</li>
+      </ul>
+      <figure class="shot" style="margin:20px 0 24px;"><img src="img/doc-liber_dropbox-files.png" alt="Lista de arquivos com o painel de pastas à esquerda, colunas de tags, contatos e produto, e os botões de baixar e compartilhar por linha." style="max-width:100%;display:block;margin:0 auto;border-radius:12px;border:1px solid #e5dbee;"><figcaption style="font-size:13px;color:#5d5266;margin-top:10px;text-align:center;">A tela de Arquivos: pastas no painel à esquerda — cada pessoa só vê as suas —, vínculos nas colunas e as ações em cada linha.</figcaption></figure>
+
+      <h2 id="configuracao" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">Configuração</h2>
+      <p style="margin:0 0 12px;"><strong style="color:#251d2b;">Grupos de acesso:</strong> o módulo cria <em>Dropbox Files / Usuário</em> (vê o app;
+      o que ele alcança é decidido pasta a pasta) e <em>Dropbox Files / Gerente</em> (enxerga todas as
+      pastas e arquivos, cura as tags e as credenciais). <strong style="color:#251d2b;">Mapear pastas novas — e mudar caminhos
+      e permissões — é ato de administrador do sistema</strong>, não do gerente. E escrever no Dropbox
+      (enviar, compartilhar) exige estar num grupo de escrita da pasta, <em>seja quem for</em>:
+      configurar a estante é um poder, enchê-la é outro.</p>
+      <p style="margin:0 0 12px;"><strong style="color:#251d2b;">Multiempresa por construção:</strong> cada empresa da base tem a sua conta do
+      Dropbox, as suas pastas e as suas tags — quem é de uma empresa não vê as estantes da outra,
+      antes mesmo de qualquer grupo entrar na conversa. O Dropbox é um dos corpos do chassi
+      <em>Cloud Files</em>, o mesmo que serve o Google Drive e o GitHub: o portão, os vínculos e a
+      disciplina são idênticos nos três apps.</p>
+      <p style="margin:0 0 12px;"><strong style="color:#251d2b;">Conta do Dropbox</strong> (uma vez por empresa, pelo gerente):</p>
+      <ol class="steps" style="margin:0 0 16px 22px;padding:0;">
+        <li style="margin:0 0 7px;">Crie um app <em>Scoped access</em> em <span class="field" style="font-weight:600;color:#251d2b;">dropbox.com/developers/apps</span>,
+        com as permissões de leitura e escrita de arquivos e de compartilhamento
+        (o passo a passo completo, com os dois comandos que geram o token, está no
+        <span class="field" style="font-weight:600;color:#251d2b;">NOTES.md</span> do módulo).</li>
+        <li style="margin:0 0 7px;">Autorize o app logado na conta da editora e troque o código pelo
+        <span class="field" style="font-weight:600;color:#251d2b;">refresh token</span> — é ele que não expira.</li>
+        <li style="margin:0 0 7px;">Preencha <span class="menupath" style="display:inline-block;background:#f1eaf6;border:1px solid #e5dbee;border-radius:6px;padding:1px 8px;font-size:13.5px;color:#251d2b;white-space:nowrap;">Dropbox<i style="font-style:normal;color:#6e2f91;margin:0 4px;font-weight:700;">‣</i>Configuração<i style="font-style:normal;color:#6e2f91;margin:0 4px;font-weight:700;">‣</i>Conta</span>: App Key,
+        App Secret, Refresh Token — e use <span class="field" style="font-weight:600;color:#251d2b;">Testar conexão</span>. Em base
+        multiempresa, uma conta para cada empresa.</li>
+      </ol>
+      <p style="margin:0 0 12px;"><strong style="color:#251d2b;">Prazo dos links:</strong> na mesma Conta,
+      <span class="field" style="font-weight:600;color:#251d2b;">Links compartilhados expiram após (dias)</span> — padrão 30.
+      Compartilhar de novo renova o prazo; 0 cria links sem validade.</p>
+      <div class="callout warn" style="border:1px solid #e5dbee;border-left:4px solid #6e2f91;border-radius:10px;padding:14px 18px;margin:0 0 16px;border-left-color:#b3831a;background:#faf3e3;border-color:#eddfba;"><span class="title" style="font-weight:700;font-size:12px;letter-spacing:.08em;text-transform:uppercase;display:block;margin:0 0 4px;color:#7a5a12;">Atenção</span><p style="margin:0 0 12px;">O Dropbox só honra expiração de
+      link em plano pago (Plus, Professional ou Business). Em conta gratuita a criação do link com
+      prazo é recusada — o erro sai explicado, e a saída é zerar o prazo ou fazer upgrade.</p></div>
+
+      <h2 id="pastas" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">Pastas e permissões</h2>
+      <ol class="steps" style="margin:0 0 16px 22px;padding:0;">
+        <li style="margin:0 0 7px;">Como <strong style="color:#251d2b;">administrador do sistema</strong>, abra
+        <span class="menupath" style="display:inline-block;background:#f1eaf6;border:1px solid #e5dbee;border-radius:6px;padding:1px 8px;font-size:13.5px;color:#251d2b;white-space:nowrap;">Dropbox<i style="font-style:normal;color:#6e2f91;margin:0 4px;font-weight:700;">‣</i>Configuração<i style="font-style:normal;color:#6e2f91;margin:0 4px;font-weight:700;">‣</i>Pastas</span> e crie um mapeamento:
+        um nome e o caminho real no Dropbox (ex.: <span class="field" style="font-weight:600;color:#251d2b;">/Editorial/Capas</span>).
+        Gerentes veem as pastas, mas não as criam nem as alteram.</li>
+        <li style="margin:0 0 7px;">Escolha os grupos de <span class="field" style="font-weight:600;color:#251d2b;">Leitura</span> e os de <span class="field" style="font-weight:600;color:#251d2b;">Escrita</span>.
+        Escrever implica ler. <strong style="color:#251d2b;">Pasta sem grupo de leitura é visível só para gerentes</strong> —
+        o padrão seguro.</li>
+        <li style="margin:0 0 7px;">Se quiser a árvore inteira, ligue <span class="field" style="font-weight:600;color:#251d2b;">Incluir subpastas</span>.
+        Uma subpasta que tiver mapeamento próprio é <em>pulada</em> pelo sync da pasta-mãe:
+        o mapeamento mais específico manda, e o largo nunca vaza o que o estrito protege.</li>
+        <li style="margin:0 0 7px;">Clique em <span class="field" style="font-weight:600;color:#251d2b;">Sincronizar</span>. Os arquivos aparecem na lista —
+        só os metadados; nenhum byte entra no Odoo.</li>
+      </ol>
+      <figure class="shot" style="margin:20px 0 24px;"><img src="img/doc-liber_dropbox-folder.png" alt="Formulário da pasta com caminho, a opção Incluir subpastas e os grupos de leitura e escrita." style="max-width:100%;display:block;margin:0 auto;border-radius:12px;border:1px solid #e5dbee;"><figcaption style="font-size:13px;color:#5d5266;margin-top:10px;text-align:center;">O mapeamento da pasta: o caminho no Dropbox à esquerda, e à direita a decisão que importa — quem lê, quem escreve.</figcaption></figure>
+
+      <h2 id="dia-a-dia" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">O dia a dia</h2>
+      <ul style="margin:0 0 14px 22px;padding:0;">
+        <li style="margin:0 0 7px;"><strong style="color:#251d2b;">Baixar</strong> — abre o arquivo em nova aba por um link temporário que o Dropbox
+        expira em 4 horas. PDFs abrem direto no navegador.</li>
+        <li style="margin:0 0 7px;"><strong style="color:#251d2b;">Enviar</strong> — o menu <span class="menupath" style="display:inline-block;background:#f1eaf6;border:1px solid #e5dbee;border-radius:6px;padding:1px 8px;font-size:13.5px;color:#251d2b;white-space:nowrap;">Dropbox<i style="font-style:normal;color:#6e2f91;margin:0 4px;font-weight:700;">‣</i>Enviar</span> sobe um
+        arquivo <em>ou uma braçada deles</em> para uma pasta em que você tenha escrita: escolha-os no
+        seletor do sistema ou arraste-os para o campo de arquivos. Cada um viaja com o seu próprio
+        nome e o Odoo não guarda cópia depois. Nunca sobrescreve em silêncio: nome repetido
+        vira <span class="field" style="font-weight:600;color:#251d2b;">arquivo (1).pdf</span>.</li>
+        <li style="margin:0 0 7px;"><strong style="color:#251d2b;">Galeria</strong> — a segunda visão da lista mostra cartões com miniatura real das
+        imagens (JPG, PNG, TIFF…), geradas pelo Dropbox na sincronização. PDF não tem miniatura —
+        é limite do Dropbox, não escolha nossa.</li>
+      </ul>
+
+      <h2 id="compartilhar" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">Compartilhar com prazo</h2>
+      <ol class="steps" style="margin:0 0 16px 22px;padding:0;">
+        <li style="margin:0 0 7px;">No arquivo, clique em <span class="field" style="font-weight:600;color:#251d2b;">Compartilhar</span>. O sistema confirma que você
+        entende que o link é público.</li>
+        <li style="margin:0 0 7px;">O link nasce com o prazo configurado e fica gravado no arquivo:
+        <span class="field" style="font-weight:600;color:#251d2b;">Link compartilhado</span>, <span class="field" style="font-weight:600;color:#251d2b;">Compartilhado por</span>,
+        <span class="field" style="font-weight:600;color:#251d2b;">Compartilhado em</span> e <span class="field" style="font-weight:600;color:#251d2b;">Link expira em</span>.</li>
+        <li style="margin:0 0 7px;">Vencido o prazo, o Dropbox mata o link. Pediram de novo? Clique
+        <span class="field" style="font-weight:600;color:#251d2b;">Compartilhar</span> outra vez: o mesmo link ganha um novo prazo.</li>
+      </ol>
+      <figure class="shot" style="margin:20px 0 24px;"><img src="img/doc-liber_dropbox-share.png" alt="Ficha do arquivo com o link compartilhado, quem compartilhou, quando, e a data em que o link expira." style="max-width:100%;display:block;margin:0 auto;border-radius:12px;border:1px solid #e5dbee;"><figcaption style="font-size:13px;color:#5d5266;margin-top:10px;text-align:center;">O razão do compartilhamento: o link, quem pediu, quando — e a data em que ele morre.</figcaption></figure>
+
+      <h2 id="vinculos" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">Autores, títulos e tags</h2>
+      <p style="margin:0 0 12px;">Cada arquivo aceita <strong style="color:#251d2b;">vários contatos</strong> (um contrato com três autores aponta para
+      os três), <strong style="color:#251d2b;">um produto</strong> (o título a que pertence) e <strong style="color:#251d2b;">tags</strong> livres
+      ("contrato", "capa", "PNLD") cujo vocabulário o gerente cura em
+      <span class="menupath" style="display:inline-block;background:#f1eaf6;border:1px solid #e5dbee;border-radius:6px;padding:1px 8px;font-size:13.5px;color:#251d2b;white-space:nowrap;">Dropbox<i style="font-style:normal;color:#6e2f91;margin:0 4px;font-weight:700;">‣</i>Configuração<i style="font-style:normal;color:#6e2f91;margin:0 4px;font-weight:700;">‣</i>Tags</span>.</p>
+      <ul style="margin:0 0 14px 22px;padding:0;">
+        <li style="margin:0 0 7px;">Na lista, os vínculos se editam ali mesmo — e com seleção múltipla: marque dez contratos
+        do mesmo autor, edite um, e vale para os dez.</li>
+        <li style="margin:0 0 7px;">O filtro <span class="field" style="font-weight:600;color:#251d2b;">Ainda sem vínculo</span> mostra o que falta classificar.</li>
+        <li style="margin:0 0 7px;">Quem pode vincular é quem tem <em>escrita</em> na pasta do arquivo — a mesma régua do envio.</li>
+      </ul>
+      <p style="margin:0 0 12px;">Do outro lado da ponte, a ficha do <strong style="color:#251d2b;">contato</strong> e a do <strong style="color:#251d2b;">produto</strong>
+      ganham um botão com a contagem de arquivos, que abre a lista já filtrada. A contagem respeita as
+      permissões: ela só promete o que a pasta deixa abrir — quem não tem o módulo nem vê o botão.</p>
+      <figure class="shot" style="margin:20px 0 24px;"><img src="img/doc-liber_dropbox-partner.png" alt="Ficha de um contato com o botão inteligente do Dropbox mostrando a contagem de arquivos vinculados." style="max-width:100%;display:block;margin:0 auto;border-radius:12px;border:1px solid #e5dbee;"><figcaption style="font-size:13px;color:#5d5266;margin-top:10px;text-align:center;">No contato do autor: os contratos dele no Dropbox, a um clique — contados conforme a permissão de quem olha.</figcaption></figure>
+
+      <h2 id="arquivar" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">O que o "arquivar" faz (e não faz)</h2>
+      <p style="margin:0 0 12px;">Arquivar, no Odoo, tira o registro das listas sem apagá-lo. Neste módulo ele acontece de dois
+      jeitos: manualmente, ou sozinho quando a sincronização nota que um arquivo sumiu da pasta
+      (alguém apagou ou moveu direto no Dropbox) — o registro é arquivado em vez de excluído, para o
+      histórico de compartilhamentos não se perder.</p>
+      <div class="callout note" style="border:1px solid #e5dbee;border-left:4px solid #6e2f91;border-radius:10px;background:#f1eaf6;padding:14px 18px;margin:0 0 16px;"><span class="title" style="font-weight:700;font-size:12px;letter-spacing:.08em;text-transform:uppercase;display:block;margin:0 0 4px;color:#6e2f91;">Nota</span><p style="margin:0 0 12px;"><strong style="color:#251d2b;">Nada acontece no Dropbox.</strong>
+      O módulo não tem sequer código de apagar ou mover arquivos lá; as únicas escritas são o envio e o
+      link de compartilhamento. Arquivar mexe só no espelho: a estante fica intacta, a ficha sai da gaveta.</p></div>
+
+      <h2 id="limitacoes" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">Limitações conhecidas</h2>
+      <ul style="margin:0 0 14px 22px;padding:0;">
+        <li style="margin:0 0 7px;"><strong style="color:#251d2b;">Miniatura só de imagem</strong> — PDF não tem prévia; o Dropbox não a gera pela API.</li>
+        <li style="margin:0 0 7px;"><strong style="color:#251d2b;">Expiração de link exige plano pago</strong> do Dropbox.</li>
+        <li style="margin:0 0 7px;"><strong style="color:#251d2b;">Sincronização uma vez por dia</strong> — automática, de madrugada, pasta a pasta;
+        o botão da pasta continua para quem não pode esperar, e cada envio sincroniza na hora.
+        Aviso em tempo real (webhook) exigiria expor o servidor à internet — fase futura.</li>
+        <li style="margin:0 0 7px;"><strong style="color:#251d2b;">Envio na raiz</strong> — o upload deposita na raiz da pasta mapeada, ainda sem
+        escolher subpasta.</li>
+      </ul>
+
+      <h2 id="faq" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">Perguntas frequentes</h2>
+      <p style="margin:0 0 12px;"><strong style="color:#251d2b;">Quem tem o link compartilhado precisa de Odoo?</strong><br>
+      Não — e é por isso que criar o link é restrito, confirmado, assinado e com prazo. O link é a única
+      porta que não passa pelo porteiro.</p>
+      <p style="margin:0 0 12px;"><strong style="color:#251d2b;">Apaguei um arquivo no Dropbox. O que o Odoo faz?</strong><br>
+      No próximo sync o registro é arquivado (não excluído). O arquivo em si o módulo nunca apaga.</p>
+      <p style="margin:0 0 12px;"><strong style="color:#251d2b;">Por que uma pasta não aparece para um usuário?</strong><br>
+      Ou ele não tem o grupo <em>Dropbox Files / Usuário</em>, ou nenhum grupo dele está na
+      <span class="field" style="font-weight:600;color:#251d2b;">Leitura</span>/<span class="field" style="font-weight:600;color:#251d2b;">Escrita</span> da pasta. Pasta sem grupos é
+      só dos gerentes.</p>
+      <p style="margin:0 0 12px;"><strong style="color:#251d2b;">Sou gerente (ou administrador) e o Compartilhar foi recusado.</strong><br>
+      Escrever no Dropbox exige estar num grupo de <span class="field" style="font-weight:600;color:#251d2b;">Escrita</span> da pasta —
+      o cargo não substitui a permissão. Peça ao administrador para incluir o seu grupo na pasta.</p>
+      <p style="margin:0 0 12px;"><strong style="color:#251d2b;">O upload dá erro de nome.</strong><br>
+      O envio nunca sobrescreve: se o nome já existe, o Dropbox renomeia para
+      <span class="field" style="font-weight:600;color:#251d2b;">arquivo (1).ext</span> — confira no próximo sync.</p>
+
+      <div class="seealso" style="border:1px solid #e5dbee;border-radius:12px;background:#f1eaf6;padding:16px 20px;margin:32px 0 0;">
+        <strong style="font-weight:700;font-size:12px;letter-spacing:.08em;text-transform:uppercase;display:block;margin:0 0 8px;color:#5d5266;">Ver também</strong>
+        <ul style="margin:0 0 14px 22px;padding:0;">
+          <li style="margin:0 0 7px;"><a href="/liber_site/static/docs/liber_copyright_contracts.html" target="_blank" rel="noopener" style="color:#6e2f91;">Contratos de direitos autorais</a> — o contrato jurídico que o PDF do Dropbox documenta.</li>
+          <li style="margin:0 0 7px;"><a href="/liber_site/static/docs/liber_roles.html" target="_blank" rel="noopener" style="color:#6e2f91;">Papéis de acesso</a> — os grupos da casa que as pastas usam como régua.</li>
+        </ul>
+      </div><p style="margin:28px 0 0;padding-top:14px;border-top:1px solid #e5dbee;font-size:13px;color:#5d5266;">Manual completo, com busca e as demais páginas: <a href="/liber_site/static/docs/liber_dropbox.html" target="_blank" rel="noopener" style="color:#6e2f91;">Arquivos no Dropbox</a>.</p></div>

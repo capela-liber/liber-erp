@@ -10,6 +10,8 @@ class LiberCloudAccount(models.Model):
         ondelete={'github': 'cascade'})
     github_token = fields.Char(
         string='Access Token',
-        help="A fine-grained personal access token of the company's "
-             "GitHub account, with Contents read/write on the mapped "
-             "repositories; see the module's NOTES.md.")
+        help="A fine-grained personal access token, created on the personal "
+             "GitHub account of an organization member (Settings > Developer "
+             "settings > Personal access tokens > Fine-grained tokens), with "
+             "the organization as Resource owner and Contents read/write on "
+             "the mapped repositories; see the module's NOTES.md.")

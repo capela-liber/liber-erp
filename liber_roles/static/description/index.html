@@ -1,0 +1,143 @@
+<!-- GERADO por scripts/gen_module_descriptions.py a partir de
+     liber_site/static/docs/liber_roles.html -- não edite aqui.
+     O Odoo mostra este arquivo em Apps > Module Info. -->
+<div class="oe_container liber_manual" style="max-width:900px;margin:0 auto;padding:8px 4px 24px;color:#251d2b;background:transparent;font:15px/1.7 Inter,'Segoe UI',system-ui,sans-serif;"><h1 style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:32px;line-height:1.2;letter-spacing:-.015em;margin:0 0 10px;color:#251d2b;">Papéis de acesso</h1>
+      <p class="lead" style="font-size:17.5px;color:#5d5266;margin:0 0 26px;max-width:62ch;">Perfis prontos por área da editora — Comercial, Financeiro, Editorial, Marketing, Direção — e uma conta pública de visitante que enxerga tudo e não grava nada.</p>
+
+      <h2 id="visao-geral" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">Visão geral</h2>
+      <p style="margin:0 0 12px;">Os perfis nativos do Odoo são recortes por <em>aplicativo</em>: "Vendas: Usuário", "Contabilidade: Contador", "Estoque: Administrador". Uma editora não pensa assim — ela pensa por <em>função</em>: Comercial, Financeiro, Editorial, Marketing, cada uma em dois níveis, mais a Direção, que é transversal.</p>
+      <p style="margin:0 0 12px;">Este módulo faz a tradução de uma coisa na outra, uma vez só e por escrito. Quem cadastra um usuário marca <strong style="color:#251d2b;">uma função</strong> na ficha dele; o Odoo deriva sozinho todos os grupos de aplicativo que aquela função implica. Ninguém mais precisa montar acesso clicando grupo por grupo — e "quem pode ver a margem?" passa a ter uma resposta que não depende de conferir usuário por usuário.</p>
+      <p style="margin:0 0 12px;">A régua dos dois níveis é simples:</p>
+      <ul style="margin:0 0 14px 22px;padding:0;">
+        <li style="margin:0 0 7px;"><strong style="color:#251d2b;">Assistente</strong> — opera o dia a dia: cria e edita os documentos da sua área.</li>
+        <li style="margin:0 0 7px;"><strong style="color:#251d2b;">Gerente</strong> — tudo do assistente, mais aprovar, configurar e ver os relatórios da área.</li>
+        <li style="margin:0 0 7px;"><strong style="color:#251d2b;">Direção</strong> — leitura ampla do sistema e os boards financeiros; acumulável com uma função de área.</li>
+      </ul>
+      <p style="margin:0 0 12px;">Fora da grade existe o <strong style="color:#251d2b;">Visitante</strong>: a conta da apresentação pública, tratada em seção própria abaixo.</p>
+      <div class="callout note" style="border:1px solid #e5dbee;border-left:4px solid #6e2f91;border-radius:10px;background:#f1eaf6;padding:14px 18px;margin:0 0 16px;"><span class="title" style="font-weight:700;font-size:12px;letter-spacing:.08em;text-transform:uppercase;display:block;margin:0 0 4px;color:#6e2f91;">Nota</span><p style="margin:0 0 12px;">Os perfis por departamento são uma primeira versão, pouco rodada em produção — a régua "assistente opera / gerente aprova" vai apertar em alguns lugares e folgar em outros. O visitante é a parte com garantia de teste automatizado. Trate a grade como ponto de partida, e ajuste os perfis no próprio módulo quando a prática pedir.</p></div>
+
+      <h2 id="configuracao" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">Configuração: atribuir uma função</h2>
+      <ol class="steps" style="margin:0 0 16px 22px;padding:0;">
+        <li style="margin:0 0 7px;">Abra <span class="menupath" style="display:inline-block;background:#f1eaf6;border:1px solid #e5dbee;border-radius:6px;padding:1px 8px;font-size:13.5px;color:#251d2b;white-space:nowrap;">Definições<i style="font-style:normal;color:#6e2f91;margin:0 4px;font-weight:700;">‣</i>Usuários e Empresas<i style="font-style:normal;color:#6e2f91;margin:0 4px;font-weight:700;">‣</i>Usuários</span> e entre na ficha do usuário.</li>
+        <li style="margin:0 0 7px;">Na aba de direitos de acesso, localize a seção <span class="field" style="font-weight:600;color:#251d2b;">Liber / Funções</span>. Cada departamento aparece como uma escolha: <span class="field" style="font-weight:600;color:#251d2b;">Direção</span>, <span class="field" style="font-weight:600;color:#251d2b;">Comercial</span>, <span class="field" style="font-weight:600;color:#251d2b;">Financeiro</span>, <span class="field" style="font-weight:600;color:#251d2b;">Editorial</span>, <span class="field" style="font-weight:600;color:#251d2b;">Marketing</span>, <span class="field" style="font-weight:600;color:#251d2b;">Visitante</span>.</li>
+        <li style="margin:0 0 7px;">Escolha o nível do departamento da pessoa — <span class="field" style="font-weight:600;color:#251d2b;">Assistente</span> ou <span class="field" style="font-weight:600;color:#251d2b;">Gerente</span>. Só isso: os grupos de Vendas, Contabilidade, Estoque etc. são preenchidos automaticamente.</li>
+        <li style="margin:0 0 7px;">Salve. No próximo login o usuário vê os menus da sua função.</li>
+      </ol>
+      <div class="callout tip" style="border:1px solid #e5dbee;border-left:4px solid #6e2f91;border-radius:10px;padding:14px 18px;margin:0 0 16px;border-left-color:#2e6e4e;background:#eef5f0;border-color:#d8e7dd;"><span class="title" style="font-weight:700;font-size:12px;letter-spacing:.08em;text-transform:uppercase;display:block;margin:0 0 4px;color:#2e6e4e;">Dica</span><p style="margin:0 0 12px;">Um diretor que também opera uma área acumula as duas funções: marque <span class="field" style="font-weight:600;color:#251d2b;">Direção</span> <em>e</em> o nível da área (ex.: Editorial ‣ Gerente). Direção sozinha dá leitura ampla e os boards — não os botões de operação.</p></div>
+      <div class="callout warn" style="border:1px solid #e5dbee;border-left:4px solid #6e2f91;border-radius:10px;padding:14px 18px;margin:0 0 16px;border-left-color:#b3831a;background:#faf3e3;border-color:#eddfba;"><span class="title" style="font-weight:700;font-size:12px;letter-spacing:.08em;text-transform:uppercase;display:block;margin:0 0 4px;color:#7a5a12;">Atenção</span><p style="margin:0 0 12px;">Evite marcar grupos de aplicativo à mão por cima de uma função: é exatamente a manutenção manual que este módulo aposenta. Se uma função precisa de mais (ou menos) acesso, a mudança certa é no próprio perfil, para valer para todos que o carregam.</p></div>
+
+      <h2 id="grade" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">O que cada função enxerga e edita</h2>
+      <p style="margin:0 0 12px;">A tabela resume a grade tal como instalada (v1):</p>
+      <div class="tablewrap" style="overflow-x:auto;margin:0 0 16px;"><table style="border-collapse:collapse;width:100%;margin:0 0 16px;font-size:14px;">
+        <thead><tr><th style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;background:#f1eaf6;font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:13.5px;">Função</th><th style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;background:#f1eaf6;font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:13.5px;">Opera (cria e edita)</th><th style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;background:#f1eaf6;font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:13.5px;">Enxerga além disso</th><th style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;background:#f1eaf6;font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:13.5px;">Não vê / não faz</th></tr></thead>
+        <tbody>
+          <tr>
+            <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;"><strong style="color:#251d2b;">Direção</strong></td>
+            <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">— (perfil de leitura; quem opera acumula outra função)</td>
+            <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Relatórios contábeis (leitura), boards do orçamento, vendas, consignação, contratos de direitos, estoque, projetos</td>
+            <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Configurar contabilidade; a v1 ainda não bloqueia edição nos apps operacionais</td>
+          </tr>
+          <tr>
+            <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;"><strong style="color:#251d2b;">Comercial ‣ Assistente</strong></td>
+            <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Pedidos, acertos de consignação, devoluções, cadastro de clientes; movimenta estoque</td>
+            <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Todos os documentos de venda da casa</td>
+            <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Relatórios financeiros; configurar vendas e consignação</td>
+          </tr>
+          <tr>
+            <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;"><strong style="color:#251d2b;">Comercial ‣ Gerente</strong></td>
+            <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Tudo do assistente + administra vendas e consignação: fecha acordos, cria campanhas, ajusta réguas de cobrança de devolução</td>
+            <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Relatórios do canal comercial</td>
+            <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Contabilidade e orçamento</td>
+          </tr>
+          <tr>
+            <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;"><strong style="color:#251d2b;">Financeiro ‣ Assistente</strong> (cobrança)</td>
+            <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Faturas, registro e preparação de pagamentos, conciliação; cadastro de parceiros</td>
+            <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">—</td>
+            <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Relatórios contábeis, orçamento, boards, configuração fiscal</td>
+          </tr>
+          <tr>
+            <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;"><strong style="color:#251d2b;">Financeiro ‣ Gerente</strong></td>
+            <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Contabilidade completa: valida e estorna, configura plano de contas e impostos; administra o orçamento; pagamentos de royalties</td>
+            <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Boards financeiros e relatórios contábeis</td>
+            <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">—</td>
+          </tr>
+          <tr>
+            <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;"><strong style="color:#251d2b;">Editorial ‣ Assistente</strong></td>
+            <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Contratos de direitos autorais (operação), fichas do catálogo, cadastro de autores</td>
+            <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Cálculos de royalty (consulta)</td>
+            <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Fechar períodos de royalty; dados financeiros</td>
+          </tr>
+          <tr>
+            <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;"><strong style="color:#251d2b;">Editorial ‣ Gerente</strong> (editor)</td>
+            <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Tudo do assistente + administra contratos, fecha períodos de royalty, arquiva títulos</td>
+            <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Valores a pagar dos contratos</td>
+            <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Pagar (isso é do Financeiro)</td>
+          </tr>
+          <tr>
+            <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;"><strong style="color:#251d2b;">Marketing ‣ Assistente</strong></td>
+            <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Conteúdo do site (edição restrita)</td>
+            <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">—</td>
+            <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Dados financeiros</td>
+          </tr>
+          <tr>
+            <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;"><strong style="color:#251d2b;">Marketing ‣ Gerente</strong></td>
+            <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Publica e configura o site</td>
+            <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Campanhas de consignação (acompanha; criar é do Comercial)</td>
+            <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Dados financeiros</td>
+          </tr>
+          <tr>
+            <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;"><strong style="color:#251d2b;">Visitante</strong></td>
+            <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Somente o chatter (comentários, atividades, anexos)</td>
+            <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">O sistema inteiro, em nível de visibilidade gerencial: vendas, consignação, contratos, orçamento, estoque, relatórios contábeis</td>
+            <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Criar, alterar ou apagar qualquer documento; exportar dados</td>
+          </tr>
+        </tbody>
+      </table></div>
+      <p style="margin:0 0 12px;">Uma consequência que vale registrar: <strong style="color:#251d2b;">os boards financeiros se protegem sozinhos</strong>. O painel de orçamento exige os grupos de Orçamento e os relatórios contábeis exigem o acesso contábil de leitura — e só Direção e Financeiro ‣ Gerente recebem esses grupos. Não há uma trava extra a manter: a restrição cai da matemática dos perfis.</p>
+      <figure class="shot" style="margin:20px 0 24px;"><img src="img/doc-liber_roles-user.png" alt="Ficha do usuário com a seção Liber / Funções: um seletor por departamento, com os níveis Assistente e Gerente." style="max-width:100%;display:block;margin:0 auto;border-radius:12px;border:1px solid #e5dbee;"><figcaption style="font-size:13px;color:#5d5266;margin-top:10px;text-align:center;">A ficha do usuário: uma função por departamento, e o resto se deriva.</figcaption></figure>
+
+      <h2 id="visitante" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">O visitante: a conta da apresentação pública</h2>
+      <p style="margin:0 0 12px;">O Visitante é uma conta feita para circular — uma demonstração pública do sistema com dados de verdade na tela. Ela abre qualquer menu, roda qualquer relatório e <em>conversa</em>: pode escrever no chatter dos documentos, marcar pessoas, criar atividades e anexar arquivos. O que ela não faz, em lugar nenhum, é criar, alterar ou apagar um documento. Não emite um pedido; manda um recado.</p>
+      <p style="margin:0 0 12px;">O ponto importante é <strong style="color:#251d2b;">onde mora a trava</strong>: no servidor, na porta por onde passa toda gravação do sistema — não no menu, não no botão escondido. Isso significa que a proteção vale também para caminhos que a interface não mostra: uma chamada direta pela API ou uma URL colada no navegador batem na mesma recusa. Esconder menus protegeria a vitrine; a trava no servidor protege o sistema.</p>
+      <p style="margin:0 0 12px;">Quando o visitante tenta gravar, a mensagem explica em vez de assustar:</p>
+      <div class="callout example" style="border:1px solid #e5dbee;border-left:4px solid #6e2f91;border-radius:10px;background:#f1eaf6;padding:14px 18px;margin:0 0 16px;border-left-color:#c76ae1;"><span class="title" style="font-weight:700;font-size:12px;letter-spacing:.08em;text-transform:uppercase;display:block;margin:0 0 4px;color:#8a4bad;">Exemplo</span><p style="margin:0 0 12px;">"Modo visitante: esta é uma conta de demonstração e não grava dados. Você pode navegar por todas as telas, abrir relatórios e escrever no chatter — mas não criar, alterar ou apagar registros."</p></div>
+      <p style="margin:0 0 12px;">Escolhas deliberadas do desenho, úteis de conhecer antes de uma apresentação:</p>
+      <ul style="margin:0 0 14px 22px;padding:0;">
+        <li style="margin:0 0 7px;"><strong style="color:#251d2b;">Visibilidade generosa, de propósito.</strong> Como a escrita está cortada no servidor, dar ao visitante o nível "gerente" na maioria dos apps não lhe dá poder nenhum — dá visibilidade. É a diferença entre demonstrar o sistema e demonstrar um sistema com metade dos menus faltando.</li>
+        <li style="margin:0 0 7px;"><strong style="color:#251d2b;">Sem exportação.</strong> A conta é pública e circula; mesmo sem escrita, ela poderia levar a base embora numa planilha. O botão de exportar não existe para ela.</li>
+        <li style="margin:0 0 7px;"><strong style="color:#251d2b;">Assistentes abrem e falham no fim.</strong> Janelas de assistente (importar, combinar, configurar) abrem e se deixam preencher — a recusa acontece no "Aplicar", quando o efeito tocaria um documento real. Numa demonstração, é melhor um assistente que abre e explica do que um menu que não responde.</li>
+        <li style="margin:0 0 7px;"><strong style="color:#251d2b;">O que a conta grava é uma lista fechada.</strong> Chatter, seguidores, atividades, anexos e as preferências da própria sessão — e nada mais. Qualquer modelo novo que entre no sistema nasce bloqueado para o visitante, sem que ninguém precise lembrar de bloqueá-lo.</li>
+      </ul>
+      <p style="margin:0 0 12px;">Uma fronteira dita em voz alta: automações internas que gravam com privilégio de sistema (login, tarefas agendadas, envio de e-mail) continuam funcionando com o visitante logado — é o que mantém a demonstração viva. Os botões comuns do Odoo (confirmar pedido, validar fatura) gravam em nome do usuário e ficam barrados.</p>
+
+      <h3 id="criar-visitante" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:19px;line-height:1.25;margin:28px 0 10px;color:#251d2b;">Colocar a conta de visitante no ar</h3>
+      <ol class="steps" style="margin:0 0 16px 22px;padding:0;">
+        <li style="margin:0 0 7px;">Crie um usuário dedicado em <span class="menupath" style="display:inline-block;background:#f1eaf6;border:1px solid #e5dbee;border-radius:6px;padding:1px 8px;font-size:13.5px;color:#251d2b;white-space:nowrap;">Definições<i style="font-style:normal;color:#6e2f91;margin:0 4px;font-weight:700;">‣</i>Usuários e Empresas<i style="font-style:normal;color:#6e2f91;margin:0 4px;font-weight:700;">‣</i>Usuários</span> (ex.: "Visitante", com um e-mail próprio).</li>
+        <li style="margin:0 0 7px;">Na seção <span class="field" style="font-weight:600;color:#251d2b;">Liber / Funções</span>, marque <span class="field" style="font-weight:600;color:#251d2b;">Visitante (demonstração)</span> — e nenhuma outra função.</li>
+        <li style="margin:0 0 7px;">Defina uma senha e distribua o acesso.</li>
+        <li style="margin:0 0 7px;">Antes de divulgar, faça o teste de um minuto: logado como visitante, tente editar um contato e confirmar um pedido (deve aparecer a mensagem do modo visitante) e poste um comentário num documento (deve funcionar).</li>
+      </ol>
+      <div class="callout warn" style="border:1px solid #e5dbee;border-left:4px solid #6e2f91;border-radius:10px;padding:14px 18px;margin:0 0 16px;border-left-color:#b3831a;background:#faf3e3;border-color:#eddfba;"><span class="title" style="font-weight:700;font-size:12px;letter-spacing:.08em;text-transform:uppercase;display:block;margin:0 0 4px;color:#7a5a12;">Atenção</span><p style="margin:0 0 12px;">Não acumule o perfil Visitante com outra função no mesmo usuário: a conta é para circular em público, e qualquer outra função somaria permissões que não fazem sentido nela. Visitante anda sozinho.</p></div>
+
+      <h2 id="faq" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">Perguntas frequentes</h2>
+      <p style="margin:0 0 12px;"><strong style="color:#251d2b;">Marquei a função e o usuário não vê o aplicativo X.</strong><br>
+      Primeiro confira se é o que a grade prevê (tabela acima) — boa parte dos "faltando" é desenho, não defeito. Se a função realmente deveria ver, o ajuste é no perfil (para valer para todos), não um grupo avulso naquele usuário.</p>
+      <p style="margin:0 0 12px;"><strong style="color:#251d2b;">O assistente do Comercial vê pedidos dos colegas. É assim mesmo?</strong><br>
+      Na v1, sim: o assistente vê todos os documentos de venda. Restringir a "só os próprios documentos" está previsto para uma fase seguinte.</p>
+      <p style="margin:0 0 12px;"><strong style="color:#251d2b;">A Direção consegue editar um pedido. Não deveria ser só leitura?</strong><br>
+      Na v1 a Direção enxerga tudo, mas ainda não está <em>impedida</em> de editar nos apps operacionais — o bloqueio de edição é fase 2. Se um diretor opera uma área, o caminho certo já é acumular a função da área.</p>
+      <p style="margin:0 0 12px;"><strong style="color:#251d2b;">O visitante abriu um assistente de importação. Isso é um furo?</strong><br>
+      Não: o assistente abre (é uma janela temporária), mas o efeito dele cai num documento real — e aí a gravação é recusada. É o comportamento desenhado.</p>
+      <p style="margin:0 0 12px;"><strong style="color:#251d2b;">Posso usar o visitante como "usuário de consulta" interno?</strong><br>
+      Funciona como leitura geral, com duas ressalvas: o nível de visibilidade é alto (relatórios contábeis inclusive) e não há exportação. Para consulta interna com recortes finos, o melhor é uma função de área.</p>
+      <p style="margin:0 0 12px;"><strong style="color:#251d2b;">Instalei um módulo novo. O visitante já está travado nele?</strong><br>
+      Sim. A regra é lista fechada do que <em>pode</em>: todo modelo novo nasce somente-leitura para o visitante. Liberar algo a mais é uma decisão explícita, no módulo.</p>
+
+      <div class="seealso" style="border:1px solid #e5dbee;border-radius:12px;background:#f1eaf6;padding:16px 20px;margin:32px 0 0;">
+        <strong style="font-weight:700;font-size:12px;letter-spacing:.08em;text-transform:uppercase;display:block;margin:0 0 8px;color:#5d5266;">Ver também</strong>
+        <ul style="margin:0 0 14px 22px;padding:0;">
+          <li style="margin:0 0 7px;"><a href="/liber_site/static/docs/liber_budget.html" target="_blank" rel="noopener" style="color:#6e2f91;">Orçamento</a> — os boards que só Direção e Financeiro ‣ Gerente enxergam.</li>
+          <li style="margin:0 0 7px;"><a href="/liber_site/static/docs/liber_soc_agreements.html" target="_blank" rel="noopener" style="color:#6e2f91;">Acordos de consignação</a> — a área que o Comercial opera.</li>
+          <li style="margin:0 0 7px;"><a href="/liber_site/static/docs/liber_copyright_contracts.html" target="_blank" rel="noopener" style="color:#6e2f91;">Contratos de direitos autorais</a> — a área do Editorial.</li>
+        </ul>
+      </div><p style="margin:28px 0 0;padding-top:14px;border-top:1px solid #e5dbee;font-size:13px;color:#5d5266;">Manual completo, com busca e as demais páginas: <a href="/liber_site/static/docs/liber_roles.html" target="_blank" rel="noopener" style="color:#6e2f91;">Papéis de acesso</a>.</p></div>

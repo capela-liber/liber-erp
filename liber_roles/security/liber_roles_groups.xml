@@ -173,42 +173,114 @@
     <!-- LIBER em nível usuário, não grava nada.                        -->
     <!--                                                                -->
     <!-- A v1 era generosa (gerente em tudo): demonstrava o Odoo        -->
-    <!-- inteiro, não o produto. Decisão de 20/07/2026: a demo mostra   -->
-    <!-- Consignação, Direitos autorais (Favorecidos), Bonificação e o  -->
-    <!-- Catálogo/Metabooks — e só. Faturamento, Orçamento, Compras,    -->
-    <!-- Projeto e o editor do Website ficam de fora do MENU; os        -->
-    <!-- documentos que essas telas embutem (pedido do acerto, remessa, -->
-    <!-- faturado do contato) entram em leitura crua pelo               -->
-    <!-- ir.model.access.csv ao lado — acesso sem menu, que é a         -->
-    <!-- diferença entre esconder um app e quebrar uma tela.            -->
+    <!-- inteiro, não o produto. A v2 (20/07/2026) apertou para         -->
+    <!-- Consignação, Direitos autorais, Bonificação e Catálogo.        -->
+    <!--                                                                -->
+    <!-- A régua da v3 (27/07/2026) é outra, e é mais fácil de manter   -->
+    <!-- honesta: **a demo abre o que a demo promete**. Duas partes:    -->
+    <!--                                                                -->
+    <!-- 1. Toda tela com manual publicado em liber_site. O corte da    -->
+    <!--    v2 era por app, e por isso escondia telas que os manuais    -->
+    <!--    descreviam em detalhe — quem lia "Cálculo de royalties" e   -->
+    <!--    entrava na demo não achava a tela. Manual que promete o     -->
+    <!--    que a demo não mostra é pior que demo pequena.              -->
+    <!--                                                                -->
+    <!-- 2. Vendas e eCommerce. Não têm manual próprio por serem do     -->
+    <!--    Odoo cru, mas são a vitrine: quem abre a demonstração de    -->
+    <!--    um ERP de editora espera ver o pedido e a loja. Ficaram de  -->
+    <!--    fora da primeira rodada da v3 justamente porque a régua     -->
+    <!--    era só o manual — e a ausência apareceu na hora.            -->
+    <!--                                                                -->
+    <!-- O que isso trouxe para dentro, e por quê:                      -->
+    <!-- - contract_manager: os manuais de Cálculo de royalties, IRRF   -->
+    <!--   e Pagamento de royalties. As três telas são gated em         -->
+    <!--   manager, não em user — daí precisar do grupo "de gerente"    -->
+    <!--   para uma conta que não grava nada.                           -->
+    <!-- - account_readonly: os manuais de Importação de XML de NF-e e  -->
+    <!--   de Notas de remessa. Ambos os menus penduram em              -->
+    <!--   account.menu_finance.                                        -->
+    <!-- - budget_user: o manual de Orçamento.                          -->
+    <!-- - sale_salesman_all_leads: Vendas E eCommerce de uma vez —     -->
+    <!--   sale.sale_menu_root é livre, mas os filhos que importam      -->
+    <!--   (Pedidos, Cotações, Faturamento, Catálogo) e o               -->
+    <!--   website_sale.menu_ecommerce exigem group_sale_salesman.      -->
+    <!--   A variante _all_leads é deliberada: com o salesman simples   -->
+    <!--   a regra de registro filtra os pedidos pelo vendedor dono, o  -->
+    <!--   visitante não é dono de nenhum, e a tela abriria VAZIA.      -->
+    <!--   Demo vazia é pior que tela fechada. O group_sale_manager     -->
+    <!--   segue fora: ele traz configuração e relatórios gerenciais,   -->
+    <!--   que não são vitrine.                                         -->
+    <!--                                                                -->
+    <!-- O preço, dito em voz alta: esta conta é pública e circula, e   -->
+    <!-- agora ela lê Faturamento e Orçamento. São números da casa. A   -->
+    <!-- troca foi consciente — a demo existe para mostrar o produto —  -->
+    <!-- mas se um dia a base deixar de ser de demonstração e passar a  -->
+    <!-- ter movimento real, esta é a primeira linha a revisar.         -->
+    <!--                                                                -->
+    <!-- Fora do menu de propósito, mesmo tendo manual:                 -->
+    <!-- - liber_roles ("Papéis de acesso"): a tela é a administração   -->
+    <!--   de acesso. Manual documenta a ideia; a demo não precisa      -->
+    <!--   entregar o painel. Exigiria base.group_system.               -->
+    <!-- - Dropbox, Drive e GitHub: os módulos não estão instalados     -->
+    <!--   nesta base. Quando entrarem, os grupos deles entram aqui.    -->
     <!--                                                                -->
     <!-- Duas ausências que continuam deliberadas:                      -->
     <!-- - a trava de escrita segue em models/ir_model_access.py: o     -->
     <!--   nível dos grupos daqui é visibilidade, nunca poder.          -->
     <!-- - base.group_allow_export: a conta é pública e circula. Sem     -->
-    <!--   escrita ela ainda poderia levar a base embora em .xlsx.       -->
+    <!--   escrita ela ainda poderia levar a base embora em .xlsx —      -->
+    <!--   e com Faturamento agora visível, isso pesa mais, não menos.   -->
     <!-- ============================================================== -->
     <record id="group_visitante" model="res.groups">
         <field name="name">Visitante (demonstração)</field>
         <field name="privilege_id" ref="privilege_visitante"/>
+        <!-- A ORDEM DESTA LISTA É SIGNIFICATIVA, e custou um susto.
+             Ela é uma sequência de comandos, executada de cima para baixo:
+             conceder um grupo dispara a cascata dos módulos que reagem a
+             ele, e essa cascata pode trazer grupos de volta. Quando os
+             (3, ...) vinham primeiro, conceder sale_salesman_all_leads no
+             fim re-introduziu project.group_project_user (via sale_project)
+             e website.group_website_restricted_editor (via website_sale) na
+             conta pública — dois apps que a régua manda esconder, sem
+             ninguém pedir e sem erro nenhum aparecer.
+             Concessões primeiro, remoções por último: assim a limpeza é a
+             última palavra, aconteça o que acontecer no meio. -->
         <field name="implied_ids" eval="[
-            (3, ref('account.group_account_readonly')),
-            (3, ref('liber_budget.group_budget_manager')),
+            (4, ref('base.group_user')),
+            (4, ref('liber_soc_agreements.group_soc_user')),
+            (4, ref('liber_copyright_contracts.group_contract_user')),
+            (4, ref('liber_copyright_contracts.group_contract_manager')),
+            (4, ref('liber_metabooks_integration.metabooks_product_group')),
+            (4, ref('liber_metabooks_integration.metadata_group')),
+            (4, ref('liber_budget.group_budget_user')),
+            (4, ref('account.group_account_readonly')),
+            (4, ref('sales_team.group_sale_salesman_all_leads')),
             (3, ref('sales_team.group_sale_manager')),
             (3, ref('stock.group_stock_manager')),
             (3, ref('project.group_project_user')),
             (3, ref('website.group_website_restricted_editor')),
             (3, ref('liber_soc_agreements.group_soc_manager')),
-            (3, ref('liber_copyright_contracts.group_contract_manager')),
-            (3, ref('liber_product_bonus.group_bonus_manager')),
-            (4, ref('base.group_user')),
-            (4, ref('liber_soc_agreements.group_soc_user')),
-            (4, ref('liber_copyright_contracts.group_contract_user')),
-            (4, ref('liber_product_bonus.group_bonus_user')),
-            (4, ref('liber_metabooks_integration.metabooks_product_group')),
-            (4, ref('liber_metabooks_integration.metadata_group')),
+            (3, ref('liber_budget.group_budget_manager')),
         ]"/>
-        <field name="comment">Conta de demonstração pública: percorre os apps do Liber (consignação, direitos autorais, bonificação, catálogo) em leitura, escreve só no chatter. A trava de escrita é no ORM, não no menu.</field>
+        <!-- Módulo de fora que queira somar (ou tirar) grupos do visitante faz
+             isso por conta própria, com comandos (4, ...) / (3, ...): eles são
+             incrementais e sobrevivem a um -u liber_roles. É assim que um módulo
+             que não vive neste repositório entra na conta pública sem que este
+             precise conhecê-lo, e sem que a lista acima cresça a cada
+             integração. Para tirar da conta um grupo que já esteja na ficha do
+             usuário, ver o `extras` em models/res_users.py. -->
+        <field name="comment">Conta de demonstração pública: abre em leitura toda tela que tem manual publicado — consignação, direitos autorais e seus royalties, fiscal, catálogo e orçamento — mais Vendas e eCommerce, que são a vitrine. Escreve só no chatter; a trava de escrita é no ORM, não no menu.</field>
     </record>
+
+    <!-- A última palavra sobre o visitante, e ela precisa ser em Python.
+         As entradas (3, ...) acima desfazem o VÍNCULO entre dois grupos; não
+         alcançam grupo que o usuário carrega direto. E é assim que a carona
+         chega: conceder o grupo de vendas fez o sale_project acrescentar
+         project.group_project_user e o website_sale acrescentar
+         website.group_website_restricted_editor direto na conta pública.
+         Esta chamada roda em todo -u liber_roles e devolve a conta ao
+         recorte declarado. Vem por último de propósito: depois dos grupos,
+         depois da cascata. -->
+    <function model="res.users" name="_liber_faxina_do_visitante"/>
 
 </odoo>

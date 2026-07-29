@@ -169,21 +169,6 @@ Página: `/liber_site/static/docs/liber_metabooks_integration.html`
   - O que capturar: Formulário de um envio para a Metabooks com os botões Buscar alterações, Verificar e Gerar planilha, e a aba de alterações com colunas Antes e Depois
 
 
-## Bonificação — `liber_product_bonus.html`
-
-Página: `/liber_site/static/docs/liber_product_bonus.html`
-
-- [x] **`doc-liber_product_bonus-import.png`**
-  - O que capturar: Assistente de importação com a prévia: contatos existentes, novos, repetidos e sem endereço, antes de gravar.
-  - Legenda no manual: A prévia da importação: nada é gravado antes do "Importar".
-- [x] **`doc-liber_product_bonus-triage.png`**
-  - O que capturar: Tela de triagem do disparo: fontes que somam, tabela de candidatos com Score e endereço, e o contador de meta se movendo.
-  - Legenda no manual: A triagem: o freio é o contador vivo, não um "não" na hora de salvar.
-- [x] **`doc-liber_product_bonus-analysis.png`**
-  - O que capturar: Tabela dinâmica de análise cruzando investimento, resultado e custo.
-  - Legenda no manual: Análise: o que cada verba gastou e o que voltou.
-
-
 ## Orçamento — `liber_budget.html`
 
 Página: `/liber_site/static/docs/liber_budget.html`
@@ -242,3 +227,18 @@ Página: `/liber_site/static/docs/liber_roles.html`
 - [x] **`doc-liber_roles-user.png`**
   - O que capturar: Ficha do usuário com a seção Liber / Funções: um seletor por departamento, com os níveis Assistente e Gerente.
   - Legenda no manual: A ficha do usuário: uma função por departamento, e o resto se deriva.
+
+
+## Impressão sob demanda (Metabrasil) — `liber_metabrasil.html`
+
+Página: `/liber_site/static/docs/liber_metabrasil.html`
+
+- [ ] **`doc-liber_metabrasil-dropship.png`**
+  - O que capturar: Pedido de compra da Metabrasil com a faixa laranja **Dropship** no canto superior direito, mostrando o cliente no campo "Entregar para"
+  - Legenda no manual: A faixa no canto diz o destino da tiragem antes de qualquer confirmação: laranja quando vai direto ao cliente.
+- [ ] **`doc-liber_metabrasil-precos.png`**
+  - O que capturar: Compras ‣ Produtos ‣ Listas de preço de fornecedor, filtrado por fornecedor Metabrasil, com as colunas Tiragem e Custo do produto visíveis e pelo menos uma linha em vermelho (acima do custo)
+  - Legenda no manual: A escada de preços: uma linha por tiragem, o custo do título ao lado e, em vermelho, as faixas em que imprimir custa mais do que o livro vale.
+- [ ] **`doc-liber_metabrasil-frete.png`**
+  - O que capturar: Janela "Adicionar envio" com a forma de entrega Dropship, depois de "Obter preço": o campo Transportadora preenchido e, abaixo, a lista das transportadoras cotadas com preço e prazo
+  - Legenda no manual: Tudo que a gráfica cotou para aquele CEP, numa lista: a regra da forma de entrega pré-seleciona uma, e a escolha é sua.
