@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="purchase_order_form_inherit_metabrasil" model="ir.ui.view">
+        <field name="name">purchase.order.form.inherit.liber.metabrasil</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header" position="inside">
+                <field name="is_metabrasil" invisible="1"/>
+                <field name="metabrasil_sent" invisible="1"/>
+                <button name="action_metabrasil_refresh" type="object"
+                        string="Refresh Print Status"
+                        invisible="not is_metabrasil or not metabrasil_sent"/>
+                <field name="metabrasil_status" widget="statusbar"
+                       statusbar_visible="included,printing,shipped,delivered"
+                       invisible="not is_metabrasil or metabrasil_status == 'not_sent'"/>
+            </xpath>
+            <xpath expr="//sheet" position="inside">
+                <field name="metabrasil_delivery_kind" invisible="1"/>
+                <widget name="web_ribbon" title="PoD" bg_color="text-bg-success"
+                        invisible="metabrasil_delivery_kind != 'warehouse'"/>
+                <widget name="web_ribbon" title="Dropship" bg_color="text-bg-warning"
+                        invisible="metabrasil_delivery_kind != 'customer'"/>
+            </xpath>
+            <xpath expr="//page[@name='purchase_delivery_invoice']//group" position="inside">
+                <group string="Metabrasil" name="metabrasil"
+                       invisible="not is_metabrasil">
+                    <field name="metabrasil_sale_order_id"
+                           groups="sales_team.group_sale_salesman"/>
+                    <field name="metabrasil_order_ref"/>
+                    <field name="metabrasil_sync_date"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="purchase_order_tree_inherit_metabrasil" model="ir.ui.view">
+        <field name="name">purchase.order.list.inherit.liber.metabrasil</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_view_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='state']" position="before">
+                <field name="metabrasil_status" optional="hide" widget="badge"
+                       decoration-info="metabrasil_status in ('included', 'printing')"
+                       decoration-success="metabrasil_status in ('shipped', 'delivered')"
+                       decoration-danger="metabrasil_status in ('error', 'not_found')"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="purchase_order_search_inherit_metabrasil" model="ir.ui.view">
+        <field name="name">purchase.order.search.inherit.liber.metabrasil</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.view_purchase_order_filter"/>
+        <field name="arch" type="xml">
+            <xpath expr="//filter[@name='approved']" position="after">
+                <separator/>
+                <filter string="Print Orders" name="metabrasil_orders"
+                        domain="[('metabrasil_sent', '=', True)]"/>
+                <filter string="Print In Production" name="metabrasil_printing"
+                        domain="[('metabrasil_status', '=', 'printing')]"/>
+                <filter string="Print Errors" name="metabrasil_errors"
+                        domain="[('metabrasil_status', 'in', ('error', 'not_found'))]"/>
+                <filter string="Print Status" name="group_metabrasil_status"
+                        context="{'group_by': 'metabrasil_status'}"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

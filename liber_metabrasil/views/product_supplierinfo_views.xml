@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="product_supplierinfo_list_inherit_metabrasil" model="ir.ui.view">
+        <field name="name">product.supplierinfo.list.inherit.liber.metabrasil</field>
+        <field name="model">product.supplierinfo</field>
+        <field name="inherit_id" ref="product.product_supplierinfo_tree_view"/>
+        <field name="arch" type="xml">
+            <!-- The print run is the whole point of a ladder: four lines of
+                 the same book differ by nothing else. Odoo ships it hidden. -->
+            <xpath expr="//field[@name='min_qty']" position="attributes">
+                <attribute name="optional">show</attribute>
+                <attribute name="string">Print Run</attribute>
+            </xpath>
+            <!-- "Preço unitário" ao lado de "Tiragem" é redundante: a coluna
+                 da esquerda já diz a quantidade. -->
+            <xpath expr="//field[@name='price']" position="attributes">
+                <attribute name="string">Price</attribute>
+            </xpath>
+            <!-- O custo entra só como coluna opcional: quem quiser conferir o
+                 número liga pelo seletor de colunas. A linha vermelha continua
+                 valendo sem ele, porque a comparação é feita no servidor. -->
+            <xpath expr="//field[@name='price']" position="after">
+                <field name="metabrasil_product_cost" optional="hide"/>
+                <field name="metabrasil_above_cost" column_invisible="True"/>
+            </xpath>
+            <xpath expr="//field[@name='currency_id']" position="attributes">
+                <attribute name="optional">hide</attribute>
+            </xpath>
+            <xpath expr="//list" position="attributes">
+                <attribute name="decoration-danger">metabrasil_above_cost</attribute>
+            </xpath>
+        </field>
+    </record>
+</odoo>

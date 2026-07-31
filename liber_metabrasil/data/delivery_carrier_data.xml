@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Named for what the salesperson is doing (dropship), not for who does
+         it (Metabrasil): 'Metabrasil' is the printer's name, and picking a
+         printer in a shipping-method dropdown reads like a mistake. The
+         delivery_type underneath is still 'metabrasil'. -->
+    <data noupdate="1">
+        <record id="product_product_delivery_metabrasil" model="product.product">
+            <field name="name">Dropship Freight</field>
+            <field name="type">service</field>
+            <field name="categ_id" ref="delivery.product_category_deliveries"/>
+            <field name="sale_ok" eval="False"/>
+            <field name="purchase_ok" eval="False"/>
+            <field name="list_price">0.0</field>
+            <field name="invoice_policy">order</field>
+        </record>
+
+        <record id="delivery_carrier_metabrasil" model="delivery.carrier">
+            <field name="name">Dropship</field>
+            <field name="delivery_type">metabrasil</field>
+            <field name="metabrasil_service_choice">cheap</field>
+            <field name="product_id" ref="product_product_delivery_metabrasil"/>
+        </record>
+    </data>
+</odoo>

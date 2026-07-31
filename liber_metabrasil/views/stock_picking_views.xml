@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_picking_form_inherit_metabrasil" model="ir.ui.view">
+        <field name="name">stock.picking.form.inherit.liber.metabrasil</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock_delivery.view_picking_withcarrier_out_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group[@name='carrier_data']" position="inside">
+                <field name="metabrasil_tracking_url" widget="url"
+                       invisible="not metabrasil_tracking_url"/>
+                <field name="metabrasil_shipped_date"
+                       invisible="not metabrasil_shipped_date"/>
+                <field name="metabrasil_delivered_date"
+                       invisible="not metabrasil_delivered_date"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

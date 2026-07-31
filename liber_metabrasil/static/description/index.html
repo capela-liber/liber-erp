@@ -1,0 +1,176 @@
+<!-- GERADO por scripts/gen_module_descriptions.py a partir de
+     liber_site/static/docs/liber_metabrasil.html -- não edite aqui.
+     O Odoo mostra este arquivo em Apps > Module Info. -->
+<div class="oe_container liber_manual" style="max-width:900px;margin:0 auto;padding:8px 4px 24px;color:#251d2b;background:transparent;font:15px/1.7 Inter,'Segoe UI',system-ui,sans-serif;"><h1 style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:32px;line-height:1.2;letter-spacing:-.015em;margin:0 0 10px;color:#251d2b;">Impressão sob demanda (Metabrasil)</h1>
+      <p class="lead" style="font-size:17.5px;color:#5d5266;margin:0 0 26px;max-width:62ch;">O pedido do cliente vira tiragem na gráfica e, se você quiser, caixa
+      despachada direto para a casa dele. O Liber conversa com a API PoD da Metabrasil para cotar
+      frete, guardar o preço de impressão por tiragem, enviar o pedido e acompanhar a produção até
+      a entrega — sem estoque parado.</p>
+
+      <div class="callout" style="border:1px solid #e5dbee;border-left:4px solid #6e2f91;border-radius:10px;background:#f1eaf6;padding:14px 18px;margin:0 0 16px;">
+        <strong style="color:#251d2b;">Estado de hoje.</strong> A conexão, a cotação de frete, a escada de preços, o envio
+        do pedido e o acompanhamento de status estão no ar e testados. Desde 27/07/2026, quando a
+        gráfica publicou a API de precificação e carregou o catálogo, <strong style="color:#251d2b;">411 dos 675 títulos
+        com ISBN já têm preço por tiragem</strong> — os demais ainda não estão no repositório PoD
+        dela. Veja <a href="#limitacoes" style="color:#6e2f91;">Limitações conhecidas</a>.
+      </div>
+
+      <h2 id="visao-geral" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">Visão geral</h2>
+      <p style="margin:0 0 12px;">Impressão sob demanda cruza dois eixos que valem ser separados, porque o Liber os trata
+      como coisas diferentes:</p>
+      <ul style="margin:0 0 14px 22px;padding:0;">
+        <li style="margin:0 0 7px;"><strong style="color:#251d2b;">Quem imprime</strong> — a Metabrasil é um fornecedor como outro qualquer. Um
+        pedido de compra cujo fornecedor é ela <em>é</em> um pedido de impressão.</li>
+        <li style="margin:0 0 7px;"><strong style="color:#251d2b;">Para onde vai</strong> — a tiragem pode chegar ao seu depósito e virar estoque
+        (<strong style="color:#251d2b;">PoD</strong>), ou sair da gráfica direto para o cliente final
+        (<strong style="color:#251d2b;">Dropship</strong>).</li>
+      </ul>
+      <p style="margin:0 0 12px;">Esse segundo eixo não é um campo a preencher: quem responde é a <strong style="color:#251d2b;">rota do título</strong>,
+      e o Liber a lê. O resultado aparece como uma <strong style="color:#251d2b;">faixa colorida no canto do documento</strong>:
+      verde <span class="field" style="font-weight:600;color:#251d2b;">PoD</span> no pedido de compra que abastece o depósito, laranja
+      <span class="field" style="font-weight:600;color:#251d2b;">Dropship</span> quando a caixa vai ao cliente — e a mesma faixa laranja no
+      pedido de venda que originou tudo, para que o par venda↔compra se reconheça de longe. A faixa
+      nasce junto com a solicitação de cotação, antes de qualquer confirmação.</p>
+
+      <figure class="shot" style="margin:20px 0 24px;"><div style="border:2px dashed #e5dbee;border-radius:12px;background:#faf8fc;color:#5d5266;font-size:13px;text-align:center;padding:28px 20px;"><div style="font-size:24px;margin-bottom:6px;">📷</div><div>Tela a inserir: <code style="background:#f1eaf6;border:1px solid #e5dbee;border-radius:5px;padding:1px 6px;font-family:ui-monospace,Menlo,Consolas,monospace;">img/doc-liber_metabrasil-dropship.png</code></div><div style="margin-top:6px;">Pedido de compra com a faixa laranja Dropship no canto superior direito e o cliente no campo Entregar para.</div></div><figcaption style="font-size:13px;color:#5d5266;margin-top:10px;text-align:center;">A faixa no canto diz o destino da tiragem antes de qualquer confirmação: laranja quando vai direto ao cliente.</figcaption></figure>
+
+      <h2 id="configuracao" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">Configuração</h2>
+      <ol class="steps" style="margin:0 0 16px 22px;padding:0;">
+        <li style="margin:0 0 7px;">Em <span class="menupath" style="display:inline-block;background:#f1eaf6;border:1px solid #e5dbee;border-radius:6px;padding:1px 8px;font-size:13.5px;color:#251d2b;white-space:nowrap;">Definições<i style="font-style:normal;color:#6e2f91;margin:0 4px;font-weight:700;">‣</i>Metabrasil</span>, ligue
+        <span class="field" style="font-weight:600;color:#251d2b;">Metabrasil PoD</span> e informe as credenciais que a gráfica emitiu:
+        <span class="field" style="font-weight:600;color:#251d2b;">Chave de acesso</span> (a <em>chaveCliente</em>) e o par usuário/senha da
+        API.</li>
+        <li style="margin:0 0 7px;">Preencha as duas URLs base com
+        <span class="field" style="font-weight:600;color:#251d2b;">https://ws.umlivro.com.br:7081/pod-api</span>. A gráfica também atende
+        em <span class="field" style="font-weight:600;color:#251d2b;">http://…:7080</span>, com as mesmas respostas, mas ali a senha
+        trafega em claro — a porta <strong style="color:#251d2b;">7081, com TLS</strong>, é a que eles documentam e a que
+        se deve usar. Atenção ao par: <span class="field" style="font-weight:600;color:#251d2b;">https</span> só existe na 7081, e
+        <span class="field" style="font-weight:600;color:#251d2b;">http</span> só na 7080; trocar um sem o outro devolve um erro de SSL
+        enigmático.</li>
+        <li style="margin:0 0 7px;">Escolha o <span class="field" style="font-weight:600;color:#251d2b;">Modo</span>. Em <em>Produção</em> o envio de um pedido
+        gera tiragem de verdade; use com a consciência disso.</li>
+        <li style="margin:0 0 7px;">Aponte o <span class="field" style="font-weight:600;color:#251d2b;">Parceiro da gráfica</span> — é ele que transforma um pedido
+        de compra qualquer em pedido de impressão.</li>
+        <li style="margin:0 0 7px;">Clique em <span class="field" style="font-weight:600;color:#251d2b;">Testar conexão</span>. O teste faz apenas uma
+        <strong style="color:#251d2b;">cotação de frete</strong>, que é leitura pura: ele nunca encomenda nada, em modo
+        nenhum.</li>
+      </ol>
+      <div class="callout" style="border:1px solid #e5dbee;border-left:4px solid #6e2f91;border-radius:10px;background:#f1eaf6;padding:14px 18px;margin:0 0 16px;">
+        <strong style="color:#251d2b;">Não existe mais ambiente de homologação.</strong> O antigo endereço de sandbox saiu
+        do ar, então o teste de conexão fala com a produção — o que é seguro justamente porque ele
+        só cota frete.
+      </div>
+
+      <h2 id="precos" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">Preços de impressão por tiragem</h2>
+      <p style="margin:0 0 12px;">O preço de imprimir não é uma consulta que alguém faz na hora: ele já está no banco quando
+      você abre a cotação. Um processo agendado pergunta à gráfica quanto custa cada título em cada
+      tiragem e grava o resultado na <strong style="color:#251d2b;">lista de preços do fornecedor</strong> — o mecanismo
+      nativo do Odoo, com faixas por quantidade. A partir daí, digitar 50 numa linha de compra faz o
+      preço da faixa de 50 aparecer sozinho, sem rede, sem espera.</p>
+      <ul style="margin:0 0 14px 22px;padding:0;">
+        <li style="margin:0 0 7px;">As tiragens consultadas ficam em <span class="menupath" style="display:inline-block;background:#f1eaf6;border:1px solid #e5dbee;border-radius:6px;padding:1px 8px;font-size:13.5px;color:#251d2b;white-space:nowrap;">Definições<i style="font-style:normal;color:#6e2f91;margin:0 4px;font-weight:700;">‣</i>Metabrasil<i style="font-style:normal;color:#6e2f91;margin:0 4px;font-weight:700;">‣</i>Tiragens
+        consultadas</span> — algo como <span class="field" style="font-weight:600;color:#251d2b;">1,15,40,100</span>. É decisão comercial:
+        mude ali, não no código.</li>
+        <li style="margin:0 0 7px;"><strong style="color:#251d2b;">Atualizar preços de impressão</strong> varre o catálogo inteiro. O trabalho corre
+        em segundo plano e você recebe a resposta na hora; um segundo clique não dispara uma segunda
+        varredura.</li>
+        <li style="margin:0 0 7px;">Para experimentar em poucos títulos, selecione-os na lista de produtos e use
+        <span class="menupath" style="display:inline-block;background:#f1eaf6;border:1px solid #e5dbee;border-radius:6px;padding:1px 8px;font-size:13.5px;color:#251d2b;white-space:nowrap;">Ações<i style="font-style:normal;color:#6e2f91;margin:0 4px;font-weight:700;">‣</i>Atualizar preços de impressão da Metabrasil</span>.</li>
+        <li style="margin:0 0 7px;">Sozinho, o processo se repete <strong style="color:#251d2b;">a cada quinze dias</strong> — custo de produção é
+        contratado e muda devagar.</li>
+      </ul>
+      <p style="margin:0 0 12px;">Na lista de preços do fornecedor, a coluna <span class="field" style="font-weight:600;color:#251d2b;">Tiragem</span> diz a que
+      quantidade cada linha pertence, e a coluna <span class="field" style="font-weight:600;color:#251d2b;">Custo do produto</span> fica ao
+      lado do preço unitário. <strong style="color:#251d2b;">A linha inteira fica vermelha quando a gráfica cobra mais do
+      que o custo que você carrega no título</strong> — o momento em que imprimir sob demanda deixa
+      de compensar. Costuma acontecer nas tiragens de um exemplar, e é justamente aí que a decisão
+      muda.</p>
+      <figure class="shot" style="margin:20px 0 24px;"><img src="img/doc-liber_metabrasil-precos.png" alt="Lista de preços de fornecedor da Metabrasil com a coluna Tiragem, o custo do produto ao lado do preço unitário e linhas em vermelho." style="max-width:100%;display:block;margin:0 auto;border-radius:12px;border:1px solid #e5dbee;"><figcaption style="font-size:13px;color:#5d5266;margin-top:10px;text-align:center;">A escada de preços: uma linha por tiragem, o custo do título ao lado e, em vermelho, as faixas em que imprimir custa mais do que o livro vale.</figcaption></figure>
+
+      <p style="margin:0 0 12px;">Os títulos que a gráfica consegue cotar recebem uma <strong style="color:#251d2b;">etiqueta</strong> (por padrão
+      <span class="field" style="font-weight:600;color:#251d2b;">PoD</span>, configurável), e a perdem se a gráfica parar de cotá-los. Como
+      não existe endpoint para perguntar "este livro está no seu catálogo?", <em>um preço que volta é
+      a própria resposta</em> — e a etiqueta é onde ela fica guardada, pronta para filtrar.</p>
+
+      <h2 id="cotacao" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">O frete, e qual transportadora</h2>
+      <p style="margin:0 0 12px;">Frete tem uma conversa só, e ela é a do próprio Odoo. No pedido de venda:
+      <span class="menupath" style="display:inline-block;background:#f1eaf6;border:1px solid #e5dbee;border-radius:6px;padding:1px 8px;font-size:13.5px;color:#251d2b;white-space:nowrap;">Adicionar envio<i style="font-style:normal;color:#6e2f91;margin:0 4px;font-weight:700;">‣</i>Dropship<i style="font-style:normal;color:#6e2f91;margin:0 4px;font-weight:700;">‣</i>Obter preço</span>. O Liber
+      pergunta à gráfica quanto custa levar aquela caixa até o CEP do cliente e traz de volta
+      <strong style="color:#251d2b;">todos os serviços cotados</strong>, cada um com transportadora, preço e prazo, numa
+      lista para comparar.</p>
+      <p style="margin:0 0 12px;">Um deles já vem escolhido — o mais barato, ou o mais rápido, conforme a regra da forma de
+      entrega — e você troca à vontade no campo <span class="field" style="font-weight:600;color:#251d2b;">Transportadora</span>. Trocar
+      não consulta a gráfica de novo: os preços dela se mexem entre duas chamadas, e o número não
+      pode mudar debaixo da sua decisão. A transportadora que ficar escolhida viaja com o pedido
+      até a gráfica, nos códigos de que ela precisa para despachar.</p>
+      <p style="margin:0 0 12px;">Não existe janela paralela de cotação. Existiu, e ter duas janelas respondendo à mesma
+      pergunta significava que uma delas mentia sempre que a outra era usada.</p>
+
+      <h2 id="dropship" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">Dropship: a exceção, não a regra</h2>
+      <p style="margin:0 0 12px;">Dropship existe para quando o estoque está em baixa ou há uma urgência. A mecânica é a rota
+      de dropship do Odoo, aplicada ao livro — e vale conhecer o efeito dela:
+      <strong style="color:#251d2b;">enquanto o título estiver nessa rota, toda venda dele vai para a gráfica</strong>,
+      mesmo com exemplares na prateleira. Por isso o Liber não mexe em rota sozinho: quem coloca um
+      título em dropship é você, deliberadamente, e o lugar natural disso são os
+      <strong style="color:#251d2b;">títulos que nunca são estocados</strong>, só impressos quando alguém compra.</p>
+      <p style="margin:0 0 12px;">Um título em dropship mostra a faixa <span class="field" style="font-weight:600;color:#251d2b;">Dropship</span> no canto do
+      pedido, e o pedido de impressão que nascer dele aponta de volta para a venda — do lado da
+      venda, o botão <span class="field" style="font-weight:600;color:#251d2b;">Pedidos de impressão</span> leva até ele.</p>
+      <div class="callout" style="border:1px solid #e5dbee;border-left:4px solid #6e2f91;border-radius:10px;background:#f1eaf6;padding:14px 18px;margin:0 0 16px;">
+        <strong style="color:#251d2b;">Rota sem fornecedor não envia nada.</strong> Um título em dropship sem nenhum
+        fornecedor cadastrado confirma em silêncio: não há de quem comprar, então não nasce pedido
+        de impressão, não nasce entrega, não se move um exemplar — e o cliente segue faturado. O
+        Liber nomeia esses títulos numa faixa vermelha enquanto ainda é cotação e
+        <strong style="color:#251d2b;">recusa a confirmação</strong>. Dê um fornecedor ao título, ou tire-o da rota.
+      </div>
+
+      <h2 id="envio" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">Enviar o pedido de impressão</h2>
+      <p style="margin:0 0 12px;">Não há botão de "enviar": <strong style="color:#251d2b;">confirmar o pedido de compra é enviá-lo</strong>. Se a
+      gráfica aceitar, o pedido confirma normalmente e passa a ser acompanhado. Se ela recusar —
+      endereço incompleto, ISBN fora do repositório PoD —, a confirmação é <strong style="color:#251d2b;">bloqueada</strong>
+      com o motivo em português na tela, e o documento continua como solicitação de cotação. Corrija
+      a causa e confirme de novo; reconfirmar <em>é</em> o reenvio.</p>
+      <p style="margin:0 0 12px;">A consequência prática é que não existe pedido "confirmado porém recusado" para alguém
+      cuidar depois.</p>
+      <div class="callout" style="border:1px solid #e5dbee;border-left:4px solid #6e2f91;border-radius:10px;background:#f1eaf6;padding:14px 18px;margin:0 0 16px;">
+        <strong style="color:#251d2b;">Endereço.</strong> A Metabrasil exige o bairro de entrega. Sem os campos fiscais
+        brasileiros, o Liber lê o bairro do <span class="field" style="font-weight:600;color:#251d2b;">Complemento</span>
+        (<em>street2</em>) do contato — mantenha-o preenchido, ou o envio volta com erro.
+      </div>
+
+      <h2 id="acompanhamento" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">Acompanhamento até a entrega</h2>
+      <p style="margin:0 0 12px;">Um processo agendado espelha o andamento da gráfica no pedido de compra, numa barra de
+      status: <span class="field" style="font-weight:600;color:#251d2b;">Pedido incluído</span> ›
+      <span class="field" style="font-weight:600;color:#251d2b;">Impressão</span> › <span class="field" style="font-weight:600;color:#251d2b;">Expedido</span> ›
+      <span class="field" style="font-weight:600;color:#251d2b;">Entregue</span>. Junto com o status vêm o código e o link de rastreio, que
+      pousam no recebimento. Conforme os interruptores de <span class="menupath" style="display:inline-block;background:#f1eaf6;border:1px solid #e5dbee;border-radius:6px;padding:1px 8px;font-size:13.5px;color:#251d2b;white-space:nowrap;">Definições<i style="font-style:normal;color:#6e2f91;margin:0 4px;font-weight:700;">‣</i>Metabrasil</span>,
+      o Liber ainda pode validar o recebimento sozinho, rascunhar a fatura do fornecedor e avisar o
+      cliente por e-mail quando a tiragem entra em produção e quando chega.</p>
+      <p style="margin:0 0 12px;">Pedidos que empacam — não aprovados em um dia, não expedidos na data prevista, não entregues
+      no prazo — geram uma atividade para o comprador, em vez de apodrecer em silêncio.</p>
+
+      <h2 id="limitacoes" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">Limitações conhecidas</h2>
+      <ul style="margin:0 0 14px 22px;padding:0;">
+        <li style="margin:0 0 7px;"><strong style="color:#251d2b;">O título precisa estar no repositório PoD da gráfica.</strong> Cerca de 260
+        títulos ainda não estão, e para esses a resposta é "ISBN não encontrado no repositório do
+        cliente". Carregar os títulos é trabalho junto à Metabrasil, não configuração do Liber —
+        feito isso, os preços entram sozinhos na varredura seguinte.</li>
+        <li style="margin:0 0 7px;"><strong style="color:#251d2b;">Valor zero não é livro grátis.</strong> Quando a gráfica reconhece o ISBN mas
+        ainda não configurou preço, ela responde zero. O Liber trata isso como <em>ausência de
+        preço</em> e não grava linha nenhuma — uma linha de compra a custo zero seria mentira pior
+        que preço velho.</li>
+        <li style="margin:0 0 7px;"><strong style="color:#251d2b;">Sem ambiente de homologação.</strong> Todo teste que envia pedido acontece contra
+        a produção da gráfica; por isso o envio só ocorre na confirmação, deliberada.</li>
+        <li style="margin:0 0 7px;"><strong style="color:#251d2b;">Sem emissão fiscal.</strong> O gancho para anexar a DANFE ao pedido existe, mas a
+        emissão em si não faz parte deste módulo.</li>
+      </ul>
+
+      <div class="seealso" style="border:1px solid #e5dbee;border-radius:12px;background:#f1eaf6;padding:16px 20px;margin:32px 0 0;">
+        <strong style="font-weight:700;font-size:12px;letter-spacing:.08em;text-transform:uppercase;display:block;margin:0 0 8px;color:#5d5266;">Ver também</strong>
+        <ul style="margin:0 0 14px 22px;padding:0;">
+          <li style="margin:0 0 7px;"><a href="/liber_site/static/docs/liber_metabooks_integration.html" target="_blank" rel="noopener" style="color:#6e2f91;">Integração Metabooks</a> — de onde vêm os
+          metadados e o ISBN que a gráfica usa para reconhecer o título.</li>
+          <li style="margin:0 0 7px;"><a href="/liber_site/static/docs/liber_nfe_remessa.html" target="_blank" rel="noopener" style="color:#6e2f91;">Notas de remessa</a> — a documentação das saídas sem
+          cobrança que acompanham a logística.</li>
+        </ul>
+      </div><p style="margin:28px 0 0;padding-top:14px;border-top:1px solid #e5dbee;font-size:13px;color:#5d5266;">Manual completo, com busca e as demais páginas: <a href="/liber_site/static/docs/liber_metabrasil.html" target="_blank" rel="noopener" style="color:#6e2f91;">Impressão sob demanda (Metabrasil)</a>.</p></div>

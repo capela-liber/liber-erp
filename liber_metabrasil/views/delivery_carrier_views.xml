@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_delivery_carrier_form_inherit_metabrasil" model="ir.ui.view">
+        <field name="name">delivery.carrier.form.inherit.liber.metabrasil</field>
+        <field name="model">delivery.carrier</field>
+        <field name="inherit_id" ref="delivery.view_delivery_carrier_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group[@name='delivery_details']" position="inside">
+                <field name="metabrasil_service_choice" widget="radio"
+                       invisible="delivery_type != 'metabrasil'"/>
+                <field name="metabrasil_excluded_carriers"
+                       invisible="delivery_type != 'metabrasil'"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

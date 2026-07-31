@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="choose_delivery_carrier_view_form_inherit_metabrasil" model="ir.ui.view">
+        <field name="name">choose.delivery.carrier.form.inherit.liber.metabrasil</field>
+        <field name="model">choose.delivery.carrier</field>
+        <field name="inherit_id" ref="delivery.choose_delivery_carrier_view_form"/>
+        <field name="arch" type="xml">
+            <!-- The transporter only has anything to say once 'Get rate' has
+                 been pressed, so it sits under the price rather than above
+                 it: the dropdown to choose, the list to compare. -->
+            <xpath expr="//footer" position="before">
+                <group invisible="delivery_type != 'metabrasil' or not metabrasil_option_ids">
+                    <group>
+                        <field name="metabrasil_option_id"
+                               options="{'no_create': True, 'no_open': True}"/>
+                    </group>
+                </group>
+                <field name="metabrasil_option_ids" nolabel="1" readonly="1"
+                       invisible="delivery_type != 'metabrasil' or not metabrasil_option_ids">
+                    <list create="false" delete="false" edit="false">
+                        <field name="carrier_name"/>
+                        <field name="days"/>
+                        <field name="price"/>
+                        <field name="currency_id" column_invisible="1"/>
+                    </list>
+                </field>
+            </xpath>
+        </field>
+    </record>
+</odoo>

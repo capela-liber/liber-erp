@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="res_config_settings_view_form" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.liber.metabrasil</field>
+        <field name="model">res.config.settings</field>
+        <field name="priority" eval="70"/>
+        <field name="inherit_id" ref="base.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form" position="inside">
+                <app string="Metabrasil" name="liber_metabrasil"
+                     logo="/liber_metabrasil/static/description/icon.png">
+                    <block title="Connection" name="metabrasil_connection">
+                        <setting string="Metabrasil PoD"
+                                 help="Send approved purchase orders to the Metabrasil printer and follow them until delivery.">
+                            <field name="metabrasil_enabled"/>
+                        </setting>
+                        <setting string="Mode"
+                                 help="Testing points every call at the sandbox URL."
+                                 invisible="not metabrasil_enabled">
+                            <field name="metabrasil_mode" widget="radio"/>
+                        </setting>
+                        <setting string="API Endpoints"
+                                 help="Base URLs, without the /pedidos path."
+                                 invisible="not metabrasil_enabled">
+                            <div class="content-group">
+                                <div class="row mt8">
+                                    <label for="metabrasil_api_url" class="col-lg-4 o_light_label"/>
+                                    <field name="metabrasil_api_url"/>
+                                </div>
+                                <div class="row">
+                                    <label for="metabrasil_test_api_url" class="col-lg-4 o_light_label"/>
+                                    <field name="metabrasil_test_api_url"/>
+                                </div>
+                            </div>
+                        </setting>
+                        <setting string="Credentials"
+                                 help="Access key (chaveCliente) and the HTTP basic-auth pair Metabrasil issued."
+                                 invisible="not metabrasil_enabled">
+                            <div class="content-group">
+                                <div class="row mt8">
+                                    <label for="metabrasil_access_key" class="col-lg-4 o_light_label"/>
+                                    <field name="metabrasil_access_key"/>
+                                </div>
+                                <div class="row">
+                                    <label for="metabrasil_username" class="col-lg-4 o_light_label"/>
+                                    <field name="metabrasil_username"/>
+                                </div>
+                                <div class="row">
+                                    <label for="metabrasil_password" class="col-lg-4 o_light_label"/>
+                                    <field name="metabrasil_password" password="True"/>
+                                </div>
+                            </div>
+                        </setting>
+                        <setting string="Printer Partner"
+                                 help="The Metabrasil vendor record: a purchase order to this partner is a print order."
+                                 invisible="not metabrasil_enabled">
+                            <field name="metabrasil_partner_id"/>
+                        </setting>
+                        <setting string="Test Connection"
+                                 help="Ping the current mode's endpoint with a read-only freight quote — never sends a print order. Save the form first if you just edited the credentials."
+                                 invisible="not metabrasil_enabled">
+                            <button name="action_metabrasil_test_connection"
+                                    type="object" icon="fa-plug"
+                                    string="Test Connection"
+                                    class="btn-secondary"/>
+                        </setting>
+                    </block>
+                    <block title="Behaviour" name="metabrasil_behaviour"
+                           invisible="not metabrasil_enabled">
+                        <setting string="Warehouse Leg"
+                                 help="How warehouse-bound print runs travel from the plant to our depot.">
+                            <field name="metabrasil_warehouse_transport" widget="radio"/>
+                        </setting>
+                        <setting string="Auto-validate Receipts"
+                                 help="Validate the receipt automatically when Metabrasil reports the order shipped or delivered.">
+                            <field name="metabrasil_auto_validate_picking"/>
+                        </setting>
+                        <setting string="Auto-draft Vendor Bill"
+                                 help="Draft (never post) the vendor bill when the print order ships.">
+                            <field name="metabrasil_auto_create_bill"/>
+                        </setting>
+                        <setting string="Customer Status E-mails"
+                                 help="E-mail the customer of direct deliveries when the run enters production and when it lands.">
+                            <field name="metabrasil_send_status_mails"/>
+                        </setting>
+                        <setting string="Overdue Print Alerts"
+                                 help="Daily activities on print orders stuck in approval, shipping or delivery.">
+                            <field name="metabrasil_exception_activities"/>
+                        </setting>
+                        <setting string="Production Pricing API"
+                                 help="Query the production-cost ladder (/pod-api/precificacao) in the print quote. Leave off until Metabrasil ships the endpoint.">
+                            <field name="metabrasil_pricing_enabled"/>
+                        </setting>
+                        <setting string="Print Runs Quoted"
+                                 help="Print runs asked of the pricing API, comma separated. Each becomes a vendor-price line, so Odoo resolves the right price by quantity on its own.">
+                            <field name="metabrasil_print_runs"
+                                   placeholder="1,15,40,100"/>
+                        </setting>
+                        <setting string="Print-on-Demand Tag"
+                                 help="Stamped on books the printer quotes, removed when it stops quoting them — the only way to tell which titles are in their catalogue, and what you filter the product list by.">
+                            <field name="metabrasil_pod_tag_id"/>
+                        </setting>
+                        <setting string="Refresh Print Prices"
+                                 help="Sweep the whole catalogue now instead of waiting for the fortnightly cron. Read-only against the printer: it quotes, it never orders.">
+                            <button name="action_metabrasil_refresh_prices"
+                                    type="object" icon="fa-refresh"
+                                    string="Refresh Print Prices"
+                                    class="btn-secondary"/>
+                        </setting>
+                    </block>
+                </app>
+            </xpath>
+        </field>
+    </record>
+</odoo>

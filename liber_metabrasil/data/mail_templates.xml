@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!-- Customer-facing e-mails stay in Portuguese at the source (house
+             i18n rule: UI translates via .po, outbound documents do not). -->
+        <record id="mail_template_metabrasil_printing" model="mail.template">
+            <field name="name">Metabrasil: pedido em produção</field>
+            <field name="model_id" ref="sale.model_sale_order"/>
+            <field name="subject">Seu pedido {{ object.name }} entrou em produção</field>
+            <field name="partner_to">{{ object.partner_id.id }}</field>
+            <field name="auto_delete" eval="True"/>
+            <field name="body_html" type="html">
+                <div style="margin: 0px; padding: 0px; font-size: 13px;">
+                    <p>Olá <t t-out="object.partner_id.name or ''"/>,</p>
+                    <p>Boa notícia: os livros do seu pedido
+                        <strong t-out="object.name or ''"/> entraram em produção
+                        na gráfica e em breve serão despachados.</p>
+                    <p>Avisaremos novamente assim que a entrega for realizada.</p>
+                    <p><t t-out="object.company_id.name or ''"/></p>
+                </div>
+            </field>
+        </record>
+
+        <record id="mail_template_metabrasil_delivered" model="mail.template">
+            <field name="name">Metabrasil: pedido entregue</field>
+            <field name="model_id" ref="sale.model_sale_order"/>
+            <field name="subject">Seu pedido {{ object.name }} foi entregue</field>
+            <field name="partner_to">{{ object.partner_id.id }}</field>
+            <field name="auto_delete" eval="True"/>
+            <field name="body_html" type="html">
+                <div style="margin: 0px; padding: 0px; font-size: 13px;">
+                    <p>Olá <t t-out="object.partner_id.name or ''"/>,</p>
+                    <p>Seu pedido <strong t-out="object.name or ''"/> foi
+                        entregue. Esperamos que aproveite a leitura!</p>
+                    <p>Qualquer problema com a entrega, responda este e-mail
+                        que resolvemos.</p>
+                    <p><t t-out="object.company_id.name or ''"/></p>
+                </div>
+            </field>
+        </record>
+    </data>
+</odoo>

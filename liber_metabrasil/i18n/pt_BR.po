@@ -1,0 +1,1419 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* liber_metabrasil
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0-20260630\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-07-28 18:37+0000\n"
+"PO-Revision-Date: 2026-07-20 12:36+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: liber_metabrasil
+#. odoo-python
+#: code:addons/liber_metabrasil/wizards/choose_delivery_carrier.py:0
+msgid "%(carrier)s Error"
+msgstr "Erro em %(carrier)s"
+
+#. module: liber_metabrasil
+#. odoo-python
+#: code:addons/liber_metabrasil/wizards/choose_delivery_carrier.py:0
+msgid "%(carrier)s — %(days)s day(s)"
+msgstr "%(carrier)s — %(days)s dia(s)"
+
+#. module: liber_metabrasil
+#. odoo-python
+#: code:addons/liber_metabrasil/models/delivery_carrier.py:0
+#: code:addons/liber_metabrasil/wizards/choose_delivery_carrier.py:0
+msgid "%(carrier)s, about %(days)s day(s)."
+msgstr "%(carrier)s, cerca de %(days)s dia(s)."
+
+#. module: liber_metabrasil
+#. odoo-python
+#: code:addons/liber_metabrasil/models/product_template.py:0
+msgid ""
+"%(count)s books selected. Pricing them takes about %(minutes)s minute(s) of "
+"calls to the printer, too long to wait on this screen. Select %(limit)s or "
+"fewer, or use Settings > Metabrasil > Refresh Print Prices to sweep the "
+"whole catalogue in the background."
+msgstr ""
+"%(count)s livros selecionados. Cotá-los leva cerca de %(minutes)s minuto(s) "
+"de chamadas à gráfica, tempo demais para esperar nesta tela. Selecione %"
+"(limit)s ou menos, ou use Definições > Metabrasil > Atualizar preços de "
+"impressão para varrer o catálogo inteiro em segundo plano."
+
+#. module: liber_metabrasil
+#. odoo-python
+#: code:addons/liber_metabrasil/models/sale_order.py:0
+msgid ""
+"%(order)s was not confirmed: these products are on the dropship route but "
+"have no vendor, so nothing would be bought and nothing would ship.\n"
+"\n"
+"%(products)s\n"
+"\n"
+"Give them a vendor, or take them off the dropship route."
+msgstr "%(order)s não foi confirmado: estes produtos estão na rota de dropship mas não têm fornecedor, então nada seria comprado e nada seria enviado.\n\n%(products)s\n\nDê um fornecedor a eles, ou tire-os da rota de dropship."
+
+#. module: liber_metabrasil
+#. odoo-python
+#: code:addons/liber_metabrasil/models/product_template.py:0
+msgid ""
+"%(priced)s book(s) priced. %(no_price)s the printer knows but has not "
+"priced, and %(unknown)s are not in your POD repository at all."
+msgstr ""
+"%(priced)s livro(s) com preço. %(no_price)s a gráfica conhece mas não "
+"precificou, e %(unknown)s não estão no seu repositório POD."
+
+#. module: liber_metabrasil
+#: model:mail.template,body_html:liber_metabrasil.mail_template_metabrasil_printing
+msgid ""
+"<div style=\"margin: 0px; padding: 0px; font-size: 13px;\">\n"
+"                    <p>Olá <t t-out=\"object.partner_id.name or ''\"/>,</p>\n"
+"                    <p>Boa notícia: os livros do seu pedido\n"
+"                        <strong t-out=\"object.name or ''\"/> entraram em "
+"produção\n"
+"                        na gráfica e em breve serão despachados.</p>\n"
+"                    <p>Avisaremos novamente assim que a entrega for "
+"realizada.</p>\n"
+"                    <p><t t-out=\"object.company_id.name or ''\"/></p>\n"
+"                </div>\n"
+"            "
+msgstr ""
+
+#. module: liber_metabrasil
+#: model:mail.template,body_html:liber_metabrasil.mail_template_metabrasil_delivered
+msgid ""
+"<div style=\"margin: 0px; padding: 0px; font-size: 13px;\">\n"
+"                    <p>Olá <t t-out=\"object.partner_id.name or ''\"/>,</p>\n"
+"                    <p>Seu pedido <strong t-out=\"object.name or ''\"/> foi\n"
+"                        entregue. Esperamos que aproveite a leitura!</p>\n"
+"                    <p>Qualquer problema com a entrega, responda este e-"
+"mail\n"
+"                        que resolvemos.</p>\n"
+"                    <p><t t-out=\"object.company_id.name or ''\"/></p>\n"
+"                </div>\n"
+"            "
+msgstr ""
+
+#. module: liber_metabrasil
+#: model:ir.model.fields,help:liber_metabrasil.field_sale_order__is_metabrasil
+msgid ""
+"A line's product is supplied by the Metabrasil printer. Drives the print-"
+"order smart button and the Dropship ribbon."
+msgstr ""
+"Algum produto das linhas é fornecido pela gráfica Metabrasil. É o que acende "
+"o botão de Pedidos de Impressão e a faixa Dropship."
+
+#. module: liber_metabrasil
+#. odoo-python
+#: code:addons/liber_metabrasil/models/product_template.py:0
+msgid ""
+"A price sweep is already running. Wait for it to finish rather than starting "
+"a second one -- two sweeps double the load on the printer's API and race "
+"each other."
+msgstr ""
+"Já existe uma varredura de preços em andamento. Espere ela terminar em vez "
+"de começar outra — duas varreduras dobram a carga na API da gráfica e "
+"disputam as mesmas linhas."
+
+#. module: liber_metabrasil
+#: model_terms:ir.ui.view,arch_db:liber_metabrasil.res_config_settings_view_form
+msgid "API Endpoints"
+msgstr "Endpoints da API"
+
+#. module: liber_metabrasil
+#: model:ir.model.fields,field_description:liber_metabrasil.field_res_company__metabrasil_password
+#: model:ir.model.fields,field_description:liber_metabrasil.field_res_config_settings__metabrasil_password
+msgid "API Password"
+msgstr "Senha da API"
+
+#. module: liber_metabrasil
+#: model:ir.model.fields,field_description:liber_metabrasil.field_res_company__metabrasil_username
+#: model:ir.model.fields,field_description:liber_metabrasil.field_res_config_settings__metabrasil_username
+msgid "API Username"
+msgstr "Usuário da API"
+
+#. module: liber_metabrasil
+#: model:ir.model.fields,field_description:liber_metabrasil.field_product_supplierinfo__metabrasil_above_cost
+msgid "Above Cost"
+msgstr "Acima do custo"
+
+#. module: liber_metabrasil
+#: model:ir.model.fields,field_description:liber_metabrasil.field_res_company__metabrasil_access_key
+#: model:ir.model.fields,field_description:liber_metabrasil.field_res_config_settings__metabrasil_access_key
+msgid "Access Key"
+msgstr "Chave de acesso"
+
+#. module: liber_metabrasil
+#: model_terms:ir.ui.view,arch_db:liber_metabrasil.res_config_settings_view_form
+msgid ""
+"Access key (chaveCliente) and the HTTP basic-auth pair Metabrasil issued."
+msgstr ""
+"Chave de acesso (chaveCliente) e o par usuário/senha (HTTP basic auth) "
+"fornecidos pela Metabrasil."
+
+#. module: liber_metabrasil
+#: model:ir.model.fields,field_description:liber_metabrasil.field_res_company__metabrasil_auto_create_bill
+#: model:ir.model.fields,field_description:liber_metabrasil.field_res_config_settings__metabrasil_auto_create_bill
+#: model_terms:ir.ui.view,arch_db:liber_metabrasil.res_config_settings_view_form
+msgid "Auto-draft Vendor Bill"
+msgstr "Rascunhar fatura do fornecedor"
+
+#. module: liber_metabrasil
+#: model:ir.model.fields,field_description:liber_metabrasil.field_res_company__metabrasil_auto_validate_picking
+#: model:ir.model.fields,field_description:liber_metabrasil.field_res_config_settings__metabrasil_auto_validate_picking
+#: model_terms:ir.ui.view,arch_db:liber_metabrasil.res_config_settings_view_form
+msgid "Auto-validate Receipts"
+msgstr "Validar recebimentos automaticamente"
+
+#. module: liber_metabrasil
+#: model:ir.model.fields,help:liber_metabrasil.field_res_company__metabrasil_test_api_url
+#: model:ir.model.fields,help:liber_metabrasil.field_res_config_settings__metabrasil_test_api_url
+msgid "Base URL of the Metabrasil sandbox, used while Mode is Testing."
+msgstr "URL base do sandbox da Metabrasil, usada enquanto o modo é Teste."
+
+#. module: liber_metabrasil
+#: model:ir.model.fields,help:liber_metabrasil.field_res_company__metabrasil_api_url
+#: model:ir.model.fields,help:liber_metabrasil.field_res_config_settings__metabrasil_api_url
+msgid "Base URL of the live Metabrasil API (without the /pedidos path)."
+msgstr "URL base da API de produção da Metabrasil (sem o caminho /pedidos)."
+
+#. module: liber_metabrasil
+#: model_terms:ir.ui.view,arch_db:liber_metabrasil.res_config_settings_view_form
+msgid "Base URLs, without the /pedidos path."
+msgstr "URLs base, sem o caminho /pedidos."
+
+#. module: liber_metabrasil
+#: model_terms:ir.ui.view,arch_db:liber_metabrasil.res_config_settings_view_form
+msgid "Behaviour"
+msgstr "Comportamento"
+
+#. module: liber_metabrasil
+#: model:ir.model.fields,field_description:liber_metabrasil.field_metabrasil_freight_option__carrier_vat
+msgid "CNPJ"
+msgstr "CNPJ"
+
+#. module: liber_metabrasil
+#: model:ir.model.fields.selection,name:liber_metabrasil.selection__purchase_order__metabrasil_status__cancelled
+msgid "Cancelled"
+msgstr "Cancelado"
+
+#. module: liber_metabrasil
+#: model:ir.model.fields,field_description:liber_metabrasil.field_metabrasil_freight_option__carrier_code
+msgid "Carrier Code"
+msgstr "Código da transportadora"
+
+#. module: liber_metabrasil
+#: model:ir.model.fields,help:liber_metabrasil.field_stock_picking__metabrasil_tracking_url
+msgid ""
+"Carrier tracking page reported by Metabrasil; also what the Tracking button "
+"opens for metabrasil deliveries."
+msgstr ""
+"Página de rastreio informada pela Metabrasil; é o que o botão Rastrear abre "
+"nas entregas metabrasil."
+
+#. module: liber_metabrasil
+#: model:ir.model.fields.selection,name:liber_metabrasil.selection__delivery_carrier__metabrasil_service_choice__cheap
+msgid "Cheapest"
+msgstr "Mais barato"
+
+#. module: liber_metabrasil
+#: model:ir.model.fields,help:liber_metabrasil.field_delivery_carrier__metabrasil_excluded_carriers
+msgid ""
+"Comma-separated carrier names to ignore when quoting (e.g. a transporter "
+"that keeps losing boxes). Leave empty to accept them all."
+msgstr ""
+"Nomes de transportadoras a ignorar na cotação, separados por vírgula (ex.: "
+"uma que vive extraviando caixas). Vazio aceita todas."
+
+#. module: liber_metabrasil
+#: model:ir.model,name:liber_metabrasil.model_res_company
+msgid "Companies"
+msgstr "Empresas"
+
+#. module: liber_metabrasil
+#: model:ir.model,name:liber_metabrasil.model_res_config_settings
+msgid "Config Settings"
+msgstr "Configurações"
+
+#. module: liber_metabrasil
+#: model_terms:ir.ui.view,arch_db:liber_metabrasil.res_config_settings_view_form
+msgid "Connection"
+msgstr "Conexão"
+
+#. module: liber_metabrasil
+#. odoo-python
+#: code:addons/liber_metabrasil/models/metabrasil_api.py:0
+msgid "Connection OK — %s answered."
+msgstr "Conexão OK — %s respondeu."
+
+#. module: liber_metabrasil
+#. odoo-python
+#: code:addons/liber_metabrasil/models/purchase_order.py:0
+msgid "Could not auto-validate this receipt: %s"
+msgstr "Não foi possível validar automaticamente este recebimento: %s"
+
+#. module: liber_metabrasil
+#. odoo-python
+#: code:addons/liber_metabrasil/models/purchase_order.py:0
+msgid "Could not draft the vendor bill: %s"
+msgstr "Não foi possível rascunhar a fatura do fornecedor: %s"
+
+#. module: liber_metabrasil
+#. odoo-python
+#: code:addons/liber_metabrasil/models/metabrasil_api.py:0
+msgid "Could not reach %(url)s: %(err)s"
+msgstr "Não foi possível alcançar %(url)s: %(err)s"
+
+#. module: liber_metabrasil
+#. odoo-python
+#: code:addons/liber_metabrasil/models/purchase_order.py:0
+msgid "Could not read the print status from Metabrasil: %s"
+msgstr "Não foi possível ler o status de impressão na Metabrasil: %s"
+
+#. module: liber_metabrasil
+#: model:ir.model.fields,field_description:liber_metabrasil.field_metabrasil_freight_option__create_uid
+msgid "Created by"
+msgstr "Criado por"
+
+#. module: liber_metabrasil
+#: model:ir.model.fields,field_description:liber_metabrasil.field_metabrasil_freight_option__create_date
+msgid "Created on"
+msgstr "Criado em"
+
+#. module: liber_metabrasil
+#: model_terms:ir.ui.view,arch_db:liber_metabrasil.res_config_settings_view_form
+msgid "Credentials"
+msgstr "Credenciais"
+
+#. module: liber_metabrasil
+#: model:ir.model.fields,field_description:liber_metabrasil.field_metabrasil_freight_option__currency_id
+msgid "Currency"
+msgstr "Moeda"
+
+#. module: liber_metabrasil
+#: model:ir.model.fields,field_description:liber_metabrasil.field_res_company__metabrasil_send_status_mails
+#: model:ir.model.fields,field_description:liber_metabrasil.field_res_config_settings__metabrasil_send_status_mails
+#: model_terms:ir.ui.view,arch_db:liber_metabrasil.res_config_settings_view_form
+msgid "Customer Status E-mails"
+msgstr "E-mails de status ao cliente"
+
+#. module: liber_metabrasil
+#: model_terms:ir.ui.view,arch_db:liber_metabrasil.res_config_settings_view_form
+msgid ""
+"Daily activities on print orders stuck in approval, shipping or delivery."
+msgstr ""
+"Atividades diárias sobre pedidos de impressão parados na aprovação, "
+"expedição ou entrega."
+
+#. module: liber_metabrasil
+#: model:ir.model.fields,help:liber_metabrasil.field_res_company__metabrasil_exception_activities
+#: model:ir.model.fields,help:liber_metabrasil.field_res_config_settings__metabrasil_exception_activities
+msgid ""
+"Daily sweep: print orders not approved within a day, not shipped by their "
+"scheduled date or not delivered by their expected date raise an activity for "
+"the buyer."
+msgstr ""
+"Varredura diária: pedidos de impressão não aprovados em um dia, não "
+"expedidos até a data programada ou não entregues até a data prevista geram "
+"uma atividade para o comprador."
+
+#. module: liber_metabrasil
+#: model:ir.model.fields,help:liber_metabrasil.field_stock_picking__metabrasil_delivered_date
+msgid "Day Metabrasil reported this print order as delivered."
+msgstr "Dia em que a Metabrasil informou a entrega deste pedido de impressão."
+
+#. module: liber_metabrasil
+#: model:ir.model.fields,help:liber_metabrasil.field_stock_picking__metabrasil_shipped_date
+msgid "Day Metabrasil reported this print order as shipped."
+msgstr ""
+"Dia em que a Metabrasil informou a expedição deste pedido de impressão."
+
+#. module: liber_metabrasil
+#: model:ir.model.fields,field_description:liber_metabrasil.field_metabrasil_freight_option__days
+msgid "Days"
+msgstr "Dias"
+
+#. module: liber_metabrasil
+#: model:ir.model.fields.selection,name:liber_metabrasil.selection__purchase_order__metabrasil_status__delivered
+msgid "Delivered"
+msgstr "Entregue"
+
+#. module: liber_metabrasil
+#: model:ir.model,name:liber_metabrasil.model_choose_delivery_carrier
+msgid "Delivery Carrier Selection Wizard"
+msgstr "Assistente de escolha da forma de entrega"
+
+#. module: liber_metabrasil
+#: model:ir.model.fields,field_description:liber_metabrasil.field_choose_delivery_carrier__display_name
+#: model:ir.model.fields,field_description:liber_metabrasil.field_delivery_carrier__display_name
+#: model:ir.model.fields,field_description:liber_metabrasil.field_metabrasil_api__display_name
+#: model:ir.model.fields,field_description:liber_metabrasil.field_metabrasil_freight_option__display_name
+#: model:ir.model.fields,field_description:liber_metabrasil.field_product_supplierinfo__display_name
+#: model:ir.model.fields,field_description:liber_metabrasil.field_product_template__display_name
+#: model:ir.model.fields,field_description:liber_metabrasil.field_purchase_order__display_name
+#: model:ir.model.fields,field_description:liber_metabrasil.field_res_company__display_name
+#: model:ir.model.fields,field_description:liber_metabrasil.field_res_config_settings__display_name
+#: model:ir.model.fields,field_description:liber_metabrasil.field_sale_order__display_name
+#: model:ir.model.fields,field_description:liber_metabrasil.field_stock_picking__display_name
+msgid "Display Name"
+msgstr "Nome exibido"
+
+#. module: liber_metabrasil
+#: model_terms:ir.ui.view,arch_db:liber_metabrasil.res_config_settings_view_form
+msgid "Draft (never post) the vendor bill when the print order ships."
+msgstr ""
+"Rascunha (nunca lança) a fatura do fornecedor quando o pedido de impressão é "
+"expedido."
+
+#. module: liber_metabrasil
+#: model:delivery.carrier,name:liber_metabrasil.delivery_carrier_metabrasil
+#: model:ir.model.fields.selection,name:liber_metabrasil.selection__purchase_order__metabrasil_delivery_kind__customer
+#: model:ir.model.fields.selection,name:liber_metabrasil.selection__sale_order__metabrasil_delivery_kind__customer
+#: model_terms:ir.ui.view,arch_db:liber_metabrasil.product_template_search_inherit_metabrasil
+#: model_terms:ir.ui.view,arch_db:liber_metabrasil.purchase_order_form_inherit_metabrasil
+#: model_terms:ir.ui.view,arch_db:liber_metabrasil.sale_order_form_inherit_metabrasil
+msgid "Dropship"
+msgstr "Dropship"
+
+#. module: liber_metabrasil
+#: model:product.template,name:liber_metabrasil.product_product_delivery_metabrasil_product_template
+msgid "Dropship Freight"
+msgstr "Frete Dropship"
+
+#. module: liber_metabrasil
+#. odoo-python
+#: code:addons/liber_metabrasil/models/sale_order.py:0
+msgid ""
+"Dropship with no vendor: %s. Confirming would buy nothing and ship nothing. "
+"Give these products a vendor, or take them off the dropship route."
+msgstr "Dropship sem fornecedor: %s. Confirmar não compraria nada e não enviaria nada. Dê um fornecedor a estes produtos, ou tire-os da rota de dropship."
+
+#. module: liber_metabrasil
+#: model:ir.model.fields,help:liber_metabrasil.field_res_company__metabrasil_send_status_mails
+#: model:ir.model.fields,help:liber_metabrasil.field_res_config_settings__metabrasil_send_status_mails
+msgid ""
+"E-mail the customer of a direct-delivery print order when it enters "
+"production and when it is delivered."
+msgstr ""
+"Envia e-mail ao cliente de pedido com entrega direta quando a impressão "
+"entra em produção e quando é entregue."
+
+#. module: liber_metabrasil
+#: model_terms:ir.ui.view,arch_db:liber_metabrasil.res_config_settings_view_form
+msgid ""
+"E-mail the customer of direct deliveries when the run enters production and "
+"when it lands."
+msgstr ""
+"Envia e-mail ao cliente das entregas diretas quando a tiragem entra em "
+"produção e quando chega."
+
+#. module: liber_metabrasil
+#: model:ir.model.fields.selection,name:liber_metabrasil.selection__purchase_order__metabrasil_status__error
+msgid "Error"
+msgstr "Erro"
+
+#. module: liber_metabrasil
+#: model:ir.model.fields,field_description:liber_metabrasil.field_delivery_carrier__metabrasil_excluded_carriers
+msgid "Excluded Carriers"
+msgstr "Transportadoras excluídas"
+
+#. module: liber_metabrasil
+#: model:ir.model.fields.selection,name:liber_metabrasil.selection__delivery_carrier__metabrasil_service_choice__fast
+msgid "Fastest"
+msgstr "Mais rápido"
+
+#. module: liber_metabrasil
+#: model:ir.model.fields,field_description:liber_metabrasil.field_metabrasil_freight_option__price
+msgid "Freight"
+msgstr "Frete"
+
+#. module: liber_metabrasil
+#: model_terms:ir.ui.view,arch_db:liber_metabrasil.product_template_search_inherit_metabrasil
+msgid "Has Print Price"
+msgstr "Com preço de impressão"
+
+#. module: liber_metabrasil
+#: model:ir.model.fields,field_description:liber_metabrasil.field_sale_order__is_metabrasil
+msgid "Has Print Products"
+msgstr "Tem produtos de impressão"
+
+#. module: liber_metabrasil
+#: model:ir.model.fields,help:liber_metabrasil.field_purchase_order__metabrasil_delivery_kind
+msgid ""
+"How this print order reaches its destination: a dropship address means the "
+"books go straight to the customer, its absence that they land at our depot. "
+"Drives the corner ribbon so PoD vs Dropship is evident without opening the "
+"route."
+msgstr ""
+"Como esta tiragem chega ao destino: com endereço de entrega, os livros vão "
+"direto ao cliente; sem ele, chegam ao nosso depósito. É o que acende a faixa "
+"no canto, para PoD ou Dropship ficar à vista sem abrir a rota."
+
+#. module: liber_metabrasil
+#: model_terms:ir.ui.view,arch_db:liber_metabrasil.res_config_settings_view_form
+msgid "How warehouse-bound print runs travel from the plant to our depot."
+msgstr "Como as tiragens destinadas ao depósito viajam da gráfica até nós."
+
+#. module: liber_metabrasil
+#: model:ir.model.fields,help:liber_metabrasil.field_res_company__metabrasil_warehouse_transport
+#: model:ir.model.fields,help:liber_metabrasil.field_res_config_settings__metabrasil_warehouse_transport
+msgid ""
+"How warehouse-bound print runs travel: Metabrasil's own car drops them at "
+"our depot, or we fetch them at the plant."
+msgstr ""
+"Como as tiragens destinadas ao depósito viajam: o carro da Metabrasil "
+"entrega no nosso depósito, ou nós retiramos na gráfica."
+
+#. module: liber_metabrasil
+#: model:ir.model.fields,field_description:liber_metabrasil.field_choose_delivery_carrier__id
+#: model:ir.model.fields,field_description:liber_metabrasil.field_delivery_carrier__id
+#: model:ir.model.fields,field_description:liber_metabrasil.field_metabrasil_api__id
+#: model:ir.model.fields,field_description:liber_metabrasil.field_metabrasil_freight_option__id
+#: model:ir.model.fields,field_description:liber_metabrasil.field_product_supplierinfo__id
+#: model:ir.model.fields,field_description:liber_metabrasil.field_product_template__id
+#: model:ir.model.fields,field_description:liber_metabrasil.field_purchase_order__id
+#: model:ir.model.fields,field_description:liber_metabrasil.field_res_company__id
+#: model:ir.model.fields,field_description:liber_metabrasil.field_res_config_settings__id
+#: model:ir.model.fields,field_description:liber_metabrasil.field_sale_order__id
+#: model:ir.model.fields,field_description:liber_metabrasil.field_stock_picking__id
+msgid "ID"
+msgstr ""
+
+#. module: liber_metabrasil
+#: model:ir.model.fields.selection,name:liber_metabrasil.selection__purchase_order__metabrasil_status__printing
+msgid "In Production"
+msgstr "Em produção"
+
+#. module: liber_metabrasil
+#: model:ir.model.fields,field_description:liber_metabrasil.field_purchase_order__is_metabrasil
+msgid "Is Print Order"
+msgstr "É pedido de impressão"
+
+#. module: liber_metabrasil
+#: model:ir.model.fields,field_description:liber_metabrasil.field_purchase_order__metabrasil_sync_date
+msgid "Last Print Sync"
+msgstr "Última sincronização de impressão"
+
+#. module: liber_metabrasil
+#: model:ir.model.fields,field_description:liber_metabrasil.field_metabrasil_freight_option__write_uid
+msgid "Last Updated by"
+msgstr "Última atualização por"
+
+#. module: liber_metabrasil
+#: model:ir.model.fields,field_description:liber_metabrasil.field_metabrasil_freight_option__write_date
+msgid "Last Updated on"
+msgstr "Última atualização em"
+
+#. module: liber_metabrasil
+#: model:ir.model.fields,help:liber_metabrasil.field_res_company__metabrasil_enabled
+#: model:ir.model.fields,help:liber_metabrasil.field_res_config_settings__metabrasil_enabled
+msgid ""
+"Master switch: when off, purchase orders to the printer are ordinary "
+"purchase orders -- nothing is sent, no cron touches them, no freight is "
+"quoted."
+msgstr ""
+"Interruptor geral: desligado, pedidos de compra para a gráfica são pedidos "
+"comuns — nada é enviado, nenhum cron mexe neles, nenhum frete é cotado."
+
+#. module: liber_metabrasil
+#: model:ir.model.fields.selection,name:liber_metabrasil.selection__delivery_carrier__delivery_type__metabrasil
+#: model_terms:ir.ui.view,arch_db:liber_metabrasil.purchase_order_form_inherit_metabrasil
+#: model_terms:ir.ui.view,arch_db:liber_metabrasil.res_config_settings_view_form
+msgid "Metabrasil"
+msgstr ""
+
+#. module: liber_metabrasil
+#: model:ir.model.fields,field_description:liber_metabrasil.field_sale_order__metabrasil_dropship_warning
+msgid "Metabrasil Dropship Warning"
+msgstr "Aviso de dropship sem fornecedor"
+
+#. module: liber_metabrasil
+#: model_terms:ir.ui.view,arch_db:liber_metabrasil.sale_order_form_inherit_metabrasil
+msgid "Metabrasil Freight"
+msgstr "Frete Metabrasil"
+
+#. module: liber_metabrasil
+#: model:ir.model,name:liber_metabrasil.model_metabrasil_freight_option
+msgid "Metabrasil Freight Option"
+msgstr "Opção de frete Metabrasil"
+
+#. module: liber_metabrasil
+#: model:ir.model.fields,field_description:liber_metabrasil.field_res_company__metabrasil_mode
+#: model:ir.model.fields,field_description:liber_metabrasil.field_res_config_settings__metabrasil_mode
+msgid "Metabrasil Mode"
+msgstr "Modo Metabrasil"
+
+#. module: liber_metabrasil
+#: model:ir.model.fields,field_description:liber_metabrasil.field_res_company__metabrasil_enabled
+#: model:ir.model.fields,field_description:liber_metabrasil.field_res_config_settings__metabrasil_enabled
+#: model_terms:ir.ui.view,arch_db:liber_metabrasil.res_config_settings_view_form
+msgid "Metabrasil PoD"
+msgstr ""
+
+#. module: liber_metabrasil
+#: model:ir.model,name:liber_metabrasil.model_metabrasil_api
+msgid "Metabrasil PoD API Client"
+msgstr "Cliente da API PoD Metabrasil"
+
+#. module: liber_metabrasil
+#: model:ir.model.fields,field_description:liber_metabrasil.field_purchase_order__metabrasil_order_ref
+msgid "Metabrasil Reference"
+msgstr "Referência Metabrasil"
+
+#. module: liber_metabrasil
+#: model:ir.model.fields,field_description:liber_metabrasil.field_choose_delivery_carrier__metabrasil_totals
+msgid "Metabrasil Totals"
+msgstr "Totais Metabrasil"
+
+#. module: liber_metabrasil
+#. odoo-python
+#: code:addons/liber_metabrasil/models/purchase_order.py:0
+msgid "Metabrasil call failed"
+msgstr "Chamada à Metabrasil falhou"
+
+#. module: liber_metabrasil
+#. odoo-python
+#: code:addons/liber_metabrasil/models/purchase_order.py:0
+msgid ""
+"Metabrasil cancelled this print order but it could not be cancelled here: %s"
+msgstr ""
+"A Metabrasil cancelou este pedido de impressão, mas não foi possível cancelá-"
+"lo aqui: %s"
+
+#. module: liber_metabrasil
+#. odoo-python
+#: code:addons/liber_metabrasil/models/res_config_settings.py:0
+msgid "Metabrasil connection"
+msgstr "Conexão Metabrasil"
+
+#. module: liber_metabrasil
+#: model:ir.model.fields.selection,name:liber_metabrasil.selection__res_company__metabrasil_warehouse_transport__meta_car
+msgid "Metabrasil delivers (CARRO META)"
+msgstr "Metabrasil entrega (CARRO META)"
+
+#. module: liber_metabrasil
+#. odoo-python
+#: code:addons/liber_metabrasil/models/purchase_order.py:0
+msgid ""
+"Metabrasil did not accept this print order, so it was not confirmed. Fix the "
+"cause and confirm again:\n"
+"\n"
+"%s"
+msgstr ""
+"A Metabrasil não aceitou este pedido de impressão, então ele não foi "
+"confirmado. Corrija a causa e confirme de novo:\n"
+"\n"
+"%s"
+
+#. module: liber_metabrasil
+#. odoo-python
+#: code:addons/liber_metabrasil/models/purchase_order.py:0
+msgid "Metabrasil does not know order %s."
+msgstr "A Metabrasil não conhece o pedido %s."
+
+#. module: liber_metabrasil
+#. odoo-python
+#: code:addons/liber_metabrasil/models/purchase_order.py:0
+msgid "Metabrasil has not shipped this order by its scheduled date."
+msgstr "A Metabrasil não expediu este pedido até a data programada."
+
+#. module: liber_metabrasil
+#. odoo-python
+#: code:addons/liber_metabrasil/models/metabrasil_api.py:0
+msgid "Metabrasil is off, or the %s mode has no API URL set."
+msgstr "A Metabrasil está desligada, ou o modo %s está sem URL de API."
+
+#. module: liber_metabrasil
+#. odoo-python
+#: code:addons/liber_metabrasil/models/delivery_carrier.py:0
+#: code:addons/liber_metabrasil/wizards/choose_delivery_carrier.py:0
+msgid "Metabrasil offers no freight service for this destination (%s)."
+msgstr "A Metabrasil não oferece frete para este destino (%s)."
+
+#. module: liber_metabrasil
+#. odoo-python
+#: code:addons/liber_metabrasil/models/product_template.py:0
+#: code:addons/liber_metabrasil/models/res_config_settings.py:0
+msgid "Metabrasil print prices"
+msgstr "Preços de impressão da Metabrasil"
+
+#. module: liber_metabrasil
+#. odoo-python
+#: code:addons/liber_metabrasil/models/purchase_order.py:0
+msgid "Metabrasil print status: %s"
+msgstr "Status de impressão Metabrasil: %s"
+
+#. module: liber_metabrasil
+#: model:ir.model.fields,help:liber_metabrasil.field_purchase_order__metabrasil_status
+#: model:ir.model.fields,help:liber_metabrasil.field_stock_picking__metabrasil_status
+msgid ""
+"Metabrasil's view of this print order, mirrored by the sync cron. Error "
+"means the last call failed -- fix the cause and use 'Send to Metabrasil' to "
+"retry."
+msgstr ""
+"A visão da Metabrasil sobre este pedido de impressão, espelhada pelo cron. "
+"Erro significa que a última chamada falhou — corrija a causa e use 'Enviar à "
+"Metabrasil' para tentar de novo."
+
+#. module: liber_metabrasil
+#: model:ir.actions.server,name:liber_metabrasil.ir_cron_metabrasil_exceptions_ir_actions_server
+msgid "Metabrasil: overdue print orders"
+msgstr "Metabrasil: pedidos de impressão atrasados"
+
+#. module: liber_metabrasil
+#: model:mail.template,name:liber_metabrasil.mail_template_metabrasil_printing
+msgid "Metabrasil: pedido em produção"
+msgstr ""
+
+#. module: liber_metabrasil
+#: model:mail.template,name:liber_metabrasil.mail_template_metabrasil_delivered
+msgid "Metabrasil: pedido entregue"
+msgstr ""
+
+#. module: liber_metabrasil
+#: model:ir.actions.server,name:liber_metabrasil.ir_cron_metabrasil_prices_ir_actions_server
+msgid "Metabrasil: refresh print prices"
+msgstr ""
+
+#. module: liber_metabrasil
+#: model:ir.actions.server,name:liber_metabrasil.ir_cron_metabrasil_sync_status_ir_actions_server
+msgid "Metabrasil: sync print order status"
+msgstr "Metabrasil: sincronizar status dos pedidos de impressão"
+
+#. module: liber_metabrasil
+#: model_terms:ir.ui.view,arch_db:liber_metabrasil.res_config_settings_view_form
+msgid "Mode"
+msgstr "Modo"
+
+#. module: liber_metabrasil
+#. odoo-python
+#: code:addons/liber_metabrasil/models/product_template.py:0
+msgid ""
+"No price came back. %(no_price)s book(s) the printer knows but has not "
+"priced — that is a price to agree with them; %(unknown)s are not in your POD "
+"repository — those have to be uploaded there first."
+msgstr ""
+"Nenhum preço voltou. %(no_price)s livro(s) a gráfica conhece mas não "
+"precificou — isso é preço a combinar com eles; %(unknown)s não estão no seu "
+"repositório POD — esses precisam ser carregados lá primeiro."
+
+#. module: liber_metabrasil
+#: model:ir.model.fields.selection,name:liber_metabrasil.selection__purchase_order__metabrasil_status__not_found
+msgid "Not Found"
+msgstr "Não encontrado"
+
+#. module: liber_metabrasil
+#: model:ir.model.fields.selection,name:liber_metabrasil.selection__purchase_order__metabrasil_status__not_sent
+msgid "Not Sent"
+msgstr "Não enviado"
+
+#. module: liber_metabrasil
+#. odoo-python
+#: code:addons/liber_metabrasil/models/delivery_carrier.py:0
+msgid "Nothing to quote: the order has no storable lines."
+msgstr "Nada a cotar: o pedido não tem linhas de produto estocável."
+
+#. module: liber_metabrasil
+#: model:ir.model.fields.selection,name:liber_metabrasil.selection__purchase_order__metabrasil_status__included
+msgid "Order Included"
+msgstr "Pedido incluído"
+
+#. module: liber_metabrasil
+#: model:ir.model.fields,field_description:liber_metabrasil.field_res_company__metabrasil_exception_activities
+#: model:ir.model.fields,field_description:liber_metabrasil.field_res_config_settings__metabrasil_exception_activities
+#: model_terms:ir.ui.view,arch_db:liber_metabrasil.res_config_settings_view_form
+msgid "Overdue Print Alerts"
+msgstr "Alertas de impressão atrasada"
+
+#. module: liber_metabrasil
+#: model:ir.model.fields,field_description:liber_metabrasil.field_delivery_carrier__metabrasil_service_choice
+msgid "Pick By"
+msgstr "Escolher por"
+
+#. module: liber_metabrasil
+#: model_terms:ir.ui.view,arch_db:liber_metabrasil.res_config_settings_view_form
+msgid ""
+"Ping the current mode's endpoint with a read-only freight quote — never "
+"sends a print order. Save the form first if you just edited the credentials."
+msgstr ""
+"Faz um ping no endpoint do modo atual com uma cotação de frete (só leitura) "
+"— nunca envia pedido de impressão. Salve o formulário antes se acabou de "
+"editar as credenciais."
+
+#. module: liber_metabrasil
+#: model:ir.model.fields.selection,name:liber_metabrasil.selection__purchase_order__metabrasil_delivery_kind__warehouse
+#: model:ir.model.fields.selection,name:liber_metabrasil.selection__sale_order__metabrasil_delivery_kind__warehouse
+#: model:product.tag,name:liber_metabrasil.product_tag_pod
+#: model_terms:ir.ui.view,arch_db:liber_metabrasil.purchase_order_form_inherit_metabrasil
+msgid "PoD"
+msgstr ""
+
+#. module: liber_metabrasil
+#: model:ir.model.fields,field_description:liber_metabrasil.field_sale_order__metabrasil_carrier_name
+msgid "PoD Carrier"
+msgstr "Transportadora PoD"
+
+#. module: liber_metabrasil
+#: model:ir.model.fields,field_description:liber_metabrasil.field_sale_order__metabrasil_carrier_vat
+msgid "PoD Carrier CNPJ"
+msgstr "CNPJ da transportadora PoD"
+
+#. module: liber_metabrasil
+#: model:ir.model.fields,field_description:liber_metabrasil.field_sale_order__metabrasil_carrier_code
+msgid "PoD Carrier Code"
+msgstr "Código da transportadora PoD"
+
+#. module: liber_metabrasil
+#: model:ir.model.fields,field_description:liber_metabrasil.field_sale_order__metabrasil_delivery_days
+msgid "PoD Delivery Days"
+msgstr "Prazo de entrega PoD (dias)"
+
+#. module: liber_metabrasil
+#: model:ir.model.fields,field_description:liber_metabrasil.field_sale_order__metabrasil_freight_cost
+msgid "PoD Freight Cost"
+msgstr "Custo de frete PoD"
+
+#. module: liber_metabrasil
+#: model:ir.model.fields,field_description:liber_metabrasil.field_sale_order__metabrasil_service_code
+msgid "PoD Service Code"
+msgstr "Código do serviço PoD"
+
+#. module: liber_metabrasil
+#: model:ir.model.fields,field_description:liber_metabrasil.field_sale_order__metabrasil_total_volumes
+msgid "PoD Volumes"
+msgstr "Volumes PoD"
+
+#. module: liber_metabrasil
+#: model:ir.model.fields,field_description:liber_metabrasil.field_sale_order__metabrasil_total_weight
+msgid "PoD Weight (kg)"
+msgstr "Peso PoD (kg)"
+
+#. module: liber_metabrasil
+#: model_terms:ir.ui.view,arch_db:liber_metabrasil.product_supplierinfo_list_inherit_metabrasil
+msgid "Price"
+msgstr "Preço"
+
+#. module: liber_metabrasil
+#: model:ir.model.fields,field_description:liber_metabrasil.field_purchase_order__metabrasil_delivery_kind
+#: model:ir.model.fields,field_description:liber_metabrasil.field_sale_order__metabrasil_delivery_kind
+msgid "Print Delivery Kind"
+msgstr "Tipo de entrega da tiragem"
+
+#. module: liber_metabrasil
+#: model_terms:ir.ui.view,arch_db:liber_metabrasil.purchase_order_search_inherit_metabrasil
+msgid "Print Errors"
+msgstr "Erros de impressão"
+
+#. module: liber_metabrasil
+#: model:ir.model.fields,field_description:liber_metabrasil.field_purchase_order__metabrasil_sale_order_id
+msgid "Print For"
+msgstr "Impressão para"
+
+#. module: liber_metabrasil
+#: model_terms:ir.ui.view,arch_db:liber_metabrasil.purchase_order_search_inherit_metabrasil
+msgid "Print In Production"
+msgstr "Impressão em produção"
+
+#. module: liber_metabrasil
+#: model:ir.model.fields,field_description:liber_metabrasil.field_sale_order__metabrasil_purchase_order_count
+msgid "Print Order Count"
+msgstr "Nº de pedidos de impressão"
+
+#. module: liber_metabrasil
+#: model:ir.model.fields,field_description:liber_metabrasil.field_sale_order__metabrasil_purchase_order_ids
+#: model_terms:ir.ui.view,arch_db:liber_metabrasil.purchase_order_search_inherit_metabrasil
+#: model_terms:ir.ui.view,arch_db:liber_metabrasil.sale_order_form_inherit_metabrasil
+msgid "Print Orders"
+msgstr "Pedidos de impressão"
+
+#. module: liber_metabrasil
+#: model:ir.model.fields,field_description:liber_metabrasil.field_product_product__metabrasil_price_check_date
+#: model:ir.model.fields,field_description:liber_metabrasil.field_product_template__metabrasil_price_check_date
+msgid "Print Price Checked"
+msgstr "Preço de impressão consultado em"
+
+#. module: liber_metabrasil
+#: model:ir.model.fields,field_description:liber_metabrasil.field_product_product__metabrasil_price_date
+#: model:ir.model.fields,field_description:liber_metabrasil.field_product_template__metabrasil_price_date
+msgid "Print Price Updated"
+msgstr "Preço de impressão atualizado em"
+
+#. module: liber_metabrasil
+#: model_terms:ir.ui.view,arch_db:liber_metabrasil.product_supplierinfo_list_inherit_metabrasil
+msgid "Print Run"
+msgstr "Tiragem"
+
+#. module: liber_metabrasil
+#: model:ir.model.fields,field_description:liber_metabrasil.field_res_company__metabrasil_print_runs
+#: model:ir.model.fields,field_description:liber_metabrasil.field_res_config_settings__metabrasil_print_runs
+#: model_terms:ir.ui.view,arch_db:liber_metabrasil.res_config_settings_view_form
+msgid "Print Runs Quoted"
+msgstr "Tiragens consultadas"
+
+#. module: liber_metabrasil
+#: model:ir.model.fields,field_description:liber_metabrasil.field_purchase_order__metabrasil_status
+#: model:ir.model.fields,field_description:liber_metabrasil.field_stock_picking__metabrasil_status
+#: model_terms:ir.ui.view,arch_db:liber_metabrasil.purchase_order_search_inherit_metabrasil
+msgid "Print Status"
+msgstr "Status de impressão"
+
+#. module: liber_metabrasil
+#. odoo-python
+#: code:addons/liber_metabrasil/models/purchase_order.py:0
+msgid "Print order awaiting approval"
+msgstr "Pedido de impressão aguardando aprovação"
+
+#. module: liber_metabrasil
+#. odoo-python
+#: code:addons/liber_metabrasil/models/purchase_order.py:0
+msgid "Print order cancelled by Metabrasil."
+msgstr "Pedido de impressão cancelado pela Metabrasil."
+
+#. module: liber_metabrasil
+#. odoo-python
+#: code:addons/liber_metabrasil/models/purchase_order.py:0
+msgid "Print order not delivered on time"
+msgstr "Pedido de impressão não entregue no prazo"
+
+#. module: liber_metabrasil
+#. odoo-python
+#: code:addons/liber_metabrasil/models/purchase_order.py:0
+msgid "Print order not shipped on time"
+msgstr "Pedido de impressão não expedido no prazo"
+
+#. module: liber_metabrasil
+#. odoo-python
+#: code:addons/liber_metabrasil/models/purchase_order.py:0
+msgid "Print order sent to Metabrasil (reference %s)."
+msgstr "Pedido de impressão enviado à Metabrasil (referência %s)."
+
+#. module: liber_metabrasil
+#. odoo-python
+#: code:addons/liber_metabrasil/models/sale_order.py:0
+msgid "Print orders for %s"
+msgstr "Pedidos de impressão de %s"
+
+#. module: liber_metabrasil
+#: model_terms:ir.ui.view,arch_db:liber_metabrasil.res_config_settings_view_form
+msgid ""
+"Print runs asked of the pricing API, comma separated. Each becomes a vendor-"
+"price line, so Odoo resolves the right price by quantity on its own."
+msgstr ""
+"Tiragens consultadas na API de preços, separadas por vírgula. Cada uma vira "
+"uma linha de preço de fornecedor, então o Odoo resolve sozinho o preço certo "
+"por quantidade."
+
+#. module: liber_metabrasil
+#: model:ir.model.fields,help:liber_metabrasil.field_res_company__metabrasil_print_runs
+#: model:ir.model.fields,help:liber_metabrasil.field_res_config_settings__metabrasil_print_runs
+msgid ""
+"Print runs asked of the pricing API, comma separated. Each one becomes a "
+"vendor-price line (min_qty) on every printable book, so the Odoo picks the "
+"right price by quantity on its own. Commercial decision -- change it here, "
+"not in the code."
+msgstr ""
+"Tiragens consultadas na API de preços, separadas por vírgula. Cada uma vira "
+"uma linha de preço de fornecedor (qtd. mín.) em todo livro imprimível, e "
+"assim o Odoo escolhe sozinho o preço certo pela quantidade. Decisão "
+"comercial — mude aqui, não no código."
+
+#. module: liber_metabrasil
+#: model:ir.model.fields,field_description:liber_metabrasil.field_res_company__metabrasil_pod_tag_id
+#: model:ir.model.fields,field_description:liber_metabrasil.field_res_config_settings__metabrasil_pod_tag_id
+#: model_terms:ir.ui.view,arch_db:liber_metabrasil.res_config_settings_view_form
+msgid "Print-on-Demand Tag"
+msgstr "Etiqueta de impressão sob demanda"
+
+#. module: liber_metabrasil
+#: model_terms:ir.ui.view,arch_db:liber_metabrasil.product_template_search_inherit_metabrasil
+msgid "Printable at Metabrasil"
+msgstr "Imprimível na Metabrasil"
+
+#. module: liber_metabrasil
+#: model:ir.model.fields,field_description:liber_metabrasil.field_stock_picking__metabrasil_delivered_date
+msgid "Printer Delivered On"
+msgstr "Entregue pela gráfica em"
+
+#. module: liber_metabrasil
+#: model:ir.model.fields,field_description:liber_metabrasil.field_res_company__metabrasil_partner_id
+#: model:ir.model.fields,field_description:liber_metabrasil.field_res_config_settings__metabrasil_partner_id
+#: model_terms:ir.ui.view,arch_db:liber_metabrasil.res_config_settings_view_form
+msgid "Printer Partner"
+msgstr "Parceiro gráfica"
+
+#. module: liber_metabrasil
+#: model:ir.model.fields,field_description:liber_metabrasil.field_stock_picking__metabrasil_shipped_date
+msgid "Printer Shipped On"
+msgstr "Expedido pela gráfica em"
+
+#. module: liber_metabrasil
+#: model:ir.model.fields,field_description:liber_metabrasil.field_stock_picking__metabrasil_tracking_url
+msgid "Printer Tracking URL"
+msgstr "URL de rastreio da gráfica"
+
+#. module: liber_metabrasil
+#: model:ir.model,name:liber_metabrasil.model_product_template
+msgid "Product"
+msgstr "Produto"
+
+#. module: liber_metabrasil
+#: model:ir.model.fields,field_description:liber_metabrasil.field_product_supplierinfo__metabrasil_product_cost
+msgid "Product Cost"
+msgstr "Custo do produto"
+
+#. module: liber_metabrasil
+#: model:ir.model.fields.selection,name:liber_metabrasil.selection__res_company__metabrasil_mode__production
+msgid "Production"
+msgstr "Produção"
+
+#. module: liber_metabrasil
+#: model:ir.model.fields,field_description:liber_metabrasil.field_res_company__metabrasil_api_url
+#: model:ir.model.fields,field_description:liber_metabrasil.field_res_config_settings__metabrasil_api_url
+msgid "Production API URL"
+msgstr "URL da API de produção"
+
+#. module: liber_metabrasil
+#: model:ir.model.fields,field_description:liber_metabrasil.field_res_company__metabrasil_pricing_enabled
+#: model:ir.model.fields,field_description:liber_metabrasil.field_res_config_settings__metabrasil_pricing_enabled
+#: model_terms:ir.ui.view,arch_db:liber_metabrasil.res_config_settings_view_form
+msgid "Production Pricing API"
+msgstr "API de precificação da produção"
+
+#. module: liber_metabrasil
+#: model:ir.model.fields,field_description:liber_metabrasil.field_delivery_carrier__delivery_type
+msgid "Provider"
+msgstr "Prestador"
+
+#. module: liber_metabrasil
+#: model:ir.model,name:liber_metabrasil.model_purchase_order
+msgid "Purchase Order"
+msgstr "Pedido de compra"
+
+#. module: liber_metabrasil
+#: model:ir.model.fields,help:liber_metabrasil.field_res_company__metabrasil_pricing_enabled
+#: model:ir.model.fields,help:liber_metabrasil.field_res_config_settings__metabrasil_pricing_enabled
+msgid ""
+"Query /pod-api/precificacao for the production cost ladder in the print "
+"quote wizard. Leave off until Metabrasil ships the endpoint; the wizard "
+"shows freight either way."
+msgstr ""
+"Consulta /pod-api/precificacao para a escada de custo de produção no "
+"assistente de cotação. Deixe desligado até a Metabrasil publicar o endpoint; "
+"o assistente mostra o frete de qualquer forma."
+
+#. module: liber_metabrasil
+#: model_terms:ir.ui.view,arch_db:liber_metabrasil.res_config_settings_view_form
+msgid ""
+"Query the production-cost ladder (/pod-api/precificacao) in the print quote. "
+"Leave off until Metabrasil ships the endpoint."
+msgstr ""
+"Consulta a escada de custo de produção (/pod-api/precificacao) na cotação de "
+"impressão. Deixe desligado até a Metabrasil publicar o endpoint."
+
+#. module: liber_metabrasil
+#: model:ir.model.fields,field_description:liber_metabrasil.field_choose_delivery_carrier__metabrasil_option_ids
+msgid "Quoted Transporters"
+msgstr "Transportadoras cotadas"
+
+#. module: liber_metabrasil
+#: model:ir.model.fields,help:liber_metabrasil.field_sale_order__metabrasil_freight_cost
+msgid "Raw freight quoted by Metabrasil, before the carrier margin."
+msgstr ""
+"Frete bruto cotado pela Metabrasil, antes da margem do método de envio."
+
+#. module: liber_metabrasil
+#. odoo-python
+#: code:addons/liber_metabrasil/models/metabrasil_api.py:0
+msgid ""
+"Reached %(url)s (HTTP %(code)s). The connection opened and the credentials "
+"were not refused, but Metabrasil's app returned an error for the probe "
+"request. Try again; if it persists, the endpoint itself is unwell."
+msgstr ""
+"Alcançou %(url)s (HTTP %(code)s). A conexão abriu e as credenciais não foram "
+"recusadas, mas a aplicação da Metabrasil devolveu erro para o pedido de "
+"teste. Tente de novo; se persistir, o próprio endpoint está com problema."
+
+#. module: liber_metabrasil
+#. odoo-python
+#: code:addons/liber_metabrasil/models/metabrasil_api.py:0
+msgid ""
+"Reached %(url)s but it refused the credentials (HTTP %(code)s). Check the "
+"access key and the API user/password."
+msgstr ""
+"Alcançou %(url)s, mas as credenciais foram recusadas (HTTP %(code)s). "
+"Confira a chave de acesso e o usuário/senha da API."
+
+#. module: liber_metabrasil
+#. odoo-python
+#: code:addons/liber_metabrasil/models/purchase_order.py:0
+msgid ""
+"Receipt validated automatically: Metabrasil reports the print order as %s."
+msgstr ""
+"Recebimento validado automaticamente: a Metabrasil informa o pedido de "
+"impressão como %s."
+
+#. module: liber_metabrasil
+#: model_terms:ir.ui.view,arch_db:liber_metabrasil.res_config_settings_view_form
+msgid "Refresh Print Prices"
+msgstr "Atualizar preços de impressão"
+
+#. module: liber_metabrasil
+#: model_terms:ir.ui.view,arch_db:liber_metabrasil.purchase_order_form_inherit_metabrasil
+msgid "Refresh Print Status"
+msgstr "Atualizar status de impressão"
+
+#. module: liber_metabrasil
+#: model:ir.model,name:liber_metabrasil.model_sale_order
+msgid "Sales Order"
+msgstr "Pedido de venda"
+
+#. module: liber_metabrasil
+#: model:ir.model.fields,field_description:liber_metabrasil.field_res_company__metabrasil_test_api_url
+#: model:ir.model.fields,field_description:liber_metabrasil.field_res_config_settings__metabrasil_test_api_url
+msgid "Sandbox API URL"
+msgstr "URL da API de teste (sandbox)"
+
+#. module: liber_metabrasil
+#: model_terms:ir.ui.view,arch_db:liber_metabrasil.res_config_settings_view_form
+msgid ""
+"Send approved purchase orders to the Metabrasil printer and follow them "
+"until delivery."
+msgstr ""
+"Envia pedidos de compra aprovados à gráfica Metabrasil e os acompanha até a "
+"entrega."
+
+#. module: liber_metabrasil
+#: model:ir.model.fields,field_description:liber_metabrasil.field_purchase_order__metabrasil_sent
+msgid "Sent to Metabrasil"
+msgstr "Enviado à Metabrasil"
+
+#. module: liber_metabrasil
+#: model:ir.model.fields,field_description:liber_metabrasil.field_metabrasil_freight_option__service_code
+msgid "Service Code"
+msgstr "Código do serviço"
+
+#. module: liber_metabrasil
+#: model:mail.template,subject:liber_metabrasil.mail_template_metabrasil_printing
+msgid "Seu pedido {{ object.name }} entrou em produção"
+msgstr ""
+
+#. module: liber_metabrasil
+#: model:mail.template,subject:liber_metabrasil.mail_template_metabrasil_delivered
+msgid "Seu pedido {{ object.name }} foi entregue"
+msgstr ""
+
+#. module: liber_metabrasil
+#: model:ir.model.fields.selection,name:liber_metabrasil.selection__purchase_order__metabrasil_status__shipped
+msgid "Shipped"
+msgstr "Expedido"
+
+#. module: liber_metabrasil
+#: model:ir.model,name:liber_metabrasil.model_delivery_carrier
+msgid "Shipping Methods"
+msgstr "Métodos de envio"
+
+#. module: liber_metabrasil
+#: model_terms:ir.ui.view,arch_db:liber_metabrasil.res_config_settings_view_form
+msgid ""
+"Stamped on books the printer quotes, removed when it stops quoting them — "
+"the only way to tell which titles are in their catalogue, and what you "
+"filter the product list by."
+msgstr ""
+"Marca os livros que a gráfica cota e sai quando ela para de cotá-los — é o "
+"único jeito de saber quais títulos estão no catálogo dela, e é por ele que "
+"você filtra a lista de produtos."
+
+#. module: liber_metabrasil
+#: model:ir.model,name:liber_metabrasil.model_product_supplierinfo
+msgid "Supplier Pricelist"
+msgstr "Lista de preços do fornecedor"
+
+#. module: liber_metabrasil
+#. odoo-python
+#: code:addons/liber_metabrasil/models/res_config_settings.py:0
+msgid ""
+"Sweep scheduled: it starts within the minute and runs in the background. "
+"Follow it in Settings > Technical > Scheduled Actions, or just check the "
+"books' Purchase tab in a few minutes."
+msgstr ""
+"Varredura agendada: começa em menos de um minuto e roda em segundo plano. "
+"Acompanhe em Definições > Técnico > Ações agendadas, ou simplesmente veja a "
+"aba Compra dos livros daqui a alguns minutos."
+
+#. module: liber_metabrasil
+#: model_terms:ir.ui.view,arch_db:liber_metabrasil.res_config_settings_view_form
+msgid ""
+"Sweep the whole catalogue now instead of waiting for the fortnightly cron. "
+"Read-only against the printer: it quotes, it never orders."
+msgstr ""
+"Varre o catálogo inteiro agora, em vez de esperar o cron quinzenal. Só "
+"leitura na gráfica: cota, nunca encomenda."
+
+#. module: liber_metabrasil
+#: model:ir.model.fields,help:liber_metabrasil.field_res_company__metabrasil_pod_tag_id
+#: model:ir.model.fields,help:liber_metabrasil.field_res_config_settings__metabrasil_pod_tag_id
+msgid ""
+"Tag stamped on books the printer quotes, and removed when it stops quoting "
+"them. The API cannot be asked 'is this book in your catalogue?' -- a price "
+"coming back IS the answer, and this tag is where that answer is stored so "
+"you can filter on it."
+msgstr ""
+"Etiqueta posta nos livros que a gráfica cota, e retirada quando ela para de "
+"cotá-los. Não dá para perguntar à API \"este livro está no seu catálogo?\" — "
+"o preço voltar É a resposta, e esta etiqueta é onde ela fica guardada, para "
+"você poder filtrar."
+
+#. module: liber_metabrasil
+#: model_terms:ir.ui.view,arch_db:liber_metabrasil.res_config_settings_view_form
+msgid "Test Connection"
+msgstr "Testar conexão"
+
+#. module: liber_metabrasil
+#: model:ir.model.fields.selection,name:liber_metabrasil.selection__res_company__metabrasil_mode__test
+msgid "Testing"
+msgstr "Teste"
+
+#. module: liber_metabrasil
+#: model:ir.model.fields,help:liber_metabrasil.field_res_company__metabrasil_mode
+#: model:ir.model.fields,help:liber_metabrasil.field_res_config_settings__metabrasil_mode
+msgid ""
+"Testing points every call at the sandbox URL below. Switch to Production "
+"only when the account manager confirms the access key is live."
+msgstr ""
+"Teste aponta todas as chamadas para a URL de sandbox abaixo. Mude para "
+"Produção só quando o atendimento confirmar que a chave de acesso está ativa."
+
+#. module: liber_metabrasil
+#: model_terms:ir.ui.view,arch_db:liber_metabrasil.res_config_settings_view_form
+msgid "Testing points every call at the sandbox URL."
+msgstr "Teste aponta todas as chamadas para a URL de sandbox."
+
+#. module: liber_metabrasil
+#: model:ir.model.fields,help:liber_metabrasil.field_res_company__metabrasil_partner_id
+#: model:ir.model.fields,help:liber_metabrasil.field_res_config_settings__metabrasil_partner_id
+msgid ""
+"The Metabrasil vendor record. A purchase order is a print order exactly when "
+"its vendor is this partner (and the switch above is on)."
+msgstr ""
+"O cadastro de fornecedor da Metabrasil. Um pedido de compra é pedido de "
+"impressão exatamente quando o fornecedor é este parceiro (e o interruptor "
+"acima está ligado)."
+
+#. module: liber_metabrasil
+#: model_terms:ir.ui.view,arch_db:liber_metabrasil.res_config_settings_view_form
+msgid ""
+"The Metabrasil vendor record: a purchase order to this partner is a print "
+"order."
+msgstr ""
+"O cadastro de fornecedor da Metabrasil: pedido de compra para este parceiro "
+"é pedido de impressão."
+
+#. module: liber_metabrasil
+#: model:ir.model.fields,help:liber_metabrasil.field_product_supplierinfo__metabrasil_product_cost
+msgid ""
+"The book's own cost, converted into this line's currency so the two numbers "
+"can be read side by side."
+msgstr ""
+"O custo do próprio livro, convertido para a moeda desta linha para que os "
+"dois números possam ser lidos lado a lado."
+
+#. module: liber_metabrasil
+#: model:ir.model.fields,help:liber_metabrasil.field_res_company__metabrasil_access_key
+#: model:ir.model.fields,help:liber_metabrasil.field_res_config_settings__metabrasil_access_key
+msgid ""
+"The chaveCliente Metabrasil issued for this company; rides inside every "
+"request body."
+msgstr ""
+"A chaveCliente emitida pela Metabrasil para esta empresa; vai no corpo de "
+"toda requisição."
+
+#. module: liber_metabrasil
+#. odoo-python
+#: code:addons/liber_metabrasil/models/res_config_settings.py:0
+msgid ""
+"The price sweep scheduled action is missing; upgrade the module to restore "
+"it."
+msgstr ""
+"A ação agendada de varredura de preços não existe; atualize o módulo para "
+"recriá-la."
+
+#. module: liber_metabrasil
+#: model:ir.model.fields,help:liber_metabrasil.field_purchase_order__metabrasil_sale_order_id
+msgid ""
+"The sale this print run serves, through the real line-to-line link -- the "
+"same one the Metabrasil payload reads for the delivery address and the "
+"freight."
+msgstr ""
+"A venda que esta tiragem atende, pelo vínculo real de linha a linha — o "
+"mesmo que o payload da Metabrasil lê para o endereço de entrega e para o "
+"frete."
+
+#. module: liber_metabrasil
+#. odoo-python
+#: code:addons/liber_metabrasil/models/purchase_order.py:0
+msgid ""
+"This order shipped but has not been reported delivered by its expected date."
+msgstr ""
+"Este pedido foi expedido, mas não consta como entregue até a data prevista."
+
+#. module: liber_metabrasil
+#. odoo-python
+#: code:addons/liber_metabrasil/models/purchase_order.py:0
+msgid ""
+"This print order was not approved within a day; Metabrasil has not received "
+"it yet."
+msgstr ""
+"Este pedido de impressão não foi aprovado em um dia; a Metabrasil ainda não "
+"o recebeu."
+
+#. module: liber_metabrasil
+#: model:ir.model.fields,help:liber_metabrasil.field_product_supplierinfo__metabrasil_above_cost
+msgid ""
+"This vendor price is higher than what we carry the book at: printing this "
+"run costs more than the book is worth to us."
+msgstr ""
+"Este preço do fornecedor é maior do que o custo com que carregamos o livro: "
+"imprimir esta tiragem custa mais do que o livro vale para nós."
+
+#. module: liber_metabrasil
+#: model:ir.model,name:liber_metabrasil.model_stock_picking
+msgid "Transfer"
+msgstr "Transferir"
+
+#. module: liber_metabrasil
+#: model:ir.model.fields,field_description:liber_metabrasil.field_choose_delivery_carrier__metabrasil_option_id
+#: model:ir.model.fields,field_description:liber_metabrasil.field_metabrasil_freight_option__carrier_name
+msgid "Transporter"
+msgstr "Transportadora"
+
+#. module: liber_metabrasil
+#: model:ir.actions.server,name:liber_metabrasil.action_metabrasil_refresh_prices
+msgid "Update Metabrasil print prices"
+msgstr "Atualizar preços de impressão da Metabrasil"
+
+#. module: liber_metabrasil
+#: model_terms:ir.ui.view,arch_db:liber_metabrasil.res_config_settings_view_form
+msgid ""
+"Validate the receipt automatically when Metabrasil reports the order shipped "
+"or delivered."
+msgstr ""
+"Valida o recebimento automaticamente quando a Metabrasil informa o pedido "
+"como expedido ou entregue."
+
+#. module: liber_metabrasil
+#. odoo-python
+#: code:addons/liber_metabrasil/models/purchase_order.py:0
+msgid "Vendor bill drafted from the shipped print order."
+msgstr ""
+"Fatura do fornecedor rascunhada a partir do pedido de impressão expedido."
+
+#. module: liber_metabrasil
+#: model:ir.model.fields,field_description:liber_metabrasil.field_res_company__metabrasil_warehouse_transport
+#: model:ir.model.fields,field_description:liber_metabrasil.field_res_config_settings__metabrasil_warehouse_transport
+#: model_terms:ir.ui.view,arch_db:liber_metabrasil.res_config_settings_view_form
+msgid "Warehouse Leg"
+msgstr "Trecho até o depósito"
+
+#. module: liber_metabrasil
+#: model:ir.model.fields.selection,name:liber_metabrasil.selection__res_company__metabrasil_warehouse_transport__pickup
+msgid "We pick up (RETIRADA)"
+msgstr "Nós retiramos (RETIRADA)"
+
+#. module: liber_metabrasil
+#: model:ir.model.fields,help:liber_metabrasil.field_res_company__metabrasil_auto_validate_picking
+#: model:ir.model.fields,help:liber_metabrasil.field_res_config_settings__metabrasil_auto_validate_picking
+msgid ""
+"When Metabrasil reports Shipped/Delivered, validate the receipt "
+"automatically with their reported weight and volume count. Off = the "
+"warehouse clicks Validate as usual."
+msgstr ""
+"Quando a Metabrasil informa Expedido/Entregue, valida o recebimento "
+"automaticamente com o peso e o número de volumes informados. Desligado = o "
+"depósito clica Validar como sempre."
+
+#. module: liber_metabrasil
+#: model:ir.model.fields,help:liber_metabrasil.field_product_product__metabrasil_price_date
+#: model:ir.model.fields,help:liber_metabrasil.field_product_template__metabrasil_price_date
+msgid ""
+"When a price last landed for this book. Old date with prices still listed "
+"means the last sweep got no answer for it."
+msgstr ""
+"Quando um preço chegou por último para este livro. Data antiga com preços "
+"ainda listados quer dizer que a última varredura não teve resposta para ele."
+
+#. module: liber_metabrasil
+#: model:ir.model.fields,help:liber_metabrasil.field_res_company__metabrasil_auto_create_bill
+#: model:ir.model.fields,help:liber_metabrasil.field_res_config_settings__metabrasil_auto_create_bill
+msgid ""
+"When a print order is Shipped, draft (never post) the vendor bill from the "
+"purchase order. The O15 connector posted bills on its own; accounting asked "
+"it to stop."
+msgstr ""
+"Quando o pedido de impressão é expedido, rascunha (nunca lança) a fatura do "
+"fornecedor a partir do pedido de compra. O conector do O15 lançava faturas "
+"sozinho; o financeiro pediu que parasse."
+
+#. module: liber_metabrasil
+#: model:ir.model.fields,help:liber_metabrasil.field_product_product__metabrasil_price_check_date
+#: model:ir.model.fields,help:liber_metabrasil.field_product_template__metabrasil_price_check_date
+msgid ""
+"When the printer was last asked about this book, answer or not. This is what "
+"the sweep orders by, so every run advances instead of re-asking about the "
+"same first books."
+msgstr ""
+"Quando a gráfica foi consultada por último sobre este livro, com resposta ou "
+"sem. É por aqui que a varredura ordena, para cada rodada avançar em vez de "
+"reperguntar sobre os mesmos primeiros livros."
+
+#. module: liber_metabrasil
+#: model:ir.model.fields,help:liber_metabrasil.field_sale_order__metabrasil_delivery_kind
+msgid ""
+"Whether this sale prints straight to the customer (dropship) or to our "
+"depot. Read from the dropship route on the line's product -- the same route "
+"that actually spawns the print order -- so the ribbon tells the truth "
+"without anyone having to declare it."
+msgstr ""
+"Se esta venda imprime direto no cliente (dropship) ou no nosso depósito. "
+"Lido da rota de dropship do produto da linha — a mesma rota que de fato gera "
+"o pedido de impressão — para a faixa dizer a verdade sem ninguém precisar "
+"declarar nada."
+
+#. module: liber_metabrasil
+#: model:ir.model.fields,help:liber_metabrasil.field_delivery_carrier__metabrasil_service_choice
+msgid ""
+"Which of the services Metabrasil offers is preselected in the quote: the "
+"lowest price or the shortest lead time. The salesperson can still pick "
+"another transporter by hand."
+msgstr ""
+"Qual dos serviços que a Metabrasil oferece vem pré-selecionado na cotação: o "
+"mais barato ou o mais rápido. O vendedor continua podendo escolher outra "
+"transportadora na mão."
+
+#. module: liber_metabrasil
+#: model:ir.model.fields,help:liber_metabrasil.field_choose_delivery_carrier__metabrasil_option_id
+msgid ""
+"Which transporter Metabrasil hands this print run to. Preset to the shipping "
+"method's own rule (cheapest or fastest); change it and the freight follows."
+msgstr ""
+"A qual transportadora a Metabrasil entrega esta tiragem. Vem na regra da "
+"própria forma de entrega (mais barata ou mais rápida); troque e o frete "
+"acompanha."
+
+#. module: liber_metabrasil
+#: model:ir.model.fields,field_description:liber_metabrasil.field_metabrasil_freight_option__wizard_id
+msgid "Wizard"
+msgstr "Assistente"
+
+#. module: liber_metabrasil
+#: model:ir.model.fields,help:liber_metabrasil.field_purchase_order__metabrasil_order_ref
+msgid "codigoEncomenda in their system; the key the status cron asks about."
+msgstr ""
+"O codigoEncomenda no sistema deles; a chave que o cron de status consulta."

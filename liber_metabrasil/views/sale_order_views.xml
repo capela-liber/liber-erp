@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="sale_order_form_inherit_metabrasil" model="ir.ui.view">
+        <field name="name">sale.order.form.inherit.liber.metabrasil</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="priority">100</field>
+        <field name="arch" type="xml">
+            <!-- No print-quote button here on purpose: freight goes through
+                 Odoo's own 'Add shipping', which now lists every transporter
+                 Metabrasil quoted. One button, one truth. -->
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button name="action_view_metabrasil_purchase_orders"
+                        type="object" class="oe_stat_button" icon="fa-print"
+                        invisible="metabrasil_purchase_order_count == 0"
+                        groups="purchase.group_purchase_user">
+                    <field name="metabrasil_purchase_order_count"
+                           widget="statinfo" string="Print Orders"/>
+                </button>
+            </xpath>
+            <xpath expr="//sheet" position="inside">
+                <field name="is_metabrasil" invisible="1"/>
+                <field name="metabrasil_delivery_kind" invisible="1"/>
+                <!-- Only Dropship flags on the sale (PoD lives on the PO):
+                     read from the route, so it shows without anyone having
+                     to declare it. -->
+                <widget name="web_ribbon" title="Dropship" bg_color="text-bg-warning"
+                        invisible="metabrasil_delivery_kind != 'customer'"/>
+            </xpath>
+            <!-- Above the lines, not in a tab: this one has to be seen
+                 without looking for it. -->
+            <xpath expr="//field[@name='order_line']" position="before">
+                <div class="alert alert-danger" role="alert"
+                     invisible="not metabrasil_dropship_warning">
+                    <field name="metabrasil_dropship_warning" nolabel="1"/>
+                </div>
+            </xpath>
+            <xpath expr="//page[@name='other_information']" position="inside">
+                <group string="Metabrasil Freight" name="metabrasil_freight"
+                       invisible="not metabrasil_carrier_name">
+                    <group>
+                        <field name="metabrasil_carrier_name"/>
+                        <field name="metabrasil_delivery_days"/>
+                        <field name="metabrasil_freight_cost"/>
+                    </group>
+                    <group>
+                        <field name="metabrasil_total_weight"/>
+                        <field name="metabrasil_total_volumes"/>
+                    </group>
+                </group>
+            </xpath>
+        </field>
+    </record>
+</odoo>

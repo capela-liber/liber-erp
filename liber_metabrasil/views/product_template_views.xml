@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- A etiqueta de PoD é a resposta à pergunta que a API não responde
+         ("este livro está no catálogo da gráfica?"), mas o campo dela mora na
+         aba Vendas do produto, que nem sempre está visível. Estes dois pontos
+         a tornam alcançável sem depender daquela aba. -->
+    <record id="product_template_search_inherit_metabrasil" model="ir.ui.view">
+        <field name="name">product.template.search.inherit.liber.metabrasil</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_search_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//filter[@name='goods']" position="after">
+                <separator/>
+                <filter string="Printable at Metabrasil" name="metabrasil_pod"
+                        domain="[('product_tag_ids.name', '=', 'PoD')]"/>
+                <filter string="Has Print Price" name="metabrasil_priced"
+                        domain="[('metabrasil_price_date', '!=', False)]"/>
+                <!-- Quem está em dropship é decisão nossa, título a título, e
+                     mora na rota do produto. Sem um filtro para vê-la, essa
+                     decisão só existe dentro de cada ficha, uma por uma. -->
+                <filter string="Dropship" name="metabrasil_dropship"
+                        domain="[('route_ids', '=', %(stock_dropshipping.route_drop_shipping)d)]"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="product_template_list_inherit_metabrasil" model="ir.ui.view">
+        <field name="name">product.template.list.inherit.liber.metabrasil</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_tree_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='product_tag_ids']" position="attributes">
+                <attribute name="optional">show</attribute>
+            </xpath>
+            <!-- Rotas como coluna (escondida até alguém pedir): é o que
+                 destrava a edição em massa do Odoo. Marque vários títulos,
+                 edite a célula uma vez e ele oferece aplicar a todos. Pela
+                 ficha do produto seriam 411 idas à aba Inventário. -->
+            <xpath expr="//field[@name='product_tag_ids']" position="after">
+                <!-- Sem groups: o formulário do produto já mostra as rotas
+                     sem exigir "Rotas de várias etapas" (é lá, na aba
+                     Inventário, que a rota de Dropship é marcada hoje), e uma
+                     coluna mais restrita que a ficha esconderia justamente de
+                     quem administra. -->
+                <field name="route_ids" widget="many2many_tags" optional="hide"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>
