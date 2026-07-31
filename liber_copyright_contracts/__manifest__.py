@@ -23,7 +23,7 @@ menu Ação e cancela. Se qualquer passo quebrar, é uma regressão.
 Rodar ao vivo (para ver na tela)
 --------------------------------
 
-1. Entre no banco ``copyright19`` (é onde o módulo está instalado).
+1. Entre no banco ``testing`` (é o banco de teste da casa; veja o TESTING.md na raiz).
 2. Ative o modo desenvolvedor.
 3. No console do navegador, execute::
 
@@ -36,7 +36,7 @@ Rodar automatizado (headless / CI)
 
 ::
 
-    odoo -d copyright19 -u liber_copyright_contracts \\
+    odoo -d testing -u liber_copyright_contracts \\
       --test-enable --test-tags '/liber_copyright_contracts:TestCopyrightContractsTour' \\
       --http-port=8072 --stop-after-init
 
