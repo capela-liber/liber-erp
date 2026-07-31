@@ -133,6 +133,10 @@
   .shot-missing code { background: #fff; border: 1px solid var(--line); border-radius: 6px; padding: 2px 8px; font-size: 13px; }
   .gallery { grid-column: 1 / -1; order: 3; display: grid; gap: 20px; margin-top: 20px;
     grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+  /* A fileira não depende da captura estar na proporção certa: 16/10 é imposto aqui,
+     e uma tela fora de medida é recortada em vez de desalinhar as vizinhas.
+     No lightbox a imagem aparece inteira — a regra é só da galeria. */
+  .gallery figure.shot img { aspect-ratio: 16 / 10; object-fit: cover; object-position: top center; }
 
   /* lightbox */
   figure.shot img { cursor: zoom-in; }
@@ -305,15 +309,15 @@
     </figure>
     <div class="gallery">
       <figure class="shot">
-        <img src="img/copyright-1.png?v=2" alt="Lista de contratos de direitos autorais" loading="lazy">
+        <img src="img/copyright-1.png?v=3" alt="Lista de contratos de direitos autorais" loading="lazy">
         <figcaption>Todos os contratos, com situação e royalties em aberto.</figcaption>
       </figure>
       <figure class="shot">
-        <img src="img/copyright-2.png?v=2" alt="Formulário de contrato de direitos autorais" loading="lazy">
+        <img src="img/copyright-2.png?v=3" alt="Formulário de contrato de direitos autorais" loading="lazy">
         <figcaption>O contrato: vigência, renovação automática e obras vinculadas.</figcaption>
       </figure>
       <figure class="shot">
-        <img src="img/copyright-3.png?v=2" alt="Faixas de exemplares e adiantamentos de um direito autoral" loading="lazy">
+        <img src="img/copyright-3.png?v=3" alt="Faixas de exemplares e adiantamentos de um direito autoral" loading="lazy">
         <figcaption>Percentual por faixa de exemplares, com adiantamentos descontáveis.</figcaption>
       </figure>
     </div>

@@ -25,10 +25,42 @@ class BudgetReport(models.Model):
     programmed = fields.Monetary(string="Programmed", readonly=True)
     practical = fields.Monetary(string="Practical", readonly=True)
 
+    def _colunas_de_plano(self):
+        """As colunas de plano analítico existentes em `account_analytic_line`.
+
+        No 19 cada plano **raiz** vira uma coluna própria na linha analítica, e o
+        nome não é livre: `analytic/models/analytic_plan.py` reserva `account_id`
+        ao **plano de projetos** e dá `x_plan{id}_id` a todos os outros::
+
+            def _strict_column_name(self):
+                return 'account_id' if self == project_plan else f"x_plan{self.id}_id"
+
+        Esta view presumia `account_id`. Num banco onde o plano da casa não é o de
+        projetos, a coluna simplesmente não existe -- o `budget_report` não é
+        criado, o upgrade do módulo morre com `Failed to load registry`, e o
+        `practical_amount` fica ilegível. Foi o que aconteceu no banco da migração
+        Hedra em 31/07/2026: o plano nasceu como `x_plan3_id`.
+
+        Então pergunta-se ao Odoo, e confere-se contra o catálogo do Postgres --
+        um plano pode existir sem a coluna já materializada.
+        """
+        planos = self.env['account.analytic.plan'].sudo().search(
+            [('parent_id', '=', False)])
+        candidatas = {p._column_name() for p in planos} or {'account_id'}
+        self.env.cr.execute("""
+            SELECT column_name FROM information_schema.columns
+             WHERE table_name = 'account_analytic_line'
+        """)
+        existentes = {r[0] for r in self.env.cr.fetchall()}
+        return sorted(candidatas & existentes) or ['account_id']
+
     def init(self):
         tools.drop_view_if_exists(self.env.cr, self._table)
+        # a linha analítica casa com a conta do orçamento por QUALQUER plano
+        casa_plano = " OR ".join(
+            "aal.%s = bl.account_id" % c for c in self._colunas_de_plano())
         self.env.cr.execute("""
-            CREATE VIEW %s AS (
+            CREATE VIEW %(table)s AS (
                 SELECT
                     bl.id                  AS id,
                     bl.id                  AS budget_line_id,
@@ -79,10 +111,10 @@ class BudgetReport(models.Model):
                     LEFT JOIN account_move_line ml ON ml.id = aal.move_line_id
                     WHERE bl.position_id IS NULL
                       AND bl.account_id IS NOT NULL
-                      AND aal.account_id = bl.account_id
+                      AND (%(casa_plano)s)
                       AND aal.company_id = bl.company_id
                       AND aal.date BETWEEN bl.date_from AND bl.date_to
                       AND (aal.move_line_id IS NULL OR ml.parent_state IN ('draft', 'posted'))
                 ) aa ON TRUE
             )
-        """ % (self._table,))
+        """ % {"table": self._table, "casa_plano": casa_plano})

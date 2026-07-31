@@ -4,7 +4,9 @@
     "description": """
 Serve o site estático de apresentação do Liber (pasta static/) na rota /liber.
 A fonte do site é a pasta _web/ na raiz do repositório; após editar lá,
-sincronize com: cp -r _web/index.html _web/logo.png _web/img liber_site/static/
+sincronize com: scripts/sync_web.sh
+(compara por conteúdo, mostra o que vai mudar e recusa quando a fonte está
+atrás do que já se serve — o cp -r que ficava aqui copiava calado)
 """,
     "version": "19.0.1.0.0",
     "author": "Edlab",

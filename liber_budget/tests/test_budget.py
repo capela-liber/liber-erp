@@ -112,3 +112,47 @@ class TestLabBudget(TransactionCase):
         self.assertEqual(len(rep), 1)
         self.assertAlmostEqual(rep.practical, line.practical_amount, places=2)
         self.assertAlmostEqual(rep.planned, -1000, places=2)
+
+
+@tagged('post_install', '-at_install')
+class TestColunasDePlano(TransactionCase):
+    """A view não pode presumir que o plano da casa é o de projetos.
+
+    No 19, `analytic/models/analytic_plan.py` reserva a coluna `account_id` ao
+    plano de projetos e dá `x_plan{id}_id` a todos os outros. O `budget_report`
+    presumia `account_id`: num banco onde o plano da casa não é o de projetos a
+    coluna não existe, a view não é criada e o upgrade do módulo morre com
+    `Failed to load registry` -- levando junto o `practical_amount`.
+    Aconteceu no banco da migração Hedra em 31/07/2026, com `x_plan3_id`.
+    """
+
+    def test_colunas_saem_do_odoo_e_existem_na_tabela(self):
+        colunas = self.env['budget.report']._colunas_de_plano()
+        self.assertTrue(colunas, "sempre há ao menos uma coluna de plano")
+
+        planos = self.env['account.analytic.plan'].sudo().search(
+            [('parent_id', '=', False)])
+        esperadas = {p._column_name() for p in planos}
+        self.assertTrue(set(colunas) <= esperadas,
+                        "nenhuma coluna inventada: todas vêm de um plano raiz")
+
+        self.env.cr.execute("""
+            SELECT column_name FROM information_schema.columns
+             WHERE table_name = 'account_analytic_line'
+        """)
+        na_tabela = {r[0] for r in self.env.cr.fetchall()}
+        self.assertTrue(set(colunas) <= na_tabela,
+                        "só entra coluna que existe de fato — plano pode existir "
+                        "sem a coluna materializada")
+
+    def test_um_plano_novo_entra_na_juncao(self):
+        plano = self.env['account.analytic.plan'].create({'name': 'Plano do teste'})
+        coluna = plano._column_name()
+        self.env.cr.execute("""
+            SELECT 1 FROM information_schema.columns
+             WHERE table_name = 'account_analytic_line' AND column_name = %s
+        """, (coluna,))
+        if not self.env.cr.fetchone():
+            self.skipTest("a coluna do plano novo ainda não foi materializada")
+        self.assertIn(coluna, self.env['budget.report']._colunas_de_plano(),
+                      "plano raiz novo tem de entrar na junção da view")
