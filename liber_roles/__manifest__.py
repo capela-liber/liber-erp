@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
 {
     'name': 'Liber Roles (as funções da casa)',
-    'version': '19.0.1.0.0',
+    'version': '19.0.1.1.0',
     'summary': 'Perfis por função: departamento + nível, embrulhando os grupos do Odoo',
     'description': """
 Os "perfis" nativos do Odoo são recortes por aplicativo (Vendas: Usuário,
-Contabilidade: Contador...). A editora pensa por FUNÇÃO: Comercial, Financeiro,
-Editorial, Marketing -- cada um em dois níveis (Assistente opera, Gerente
-aprova e configura) -- mais a Direção, transversal.
+Contabilidade: Contador...). A editora pensa por FUNÇÃO: Comercial, Logística,
+Financeiro, Editorial, Marketing -- cada um em dois níveis (Assistente opera,
+Gerente aprova e configura) -- mais a Direção, transversal.
 
 Este módulo é só a tradução: cada função é um res.groups que IMPLICA
 (implied_ids) o pacote certo de grupos nativos e dos nossos módulos. O
@@ -25,6 +25,11 @@ Decisões da v1 (a refinar; ver NOTES.md ao lado deste arquivo):
   relatórios contábeis nem orçamento. Lançar orçamento subiu para o Gerente.
 - Comercial/Assistente vê TODOS os documentos de venda ("só os próprios"
   fica para a fase 2, via record rule).
+- Logística (31/07/2026) é o app Inventário, e só ele. Com ela, o Comercial
+  deixou de carregar o Inventário inteiro: ficou com um grupo estreito
+  (liber_soc_moves.group_consignment_stock_docs) que dá conta das
+  transferências da consignação -- que o código cria como o usuário -- sem
+  dar contagem de inventário nem cadastro de armazém.
 - Direção enxerga tudo em leitura; a v1 ainda não IMPEDE a edição nos apps
   operacionais (fase 2). Diretor que opera uma área acumula a função dela.
 - Marketing usa os grupos do website (mass_mailing não está instalado).
@@ -44,6 +49,8 @@ menu, então vale também para RPC e URL colada. Ver models/ir_model_access.py.
         'project',
         'website',
         'liber_soc_agreements',
+        # o grupo estreito de documentos de estoque do Comercial mora aqui
+        'liber_soc_moves',
         'liber_copyright_contracts',
         'liber_budget',
         'liber_metabooks_integration',

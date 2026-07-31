@@ -1,5 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
+    <!-- ==================================================================
+         The consignment documents, WITHOUT the Inventory app.
+
+         Confirming a CR creates a stock.picking and the acerto creates and
+         validates another one (_create_shelf_outflow) — and both do it AS
+         THE USER, not as superuser. So whoever runs consignment needs write
+         on stock.picking / stock.move. Until now the only way to give that
+         was stock.group_stock_user, which also hands over the whole Inventory
+         app: adjustments on stock.quant, warehouse and location setup,
+         operation types, scrap, replenishment.
+
+         That is the warehouse's job, not the sales desk's. This group is the
+         narrow cut: exactly the two models the consignment code writes, so
+         the salesperson keeps working the consignment screens while Inventory
+         stays with Logística (see liber_roles).
+
+         Said plainly, because a security group should never promise more than
+         it delivers: this is a separation of APPS, not of records. Whoever
+         holds it can write any picking through the ORM, including a warehouse
+         delivery — there is no Odoo record rule scoping pickings by
+         operation type. What it removes is the Inventory app, the stock
+         adjustments and the warehouse configuration.
+         ================================================================== -->
+    <record id="group_consignment_stock_docs" model="res.groups">
+        <field name="name">Consignment stock documents</field>
+        <field name="comment">Technical group: write access to the shipment/return/settlement transfers of consignment, without the Inventory app. Granted through a role (liber_roles), not by hand.</field>
+    </record>
+
     <!-- Multi-company: consignment movements and templates are only visible for
          the companies selected in the company switcher (records with no company
          stay visible to all). -->

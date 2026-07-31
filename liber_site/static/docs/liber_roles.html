@@ -24,10 +24,10 @@
     <article class="doc">
       <div class="breadcrumb"><a href="index.html">Manuais</a><span class="sep">›</span>Gestão<span class="sep">›</span>Papéis de acesso</div>
       <h1>Papéis de acesso</h1>
-      <p class="lead">Perfis prontos por área da editora — Comercial, Financeiro, Editorial, Marketing, Direção — e uma conta pública de visitante que enxerga tudo e não grava nada.</p>
+      <p class="lead">Perfis prontos por área da editora — Comercial, Logística, Financeiro, Editorial, Marketing, Direção — e uma conta pública de visitante que enxerga tudo e não grava nada.</p>
 
       <h2 id="visao-geral">Visão geral</h2>
-      <p>Os perfis nativos do Odoo são recortes por <em>aplicativo</em>: "Vendas: Usuário", "Contabilidade: Contador", "Estoque: Administrador". Uma editora não pensa assim — ela pensa por <em>função</em>: Comercial, Financeiro, Editorial, Marketing, cada uma em dois níveis, mais a Direção, que é transversal.</p>
+      <p>Os perfis nativos do Odoo são recortes por <em>aplicativo</em>: "Vendas: Usuário", "Contabilidade: Contador", "Estoque: Administrador". Uma editora não pensa assim — ela pensa por <em>função</em>: Comercial, Logística, Financeiro, Editorial, Marketing, cada uma em dois níveis, mais a Direção, que é transversal.</p>
       <p>Este módulo faz a tradução de uma coisa na outra, uma vez só e por escrito. Quem cadastra um usuário marca <strong>uma função</strong> na ficha dele; o Odoo deriva sozinho todos os grupos de aplicativo que aquela função implica. Ninguém mais precisa montar acesso clicando grupo por grupo — e "quem pode ver a margem?" passa a ter uma resposta que não depende de conferir usuário por usuário.</p>
       <p>A régua dos dois níveis é simples:</p>
       <ul>
@@ -41,7 +41,7 @@
       <h2 id="configuracao">Configuração: atribuir uma função</h2>
       <ol class="steps">
         <li>Abra <span class="menupath">Definições<i>‣</i>Usuários e Empresas<i>‣</i>Usuários</span> e entre na ficha do usuário.</li>
-        <li>Na aba de direitos de acesso, localize a seção <span class="field">Liber / Funções</span>. Cada departamento aparece como uma escolha: <span class="field">Direção</span>, <span class="field">Comercial</span>, <span class="field">Financeiro</span>, <span class="field">Editorial</span>, <span class="field">Marketing</span>, <span class="field">Visitante</span>.</li>
+        <li>Na aba de direitos de acesso, localize a seção <span class="field">Liber / Funções</span>. Cada departamento aparece como uma escolha: <span class="field">Direção</span>, <span class="field">Comercial</span>, <span class="field">Logística</span>, <span class="field">Financeiro</span>, <span class="field">Editorial</span>, <span class="field">Marketing</span>, <span class="field">Visitante</span>.</li>
         <li>Escolha o nível do departamento da pessoa — <span class="field">Assistente</span> ou <span class="field">Gerente</span>. Só isso: os grupos de Vendas, Contabilidade, Estoque etc. são preenchidos automaticamente.</li>
         <li>Salve. No próximo login o usuário vê os menus da sua função.</li>
       </ol>
@@ -61,7 +61,7 @@
           </tr>
           <tr>
             <td><strong>Comercial ‣ Assistente</strong></td>
-            <td>Pedidos, acertos de consignação, devoluções, cadastro de clientes; movimenta estoque</td>
+            <td>Pedidos, acertos de consignação, devoluções, cadastro de clientes; as transferências da consignação (sem o app Inventário, que é da Logística)</td>
             <td>Todos os documentos de venda da casa</td>
             <td>Relatórios financeiros; configurar vendas e consignação</td>
           </tr>
@@ -70,6 +70,18 @@
             <td>Tudo do assistente + administra vendas e consignação: fecha acordos, cria campanhas, ajusta réguas de cobrança de devolução</td>
             <td>Relatórios do canal comercial</td>
             <td>Contabilidade e orçamento</td>
+          </tr>
+          <tr>
+            <td><strong>Logística ‣ Assistente</strong></td>
+            <td>Recebimentos, separação e entregas; valida as transferências da consignação (COM/, RET/, ACERTO/); contagem de inventário</td>
+            <td>O estoque da casa e o consignado em poder dos clientes</td>
+            <td>Pedido de venda, cliente, acerto, contrato e qualquer número financeiro</td>
+          </tr>
+          <tr>
+            <td><strong>Logística ‣ Gerente</strong></td>
+            <td>Tudo do assistente + configura o depósito: armazéns, localizações, tipos de operação, rotas e regras de reposição; valida ajustes de inventário</td>
+            <td>Relatórios de estoque</td>
+            <td>Pedido de venda, acerto e dados financeiros</td>
           </tr>
           <tr>
             <td><strong>Financeiro ‣ Assistente</strong> (cobrança)</td>

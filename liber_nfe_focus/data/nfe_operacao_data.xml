@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- As operacoes fiscais da casa: o CFOP sem o primeiro digito.
+
+             O sufixo diz O QUE a operacao e; o primeiro digito diz PARA ONDE
+             ela vai, e nasce da UF do destinatario na hora de montar a nota.
+             Por isso 5101 e 6101 nao sao duas linhas aqui: sao uma.
+
+             Os textos e as finalidades saem do que a casa emitiu de fato, sobre
+             14.555 notas autorizadas do sistema em producao (2023 a 2026).
+
+             Exportacao nao entra: em 22 sufixos o 7xxx diz outra coisa. Quem
+             exportar escolhe o CFOP explicitamente na linha ou na nota. -->
+        <record id="operacao_entrada_202" model="nfe.operacao">
+            <field name="code">202</field>
+            <field name="sentido">entrada</field>
+            <field name="name">Devolucao de venda</field>
+            <field name="natureza_operacao">Devolucao de venda</field>
+            <field name="finalidade">4</field>
+            <field name="cbenef">SP070130</field>
+            <field name="ibs_cbs_cst">410</field>
+            <field name="ibs_cbs_classificacao">410008</field>
+            <field name="document_kind">consignment_return</field>
+        </record>
+        <record id="operacao_entrada_918" model="nfe.operacao">
+            <field name="code">918</field>
+            <field name="sentido">entrada</field>
+            <field name="name">Devolucao de mercadoria remetida em consignacao</field>
+            <field name="natureza_operacao">Devolucao de mercadoria remetida em consignacao</field>
+            <field name="finalidade">4</field>
+            <field name="cbenef">SP070130</field>
+            <field name="ibs_cbs_cst">410</field>
+            <field name="ibs_cbs_classificacao">410008</field>
+            <field name="document_kind">consignment_return</field>
+        </record>
+        <record id="operacao_saida_101" model="nfe.operacao">
+            <field name="code">101</field>
+            <field name="sentido">saida</field>
+            <field name="name">Venda de producao do estabelecimento</field>
+            <field name="natureza_operacao">Venda de producao do estabelecimento</field>
+            <field name="finalidade">1</field>
+            <field name="cbenef">SP070130</field>
+            <field name="ibs_cbs_cst">410</field>
+            <field name="ibs_cbs_classificacao">410008</field>
+            <field name="document_kind">sale</field>
+        </record>
+        <record id="operacao_saida_102" model="nfe.operacao">
+            <field name="code">102</field>
+            <field name="sentido">saida</field>
+            <field name="name">Venda de mercadoria adquirida de terceiros</field>
+            <field name="natureza_operacao">Venda de mercadoria adquirida de terceiros</field>
+            <field name="finalidade">1</field>
+            <field name="cbenef">SP070130</field>
+            <field name="ibs_cbs_cst">410</field>
+            <field name="ibs_cbs_classificacao">410008</field>
+            <field name="document_kind">sale</field>
+        </record>
+        <record id="operacao_saida_104" model="nfe.operacao">
+            <field name="code">104</field>
+            <field name="sentido">saida</field>
+            <field name="name">Venda de mercadoria adquirida de terceiros</field>
+            <field name="natureza_operacao">Venda de mercadoria adquirida de terceiros</field>
+            <field name="finalidade">1</field>
+            <field name="cbenef">SP070130</field>
+            <field name="ibs_cbs_cst">410</field>
+            <field name="ibs_cbs_classificacao">410008</field>
+            <field name="document_kind">sale</field>
+        </record>
+        <record id="operacao_saida_113" model="nfe.operacao">
+            <field name="code">113</field>
+            <field name="sentido">saida</field>
+            <field name="name">Venda de merc. remetida em consignacao</field>
+            <field name="natureza_operacao">Venda de merc. remetida em consignacao</field>
+            <field name="finalidade">1</field>
+            <field name="cbenef">SP070130</field>
+            <field name="ibs_cbs_cst">410</field>
+            <field name="ibs_cbs_classificacao">410008</field>
+            <field name="document_kind">settlement</field>
+        </record>
+        <record id="operacao_saida_905" model="nfe.operacao">
+            <field name="code">905</field>
+            <field name="sentido">saida</field>
+            <field name="name">Remessa para deposito fechado</field>
+            <field name="natureza_operacao">Remessa para deposito fechado</field>
+            <field name="finalidade">1</field>
+            <field name="cbenef">SP070130</field>
+            <field name="ibs_cbs_cst">410</field>
+            <field name="ibs_cbs_classificacao">410008</field>
+            <field name="document_kind">transfer</field>
+        </record>
+        <record id="operacao_saida_910" model="nfe.operacao">
+            <field name="code">910</field>
+            <field name="sentido">saida</field>
+            <field name="name">Bonificacao, doacao ou brinde</field>
+            <field name="natureza_operacao">Bonificacao, doacao ou brinde</field>
+            <field name="finalidade">1</field>
+            <field name="cbenef">SP070130</field>
+            <field name="ibs_cbs_cst">410</field>
+            <field name="ibs_cbs_classificacao">410008</field>
+            <field name="document_kind">bonus</field>
+        </record>
+        <record id="operacao_saida_914" model="nfe.operacao">
+            <field name="code">914</field>
+            <field name="sentido">saida</field>
+            <field name="name">Remessa para exposicao ou feira</field>
+            <field name="natureza_operacao">Remessa para exposicao ou feira</field>
+            <field name="finalidade">1</field>
+            <field name="cbenef">SP070130</field>
+            <field name="ibs_cbs_cst">410</field>
+            <field name="ibs_cbs_classificacao">410008</field>
+            <field name="document_kind">event_out</field>
+        </record>
+        <record id="operacao_saida_917" model="nfe.operacao">
+            <field name="code">917</field>
+            <field name="sentido">saida</field>
+            <field name="name">Remessa em consignacao mercantil</field>
+            <field name="natureza_operacao">Remessa em consignacao mercantil</field>
+            <field name="finalidade">1</field>
+            <field name="cbenef">SP070130</field>
+            <field name="ibs_cbs_cst">410</field>
+            <field name="ibs_cbs_classificacao">410008</field>
+            <field name="document_kind">consignment</field>
+        </record>
+        <record id="operacao_saida_918" model="nfe.operacao">
+            <field name="code">918</field>
+            <field name="sentido">saida</field>
+            <field name="name">Devolucao de merc. recebida em consignacao</field>
+            <field name="natureza_operacao">Devolucao de merc. recebida em consignacao</field>
+            <field name="finalidade">4</field>
+            <field name="cbenef">SP070130</field>
+            <field name="ibs_cbs_cst">410</field>
+            <field name="ibs_cbs_classificacao">410008</field>
+            <field name="document_kind">consignment_return</field>
+        </record>
+        <record id="operacao_saida_919" model="nfe.operacao">
+            <field name="code">919</field>
+            <field name="sentido">saida</field>
+            <field name="name">Devolucao simbolica de merc. em consignacao</field>
+            <field name="natureza_operacao">Devolucao simbolica de merc. em consignacao</field>
+            <field name="finalidade">4</field>
+            <field name="cbenef">SP070130</field>
+            <field name="ibs_cbs_cst">410</field>
+            <field name="ibs_cbs_classificacao">410008</field>
+            <field name="document_kind">consignment_return</field>
+        </record>
+        <record id="operacao_saida_924" model="nfe.operacao">
+            <field name="code">924</field>
+            <field name="sentido">saida</field>
+            <field name="name">Remessa por conta e ordem de terceiros</field>
+            <field name="natureza_operacao">Remessa por conta e ordem de terceiros</field>
+            <field name="finalidade">1</field>
+            <field name="cbenef">SP070130</field>
+            <field name="ibs_cbs_cst">410</field>
+            <field name="ibs_cbs_classificacao">410008</field>
+            <field name="document_kind">transfer</field>
+        </record>
+        <record id="operacao_saida_949" model="nfe.operacao">
+            <field name="code">949</field>
+            <field name="sentido">saida</field>
+            <field name="name">Simples remessa</field>
+            <field name="natureza_operacao">Simples remessa</field>
+            <field name="finalidade">1</field>
+            <field name="cbenef">SP070130</field>
+            <field name="ibs_cbs_cst">410</field>
+            <field name="ibs_cbs_classificacao">410008</field>
+            <field name="document_kind">transfer</field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Número e bairro não existem no endereço do Odoo, e a SEFAZ exige os
+         dois separados. Ficam ao lado do endereço, onde se procura por eles. -->
+    <record id="view_partner_form_focus" model="ir.ui.view">
+        <field name="name">res.partner.form.focus.nfe</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <field name="vat" position="after">
+                <field name="nfe_inscricao_estadual"/>
+                <field name="nfe_indicador_ie"/>
+            </field>
+            <xpath expr="//field[@name='street2']" position="after">
+                <field name="nfe_numero" placeholder="Número"/>
+                <field name="nfe_bairro" placeholder="Bairro"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

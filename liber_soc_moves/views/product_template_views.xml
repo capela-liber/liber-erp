@@ -10,16 +10,32 @@
              pushed into the "More" dropdown at the end of the button box. -->
         <field name="inherit_id" ref="stock.product_template_form_view_procurement_button"/>
         <field name="arch" type="xml">
-            <xpath expr="//button[@name='action_product_tmpl_forecast_report']" position="after">
+            <!-- The anchor is `action_open_documents`, NOT the On Hand button
+                 right above it, and the difference is not cosmetic. Odoo wraps
+                 its own stock buttons in a <t groups="stock.group_stock_user">;
+                 anything inserted *after* one of them lands INSIDE that wrapper
+                 and is deleted with it for whoever lacks the group, no matter
+                 what `groups` the button itself carries. That is what happened
+                 in 31/07/2026, when the sales desk gave the Inventory app back
+                 to Logística: our two numbers vanished from their product form
+                 and the buttons' own `groups` was powerless to stop it.
+                 `action_open_documents` sits outside the wrapper and right
+                 after it, so the placement on screen is the same and the
+                 visibility is ours to decide. -->
+            <xpath expr="//button[@name='action_open_documents']" position="before">
+                <!-- Also for whoever holds only the consignment documents: the
+                     sales desk lost the Inventory app but not the question
+                     "where are my books?", which is asked from this very
+                     screen. `groups` is an OR. -->
                 <button name="action_view_soc_wh_stock" type="object"
                         class="oe_stat_button" icon="fa-cubes"
-                        groups="stock.group_stock_user">
+                        groups="stock.group_stock_user,liber_soc_moves.group_consignment_stock_docs">
                     <field name="soc_qty_wh" widget="statinfo"
                            string="Stock"/>
                 </button>
                 <button name="action_view_soc_consigned" type="object"
                         class="oe_stat_button" icon="fa-handshake-o"
-                        groups="stock.group_stock_user">
+                        groups="stock.group_stock_user,liber_soc_moves.group_consignment_stock_docs">
                     <field name="soc_qty_consigned" widget="statinfo"
                            string="Consigned"/>
                 </button>

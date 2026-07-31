@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- A ligação que faltava estar à vista: a posição fiscal diz a operação, e
+         os dois CFOPs aparecem só de leitura, calculados. -->
+    <record id="view_fiscal_position_form_focus" model="ir.ui.view">
+        <field name="name">account.fiscal.position.form.focus.nfe</field>
+        <field name="model">account.fiscal.position</field>
+        <field name="inherit_id" ref="account.view_account_position_form"/>
+        <field name="arch" type="xml">
+            <field name="name" position="after">
+                <field name="nfe_operacao_id"/>
+                <field name="nfe_cfop_interno_id" readonly="1"
+                       invisible="not nfe_operacao_id"/>
+                <field name="nfe_cfop_externo_id" readonly="1"
+                       invisible="not nfe_operacao_id"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="view_fiscal_position_list_focus" model="ir.ui.view">
+        <field name="name">account.fiscal.position.list.focus.nfe</field>
+        <field name="model">account.fiscal.position</field>
+        <field name="inherit_id" ref="account.view_account_position_tree"/>
+        <field name="arch" type="xml">
+            <field name="name" position="after">
+                <field name="nfe_operacao_id" optional="show"/>
+            </field>
+        </field>
+    </record>
+</odoo>

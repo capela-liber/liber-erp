@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     'name': 'Consignment - Movements',
-    'version': '19.0.2.2.0',
+    'version': '19.0.2.3.0',
     'summary': 'Consignment stock movements: shipment, replenishment, return, symbolic renewal',
     'description': """
 Consignment movements (SOC redesign).
@@ -25,7 +25,11 @@ settlement (soc_settlement).
     # window actions. Declaring the base we override guarantees 'sale' always
     # loads first and our overrides always apply last -- regardless of install
     # order, and it survives soc_agreements ever dropping the dependency.
-    'depends': ['liber_soc_agreements', 'sale'],
+    # 'stock' is declared explicitly (it already arrives via soc_agreements)
+    # because security/ir.model.access.csv now hands out rights ON stock's own
+    # models: an ACL that names a model of a module we do not declare would
+    # break the day that dependency moved.
+    'depends': ['liber_soc_agreements', 'sale', 'stock'],
     'data': [
         'security/soc_moves_security.xml',
         'security/ir.model.access.csv',

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_nfe_focus_correcao_wizard_form" model="ir.ui.view">
+        <field name="name">nfe.focus.correcao.wizard.form</field>
+        <field name="model">nfe.focus.correcao.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Carta de Correção">
+                <div class="alert alert-info" role="alert">
+                    A carta conserta erro de <b>redação</b>: descrição do
+                    produto, dados de transporte, informações complementares.
+                    <b>Valor, imposto, data de emissão, remetente e
+                    destinatário não se corrigem por carta</b> — a nota errada
+                    se cancela e se emite outra.
+                </div>
+                <div class="alert alert-warning" role="alert"
+                     invisible="not historico">
+                    Esta nota já tem carta de correção. A nova
+                    <b>substitui</b> a anterior por inteiro — o texto abaixo
+                    veio preenchido com o que vale hoje. Apague só o que quiser
+                    deixar de valer.
+                </div>
+                <group>
+                    <field name="move_id"/>
+                    <field name="correcao"
+                           placeholder="O que está errado e o que é o certo (15 a 1000 caracteres)"/>
+                </group>
+                <group string="Cartas anteriores" invisible="not historico">
+                    <field name="historico" nolabel="1" readonly="1"/>
+                </group>
+                <footer>
+                    <button name="action_enviar" type="object"
+                            string="Enviar à SEFAZ" class="btn-primary"/>
+                    <button string="Voltar" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>

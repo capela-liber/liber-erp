@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- A operação fiscal: o CFOP sem o primeiro dígito. É esta tela que
+         responde "o que precisamos definir" — uma linha por operação da casa,
+         e não duas (uma para dentro do estado, outra para fora). -->
+    <record id="view_nfe_operacao_form" model="ir.ui.view">
+        <field name="name">nfe.operacao.form</field>
+        <field name="model">nfe.operacao</field>
+        <field name="arch" type="xml">
+            <form string="Operação fiscal">
+                <sheet>
+                    <group>
+                        <group string="A operação">
+                            <field name="code" placeholder="101"/>
+                            <field name="sentido"/>
+                            <field name="name"/>
+                            <field name="document_kind"/>
+                            <field name="active" widget="boolean_toggle"/>
+                        </group>
+                        <group string="Como vira nota fiscal">
+                            <field name="natureza_operacao"/>
+                            <field name="finalidade"/>
+                            <field name="cst_icms"/>
+                            <field name="cbenef"/>
+                            <field name="ibs_cbs_cst"/>
+                            <field name="ibs_cbs_classificacao"/>
+                            <field name="consumidor_final"/>
+                        </group>
+                    </group>
+                    <div class="text-muted">
+                        O CFOP completo nasce desta operação mais o destino:
+                        dentro do estado leva 5 (saída) ou 1 (entrada); para
+                        outro estado, 6 ou 2. Exportação não se deduz — escolha
+                        o CFOP explicitamente na nota.
+                    </div>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_nfe_operacao_list" model="ir.ui.view">
+        <field name="name">nfe.operacao.list</field>
+        <field name="model">nfe.operacao</field>
+        <field name="arch" type="xml">
+            <list string="Operações fiscais" editable="bottom">
+                <field name="sentido"/>
+                <field name="code"/>
+                <field name="name"/>
+                <field name="natureza_operacao"/>
+                <field name="finalidade"/>
+                <field name="cst_icms" optional="show"/>
+                <field name="cbenef" optional="hide"/>
+                <field name="ibs_cbs_cst" optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="action_nfe_operacao" model="ir.actions.act_window">
+        <field name="name">Operações fiscais</field>
+        <field name="res_model">nfe.operacao</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <record id="action_nfe_cfop_focus" model="ir.actions.act_window">
+        <field name="name">CFOPs (tabela oficial)</field>
+        <field name="res_model">nfe.cfop</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Tabela oficial do CONFAZ</p>
+            <p>
+                Anexo II do Convênio SINIEF s/nº de 15/12/1970. É referência:
+                a configuração da casa fica em Operações fiscais.
+            </p>
+        </field>
+    </record>
+
+    <menuitem id="menu_nfe_operacao" name="Operações fiscais"
+              parent="account.menu_finance_configuration"
+              action="action_nfe_operacao" sequence="90"/>
+    <menuitem id="menu_nfe_cfop_focus" name="CFOPs (tabela oficial)"
+              parent="account.menu_finance_configuration"
+              action="action_nfe_cfop_focus" sequence="91"/>
+</odoo>

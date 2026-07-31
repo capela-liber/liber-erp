@@ -1,0 +1,2497 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- A tabela CFOP oficial: Anexo II do Convenio SINIEF s/n de 15/12/1970,
+             instituido pelo CONFAZ (nao pela Receita Federal, porque o CFOP e
+             materia de ICMS, logo estadual). Atualizado ate o Ajuste SINIEF
+             03/24. Transcricao da OCA (l10n-brazil, AGPL-3), mesma licenca
+             deste modulo.
+
+             O `name` aqui e a descricao NORMATIVA, e nao se inventa. Ela e
+             diferente da `focus_natureza_operacao`, que e o texto livre que a
+             casa imprime no DANFE e pode ser mais curto ou mais claro. Os dois
+             conviviam no mesmo campo ate agora, e nao deviam.
+
+             Atualizavel de proposito (sem noupdate): quando o CONFAZ publica um
+             Ajuste SINIEF, um `-u` traz a redacao nova. Foi tentado com
+             noupdate="1" e estava errado por dois motivos. A descricao oficial
+             congelava numa versao. E os CFOPs adotados de um banco antigo nunca
+             recebiam descricao nenhuma: ficavam em branco para sempre. -->
+        <record id="cfop_1101" model="nfe.cfop">
+            <field name="code">1101</field>
+            <field name="name">Compra para industrialização</field>
+        </record>
+        <record id="cfop_1102" model="nfe.cfop">
+            <field name="code">1102</field>
+            <field name="name">Compra para comercialização</field>
+        </record>
+        <record id="cfop_1111" model="nfe.cfop">
+            <field name="code">1111</field>
+            <field name="name">Compra para industrialização de mercadoria recebida anteriormente em consignação industrial</field>
+        </record>
+        <record id="cfop_1113" model="nfe.cfop">
+            <field name="code">1113</field>
+            <field name="name">Compra para comercialização, de mercadoria recebida anteriormente em consignação mercantil</field>
+        </record>
+        <record id="cfop_1116" model="nfe.cfop">
+            <field name="code">1116</field>
+            <field name="name">Compra para industrialização originada de encomenda para recebimento futuro</field>
+        </record>
+        <record id="cfop_1117" model="nfe.cfop">
+            <field name="code">1117</field>
+            <field name="name">Compra para comercialização originada de encomenda para recebimento futuro</field>
+        </record>
+        <record id="cfop_1118" model="nfe.cfop">
+            <field name="code">1118</field>
+            <field name="name">Compra de mercadoria para comercialização pelo adquirente originário, entregue pelo vendedor remetente ao destinatário, em venda à ordem</field>
+        </record>
+        <record id="cfop_1120" model="nfe.cfop">
+            <field name="code">1120</field>
+            <field name="name">Compra para industrialização, em venda à ordem, já recebida do vendedor remetente</field>
+        </record>
+        <record id="cfop_1121" model="nfe.cfop">
+            <field name="code">1121</field>
+            <field name="name">Compra para comercialização, em venda à ordem, já recebida do vendedor remetente</field>
+        </record>
+        <record id="cfop_1122" model="nfe.cfop">
+            <field name="code">1122</field>
+            <field name="name">Compra para industrialização em que a mercadoria foi remetida pelo fornecedor ao industrializador sem transitar pelo estabelecimento adquirente</field>
+        </record>
+        <record id="cfop_1124" model="nfe.cfop">
+            <field name="code">1124</field>
+            <field name="name">Industrialização efetuada por outra empresa</field>
+        </record>
+        <record id="cfop_1125" model="nfe.cfop">
+            <field name="code">1125</field>
+            <field name="name">Industrialização efetuada por outra empresa quando a mercadoria remetida para utilização no processo de industrialização não transitou pelo estabelecimento adquirente da mercadoria</field>
+        </record>
+        <record id="cfop_1126" model="nfe.cfop">
+            <field name="code">1126</field>
+            <field name="name">Compra para utilização na prestação de serviço</field>
+        </record>
+        <record id="cfop_1128" model="nfe.cfop">
+            <field name="code">1128</field>
+            <field name="name">Compra para utilização na prestação de serviço sujeita ao ISSQN</field>
+        </record>
+        <record id="cfop_1131" model="nfe.cfop">
+            <field name="code">1131</field>
+            <field name="name">Entrada de mercadoria com previsão de posterior ajuste ou fixação de preço, decorrente de operação de ato cooperativo.</field>
+        </record>
+        <record id="cfop_1132" model="nfe.cfop">
+            <field name="code">1132</field>
+            <field name="name">Fixação de preço de produção do estabelecimento produtor, inclusive quando remetidas anteriormente com previsão de posterior ajuste ou fixação de preço, em ato cooperativo, para comercialização</field>
+        </record>
+        <record id="cfop_1135" model="nfe.cfop">
+            <field name="code">1135</field>
+            <field name="name">Fixação de preço de produção do estabelecimento produtor, inclusive quando remetidas anteriormente com previsão de posterior ajuste ou fixação de preço, em ato cooperativo, para industrialização.</field>
+        </record>
+        <record id="cfop_1151" model="nfe.cfop">
+            <field name="code">1151</field>
+            <field name="name">Transferência para industrialização</field>
+        </record>
+        <record id="cfop_1152" model="nfe.cfop">
+            <field name="code">1152</field>
+            <field name="name">Transferência para comercialização</field>
+        </record>
+        <record id="cfop_1153" model="nfe.cfop">
+            <field name="code">1153</field>
+            <field name="name">Transferência de energia elétrica para distribuição</field>
+        </record>
+        <record id="cfop_1154" model="nfe.cfop">
+            <field name="code">1154</field>
+            <field name="name">Transferência para utilização na prestação de serviço</field>
+        </record>
+        <record id="cfop_1159" model="nfe.cfop">
+            <field name="code">1159</field>
+            <field name="name">Entrada decorrente do fornecimento de produto ou mercadoria de ato cooperativo</field>
+        </record>
+        <record id="cfop_1201" model="nfe.cfop">
+            <field name="code">1201</field>
+            <field name="name">Devolução de venda de produção do estabelecimento</field>
+        </record>
+        <record id="cfop_1202" model="nfe.cfop">
+            <field name="code">1202</field>
+            <field name="name">Devolução de venda de mercadoria adquirida ou recebida de terceiros</field>
+        </record>
+        <record id="cfop_1203" model="nfe.cfop">
+            <field name="code">1203</field>
+            <field name="name">Devolução de venda de produção do estabelecimento, destinada à Zona Franca de Manaus ou Áreas de Livre Comércio</field>
+        </record>
+        <record id="cfop_1204" model="nfe.cfop">
+            <field name="code">1204</field>
+            <field name="name">Devolução de venda de mercadoria adquirida ou recebida de terceiros, destinada à Zona Franca de Manaus ou Áreas de Livre Comércio</field>
+        </record>
+        <record id="cfop_1205" model="nfe.cfop">
+            <field name="code">1205</field>
+            <field name="name">Anulação de valor relativo à prestação de serviço de comunicação</field>
+        </record>
+        <record id="cfop_1206" model="nfe.cfop">
+            <field name="code">1206</field>
+            <field name="name">Anulação de valor relativo à prestação de serviço de transporte</field>
+        </record>
+        <record id="cfop_1207" model="nfe.cfop">
+            <field name="code">1207</field>
+            <field name="name">Anulação de valor relativo à venda de energia elétrica</field>
+        </record>
+        <record id="cfop_1208" model="nfe.cfop">
+            <field name="code">1208</field>
+            <field name="name">Devolução de produção do estabelecimento, remetida em transferência</field>
+        </record>
+        <record id="cfop_1209" model="nfe.cfop">
+            <field name="code">1209</field>
+            <field name="name">Devolução de mercadoria adquirida ou recebida de terceiros, remetida em transferência</field>
+        </record>
+        <record id="cfop_1212" model="nfe.cfop">
+            <field name="code">1212</field>
+            <field name="name">Devolução de venda no mercado interno de mercadoria industrializada e insumo importado sob o Regime Aduaneiro Especial de Entreposto Industrial sob Controle Informatizado do Sistema Público de Escrituração Digital (Recof-Sped)</field>
+        </record>
+        <record id="cfop_1213" model="nfe.cfop">
+            <field name="code">1213</field>
+            <field name="name">Devolução de remessa de produção do estabelecimento com previsão de posterior ajuste ou fixação de preço, em ato cooperativo.</field>
+        </record>
+        <record id="cfop_1214" model="nfe.cfop">
+            <field name="code">1214</field>
+            <field name="name">Devolução de fixação de preço de produção do estabelecimento produtor, de ato cooperativo.</field>
+        </record>
+        <record id="cfop_1215" model="nfe.cfop">
+            <field name="code">1215</field>
+            <field name="name">Devolução de fornecimento de produção do estabelecimento de ato cooperativo</field>
+        </record>
+        <record id="cfop_1216" model="nfe.cfop">
+            <field name="code">1216</field>
+            <field name="name">Devolução de fornecimento de mercadoria adquirida ou recebida de terceiros de ato cooperativo</field>
+        </record>
+        <record id="cfop_1251" model="nfe.cfop">
+            <field name="code">1251</field>
+            <field name="name">Compra de energia elétrica para distribuição ou comercialização</field>
+        </record>
+        <record id="cfop_1252" model="nfe.cfop">
+            <field name="code">1252</field>
+            <field name="name">Compra de energia elétrica por estabelecimento industrial</field>
+        </record>
+        <record id="cfop_1253" model="nfe.cfop">
+            <field name="code">1253</field>
+            <field name="name">Compra de energia elétrica por estabelecimento comercial</field>
+        </record>
+        <record id="cfop_1254" model="nfe.cfop">
+            <field name="code">1254</field>
+            <field name="name">Compra de energia elétrica por estabelecimento prestador de serviço de transporte</field>
+        </record>
+        <record id="cfop_1255" model="nfe.cfop">
+            <field name="code">1255</field>
+            <field name="name">Compra de energia elétrica por estabelecimento prestador de serviço de comunicação</field>
+        </record>
+        <record id="cfop_1256" model="nfe.cfop">
+            <field name="code">1256</field>
+            <field name="name">Compra de energia elétrica por estabelecimento de produtor rural</field>
+        </record>
+        <record id="cfop_1257" model="nfe.cfop">
+            <field name="code">1257</field>
+            <field name="name">Compra de energia elétrica para consumo por demanda contratada</field>
+        </record>
+        <record id="cfop_1301" model="nfe.cfop">
+            <field name="code">1301</field>
+            <field name="name">Aquisição de serviço de comunicação para execução de serviço da mesma natureza</field>
+        </record>
+        <record id="cfop_1302" model="nfe.cfop">
+            <field name="code">1302</field>
+            <field name="name">Aquisição de serviço de comunicação por estabelecimento industrial</field>
+        </record>
+        <record id="cfop_1303" model="nfe.cfop">
+            <field name="code">1303</field>
+            <field name="name">Aquisição de serviço de comunicação por estabelecimento comercial</field>
+        </record>
+        <record id="cfop_1304" model="nfe.cfop">
+            <field name="code">1304</field>
+            <field name="name">Aquisição de serviço de comunicação por estabelecimento de prestador de serviço de transporte</field>
+        </record>
+        <record id="cfop_1305" model="nfe.cfop">
+            <field name="code">1305</field>
+            <field name="name">Aquisição de serviço de comunicação por estabelecimento de geradora ou de distribuidora de energia elétrica</field>
+        </record>
+        <record id="cfop_1306" model="nfe.cfop">
+            <field name="code">1306</field>
+            <field name="name">Aquisição de serviço de comunicação por estabelecimento de produtor rural</field>
+        </record>
+        <record id="cfop_1351" model="nfe.cfop">
+            <field name="code">1351</field>
+            <field name="name">Aquisição de serviço de transporte para execução de serviço da mesma natureza</field>
+        </record>
+        <record id="cfop_1352" model="nfe.cfop">
+            <field name="code">1352</field>
+            <field name="name">Aquisição de serviço de transporte por estabelecimento industrial</field>
+        </record>
+        <record id="cfop_1353" model="nfe.cfop">
+            <field name="code">1353</field>
+            <field name="name">Aquisição de serviço de transporte por estabelecimento comercial</field>
+        </record>
+        <record id="cfop_1354" model="nfe.cfop">
+            <field name="code">1354</field>
+            <field name="name">Aquisição de serviço de transporte por estabelecimento de prestador de serviço de comunicação</field>
+        </record>
+        <record id="cfop_1355" model="nfe.cfop">
+            <field name="code">1355</field>
+            <field name="name">Aquisição de serviço de transporte por estabelecimento de geradora ou de distribuidora de energia elétrica</field>
+        </record>
+        <record id="cfop_1356" model="nfe.cfop">
+            <field name="code">1356</field>
+            <field name="name">Aquisição de serviço de transporte por estabelecimento de produtor rural</field>
+        </record>
+        <record id="cfop_1360" model="nfe.cfop">
+            <field name="code">1360</field>
+            <field name="name">Aquisição de serviço de transporte por contribuinte substituto em relação ao serviço de transporte.</field>
+        </record>
+        <record id="cfop_1401" model="nfe.cfop">
+            <field name="code">1401</field>
+            <field name="name">Compra para industrialização em operação com mercadoria sujeita ao regime de substituição tributária</field>
+        </record>
+        <record id="cfop_1403" model="nfe.cfop">
+            <field name="code">1403</field>
+            <field name="name">Compra para comercialização em operação com mercadoria sujeita ao regime de substituição tributária</field>
+        </record>
+        <record id="cfop_1406" model="nfe.cfop">
+            <field name="code">1406</field>
+            <field name="name">Compra de bem para o ativo imobilizado cuja mercadoria está sujeita ao regime de substituição tributária</field>
+        </record>
+        <record id="cfop_1407" model="nfe.cfop">
+            <field name="code">1407</field>
+            <field name="name">Compra de mercadoria para uso ou consumo cuja mercadoria está sujeita ao regime de substituição tributária</field>
+        </record>
+        <record id="cfop_1408" model="nfe.cfop">
+            <field name="code">1408</field>
+            <field name="name">Transferência para industrialização em operação com mercadoria sujeita ao regime de substituição tributária</field>
+        </record>
+        <record id="cfop_1409" model="nfe.cfop">
+            <field name="code">1409</field>
+            <field name="name">Transferência para comercialização em operação com mercadoria sujeita ao regime de substituição tributária</field>
+        </record>
+        <record id="cfop_1410" model="nfe.cfop">
+            <field name="code">1410</field>
+            <field name="name">Devolução de venda de produção do estabelecimento em operação com produto sujeito ao regime de substituição tributária</field>
+        </record>
+        <record id="cfop_1411" model="nfe.cfop">
+            <field name="code">1411</field>
+            <field name="name">Devolução de venda de mercadoria adquirida ou recebida de terceiros em operação com mercadoria sujeita ao regime de substituição tributária</field>
+        </record>
+        <record id="cfop_1414" model="nfe.cfop">
+            <field name="code">1414</field>
+            <field name="name">Retorno de produção do estabelecimento, remetida para venda fora do estabelecimento em operação com produto sujeito ao regime de substituição tributária</field>
+        </record>
+        <record id="cfop_1415" model="nfe.cfop">
+            <field name="code">1415</field>
+            <field name="name">Retorno de mercadoria adquirida ou recebida de terceiros, remetida para venda fora do estabelecimento em operação com mercadoria sujeita ao regime de substituição tributária</field>
+        </record>
+        <record id="cfop_1451" model="nfe.cfop">
+            <field name="code">1451</field>
+            <field name="name">Entrada de animal - Sistema de Integração e Parceria Rural</field>
+        </record>
+        <record id="cfop_1452" model="nfe.cfop">
+            <field name="code">1452</field>
+            <field name="name">Entrada de insumo - Sistema de Integração e Parceria Rural</field>
+        </record>
+        <record id="cfop_1453" model="nfe.cfop">
+            <field name="code">1453</field>
+            <field name="name">Retorno do animal ou da produção - Sistema de Integração e Parceria Rural</field>
+        </record>
+        <record id="cfop_1454" model="nfe.cfop">
+            <field name="code">1454</field>
+            <field name="name">Retorno simbólico do animal ou da produção - Sistema de Integração e Parceria Rural</field>
+        </record>
+        <record id="cfop_1455" model="nfe.cfop">
+            <field name="code">1455</field>
+            <field name="name">Retorno de insumo não utilizado na produção - Sistema de Integração e Parceria Rural</field>
+        </record>
+        <record id="cfop_1456" model="nfe.cfop">
+            <field name="code">1456</field>
+            <field name="name">Entrada referente a remuneração do produtor no Sistema de Integração e Parceria Rural</field>
+        </record>
+        <record id="cfop_1501" model="nfe.cfop">
+            <field name="code">1501</field>
+            <field name="name">Entrada de mercadoria recebida com fim específico de exportação</field>
+        </record>
+        <record id="cfop_1503" model="nfe.cfop">
+            <field name="code">1503</field>
+            <field name="name">Entrada decorrente de devolução de produto remetido com fim específico de exportação, de produção do estabelecimento</field>
+        </record>
+        <record id="cfop_1504" model="nfe.cfop">
+            <field name="code">1504</field>
+            <field name="name">Entrada decorrente de devolução de mercadoria remetida com fim específico de exportação, adquirida ou recebida de terceiros</field>
+        </record>
+        <record id="cfop_1505" model="nfe.cfop">
+            <field name="code">1505</field>
+            <field name="name">Entrada decorrente de devolução de mercadorias remetidas para formação de lote de exportação, de produtos industrializados ou produzidos pelo próprio estabelecimento.</field>
+        </record>
+        <record id="cfop_1506" model="nfe.cfop">
+            <field name="code">1506</field>
+            <field name="name">Entrada decorrente de devolução de mercadorias, adquiridas ou recebidas de terceiros, remetidas para formação de lote de exportação</field>
+        </record>
+        <record id="cfop_1551" model="nfe.cfop">
+            <field name="code">1551</field>
+            <field name="name">Compra de bem para o ativo imobilizado</field>
+        </record>
+        <record id="cfop_1552" model="nfe.cfop">
+            <field name="code">1552</field>
+            <field name="name">Transferência de bem do ativo imobilizado</field>
+        </record>
+        <record id="cfop_1553" model="nfe.cfop">
+            <field name="code">1553</field>
+            <field name="name">Devolução de venda de bem do ativo imobilizado</field>
+        </record>
+        <record id="cfop_1554" model="nfe.cfop">
+            <field name="code">1554</field>
+            <field name="name">Retorno de bem do ativo imobilizado remetido para uso fora do estabelecimento</field>
+        </record>
+        <record id="cfop_1555" model="nfe.cfop">
+            <field name="code">1555</field>
+            <field name="name">Entrada de bem do ativo imobilizado de terceiro, remetido para uso no estabelecimento</field>
+        </record>
+        <record id="cfop_1556" model="nfe.cfop">
+            <field name="code">1556</field>
+            <field name="name">Compra de material para uso ou consumo</field>
+        </record>
+        <record id="cfop_1557" model="nfe.cfop">
+            <field name="code">1557</field>
+            <field name="name">Transferência de material para uso ou consumo</field>
+        </record>
+        <record id="cfop_1601" model="nfe.cfop">
+            <field name="code">1601</field>
+            <field name="name">Recebimento, por transferência, de crédito de ICMS</field>
+        </record>
+        <record id="cfop_1602" model="nfe.cfop">
+            <field name="code">1602</field>
+            <field name="name">Recebimento, por transferência, de saldo credor de ICMS de outro estabelecimento da mesma empresa, para compensação de saldo devedor de ICMS</field>
+        </record>
+        <record id="cfop_1603" model="nfe.cfop">
+            <field name="code">1603</field>
+            <field name="name">Ressarcimento de ICMS retido por substituição tributária</field>
+        </record>
+        <record id="cfop_1604" model="nfe.cfop">
+            <field name="code">1604</field>
+            <field name="name">Lançamento do crédito relativo à compra de bem para o ativo imobilizado</field>
+        </record>
+        <record id="cfop_1605" model="nfe.cfop">
+            <field name="code">1605</field>
+            <field name="name">Recebimento, por transferência, de saldo devedor de ICMS de outro estabelecimento da mesma empresa.</field>
+        </record>
+        <record id="cfop_1651" model="nfe.cfop">
+            <field name="code">1651</field>
+            <field name="name">Compra de combustível ou lubrificante para industrialização subseqüente</field>
+        </record>
+        <record id="cfop_1652" model="nfe.cfop">
+            <field name="code">1652</field>
+            <field name="name">Compra de combustível ou lubrificante para comercialização</field>
+        </record>
+        <record id="cfop_1653" model="nfe.cfop">
+            <field name="code">1653</field>
+            <field name="name">Compra de combustível ou lubrificante por consumidor ou usuário final</field>
+        </record>
+        <record id="cfop_1657" model="nfe.cfop">
+            <field name="code">1657</field>
+            <field name="name">Retorno de remessa de combustível ou lubrificante para venda fora do estabelecimento</field>
+        </record>
+        <record id="cfop_1658" model="nfe.cfop">
+            <field name="code">1658</field>
+            <field name="name">Transferência de combustível e lubrificante para industrialização</field>
+        </record>
+        <record id="cfop_1659" model="nfe.cfop">
+            <field name="code">1659</field>
+            <field name="name">Transferência de combustível e lubrificante para comercialização</field>
+        </record>
+        <record id="cfop_1660" model="nfe.cfop">
+            <field name="code">1660</field>
+            <field name="name">Devolução de venda de combustível ou lubrificante destinado à industrialização subseqüente</field>
+        </record>
+        <record id="cfop_1661" model="nfe.cfop">
+            <field name="code">1661</field>
+            <field name="name">Devolução de venda de combustível ou lubrificante destinado à comercialização</field>
+        </record>
+        <record id="cfop_1662" model="nfe.cfop">
+            <field name="code">1662</field>
+            <field name="name">Devolução de venda de combustível ou lubrificante destinado a consumidor ou usuário final</field>
+        </record>
+        <record id="cfop_1663" model="nfe.cfop">
+            <field name="code">1663</field>
+            <field name="name">Entrada de combustível ou lubrificante para armazenagem</field>
+        </record>
+        <record id="cfop_1664" model="nfe.cfop">
+            <field name="code">1664</field>
+            <field name="name">Retorno de combustível ou lubrificante remetido para armazenagem</field>
+        </record>
+        <record id="cfop_1901" model="nfe.cfop">
+            <field name="code">1901</field>
+            <field name="name">Entrada para industrialização por encomenda</field>
+        </record>
+        <record id="cfop_1902" model="nfe.cfop">
+            <field name="code">1902</field>
+            <field name="name">Retorno de mercadoria remetida para industrialização por encomenda</field>
+        </record>
+        <record id="cfop_1903" model="nfe.cfop">
+            <field name="code">1903</field>
+            <field name="name">Entrada de mercadoria remetida para industrialização e não aplicada no referido processo</field>
+        </record>
+        <record id="cfop_1904" model="nfe.cfop">
+            <field name="code">1904</field>
+            <field name="name">Retorno de remessa para venda fora do estabelecimento</field>
+        </record>
+        <record id="cfop_1905" model="nfe.cfop">
+            <field name="code">1905</field>
+            <field name="name">Entrada de mercadoria recebida para depósito em depósito fechado ou armazém geral</field>
+        </record>
+        <record id="cfop_1906" model="nfe.cfop">
+            <field name="code">1906</field>
+            <field name="name">Retorno de mercadoria remetida para depósito fechado ou armazém geral</field>
+        </record>
+        <record id="cfop_1907" model="nfe.cfop">
+            <field name="code">1907</field>
+            <field name="name">Retorno simbólico de mercadoria remetida para depósito fechado ou armazém geral</field>
+        </record>
+        <record id="cfop_1908" model="nfe.cfop">
+            <field name="code">1908</field>
+            <field name="name">Entrada de bem por conta de contrato de comodato ou locação</field>
+        </record>
+        <record id="cfop_1909" model="nfe.cfop">
+            <field name="code">1909</field>
+            <field name="name">Retorno de bem remetido por conta de contrato de comodato ou locação</field>
+        </record>
+        <record id="cfop_1910" model="nfe.cfop">
+            <field name="code">1910</field>
+            <field name="name">Entrada de bonificação, doação ou brinde</field>
+        </record>
+        <record id="cfop_1911" model="nfe.cfop">
+            <field name="code">1911</field>
+            <field name="name">Entrada de amostra grátis</field>
+        </record>
+        <record id="cfop_1912" model="nfe.cfop">
+            <field name="code">1912</field>
+            <field name="name">Entrada de mercadoria ou bem recebido para demonstração</field>
+        </record>
+        <record id="cfop_1913" model="nfe.cfop">
+            <field name="code">1913</field>
+            <field name="name">Retorno de mercadoria ou bem remetido para demonstração</field>
+        </record>
+        <record id="cfop_1914" model="nfe.cfop">
+            <field name="code">1914</field>
+            <field name="name">Retorno de mercadoria ou bem remetido para exposição ou feira</field>
+        </record>
+        <record id="cfop_1915" model="nfe.cfop">
+            <field name="code">1915</field>
+            <field name="name">Entrada de mercadoria ou bem recebido para conserto ou reparo</field>
+        </record>
+        <record id="cfop_1916" model="nfe.cfop">
+            <field name="code">1916</field>
+            <field name="name">Retorno de mercadoria ou bem remetido para conserto ou reparo</field>
+        </record>
+        <record id="cfop_1917" model="nfe.cfop">
+            <field name="code">1917</field>
+            <field name="name">Entrada de mercadoria recebida em consignação mercantil ou industrial</field>
+        </record>
+        <record id="cfop_1918" model="nfe.cfop">
+            <field name="code">1918</field>
+            <field name="name">Devolução de mercadoria remetida em consignação mercantil ou industrial</field>
+        </record>
+        <record id="cfop_1919" model="nfe.cfop">
+            <field name="code">1919</field>
+            <field name="name">Devolução simbólica de mercadoria vendida ou utilizada em processo industrial, remetida anteriormente em consignação mercantil ou industrial</field>
+        </record>
+        <record id="cfop_1920" model="nfe.cfop">
+            <field name="code">1920</field>
+            <field name="name">Entrada de vasilhame ou sacaria</field>
+        </record>
+        <record id="cfop_1921" model="nfe.cfop">
+            <field name="code">1921</field>
+            <field name="name">Retorno de vasilhame ou sacaria</field>
+        </record>
+        <record id="cfop_1922" model="nfe.cfop">
+            <field name="code">1922</field>
+            <field name="name">Lançamento efetuado a título de simples faturamento decorrente de compra para recebimento futuro</field>
+        </record>
+        <record id="cfop_1923" model="nfe.cfop">
+            <field name="code">1923</field>
+            <field name="name">Entrada de mercadoria recebida do vendedor remetente, em venda à ordem</field>
+        </record>
+        <record id="cfop_1924" model="nfe.cfop">
+            <field name="code">1924</field>
+            <field name="name">Entrada para industrialização por conta e ordem do adquirente da mercadoria, quando esta não transitar pelo estabelecimento do adquirente</field>
+        </record>
+        <record id="cfop_1925" model="nfe.cfop">
+            <field name="code">1925</field>
+            <field name="name">Retorno de mercadoria remetida para industrialização por conta e ordem do adquirente da mercadoria, quando esta não transitar pelo estabelecimento do adquirente</field>
+        </record>
+        <record id="cfop_1926" model="nfe.cfop">
+            <field name="code">1926</field>
+            <field name="name">Lançamento efetuado a título de reclassificação de mercadoria decorrente de formação de kit ou de sua desagregação</field>
+        </record>
+        <record id="cfop_1931" model="nfe.cfop">
+            <field name="code">1931</field>
+            <field name="name">Lançamento efetuado pelo tomador do serviço de transporte quando a responsabilidade de retenção do imposto for atribuída ao remetente ou alienante da mercadoria, pelo serviço de transporte realizado por transportador autônomo ou por transportador não inscrito na unidade da Federação onde iniciado o serviço. (Ajuste SINIEF 03/04)</field>
+        </record>
+        <record id="cfop_1932" model="nfe.cfop">
+            <field name="code">1932</field>
+            <field name="name">Aquisição de serviço de transporte iniciado em unidade da Federação diversa daquela onde inscrito o prestador. (ajuste sinief 03/04)</field>
+        </record>
+        <record id="cfop_1933" model="nfe.cfop">
+            <field name="code">1933</field>
+            <field name="name">Aquisição de serviço tributado pelo ISSQN.(ajuste sinief 03/04)</field>
+        </record>
+        <record id="cfop_1934" model="nfe.cfop">
+            <field name="code">1934</field>
+            <field name="name">Entrada simbólica de mercadoria recebida para depósito fechado ou armazém geral</field>
+        </record>
+        <record id="cfop_1949" model="nfe.cfop">
+            <field name="code">1949</field>
+            <field name="name">Outra entrada de mercadoria ou prestação de serviço não especificada</field>
+        </record>
+        <record id="cfop_2101" model="nfe.cfop">
+            <field name="code">2101</field>
+            <field name="name">Compra para industrialização</field>
+        </record>
+        <record id="cfop_2102" model="nfe.cfop">
+            <field name="code">2102</field>
+            <field name="name">Compra para comercialização</field>
+        </record>
+        <record id="cfop_2111" model="nfe.cfop">
+            <field name="code">2111</field>
+            <field name="name">Compra para industrialização de mercadoria recebida anteriormente em consignação industrial</field>
+        </record>
+        <record id="cfop_2113" model="nfe.cfop">
+            <field name="code">2113</field>
+            <field name="name">Compra para comercialização, de mercadoria recebida anteriormente em consignação mercantil</field>
+        </record>
+        <record id="cfop_2116" model="nfe.cfop">
+            <field name="code">2116</field>
+            <field name="name">Compra para industrialização originada de encomenda para recebimento futuro</field>
+        </record>
+        <record id="cfop_2117" model="nfe.cfop">
+            <field name="code">2117</field>
+            <field name="name">Compra para comercialização originada de encomenda para recebimento futuro</field>
+        </record>
+        <record id="cfop_2118" model="nfe.cfop">
+            <field name="code">2118</field>
+            <field name="name">Compra de mercadoria para comercialização pelo adquirente originário, entregue pelo vendedor remetente ao destinatário, em venda à ordem</field>
+        </record>
+        <record id="cfop_2120" model="nfe.cfop">
+            <field name="code">2120</field>
+            <field name="name">Compra para industrialização, em venda à ordem, já recebida do vendedor remetente</field>
+        </record>
+        <record id="cfop_2121" model="nfe.cfop">
+            <field name="code">2121</field>
+            <field name="name">Compra para comercialização, em venda à ordem, já recebida do vendedor remetente</field>
+        </record>
+        <record id="cfop_2122" model="nfe.cfop">
+            <field name="code">2122</field>
+            <field name="name">Compra para industrialização em que a mercadoria foi remetida pelo fornecedor ao industrializador sem transitar pelo estabelecimento adquirente</field>
+        </record>
+        <record id="cfop_2124" model="nfe.cfop">
+            <field name="code">2124</field>
+            <field name="name">Industrialização efetuada por outra empresa</field>
+        </record>
+        <record id="cfop_2125" model="nfe.cfop">
+            <field name="code">2125</field>
+            <field name="name">Industrialização efetuada por outra empresa quando a mercadoria remetida para utilização no processo de industrialização não transitou pelo estabelecimento adquirente da mercadoria</field>
+        </record>
+        <record id="cfop_2126" model="nfe.cfop">
+            <field name="code">2126</field>
+            <field name="name">Compra para utilização na prestação de serviço</field>
+        </record>
+        <record id="cfop_2128" model="nfe.cfop">
+            <field name="code">2128</field>
+            <field name="name">Compra para utilização na prestação de serviço sujeita ao ISSQN</field>
+        </record>
+        <record id="cfop_2131" model="nfe.cfop">
+            <field name="code">2131</field>
+            <field name="name">Entrada de mercadoria com previsão de posterior ajuste ou fixação de preço, decorrente de operação de ato cooperativo.</field>
+        </record>
+        <record id="cfop_2132" model="nfe.cfop">
+            <field name="code">2132</field>
+            <field name="name">Fixação de preço de produção do estabelecimento produtor, inclusive quando remetidas anteriormente com previsão de posterior ajuste ou fixação de preço, em ato cooperativo, para comercialização.</field>
+        </record>
+        <record id="cfop_2135" model="nfe.cfop">
+            <field name="code">2135</field>
+            <field name="name">Fixação de preço de produção do estabelecimento produtor, inclusive quando remetidas anteriormente com previsão de posterior ajuste ou fixação de preço, em ato cooperativo, para industrialização.</field>
+        </record>
+        <record id="cfop_2151" model="nfe.cfop">
+            <field name="code">2151</field>
+            <field name="name">Transferência para industrialização</field>
+        </record>
+        <record id="cfop_2152" model="nfe.cfop">
+            <field name="code">2152</field>
+            <field name="name">Transferência para comercialização</field>
+        </record>
+        <record id="cfop_2153" model="nfe.cfop">
+            <field name="code">2153</field>
+            <field name="name">Transferência de energia elétrica para distribuição</field>
+        </record>
+        <record id="cfop_2154" model="nfe.cfop">
+            <field name="code">2154</field>
+            <field name="name">Transferência para utilização na prestação de serviço</field>
+        </record>
+        <record id="cfop_2159" model="nfe.cfop">
+            <field name="code">2159</field>
+            <field name="name">Entrada decorrente do fornecimento de produto ou mercadoria de ato cooperativo</field>
+        </record>
+        <record id="cfop_2201" model="nfe.cfop">
+            <field name="code">2201</field>
+            <field name="name">Devolução de venda de produção do estabelecimento</field>
+        </record>
+        <record id="cfop_2202" model="nfe.cfop">
+            <field name="code">2202</field>
+            <field name="name">Devolução de venda de mercadoria adquirida ou recebida de terceiros</field>
+        </record>
+        <record id="cfop_2203" model="nfe.cfop">
+            <field name="code">2203</field>
+            <field name="name">Devolução de venda de produção do estabelecimento, destinada à Zona Franca de Manaus ou Áreas de Livre Comércio</field>
+        </record>
+        <record id="cfop_2204" model="nfe.cfop">
+            <field name="code">2204</field>
+            <field name="name">Devolução de venda de mercadoria adquirida ou recebida de terceiros, destinada à Zona Franca de Manaus ou Áreas de Livre Comércio</field>
+        </record>
+        <record id="cfop_2205" model="nfe.cfop">
+            <field name="code">2205</field>
+            <field name="name">Anulação de valor relativo à prestação de serviço de comunicação</field>
+        </record>
+        <record id="cfop_2206" model="nfe.cfop">
+            <field name="code">2206</field>
+            <field name="name">Anulação de valor relativo à prestação de serviço de transporte</field>
+        </record>
+        <record id="cfop_2207" model="nfe.cfop">
+            <field name="code">2207</field>
+            <field name="name">Anulação de valor relativo à venda de energia elétrica</field>
+        </record>
+        <record id="cfop_2208" model="nfe.cfop">
+            <field name="code">2208</field>
+            <field name="name">Devolução de produção do estabelecimento, remetida em transferência</field>
+        </record>
+        <record id="cfop_2209" model="nfe.cfop">
+            <field name="code">2209</field>
+            <field name="name">Devolução de mercadoria adquirida ou recebida de terceiros, remetida em transferência</field>
+        </record>
+        <record id="cfop_2212" model="nfe.cfop">
+            <field name="code">2212</field>
+            <field name="name">Devolução de venda no mercado interno de mercadoria industrializada e insumo importado sob o Regime Aduaneiro Especial de Entreposto Industrial sob Controle Informatizado do Sistema Público de Escrituração Digital (Recof-Sped)</field>
+        </record>
+        <record id="cfop_2213" model="nfe.cfop">
+            <field name="code">2213</field>
+            <field name="name">Devolução de remessa de produção do estabelecimento com previsão de posterior ajuste ou fixação de preço, em ato cooperativo.</field>
+        </record>
+        <record id="cfop_2214" model="nfe.cfop">
+            <field name="code">2214</field>
+            <field name="name">Devolução de fixação de preço de produção do estabelecimento produtor, de ato cooperativo.</field>
+        </record>
+        <record id="cfop_2215" model="nfe.cfop">
+            <field name="code">2215</field>
+            <field name="name">Devolução de fornecimento de produção do estabelecimento de ato cooperativo</field>
+        </record>
+        <record id="cfop_2216" model="nfe.cfop">
+            <field name="code">2216</field>
+            <field name="name">Devolução de fornecimento de mercadoria adquirida ou recebida de terceiros de ato cooperativo</field>
+        </record>
+        <record id="cfop_2251" model="nfe.cfop">
+            <field name="code">2251</field>
+            <field name="name">Compra de energia elétrica para distribuição ou comercialização</field>
+        </record>
+        <record id="cfop_2252" model="nfe.cfop">
+            <field name="code">2252</field>
+            <field name="name">Compra de energia elétrica por estabelecimento industrial</field>
+        </record>
+        <record id="cfop_2253" model="nfe.cfop">
+            <field name="code">2253</field>
+            <field name="name">Compra de energia elétrica por estabelecimento comercial</field>
+        </record>
+        <record id="cfop_2254" model="nfe.cfop">
+            <field name="code">2254</field>
+            <field name="name">Compra de energia elétrica por estabelecimento prestador de serviço de transporte</field>
+        </record>
+        <record id="cfop_2255" model="nfe.cfop">
+            <field name="code">2255</field>
+            <field name="name">Compra de energia elétrica por estabelecimento prestador de serviço de comunicação</field>
+        </record>
+        <record id="cfop_2256" model="nfe.cfop">
+            <field name="code">2256</field>
+            <field name="name">Compra de energia elétrica por estabelecimento de produtor rural</field>
+        </record>
+        <record id="cfop_2257" model="nfe.cfop">
+            <field name="code">2257</field>
+            <field name="name">Compra de energia elétrica para consumo por demanda contratada</field>
+        </record>
+        <record id="cfop_2301" model="nfe.cfop">
+            <field name="code">2301</field>
+            <field name="name">Aquisição de serviço de comunicação para execução de serviço da mesma natureza</field>
+        </record>
+        <record id="cfop_2302" model="nfe.cfop">
+            <field name="code">2302</field>
+            <field name="name">Aquisição de serviço de comunicação por estabelecimento industrial</field>
+        </record>
+        <record id="cfop_2303" model="nfe.cfop">
+            <field name="code">2303</field>
+            <field name="name">Aquisição de serviço de comunicação por estabelecimento comercial</field>
+        </record>
+        <record id="cfop_2304" model="nfe.cfop">
+            <field name="code">2304</field>
+            <field name="name">Aquisição de serviço de comunicação por estabelecimento de prestador de serviço de transporte</field>
+        </record>
+        <record id="cfop_2305" model="nfe.cfop">
+            <field name="code">2305</field>
+            <field name="name">Aquisição de serviço de comunicação por estabelecimento de geradora ou de distribuidora de energia elétrica</field>
+        </record>
+        <record id="cfop_2306" model="nfe.cfop">
+            <field name="code">2306</field>
+            <field name="name">Aquisição de serviço de comunicação por estabelecimento de produtor rural</field>
+        </record>
+        <record id="cfop_2351" model="nfe.cfop">
+            <field name="code">2351</field>
+            <field name="name">Aquisição de serviço de transporte para execução de serviço da mesma natureza</field>
+        </record>
+        <record id="cfop_2352" model="nfe.cfop">
+            <field name="code">2352</field>
+            <field name="name">Aquisição de serviço de transporte por estabelecimento industrial</field>
+        </record>
+        <record id="cfop_2353" model="nfe.cfop">
+            <field name="code">2353</field>
+            <field name="name">Aquisição de serviço de transporte por estabelecimento comercial</field>
+        </record>
+        <record id="cfop_2354" model="nfe.cfop">
+            <field name="code">2354</field>
+            <field name="name">Aquisição de serviço de transporte por estabelecimento de prestador de serviço de comunicação</field>
+        </record>
+        <record id="cfop_2355" model="nfe.cfop">
+            <field name="code">2355</field>
+            <field name="name">Aquisição de serviço de transporte por estabelecimento de geradora ou de distribuidora de energia elétrica</field>
+        </record>
+        <record id="cfop_2356" model="nfe.cfop">
+            <field name="code">2356</field>
+            <field name="name">Aquisição de serviço de transporte por estabelecimento de produtor rural</field>
+        </record>
+        <record id="cfop_2401" model="nfe.cfop">
+            <field name="code">2401</field>
+            <field name="name">Compra para industrialização em operação com mercadoria sujeita ao regime de substituição tributária</field>
+        </record>
+        <record id="cfop_2403" model="nfe.cfop">
+            <field name="code">2403</field>
+            <field name="name">Compra para comercialização em operação com mercadoria sujeita ao regime de substituição tributária</field>
+        </record>
+        <record id="cfop_2406" model="nfe.cfop">
+            <field name="code">2406</field>
+            <field name="name">Compra de bem para o ativo imobilizado cuja mercadoria está sujeita ao regime de substituição tributária</field>
+        </record>
+        <record id="cfop_2407" model="nfe.cfop">
+            <field name="code">2407</field>
+            <field name="name">Compra de mercadoria para uso ou consumo cuja mercadoria está sujeita ao regime de substituição tributária</field>
+        </record>
+        <record id="cfop_2408" model="nfe.cfop">
+            <field name="code">2408</field>
+            <field name="name">Transferência para industrialização em operação com mercadoria sujeita ao regime de substituição tributária</field>
+        </record>
+        <record id="cfop_2409" model="nfe.cfop">
+            <field name="code">2409</field>
+            <field name="name">Transferência para comercialização em operação com mercadoria sujeita ao regime de substituição tributária</field>
+        </record>
+        <record id="cfop_2410" model="nfe.cfop">
+            <field name="code">2410</field>
+            <field name="name">Devolução de venda de produção do estabelecimento em operação com produto sujeito ao regime de substituição tributária</field>
+        </record>
+        <record id="cfop_2411" model="nfe.cfop">
+            <field name="code">2411</field>
+            <field name="name">Devolução de venda de mercadoria adquirida ou recebida de terceiros em operação com mercadoria sujeita ao regime de substituição tributária</field>
+        </record>
+        <record id="cfop_2414" model="nfe.cfop">
+            <field name="code">2414</field>
+            <field name="name">Retorno de produção do estabelecimento, remetida para venda fora do estabelecimento em operação com produto sujeito ao regime de substituição tributária</field>
+        </record>
+        <record id="cfop_2415" model="nfe.cfop">
+            <field name="code">2415</field>
+            <field name="name">Retorno de mercadoria adquirida ou recebida de terceiros, remetida para venda fora do estabelecimento em operação com mercadoria sujeita ao regime de substituição tributária</field>
+        </record>
+        <record id="cfop_2451" model="nfe.cfop">
+            <field name="code">2451</field>
+            <field name="name">Entrada de animal - Sistema de Integração e Parceria Rural</field>
+        </record>
+        <record id="cfop_2452" model="nfe.cfop">
+            <field name="code">2452</field>
+            <field name="name">Entrada de insumo - Sistema de Integração e Parceria Rural</field>
+        </record>
+        <record id="cfop_2453" model="nfe.cfop">
+            <field name="code">2453</field>
+            <field name="name">Retorno do animal ou da produção - Sistema de Integração e Parceria Rural</field>
+        </record>
+        <record id="cfop_2454" model="nfe.cfop">
+            <field name="code">2454</field>
+            <field name="name">Retorno simbólico do animal ou da produção - Sistema de Integração e Parceria Rural</field>
+        </record>
+        <record id="cfop_2455" model="nfe.cfop">
+            <field name="code">2455</field>
+            <field name="name">Retorno de insumo não utilizado na produção - Sistema de Integração e Parceria Rural</field>
+        </record>
+        <record id="cfop_2456" model="nfe.cfop">
+            <field name="code">2456</field>
+            <field name="name">Entrada referente a remuneração do produtor no Sistema de Integração e Parceria Rural</field>
+        </record>
+        <record id="cfop_2501" model="nfe.cfop">
+            <field name="code">2501</field>
+            <field name="name">Entrada de mercadoria recebida com fim específico de exportação</field>
+        </record>
+        <record id="cfop_2503" model="nfe.cfop">
+            <field name="code">2503</field>
+            <field name="name">Entrada decorrente de devolução de produto remetido com fim específico de exportação, de produção do estabelecimento</field>
+        </record>
+        <record id="cfop_2504" model="nfe.cfop">
+            <field name="code">2504</field>
+            <field name="name">Entrada decorrente de devolução de mercadoria remetida com fim específico de exportação, adquirida ou recebida de terceiros</field>
+        </record>
+        <record id="cfop_2505" model="nfe.cfop">
+            <field name="code">2505</field>
+            <field name="name">Entrada decorrente de devolução de mercadorias remetidas para formação de lote de exportação, de produtos industrializados ou produzidos pelo próprio estabelecimento</field>
+        </record>
+        <record id="cfop_2506" model="nfe.cfop">
+            <field name="code">2506</field>
+            <field name="name">Entrada decorrente de devolução de mercadorias, adquiridas ou recebidas de terceiros, remetidas para formação de lote de exportação</field>
+        </record>
+        <record id="cfop_2551" model="nfe.cfop">
+            <field name="code">2551</field>
+            <field name="name">Compra de bem para o ativo imobilizado</field>
+        </record>
+        <record id="cfop_2552" model="nfe.cfop">
+            <field name="code">2552</field>
+            <field name="name">Transferência de bem do ativo imobilizado</field>
+        </record>
+        <record id="cfop_2553" model="nfe.cfop">
+            <field name="code">2553</field>
+            <field name="name">Devolução de venda de bem do ativo imobilizado</field>
+        </record>
+        <record id="cfop_2554" model="nfe.cfop">
+            <field name="code">2554</field>
+            <field name="name">Retorno de bem do ativo imobilizado remetido para uso fora do estabelecimento</field>
+        </record>
+        <record id="cfop_2555" model="nfe.cfop">
+            <field name="code">2555</field>
+            <field name="name">Entrada de bem do ativo imobilizado de terceiro, remetido para uso no estabelecimento</field>
+        </record>
+        <record id="cfop_2556" model="nfe.cfop">
+            <field name="code">2556</field>
+            <field name="name">Compra de material para uso ou consumo</field>
+        </record>
+        <record id="cfop_2557" model="nfe.cfop">
+            <field name="code">2557</field>
+            <field name="name">Transferência de material para uso ou consumo</field>
+        </record>
+        <record id="cfop_2603" model="nfe.cfop">
+            <field name="code">2603</field>
+            <field name="name">Ressarcimento de ICMS retido por substituição tributária</field>
+        </record>
+        <record id="cfop_2651" model="nfe.cfop">
+            <field name="code">2651</field>
+            <field name="name">Compra de combustível ou lubrificante para industrialização subseqüente</field>
+        </record>
+        <record id="cfop_2652" model="nfe.cfop">
+            <field name="code">2652</field>
+            <field name="name">Compra de combustível ou lubrificante para comercialização</field>
+        </record>
+        <record id="cfop_2653" model="nfe.cfop">
+            <field name="code">2653</field>
+            <field name="name">Compra de combustível ou lubrificante por consumidor ou usuário final</field>
+        </record>
+        <record id="cfop_2657" model="nfe.cfop">
+            <field name="code">2657</field>
+            <field name="name">Retorno de remessa de combustível ou lubrificante para venda fora do estabelecimento</field>
+        </record>
+        <record id="cfop_2658" model="nfe.cfop">
+            <field name="code">2658</field>
+            <field name="name">Transferência de combustível e lubrificante para industrialização</field>
+        </record>
+        <record id="cfop_2659" model="nfe.cfop">
+            <field name="code">2659</field>
+            <field name="name">Transferência de combustível e lubrificante para comercialização</field>
+        </record>
+        <record id="cfop_2660" model="nfe.cfop">
+            <field name="code">2660</field>
+            <field name="name">Devolução de venda de combustível ou lubrificante destinado à industrialização subseqüente</field>
+        </record>
+        <record id="cfop_2661" model="nfe.cfop">
+            <field name="code">2661</field>
+            <field name="name">Devolução de venda de combustível ou lubrificante destinado à comercialização</field>
+        </record>
+        <record id="cfop_2662" model="nfe.cfop">
+            <field name="code">2662</field>
+            <field name="name">Devolução de venda de combustível ou lubrificante destinado a consumidor ou usuário final</field>
+        </record>
+        <record id="cfop_2663" model="nfe.cfop">
+            <field name="code">2663</field>
+            <field name="name">Entrada de combustível ou lubrificante para armazenagem</field>
+        </record>
+        <record id="cfop_2664" model="nfe.cfop">
+            <field name="code">2664</field>
+            <field name="name">Retorno de combustível ou lubrificante remetido para armazenagem</field>
+        </record>
+        <record id="cfop_2901" model="nfe.cfop">
+            <field name="code">2901</field>
+            <field name="name">Entrada para industrialização por encomenda</field>
+        </record>
+        <record id="cfop_2902" model="nfe.cfop">
+            <field name="code">2902</field>
+            <field name="name">Retorno de mercadoria remetida para industrialização por encomenda</field>
+        </record>
+        <record id="cfop_2903" model="nfe.cfop">
+            <field name="code">2903</field>
+            <field name="name">Entrada de mercadoria remetida para industrialização e não aplicada no referido processo</field>
+        </record>
+        <record id="cfop_2904" model="nfe.cfop">
+            <field name="code">2904</field>
+            <field name="name">Retorno de remessa para venda fora do estabelecimento</field>
+        </record>
+        <record id="cfop_2905" model="nfe.cfop">
+            <field name="code">2905</field>
+            <field name="name">Entrada de mercadoria recebida para depósito em depósito fechado ou armazém geral</field>
+        </record>
+        <record id="cfop_2906" model="nfe.cfop">
+            <field name="code">2906</field>
+            <field name="name">Retorno de mercadoria remetida para depósito fechado ou armazém geral</field>
+        </record>
+        <record id="cfop_2907" model="nfe.cfop">
+            <field name="code">2907</field>
+            <field name="name">Retorno simbólico de mercadoria remetida para depósito fechado ou armazém geral</field>
+        </record>
+        <record id="cfop_2908" model="nfe.cfop">
+            <field name="code">2908</field>
+            <field name="name">Entrada de bem por conta de contrato de comodato ou locação</field>
+        </record>
+        <record id="cfop_2909" model="nfe.cfop">
+            <field name="code">2909</field>
+            <field name="name">Retorno de bem remetido por conta de contrato de comodato ou locação</field>
+        </record>
+        <record id="cfop_2910" model="nfe.cfop">
+            <field name="code">2910</field>
+            <field name="name">Entrada de bonificação, doação ou brinde</field>
+        </record>
+        <record id="cfop_2911" model="nfe.cfop">
+            <field name="code">2911</field>
+            <field name="name">Entrada de amostra grátis</field>
+        </record>
+        <record id="cfop_2912" model="nfe.cfop">
+            <field name="code">2912</field>
+            <field name="name">Entrada de mercadoria ou bem recebido para demonstração</field>
+        </record>
+        <record id="cfop_2913" model="nfe.cfop">
+            <field name="code">2913</field>
+            <field name="name">Retorno de mercadoria ou bem remetido para demonstração</field>
+        </record>
+        <record id="cfop_2914" model="nfe.cfop">
+            <field name="code">2914</field>
+            <field name="name">Retorno de mercadoria ou bem remetido para exposição ou feira</field>
+        </record>
+        <record id="cfop_2915" model="nfe.cfop">
+            <field name="code">2915</field>
+            <field name="name">Entrada de mercadoria ou bem recebido para conserto ou reparo</field>
+        </record>
+        <record id="cfop_2916" model="nfe.cfop">
+            <field name="code">2916</field>
+            <field name="name">Retorno de mercadoria ou bem remetido para conserto ou reparo</field>
+        </record>
+        <record id="cfop_2917" model="nfe.cfop">
+            <field name="code">2917</field>
+            <field name="name">Entrada de mercadoria recebida em consignação mercantil ou industrial</field>
+        </record>
+        <record id="cfop_2918" model="nfe.cfop">
+            <field name="code">2918</field>
+            <field name="name">Devolução de mercadoria remetida em consignação mercantil ou industrial</field>
+        </record>
+        <record id="cfop_2919" model="nfe.cfop">
+            <field name="code">2919</field>
+            <field name="name">Devolução simbólica de mercadoria vendida ou utilizada em processo industrial, remetida anteriormente em consignação mercantil ou industrial</field>
+        </record>
+        <record id="cfop_2920" model="nfe.cfop">
+            <field name="code">2920</field>
+            <field name="name">Entrada de vasilhame ou sacaria</field>
+        </record>
+        <record id="cfop_2921" model="nfe.cfop">
+            <field name="code">2921</field>
+            <field name="name">Retorno de vasilhame ou sacaria</field>
+        </record>
+        <record id="cfop_2922" model="nfe.cfop">
+            <field name="code">2922</field>
+            <field name="name">Lançamento efetuado a título de simples faturamento decorrente de compra para recebimento futuro</field>
+        </record>
+        <record id="cfop_2923" model="nfe.cfop">
+            <field name="code">2923</field>
+            <field name="name">Entrada de mercadoria recebida do vendedor remetente, em venda à ordem</field>
+        </record>
+        <record id="cfop_2924" model="nfe.cfop">
+            <field name="code">2924</field>
+            <field name="name">Entrada para industrialização por conta e ordem do adquirente da mercadoria, quando esta não transitar pelo estabelecimento do adquirente</field>
+        </record>
+        <record id="cfop_2925" model="nfe.cfop">
+            <field name="code">2925</field>
+            <field name="name">Retorno de mercadoria remetida para industrialização por conta e ordem do adquirente da mercadoria, quando esta não transitar pelo estabelecimento do adquirente</field>
+        </record>
+        <record id="cfop_2931" model="nfe.cfop">
+            <field name="code">2931</field>
+            <field name="name">Lançamento efetuado pelo tomador do serviço de transporte quando a responsabilidade de retenção do imposto for atribuída ao remetente ou alienante da mercadoria, pelo serviço de transporte realizado por transportador autônomo ou por transportador não inscrito na unidade da Federação onde iniciado o serviço. (ajuste sinief 03/04)</field>
+        </record>
+        <record id="cfop_2932" model="nfe.cfop">
+            <field name="code">2932</field>
+            <field name="name">Aquisição de serviço de transporte iniciado em unidade da Federação diversa daquela onde inscrito o prestador. (ajuste sinief 03/04)</field>
+        </record>
+        <record id="cfop_2933" model="nfe.cfop">
+            <field name="code">2933</field>
+            <field name="name">Aquisição de serviço tributado pelo ISSQN. (ajuste sinief 03/04)</field>
+        </record>
+        <record id="cfop_2934" model="nfe.cfop">
+            <field name="code">2934</field>
+            <field name="name">Entrada simbólica de mercadoria recebida para depósito fechado ou armazém geral</field>
+        </record>
+        <record id="cfop_2949" model="nfe.cfop">
+            <field name="code">2949</field>
+            <field name="name">Outra entrada de mercadoria ou prestação de serviço não especificado</field>
+        </record>
+        <record id="cfop_3101" model="nfe.cfop">
+            <field name="code">3101</field>
+            <field name="name">Compra para industrialização</field>
+        </record>
+        <record id="cfop_3102" model="nfe.cfop">
+            <field name="code">3102</field>
+            <field name="name">Compra para comercialização</field>
+        </record>
+        <record id="cfop_3126" model="nfe.cfop">
+            <field name="code">3126</field>
+            <field name="name">Compra para utilização na prestação de serviço</field>
+        </record>
+        <record id="cfop_3127" model="nfe.cfop">
+            <field name="code">3127</field>
+            <field name="name">Compra para industrialização sob o regime de drawback</field>
+        </record>
+        <record id="cfop_3128" model="nfe.cfop">
+            <field name="code">3128</field>
+            <field name="name">Compra para utilização na prestação de serviço sujeita ao ISSQN</field>
+        </record>
+        <record id="cfop_3129" model="nfe.cfop">
+            <field name="code">3129</field>
+            <field name="name">Compra para industrialização sob o Regime Aduaneiro Especial de Entreposto Industrial sob Controle Informatizado do Sistema Público de Escrituração Digital (Recof-Sped)</field>
+        </record>
+        <record id="cfop_3201" model="nfe.cfop">
+            <field name="code">3201</field>
+            <field name="name">Devolução de venda de produção do estabelecimento</field>
+        </record>
+        <record id="cfop_3202" model="nfe.cfop">
+            <field name="code">3202</field>
+            <field name="name">Devolução de venda de mercadoria adquirida ou recebida de terceiros</field>
+        </record>
+        <record id="cfop_3205" model="nfe.cfop">
+            <field name="code">3205</field>
+            <field name="name">Anulação de valor relativo à prestação de serviço de comunicação</field>
+        </record>
+        <record id="cfop_3206" model="nfe.cfop">
+            <field name="code">3206</field>
+            <field name="name">Anulação de valor relativo à prestação de serviço de transporte</field>
+        </record>
+        <record id="cfop_3207" model="nfe.cfop">
+            <field name="code">3207</field>
+            <field name="name">Anulação de valor relativo à venda de energia elétrica</field>
+        </record>
+        <record id="cfop_3211" model="nfe.cfop">
+            <field name="code">3211</field>
+            <field name="name">Devolução de venda de produção do estabelecimento sob o regime de drawback</field>
+        </record>
+        <record id="cfop_3212" model="nfe.cfop">
+            <field name="code">3212</field>
+            <field name="name">Devolução de venda no mercado externo de mercadoria industrializada sob o Regime Aduaneiro Especial de Entreposto Industrial sob Controle Informatizado do Sistema Público de Escrituração Digital (Recof-Sped)</field>
+        </record>
+        <record id="cfop_3251" model="nfe.cfop">
+            <field name="code">3251</field>
+            <field name="name">Compra de energia elétrica para distribuição ou comercialização</field>
+        </record>
+        <record id="cfop_3301" model="nfe.cfop">
+            <field name="code">3301</field>
+            <field name="name">Aquisição de serviço de comunicação para execução de serviço da mesma natureza</field>
+        </record>
+        <record id="cfop_3351" model="nfe.cfop">
+            <field name="code">3351</field>
+            <field name="name">Aquisição de serviço de transporte para execução de serviço da mesma natureza</field>
+        </record>
+        <record id="cfop_3352" model="nfe.cfop">
+            <field name="code">3352</field>
+            <field name="name">Aquisição de serviço de transporte por estabelecimento industrial</field>
+        </record>
+        <record id="cfop_3353" model="nfe.cfop">
+            <field name="code">3353</field>
+            <field name="name">Aquisição de serviço de transporte por estabelecimento comercial</field>
+        </record>
+        <record id="cfop_3354" model="nfe.cfop">
+            <field name="code">3354</field>
+            <field name="name">Aquisição de serviço de transporte por estabelecimento de prestador de serviço de comunicação</field>
+        </record>
+        <record id="cfop_3355" model="nfe.cfop">
+            <field name="code">3355</field>
+            <field name="name">Aquisição de serviço de transporte por estabelecimento de geradora ou de distribuidora de energia elétrica</field>
+        </record>
+        <record id="cfop_3356" model="nfe.cfop">
+            <field name="code">3356</field>
+            <field name="name">Aquisição de serviço de transporte por estabelecimento de produtor rural</field>
+        </record>
+        <record id="cfop_3503" model="nfe.cfop">
+            <field name="code">3503</field>
+            <field name="name">Devolução de mercadoria exportada que tenha sido recebida com fim específico de exportação</field>
+        </record>
+        <record id="cfop_3551" model="nfe.cfop">
+            <field name="code">3551</field>
+            <field name="name">Compra de bem para o ativo imobilizado</field>
+        </record>
+        <record id="cfop_3552" model="nfe.cfop">
+            <field name="code">3552</field>
+            <field name="name">Entrada de produtos destinados ao uso ou consumo de bordo, em embarcações ou aeronaves exclusivamente em tráfego internacional com destino ao exterior</field>
+        </record>
+        <record id="cfop_3553" model="nfe.cfop">
+            <field name="code">3553</field>
+            <field name="name">Devolução de venda de bem do ativo imobilizado</field>
+        </record>
+        <record id="cfop_3556" model="nfe.cfop">
+            <field name="code">3556</field>
+            <field name="name">Compra de material para uso ou consumo</field>
+        </record>
+        <record id="cfop_3651" model="nfe.cfop">
+            <field name="code">3651</field>
+            <field name="name">Compra de combustível ou lubrificante para industrialização subseqüente</field>
+        </record>
+        <record id="cfop_3652" model="nfe.cfop">
+            <field name="code">3652</field>
+            <field name="name">Compra de combustível ou lubrificante para comercialização</field>
+        </record>
+        <record id="cfop_3653" model="nfe.cfop">
+            <field name="code">3653</field>
+            <field name="name">Compra de combustível ou lubrificante por consumidor ou usuário final</field>
+        </record>
+        <record id="cfop_3667" model="nfe.cfop">
+            <field name="code">3667</field>
+            <field name="name">Entrada de combustível ou lubrificante para consumo final, em embarcações ou aeronaves exclusivamente em tráfego internacional com destino ao exterior</field>
+        </record>
+        <record id="cfop_3930" model="nfe.cfop">
+            <field name="code">3930</field>
+            <field name="name">Lançamento efetuado a título de entrada de bem sob amparo de regime especial aduaneiro de admissão temporária</field>
+        </record>
+        <record id="cfop_3949" model="nfe.cfop">
+            <field name="code">3949</field>
+            <field name="name">Outra entrada de mercadoria ou prestação de serviço não especificado</field>
+        </record>
+        <record id="cfop_5101" model="nfe.cfop">
+            <field name="code">5101</field>
+            <field name="name">Venda de produção do estabelecimento</field>
+        </record>
+        <record id="cfop_5102" model="nfe.cfop">
+            <field name="code">5102</field>
+            <field name="name">Venda de mercadoria adquirida ou recebida de terceiros</field>
+        </record>
+        <record id="cfop_5103" model="nfe.cfop">
+            <field name="code">5103</field>
+            <field name="name">Venda de produção do estabelecimento, efetuada fora do estabelecimento</field>
+        </record>
+        <record id="cfop_5104" model="nfe.cfop">
+            <field name="code">5104</field>
+            <field name="name">Venda de mercadoria adquirida ou recebida de terceiros, efetuada fora do estabelecimento</field>
+        </record>
+        <record id="cfop_5105" model="nfe.cfop">
+            <field name="code">5105</field>
+            <field name="name">Venda de produção do estabelecimento que não deva por ele transitar</field>
+        </record>
+        <record id="cfop_5106" model="nfe.cfop">
+            <field name="code">5106</field>
+            <field name="name">Venda de mercadoria adquirida ou recebida de terceiros, que não deva por ele transitar</field>
+        </record>
+        <record id="cfop_5109" model="nfe.cfop">
+            <field name="code">5109</field>
+            <field name="name">Venda de produção do estabelecimento, destinada à Zona Franca de Manaus ou Áreas de Livre Comércio</field>
+        </record>
+        <record id="cfop_5110" model="nfe.cfop">
+            <field name="code">5110</field>
+            <field name="name">Venda de mercadoria adquirida ou recebida de terceiros, destinada à Zona Franca de Manaus ou Áreas de Livre Comércio</field>
+        </record>
+        <record id="cfop_5111" model="nfe.cfop">
+            <field name="code">5111</field>
+            <field name="name">Venda de produção do estabelecimento remetida anteriormente em consignação industrial</field>
+        </record>
+        <record id="cfop_5112" model="nfe.cfop">
+            <field name="code">5112</field>
+            <field name="name">Venda de mercadoria adquirida ou recebida de terceiros remetida anteriormente em consignação industrial</field>
+        </record>
+        <record id="cfop_5113" model="nfe.cfop">
+            <field name="code">5113</field>
+            <field name="name">Venda de produção do estabelecimento remetida anteriormente em consignação mercantil</field>
+        </record>
+        <record id="cfop_5114" model="nfe.cfop">
+            <field name="code">5114</field>
+            <field name="name">Venda de mercadoria adquirida ou recebida de terceiros remetida anteriormente em consignação mercantil</field>
+        </record>
+        <record id="cfop_5115" model="nfe.cfop">
+            <field name="code">5115</field>
+            <field name="name">Venda de mercadoria adquirida ou recebida de terceiros, recebida anteriormente em consignação mercantil</field>
+        </record>
+        <record id="cfop_5116" model="nfe.cfop">
+            <field name="code">5116</field>
+            <field name="name">Venda de produção do estabelecimento originada de encomenda para entrega futura</field>
+        </record>
+        <record id="cfop_5117" model="nfe.cfop">
+            <field name="code">5117</field>
+            <field name="name">Venda de mercadoria adquirida ou recebida de terceiros, originada de encomenda para entrega futura</field>
+        </record>
+        <record id="cfop_5118" model="nfe.cfop">
+            <field name="code">5118</field>
+            <field name="name">Venda de produção do estabelecimento entregue ao destinatário por conta e ordem do adquirente originário, em venda à ordem</field>
+        </record>
+        <record id="cfop_5119" model="nfe.cfop">
+            <field name="code">5119</field>
+            <field name="name">Venda de mercadoria adquirida ou recebida de terceiros entregue ao destinatário por conta e ordem do adquirente originário, em venda à ordem</field>
+        </record>
+        <record id="cfop_5120" model="nfe.cfop">
+            <field name="code">5120</field>
+            <field name="name">Venda de mercadoria adquirida ou recebida de terceiros entregue ao destinatário pelo vendedor remetente, em venda à ordem</field>
+        </record>
+        <record id="cfop_5122" model="nfe.cfop">
+            <field name="code">5122</field>
+            <field name="name">Venda de produção do estabelecimento remetida para industrialização, por conta e ordem do adquirente, sem transitar pelo estabelecimento do adquirente</field>
+        </record>
+        <record id="cfop_5123" model="nfe.cfop">
+            <field name="code">5123</field>
+            <field name="name">Venda de mercadoria adquirida ou recebida de terceiros remetida para industrialização, por conta e ordem do adquirente, sem transitar pelo estabelecimento do adquirente</field>
+        </record>
+        <record id="cfop_5124" model="nfe.cfop">
+            <field name="code">5124</field>
+            <field name="name">Industrialização efetuada para outra empresa</field>
+        </record>
+        <record id="cfop_5125" model="nfe.cfop">
+            <field name="code">5125</field>
+            <field name="name">Industrialização efetuada para outra empresa quando a mercadoria recebida para utilização no processo de industrialização não transitar pelo estabelecimento adquirente da mercadoria</field>
+        </record>
+        <record id="cfop_5129" model="nfe.cfop">
+            <field name="code">5129</field>
+            <field name="name">Venda de insumo importado e de mercadoria industrializada sob o amparo do Regime Aduaneiro Especial de Entreposto Industrial sob Controle Informatizado do Sistema Público de Escrituração Digital (Recof-Sped</field>
+        </record>
+        <record id="cfop_5131" model="nfe.cfop">
+            <field name="code">5131</field>
+            <field name="name">Remessa de produção do estabelecimento, com previsão de posterior ajuste ou fixação de preço, de ato cooperativo.</field>
+        </record>
+        <record id="cfop_5132" model="nfe.cfop">
+            <field name="code">5132</field>
+            <field name="name">Fixação de preço de produção do estabelecimento, inclusive quando remetidas anteriormente com previsão de posterior ajuste ou fixação de preço de ato cooperativo.</field>
+        </record>
+        <record id="cfop_5151" model="nfe.cfop">
+            <field name="code">5151</field>
+            <field name="name">Transferência de produção do estabelecimento</field>
+        </record>
+        <record id="cfop_5152" model="nfe.cfop">
+            <field name="code">5152</field>
+            <field name="name">Transferência de mercadoria adquirida ou recebida de terceiros</field>
+        </record>
+        <record id="cfop_5153" model="nfe.cfop">
+            <field name="code">5153</field>
+            <field name="name">Transferência de energia elétrica</field>
+        </record>
+        <record id="cfop_5155" model="nfe.cfop">
+            <field name="code">5155</field>
+            <field name="name">Transferência de produção do estabelecimento, que não deva por ele transitar</field>
+        </record>
+        <record id="cfop_5156" model="nfe.cfop">
+            <field name="code">5156</field>
+            <field name="name">Transferência de mercadoria adquirida ou recebida de terceiros, que não deva por ele transitar</field>
+        </record>
+        <record id="cfop_5159" model="nfe.cfop">
+            <field name="code">5159</field>
+            <field name="name">Fornecimento de produção do estabelecimento de ato cooperativo</field>
+        </record>
+        <record id="cfop_5160" model="nfe.cfop">
+            <field name="code">5160</field>
+            <field name="name">Fornecimento de mercadoria adquirida ou recebida de terceiros de ato cooperativo</field>
+        </record>
+        <record id="cfop_5201" model="nfe.cfop">
+            <field name="code">5201</field>
+            <field name="name">Devolução de compra para industrialização</field>
+        </record>
+        <record id="cfop_5202" model="nfe.cfop">
+            <field name="code">5202</field>
+            <field name="name">Devolução de compra para comercialização</field>
+        </record>
+        <record id="cfop_5205" model="nfe.cfop">
+            <field name="code">5205</field>
+            <field name="name">Anulação de valor relativo a aquisição de serviço de comunicação</field>
+        </record>
+        <record id="cfop_5206" model="nfe.cfop">
+            <field name="code">5206</field>
+            <field name="name">Anulação de valor relativo a aquisição de serviço de transporte</field>
+        </record>
+        <record id="cfop_5207" model="nfe.cfop">
+            <field name="code">5207</field>
+            <field name="name">Anulação de valor relativo à compra de energia elétrica</field>
+        </record>
+        <record id="cfop_5208" model="nfe.cfop">
+            <field name="code">5208</field>
+            <field name="name">Devolução de mercadoria recebida em transferência para industrialização</field>
+        </record>
+        <record id="cfop_5209" model="nfe.cfop">
+            <field name="code">5209</field>
+            <field name="name">Devolução de mercadoria recebida em transferência para comercialização</field>
+        </record>
+        <record id="cfop_5210" model="nfe.cfop">
+            <field name="code">5210</field>
+            <field name="name">Devolução de compra para utilização na prestação de serviço</field>
+        </record>
+        <record id="cfop_5213" model="nfe.cfop">
+            <field name="code">5213</field>
+            <field name="name">Devolução de entrada de mercadoria com previsão de posterior ajuste ou fixação de preço, em ato cooperativo.</field>
+        </record>
+        <record id="cfop_5214" model="nfe.cfop">
+            <field name="code">5214</field>
+            <field name="name">Devolução de fixação de preço de produção do estabelecimento produtor, inclusive quando remetidas anteriormente com previsão de posterior ajuste ou fixação de preço, de ato cooperativo, para comercialização.</field>
+        </record>
+        <record id="cfop_5215" model="nfe.cfop">
+            <field name="code">5215</field>
+            <field name="name">Devolução de fixação de preço de produção do estabelecimento produtor, inclusive quando remetidas anteriormente com previsão de posterior ajuste ou fixação de preço, de ato cooperativo, para industrialização.</field>
+        </record>
+        <record id="cfop_5216" model="nfe.cfop">
+            <field name="code">5216</field>
+            <field name="name">Devolução de entrada decorrente do fornecimento de produto ou mercadoria de ato cooperativo</field>
+        </record>
+        <record id="cfop_5251" model="nfe.cfop">
+            <field name="code">5251</field>
+            <field name="name">Venda de energia elétrica para distribuição ou comercialização</field>
+        </record>
+        <record id="cfop_5252" model="nfe.cfop">
+            <field name="code">5252</field>
+            <field name="name">Venda de energia elétrica para estabelecimento industrial</field>
+        </record>
+        <record id="cfop_5253" model="nfe.cfop">
+            <field name="code">5253</field>
+            <field name="name">Venda de energia elétrica para estabelecimento comercial</field>
+        </record>
+        <record id="cfop_5254" model="nfe.cfop">
+            <field name="code">5254</field>
+            <field name="name">Venda de energia elétrica para estabelecimento prestador de serviço de transporte</field>
+        </record>
+        <record id="cfop_5255" model="nfe.cfop">
+            <field name="code">5255</field>
+            <field name="name">Venda de energia elétrica para estabelecimento prestador de serviço de comunicação</field>
+        </record>
+        <record id="cfop_5256" model="nfe.cfop">
+            <field name="code">5256</field>
+            <field name="name">Venda de energia elétrica para estabelecimento de produtor rural</field>
+        </record>
+        <record id="cfop_5257" model="nfe.cfop">
+            <field name="code">5257</field>
+            <field name="name">Venda de energia elétrica para consumo por demanda contratada</field>
+        </record>
+        <record id="cfop_5258" model="nfe.cfop">
+            <field name="code">5258</field>
+            <field name="name">Venda de energia elétrica a não contribuinte</field>
+        </record>
+        <record id="cfop_5301" model="nfe.cfop">
+            <field name="code">5301</field>
+            <field name="name">Prestação de serviço de comunicação para execução de serviço da mesma natureza</field>
+        </record>
+        <record id="cfop_5302" model="nfe.cfop">
+            <field name="code">5302</field>
+            <field name="name">Prestação de serviço de comunicação a estabelecimento industrial</field>
+        </record>
+        <record id="cfop_5303" model="nfe.cfop">
+            <field name="code">5303</field>
+            <field name="name">Prestação de serviço de comunicação a estabelecimento comercial</field>
+        </record>
+        <record id="cfop_5304" model="nfe.cfop">
+            <field name="code">5304</field>
+            <field name="name">Prestação de serviço de comunicação a estabelecimento de prestador de serviço de transporte</field>
+        </record>
+        <record id="cfop_5305" model="nfe.cfop">
+            <field name="code">5305</field>
+            <field name="name">Prestação de serviço de comunicação a estabelecimento de geradora ou de distribuidora de energia elétrica</field>
+        </record>
+        <record id="cfop_5306" model="nfe.cfop">
+            <field name="code">5306</field>
+            <field name="name">Prestação de serviço de comunicação a estabelecimento de produtor rural</field>
+        </record>
+        <record id="cfop_5307" model="nfe.cfop">
+            <field name="code">5307</field>
+            <field name="name">Prestação de serviço de comunicação a não contribuinte</field>
+        </record>
+        <record id="cfop_5351" model="nfe.cfop">
+            <field name="code">5351</field>
+            <field name="name">Prestação de serviço de transporte para execução de serviço da mesma natureza</field>
+        </record>
+        <record id="cfop_5352" model="nfe.cfop">
+            <field name="code">5352</field>
+            <field name="name">Prestação de serviço de transporte a estabelecimento industrial</field>
+        </record>
+        <record id="cfop_5353" model="nfe.cfop">
+            <field name="code">5353</field>
+            <field name="name">Prestação de serviço de transporte a estabelecimento comercial</field>
+        </record>
+        <record id="cfop_5354" model="nfe.cfop">
+            <field name="code">5354</field>
+            <field name="name">Prestação de serviço de transporte a estabelecimento de prestador de serviço de comunicação</field>
+        </record>
+        <record id="cfop_5355" model="nfe.cfop">
+            <field name="code">5355</field>
+            <field name="name">Prestação de serviço de transporte a estabelecimento de geradora ou de distribuidora de energia elétrica</field>
+        </record>
+        <record id="cfop_5356" model="nfe.cfop">
+            <field name="code">5356</field>
+            <field name="name">Prestação de serviço de transporte a estabelecimento de produtor rural</field>
+        </record>
+        <record id="cfop_5357" model="nfe.cfop">
+            <field name="code">5357</field>
+            <field name="name">Prestação de serviço de transporte a não contribuinte</field>
+        </record>
+        <record id="cfop_5359" model="nfe.cfop">
+            <field name="code">5359</field>
+            <field name="name">Prestação de serviço de transporte a contribuinte ou a não contribuinte quando a mercadoria transportada está dispensada de emissão de nota fiscal. (ajuste sinief 03/04)</field>
+        </record>
+        <record id="cfop_5360" model="nfe.cfop">
+            <field name="code">5360</field>
+            <field name="name">Prestação de serviço de transporte a contribuinte substituto em relação ao serviço de transporte.</field>
+        </record>
+        <record id="cfop_5401" model="nfe.cfop">
+            <field name="code">5401</field>
+            <field name="name">Venda de produção do estabelecimento em operação com produto sujeito ao regime de substituição tributária, na condição de contribuinte substituto</field>
+        </record>
+        <record id="cfop_5402" model="nfe.cfop">
+            <field name="code">5402</field>
+            <field name="name">Venda de produção do estabelecimento de produto sujeito ao regime de substituição tributária, em operação entre contribuintes substitutos do mesmo produto</field>
+        </record>
+        <record id="cfop_5403" model="nfe.cfop">
+            <field name="code">5403</field>
+            <field name="name">Venda de mercadoria, adquirida ou recebida de terceiros, sujeita ao regime de substituição tributária, na condição de contribuinte-substituto</field>
+        </record>
+        <record id="cfop_5405" model="nfe.cfop">
+            <field name="code">5405</field>
+            <field name="name">Venda de mercadoria, adquirida ou recebida de terceiros, sujeita ao regime de substituição tributária, na condição de contribuinte-substituído</field>
+        </record>
+        <record id="cfop_5408" model="nfe.cfop">
+            <field name="code">5408</field>
+            <field name="name">Transferência de produção do estabelecimento em operação com produto sujeito ao regime de substituição tributária</field>
+        </record>
+        <record id="cfop_5409" model="nfe.cfop">
+            <field name="code">5409</field>
+            <field name="name">Transferência de mercadoria adquirida ou recebida de terceiros em operação com mercadoria sujeita ao regime de substituição tributária</field>
+        </record>
+        <record id="cfop_5410" model="nfe.cfop">
+            <field name="code">5410</field>
+            <field name="name">Devolução de compra para industrialização em operação com mercadoria sujeita ao regime de substituição tributária</field>
+        </record>
+        <record id="cfop_5411" model="nfe.cfop">
+            <field name="code">5411</field>
+            <field name="name">Devolução de compra para comercialização em operação com mercadoria sujeita ao regime de substituição tributária</field>
+        </record>
+        <record id="cfop_5412" model="nfe.cfop">
+            <field name="code">5412</field>
+            <field name="name">Devolução de bem do ativo imobilizado, em operação com mercadoria sujeita ao regime de substituição tributária</field>
+        </record>
+        <record id="cfop_5413" model="nfe.cfop">
+            <field name="code">5413</field>
+            <field name="name">Devolução de mercadoria destinada ao uso ou consumo, em operação com mercadoria sujeita ao regime de substituição tributária.</field>
+        </record>
+        <record id="cfop_5414" model="nfe.cfop">
+            <field name="code">5414</field>
+            <field name="name">Remessa de produção do estabelecimento para venda fora do estabelecimento em operação com produto sujeito ao regime de substituição tributária</field>
+        </record>
+        <record id="cfop_5415" model="nfe.cfop">
+            <field name="code">5415</field>
+            <field name="name">Remessa de mercadoria adquirida ou recebida de terceiros para venda fora do estabelecimento, em operação com mercadoria sujeita ao regime de substituição tributária</field>
+        </record>
+        <record id="cfop_5451" model="nfe.cfop">
+            <field name="code">5451</field>
+            <field name="name">Remessa de animal - Sistema de Integração e Parceria Rural</field>
+        </record>
+        <record id="cfop_5452" model="nfe.cfop">
+            <field name="code">5452</field>
+            <field name="name">Remessa de insumo - Sistema de Integração e Parceria Rural</field>
+        </record>
+        <record id="cfop_5453" model="nfe.cfop">
+            <field name="code">5453</field>
+            <field name="name">Retorno de animal ou da produção - Sistema de Integração e Parceria Rural</field>
+        </record>
+        <record id="cfop_5454" model="nfe.cfop">
+            <field name="code">5454</field>
+            <field name="name">Retorno simbólico de animal ou da produção - Sistema de Integração e Parceria Rural</field>
+        </record>
+        <record id="cfop_5455" model="nfe.cfop">
+            <field name="code">5455</field>
+            <field name="name">Retorno de insumos não utilizados na produção - Sistema de Integração e Parceria Rural</field>
+        </record>
+        <record id="cfop_5456" model="nfe.cfop">
+            <field name="code">5456</field>
+            <field name="name">Saída referente a remuneração do produtor - Sistema de Integração e Parceria Rural</field>
+        </record>
+        <record id="cfop_5501" model="nfe.cfop">
+            <field name="code">5501</field>
+            <field name="name">Remessa de produção do estabelecimento, com fim específico de exportação</field>
+        </record>
+        <record id="cfop_5502" model="nfe.cfop">
+            <field name="code">5502</field>
+            <field name="name">Remessa de mercadoria adquirida ou recebida de terceiros, com fim específico de exportação</field>
+        </record>
+        <record id="cfop_5503" model="nfe.cfop">
+            <field name="code">5503</field>
+            <field name="name">Devolução de mercadoria recebida com fim específico de exportação</field>
+        </record>
+        <record id="cfop_5504" model="nfe.cfop">
+            <field name="code">5504</field>
+            <field name="name">Remessa de mercadorias para formação de lote de exportação, de produtos industrializados ou produzidos pelo próprio estabelecimento.</field>
+        </record>
+        <record id="cfop_5505" model="nfe.cfop">
+            <field name="code">5505</field>
+            <field name="name">Remessa de mercadorias, adquiridas ou recebidas de terceiros, para formação de lote de exportação</field>
+        </record>
+        <record id="cfop_5551" model="nfe.cfop">
+            <field name="code">5551</field>
+            <field name="name">Venda de bem do ativo imobilizado</field>
+        </record>
+        <record id="cfop_5552" model="nfe.cfop">
+            <field name="code">5552</field>
+            <field name="name">Transferência de bem do ativo imobilizado</field>
+        </record>
+        <record id="cfop_5553" model="nfe.cfop">
+            <field name="code">5553</field>
+            <field name="name">Devolução de compra de bem para o ativo imobilizado</field>
+        </record>
+        <record id="cfop_5554" model="nfe.cfop">
+            <field name="code">5554</field>
+            <field name="name">Remessa de bem do ativo imobilizado para uso fora do estabelecimento</field>
+        </record>
+        <record id="cfop_5555" model="nfe.cfop">
+            <field name="code">5555</field>
+            <field name="name">Devolução de bem do ativo imobilizado de terceiro, recebido para uso no estabelecimento</field>
+        </record>
+        <record id="cfop_5556" model="nfe.cfop">
+            <field name="code">5556</field>
+            <field name="name">Devolução de compra de material de uso ou consumo</field>
+        </record>
+        <record id="cfop_5557" model="nfe.cfop">
+            <field name="code">5557</field>
+            <field name="name">Transferência de material de uso ou consumo</field>
+        </record>
+        <record id="cfop_5601" model="nfe.cfop">
+            <field name="code">5601</field>
+            <field name="name">Transferência de crédito de ICMS acumulado</field>
+        </record>
+        <record id="cfop_5602" model="nfe.cfop">
+            <field name="code">5602</field>
+            <field name="name">Transferência de saldo credor de ICMS para outro estabelecimento da mesma empresa, destinado à compensação de saldo devedor de ICMS</field>
+        </record>
+        <record id="cfop_5603" model="nfe.cfop">
+            <field name="code">5603</field>
+            <field name="name">Ressarcimento de ICMS retido por substituição tributária</field>
+        </record>
+        <record id="cfop_5605" model="nfe.cfop">
+            <field name="code">5605</field>
+            <field name="name">Transferência de saldo devedor de ICMS de outro estabelecimento da mesma empresa. (ajuste sinief 03/04)</field>
+        </record>
+        <record id="cfop_5606" model="nfe.cfop">
+            <field name="code">5606</field>
+            <field name="name">Utilização de saldo credor de ICMS para extinção por compensação de débitos fiscais.</field>
+        </record>
+        <record id="cfop_5651" model="nfe.cfop">
+            <field name="code">5651</field>
+            <field name="name">Venda de combustível ou lubrificante de produção do estabelecimento destinado à industrialização subseqüente</field>
+        </record>
+        <record id="cfop_5652" model="nfe.cfop">
+            <field name="code">5652</field>
+            <field name="name">Venda de combustível ou lubrificante de produção do estabelecimento destinado à comercialização</field>
+        </record>
+        <record id="cfop_5653" model="nfe.cfop">
+            <field name="code">5653</field>
+            <field name="name">Venda de combustível ou lubrificante de produção do estabelecimento destinado a consumidor ou usuário final</field>
+        </record>
+        <record id="cfop_5654" model="nfe.cfop">
+            <field name="code">5654</field>
+            <field name="name">Venda de combustível ou lubrificante adquirido ou recebido de terceiros destinado à industrialização subseqüente</field>
+        </record>
+        <record id="cfop_5655" model="nfe.cfop">
+            <field name="code">5655</field>
+            <field name="name">Venda de combustível ou lubrificante adquirido ou recebido de terceiros destinado à comercialização</field>
+        </record>
+        <record id="cfop_5656" model="nfe.cfop">
+            <field name="code">5656</field>
+            <field name="name">Venda de combustível ou lubrificante adquirido ou recebido de terceiros destinado a consumidor ou usuário final</field>
+        </record>
+        <record id="cfop_5657" model="nfe.cfop">
+            <field name="code">5657</field>
+            <field name="name">Remessa de combustível ou lubrificante adquirido ou recebido de terceiros para venda fora do estabelecimento</field>
+        </record>
+        <record id="cfop_5658" model="nfe.cfop">
+            <field name="code">5658</field>
+            <field name="name">Transferência de combustível ou lubrificante de produção do estabelecimento</field>
+        </record>
+        <record id="cfop_5659" model="nfe.cfop">
+            <field name="code">5659</field>
+            <field name="name">Transferência de combustível ou lubrificante adquirido ou recebido de terceiro</field>
+        </record>
+        <record id="cfop_5660" model="nfe.cfop">
+            <field name="code">5660</field>
+            <field name="name">Devolução de compra de combustível ou lubrificante adquirido para industrialização subseqüente</field>
+        </record>
+        <record id="cfop_5661" model="nfe.cfop">
+            <field name="code">5661</field>
+            <field name="name">Devolução de compra de combustível ou lubrificante adquirido para comercialização</field>
+        </record>
+        <record id="cfop_5662" model="nfe.cfop">
+            <field name="code">5662</field>
+            <field name="name">Devolução de compra de combustível ou lubrificante adquirido por consumidor ou usuário final</field>
+        </record>
+        <record id="cfop_5663" model="nfe.cfop">
+            <field name="code">5663</field>
+            <field name="name">Remessa para armazenagem de combustível ou lubrificante</field>
+        </record>
+        <record id="cfop_5664" model="nfe.cfop">
+            <field name="code">5664</field>
+            <field name="name">Retorno de combustível ou lubrificante recebido para armazenagem</field>
+        </record>
+        <record id="cfop_5665" model="nfe.cfop">
+            <field name="code">5665</field>
+            <field name="name">Retorno simbólico de combustível ou lubrificante recebido para armazenagem</field>
+        </record>
+        <record id="cfop_5666" model="nfe.cfop">
+            <field name="code">5666</field>
+            <field name="name">Remessa por conta e ordem de terceiros de combustível ou lubrificante recebido para armazenagem</field>
+        </record>
+        <record id="cfop_5667" model="nfe.cfop">
+            <field name="code">5667</field>
+            <field name="name">Venda de combustível ou lubrificante a consumidor ou usuário final estabelecido em outra unidade da Federação</field>
+        </record>
+        <record id="cfop_5901" model="nfe.cfop">
+            <field name="code">5901</field>
+            <field name="name">Remessa para industrialização por encomenda</field>
+        </record>
+        <record id="cfop_5902" model="nfe.cfop">
+            <field name="code">5902</field>
+            <field name="name">Retorno de mercadoria utilizada na industrialização por encomenda</field>
+        </record>
+        <record id="cfop_5903" model="nfe.cfop">
+            <field name="code">5903</field>
+            <field name="name">Retorno de mercadoria recebida para industrialização e não aplicada no referido processo</field>
+        </record>
+        <record id="cfop_5904" model="nfe.cfop">
+            <field name="code">5904</field>
+            <field name="name">Remessa para venda fora do estabelecimento</field>
+        </record>
+        <record id="cfop_5905" model="nfe.cfop">
+            <field name="code">5905</field>
+            <field name="name">Remessa para depósito fechado ou armazém geral</field>
+        </record>
+        <record id="cfop_5906" model="nfe.cfop">
+            <field name="code">5906</field>
+            <field name="name">Retorno de mercadoria depositada em depósito fechado ou armazém geral</field>
+        </record>
+        <record id="cfop_5907" model="nfe.cfop">
+            <field name="code">5907</field>
+            <field name="name">Retorno simbólico de mercadoria depositada em depósito fechado ou armazém geral</field>
+        </record>
+        <record id="cfop_5908" model="nfe.cfop">
+            <field name="code">5908</field>
+            <field name="name">Remessa de bem por conta de contrato de comodato ou locação</field>
+        </record>
+        <record id="cfop_5909" model="nfe.cfop">
+            <field name="code">5909</field>
+            <field name="name">Retorno de bem recebido por conta de contrato de comodato ou locação</field>
+        </record>
+        <record id="cfop_5910" model="nfe.cfop">
+            <field name="code">5910</field>
+            <field name="name">Remessa em bonificação, doação ou brinde</field>
+        </record>
+        <record id="cfop_5911" model="nfe.cfop">
+            <field name="code">5911</field>
+            <field name="name">Remessa de amostra grátis</field>
+        </record>
+        <record id="cfop_5912" model="nfe.cfop">
+            <field name="code">5912</field>
+            <field name="name">Remessa de mercadoria ou bem para demonstração</field>
+        </record>
+        <record id="cfop_5913" model="nfe.cfop">
+            <field name="code">5913</field>
+            <field name="name">Retorno de mercadoria ou bem recebido para demonstração</field>
+        </record>
+        <record id="cfop_5914" model="nfe.cfop">
+            <field name="code">5914</field>
+            <field name="name">Remessa de mercadoria ou bem para exposição ou feira</field>
+        </record>
+        <record id="cfop_5915" model="nfe.cfop">
+            <field name="code">5915</field>
+            <field name="name">Remessa de mercadoria ou bem para conserto ou reparo</field>
+        </record>
+        <record id="cfop_5916" model="nfe.cfop">
+            <field name="code">5916</field>
+            <field name="name">Retorno de mercadoria ou bem recebido para conserto ou reparo</field>
+        </record>
+        <record id="cfop_5917" model="nfe.cfop">
+            <field name="code">5917</field>
+            <field name="name">Remessa de mercadoria em consignação mercantil ou industrial</field>
+        </record>
+        <record id="cfop_5918" model="nfe.cfop">
+            <field name="code">5918</field>
+            <field name="name">Devolução de mercadoria recebida em consignação mercantil ou industrial</field>
+        </record>
+        <record id="cfop_5919" model="nfe.cfop">
+            <field name="code">5919</field>
+            <field name="name">Devolução simbólica de mercadoria vendida ou utilizada em processo industrial, recebida anteriormente em consignação mercantil ou industrial</field>
+        </record>
+        <record id="cfop_5920" model="nfe.cfop">
+            <field name="code">5920</field>
+            <field name="name">Remessa de vasilhame ou sacaria</field>
+        </record>
+        <record id="cfop_5921" model="nfe.cfop">
+            <field name="code">5921</field>
+            <field name="name">Devolução de vasilhame ou sacaria</field>
+        </record>
+        <record id="cfop_5922" model="nfe.cfop">
+            <field name="code">5922</field>
+            <field name="name">Lançamento efetuado a título de simples faturamento decorrente de venda para entrega futura</field>
+        </record>
+        <record id="cfop_5923" model="nfe.cfop">
+            <field name="code">5923</field>
+            <field name="name">Remessa de mercadoria por conta e ordem de terceiros, em venda à ordem ou em operações com armazém geral ou depósito fechado</field>
+        </record>
+        <record id="cfop_5924" model="nfe.cfop">
+            <field name="code">5924</field>
+            <field name="name">Remessa para industrialização por conta e ordem do adquirente da mercadoria, quando esta não transitar pelo estabelecimento do adquirente</field>
+        </record>
+        <record id="cfop_5925" model="nfe.cfop">
+            <field name="code">5925</field>
+            <field name="name">Retorno de mercadoria recebida para industrialização por conta e ordem do adquirente da mercadoria, quando aquela não transitar pelo estabelecimento do adquirente</field>
+        </record>
+        <record id="cfop_5926" model="nfe.cfop">
+            <field name="code">5926</field>
+            <field name="name">Lançamento efetuado a título de reclassificação de mercadoria decorrente de formação de kit ou de sua desagregação</field>
+        </record>
+        <record id="cfop_5927" model="nfe.cfop">
+            <field name="code">5927</field>
+            <field name="name">Lançamento efetuado a título de baixa de estoque decorrente de perda, roubo ou deterioração</field>
+        </record>
+        <record id="cfop_5928" model="nfe.cfop">
+            <field name="code">5928</field>
+            <field name="name">Lançamento efetuado a título de baixa de estoque decorrente do encerramento da atividade da empresa</field>
+        </record>
+        <record id="cfop_5929" model="nfe.cfop">
+            <field name="code">5929</field>
+            <field name="name">Lançamento efetuado em decorrência de emissão de documento fiscal relativo a operação ou prestação também acobertada por documento fiscal do varejo</field>
+        </record>
+        <record id="cfop_5931" model="nfe.cfop">
+            <field name="code">5931</field>
+            <field name="name">Lançamento efetuado em decorrência da responsabilidade de retenção do imposto por substituição tributária, atribuída ao remetente ou alienante da mercadoria, pelo serviço de transporte realizado por transportador autônomo ou por transportador não inscrito na unidade da Federação onde iniciado o serviço</field>
+        </record>
+        <record id="cfop_5932" model="nfe.cfop">
+            <field name="code">5932</field>
+            <field name="name">Prestação de serviço de transporte iniciada em unidade da Federação diversa daquela onde inscrito o prestador</field>
+        </record>
+        <record id="cfop_5933" model="nfe.cfop">
+            <field name="code">5933</field>
+            <field name="name">Prestação de serviço tributado pelo ISSQN. (ajuste sinief 03/04)</field>
+        </record>
+        <record id="cfop_5934" model="nfe.cfop">
+            <field name="code">5934</field>
+            <field name="name">Remessa simbólica de mercadoria depositada em armazém geral ou depósito fechado</field>
+        </record>
+        <record id="cfop_5949" model="nfe.cfop">
+            <field name="code">5949</field>
+            <field name="name">Outra saída de mercadoria ou prestação de serviço não especificado</field>
+        </record>
+        <record id="cfop_6101" model="nfe.cfop">
+            <field name="code">6101</field>
+            <field name="name">Venda de produção do estabelecimento</field>
+        </record>
+        <record id="cfop_6102" model="nfe.cfop">
+            <field name="code">6102</field>
+            <field name="name">Venda de mercadoria adquirida ou recebida de terceiros</field>
+        </record>
+        <record id="cfop_6103" model="nfe.cfop">
+            <field name="code">6103</field>
+            <field name="name">Venda de produção do estabelecimento, efetuada fora do estabelecimento</field>
+        </record>
+        <record id="cfop_6104" model="nfe.cfop">
+            <field name="code">6104</field>
+            <field name="name">Venda de mercadoria adquirida ou recebida de terceiros, efetuada fora do estabelecimento</field>
+        </record>
+        <record id="cfop_6105" model="nfe.cfop">
+            <field name="code">6105</field>
+            <field name="name">Venda de produção do estabelecimento que não deva por ele transitar</field>
+        </record>
+        <record id="cfop_6106" model="nfe.cfop">
+            <field name="code">6106</field>
+            <field name="name">Venda de mercadoria adquirida ou recebida de terceiros, que não deva por ele transitar</field>
+        </record>
+        <record id="cfop_6107" model="nfe.cfop">
+            <field name="code">6107</field>
+            <field name="name">Venda de produção do estabelecimento, destinada a não contribuinte</field>
+        </record>
+        <record id="cfop_6108" model="nfe.cfop">
+            <field name="code">6108</field>
+            <field name="name">Venda de mercadoria adquirida ou recebida de terceiros, destinada a não contribuinte</field>
+        </record>
+        <record id="cfop_6109" model="nfe.cfop">
+            <field name="code">6109</field>
+            <field name="name">Venda de produção do estabelecimento, destinada à Zona Franca de Manaus ou Áreas de Livre Comércio</field>
+        </record>
+        <record id="cfop_6110" model="nfe.cfop">
+            <field name="code">6110</field>
+            <field name="name">Venda de mercadoria adquirida ou recebida de terceiros, destinada à Zona Franca de Manaus ou Áreas de Livre Comércio</field>
+        </record>
+        <record id="cfop_6111" model="nfe.cfop">
+            <field name="code">6111</field>
+            <field name="name">Venda de produção do estabelecimento remetida anteriormente em consignação industrial</field>
+        </record>
+        <record id="cfop_6112" model="nfe.cfop">
+            <field name="code">6112</field>
+            <field name="name">Venda de mercadoria adquirida ou recebida de Terceiros remetida anteriormente em consignação industrial</field>
+        </record>
+        <record id="cfop_6113" model="nfe.cfop">
+            <field name="code">6113</field>
+            <field name="name">Venda de produção do estabelecimento remetida anteriormente em consignação mercantil</field>
+        </record>
+        <record id="cfop_6114" model="nfe.cfop">
+            <field name="code">6114</field>
+            <field name="name">Venda de mercadoria adquirida ou recebida de terceiros remetida anteriormente em consignação mercantil</field>
+        </record>
+        <record id="cfop_6115" model="nfe.cfop">
+            <field name="code">6115</field>
+            <field name="name">Venda de mercadoria adquirida ou recebida de terceiros, recebida anteriormente em consignação mercantil</field>
+        </record>
+        <record id="cfop_6116" model="nfe.cfop">
+            <field name="code">6116</field>
+            <field name="name">Venda de produção do estabelecimento originada de encomenda para entrega futura</field>
+        </record>
+        <record id="cfop_6117" model="nfe.cfop">
+            <field name="code">6117</field>
+            <field name="name">Venda de mercadoria adquirida ou recebida de terceiros, originada de encomenda para entrega futura</field>
+        </record>
+        <record id="cfop_6118" model="nfe.cfop">
+            <field name="code">6118</field>
+            <field name="name">Venda de produção do estabelecimento entregue ao destinatário por conta e ordem do adquirente originário, em venda à ordem</field>
+        </record>
+        <record id="cfop_6119" model="nfe.cfop">
+            <field name="code">6119</field>
+            <field name="name">Venda de mercadoria adquirida ou recebida de terceiros entregue ao destinatário por conta e ordem do adquirente originário, em venda à ordem</field>
+        </record>
+        <record id="cfop_6120" model="nfe.cfop">
+            <field name="code">6120</field>
+            <field name="name">Venda de mercadoria adquirida ou recebida de terceiros entregue ao destinatário pelo vendedor remetente, em venda à ordem</field>
+        </record>
+        <record id="cfop_6122" model="nfe.cfop">
+            <field name="code">6122</field>
+            <field name="name">Venda de produção do estabelecimento remetida para industrialização, por conta e ordem do adquirente, sem transitar pelo estabelecimento do adquirente</field>
+        </record>
+        <record id="cfop_6123" model="nfe.cfop">
+            <field name="code">6123</field>
+            <field name="name">Venda de mercadoria adquirida ou recebida de terceiros remetida para industrialização, por conta e ordem do adquirente, sem transitar pelo estabelecimento do adquirente</field>
+        </record>
+        <record id="cfop_6124" model="nfe.cfop">
+            <field name="code">6124</field>
+            <field name="name">Industrialização efetuada para outra empresa</field>
+        </record>
+        <record id="cfop_6125" model="nfe.cfop">
+            <field name="code">6125</field>
+            <field name="name">Industrialização efetuada para outra empresa quando a mercadoria recebida para utilização no processo de industrialização não transitar pelo estabelecimento adquirente da mercadoria</field>
+        </record>
+        <record id="cfop_6129" model="nfe.cfop">
+            <field name="code">6129</field>
+            <field name="name">Venda de insumo importado e de mercadoria industrializada sob o amparo do Regime Aduaneiro Especial de Entreposto Industrial sob Controle Informatizado do Sistema Público de Escrituração Digital (Recof-Sped)</field>
+        </record>
+        <record id="cfop_6131" model="nfe.cfop">
+            <field name="code">6131</field>
+            <field name="name">Remessa de produção de estabelecimento, com previsão de posterior ajuste ou fixação de preço de ato cooperativo.</field>
+        </record>
+        <record id="cfop_6132" model="nfe.cfop">
+            <field name="code">6132</field>
+            <field name="name">Fixação de preço de produção do estabelecimento, inclusive quando remetidas anteriormente com previsão de posterior ajuste ou fixação de preço ou fixação de preço de ato cooperativo.</field>
+        </record>
+        <record id="cfop_6151" model="nfe.cfop">
+            <field name="code">6151</field>
+            <field name="name">Transferência de produção do estabelecimento</field>
+        </record>
+        <record id="cfop_6152" model="nfe.cfop">
+            <field name="code">6152</field>
+            <field name="name">Transferência de mercadoria adquirida ou recebida de terceiros</field>
+        </record>
+        <record id="cfop_6153" model="nfe.cfop">
+            <field name="code">6153</field>
+            <field name="name">Transferência de energia elétrica</field>
+        </record>
+        <record id="cfop_6155" model="nfe.cfop">
+            <field name="code">6155</field>
+            <field name="name">Transferência de produção do estabelecimento, que não deva por ele transitar</field>
+        </record>
+        <record id="cfop_6156" model="nfe.cfop">
+            <field name="code">6156</field>
+            <field name="name">Transferência de mercadoria adquirida ou recebida de terceiros, que não deva por ele transitar</field>
+        </record>
+        <record id="cfop_6159" model="nfe.cfop">
+            <field name="code">6159</field>
+            <field name="name">Fornecimento de produção do estabelecimento de ato cooperativo</field>
+        </record>
+        <record id="cfop_6160" model="nfe.cfop">
+            <field name="code">6160</field>
+            <field name="name">Fornecimento de mercadoria adquirida ou recebida de terceiros de ato cooperativo</field>
+        </record>
+        <record id="cfop_6201" model="nfe.cfop">
+            <field name="code">6201</field>
+            <field name="name">Devolução de compra para industrialização</field>
+        </record>
+        <record id="cfop_6202" model="nfe.cfop">
+            <field name="code">6202</field>
+            <field name="name">Devolução de compra para comercialização</field>
+        </record>
+        <record id="cfop_6205" model="nfe.cfop">
+            <field name="code">6205</field>
+            <field name="name">Anulação de valor relativo a aquisição de serviço de comunicação</field>
+        </record>
+        <record id="cfop_6206" model="nfe.cfop">
+            <field name="code">6206</field>
+            <field name="name">Anulação de valor relativo a aquisição de serviço de transporte</field>
+        </record>
+        <record id="cfop_6207" model="nfe.cfop">
+            <field name="code">6207</field>
+            <field name="name">Anulação de valor relativo à compra de energia elétrica</field>
+        </record>
+        <record id="cfop_6208" model="nfe.cfop">
+            <field name="code">6208</field>
+            <field name="name">Devolução de mercadoria recebida em transferência para industrialização</field>
+        </record>
+        <record id="cfop_6209" model="nfe.cfop">
+            <field name="code">6209</field>
+            <field name="name">Devolução de mercadoria recebida em transferência para comercialização</field>
+        </record>
+        <record id="cfop_6210" model="nfe.cfop">
+            <field name="code">6210</field>
+            <field name="name">Devolução de compra para utilização na prestação de serviço</field>
+        </record>
+        <record id="cfop_6213" model="nfe.cfop">
+            <field name="code">6213</field>
+            <field name="name">Devolução de entrada de mercadoria com previsão de posterior ajuste ou fixação de preço, em ato cooperativo.</field>
+        </record>
+        <record id="cfop_6214" model="nfe.cfop">
+            <field name="code">6214</field>
+            <field name="name">Devolução de fixação de preço de produção do estabelecimento produtor, inclusive quando remetidas anteriormente com previsão de posterior ajuste ou fixação de preço, de ato cooperativo, para comercialização.</field>
+        </record>
+        <record id="cfop_6215" model="nfe.cfop">
+            <field name="code">6215</field>
+            <field name="name">Devolução de fixação de preço de produção do estabelecimento produtor, inclusive quando remetidas anteriormente com previsão de posterior ajuste ou fixação de preço, de ato cooperativo para industrialização.</field>
+        </record>
+        <record id="cfop_6216" model="nfe.cfop">
+            <field name="code">6216</field>
+            <field name="name">Devolução de entrada decorrente do fornecimento de produto ou mercadoria de ato cooperativo</field>
+        </record>
+        <record id="cfop_6251" model="nfe.cfop">
+            <field name="code">6251</field>
+            <field name="name">Venda de energia elétrica para distribuição ou comercialização</field>
+        </record>
+        <record id="cfop_6252" model="nfe.cfop">
+            <field name="code">6252</field>
+            <field name="name">Venda de energia elétrica para estabelecimento industrial</field>
+        </record>
+        <record id="cfop_6253" model="nfe.cfop">
+            <field name="code">6253</field>
+            <field name="name">Venda de energia elétrica para estabelecimento comercial</field>
+        </record>
+        <record id="cfop_6254" model="nfe.cfop">
+            <field name="code">6254</field>
+            <field name="name">Venda de energia elétrica para estabelecimento prestador de serviço de transporte</field>
+        </record>
+        <record id="cfop_6255" model="nfe.cfop">
+            <field name="code">6255</field>
+            <field name="name">Venda de energia elétrica para estabelecimento prestador de serviço de comunicação</field>
+        </record>
+        <record id="cfop_6256" model="nfe.cfop">
+            <field name="code">6256</field>
+            <field name="name">Venda de energia elétrica para estabelecimento de produtor rural</field>
+        </record>
+        <record id="cfop_6257" model="nfe.cfop">
+            <field name="code">6257</field>
+            <field name="name">Venda de energia elétrica para consumo por demanda contratada</field>
+        </record>
+        <record id="cfop_6258" model="nfe.cfop">
+            <field name="code">6258</field>
+            <field name="name">Venda de energia elétrica a não contribuinte</field>
+        </record>
+        <record id="cfop_6301" model="nfe.cfop">
+            <field name="code">6301</field>
+            <field name="name">Prestação de serviço de comunicação para execução de serviço da mesma natureza</field>
+        </record>
+        <record id="cfop_6302" model="nfe.cfop">
+            <field name="code">6302</field>
+            <field name="name">Prestação de serviço de comunicação a estabelecimento industrial</field>
+        </record>
+        <record id="cfop_6303" model="nfe.cfop">
+            <field name="code">6303</field>
+            <field name="name">Prestação de serviço de comunicação a estabelecimento comercial</field>
+        </record>
+        <record id="cfop_6304" model="nfe.cfop">
+            <field name="code">6304</field>
+            <field name="name">Prestação de serviço de comunicação a estabelecimento de prestador de serviço de transporte</field>
+        </record>
+        <record id="cfop_6305" model="nfe.cfop">
+            <field name="code">6305</field>
+            <field name="name">Prestação de serviço de comunicação a estabelecimento de geradora ou de distribuidora de energia elétrica</field>
+        </record>
+        <record id="cfop_6306" model="nfe.cfop">
+            <field name="code">6306</field>
+            <field name="name">Prestação de serviço de comunicação a estabelecimento de produtor rural</field>
+        </record>
+        <record id="cfop_6307" model="nfe.cfop">
+            <field name="code">6307</field>
+            <field name="name">Prestação de serviço de comunicação a não contribuinte</field>
+        </record>
+        <record id="cfop_6351" model="nfe.cfop">
+            <field name="code">6351</field>
+            <field name="name">Prestação de serviço de transporte para execução de serviço da mesma natureza</field>
+        </record>
+        <record id="cfop_6352" model="nfe.cfop">
+            <field name="code">6352</field>
+            <field name="name">Prestação de serviço de transporte a estabelecimento industrial</field>
+        </record>
+        <record id="cfop_6353" model="nfe.cfop">
+            <field name="code">6353</field>
+            <field name="name">Prestação de serviço de transporte a estabelecimento comercial</field>
+        </record>
+        <record id="cfop_6354" model="nfe.cfop">
+            <field name="code">6354</field>
+            <field name="name">Prestação de serviço de transporte a estabelecimento de prestador de serviço de comunicação</field>
+        </record>
+        <record id="cfop_6355" model="nfe.cfop">
+            <field name="code">6355</field>
+            <field name="name">Prestação de serviço de transporte a estabelecimento de geradora ou de distribuidora de energia elétrica</field>
+        </record>
+        <record id="cfop_6356" model="nfe.cfop">
+            <field name="code">6356</field>
+            <field name="name">Prestação de serviço de transporte a estabelecimento de produtor rural</field>
+        </record>
+        <record id="cfop_6357" model="nfe.cfop">
+            <field name="code">6357</field>
+            <field name="name">Prestação de serviço de transporte a não contribuinte</field>
+        </record>
+        <record id="cfop_6359" model="nfe.cfop">
+            <field name="code">6359</field>
+            <field name="name">Prestação de serviço de transporte a contribuinte ou a não contribuinte quando a mercadoria transportada está dispensada de emissão de nota fiscal. (ajuste sinief 03/04)</field>
+        </record>
+        <record id="cfop_6360" model="nfe.cfop">
+            <field name="code">6360</field>
+            <field name="name">Prestação de serviço de transporte a contribuinte substituto em relação ao serviço de transporte</field>
+        </record>
+        <record id="cfop_6401" model="nfe.cfop">
+            <field name="code">6401</field>
+            <field name="name">Venda de produção do estabelecimento em operação com produto sujeito ao regime de substituição tributária, na condição de contribuinte substituto</field>
+        </record>
+        <record id="cfop_6402" model="nfe.cfop">
+            <field name="code">6402</field>
+            <field name="name">Venda de produção do estabelecimento de produto sujeito ao regime de substituição tributária, em operação entre contribuintes substitutos do mesmo produto</field>
+        </record>
+        <record id="cfop_6403" model="nfe.cfop">
+            <field name="code">6403</field>
+            <field name="name">Venda de mercadoria adquirida ou recebida de terceiros em operação com mercadoria sujeita ao regime de substituição tributária, na condição de contribuinte substituto</field>
+        </record>
+        <record id="cfop_6404" model="nfe.cfop">
+            <field name="code">6404</field>
+            <field name="name">Venda de mercadoria sujeita ao regime de substituição tributária, cujo imposto já tenha sido retido anteriormente</field>
+        </record>
+        <record id="cfop_6408" model="nfe.cfop">
+            <field name="code">6408</field>
+            <field name="name">Transferência de produção do estabelecimento em operação com produto sujeito ao regime de substituição tributária</field>
+        </record>
+        <record id="cfop_6409" model="nfe.cfop">
+            <field name="code">6409</field>
+            <field name="name">Transferência de mercadoria adquirida ou recebida de terceiros em operação com mercadoria sujeita ao regime de substituição tributária</field>
+        </record>
+        <record id="cfop_6410" model="nfe.cfop">
+            <field name="code">6410</field>
+            <field name="name">Devolução de compra para industrialização em operação com mercadoria sujeita ao regime de substituição tributária</field>
+        </record>
+        <record id="cfop_6411" model="nfe.cfop">
+            <field name="code">6411</field>
+            <field name="name">Devolução de compra para comercialização em operação com mercadoria sujeita ao regime de substituição tributária</field>
+        </record>
+        <record id="cfop_6412" model="nfe.cfop">
+            <field name="code">6412</field>
+            <field name="name">Devolução de bem do ativo imobilizado, em operação com mercadoria sujeita ao regime de substituição tributária</field>
+        </record>
+        <record id="cfop_6413" model="nfe.cfop">
+            <field name="code">6413</field>
+            <field name="name">Devolução de mercadoria destinada ao uso ou consumo, em operação com mercadoria sujeita ao regime de substituição tributária</field>
+        </record>
+        <record id="cfop_6414" model="nfe.cfop">
+            <field name="code">6414</field>
+            <field name="name">Remessa de produção do estabelecimento para venda fora do estabelecimento em operação com produto sujeito ao regime de substituição tributária</field>
+        </record>
+        <record id="cfop_6415" model="nfe.cfop">
+            <field name="code">6415</field>
+            <field name="name">Remessa de mercadoria adquirida ou recebida de terceiros para venda fora do estabelecimento, em operação com mercadoria sujeita ao regime de substituição tributária</field>
+        </record>
+        <record id="cfop_6451" model="nfe.cfop">
+            <field name="code">6451</field>
+            <field name="name">Remessa de animal - Sistema de Integração e Parceria Rural</field>
+        </record>
+        <record id="cfop_6452" model="nfe.cfop">
+            <field name="code">6452</field>
+            <field name="name">Remessa de insumo - Sistema de Integração e Parceria Rural</field>
+        </record>
+        <record id="cfop_6453" model="nfe.cfop">
+            <field name="code">6453</field>
+            <field name="name">Retorno de animal ou da produção - Sistema de Integração e Parceria Rural</field>
+        </record>
+        <record id="cfop_6454" model="nfe.cfop">
+            <field name="code">6454</field>
+            <field name="name">Retorno simbólico de animal ou da produção - Sistema de Integração e Parceria Rural</field>
+        </record>
+        <record id="cfop_6455" model="nfe.cfop">
+            <field name="code">6455</field>
+            <field name="name">Retorno de insumos não utilizados na produção - Sistema de Integração e Parceria Rural</field>
+        </record>
+        <record id="cfop_6456" model="nfe.cfop">
+            <field name="code">6456</field>
+            <field name="name">Saída referente a remuneração do produtor - Sistema de Integração e Parceria Rural</field>
+        </record>
+        <record id="cfop_6501" model="nfe.cfop">
+            <field name="code">6501</field>
+            <field name="name">Remessa de produção do estabelecimento, com fim específico de exportação</field>
+        </record>
+        <record id="cfop_6502" model="nfe.cfop">
+            <field name="code">6502</field>
+            <field name="name">Remessa de mercadoria adquirida ou recebida de terceiros, com fim específico de exportação</field>
+        </record>
+        <record id="cfop_6503" model="nfe.cfop">
+            <field name="code">6503</field>
+            <field name="name">Devolução de mercadoria recebida com fim específico de exportação</field>
+        </record>
+        <record id="cfop_6504" model="nfe.cfop">
+            <field name="code">6504</field>
+            <field name="name">Remessa de mercadorias para formação de lote de exportação, de produtos industrializados ou produzidos pelo próprio estabelecimento.</field>
+        </record>
+        <record id="cfop_6505" model="nfe.cfop">
+            <field name="code">6505</field>
+            <field name="name">Remessa de mercadorias, adquiridas ou recebidas de terceiros, para formação de lote de exportação</field>
+        </record>
+        <record id="cfop_6551" model="nfe.cfop">
+            <field name="code">6551</field>
+            <field name="name">Venda de bem do ativo imobilizado</field>
+        </record>
+        <record id="cfop_6552" model="nfe.cfop">
+            <field name="code">6552</field>
+            <field name="name">Transferência de bem do ativo imobilizado</field>
+        </record>
+        <record id="cfop_6553" model="nfe.cfop">
+            <field name="code">6553</field>
+            <field name="name">Devolução de compra de bem para o ativo imobilizado</field>
+        </record>
+        <record id="cfop_6554" model="nfe.cfop">
+            <field name="code">6554</field>
+            <field name="name">Remessa de bem do ativo imobilizado para uso fora do estabelecimento</field>
+        </record>
+        <record id="cfop_6555" model="nfe.cfop">
+            <field name="code">6555</field>
+            <field name="name">Devolução de bem do ativo imobilizado de terceiro, recebido para uso no estabelecimento</field>
+        </record>
+        <record id="cfop_6556" model="nfe.cfop">
+            <field name="code">6556</field>
+            <field name="name">Devolução de compra de material de uso ou consumo</field>
+        </record>
+        <record id="cfop_6557" model="nfe.cfop">
+            <field name="code">6557</field>
+            <field name="name">Transferência de material de uso ou consumo</field>
+        </record>
+        <record id="cfop_6603" model="nfe.cfop">
+            <field name="code">6603</field>
+            <field name="name">Ressarcimento de ICMS retido por substituição tributária</field>
+        </record>
+        <record id="cfop_6651" model="nfe.cfop">
+            <field name="code">6651</field>
+            <field name="name">Venda de combustível ou lubrificante de produção do estabelecimento destinado à industrialização subseqüente</field>
+        </record>
+        <record id="cfop_6652" model="nfe.cfop">
+            <field name="code">6652</field>
+            <field name="name">Venda de combustível ou lubrificante de produção do estabelecimento destinado à comercialização</field>
+        </record>
+        <record id="cfop_6653" model="nfe.cfop">
+            <field name="code">6653</field>
+            <field name="name">Venda de combustível ou lubrificante de produção do estabelecimento destinado a consumidor ou usuário final</field>
+        </record>
+        <record id="cfop_6654" model="nfe.cfop">
+            <field name="code">6654</field>
+            <field name="name">Venda de combustível ou lubrificante adquirido ou recebido de terceiros destinado à industrialização subseqüente</field>
+        </record>
+        <record id="cfop_6655" model="nfe.cfop">
+            <field name="code">6655</field>
+            <field name="name">Venda de combustível ou lubrificante adquirido ou recebido de terceiros destinado à comercialização</field>
+        </record>
+        <record id="cfop_6656" model="nfe.cfop">
+            <field name="code">6656</field>
+            <field name="name">Venda de combustível ou lubrificante adquirido ou recebido de terceiros destinado a consumidor ou usuário final</field>
+        </record>
+        <record id="cfop_6657" model="nfe.cfop">
+            <field name="code">6657</field>
+            <field name="name">Remessa de combustível ou lubrificante adquirido ou recebido de terceiros para venda fora do estabelecimento</field>
+        </record>
+        <record id="cfop_6658" model="nfe.cfop">
+            <field name="code">6658</field>
+            <field name="name">Transferência de combustível ou lubrificante de produção do estabelecimento</field>
+        </record>
+        <record id="cfop_6659" model="nfe.cfop">
+            <field name="code">6659</field>
+            <field name="name">Transferência de combustível ou lubrificante adquirido ou recebido de terceiro</field>
+        </record>
+        <record id="cfop_6660" model="nfe.cfop">
+            <field name="code">6660</field>
+            <field name="name">Devolução de compra de combustível ou lubrificante adquirido para industrialização subseqüente</field>
+        </record>
+        <record id="cfop_6661" model="nfe.cfop">
+            <field name="code">6661</field>
+            <field name="name">Devolução de compra de combustível ou lubrificante adquirido para comercialização</field>
+        </record>
+        <record id="cfop_6662" model="nfe.cfop">
+            <field name="code">6662</field>
+            <field name="name">Devolução de compra de combustível ou lubrificante adquirido por consumidor ou usuário final</field>
+        </record>
+        <record id="cfop_6663" model="nfe.cfop">
+            <field name="code">6663</field>
+            <field name="name">Remessa para armazenagem de combustível ou lubrificante</field>
+        </record>
+        <record id="cfop_6664" model="nfe.cfop">
+            <field name="code">6664</field>
+            <field name="name">Retorno de combustível ou lubrificante recebido para armazenagem</field>
+        </record>
+        <record id="cfop_6665" model="nfe.cfop">
+            <field name="code">6665</field>
+            <field name="name">Retorno simbólico de combustível ou lubrificante recebido para armazenagem</field>
+        </record>
+        <record id="cfop_6666" model="nfe.cfop">
+            <field name="code">6666</field>
+            <field name="name">Remessa por conta e ordem de terceiros de combustível ou lubrificante recebido para armazenagem</field>
+        </record>
+        <record id="cfop_6667" model="nfe.cfop">
+            <field name="code">6667</field>
+            <field name="name">Venda de combustível ou lubrificante a consumidor ou usuário final estabelecido em outra unidade da Federação diferente a da que ocorrer o consumo</field>
+        </record>
+        <record id="cfop_6901" model="nfe.cfop">
+            <field name="code">6901</field>
+            <field name="name">Remessa para industrialização por encomenda</field>
+        </record>
+        <record id="cfop_6902" model="nfe.cfop">
+            <field name="code">6902</field>
+            <field name="name">Retorno de mercadoria utilizada na industrialização por encomenda</field>
+        </record>
+        <record id="cfop_6903" model="nfe.cfop">
+            <field name="code">6903</field>
+            <field name="name">Retorno de mercadoria recebida para industrialização e não aplicada no referido processo</field>
+        </record>
+        <record id="cfop_6904" model="nfe.cfop">
+            <field name="code">6904</field>
+            <field name="name">Remessa para venda fora do estabelecimento</field>
+        </record>
+        <record id="cfop_6905" model="nfe.cfop">
+            <field name="code">6905</field>
+            <field name="name">Remessa para depósito fechado ou armazém geral</field>
+        </record>
+        <record id="cfop_6906" model="nfe.cfop">
+            <field name="code">6906</field>
+            <field name="name">Retorno de mercadoria depositada em depósito fechado ou armazém geral</field>
+        </record>
+        <record id="cfop_6907" model="nfe.cfop">
+            <field name="code">6907</field>
+            <field name="name">Retorno simbólico de mercadoria depositada em depósito fechado ou armazém geral</field>
+        </record>
+        <record id="cfop_6908" model="nfe.cfop">
+            <field name="code">6908</field>
+            <field name="name">Remessa de bem por conta de contrato de comodato ou locação</field>
+        </record>
+        <record id="cfop_6909" model="nfe.cfop">
+            <field name="code">6909</field>
+            <field name="name">Retorno de bem recebido por conta de contrato de comodato ou locação</field>
+        </record>
+        <record id="cfop_6910" model="nfe.cfop">
+            <field name="code">6910</field>
+            <field name="name">Remessa em bonificação, doação ou brinde</field>
+        </record>
+        <record id="cfop_6911" model="nfe.cfop">
+            <field name="code">6911</field>
+            <field name="name">Remessa de amostra grátis</field>
+        </record>
+        <record id="cfop_6912" model="nfe.cfop">
+            <field name="code">6912</field>
+            <field name="name">Remessa de mercadoria ou bem para demonstração</field>
+        </record>
+        <record id="cfop_6913" model="nfe.cfop">
+            <field name="code">6913</field>
+            <field name="name">Retorno de mercadoria ou bem recebido para demonstração</field>
+        </record>
+        <record id="cfop_6914" model="nfe.cfop">
+            <field name="code">6914</field>
+            <field name="name">Remessa de mercadoria ou bem para exposição ou feira</field>
+        </record>
+        <record id="cfop_6915" model="nfe.cfop">
+            <field name="code">6915</field>
+            <field name="name">Remessa de mercadoria ou bem para conserto ou reparo</field>
+        </record>
+        <record id="cfop_6916" model="nfe.cfop">
+            <field name="code">6916</field>
+            <field name="name">Retorno de mercadoria ou bem recebido para conserto ou reparo</field>
+        </record>
+        <record id="cfop_6917" model="nfe.cfop">
+            <field name="code">6917</field>
+            <field name="name">Remessa de mercadoria em consignação mercantil ou industrial</field>
+        </record>
+        <record id="cfop_6918" model="nfe.cfop">
+            <field name="code">6918</field>
+            <field name="name">Devolução de mercadoria recebida em consignação mercantil ou industrial</field>
+        </record>
+        <record id="cfop_6919" model="nfe.cfop">
+            <field name="code">6919</field>
+            <field name="name">Devolução simbólica de mercadoria vendida ou utilizada em processo industrial, recebida anteriormente em consignação mercantil ou industrial</field>
+        </record>
+        <record id="cfop_6920" model="nfe.cfop">
+            <field name="code">6920</field>
+            <field name="name">Remessa de vasilhame ou sacaria</field>
+        </record>
+        <record id="cfop_6921" model="nfe.cfop">
+            <field name="code">6921</field>
+            <field name="name">Devolução de vasilhame ou sacaria</field>
+        </record>
+        <record id="cfop_6922" model="nfe.cfop">
+            <field name="code">6922</field>
+            <field name="name">Lançamento efetuado a título de simples faturamento decorrente de venda para entrega futura</field>
+        </record>
+        <record id="cfop_6923" model="nfe.cfop">
+            <field name="code">6923</field>
+            <field name="name">Remessa de mercadoria por conta e ordem de terceiros, em venda à ordem ou em operações com armazém geral ou depósito fechado</field>
+        </record>
+        <record id="cfop_6924" model="nfe.cfop">
+            <field name="code">6924</field>
+            <field name="name">Remessa para industrialização por conta e ordem do adquirente da mercadoria, quando esta não transitar pelo estabelecimento do adquirente</field>
+        </record>
+        <record id="cfop_6925" model="nfe.cfop">
+            <field name="code">6925</field>
+            <field name="name">Retorno de mercadoria recebida para industrialização por conta e ordem do adquirente da mercadoria, quando aquela não transitar pelo estabelecimento do adquirente</field>
+        </record>
+        <record id="cfop_6929" model="nfe.cfop">
+            <field name="code">6929</field>
+            <field name="name">Lançamento efetuado em decorrência de emissão de documento fiscal relativo a operação ou prestação também registrada em equipamento Emissor de Cupom Fiscal - ECF</field>
+        </record>
+        <record id="cfop_6931" model="nfe.cfop">
+            <field name="code">6931</field>
+            <field name="name">Lançamento efetuado em decorrência da responsabilidade de retenção do imposto por substituição tributária, atribuída ao remetente ou alienante da mercadoria, pelo serviço de transporte realizado por transportador autônomo ou por transportador não inscrito na unidade da Federação onde iniciado o serviço</field>
+        </record>
+        <record id="cfop_6932" model="nfe.cfop">
+            <field name="code">6932</field>
+            <field name="name">Prestação de serviço de transporte iniciada em unidade da Federação diversa daquela onde inscrito o prestador</field>
+        </record>
+        <record id="cfop_6933" model="nfe.cfop">
+            <field name="code">6933</field>
+            <field name="name">Prestação de serviço tributado pelo ISSQN (ajuste sinief 03/04)</field>
+        </record>
+        <record id="cfop_6934" model="nfe.cfop">
+            <field name="code">6934</field>
+            <field name="name">Remessa simbólica de mercadoria depositada em armazém geral ou depósito fechado</field>
+        </record>
+        <record id="cfop_6949" model="nfe.cfop">
+            <field name="code">6949</field>
+            <field name="name">Outra saída de mercadoria ou prestação de serviço não especificado</field>
+        </record>
+        <record id="cfop_7101" model="nfe.cfop">
+            <field name="code">7101</field>
+            <field name="name">Venda de produção do estabelecimento</field>
+        </record>
+        <record id="cfop_7102" model="nfe.cfop">
+            <field name="code">7102</field>
+            <field name="name">Venda de mercadoria adquirida ou recebida de terceiros</field>
+        </record>
+        <record id="cfop_7105" model="nfe.cfop">
+            <field name="code">7105</field>
+            <field name="name">Venda de produção do estabelecimento, que não deva por ele transitar</field>
+        </record>
+        <record id="cfop_7106" model="nfe.cfop">
+            <field name="code">7106</field>
+            <field name="name">Venda de mercadoria adquirida ou recebida de terceiros, que não deva por ele transitar</field>
+        </record>
+        <record id="cfop_7127" model="nfe.cfop">
+            <field name="code">7127</field>
+            <field name="name">Venda de produção do estabelecimento sob o regime de drawback</field>
+        </record>
+        <record id="cfop_7129" model="nfe.cfop">
+            <field name="code">7129</field>
+            <field name="name">Venda de produção do estabelecimento ao mercado externo de mercadoria industrializada sob o amparo do Regime Aduaneiro Especial de Entreposto Industrial sob Controle Informatizado do Sistema Público de Escrituração Digital (Recof-Sped)</field>
+        </record>
+        <record id="cfop_7201" model="nfe.cfop">
+            <field name="code">7201</field>
+            <field name="name">Devolução de compra para industrialização</field>
+        </record>
+        <record id="cfop_7202" model="nfe.cfop">
+            <field name="code">7202</field>
+            <field name="name">Devolução de compra para comercialização</field>
+        </record>
+        <record id="cfop_7205" model="nfe.cfop">
+            <field name="code">7205</field>
+            <field name="name">Anulação de valor relativo à aquisição de serviço de comunicação</field>
+        </record>
+        <record id="cfop_7206" model="nfe.cfop">
+            <field name="code">7206</field>
+            <field name="name">Anulação de valor relativo a aquisição de serviço de transporte</field>
+        </record>
+        <record id="cfop_7207" model="nfe.cfop">
+            <field name="code">7207</field>
+            <field name="name">Anulação de valor relativo à compra de energia elétrica</field>
+        </record>
+        <record id="cfop_7210" model="nfe.cfop">
+            <field name="code">7210</field>
+            <field name="name">Devolução de compra para utilização na prestação de serviço</field>
+        </record>
+        <record id="cfop_7211" model="nfe.cfop">
+            <field name="code">7211</field>
+            <field name="name">Devolução de compras para industrialização sob o regime de drawback</field>
+        </record>
+        <record id="cfop_7212" model="nfe.cfop">
+            <field name="code">7212</field>
+            <field name="name">Devolução de compras para industrialização sob o regime de Regime Aduaneiro Especial de Entreposto Industrial sob Controle Informatizado do Sistema Público de Escrituração Digital (Recof-Sped)</field>
+        </record>
+        <record id="cfop_7251" model="nfe.cfop">
+            <field name="code">7251</field>
+            <field name="name">Venda de energia elétrica para o exterior</field>
+        </record>
+        <record id="cfop_7301" model="nfe.cfop">
+            <field name="code">7301</field>
+            <field name="name">Prestação de serviço de comunicação para execução de serviço da mesma natureza</field>
+        </record>
+        <record id="cfop_7358" model="nfe.cfop">
+            <field name="code">7358</field>
+            <field name="name">Prestação de serviço de transporte</field>
+        </record>
+        <record id="cfop_7501" model="nfe.cfop">
+            <field name="code">7501</field>
+            <field name="name">Exportação de mercadorias recebidas com fim específico de exportação</field>
+        </record>
+        <record id="cfop_7504" model="nfe.cfop">
+            <field name="code">7504</field>
+            <field name="name">Exportação de mercadoria que foi objeto de formação de lote de exportação</field>
+        </record>
+        <record id="cfop_7551" model="nfe.cfop">
+            <field name="code">7551</field>
+            <field name="name">Venda de bem do ativo imobilizado</field>
+        </record>
+        <record id="cfop_7552" model="nfe.cfop">
+            <field name="code">7552</field>
+            <field name="name">Saída de produtos destinados ao uso ou consumo de bordo, em embarcações ou aeronaves exclusivamente em tráfego internacional com destino ao exterior</field>
+        </record>
+        <record id="cfop_7553" model="nfe.cfop">
+            <field name="code">7553</field>
+            <field name="name">Devolução de compra de bem para o ativo imobilizado</field>
+        </record>
+        <record id="cfop_7556" model="nfe.cfop">
+            <field name="code">7556</field>
+            <field name="name">Devolução de compra de material de uso ou consumo</field>
+        </record>
+        <record id="cfop_7651" model="nfe.cfop">
+            <field name="code">7651</field>
+            <field name="name">Venda de combustível ou lubrificante de produção do estabelecimento destinado à industrialização subseqüente</field>
+        </record>
+        <record id="cfop_7654" model="nfe.cfop">
+            <field name="code">7654</field>
+            <field name="name">Venda de combustível ou lubrificante adquirido ou recebido de terceiros destinado à industrialização subseqüente</field>
+        </record>
+        <record id="cfop_7667" model="nfe.cfop">
+            <field name="code">7667</field>
+            <field name="name">Venda de combustível ou lubrificante a consumidor ou usuário final</field>
+        </record>
+        <record id="cfop_7930" model="nfe.cfop">
+            <field name="code">7930</field>
+            <field name="name">Lançamento efetuado a título de devolução de bem cuja entrada tenha ocorrido sob amparo de regime especial aduaneiro de admissão temporária</field>
+        </record>
+        <record id="cfop_7949" model="nfe.cfop">
+            <field name="code">7949</field>
+            <field name="name">Outra saída de mercadoria ou prestação de serviço não especificado</field>
+        </record>
+    </data>
+</odoo>

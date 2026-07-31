@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!-- A autorização da SEFAZ leva de segundos a minutos. Sem este cron,
+             uma nota só sai de 'processando' quando alguém lembra de clicar. -->
+        <record id="cron_focus_consultar_pendentes" model="ir.cron">
+            <field name="name">NFe Focus - Consultar notas em processamento</field>
+            <field name="active" eval="True"/>
+            <field name="user_id" ref="base.user_root"/>
+            <field name="model_id" ref="account.model_account_move"/>
+            <field name="interval_number">10</field>
+            <field name="interval_type">minutes</field>
+            <field name="state">code</field>
+            <field name="code">model._cron_focus_consultar_pendentes()</field>
+            <field name="priority" eval="20"/>
+        </record>
+    </data>
+</odoo>

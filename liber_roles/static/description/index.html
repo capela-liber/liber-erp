@@ -2,10 +2,10 @@
      liber_site/static/docs/liber_roles.html -- não edite aqui.
      O Odoo mostra este arquivo em Apps > Module Info. -->
 <div class="oe_container liber_manual" style="max-width:900px;margin:0 auto;padding:8px 4px 24px;color:#251d2b;background:transparent;font:15px/1.7 Inter,'Segoe UI',system-ui,sans-serif;"><h1 style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:32px;line-height:1.2;letter-spacing:-.015em;margin:0 0 10px;color:#251d2b;">Papéis de acesso</h1>
-      <p class="lead" style="font-size:17.5px;color:#5d5266;margin:0 0 26px;max-width:62ch;">Perfis prontos por área da editora — Comercial, Financeiro, Editorial, Marketing, Direção — e uma conta pública de visitante que enxerga tudo e não grava nada.</p>
+      <p class="lead" style="font-size:17.5px;color:#5d5266;margin:0 0 26px;max-width:62ch;">Perfis prontos por área da editora — Comercial, Logística, Financeiro, Editorial, Marketing, Direção — e uma conta pública de visitante que enxerga tudo e não grava nada.</p>
 
       <h2 id="visao-geral" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">Visão geral</h2>
-      <p style="margin:0 0 12px;">Os perfis nativos do Odoo são recortes por <em>aplicativo</em>: "Vendas: Usuário", "Contabilidade: Contador", "Estoque: Administrador". Uma editora não pensa assim — ela pensa por <em>função</em>: Comercial, Financeiro, Editorial, Marketing, cada uma em dois níveis, mais a Direção, que é transversal.</p>
+      <p style="margin:0 0 12px;">Os perfis nativos do Odoo são recortes por <em>aplicativo</em>: "Vendas: Usuário", "Contabilidade: Contador", "Estoque: Administrador". Uma editora não pensa assim — ela pensa por <em>função</em>: Comercial, Logística, Financeiro, Editorial, Marketing, cada uma em dois níveis, mais a Direção, que é transversal.</p>
       <p style="margin:0 0 12px;">Este módulo faz a tradução de uma coisa na outra, uma vez só e por escrito. Quem cadastra um usuário marca <strong style="color:#251d2b;">uma função</strong> na ficha dele; o Odoo deriva sozinho todos os grupos de aplicativo que aquela função implica. Ninguém mais precisa montar acesso clicando grupo por grupo — e "quem pode ver a margem?" passa a ter uma resposta que não depende de conferir usuário por usuário.</p>
       <p style="margin:0 0 12px;">A régua dos dois níveis é simples:</p>
       <ul style="margin:0 0 14px 22px;padding:0;">
@@ -19,7 +19,7 @@
       <h2 id="configuracao" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">Configuração: atribuir uma função</h2>
       <ol class="steps" style="margin:0 0 16px 22px;padding:0;">
         <li style="margin:0 0 7px;">Abra <span class="menupath" style="display:inline-block;background:#f1eaf6;border:1px solid #e5dbee;border-radius:6px;padding:1px 8px;font-size:13.5px;color:#251d2b;white-space:nowrap;">Definições<i style="font-style:normal;color:#6e2f91;margin:0 4px;font-weight:700;">‣</i>Usuários e Empresas<i style="font-style:normal;color:#6e2f91;margin:0 4px;font-weight:700;">‣</i>Usuários</span> e entre na ficha do usuário.</li>
-        <li style="margin:0 0 7px;">Na aba de direitos de acesso, localize a seção <span class="field" style="font-weight:600;color:#251d2b;">Liber / Funções</span>. Cada departamento aparece como uma escolha: <span class="field" style="font-weight:600;color:#251d2b;">Direção</span>, <span class="field" style="font-weight:600;color:#251d2b;">Comercial</span>, <span class="field" style="font-weight:600;color:#251d2b;">Financeiro</span>, <span class="field" style="font-weight:600;color:#251d2b;">Editorial</span>, <span class="field" style="font-weight:600;color:#251d2b;">Marketing</span>, <span class="field" style="font-weight:600;color:#251d2b;">Visitante</span>.</li>
+        <li style="margin:0 0 7px;">Na aba de direitos de acesso, localize a seção <span class="field" style="font-weight:600;color:#251d2b;">Liber / Funções</span>. Cada departamento aparece como uma escolha: <span class="field" style="font-weight:600;color:#251d2b;">Direção</span>, <span class="field" style="font-weight:600;color:#251d2b;">Comercial</span>, <span class="field" style="font-weight:600;color:#251d2b;">Logística</span>, <span class="field" style="font-weight:600;color:#251d2b;">Financeiro</span>, <span class="field" style="font-weight:600;color:#251d2b;">Editorial</span>, <span class="field" style="font-weight:600;color:#251d2b;">Marketing</span>, <span class="field" style="font-weight:600;color:#251d2b;">Visitante</span>.</li>
         <li style="margin:0 0 7px;">Escolha o nível do departamento da pessoa — <span class="field" style="font-weight:600;color:#251d2b;">Assistente</span> ou <span class="field" style="font-weight:600;color:#251d2b;">Gerente</span>. Só isso: os grupos de Vendas, Contabilidade, Estoque etc. são preenchidos automaticamente.</li>
         <li style="margin:0 0 7px;">Salve. No próximo login o usuário vê os menus da sua função.</li>
       </ol>
@@ -39,7 +39,7 @@
           </tr>
           <tr>
             <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;"><strong style="color:#251d2b;">Comercial ‣ Assistente</strong></td>
-            <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Pedidos, acertos de consignação, devoluções, cadastro de clientes; movimenta estoque</td>
+            <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Pedidos, acertos de consignação, devoluções, cadastro de clientes; as transferências da consignação (sem o app Inventário, que é da Logística)</td>
             <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Todos os documentos de venda da casa</td>
             <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Relatórios financeiros; configurar vendas e consignação</td>
           </tr>
@@ -48,6 +48,18 @@
             <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Tudo do assistente + administra vendas e consignação: fecha acordos, cria campanhas, ajusta réguas de cobrança de devolução</td>
             <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Relatórios do canal comercial</td>
             <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Contabilidade e orçamento</td>
+          </tr>
+          <tr>
+            <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;"><strong style="color:#251d2b;">Logística ‣ Assistente</strong></td>
+            <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Recebimentos, separação e entregas; valida as transferências da consignação (COM/, RET/, ACERTO/); contagem de inventário</td>
+            <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">O estoque da casa e o consignado em poder dos clientes</td>
+            <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Pedido de venda, cliente, acerto, contrato e qualquer número financeiro</td>
+          </tr>
+          <tr>
+            <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;"><strong style="color:#251d2b;">Logística ‣ Gerente</strong></td>
+            <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Tudo do assistente + configura o depósito: armazéns, localizações, tipos de operação, rotas e regras de reposição; valida ajustes de inventário</td>
+            <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Relatórios de estoque</td>
+            <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Pedido de venda, acerto e dados financeiros</td>
           </tr>
           <tr>
             <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;"><strong style="color:#251d2b;">Financeiro ‣ Assistente</strong> (cobrança)</td>

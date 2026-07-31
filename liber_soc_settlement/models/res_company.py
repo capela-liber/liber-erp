@@ -21,7 +21,7 @@ class ResCompany(models.Model):
     def _get_consignment_settlement_operation_type(self):
         self.ensure_one()
         if not self.consignment_settlement_operation_type_id:
-            self.consignment_settlement_operation_type_id = \
+            self.sudo().consignment_settlement_operation_type_id = \
                 self._create_consignment_operation_type(
                     _('Consignment Settlement'), 'ACERTO/%(year)s/',
                     'Consignment Settlement Operation', code='outgoing')

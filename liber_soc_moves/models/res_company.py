@@ -34,6 +34,17 @@ class ResCompany(models.Model):
         return self.env['stock.warehouse'].search(
             [('company_id', '=', self.id)], limit=1)
 
+    # Os tipos de operação nascem sozinhos, no primeiro uso, e por isso as
+    # gravações abaixo são todas em `sudo()` -- a criação do stock.picking.type
+    # já era, mas guardar o resultado no res.company não, e escrever em
+    # res.company pede base.group_erp_manager. O efeito era que o PRIMEIRO
+    # comercial a soltar uma remessa numa empresa recém-configurada levava um
+    # AccessError; a partir da segunda vez, com o campo já preenchido, ninguém
+    # via nada. Apareceu em 31/07/2026, ao testar a consignação com um usuário
+    # que não é administrador (liber_roles/tests/test_logistica.py) -- é
+    # exatamente o tipo de defeito que só um teste sem `su=True` acha.
+    # Não há escalada de privilégio aqui: o valor gravado é um registro que o
+    # próprio método acabou de criar, o usuário não o escolhe.
     def _create_consignment_operation_type(self, name, prefix, seq_name,
                                             code='internal'):
         self.ensure_one()
@@ -66,7 +77,7 @@ class ResCompany(models.Model):
         if not self.consignment_delivery_operation_type_id:
             shipment = self._get_consignment_shipment_operation_type()
             warehouse = self._consignment_warehouse()
-            self.consignment_delivery_operation_type_id = \
+            self.sudo().consignment_delivery_operation_type_id = \
                 self.env['stock.picking.type'].sudo().create({
                     'name': _('Consignment Delivery'),
                     'code': 'outgoing',
@@ -80,7 +91,7 @@ class ResCompany(models.Model):
     def _get_consignment_shipment_operation_type(self):
         self.ensure_one()
         if not self.consignment_shipment_operation_type_id:
-            self.consignment_shipment_operation_type_id = \
+            self.sudo().consignment_shipment_operation_type_id = \
                 self._create_consignment_operation_type(
                     # COM/, não mais REM/: o REM/ agora é do documento FISCAL
                     # de remessa (nfe_remessa) — dois documentos de naturezas
@@ -93,7 +104,7 @@ class ResCompany(models.Model):
     def _get_consignment_return_operation_type(self):
         self.ensure_one()
         if not self.consignment_return_operation_type_id:
-            self.consignment_return_operation_type_id = \
+            self.sudo().consignment_return_operation_type_id = \
                 self._create_consignment_operation_type(
                     _('Consignment Return'), 'RET/%(year)s/',
                     'Consignment Return Operation')

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_company_form_focus" model="ir.ui.view">
+        <field name="name">res.company.form.focus.nfe</field>
+        <field name="model">res.company</field>
+        <field name="inherit_id" ref="base.view_company_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//sheet" position="inside">
+                <group string="NFe — Focus NFe" name="focus_nfe">
+                    <group string="Credenciais">
+                        <field name="focus_ambiente" widget="radio"/>
+                        <field name="focus_token_homologacao" password="True"/>
+                        <field name="focus_token_producao" password="True"/>
+                        <field name="focus_ref_prefix"/>
+                        <button name="action_focus_testar_conexao" type="object"
+                                string="Testar conexão" class="btn-secondary"
+                                icon="fa-plug"/>
+                    </group>
+                    <group string="Dados fiscais e padrões">
+                        <field name="focus_regime_tributario"/>
+                        <field name="focus_natureza_operacao"/>
+                        <field name="focus_ncm_padrao"/>
+                        <field name="focus_codigo_beneficio_fiscal"/>
+                        <field name="focus_ibs_cbs_cst"/>
+                        <field name="focus_ibs_cbs_classificacao"/>
+                        <field name="focus_codigo_produto"/>
+                        <field name="focus_forma_pagamento_vista"/>
+                        <field name="focus_operacao_padrao_id"/>
+                        <button name="action_focus_gerar_impostos" type="object"
+                                string="Gerar impostos por CFOP" class="btn-secondary"
+                                icon="fa-magic"
+                                help="Cria um imposto de alíquota zero por CFOP configurado. É por eles que a posição fiscal entrega o CFOP à nota."/>
+                    </group>
+                </group>
+            </xpath>
+        </field>
+    </record>
+</odoo>

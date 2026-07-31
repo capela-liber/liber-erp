@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_nfe_operacao_user,nfe.operacao leitura,model_nfe_operacao,base.group_user,1,0,0,0
+access_nfe_operacao_contab,nfe.operacao contabilidade,model_nfe_operacao,account.group_account_manager,1,1,1,1
+access_nfe_focus_cancel_wizard,nfe.focus.cancel.wizard,model_nfe_focus_cancel_wizard,account.group_account_invoice,1,1,1,1
+access_nfe_focus_correcao_wizard,nfe.focus.correcao.wizard,model_nfe_focus_correcao_wizard,account.group_account_invoice,1,1,1,1

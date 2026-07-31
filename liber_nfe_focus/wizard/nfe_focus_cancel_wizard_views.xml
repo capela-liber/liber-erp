@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_nfe_focus_cancel_wizard_form" model="ir.ui.view">
+        <field name="name">nfe.focus.cancel.wizard.form</field>
+        <field name="model">nfe.focus.cancel.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Cancelar NFe">
+                <div class="alert alert-warning" role="alert">
+                    O cancelamento vai direto à SEFAZ e não tem volta. O prazo
+                    é de 24 horas após a autorização na maioria dos estados.
+                </div>
+                <group>
+                    <field name="move_id"/>
+                    <field name="justificativa"
+                           placeholder="Motivo do cancelamento (15 a 255 caracteres)"/>
+                </group>
+                <footer>
+                    <button name="action_cancelar" type="object"
+                            string="Cancelar na SEFAZ" class="btn-primary"/>
+                    <button string="Voltar" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>
