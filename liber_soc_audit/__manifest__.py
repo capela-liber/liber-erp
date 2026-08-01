@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     'name': 'Consignment - Audit (XML vs Map)',
-    'version': '19.0.2.2.0',
+    'version': '19.0.2.3.0',
     'summary': 'Rebuild the expected shelf balance from the fiscal truth (NFe XMLs) '
                'and reconcile it against the map',
     'description': """
@@ -43,6 +43,7 @@ records -- it never re-parses the XML.
         'views/res_config_settings_views.xml',
         'views/soc_audit_menus.xml',
     ],
+    'pre_init_hook': 'pre_init_hook',
     'installable': True,
     'application': False,
     'license': 'AGPL-3',

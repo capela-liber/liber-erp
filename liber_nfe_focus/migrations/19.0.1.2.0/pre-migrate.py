@@ -12,7 +12,7 @@ Esta migração fecha os dois caminhos, chamando a mesma rotina do hook.
 
 import logging
 
-from odoo.addons.liber_nfe_focus.hooks import preparar_cfops
+from odoo.addons.liber_nfe_focus.hooks import preparar
 
 _logger = logging.getLogger(__name__)
 
@@ -23,4 +23,4 @@ def migrate(cr, version):
     from odoo.api import Environment
     from odoo import SUPERUSER_ID
     env = Environment(cr, SUPERUSER_ID, {})
-    preparar_cfops(env)
+    preparar(env)
