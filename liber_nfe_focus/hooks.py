@@ -28,3 +28,16 @@ def preparar(env):
 
 def pre_init_hook(env):
     preparar(env)
+
+
+def post_init_hook(env):
+    """As posições fiscais nascem com o módulo, já ligadas à operação.
+
+    Nesta ordem, e a ordem importa: primeiro adota o que veio do legado (o banco
+    migrado chega com mais de cem posições, todas sem operação), e só depois
+    semeia -- assim a semeadura encontra os lugares ocupados e não cria a
+    segunda posição para a mesma operação.
+    """
+    Posicao = env['account.fiscal.position']
+    Posicao._nfe_adotar_posicoes_do_legado()
+    Posicao._nfe_semear_posicoes()

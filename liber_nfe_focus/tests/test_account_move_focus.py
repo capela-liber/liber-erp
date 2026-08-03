@@ -13,6 +13,13 @@ from odoo.tests import tagged
 
 from ..models import nfe_payload
 
+# Um ISBN que não é de livro nenhum. O código de barras é único por empresa no
+# Odoo, e um ISBN real põe o teste em rota de colisão com o catálogo do banco em
+# que ele roda -- foi o que aconteceu quando a suíte encontrou o exemplar de
+# verdade. O prefixo 978-0-00-000000 é sintaticamente válido (o dígito 2 fecha o
+# EAN-13) e não pertence a editora alguma.
+ISBN_DE_TESTE = '9780000000002'
+
 
 def preparar_documento_latam(move):
     """Dá um tipo de documento à fatura quando o `l10n_br` do Odoo está por perto.
@@ -598,7 +605,7 @@ class TestNotaServivel(TestAccountMoveFocus):
     """O que separa 'a SEFAZ aceita' de 'a nota serve ao cliente'."""
 
     def test_isbn_do_produto_vai_para_a_nota(self):
-        self.livro.barcode = '9786551590115'
+        self.livro.barcode = ISBN_DE_TESTE
         self.livro.product_tmpl_id.default_code = False
         self.company.focus_codigo_produto = 'barras' 
 
@@ -606,18 +613,18 @@ class TestNotaServivel(TestAccountMoveFocus):
 
         # Sem referência interna, o ISBN vale como código do produto — melhor
         # que o id do registro, que não diz nada a quem recebe.
-        self.assertEqual(item['codigo_produto'], '9786551590115')
-        self.assertEqual(item['codigo_barras_comercial'], '9786551590115')
-        self.assertEqual(item['codigo_barras_tributavel'], '9786551590115')
+        self.assertEqual(item['codigo_produto'], ISBN_DE_TESTE)
+        self.assertEqual(item['codigo_barras_comercial'], ISBN_DE_TESTE)
+        self.assertEqual(item['codigo_barras_tributavel'], ISBN_DE_TESTE)
 
     def test_referencia_interna_quando_a_casa_prefere_a_dela(self):
-        self.livro.barcode = '9786551590115'
+        self.livro.barcode = ISBN_DE_TESTE
         self.company.focus_codigo_produto = 'interno'
 
         item = self._fatura()._focus_build_payload()['items'][0]
 
         self.assertEqual(item['codigo_produto'], 'LIV-001')
-        self.assertEqual(item['codigo_barras_comercial'], '9786551590115')
+        self.assertEqual(item['codigo_barras_comercial'], ISBN_DE_TESTE)
 
     def test_unidade_sai_como_sigla_e_nao_como_rotulo(self):
         """O nome da unidade no Odoo é rótulo de interface: sai 'Units'."""
@@ -635,13 +642,13 @@ class TestNotaServivel(TestAccountMoveFocus):
     def test_referencia_lixo_de_migracao_cai_fora(self):
         """`default_code` valendo "0" é sujeira de migração: não identifica
         nada, e uma nota com cProd=0 é inútil para quem a recebe."""
-        self.livro.barcode = '9786551590115'
+        self.livro.barcode = ISBN_DE_TESTE
         self.livro.product_tmpl_id.default_code = '0'
         self.company.focus_codigo_produto = 'interno'
 
         item = self._fatura()._focus_build_payload()['items'][0]
 
-        self.assertEqual(item['codigo_produto'], '9786551590115')
+        self.assertEqual(item['codigo_produto'], ISBN_DE_TESTE)
 
     def _fatura_com_vencimento(self, vencimento):
         move = self.env['account.move'].create({

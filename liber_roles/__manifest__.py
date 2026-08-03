@@ -30,8 +30,17 @@ Decisões da v1 (a refinar; ver NOTES.md ao lado deste arquivo):
   (liber_soc_moves.group_consignment_stock_docs) que dá conta das
   transferências da consignação -- que o código cria como o usuário -- sem
   dar contagem de inventário nem cadastro de armazém.
-- Direção enxerga tudo em leitura; a v1 ainda não IMPEDE a edição nos apps
-  operacionais (fase 2). Diretor que opera uma área acumula a função dela.
+- Direção OPERA. Não é perfil de consulta: nos apps operacionais (vendas,
+  consignação, contratos, estoque, projetos) ela carrega grupos de nível
+  usuário e cria e edita como qualquer operador -- deliberadamente, porque
+  quem dirige a casa mexe no que precisar. O que fica de fora é o nível de
+  gerente das áreas (aprovar, configurar) e a configuração contábil: em
+  contabilidade o acesso é de leitura. Diretor que também gerencia uma área
+  acumula a função dela.
+- Contabilidade analítica (02/08/2026) para Direção e Financeiro/Gerente. O
+  grupo `analytic.group_analytic_accounting` não estava com ninguém, e sem
+  ele o menu Faturamento > Configuração > Contabilidade analítica nem
+  aparece. Só existe em CRUD cheio -- o core não publica variante de leitura.
 - Marketing usa os grupos do website (mass_mailing não está instalado).
 
 Fora da grade dos departamentos existe o VISITANTE: a conta da apresentação
@@ -45,6 +54,9 @@ menu, então vale também para RPC e URL colada. Ver models/ir_model_access.py.
         'mail',
         'sale_management',
         'account',
+        # chega de carona pelo account e pelo liber_budget, mas agora o
+        # módulo referencia group_analytic_accounting diretamente
+        'analytic',
         'stock',
         'project',
         'website',

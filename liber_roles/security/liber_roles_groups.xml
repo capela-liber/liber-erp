@@ -53,9 +53,17 @@
     </record>
 
     <!-- ============================================================== -->
-    <!-- Direção: leitura ampla + boards financeiros. Não operacional   -->
-    <!-- (na v1 a edição ainda não é bloqueada; fase 2). Diretor que    -->
-    <!-- opera uma área acumula também o nível daquela área.            -->
+    <!-- Direção. NÃO é perfil de consulta: os grupos abaixo são de     -->
+    <!-- nível usuário nos apps operacionais (vendas, consignação,      -->
+    <!-- contratos, estoque, projetos), e neles a Direção cria e edita  -->
+    <!-- como qualquer operador. Isso é deliberado, e não uma lacuna a  -->
+    <!-- fechar: quem dirige a casa mexe no que precisar mexer.         -->
+    <!--                                                                -->
+    <!-- O que ela não carrega é o nível de GERENTE (aprovar,           -->
+    <!-- configurar) das áreas; diretor que também gerencia uma área    -->
+    <!-- acumula a função dela. Em contabilidade o acesso é de leitura  -->
+    <!-- (account_readonly) — a exceção é o analítico, que o Odoo só    -->
+    <!-- publica em CRUD cheio, sem variante de leitura.                -->
     <!-- ============================================================== -->
     <record id="group_direcao" model="res.groups">
         <field name="name">Diretor(a)</field>
@@ -63,6 +71,7 @@
         <field name="implied_ids" eval="[
             (4, ref('base.group_user')),
             (4, ref('account.group_account_readonly')),
+            (4, ref('analytic.group_analytic_accounting')),
             (4, ref('liber_budget.group_budget_user')),
             (4, ref('sales_team.group_sale_salesman_all_leads')),
             (4, ref('liber_soc_agreements.group_soc_user')),
@@ -70,7 +79,7 @@
             (4, ref('stock.group_stock_user')),
             (4, ref('project.group_project_user')),
         ]"/>
-        <field name="comment">Sócios e diretores: relatórios contábeis (leitura), boards do orçamento, visão de vendas, consignação, contratos, estoque e projetos.</field>
+        <field name="comment">Sócios e diretores: acesso transversal à casa. Opera (cria e edita) vendas, consignação, contratos de direitos, estoque e projetos; lê os relatórios contábeis e os boards do orçamento; mexe na contabilidade analítica. Não é perfil de consulta. Fica de fora só o nível de gerente das áreas e a configuração contábil — quem gerencia uma área acumula a função dela.</field>
     </record>
 
     <!-- ============================================================== -->
@@ -172,9 +181,10 @@
         <field name="implied_ids" eval="[
             (4, ref('group_financeiro_assistente')),
             (4, ref('account.group_account_manager')),
+            (4, ref('analytic.group_analytic_accounting')),
             (4, ref('liber_budget.group_budget_manager')),
         ]"/>
-        <field name="comment">Contabilidade completa: valida e estorna, configura plano de contas e impostos, administra o orçamento, vê os boards financeiros. Pagamentos de royalties.</field>
+        <field name="comment">Contabilidade completa: valida e estorna, configura plano de contas e impostos, administra o orçamento e a contabilidade analítica (contas, planos e modelos de distribuição), vê os boards financeiros. Pagamentos de royalties.</field>
     </record>
 
     <!-- ============================================================== -->

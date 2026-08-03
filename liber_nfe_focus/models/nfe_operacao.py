@@ -25,6 +25,8 @@ Exportação não é a mesma operação noutro lugar — é outra operação. Qu
 escolhe o CFOP explicitamente, na linha ou na nota.
 """
 
+import string
+
 from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
 
@@ -36,6 +38,26 @@ PRIMEIRO_DIGITO = {
     ('entrada', 'interna'): '1',
     ('entrada', 'interestadual'): '2',
 }
+
+# A taxonomia da casa. Não é da SEFAZ: é o agrupamento por que as pessoas daqui
+# procuram a operação na tela — "a (B)" quer dizer consignação, e quem trabalha
+# aqui sabe disso antes de saber o que é 5917.
+#
+# As famílias saem do que a casa usou de fato em 14.555 notas (2023–2026), não
+# de uma proposta nova. O alfabeto fica aberto: as letras livres continuam
+# escolhíveis, sem nome, para quando aparecer uma família que ainda não existe.
+FAMILIAS = {
+    'A': 'Venda',
+    'B': 'Consignação nossa',
+    'C': 'Consignação de terceiros',
+    'D': 'Bonificação',
+    'E': 'Remessa',
+    'Z': 'Outras',
+}
+LETRAS = [
+    (letra, '%s — %s' % (letra, FAMILIAS[letra]) if letra in FAMILIAS else letra)
+    for letra in string.ascii_uppercase
+]
 
 
 class NfeOperacao(models.Model):
@@ -54,6 +76,13 @@ class NfeOperacao(models.Model):
         help="O sufixo sozinho é ambíguo: 101 na saída é venda de produção, na "
              "entrada é compra para industrialização. São operações diferentes.")
     name = fields.Char(string='Operação', required=True)
+    letra = fields.Selection(
+        selection=LETRAS, string='Letra da casa', index=True,
+        help="A família na taxonomia da casa — (A) venda, (B) consignação "
+             "nossa, (C) consignação de terceiros, (D) bonificação, (E) "
+             "remessa, (Z) o resto. A SEFAZ não a conhece: ela existe para "
+             "quem procura a operação na tela, e é o que nomeia a posição "
+             "fiscal correspondente.")
     active = fields.Boolean(default=True)
 
     # -- como esta operação vira nota ----------------------------------
@@ -136,6 +165,29 @@ class NfeOperacao(models.Model):
         if not codigo:
             return self.env['nfe.cfop']
         return self.env['nfe.cfop'].search([('code', '=', codigo)], limit=1)
+
+    def nome_posicao_fiscal(self):
+        """O nome da posição fiscal desta operação, no formato da casa.
+
+            (B) Remessa em consignação mercantil — 5917/6917
+
+        Três coisas, nesta ordem: a letra por que se procura, o que a operação
+        é, e o par de CFOPs. O par fica no nome de propósito — a posição fiscal
+        aparece como um campo de escolha na fatura, e ali só o nome se vê; ter
+        de abrir a posição para descobrir se é 5917 ou 5949 é o que fazia todo
+        mundo escrever o CFOP no nome à mão.
+
+        O que **não** entra é o nome da empresa. Era o que gerava as catorze
+        redações do 5101 no legado, e é redundante: a posição fiscal já é de uma
+        empresa só, e o DANFE já traz o emitente no cabeçalho.
+        """
+        self.ensure_one()
+        interno = self.cfop_para('interna')
+        externo = self.cfop_para('interestadual')
+        nome = '(%s) %s' % (self.letra, self.name) if self.letra else self.name
+        if interno and externo:
+            return '%s — %s/%s' % (nome, interno, externo)
+        return nome
 
     def _focus_fiscal(self, company):
         """Atributos fiscais desta operação, com o padrão da empresa atrás."""

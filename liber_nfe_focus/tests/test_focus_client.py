@@ -108,10 +108,37 @@ class TestFocusClient(TransactionCase):
         self.assertNotIn('/v2/empresas', sessao.chamadas[0]['url'])
 
     def test_teste_de_conexao_em_producao_lista_empresas(self):
-        producao = FocusClient('tok', ambiente='producao', session=FakeSession(
-            FakeResponse(200, [{'id': 1}, {'id': 2}])))
+        """Com token de conta o probe passa e a lista de emitentes ainda vem."""
+        sessao = FakeSession(
+            FakeResponse(404, {'codigo': 'nao_encontrado'}),
+            FakeResponse(200, [{'id': 1}, {'id': 2}]))
+        producao = FocusClient('tok', ambiente='producao', session=sessao)
 
         self.assertEqual(len(producao.testar_conexao()), 2)
+        self.assertIn('/v2/nfe/', sessao.chamadas[0]['url'])
+        self.assertTrue(sessao.chamadas[1]['url'].endswith('/v2/empresas'))
+
+    def test_token_de_emitente_passa_no_teste_mesmo_sem_ver_empresas(self):
+        """O caso que quebrava: `/v2/empresas` é endpoint de conta e devolve
+        401 para o token do emitente -- que é justamente o que emite a nota.
+        O probe já provou o token, então o 401 de lá não reprova nada."""
+        sessao = FakeSession(
+            FakeResponse(404, {'codigo': 'nao_encontrado'}),
+            FakeResponse(401, {'codigo': 'permissao_negada',
+                               'mensagem': 'Access token inválido'}))
+        producao = FocusClient('tok-emitente', ambiente='producao', session=sessao)
+
+        self.assertEqual(producao.testar_conexao(), [])
+        self.assertEqual(len(sessao.chamadas), 2)
+
+    def test_token_invalido_em_producao_reprova_no_probe(self):
+        """Já um token de verdade inválido morre no probe, antes de empresas."""
+        sessao = FakeSession(FakeResponse(401, {'mensagem': 'token inválido'}))
+        producao = FocusClient('tok-ruim', ambiente='producao', session=sessao)
+
+        with self.assertRaises(FocusAuthError):
+            producao.testar_conexao()
+        self.assertEqual(len(sessao.chamadas), 1)
 
     def test_token_invalido_reprova_o_teste_de_conexao(self):
         """O 404 do probe é sucesso, mas o 401 continua sendo falha."""

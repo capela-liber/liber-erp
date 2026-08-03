@@ -31,10 +31,40 @@ Autorizada, a chave de acesso vai para `account.move.nfe_key` — o mesmo campo
 que o liber_nfe_xml usa para amarrar XML e fatura. Uma nota que emitimos e uma
 nota que recebemos viram a mesma coisa para o resto do sistema.
 
+As posições fiscais vêm prontas
+-------------------------------
+
+Cada operação da casa vira uma posição fiscal por empresa brasileira, criada
+pelo módulo, com a operação **já ligada** e o nome no formato da casa::
+
+    (B) Remessa em consignação mercantil — 5917/6917
+
+Três coisas, nesta ordem: a letra da taxonomia da casa, o que a operação é, e o
+par de CFOPs. O nome da empresa não entra — era o que gerava as catorze
+redações do 5101 no legado, e a posição fiscal já é de uma empresa só.
+
+A letra mora na operação, num campo, e é de lá que o nome a copia. As famílias
+saem do que a casa emitiu em 14.555 notas: (A) venda, (B) consignação nossa,
+(C) consignação de terceiros, (D) bonificação, (E) remessa, (Z) o resto. O
+alfabeto fica aberto — as letras livres continuam escolhíveis.
+
+Empresa brasileira nova nasce com as posições. Banco migrado tem as suas
+adotadas pela migração 19.0.1.5.0: o legado escrevia o CFOP no próprio nome
+("CFOP: 5917/6917") porque não tinha onde mais guardá-lo, e é essa a pista que
+liga a posição herdada à sua operação.
+
 Configuração mínima, em Configurações > Empresas:
   - token de homologação (e o de produção, quando for a hora)
   - regime tributário, inscrição estadual, número e bairro do endereço
   - CFOP padrão dentro do estado e para fora
+
+O token é o **do emitente**, não o da conta. A Focus dá os dois, e eles não são
+intercambiáveis: o da conta administra emitentes (é o que responde em
+`/v2/empresas`) e não emite nota nenhuma; o do emitente emite, e é um por
+ambiente. Colar o token da conta no campo de homologação dá 401
+`permissao_negada` na emissão — o token é válido, só não é aquele. No painel da
+Focus ele aparece por empresa, como "token de homologação" e "token de
+produção".
 
 Os defaults fiscais são de editora: livro é imune de ICMS (CST 41, ou CSOSN 400
 no Simples) e tem PIS/COFINS com alíquota zero (CST 06). Quem vende outra coisa
@@ -43,7 +73,7 @@ troca no produto ou na linha.
 Testes
 ------
 
-97 testes, em arquivos que correspondem às camadas:
+166 testes, em arquivos que correspondem às camadas:
 
 - ``tests/test_nfe_payload.py`` — a regra fiscal, sem banco: totais que fecham
   com a soma dos itens, arredondamento meio-para-cima (o ``round()`` do Python
@@ -57,6 +87,14 @@ Testes
   ``AccountTestInvoicingCommon``, sem dados de demonstração e sem mockar o ORM.
   Fatura vira payload, CFOP segue a UF, a chave de acesso só se grava quando a
   SEFAZ autoriza.
+- ``tests/test_posicoes_semeadas.py`` — o cadastro que a emissão pressupõe.
+  Posição fiscal sem operação não estoura: emite a nota com o CFOP errado, em
+  silêncio, e o erro aparece semanas depois na apuração. Cobre os dois
+  caminhos, separados de propósito — a semeadura (banco novo, ou empresa nova:
+  uma posição por operação, nome no formato da casa, operação ligada, e rodar
+  duas vezes não duplica) e a adoção (banco migrado: o CFOP escrito no nome
+  herdado vira a ligação, a letra herdada cede à da operação, e o nome que
+  colidiria com outro da mesma empresa é mapeado sem ser renomeado).
 - ``tests/test_endereco_localizacao.py`` — a reconciliação com a localização
   brasileira da OCA. O módulo lê ``street_name``/``street_number``/``district``
   quando esses campos existem no registry e cai nos seus próprios quando não
@@ -76,7 +114,7 @@ errado" de "o cadastro na Focus está errado".
     """,
     'author': "EdLab Press",
     'category': 'Accounting',
-    'version': '19.0.1.4.0',
+    'version': '19.0.1.5.0',
     'license': 'AGPL-3',
     'depends': ['account', 'liber_nfe_xml'],
     'external_dependencies': {'python': ['requests', 'pytz']},
@@ -96,6 +134,7 @@ errado" de "o cadastro na Focus está errado".
         'wizard/nfe_focus_correcao_wizard_views.xml',
     ],
     'pre_init_hook': 'pre_init_hook',
+    'post_init_hook': 'post_init_hook',
     'installable': True,
     'application': False,
 }

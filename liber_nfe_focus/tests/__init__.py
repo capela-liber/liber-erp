@@ -6,3 +6,4 @@ from . import test_carta_correcao
 from . import test_posicao_fiscal
 from . import test_config_no_codigo
 from . import test_endereco_localizacao
+from . import test_posicoes_semeadas

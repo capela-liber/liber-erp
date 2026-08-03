@@ -38,13 +38,56 @@ Logística, Financeiro, Editorial e Marketing**:
 |---|---|
 | **Assistente** | opera o dia a dia: cria e edita os documentos da sua área |
 | **Gerente** | tudo do assistente, mais aprovar e configurar |
-| **Direção** | leitura ampla e os boards financeiros; transversal |
+| **Direção** | transversal: opera os apps operacionais, lê a contabilidade, tem os boards |
 
 A regra dos boards financeiros não é uma trava escrita à mão — ela **cai
 sozinha da matemática dos grupos**. O painel de orçamento exige os grupos do
 `liber_budget` e os relatórios contábeis exigem `account_readonly` ou mais;
 como só Direção e Financeiro/Gerente recebem esses grupos, só eles veem os
 boards. Não há nada a manter.
+
+Uma linha da tabela merece ser dita sem meia-palavra, porque a v1 a escrevia
+errado. **A Direção opera.** Ela não é um perfil de consulta: os grupos que
+carrega nos apps operacionais — vendas, consignação, contratos de direitos,
+estoque, projetos — são de nível usuário, e com eles cria e edita documento
+como qualquer operador. Isso é a decisão, não uma trava que ficou faltando:
+quem dirige a casa mexe no que precisar mexer. A régua da Direção é para
+cima, não para baixo — o que ela não recebe é o nível de **gerente** das
+áreas (aprovar, configurar) e a configuração contábil, e diretor que também
+gerencia uma área acumula a função dela. Em contabilidade o acesso é de
+leitura; a exceção é o analítico, abaixo.
+
+## 2.1. Contabilidade analítica
+
+*Acrescentado em 02/08/2026.*
+
+`analytic.group_analytic_accounting` passou a ser implicado por **Direção** e
+**Financeiro/Gerente**. Antes não estava com ninguém — um grep pelo nome do
+grupo em todo o repositório não achava nada —, e a consequência era concreta:
+o menu `Faturamento ‣ Configuração ‣ Contabilidade analítica` (contas, planos
+e modelos de distribuição) simplesmente não existia para usuário nenhum, e
+`/odoo/analytic-accounts` respondia com erro de acesso, porque esse grupo é o
+único ACL dos cinco modelos do `analytic`.
+
+Duas coisas que essa linha ensina e que valem para a próxima:
+
+- **O interruptor das Definições não estava ao nosso alcance.** O bloco
+  "Análise" do formulário de configuração é `groups="account.group_account_user"`,
+  e em base só-Faturamento (sem o `account_accountant`, que é Enterprise) o
+  `group_account_manager` **não** implica `group_account_user` — a hierarquia
+  está desenhada assim de propósito no `account_security.xml`. Ou seja: nem o
+  administrador de Faturamento via a opção para marcá-la. Conceder o grupo
+  pelo `implied_ids` contorna o formulário e é o lugar certo, já que é
+  justamente o que este módulo existe para fazer.
+- **Não há variante de leitura.** O `ir.model.access.csv` do `analytic` dá
+  `1,1,1,1` nos cinco modelos para esse único grupo. Direção e Financeiro
+  ganham criar/alterar/apagar conta e plano analítico; não dava para conceder
+  menos sem escrever ACL própria.
+
+Não precisou de script de migração. Na v19 a implicação virou fecho
+transitivo **calculado** (`res.groups.all_implied_ids`, com
+`res.users.all_group_ids` dependendo dele), então um `-u liber_roles` já
+alcança todo mundo que hoje tem as duas funções.
 
 ## 3. Logística, e o preço de separá-la do Comercial
 
@@ -171,7 +214,5 @@ sistema, e `models/mail_thread.py` o concede: quem pode ler, pode comentar.
 - "Assistente vê só os próprios documentos / só o seu canal" — é `ir.rule` por
   registro. Fácil de acrescentar por cima, difícil de acertar de primeira.
 - Alçadas com valor (desconto acima de X% sobe para o gerente).
-- Direção enxerga tudo em leitura, mas ainda **não está impedida** de editar
-  nos apps operacionais. Diretor que opera uma área acumula a função dela.
 - O visitante não tem trava contra `sudo()`. Se algum dia isso importar, o
   caminho é auditar os botões, não endurecer o guarda.

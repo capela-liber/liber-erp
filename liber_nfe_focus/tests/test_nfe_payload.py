@@ -433,11 +433,11 @@ class TestNfePayload(TransactionCase):
     # -- ISBN ----------------------------------------------------------
     def test_isbn_vai_como_codigo_de_barras(self):
         itens = self._itens()
-        itens[0]['codigo_barras_comercial'] = '9786551590115'
-        itens[0]['codigo_barras_tributavel'] = '9786551590115'
+        itens[0]['codigo_barras_comercial'] = '9780000000002'
+        itens[0]['codigo_barras_tributavel'] = '9780000000002'
 
         item = nfe_payload.build_payload(
             self._nota(), self._emitente(), self._destinatario(), itens)['items'][0]
 
-        self.assertEqual(item['codigo_barras_comercial'], '9786551590115')
-        self.assertEqual(item['codigo_barras_tributavel'], '9786551590115')
+        self.assertEqual(item['codigo_barras_comercial'], '9780000000002')
+        self.assertEqual(item['codigo_barras_tributavel'], '9780000000002')

@@ -239,22 +239,30 @@ class FocusClient(object):
     def testar_conexao(self):
         """Confirma token e ambiente sem emitir nada.
 
-        `/v2/empresas` **só existe em produção** -- em homologação ele devolve
-        404, o que faria um teste de conexão perfeitamente saudável parecer
-        falha. Então em homologação o probe é outro: consultar uma referência
-        que não existe. Um 404 "nota não encontrada" prova que o token foi
-        aceito (a API chegou a procurar); um 401 prova que não.
+        O probe é sempre o mesmo: consultar uma referência que não existe. Um
+        404 "nota não encontrada" prova que o token foi aceito (a API chegou a
+        procurar); um 401 prova que não. Vale nos dois ambientes e -- o que
+        importa aqui -- usa exatamente a credencial que emite a nota.
 
-        Devolve a lista de emitentes quando dá para obtê-la, e uma lista vazia
-        quando o ambiente não expõe esse endpoint.
+        `/v2/empresas` não serve de probe. Ele é um endpoint de *conta*: só o
+        token da conta (o do painel, que administra todos os emitentes) entra
+        lá. O token do emitente, que é o que emite NFe, leva 401 -- e usá-lo
+        como teste faria um token perfeitamente bom parecer inválido. Em
+        homologação o endpoint nem existe. Por isso ele vira enriquecimento
+        opcional: se a lista vier, devolvemos; se der 401, o teste já passou.
         """
-        if self.ambiente == 'producao':
-            empresas = self._request('GET', '/v2/empresas')
-            return empresas if isinstance(empresas, list) else []
         try:
             self._request('GET', '/v2/nfe/%s' % PROBE_REF)
         except FocusNotFound:
             pass  # token aceito: é a referência que não existe, e é de propósito
+
+        if self.ambiente == 'producao':
+            try:
+                empresas = self._request('GET', '/v2/empresas')
+            except FocusAuthError:
+                return []  # token de emitente, não de conta. O probe já valeu.
+            if isinstance(empresas, list):
+                return empresas
         return []
 
     def baixar(self, caminho):

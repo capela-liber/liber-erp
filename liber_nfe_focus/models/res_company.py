@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from odoo import _, fields, models
+from odoo import _, api, fields, models
 from odoo.exceptions import UserError
 
 from .focus_client import FocusClient, FocusError
@@ -188,22 +188,47 @@ class ResCompany(models.Model):
         }
 
     def action_focus_testar_conexao(self):
-        """Confere token e ambiente sem emitir nada (GET /v2/empresas)."""
+        """Confere token e ambiente sem emitir nada."""
         self.ensure_one()
         try:
             empresas = self._focus_client().testar_conexao()
         except FocusError as exc:
             raise UserError(_("Focus NFe: %s", exc.message)) from exc
-        quantidade = len(empresas) if isinstance(empresas, list) else 1
+        ambiente = self.sudo().focus_ambiente
+        # A lista de emitentes só vem com token de conta. Com token de
+        # emitente ela vem vazia, e isso não é defeito nenhum -- então a
+        # mensagem não pode anunciar "0 emitentes" como se fosse resultado.
+        if empresas:
+            mensagem = _(
+                "Ambiente %(ambiente)s, %(n)s emitente(s) no cadastro.",
+                ambiente=ambiente, n=len(empresas))
+        else:
+            mensagem = _("Ambiente %(ambiente)s, token aceito.",
+                         ambiente=ambiente)
         return {
             'type': 'ir.actions.client',
             'tag': 'display_notification',
             'params': {
                 'type': 'success',
                 'title': _("Focus NFe conectada"),
-                'message': _(
-                    "Ambiente %(ambiente)s, %(n)s emitente(s) no cadastro.",
-                    ambiente=self.sudo().focus_ambiente, n=quantidade),
+                'message': mensagem,
                 'sticky': False,
             },
         }
+
+    # ------------------------------------------------------------------
+    @api.model_create_multi
+    def create(self, vals_list):
+        """Empresa brasileira nova já nasce com as posições fiscais da casa.
+
+        Sem isto, criar a quinta editora significa lembrar de rodar a semeadura
+        à mão -- e a hora de descobrir que ninguém lembrou é a primeira nota,
+        que sai com a posição em branco.
+        """
+        companies = super().create(vals_list)
+        brasileiras = companies.filtered(
+            lambda c: c.partner_id.country_id.code == 'BR')
+        if brasileiras:
+            self.env['account.fiscal.position']._nfe_semear_posicoes(
+                companies=brasileiras)
+        return companies

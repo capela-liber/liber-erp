@@ -24,6 +24,8 @@
         <field name="arch" type="xml">
             <field name="name" position="after">
                 <field name="nfe_operacao_id" optional="show"/>
+                <field name="nfe_cfop_interno_id" optional="hide"/>
+                <field name="nfe_cfop_externo_id" optional="hide"/>
             </field>
         </field>
     </record>
