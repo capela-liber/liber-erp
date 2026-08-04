@@ -50,6 +50,25 @@ CFOP_NO_NOME = re.compile(r'\b([1256])(\d{3})\b')
 LETRA_NO_NOME = re.compile(r'^\(([A-Z])\)\s*')
 SENTIDO_DO_DIGITO = {'1': 'entrada', '2': 'entrada', '5': 'saida', '6': 'saida'}
 
+# A letra de quem NÃO tem operação, pelo nome. A ordem importa: a primeira que
+# casar ganha.
+#
+# Isto é palpite, e é palpite barato de propósito. Errar a letra desarruma uma
+# lista; errar a operação emite nota com o CFOP do vizinho. Por isso a operação
+# só se liga quando o CFOP está escrito no nome, e a letra pode sair de um
+# padrão -- os dois erros não custam a mesma coisa.
+#
+# Cada regra é (o que casa, o que veta, a letra). O veto existe por causa de uma
+# armadilha real: "prestação de serviço" é fraseado padrão do CONFAZ e aparece
+# no nome de CFOP de MERCADORIA -- "Outra saída de mercadoria ou prestação de
+# serviço não especificado" é o 5949/7949, que não tem nada de serviço. Um nome
+# que fala em mercadoria não vira (G) por trazer a palavra.
+LETRA_POR_PADRAO = [
+    (re.compile(r'irrf|direito[s]?\s+autora|serviç|servic', re.I),
+     re.compile(r'mercadoria', re.I), 'G'),
+    (re.compile(r'nfc-?e|consumidor', re.I), None, 'F'),
+]
+
 
 class AccountFiscalPosition(models.Model):
     _inherit = 'account.fiscal.position'
@@ -223,3 +242,66 @@ class AccountFiscalPosition(models.Model):
                      "%d sem operação dedutível do nome",
                      len(adotadas), len(renomeadas), len(sem_operacao))
         return adotadas, renomeadas, sem_operacao
+
+    # ------------------------------------------------------- letra sem operação
+    @api.model
+    def _nfe_letra_do_nome(self, nome):
+        """A letra que este nome merece quando não há operação para dá-la.
+
+        A letra que o nome já traz **fica**. É o inverso do que se faz quando há
+        operação, e pelo mesmo motivo: lá a operação arbitra e o nome repete;
+        aqui não há árbitro, então a classificação herdada é a única que existe
+        e jogá-la fora seria trocar informação por nada.
+
+        Sem letra herdada, o nome decide entre duas famílias que não emitem NFe
+        55 -- (G) o que é serviço ou retenção, (F) o que é cupom ao consumidor
+        -- e (Z) para o resto, que é o que "outras" quer dizer.
+        """
+        herdada = LETRA_NO_NOME.match((nome or '').lstrip())
+        if herdada:
+            return herdada.group(1)
+        for padrao, veto, letra in LETRA_POR_PADRAO:
+            if padrao.search(nome or '') and not (veto and veto.search(nome or '')):
+                return letra
+        return 'Z'
+
+    @api.model
+    def _nfe_letrar_sem_operacao(self):
+        """Põe no alfabeto da casa as posições que não têm operação.
+
+        Elas não somem e não deviam sumir: o IRRF do direito autoral é posição
+        fiscal de verdade, em uso, que simplesmente não emite NFe de mercadoria.
+        O que não pode é metade da lista estar classificada e metade solta.
+
+        Só o nome muda -- não se inventa operação aqui. E o nome só muda se o
+        novo não colidir com outro da mesma empresa, pela mesma razão de sempre:
+        duas posições homônimas na mesma empresa tornam a escolha na fatura um
+        chute. Devolve as renomeadas.
+        """
+        candidatas = self.sudo().with_context(active_test=False).search([
+            ('nfe_operacao_id', '=', False)])
+        usados = {}
+        for posicao in self.sudo().with_context(active_test=False).search([]):
+            usados.setdefault(posicao.company_id.id, set()).add(posicao.name)
+
+        renomeadas = self.browse()
+        for posicao in candidatas:
+            letra = self._nfe_letra_do_nome(posicao.name)
+            limpo = posicao.name or ''
+            for padrao in LIXO_NO_NOME:
+                limpo = padrao.sub(' ', limpo)
+            limpo = LETRA_NO_NOME.sub('', limpo.lstrip())
+            limpo = ' '.join(limpo.split()).strip(' -–—')
+            if not limpo:
+                continue
+            novo = '(%s) %s' % (letra, limpo)
+            da_empresa = usados.setdefault(posicao.company_id.id, set())
+            if novo == posicao.name or novo in da_empresa:
+                continue
+            da_empresa.discard(posicao.name)
+            da_empresa.add(novo)
+            _logger.info("liber_nfe_focus: posição sem operação %r -> %r",
+                         posicao.name, novo)
+            posicao.name = novo
+            renomeadas |= posicao
+        return renomeadas

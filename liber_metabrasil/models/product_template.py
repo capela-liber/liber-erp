@@ -90,6 +90,14 @@ class ProductTemplate(models.Model):
         the catalogue needs minutes, so a single-shot version would be
         murdered at the same place on every run and never reach the end.
         """
+        # A casa que não usa a Metabrasil não tem varredura para fazer. Sem
+        # esta saída, o resto do método conta 2.662 livros atrasados, chama um
+        # lote que não faz nada, e re-agenda porque ainda "falta trabalho".
+        company = self.env.company
+        if not company.metabrasil_enabled or not company.metabrasil_partner_id:
+            _logger.info("Metabrasil price sweep skipped: not configured.")
+            return {'priced': 0, 'unpriced': 0, 'skipped': 0,
+                    'no_price': 0, 'unknown': 0}
         stale = fields.Datetime.subtract(fields.Datetime.now(),
                                          days=REFRESH_AFTER_DAYS)
         # 'not in (False, "")' e não '!= False': em SQL o segundo vira
@@ -111,7 +119,15 @@ class ProductTemplate(models.Model):
         _logger.info("Metabrasil price sweep: batch of %s, %s stale in total.",
                      len(books), remaining)
         summary = books._metabrasil_refresh_prices(commit=True)
-        if remaining > len(books) and not summary.get('busy'):
+        # Re-agendar exige duas coisas, e "ainda falta livro" é só uma delas: o
+        # lote também precisa ter ANDADO. Um lote que não carimba data nenhuma
+        # devolve a fila do mesmo tamanho, e um `_trigger()` aqui marca a
+        # próxima execução para agora -- que devolve a fila do mesmo tamanho, e
+        # re-agenda. O servidor entra em laço quente e passa a recusar
+        # requisição HTTP. Comparar a fila com ela mesma é o que distingue
+        # progresso de giro em falso, e vale para qualquer causa: casa
+        # desconfigurada, API fora do ar, livro que não aceita carimbo.
+        if not summary.get('busy') and self.search_count(domain) < remaining:
             cron = self.env.ref('liber_metabrasil.ir_cron_metabrasil_prices',
                                 raise_if_not_found=False)
             if cron:

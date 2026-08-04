@@ -52,6 +52,17 @@ FAMILIAS = {
     'C': 'Consignação de terceiros',
     'D': 'Bonificação',
     'E': 'Remessa',
+    # (F) e (G) não têm operação nenhuma hoje, e é de propósito. Elas nomeiam
+    # posições fiscais que não emitem NFe modelo 55: o (F) é o cupom ao
+    # consumidor, que é modelo 65 e outro documento; o (G) é retenção sobre
+    # serviço -- o IRRF do direito autoral, que não tem CFOP porque não há
+    # mercadoria circulando. O (F) vem do próprio legado, que já chamava assim.
+    #
+    # Uma família sem operação continua sendo família: ela existe para que a
+    # lista de posições fiscais se leia inteira pelo mesmo alfabeto, em vez de
+    # ter metade classificada e metade solta.
+    'F': 'Venda ao consumidor (NFC-e)',
+    'G': 'Serviços e retenções',
     'Z': 'Outras',
 }
 LETRAS = [

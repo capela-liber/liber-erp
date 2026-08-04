@@ -354,6 +354,36 @@ class TestMetabrasil(TransactionCase):
             [('metabrasil_price_check_date', '>=', started)])
         self.assertEqual(swept, 2, "a batch must stop at CRON_BATCH books")
 
+    def test_cron_nao_reagenda_quando_o_lote_nao_anda(self):
+        """Re-agendar exige progresso, não só fila.
+
+        A casa sem tiragens configuradas atravessa o lote sem carimbar data
+        nenhuma. Enquanto a condição para re-agendar era só "ainda falta
+        livro", a fila voltava do mesmo tamanho e o cron marcava a próxima
+        execução para agora -- centenas de vezes por segundo, até o servidor
+        parar de responder a HTTP.
+        """
+        Product = self.env['product.template']
+        for index in range(4):
+            Product.create({'name': "Sem tiragem %s" % index,
+                            'barcode': '978200000000%s' % index})
+        self.company.metabrasil_print_runs = ''
+        with patch.object(type(self.env['ir.cron']), '_trigger') as chained:
+            Product._cron_metabrasil_refresh_prices()
+        chained.assert_not_called()
+
+    def test_cron_nao_varre_casa_que_nao_usa_a_metabrasil(self):
+        """Sem a integração ligada não há varredura -- nem consulta de fila."""
+        Product = self.env['product.template']
+        Product.create({'name': "Ninguém pergunta", 'barcode': '9782000000099'})
+        self.company.metabrasil_enabled = False
+        with patch.object(self.api_cls, '_request') as called, \
+             patch.object(type(self.env['ir.cron']), '_trigger') as chained:
+            summary = Product._cron_metabrasil_refresh_prices()
+        called.assert_not_called()
+        chained.assert_not_called()
+        self.assertEqual(summary['priced'], 0)
+
     def test_cron_skips_freshly_checked(self):
         """A book asked about yesterday is not asked about again today: that
         is what lets each chained run advance."""

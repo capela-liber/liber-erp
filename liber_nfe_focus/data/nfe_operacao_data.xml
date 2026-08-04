@@ -180,5 +180,55 @@
             <field name="ibs_cbs_classificacao">410008</field>
             <field name="document_kind">transfer</field>
         </record>
+
+        <!-- As tres operacoes de ENTRADA e de retorno que faltavam.
+
+             Elas nao vem de nota que a casa emitiu: vem das posicoes fiscais
+             herdadas, que escreviam o CFOP no proprio nome ("CFOP: 1917") e
+             ficavam sem operacao porque a operacao nao existia aqui. Sao doze
+             posicoes em quatro empresas, e sem estas linhas nenhuma delas
+             consegue dizer que CFOP sai.
+
+             A letra segue o par, nao o sentido: a saida 917 e "consignacao
+             nossa" (B) porque somos nos que remetemos; a entrada 917 e o mesmo
+             negocio visto do outro lado, mercadoria de terceiro entrando aqui,
+             que e "consignacao de terceiros" (C). Ja o retorno de feira herda o
+             Z da remessa de feira, que a casa resolveu ser Z. -->
+        <record id="operacao_entrada_917" model="nfe.operacao">
+            <field name="code">917</field>
+            <field name="letra">C</field>
+            <field name="sentido">entrada</field>
+            <field name="name">Entrada de mercadoria recebida em consignacao</field>
+            <field name="natureza_operacao">Entrada de mercadoria recebida em consignacao</field>
+            <field name="finalidade">1</field>
+            <field name="cbenef">SP070130</field>
+            <field name="ibs_cbs_cst">410</field>
+            <field name="ibs_cbs_classificacao">410008</field>
+            <field name="document_kind">consignment</field>
+        </record>
+        <record id="operacao_entrada_914" model="nfe.operacao">
+            <field name="code">914</field>
+            <field name="letra">Z</field>
+            <field name="sentido">entrada</field>
+            <field name="name">Retorno de mercadoria remetida para exposicao ou feira</field>
+            <field name="natureza_operacao">Retorno de merc. remetida para exposicao ou feira</field>
+            <field name="finalidade">1</field>
+            <field name="cbenef">SP070130</field>
+            <field name="ibs_cbs_cst">410</field>
+            <field name="ibs_cbs_classificacao">410008</field>
+            <field name="document_kind">event_return</field>
+        </record>
+        <record id="operacao_saida_209" model="nfe.operacao">
+            <field name="code">209</field>
+            <field name="letra">Z</field>
+            <field name="sentido">saida</field>
+            <field name="name">Devolucao de merc. recebida em transferencia</field>
+            <field name="natureza_operacao">Devolucao de merc. recebida em transferencia</field>
+            <field name="finalidade">4</field>
+            <field name="cbenef">SP070130</field>
+            <field name="ibs_cbs_cst">410</field>
+            <field name="ibs_cbs_classificacao">410008</field>
+            <field name="document_kind">other</field>
+        </record>
     </data>
 </odoo>

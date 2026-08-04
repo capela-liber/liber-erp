@@ -165,27 +165,113 @@ class TestPosicoesSemeadas(TransactionCase):
             posicao.name, '(Z) Remessa para feiras e eventos — 5914/6914')
 
     def test_nome_sem_cfop_dedutivel_fica_como_estava(self):
-        """O caso de erro: 1917 pede uma entrada 917 que a casa não tem.
+        """O caso de erro: um sufixo que a casa não tem não vira operação.
 
-        É a "(C) Devolução simbólica de terceiros CFOP: 1917" da Hedra -- que a
-        n-1 emitiu 18 vezes como saída 5919. Não inventamos a operação: a
-        posição fica intocada e sai no relatório da migração.
+        A adoção lê o CFOP do nome, mas só liga o que existe na tabela da casa.
+        Sufixo desconhecido não inventa operação nenhuma: a posição fica
+        intocada e sai no relatório da migração, para alguém decidir.
         """
         posicao = self.herdada(
-            '(C) Devolução simbólica de terceiros (Editora Hedra) CFOP: 1917')
+            '(Z) Operação que a casa não tem (Editora Hedra) CFOP: 1657')
         _adotadas, _renomeadas, sem_operacao = (
             self.Posicao._nfe_adotar_posicoes_do_legado())
         self.assertIn(posicao, sem_operacao)
         self.assertFalse(posicao.nfe_operacao_id)
         self.assertEqual(
             posicao.name,
+            '(Z) Operação que a casa não tem (Editora Hedra) CFOP: 1657')
+
+    def test_entrada_917_existe_e_a_posicao_da_hedra_e_adotada(self):
+        """A "(C) Devolução simbólica de terceiros CFOP: 1917" da Hedra.
+
+        Ela ficou órfã enquanto a casa só tinha a saída 917: doze posições em
+        quatro empresas dependiam de uma entrada 917, de uma entrada 914 e de
+        uma saída 209 que não existiam. As três passaram a existir como dado do
+        módulo, e a adoção — que não mudou — reencontra a posição e a liga.
+        """
+        posicao = self.herdada(
             '(C) Devolução simbólica de terceiros (Editora Hedra) CFOP: 1917')
+        self.Posicao._nfe_adotar_posicoes_do_legado()
+        operacao = posicao.nfe_operacao_id
+        self.assertTrue(operacao, "a entrada 917 deveria vir com o módulo")
+        self.assertEqual((operacao.code, operacao.sentido), ('917', 'entrada'))
+        # A letra segue o par, não o sentido: remeter em consignação é (B)
+        # porque a mercadoria é nossa; recebê-la é (C), de terceiros.
+        self.assertEqual(operacao.letra, 'C')
+        self.assertEqual(posicao.name,
+                         '(C) Devolução simbólica de terceiros — 1917/2917')
 
     def test_nome_sem_cfop_nenhum_nao_e_tocado(self):
         posicao = self.herdada('DIREITOS AUTORAIS (IRRF)')
         self.Posicao._nfe_adotar_posicoes_do_legado()
         self.assertFalse(posicao.nfe_operacao_id)
         self.assertEqual(posicao.name, 'DIREITOS AUTORAIS (IRRF)')
+
+    # ------------------------------------------ letra de quem não tem operação
+    def test_o_irrf_do_direito_autoral_ganha_a_letra_e_nao_a_operacao(self):
+        """O caso que motivou o (G): posição fiscal de verdade, em uso, que
+        não emite NFe de mercadoria porque não há mercadoria."""
+        posicao = self.herdada('DIREITOS AUTORAIS (IRRF)')
+        self.Posicao._nfe_letrar_sem_operacao()
+        self.assertFalse(posicao.nfe_operacao_id)
+        self.assertEqual(posicao.name, '(G) DIREITOS AUTORAIS (IRRF)')
+
+    def test_o_cupom_ao_consumidor_fica_em_f(self):
+        """Modelo 65, outro documento — e o legado já o chamava de (F)."""
+        posicao = self.herdada('Venda ao Consumidor NFC-e (EdLab Press)')
+        self.Posicao._nfe_letrar_sem_operacao()
+        self.assertEqual(posicao.name, '(F) Venda ao Consumidor NFC-e')
+
+    def test_prestacao_de_servico_no_nome_de_cfop_de_mercadoria_nao_e_g(self):
+        """A armadilha: "prestação de serviço" é fraseado do CONFAZ.
+
+        O 5949/7949 se chama "Outra saída de mercadoria ou prestação de serviço
+        não especificado" e é operação de mercadoria — quem casar só a palavra
+        "serviço" o manda para a família errada.
+        """
+        posicao = self.herdada(
+            'Outra saída de mercadoria ou prestação de serviço não especificado')
+        self.Posicao._nfe_letrar_sem_operacao()
+        self.assertEqual(
+            posicao.name,
+            '(Z) Outra saída de mercadoria ou prestação de serviço não especificado')
+
+    def test_o_que_nao_se_classifica_cai_em_z(self):
+        posicao = self.herdada('Entrada de Nota de Crédito')
+        self.Posicao._nfe_letrar_sem_operacao()
+        self.assertEqual(posicao.name, '(Z) Entrada de Nota de Crédito')
+
+    def test_a_letra_herdada_fica_quando_nao_ha_operacao_para_arbitrar(self):
+        """O inverso da regra da adoção, e pelo mesmo motivo.
+
+        Quando há operação, ela manda e o nome repete. Sem operação não há
+        árbitro: a letra do legado é a única classificação que existe, e
+        rebaixá-la para (Z) trocaria informação por nada.
+        """
+        posicao = self.herdada('(C) Devolução de consignação  (n-1 edições)*')
+        self.Posicao._nfe_letrar_sem_operacao()
+        self.assertFalse(posicao.nfe_operacao_id)
+        self.assertEqual(posicao.name, '(C) Devolução de consignação')
+
+    def test_letrar_nao_toca_em_quem_tem_operacao(self):
+        posicao = self.herdada('Remessa em consignacao')
+        posicao.nfe_operacao_id = self.op_consig
+        self.Posicao._nfe_letrar_sem_operacao()
+        self.assertEqual(posicao.name, 'Remessa em consignacao')
+
+    def test_letrar_duas_vezes_nao_empilha_parenteses(self):
+        posicao = self.herdada('DIREITOS AUTORAIS (IRRF)')
+        self.Posicao._nfe_letrar_sem_operacao()
+        self.Posicao._nfe_letrar_sem_operacao()
+        self.assertEqual(posicao.name, '(G) DIREITOS AUTORAIS (IRRF)')
+
+    def test_letra_que_colidiria_nao_renomeia(self):
+        """Duas homônimas na mesma empresa tornam a escolha na fatura um chute."""
+        ja_existe = self.herdada('(Z) Pagamento')
+        posicao = self.herdada('Pagamento')
+        self.Posicao._nfe_letrar_sem_operacao()
+        self.assertEqual(posicao.name, 'Pagamento')
+        self.assertEqual(ja_existe.name, '(Z) Pagamento')
 
     def test_posicao_ja_mapeada_a_mao_nao_e_mexida(self):
         posicao = self.herdada('Remessa em consignacao')

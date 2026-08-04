@@ -76,8 +76,14 @@ class TestConfigNoCodigo(AccountTestInvoicingCommon):
         configurado. É o ponto do desenho — configurar uma vez serve para
         dentro e para fora do estado. Quem fica sem operação é o sufixo que
         ninguém configurou.
+
+        Os exemplos são de propósito coisas que uma editora não faz: vender
+        ativo imobilizado, comprar material de consumo, faturar para entrega
+        futura. Os três de antes (5209, 6209, 1914) saíram daqui quando
+        passaram a ser configurados de verdade — eram justamente as operações
+        que doze posições fiscais herdadas do legado estavam pedindo.
         """
-        for codigo in ('5209', '6209', '1914'):
+        for codigo in ('5551', '6551', '1556', '1922'):
             cfop = self.env['nfe.cfop'].search([('code', '=', codigo)], limit=1)
             self.assertTrue(cfop, "O CFOP %s devia existir (tabela oficial)" % codigo)
             self.assertTrue(cfop.name, "O CFOP %s devia ter descrição oficial" % codigo)
@@ -109,7 +115,14 @@ class TestConfigNoCodigo(AccountTestInvoicingCommon):
         self.assertEqual(len(impostos), len(cfops))
         # Alíquota zero: ele marca a operação, não tributa.
         self.assertEqual(set(impostos.mapped('amount')), {0.0})
-        consig = impostos.filtered(lambda t: t.nfe_operacao_id.code == '917')
+        # Pelo par (sufixo, sentido), não pelo sufixo: 917 e 918 existem nos
+        # dois sentidos -- remeter em consignação e receber de volta são
+        # operações diferentes com o mesmo sufixo. Filtrar só pelo código traz
+        # duas e estoura em `consig.name` com "Expected singleton".
+        consig = impostos.filtered(
+            lambda t: (t.nfe_operacao_id.code == '917'
+                       and t.nfe_operacao_id.sentido == 'saida'))
+        self.assertEqual(len(consig), 1)
         self.assertIn('OP x917', consig.name)
         self.assertIn('ICMS 41', consig.name)
 

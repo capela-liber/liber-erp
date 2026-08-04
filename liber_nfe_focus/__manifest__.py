@@ -114,7 +114,7 @@ errado" de "o cadastro na Focus está errado".
     """,
     'author': "EdLab Press",
     'category': 'Accounting',
-    'version': '19.0.1.5.0',
+    'version': '19.0.1.6.0',
     'license': 'AGPL-3',
     'depends': ['account', 'liber_nfe_xml'],
     'external_dependencies': {'python': ['requests', 'pytz']},
