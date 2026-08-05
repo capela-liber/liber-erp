@@ -27,6 +27,9 @@ TECHNICAL_BATCH_SIZE = 20
 # killed, container restarted) and may be picked up again
 STALE_JOB_SECONDS = 600
 
+# teto da lista de recusados guardada no registro (o resto fica no log)
+MESSAGE_MAX_CHARS = 20000
+
 
 class MetabooksImportJob(models.Model):
     _name = "metabooks.import.job"
@@ -59,6 +62,11 @@ class MetabooksImportJob(models.Model):
         default="queued", required=True, readonly=True)
     total = fields.Integer("Catalogue Size", readonly=True)
     imported = fields.Integer("Imported", readonly=True)
+    skipped = fields.Integer(
+        "Skipped", readonly=True,
+        help="Books the database refused (a barcode that already belongs to "
+             "another product, say). They are listed in the message; the rest "
+             "of the catalogue came in anyway.")
     total_pages = fields.Integer("Catalogue Pages", readonly=True)
     next_page = fields.Integer("Next Page", default=1, readonly=True)
     progress = fields.Float("Progress", compute="_compute_progress")
@@ -84,7 +92,7 @@ class MetabooksImportJob(models.Model):
 
     def action_requeue(self):
         self.write({"state": "queued", "next_page": 1, "imported": 0,
-                    "message": False})
+                    "skipped": 0, "message": False})
         self._trigger_cron()
         return True
 
@@ -211,8 +219,38 @@ class MetabooksImportJob(models.Model):
             if self.state == "done":
                 return
             if time.monotonic() - start > BATCH_DEADLINE_SECONDS:
-                self._trigger_cron()  # cron resumes from `imported`
+                self._hand_back()  # cron resumes from `imported`
                 return
+
+    def _hand_back(self):
+        """Devolve o job ao cron no fim do lote, e volta a ficar `queued`.
+
+        Ficar `running` na devolução era o mesmo que dormir: o cron só reabre
+        um `running` depois de STALE_JOB_SECONDS de silêncio, então cada lote
+        custava dez minutos parado. `queued` diz a verdade — ninguém está
+        trabalhando nele agora — e o cron retoma na página seguinte.
+        """
+        self.state = "queued"
+        self.env.cr.commit()
+        self._trigger_cron()
+
+    def _record_failures(self, failed):
+        """Guarda os livros que o banco recusou, sem derrubar o job.
+
+        A mensagem cresce página a página (o job é retomável), então tem teto:
+        o que interessa é o começo da lista e o número total, que fica em
+        `skipped`.
+        """
+        if not failed:
+            return
+        self.skipped += len(failed)
+        linhas = ["%s: %s" % (f.get("isbn") or "sem ISBN",
+                              (f.get("error") or "").strip().replace("\n", " "))
+                  for f in failed]
+        texto = "\n".join(filter(None, [(self.message or "").strip()] + linhas))
+        if len(texto) > MESSAGE_MAX_CHARS:
+            texto = texto[:MESSAGE_MAX_CHARS] + "\n[...] veja o log do servidor"
+        self.message = texto
 
     def _process_batch(self):
         self.ensure_one()
@@ -229,7 +267,10 @@ class MetabooksImportJob(models.Model):
                     self.mvb_id, self.next_page, self.with_covers)
                 self.total_pages = res["total_pages"]
                 self.total = res["total_elements"]
-                self.imported += res["count"]
+                # `imported` conta o que entrou, não o que a página trazia: os
+                # recusados vão para `skipped` e para a mensagem.
+                self.imported += res.get("imported", res["count"])
+                self._record_failures(res.get("failed") or [])
                 if res["product_ids"]:
                     self.product_ids = [(4, pid) for pid in res["product_ids"]]
 
@@ -252,7 +293,7 @@ class MetabooksImportJob(models.Model):
                     break
                 if time.monotonic() - start > BATCH_DEADLINE_SECONDS:
                     # hand back to the cron; it will resume from next_page
-                    self._trigger_cron()
+                    self._hand_back()
                     break
         except MetabooksError as exc:
             self.env.cr.rollback()

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_liber_amazon_import_form" model="ir.ui.view">
+        <field name="name">liber.amazon.import.form</field>
+        <field name="model">liber.amazon.import</field>
+        <field name="arch" type="xml">
+            <form>
+                <group invisible="state != 'draft'">
+                    <field name="account_id"/>
+                    <field name="date_from"/>
+                    <field name="date_to"/>
+                </group>
+
+                <div invisible="state != 'preview'">
+                    <div class="alert alert-info" role="status">
+                        Read from Amazon. <strong>Nothing has been written
+                        yet</strong> — and nothing was sent to Amazon.
+                    </div>
+
+                    <group>
+                        <group string="What Amazon sent">
+                            <field name="order_count" string="Purchase orders"/>
+                            <field name="open_count" string="Still open"/>
+                            <field name="line_count" string="Lines"/>
+                            <field name="quantity_total" string="Copies"/>
+                            <field name="amount_total" string="Net cost total"/>
+                        </group>
+                        <group string="Against our catalogue">
+                            <field name="isbn_count" string="Distinct ISBNs"/>
+                            <field name="matched_count" string="Found by barcode"/>
+                        </group>
+                    </group>
+
+                    <div class="alert alert-warning" role="alert"
+                         invisible="not warnings">
+                        <field name="warnings" nolabel="1" readonly="1"/>
+                    </div>
+
+                    <separator string="ISBNs with no product in the catalogue"
+                               invisible="not unmatched_isbns"/>
+                    <p invisible="not unmatched_isbns" class="text-muted">
+                        These orders will still be imported. Their lines simply
+                        carry no product, and a quotation cannot be made from
+                        them until the title is registered or the product is
+                        chosen by hand.
+                    </p>
+                    <field name="unmatched_isbns" nolabel="1" readonly="1"
+                           invisible="not unmatched_isbns"/>
+
+                    <field name="payload_json" invisible="1"/>
+                </div>
+
+                <field name="state" invisible="1"/>
+
+                <footer>
+                    <button name="action_preview" type="object"
+                            string="Read from Amazon" class="btn-primary"
+                            invisible="state != 'draft'"/>
+                    <button name="action_import" type="object"
+                            string="Import" class="btn-primary"
+                            invisible="state != 'preview'"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_liber_amazon_import" model="ir.actions.act_window">
+        <field name="name">Import from Amazon</field>
+        <field name="res_model">liber.amazon.import</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+</odoo>

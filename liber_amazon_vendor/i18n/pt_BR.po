@@ -1,0 +1,1537 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* liber_amazon_vendor
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0-20260630\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-08-05 21:50+0000\n"
+"PO-Revision-Date: 2026-08-05 21:50+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: pt_BR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#. module: liber_amazon_vendor
+#. odoo-python
+#: code:addons/liber_amazon_vendor/models/amazon_order.py:0
+msgid ""
+"\n"
+"\n"
+"%s line(s) were left out for having no product in the catalogue — see each order's log."
+msgstr "\n\n%s linha(s) ficaram de fora por não terem produto no cadastro — veja o histórico de cada pedido."
+
+#. module: liber_amazon_vendor
+#. odoo-python
+#: code:addons/liber_amazon_vendor/models/amazon_order.py:0
+msgid ""
+"\n"
+"… and %s more."
+msgstr "\n… e mais %s."
+
+#. module: liber_amazon_vendor
+#. odoo-python
+#: code:addons/liber_amazon_vendor/models/amazon_account.py:0
+msgid ""
+"%(created)s new orders, %(updated)s updated. Nothing was confirmed, here or "
+"at Amazon."
+msgstr "%(created)s pedidos novos, %(updated)s atualizados. Nada foi confirmado, nem aqui nem na Amazon."
+
+#. module: liber_amazon_vendor
+#. odoo-python
+#: code:addons/liber_amazon_vendor/models/amazon_order.py:0
+msgid ""
+"%(feitas)s quotation(s) created, %(pulados)s skipped:\n"
+"\n"
+"%(amostra)s"
+msgstr "%(feitas)s cotação(ões) gerada(s), %(pulados)s pulada(s):\n\n%(amostra)s"
+
+#. module: liber_amazon_vendor
+#. odoo-python
+#: code:addons/liber_amazon_vendor/models/amazon_order.py:0
+msgid "%(po)s already has quotation %(quote)s."
+msgstr "%(po)s já tem a cotação %(quote)s."
+
+#. module: liber_amazon_vendor
+#. odoo-python
+#: code:addons/liber_amazon_vendor/models/amazon_order.py:0
+msgid ""
+"%(po)s is priced in %(foreign)s but the company books in %(company)s. "
+"Converting silently would put a plausible wrong number in the quotation."
+msgstr "%(po)s está precificado em %(foreign)s mas a empresa escritura em %(company)s. Converter caladamente poria um número plausível e errado na cotação."
+
+#. module: liber_amazon_vendor
+#. odoo-python
+#: code:addons/liber_amazon_vendor/models/amazon_order.py:0
+msgid "%s has no line that can become a quotation."
+msgstr "%s não tem nenhuma linha que possa virar cotação."
+
+#. module: liber_amazon_vendor
+#. odoo-python
+#: code:addons/liber_amazon_vendor/wizard/amazon_import.py:0
+msgid "%s line(s) carry no ISBN at all and can never be matched."
+msgstr "%s linha(s) não trazem ISBN nenhum e nunca vão casar."
+
+#. module: liber_amazon_vendor
+#. odoo-python
+#: code:addons/liber_amazon_vendor/models/amazon_order.py:0
+msgid "%s quotation(s) created, all in draft. Nothing was confirmed."
+msgstr "%s cotação(ões) gerada(s), todas em rascunho. Nada foi confirmado."
+
+#. module: liber_amazon_vendor
+#. odoo-python
+#: code:addons/liber_amazon_vendor/models/amazon_order.py:0
+msgid "(line %s, no ISBN)"
+msgstr "(linha %s, sem ISBN)"
+
+#. module: liber_amazon_vendor
+#: model_terms:ir.ui.view,arch_db:liber_amazon_vendor.res_config_settings_view_form
+msgid "<span class=\"ms-2\">dias para trás</span>"
+msgstr ""
+
+#. module: liber_amazon_vendor
+#: model_terms:ir.ui.view,arch_db:liber_amazon_vendor.view_liber_amazon_order_form
+msgid "<span class=\"o_stat_text\">Quotation</span>"
+msgstr "<span class=\"o_stat_text\">Cotação</span>"
+
+#. module: liber_amazon_vendor
+#: model:ir.model.fields,field_description:liber_amazon_vendor.field_liber_amazon_order_line__asin
+msgid "ASIN"
+msgstr "ASIN"
+
+#. module: liber_amazon_vendor
+#: model:ir.model.fields.selection,name:liber_amazon_vendor.selection__liber_amazon_account__region__au
+#: model:ir.model.fields.selection,name:liber_amazon_vendor.selection__res_config_settings__amazon_region__au
+msgid "AU"
+msgstr ""
+
+#. module: liber_amazon_vendor
+#: model:ir.model.fields,field_description:liber_amazon_vendor.field_liber_amazon_import__account_id
+#: model:ir.model.fields,field_description:liber_amazon_vendor.field_liber_amazon_order__account_id
+#: model_terms:ir.ui.view,arch_db:liber_amazon_vendor.res_config_settings_view_form
+#: model_terms:ir.ui.view,arch_db:liber_amazon_vendor.view_liber_amazon_account_form
+#: model_terms:ir.ui.view,arch_db:liber_amazon_vendor.view_liber_amazon_order_search
+msgid "Account"
+msgstr "Conta"
+
+#. module: liber_amazon_vendor
+#: model:ir.model.fields,field_description:liber_amazon_vendor.field_res_config_settings__amazon_account_name
+msgid "Account Name"
+msgstr "Nome da conta"
+
+#. module: liber_amazon_vendor
+#: model_terms:ir.ui.view,arch_db:liber_amazon_vendor.res_config_settings_view_form
+msgid "Account name"
+msgstr "Nome da conta"
+
+#. module: liber_amazon_vendor
+#: model:ir.ui.menu,name:liber_amazon_vendor.menu_liber_amazon_accounts
+msgid "Accounts"
+msgstr "Contas"
+
+#. module: liber_amazon_vendor
+#: model_terms:ir.ui.view,arch_db:liber_amazon_vendor.view_liber_amazon_order_form
+msgid "Acknowledge Change"
+msgstr "Dar por lida a mudança"
+
+#. module: liber_amazon_vendor
+#: model:ir.model.fields,field_description:liber_amazon_vendor.field_liber_amazon_account__message_needaction
+#: model:ir.model.fields,field_description:liber_amazon_vendor.field_liber_amazon_order__message_needaction
+msgid "Action Needed"
+msgstr ""
+
+#. module: liber_amazon_vendor
+#: model:ir.model.fields,field_description:liber_amazon_vendor.field_liber_amazon_account__active
+msgid "Active"
+msgstr "Ativo"
+
+#. module: liber_amazon_vendor
+#: model_terms:ir.ui.view,arch_db:liber_amazon_vendor.view_liber_amazon_import_form
+msgid "Against our catalogue"
+msgstr "Contra o nosso cadastro"
+
+#. module: liber_amazon_vendor
+#: model_terms:ir.ui.view,arch_db:liber_amazon_vendor.res_config_settings_view_form
+msgid "All accounts"
+msgstr "Todas as contas"
+
+#. module: liber_amazon_vendor
+#: model_terms:ir.ui.view,arch_db:liber_amazon_vendor.view_liber_amazon_order_form
+msgid "Amazon"
+msgstr ""
+
+#. module: liber_amazon_vendor
+#: model:ir.model.fields,field_description:liber_amazon_vendor.field_res_config_settings__amazon_account_id
+msgid "Amazon Account"
+msgstr "Conta da Amazon"
+
+#. module: liber_amazon_vendor
+#: model:ir.actions.act_window,name:liber_amazon_vendor.action_liber_amazon_account
+#: model_terms:ir.ui.view,arch_db:liber_amazon_vendor.res_config_settings_view_form
+msgid "Amazon Accounts"
+msgstr "Contas da Amazon"
+
+#. module: liber_amazon_vendor
+#. odoo-python
+#: code:addons/liber_amazon_vendor/models/amazon_account.py:0
+msgid "Amazon Orders"
+msgstr "Pedidos da Amazon"
+
+#. module: liber_amazon_vendor
+#. odoo-python
+#: code:addons/liber_amazon_vendor/wizard/amazon_import.py:0
+msgid "Amazon Orders (%(created)s new, %(updated)s updated)"
+msgstr "Pedidos da Amazon (%(created)s novos, %(updated)s atualizados)"
+
+#. module: liber_amazon_vendor
+#: model:ir.actions.act_window,name:liber_amazon_vendor.action_liber_amazon_order
+#: model:ir.model.fields,field_description:liber_amazon_vendor.field_sale_order__amazon_order_ids
+msgid "Amazon Purchase Orders"
+msgstr "Pedidos de compra da Amazon"
+
+#. module: liber_amazon_vendor
+#: model:ir.model.fields,field_description:liber_amazon_vendor.field_res_config_settings__amazon_region
+msgid "Amazon Region"
+msgstr "Região da Amazon"
+
+#. module: liber_amazon_vendor
+#: model:ir.model.fields,field_description:liber_amazon_vendor.field_liber_amazon_order__amazon_state
+#: model_terms:ir.ui.view,arch_db:liber_amazon_vendor.view_liber_amazon_order_search
+#: model_terms:ir.ui.view,arch_db:liber_amazon_vendor.view_liber_amazon_schedule_search
+msgid "Amazon State"
+msgstr "Estado na Amazon"
+
+#. module: liber_amazon_vendor
+#: model:ir.model.fields,field_description:liber_amazon_vendor.field_liber_amazon_order_line__uom_label
+msgid "Amazon UoM"
+msgstr "Unidade da Amazon"
+
+#. module: liber_amazon_vendor
+#. odoo-python
+#: code:addons/liber_amazon_vendor/models/res_config_settings.py:0
+#: model:ir.module.category,name:liber_amazon_vendor.module_category_liber_amazon
+#: model:ir.ui.menu,name:liber_amazon_vendor.menu_liber_amazon_root
+#: model:res.groups.privilege,name:liber_amazon_vendor.privilege_liber_amazon
+#: model_terms:ir.ui.view,arch_db:liber_amazon_vendor.res_config_settings_view_form
+msgid "Amazon Vendor"
+msgstr "Amazon Vendor"
+
+#. module: liber_amazon_vendor
+#: model:ir.model,name:liber_amazon_vendor.model_liber_amazon_account
+msgid "Amazon Vendor Account"
+msgstr "Conta da Amazon Vendor"
+
+#. module: liber_amazon_vendor
+#: model_terms:ir.ui.view,arch_db:liber_amazon_vendor.res_config_settings_view_form
+msgid "Amazon Vendor BR"
+msgstr ""
+
+#. module: liber_amazon_vendor
+#: model:ir.model,name:liber_amazon_vendor.model_liber_amazon_order
+msgid "Amazon Vendor Purchase Order"
+msgstr "Pedido de compra da Amazon Vendor"
+
+#. module: liber_amazon_vendor
+#: model:ir.model,name:liber_amazon_vendor.model_liber_amazon_order_line
+msgid "Amazon Vendor Purchase Order Line"
+msgstr "Linha de pedido de compra da Amazon Vendor"
+
+#. module: liber_amazon_vendor
+#: model:ir.actions.server,name:liber_amazon_vendor.cron_liber_amazon_import_ir_actions_server
+msgid "Amazon Vendor: read purchase orders"
+msgstr "Amazon Vendor: ler pedidos de compra"
+
+#. module: liber_amazon_vendor
+#. odoo-python
+#: code:addons/liber_amazon_vendor/services/api.py:0
+msgid ""
+"Amazon accepted the credentials but refused the Vendor Orders API (HTTP 403).\n"
+"\n"
+"This is usually not a wrong password: check that the app has the Vendor Orders role in Developer Central, and that the authorisation was granted for Vendor Central and not Seller Central.\n"
+"\n"
+"%s"
+msgstr "A Amazon aceitou as credenciais mas recusou a Vendor Orders API (HTTP 403).\n\nIsso quase nunca é senha errada: confira se o aplicativo tem o papel de Vendor Orders no Developer Central, e se a autorização foi dada para o Vendor Central e não para o Seller Central.\n\n%s"
+
+#. module: liber_amazon_vendor
+#. odoo-python
+#: code:addons/liber_amazon_vendor/models/amazon_account.py:0
+msgid "Amazon answered"
+msgstr "A Amazon respondeu"
+
+#. module: liber_amazon_vendor
+#: model:ir.model.fields,field_description:liber_amazon_vendor.field_liber_amazon_account__partner_id
+#: model:ir.model.fields,field_description:liber_amazon_vendor.field_res_config_settings__amazon_partner_id
+msgid "Amazon as Customer"
+msgstr "Amazon como cliente"
+
+#. module: liber_amazon_vendor
+#: model_terms:ir.ui.view,arch_db:liber_amazon_vendor.res_config_settings_view_form
+msgid "Amazon as customer"
+msgstr "Amazon como cliente"
+
+#. module: liber_amazon_vendor
+#. odoo-python
+#: code:addons/liber_amazon_vendor/models/amazon_order.py:0
+msgid ""
+"Amazon changed this order after quotation %(quote)s was created:\n"
+"- %(changes)s"
+msgstr "A Amazon mudou este pedido depois que a cotação %(quote)s foi criada:\n- %(changes)s"
+
+#. module: liber_amazon_vendor
+#. odoo-python
+#: code:addons/liber_amazon_vendor/services/api.py:0
+msgid ""
+"Amazon is rate limiting us (HTTP 429). Try a shorter date range, or run the "
+"import again in a few minutes."
+msgstr "A Amazon está limitando a nossa taxa de chamadas (HTTP 429). Tente um intervalo de datas menor, ou rode a importação de novo daqui a alguns minutos."
+
+#. module: liber_amazon_vendor
+#. odoo-python
+#: code:addons/liber_amazon_vendor/services/api.py:0
+msgid ""
+"Amazon refused the request (HTTP %(code)s).\n"
+"\n"
+"%(body)s"
+msgstr "A Amazon recusou a chamada (HTTP %(code)s).\n\n%(body)s"
+
+#. module: liber_amazon_vendor
+#. odoo-python
+#: code:addons/liber_amazon_vendor/services/api.py:0
+msgid ""
+"Amazon refused these credentials (HTTP %(code)s).\n"
+"\n"
+"%(body)s"
+msgstr "A Amazon recusou estas credenciais (HTTP %(code)s).\n\n%(body)s"
+
+#. module: liber_amazon_vendor
+#. odoo-python
+#: code:addons/liber_amazon_vendor/services/api.py:0
+msgid "Amazon replied 200 but sent no access token."
+msgstr "A Amazon respondeu 200 mas não mandou access token."
+
+#. module: liber_amazon_vendor
+#. odoo-python
+#: code:addons/liber_amazon_vendor/wizard/amazon_import.py:0
+msgid ""
+"Amazon used states this module does not know yet: %s. They were imported "
+"anyway and are flagged."
+msgstr "A Amazon usou estados que este módulo ainda não conhece: %s. Foram importados assim mesmo e estão marcados."
+
+#. module: liber_amazon_vendor
+#: model:ir.model.fields,field_description:liber_amazon_vendor.field_liber_amazon_import__amount_total
+#: model:ir.model.fields,field_description:liber_amazon_vendor.field_liber_amazon_order__amount_total
+msgid "Amount Total"
+msgstr "Valor total"
+
+#. module: liber_amazon_vendor
+#: model:ir.model.fields,field_description:liber_amazon_vendor.field_liber_amazon_account__message_attachment_count
+#: model:ir.model.fields,field_description:liber_amazon_vendor.field_liber_amazon_order__message_attachment_count
+msgid "Attachment Count"
+msgstr ""
+
+#. module: liber_amazon_vendor
+#: model:ir.model.fields.selection,name:liber_amazon_vendor.selection__liber_amazon_account__region__br
+#: model:ir.model.fields.selection,name:liber_amazon_vendor.selection__res_config_settings__amazon_region__br
+msgid "BR"
+msgstr ""
+
+#. module: liber_amazon_vendor
+#: model:ir.model.fields,field_description:liber_amazon_vendor.field_liber_amazon_order_line__backorder_allowed
+msgid "Backorder Allowed"
+msgstr "Aceita pendência"
+
+#. module: liber_amazon_vendor
+#: model:ir.model.fields,field_description:liber_amazon_vendor.field_liber_amazon_order__buying_party
+msgid "Buying Party"
+msgstr "Parte compradora"
+
+#. module: liber_amazon_vendor
+#: model:ir.model.fields.selection,name:liber_amazon_vendor.selection__liber_amazon_account__region__ca
+#: model:ir.model.fields.selection,name:liber_amazon_vendor.selection__res_config_settings__amazon_region__ca
+msgid "CA"
+msgstr ""
+
+#. module: liber_amazon_vendor
+#: model_terms:ir.ui.view,arch_db:liber_amazon_vendor.view_liber_amazon_import_form
+msgid "Cancel"
+msgstr "Cancelar"
+
+#. module: liber_amazon_vendor
+#: model_terms:ir.ui.view,arch_db:liber_amazon_vendor.view_liber_amazon_order_list
+msgid "Changed"
+msgstr "Mudou"
+
+#. module: liber_amazon_vendor
+#: model_terms:ir.ui.view,arch_db:liber_amazon_vendor.view_liber_amazon_order_search
+msgid "Changed After Quotation"
+msgstr "Mudou depois da cotação"
+
+#. module: liber_amazon_vendor
+#: model:ir.model.fields.selection,name:liber_amazon_vendor.selection__liber_amazon_import__state__draft
+msgid "Choose the window"
+msgstr "Escolher a janela"
+
+#. module: liber_amazon_vendor
+#: model_terms:ir.ui.view,arch_db:liber_amazon_vendor.view_liber_amazon_order_form
+msgid "Closed by Amazon"
+msgstr "Fechado pela Amazon"
+
+#. module: liber_amazon_vendor
+#: model:ir.model.fields,field_description:liber_amazon_vendor.field_liber_amazon_account__company_id
+#: model:ir.model.fields,field_description:liber_amazon_vendor.field_liber_amazon_order__company_id
+#: model:ir.model.fields,field_description:liber_amazon_vendor.field_liber_amazon_order_line__company_id
+msgid "Company"
+msgstr "Empresa"
+
+#. module: liber_amazon_vendor
+#: model:ir.model,name:liber_amazon_vendor.model_res_config_settings
+msgid "Config Settings"
+msgstr ""
+
+#. module: liber_amazon_vendor
+#: model:ir.ui.menu,name:liber_amazon_vendor.menu_liber_amazon_config
+msgid "Configuration"
+msgstr "Configuração"
+
+#. module: liber_amazon_vendor
+#: model_terms:ir.actions.act_window,help:liber_amazon_vendor.action_liber_amazon_account
+msgid "Connect a Vendor Central account"
+msgstr "Conecte uma conta do Vendor Central"
+
+#. module: liber_amazon_vendor
+#: model_terms:ir.ui.view,arch_db:liber_amazon_vendor.view_liber_amazon_import_form
+msgid "Copies"
+msgstr "Exemplares"
+
+#. module: liber_amazon_vendor
+#. odoo-python
+#: code:addons/liber_amazon_vendor/services/api.py:0
+msgid "Could not reach Amazon's login server: %s"
+msgstr "Não consegui falar com o servidor de login da Amazon: %s"
+
+#. module: liber_amazon_vendor
+#. odoo-python
+#: code:addons/liber_amazon_vendor/services/api.py:0
+msgid "Could not reach Amazon: %s"
+msgstr "Não consegui falar com a Amazon: %s"
+
+#. module: liber_amazon_vendor
+#: model_terms:ir.ui.view,arch_db:liber_amazon_vendor.view_liber_amazon_order_form
+msgid "Create Quotation"
+msgstr "Gerar cotação"
+
+#. module: liber_amazon_vendor
+#: model:ir.actions.server,name:liber_amazon_vendor.action_bulk_create_quotations
+msgid "Create Quotations"
+msgstr "Gerar cotações"
+
+#. module: liber_amazon_vendor
+#: model:ir.model.fields,field_description:liber_amazon_vendor.field_liber_amazon_account__create_uid
+#: model:ir.model.fields,field_description:liber_amazon_vendor.field_liber_amazon_import__create_uid
+#: model:ir.model.fields,field_description:liber_amazon_vendor.field_liber_amazon_order__create_uid
+#: model:ir.model.fields,field_description:liber_amazon_vendor.field_liber_amazon_order_line__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: liber_amazon_vendor
+#: model:ir.model.fields,field_description:liber_amazon_vendor.field_liber_amazon_account__create_date
+#: model:ir.model.fields,field_description:liber_amazon_vendor.field_liber_amazon_import__create_date
+#: model:ir.model.fields,field_description:liber_amazon_vendor.field_liber_amazon_order__create_date
+#: model:ir.model.fields,field_description:liber_amazon_vendor.field_liber_amazon_order_line__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: liber_amazon_vendor
+#: model_terms:ir.ui.view,arch_db:liber_amazon_vendor.res_config_settings_view_form
+#: model_terms:ir.ui.view,arch_db:liber_amazon_vendor.view_liber_amazon_account_form
+msgid "Credentials"
+msgstr "Credenciais"
+
+#. module: liber_amazon_vendor
+#: model:ir.model.fields,field_description:liber_amazon_vendor.field_res_config_settings__amazon_credentials_set
+msgid "Credentials Configured"
+msgstr "Credenciais configuradas"
+
+#. module: liber_amazon_vendor
+#: model_terms:ir.ui.view,arch_db:liber_amazon_vendor.res_config_settings_view_form
+msgid "Credentials configured"
+msgstr "Credenciais configuradas"
+
+#. module: liber_amazon_vendor
+#: model:ir.model.fields,field_description:liber_amazon_vendor.field_liber_amazon_order__currency_id
+msgid "Currency"
+msgstr "Moeda"
+
+#. module: liber_amazon_vendor
+#: model:ir.model.fields,field_description:liber_amazon_vendor.field_liber_amazon_order_line__currency_code
+msgid "Currency Code"
+msgstr "Código da moeda"
+
+#. module: liber_amazon_vendor
+#: model:ir.model.fields.selection,name:liber_amazon_vendor.selection__liber_amazon_account__region__de
+#: model:ir.model.fields.selection,name:liber_amazon_vendor.selection__res_config_settings__amazon_region__de
+msgid "DE"
+msgstr ""
+
+#. module: liber_amazon_vendor
+#: model:ir.model.fields,field_description:liber_amazon_vendor.field_res_config_settings__amazon_cron_active
+msgid "Daily Import"
+msgstr "Importação diária"
+
+#. module: liber_amazon_vendor
+#: model_terms:ir.ui.view,arch_db:liber_amazon_vendor.res_config_settings_view_form
+msgid "Daily import"
+msgstr "Importação diária"
+
+#. module: liber_amazon_vendor
+#: model:ir.model.fields,field_description:liber_amazon_vendor.field_liber_amazon_import__date_from
+msgid "Date From"
+msgstr "De"
+
+#. module: liber_amazon_vendor
+#: model:ir.model.fields,field_description:liber_amazon_vendor.field_liber_amazon_import__date_to
+msgid "Date To"
+msgstr "Até"
+
+#. module: liber_amazon_vendor
+#: model:ir.model.fields,help:liber_amazon_vendor.field_liber_amazon_order__lead_time_days
+msgid ""
+"Days Amazon gave us, from the order to the end of the delivery window. Fixed"
+" at import: it is a fact about the order, not about today."
+msgstr "Dias que a Amazon nos deu, do pedido até o fim da janela de entrega. Fixado na importação: é fato sobre o pedido, não sobre hoje."
+
+#. module: liber_amazon_vendor
+#: model:ir.model.fields,field_description:liber_amazon_vendor.field_liber_amazon_order__lead_time_days
+#: model_terms:ir.ui.view,arch_db:liber_amazon_vendor.view_liber_amazon_schedule_list
+msgid "Days Granted"
+msgstr "Dias concedidos"
+
+#. module: liber_amazon_vendor
+#: model:ir.model.fields,field_description:liber_amazon_vendor.field_liber_amazon_order__days_to_deadline
+#: model_terms:ir.ui.view,arch_db:liber_amazon_vendor.view_liber_amazon_schedule_list
+msgid "Days Left"
+msgstr "Dias restantes"
+
+#. module: liber_amazon_vendor
+#: model:ir.model.fields,help:liber_amazon_vendor.field_liber_amazon_order__days_to_deadline
+msgid ""
+"Days until the delivery deadline. Negative means overdue. Empty for orders "
+"Amazon already closed."
+msgstr "Dias até o prazo de entrega. Negativo quer dizer atrasado. Vazio para pedidos que a Amazon já fechou."
+
+#. module: liber_amazon_vendor
+#: model_terms:ir.ui.view,arch_db:liber_amazon_vendor.view_liber_amazon_schedule_list
+msgid "Deadline"
+msgstr "Prazo"
+
+#. module: liber_amazon_vendor
+#: model_terms:ir.ui.view,arch_db:liber_amazon_vendor.view_liber_amazon_schedule_search
+msgid "Deadline Ahead"
+msgstr "Prazo à frente"
+
+#. module: liber_amazon_vendor
+#: model_terms:ir.ui.view,arch_db:liber_amazon_vendor.view_liber_amazon_schedule_search
+msgid "Deadline Month"
+msgstr "Mês do prazo"
+
+#. module: liber_amazon_vendor
+#: model_terms:ir.ui.view,arch_db:liber_amazon_vendor.view_liber_amazon_schedule_search
+msgid "Deadline This Month"
+msgstr "Prazo neste mês"
+
+#. module: liber_amazon_vendor
+#: model_terms:ir.ui.view,arch_db:liber_amazon_vendor.view_liber_amazon_schedule_search
+msgid "Deadline Week"
+msgstr "Semana do prazo"
+
+#. module: liber_amazon_vendor
+#: model_terms:ir.ui.view,arch_db:liber_amazon_vendor.view_liber_amazon_order_form
+msgid "Delivery"
+msgstr "Entrega"
+
+#. module: liber_amazon_vendor
+#: model:ir.model.fields,field_description:liber_amazon_vendor.field_liber_amazon_order__delivery_end
+msgid "Delivery End"
+msgstr "Fim da janela"
+
+#. module: liber_amazon_vendor
+#: model:ir.actions.act_window,name:liber_amazon_vendor.action_liber_amazon_schedule
+#: model:ir.ui.menu,name:liber_amazon_vendor.menu_liber_amazon_schedule
+#: model_terms:ir.ui.view,arch_db:liber_amazon_vendor.view_liber_amazon_schedule_graph
+#: model_terms:ir.ui.view,arch_db:liber_amazon_vendor.view_liber_amazon_schedule_pivot
+msgid "Delivery Schedule"
+msgstr "Agenda de entregas"
+
+#. module: liber_amazon_vendor
+#: model:ir.model.fields,field_description:liber_amazon_vendor.field_liber_amazon_order__delivery_start
+msgid "Delivery Start"
+msgstr "Início da janela"
+
+#. module: liber_amazon_vendor
+#: model_terms:ir.ui.view,arch_db:liber_amazon_vendor.view_liber_amazon_schedule_list
+#: model_terms:ir.ui.view,arch_db:liber_amazon_vendor.view_liber_amazon_schedule_search
+msgid "Destination"
+msgstr "Destino"
+
+#. module: liber_amazon_vendor
+#: model:ir.model.fields,field_description:liber_amazon_vendor.field_liber_amazon_account__display_name
+#: model:ir.model.fields,field_description:liber_amazon_vendor.field_liber_amazon_import__display_name
+#: model:ir.model.fields,field_description:liber_amazon_vendor.field_liber_amazon_order__display_name
+#: model:ir.model.fields,field_description:liber_amazon_vendor.field_liber_amazon_order_line__display_name
+#: model:ir.model.fields,field_description:liber_amazon_vendor.field_res_config_settings__display_name
+#: model:ir.model.fields,field_description:liber_amazon_vendor.field_sale_order__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: liber_amazon_vendor
+#: model_terms:ir.ui.view,arch_db:liber_amazon_vendor.view_liber_amazon_import_form
+msgid "Distinct ISBNs"
+msgstr "ISBNs distintos"
+
+#. module: liber_amazon_vendor
+#: model:ir.model.fields,field_description:liber_amazon_vendor.field_liber_amazon_order__divergence_note
+msgid "Divergence Note"
+msgstr "Nota de divergência"
+
+#. module: liber_amazon_vendor
+#. odoo-python
+#: code:addons/liber_amazon_vendor/models/amazon_order.py:0
+msgid ""
+"Divergence acknowledged:\n"
+"%s"
+msgstr "Divergência dada por lida:\n%s"
+
+#. module: liber_amazon_vendor
+#: model_terms:ir.ui.view,arch_db:liber_amazon_vendor.view_liber_amazon_schedule_search
+msgid "Due Within 7 Days"
+msgstr "Vence em 7 dias"
+
+#. module: liber_amazon_vendor
+#: model:ir.model.fields.selection,name:liber_amazon_vendor.selection__liber_amazon_account__region__es
+#: model:ir.model.fields.selection,name:liber_amazon_vendor.selection__res_config_settings__amazon_region__es
+msgid "ES"
+msgstr ""
+
+#. module: liber_amazon_vendor
+#: model_terms:ir.ui.view,arch_db:liber_amazon_vendor.res_config_settings_view_form
+msgid "Every company's account in one list."
+msgstr "A conta de cada empresa numa lista só."
+
+#. module: liber_amazon_vendor
+#: model_terms:ir.ui.view,arch_db:liber_amazon_vendor.res_config_settings_view_form
+msgid ""
+"Every import also re-reads this many days before the last one. Amazon "
+"changes an order's state after it was created, so a watermark that only "
+"moves forward would never see it."
+msgstr "Toda importação relê esta quantidade de dias antes da anterior. A Amazon muda o estado do pedido depois de criado, e uma marca d'água que só anda para frente nunca veria isso."
+
+#. module: liber_amazon_vendor
+#: model:ir.model.fields,help:liber_amazon_vendor.field_liber_amazon_account__import_days_back
+msgid ""
+"Every import also re-reads this many days before the last one. Amazon "
+"changes the state of an order after it was created -- a watermark that only "
+"moves forward would never see it."
+msgstr "Toda importação relê esta quantidade de dias antes da anterior. A Amazon muda o estado do pedido depois de criado — uma marca d'água que só anda para frente nunca veria isso."
+
+#. module: liber_amazon_vendor
+#: model:ir.model.fields.selection,name:liber_amazon_vendor.selection__liber_amazon_account__region__fr
+#: model:ir.model.fields.selection,name:liber_amazon_vendor.selection__res_config_settings__amazon_region__fr
+msgid "FR"
+msgstr ""
+
+#. module: liber_amazon_vendor
+#: model:ir.model.fields,help:liber_amazon_vendor.field_liber_amazon_order__is_open
+msgid "False once Amazon closed the order -- delivered or cancelled."
+msgstr "Falso depois que a Amazon fecha o pedido — entregue ou cancelado."
+
+#. module: liber_amazon_vendor
+#: model:ir.model.fields,help:liber_amazon_vendor.field_liber_amazon_order__divergence_note
+msgid ""
+"Filled when Amazon changed an order after we had already made a quotation "
+"from it. Nothing is rewritten automatically -- someone reads this and "
+"decides."
+msgstr "Preenchido quando a Amazon mudou um pedido depois de já termos feito cotação dele. Nada é reescrito automaticamente — alguém lê e decide."
+
+#. module: liber_amazon_vendor
+#: model:ir.model.fields,field_description:liber_amazon_vendor.field_liber_amazon_account__message_follower_ids
+#: model:ir.model.fields,field_description:liber_amazon_vendor.field_liber_amazon_order__message_follower_ids
+msgid "Followers"
+msgstr ""
+
+#. module: liber_amazon_vendor
+#: model:ir.model.fields,field_description:liber_amazon_vendor.field_liber_amazon_account__message_partner_ids
+#: model:ir.model.fields,field_description:liber_amazon_vendor.field_liber_amazon_order__message_partner_ids
+msgid "Followers (Partners)"
+msgstr ""
+
+#. module: liber_amazon_vendor
+#: model_terms:ir.ui.view,arch_db:liber_amazon_vendor.view_liber_amazon_import_form
+msgid "Found by barcode"
+msgstr "Encontrados pelo código de barras"
+
+#. module: liber_amazon_vendor
+#: model:ir.model.fields,field_description:liber_amazon_vendor.field_liber_amazon_order__has_divergence
+msgid "Has Divergence"
+msgstr "Tem divergência"
+
+#. module: liber_amazon_vendor
+#: model:ir.model.fields,field_description:liber_amazon_vendor.field_liber_amazon_account__has_message
+#: model:ir.model.fields,field_description:liber_amazon_vendor.field_liber_amazon_order__has_message
+msgid "Has Message"
+msgstr ""
+
+#. module: liber_amazon_vendor
+#: model_terms:ir.ui.view,arch_db:liber_amazon_vendor.view_liber_amazon_account_form
+msgid "Hedra — Vendor BR"
+msgstr ""
+
+#. module: liber_amazon_vendor
+#: model_terms:ir.ui.view,arch_db:liber_amazon_vendor.res_config_settings_view_form
+msgid "How this account is called in lists and menus."
+msgstr "Como esta conta aparece em listas e menus."
+
+#. module: liber_amazon_vendor
+#: model:ir.model.fields,field_description:liber_amazon_vendor.field_liber_amazon_account__id
+#: model:ir.model.fields,field_description:liber_amazon_vendor.field_liber_amazon_import__id
+#: model:ir.model.fields,field_description:liber_amazon_vendor.field_liber_amazon_order__id
+#: model:ir.model.fields,field_description:liber_amazon_vendor.field_liber_amazon_order_line__id
+#: model:ir.model.fields,field_description:liber_amazon_vendor.field_res_config_settings__id
+#: model:ir.model.fields,field_description:liber_amazon_vendor.field_sale_order__id
+msgid "ID"
+msgstr ""
+
+#. module: liber_amazon_vendor
+#: model:ir.model.fields,field_description:liber_amazon_vendor.field_liber_amazon_order_line__isbn
+msgid "ISBN"
+msgstr "ISBN"
+
+#. module: liber_amazon_vendor
+#: model_terms:ir.ui.view,arch_db:liber_amazon_vendor.view_liber_amazon_import_form
+msgid "ISBNs with no product in the catalogue"
+msgstr "ISBNs sem produto no cadastro"
+
+#. module: liber_amazon_vendor
+#: model:ir.model.fields.selection,name:liber_amazon_vendor.selection__liber_amazon_account__region__it
+#: model:ir.model.fields.selection,name:liber_amazon_vendor.selection__res_config_settings__amazon_region__it
+msgid "IT"
+msgstr ""
+
+#. module: liber_amazon_vendor
+#: model:ir.model.fields,help:liber_amazon_vendor.field_liber_amazon_account__message_needaction
+#: model:ir.model.fields,help:liber_amazon_vendor.field_liber_amazon_order__message_needaction
+msgid "If checked, new messages require your attention."
+msgstr ""
+
+#. module: liber_amazon_vendor
+#: model:ir.model.fields,help:liber_amazon_vendor.field_liber_amazon_account__message_has_error
+#: model:ir.model.fields,help:liber_amazon_vendor.field_liber_amazon_account__message_has_sms_error
+#: model:ir.model.fields,help:liber_amazon_vendor.field_liber_amazon_order__message_has_error
+#: model:ir.model.fields,help:liber_amazon_vendor.field_liber_amazon_order__message_has_sms_error
+msgid "If checked, some messages have a delivery error."
+msgstr ""
+
+#. module: liber_amazon_vendor
+#: model_terms:ir.ui.view,arch_db:liber_amazon_vendor.res_config_settings_view_form
+#: model_terms:ir.ui.view,arch_db:liber_amazon_vendor.view_liber_amazon_account_form
+#: model_terms:ir.ui.view,arch_db:liber_amazon_vendor.view_liber_amazon_import_form
+msgid "Import"
+msgstr "Importar"
+
+#. module: liber_amazon_vendor
+#: model:ir.model,name:liber_amazon_vendor.model_liber_amazon_import
+msgid "Import Amazon Vendor Orders"
+msgstr "Importar pedidos da Amazon Vendor"
+
+#. module: liber_amazon_vendor
+#: model_terms:ir.ui.view,arch_db:liber_amazon_vendor.view_liber_amazon_account_form
+msgid "Import Now"
+msgstr "Importar agora"
+
+#. module: liber_amazon_vendor
+#. odoo-python
+#: code:addons/liber_amazon_vendor/models/amazon_account.py:0
+msgid "Import finished"
+msgstr "Importação concluída"
+
+#. module: liber_amazon_vendor
+#: model:ir.actions.act_window,name:liber_amazon_vendor.action_liber_amazon_import
+#: model:ir.ui.menu,name:liber_amazon_vendor.menu_liber_amazon_import
+msgid "Import from Amazon"
+msgstr "Importar da Amazon"
+
+#. module: liber_amazon_vendor
+#: model_terms:ir.actions.act_window,help:liber_amazon_vendor.action_liber_amazon_schedule
+msgid ""
+"Import purchase orders and their delivery windows show up here,\n"
+"               nearest deadline first."
+msgstr "Importe pedidos de compra e as janelas de entrega aparecem aqui, do prazo mais próximo para o mais distante."
+
+#. module: liber_amazon_vendor
+#: model:ir.model.fields.selection,name:liber_amazon_vendor.selection__liber_amazon_order__state__imported
+msgid "Imported"
+msgstr "Importado"
+
+#. module: liber_amazon_vendor
+#: model:ir.model.fields,field_description:liber_amazon_vendor.field_liber_amazon_account__message_is_follower
+#: model:ir.model.fields,field_description:liber_amazon_vendor.field_liber_amazon_order__message_is_follower
+msgid "Is Follower"
+msgstr ""
+
+#. module: liber_amazon_vendor
+#: model:ir.model.fields,field_description:liber_amazon_vendor.field_liber_amazon_import__isbn_count
+msgid "Isbn Count"
+msgstr "ISBNs"
+
+#. module: liber_amazon_vendor
+#: model:ir.model.fields,field_description:liber_amazon_vendor.field_liber_amazon_order_line__item_sequence
+msgid "Item Sequence"
+msgstr "Sequência do item"
+
+#. module: liber_amazon_vendor
+#: model:ir.model.fields.selection,name:liber_amazon_vendor.selection__liber_amazon_account__region__jp
+#: model:ir.model.fields.selection,name:liber_amazon_vendor.selection__res_config_settings__amazon_region__jp
+msgid "JP"
+msgstr ""
+
+#. module: liber_amazon_vendor
+#: model_terms:ir.ui.view,arch_db:liber_amazon_vendor.view_liber_amazon_order_form
+msgid "Known state"
+msgstr "Estado conhecido"
+
+#. module: liber_amazon_vendor
+#: model:ir.model.fields,field_description:liber_amazon_vendor.field_liber_amazon_account__client_id
+#: model:ir.model.fields,field_description:liber_amazon_vendor.field_res_config_settings__amazon_client_id
+#: model_terms:ir.ui.view,arch_db:liber_amazon_vendor.res_config_settings_view_form
+msgid "LWA Client ID"
+msgstr "Client ID do LWA"
+
+#. module: liber_amazon_vendor
+#: model:ir.model.fields,field_description:liber_amazon_vendor.field_liber_amazon_account__client_secret
+#: model:ir.model.fields,field_description:liber_amazon_vendor.field_res_config_settings__amazon_client_secret
+#: model_terms:ir.ui.view,arch_db:liber_amazon_vendor.res_config_settings_view_form
+msgid "LWA Client Secret"
+msgstr "Client Secret do LWA"
+
+#. module: liber_amazon_vendor
+#: model:ir.model.fields,field_description:liber_amazon_vendor.field_res_config_settings__amazon_last_import_date
+msgid "Last Import"
+msgstr "Última importação"
+
+#. module: liber_amazon_vendor
+#: model:ir.model.fields,field_description:liber_amazon_vendor.field_liber_amazon_account__last_import_date
+msgid "Last Import Date"
+msgstr "Última importação"
+
+#. module: liber_amazon_vendor
+#: model:ir.model.fields,field_description:liber_amazon_vendor.field_liber_amazon_order__last_sync
+msgid "Last Sync"
+msgstr "Última sincronia"
+
+#. module: liber_amazon_vendor
+#: model:ir.model.fields,field_description:liber_amazon_vendor.field_liber_amazon_account__write_uid
+#: model:ir.model.fields,field_description:liber_amazon_vendor.field_liber_amazon_import__write_uid
+#: model:ir.model.fields,field_description:liber_amazon_vendor.field_liber_amazon_order__write_uid
+#: model:ir.model.fields,field_description:liber_amazon_vendor.field_liber_amazon_order_line__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: liber_amazon_vendor
+#: model:ir.model.fields,field_description:liber_amazon_vendor.field_liber_amazon_account__write_date
+#: model:ir.model.fields,field_description:liber_amazon_vendor.field_liber_amazon_import__write_date
+#: model:ir.model.fields,field_description:liber_amazon_vendor.field_liber_amazon_order__write_date
+#: model:ir.model.fields,field_description:liber_amazon_vendor.field_liber_amazon_order_line__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: liber_amazon_vendor
+#: model_terms:ir.ui.view,arch_db:liber_amazon_vendor.res_config_settings_view_form
+msgid "Last import"
+msgstr "Última importação"
+
+#. module: liber_amazon_vendor
+#: model:ir.model.fields,field_description:liber_amazon_vendor.field_liber_amazon_order__line_ids
+msgid "Line"
+msgstr "Linha"
+
+#. module: liber_amazon_vendor
+#: model:ir.model.fields,field_description:liber_amazon_vendor.field_liber_amazon_import__line_count
+#: model:ir.model.fields,field_description:liber_amazon_vendor.field_liber_amazon_order__line_count
+msgid "Line Count"
+msgstr "Linhas"
+
+#. module: liber_amazon_vendor
+#: model_terms:ir.ui.view,arch_db:liber_amazon_vendor.view_liber_amazon_import_form
+#: model_terms:ir.ui.view,arch_db:liber_amazon_vendor.view_liber_amazon_order_form
+#: model_terms:ir.ui.view,arch_db:liber_amazon_vendor.view_liber_amazon_order_list
+#: model_terms:ir.ui.view,arch_db:liber_amazon_vendor.view_liber_amazon_schedule_list
+msgid "Lines"
+msgstr "Linhas"
+
+#. module: liber_amazon_vendor
+#: model:ir.model.fields,help:liber_amazon_vendor.field_liber_amazon_order__unmatched_count
+msgid "Lines whose ISBN has no product in the catalogue."
+msgstr "Linhas cujo ISBN não tem produto no cadastro."
+
+#. module: liber_amazon_vendor
+#: model_terms:ir.ui.view,arch_db:liber_amazon_vendor.view_liber_amazon_order_form
+msgid ""
+"Lines with no product in the catalogue will be left out of the quotation. "
+"Their ISBNs are recorded in this order's log."
+msgstr "As linhas sem produto no cadastro ficarão de fora da cotação. Os ISBNs delas são registrados no histórico deste pedido."
+
+#. module: liber_amazon_vendor
+#: model:ir.model.fields,field_description:liber_amazon_vendor.field_liber_amazon_order_line__list_price
+msgid "List Price"
+msgstr "Preço de capa"
+
+#. module: liber_amazon_vendor
+#: model:ir.model.fields.selection,name:liber_amazon_vendor.selection__liber_amazon_account__region__mx
+#: model:ir.model.fields.selection,name:liber_amazon_vendor.selection__res_config_settings__amazon_region__mx
+msgid "MX"
+msgstr ""
+
+#. module: liber_amazon_vendor
+#: model:res.groups,name:liber_amazon_vendor.group_liber_amazon_manager
+msgid "Manager"
+msgstr "Gerente"
+
+#. module: liber_amazon_vendor
+#: model:ir.model.fields,field_description:liber_amazon_vendor.field_liber_amazon_order_line__matched
+msgid "Matched"
+msgstr "Casou"
+
+#. module: liber_amazon_vendor
+#: model:ir.model.fields,field_description:liber_amazon_vendor.field_liber_amazon_import__matched_count
+msgid "Matched Count"
+msgstr "Casaram"
+
+#. module: liber_amazon_vendor
+#: model:ir.model.fields,field_description:liber_amazon_vendor.field_liber_amazon_account__message_has_error
+#: model:ir.model.fields,field_description:liber_amazon_vendor.field_liber_amazon_order__message_has_error
+msgid "Message Delivery error"
+msgstr ""
+
+#. module: liber_amazon_vendor
+#: model:ir.model.fields,field_description:liber_amazon_vendor.field_liber_amazon_account__message_ids
+#: model:ir.model.fields,field_description:liber_amazon_vendor.field_liber_amazon_order__message_ids
+msgid "Messages"
+msgstr ""
+
+#. module: liber_amazon_vendor
+#: model:ir.model.fields,field_description:liber_amazon_vendor.field_liber_amazon_account__name
+msgid "Name"
+msgstr "Nome"
+
+#. module: liber_amazon_vendor
+#: model:ir.model.fields,field_description:liber_amazon_vendor.field_liber_amazon_order_line__price_unit
+msgid "Net Cost"
+msgstr "Net cost"
+
+#. module: liber_amazon_vendor
+#: model_terms:ir.ui.view,arch_db:liber_amazon_vendor.view_liber_amazon_import_form
+msgid "Net cost total"
+msgstr "Total em net cost"
+
+#. module: liber_amazon_vendor
+#. odoo-python
+#: code:addons/liber_amazon_vendor/wizard/amazon_import.py:0
+msgid ""
+"No Amazon account for %(company)s.\n"
+"\n"
+"One exists for another company. Switch company in the top-right selector, or create an account for this one under Configuration > Settings."
+msgstr "Nenhuma conta da Amazon para %(company)s.\n\nExiste uma para outra empresa. Troque a empresa no seletor do canto superior direito, ou crie uma conta para esta em Configuração > Definições."
+
+#. module: liber_amazon_vendor
+#. odoo-python
+#: code:addons/liber_amazon_vendor/wizard/amazon_import.py:0
+msgid ""
+"No Amazon account yet.\n"
+"\n"
+"Create one under Configuration > Settings, with the credentials from the app in Amazon Developer Central."
+msgstr "Ainda não há conta da Amazon.\n\nCrie uma em Configuração > Definições, com as credenciais do aplicativo no Amazon Developer Central."
+
+#. module: liber_amazon_vendor
+#: model_terms:ir.actions.act_window,help:liber_amazon_vendor.action_liber_amazon_order
+msgid "No order imported yet"
+msgstr "Nenhum pedido importado ainda"
+
+#. module: liber_amazon_vendor
+#: model_terms:ir.actions.act_window,help:liber_amazon_vendor.action_liber_amazon_schedule
+msgid "Nothing scheduled"
+msgstr "Nada agendado"
+
+#. module: liber_amazon_vendor
+#. odoo-python
+#: code:addons/liber_amazon_vendor/models/amazon_order.py:0
+msgid "Nothing was selected."
+msgstr "Nada foi selecionado."
+
+#. module: liber_amazon_vendor
+#: model:ir.model.fields,field_description:liber_amazon_vendor.field_liber_amazon_account__message_needaction_counter
+#: model:ir.model.fields,field_description:liber_amazon_vendor.field_liber_amazon_order__message_needaction_counter
+msgid "Number of Actions"
+msgstr ""
+
+#. module: liber_amazon_vendor
+#: model:ir.model.fields,field_description:liber_amazon_vendor.field_liber_amazon_account__message_has_error_counter
+#: model:ir.model.fields,field_description:liber_amazon_vendor.field_liber_amazon_order__message_has_error_counter
+msgid "Number of errors"
+msgstr ""
+
+#. module: liber_amazon_vendor
+#: model:ir.model.fields,help:liber_amazon_vendor.field_liber_amazon_account__message_needaction_counter
+#: model:ir.model.fields,help:liber_amazon_vendor.field_liber_amazon_order__message_needaction_counter
+msgid "Number of messages requiring action"
+msgstr ""
+
+#. module: liber_amazon_vendor
+#: model:ir.model.fields,help:liber_amazon_vendor.field_liber_amazon_account__message_has_error_counter
+#: model:ir.model.fields,help:liber_amazon_vendor.field_liber_amazon_order__message_has_error_counter
+msgid "Number of messages with delivery error"
+msgstr ""
+
+#. module: liber_amazon_vendor
+#: model_terms:ir.actions.act_window,help:liber_amazon_vendor.action_liber_amazon_account
+msgid ""
+"One account per company and region. The credentials come from\n"
+"               the Amazon Developer Central app: LWA client id, client secret\n"
+"               and the refresh token from the authorisation."
+msgstr "Uma conta por empresa e região. As credenciais vêm do aplicativo no Amazon Developer Central: client id e client secret do LWA, e o refresh token da autorização."
+
+#. module: liber_amazon_vendor
+#: model:ir.model.fields,field_description:liber_amazon_vendor.field_liber_amazon_import__open_count
+msgid "Open Count"
+msgstr "Abertos"
+
+#. module: liber_amazon_vendor
+#: model:res.groups,name:liber_amazon_vendor.group_liber_amazon_user
+msgid "Operator"
+msgstr "Operador"
+
+#. module: liber_amazon_vendor
+#: model:ir.model.fields,field_description:liber_amazon_vendor.field_liber_amazon_order_line__order_id
+msgid "Order"
+msgstr "Pedido"
+
+#. module: liber_amazon_vendor
+#: model:ir.model.fields,field_description:liber_amazon_vendor.field_liber_amazon_account__order_count
+#: model:ir.model.fields,field_description:liber_amazon_vendor.field_liber_amazon_import__order_count
+msgid "Order Count"
+msgstr "Pedidos"
+
+#. module: liber_amazon_vendor
+#: model:ir.model.fields,field_description:liber_amazon_vendor.field_liber_amazon_order__order_date
+#: model_terms:ir.ui.view,arch_db:liber_amazon_vendor.view_liber_amazon_schedule_search
+msgid "Order Date"
+msgstr "Data do pedido"
+
+#. module: liber_amazon_vendor
+#: model_terms:ir.ui.view,arch_db:liber_amazon_vendor.view_liber_amazon_order_search
+#: model_terms:ir.ui.view,arch_db:liber_amazon_vendor.view_liber_amazon_schedule_search
+msgid "Order Month"
+msgstr "Mês do pedido"
+
+#. module: liber_amazon_vendor
+#: model:ir.model.fields,field_description:liber_amazon_vendor.field_liber_amazon_order__order_type
+msgid "Order Type"
+msgstr "Tipo de pedido"
+
+#. module: liber_amazon_vendor
+#: model_terms:ir.ui.view,arch_db:liber_amazon_vendor.view_liber_amazon_account_form
+#: model_terms:ir.ui.view,arch_db:liber_amazon_vendor.view_liber_amazon_account_list
+msgid "Orders"
+msgstr "Pedidos"
+
+#. module: liber_amazon_vendor
+#: model:ir.model.fields,field_description:liber_amazon_vendor.field_liber_amazon_order__is_late
+#: model_terms:ir.ui.view,arch_db:liber_amazon_vendor.view_liber_amazon_schedule_search
+msgid "Overdue"
+msgstr "Atrasado"
+
+#. module: liber_amazon_vendor
+#. odoo-python
+#: code:addons/liber_amazon_vendor/models/amazon_order.py:0
+msgid "Overdue can only be filtered as yes or no."
+msgstr "Atrasado só se filtra como sim ou não."
+
+#. module: liber_amazon_vendor
+#: model:ir.model.fields,field_description:liber_amazon_vendor.field_liber_amazon_order__name
+msgid "PO Number"
+msgstr "Número do PO"
+
+#. module: liber_amazon_vendor
+#: model_terms:ir.ui.view,arch_db:liber_amazon_vendor.view_liber_amazon_order_search
+#: model_terms:ir.ui.view,arch_db:liber_amazon_vendor.view_liber_amazon_schedule_search
+msgid "PO or ISBN"
+msgstr "PO ou ISBN"
+
+#. module: liber_amazon_vendor
+#: model_terms:ir.ui.view,arch_db:liber_amazon_vendor.view_liber_amazon_order_form
+msgid "Parties"
+msgstr "Partes"
+
+#. module: liber_amazon_vendor
+#: model:ir.model.fields,help:liber_amazon_vendor.field_liber_amazon_order__is_late
+msgid "Past the delivery deadline and still open at Amazon."
+msgstr "Passou do prazo de entrega e continua aberto na Amazon."
+
+#. module: liber_amazon_vendor
+#: model:ir.model.fields,field_description:liber_amazon_vendor.field_liber_amazon_import__payload_json
+msgid "Payload Json"
+msgstr ""
+
+#. module: liber_amazon_vendor
+#: model:ir.model.fields,field_description:liber_amazon_vendor.field_liber_amazon_order__payment_method
+msgid "Payment Method"
+msgstr "Forma de pagamento"
+
+#. module: liber_amazon_vendor
+#: model:ir.model.fields,field_description:liber_amazon_vendor.field_liber_amazon_order_line__product_id
+msgid "Product"
+msgstr "Produto"
+
+#. module: liber_amazon_vendor
+#: model:ir.model.fields,field_description:liber_amazon_vendor.field_liber_amazon_order_line__product_locked
+msgid "Product Locked"
+msgstr "Produto travado"
+
+#. module: liber_amazon_vendor
+#: model_terms:ir.ui.view,arch_db:liber_amazon_vendor.view_liber_amazon_order_form
+msgid "Purchase Order"
+msgstr "Pedido de compra"
+
+#. module: liber_amazon_vendor
+#: model:ir.ui.menu,name:liber_amazon_vendor.menu_liber_amazon_orders
+msgid "Purchase Orders"
+msgstr "Pedidos de compra"
+
+#. module: liber_amazon_vendor
+#: model_terms:ir.ui.view,arch_db:liber_amazon_vendor.view_liber_amazon_import_form
+msgid "Purchase orders"
+msgstr "Pedidos de compra"
+
+#. module: liber_amazon_vendor
+#: model:ir.model.fields,field_description:liber_amazon_vendor.field_liber_amazon_order_line__quantity
+msgid "Quantity"
+msgstr "Quantidade"
+
+#. module: liber_amazon_vendor
+#: model:ir.model.fields,field_description:liber_amazon_vendor.field_liber_amazon_import__quantity_total
+msgid "Quantity Total"
+msgstr "Total de exemplares"
+
+#. module: liber_amazon_vendor
+#: model:ir.model.fields,field_description:liber_amazon_vendor.field_liber_amazon_order__sale_order_id
+msgid "Quotation"
+msgstr "Cotação"
+
+#. module: liber_amazon_vendor
+#. odoo-python
+#: code:addons/liber_amazon_vendor/models/amazon_order.py:0
+msgid ""
+"Quotation %(name)s created from this purchase order. It was NOT confirmed, "
+"and nothing was sent to Amazon."
+msgstr "Cotação %(name)s gerada a partir deste pedido de compra. Ela NÃO foi confirmada, e nada foi enviado à Amazon."
+
+#. module: liber_amazon_vendor
+#. odoo-python
+#: code:addons/liber_amazon_vendor/models/amazon_order.py:0
+msgid ""
+"Quotation %(name)s created from this purchase order. It was NOT confirmed, and nothing was sent to Amazon.\n"
+"\n"
+"%(count)s line(s) were left out for having no product in the catalogue:\n"
+"%(isbns)s"
+msgstr "Cotação %(name)s gerada a partir deste pedido de compra. Ela NÃO foi confirmada, e nada foi enviado à Amazon.\n\n%(count)s linha(s) ficaram de fora por não terem produto no cadastro:\n%(isbns)s"
+
+#. module: liber_amazon_vendor
+#: model:ir.model.fields.selection,name:liber_amazon_vendor.selection__liber_amazon_order__state__quoted
+msgid "Quotation created"
+msgstr "Cotação gerada"
+
+#. module: liber_amazon_vendor
+#. odoo-python
+#: code:addons/liber_amazon_vendor/models/amazon_order.py:0
+msgid "Quotations"
+msgstr "Cotações"
+
+#. module: liber_amazon_vendor
+#: model:ir.model.fields,field_description:liber_amazon_vendor.field_liber_amazon_account__import_days_back
+#: model:ir.model.fields,field_description:liber_amazon_vendor.field_res_config_settings__amazon_import_days_back
+msgid "Re-read Window (days)"
+msgstr "Janela de releitura (dias)"
+
+#. module: liber_amazon_vendor
+#: model_terms:ir.ui.view,arch_db:liber_amazon_vendor.res_config_settings_view_form
+msgid "Re-read window"
+msgstr "Janela de releitura"
+
+#. module: liber_amazon_vendor
+#: model:ir.model.fields.selection,name:liber_amazon_vendor.selection__liber_amazon_import__state__preview
+#: model_terms:ir.ui.view,arch_db:liber_amazon_vendor.view_liber_amazon_import_form
+msgid "Read from Amazon"
+msgstr "Ler da Amazon"
+
+#. module: liber_amazon_vendor
+#. odoo-python
+#: code:addons/liber_amazon_vendor/wizard/amazon_import.py:0
+msgid "Read from Amazon first."
+msgstr "Leia da Amazon primeiro."
+
+#. module: liber_amazon_vendor
+#: model_terms:ir.ui.view,arch_db:liber_amazon_vendor.view_liber_amazon_import_form
+msgid ""
+"Read from Amazon. <strong>Nothing has been written\n"
+"                        yet</strong> — and nothing was sent to Amazon."
+msgstr "Lido da Amazon. <strong>Nada foi gravado ainda</strong> — e nada foi enviado à Amazon."
+
+#. module: liber_amazon_vendor
+#: model_terms:ir.ui.view,arch_db:liber_amazon_vendor.res_config_settings_view_form
+msgid ""
+"Reads new and changed purchase orders every day at 07:00 UTC. It never "
+"creates quotations on its own."
+msgstr "Lê pedidos novos e alterados todo dia às 07:00 UTC. Nunca gera cotação por conta própria."
+
+#. module: liber_amazon_vendor
+#: model:ir.model.fields,field_description:liber_amazon_vendor.field_liber_amazon_account__refresh_token
+#: model:ir.model.fields,field_description:liber_amazon_vendor.field_res_config_settings__amazon_refresh_token
+#: model_terms:ir.ui.view,arch_db:liber_amazon_vendor.res_config_settings_view_form
+msgid "Refresh Token"
+msgstr "Refresh token"
+
+#. module: liber_amazon_vendor
+#: model:ir.model.fields,field_description:liber_amazon_vendor.field_liber_amazon_account__region
+#: model_terms:ir.ui.view,arch_db:liber_amazon_vendor.res_config_settings_view_form
+msgid "Region"
+msgstr "Região"
+
+#. module: liber_amazon_vendor
+#. odoo-python
+#: code:addons/liber_amazon_vendor/models/amazon_account.py:0
+msgid "Region %(region)s via %(host)s. Nothing was imported."
+msgstr "Região %(region)s via %(host)s. Nada foi importado."
+
+#. module: liber_amazon_vendor
+#: model:ir.model.fields,help:liber_amazon_vendor.field_liber_amazon_order_line__product_id
+msgid ""
+"Resolved from the ISBN against the product barcode. Set it by hand when the "
+"catalogue disagrees -- your choice survives the next import."
+msgstr "Resolvido pelo ISBN contra o código de barras do produto. Escolha à mão quando o cadastro discordar — a sua escolha sobrevive à próxima importação."
+
+#. module: liber_amazon_vendor
+#: model:ir.model.fields,field_description:liber_amazon_vendor.field_liber_amazon_account__message_has_sms_error
+#: model:ir.model.fields,field_description:liber_amazon_vendor.field_liber_amazon_order__message_has_sms_error
+msgid "SMS Delivery error"
+msgstr ""
+
+#. module: liber_amazon_vendor
+#: model:ir.model,name:liber_amazon_vendor.model_sale_order
+msgid "Sales Order"
+msgstr ""
+
+#. module: liber_amazon_vendor
+#: model:ir.model.fields,field_description:liber_amazon_vendor.field_liber_amazon_order__selling_party
+msgid "Selling Party"
+msgstr "Parte vendedora"
+
+#. module: liber_amazon_vendor
+#. odoo-python
+#: code:addons/liber_amazon_vendor/models/amazon_order.py:0
+msgid "Set 'Amazon as Customer' on account %s before creating quotations."
+msgstr "Defina 'Amazon como cliente' na conta %s antes de gerar cotações."
+
+#. module: liber_amazon_vendor
+#: model:ir.actions.act_window,name:liber_amazon_vendor.action_liber_amazon_settings
+#: model:ir.ui.menu,name:liber_amazon_vendor.menu_liber_amazon_settings
+msgid "Settings"
+msgstr "Definições"
+
+#. module: liber_amazon_vendor
+#: model:ir.model.fields,field_description:liber_amazon_vendor.field_liber_amazon_order__ship_to_party
+msgid "Ship To Party"
+msgstr "Destino da entrega"
+
+#. module: liber_amazon_vendor
+#: model:ir.model.fields,help:liber_amazon_vendor.field_liber_amazon_account__client_id
+#: model_terms:ir.ui.view,arch_db:liber_amazon_vendor.res_config_settings_view_form
+msgid "Starts with amzn1.application-oa2-client."
+msgstr "Começa com amzn1.application-oa2-client."
+
+#. module: liber_amazon_vendor
+#: model:ir.model.fields,field_description:liber_amazon_vendor.field_liber_amazon_import__state
+#: model:ir.model.fields,field_description:liber_amazon_vendor.field_liber_amazon_order__state
+msgid "State"
+msgstr "Estado"
+
+#. module: liber_amazon_vendor
+#: model:ir.model.fields,field_description:liber_amazon_vendor.field_liber_amazon_order__state_changed_date
+msgid "State Changed Date"
+msgstr "Data da mudança de estado"
+
+#. module: liber_amazon_vendor
+#: model:ir.model.fields,field_description:liber_amazon_vendor.field_liber_amazon_order__state_known
+msgid "State Known"
+msgstr "Estado conhecido"
+
+#. module: liber_amazon_vendor
+#: model:ir.model.fields,field_description:liber_amazon_vendor.field_liber_amazon_order__is_open
+#: model_terms:ir.ui.view,arch_db:liber_amazon_vendor.view_liber_amazon_order_search
+#: model_terms:ir.ui.view,arch_db:liber_amazon_vendor.view_liber_amazon_schedule_search
+msgid "Still Open"
+msgstr "Ainda aberto"
+
+#. module: liber_amazon_vendor
+#: model_terms:ir.ui.view,arch_db:liber_amazon_vendor.view_liber_amazon_import_form
+msgid "Still open"
+msgstr "Ainda abertos"
+
+#. module: liber_amazon_vendor
+#: model:ir.model.fields,field_description:liber_amazon_vendor.field_liber_amazon_order_line__subtotal
+msgid "Subtotal"
+msgstr "Subtotal"
+
+#. module: liber_amazon_vendor
+#: model_terms:ir.ui.view,arch_db:liber_amazon_vendor.view_liber_amazon_account_form
+msgid "Test Connection"
+msgstr "Testar conexão"
+
+#. module: liber_amazon_vendor
+#. odoo-python
+#: code:addons/liber_amazon_vendor/wizard/amazon_import.py:0
+msgid "The end of the window comes before its start."
+msgstr "O fim da janela vem antes do começo."
+
+#. module: liber_amazon_vendor
+#: model:ir.model.fields,help:liber_amazon_vendor.field_liber_amazon_account__refresh_token
+#: model_terms:ir.ui.view,arch_db:liber_amazon_vendor.res_config_settings_view_form
+msgid ""
+"The long-lived token from the authorisation. Starts with Atzr|. Not the "
+"access token, which lasts one hour and is fetched automatically."
+msgstr "O token de longa duração da autorização. Começa com Atzr|. Não é o access token, que dura uma hora e é obtido sozinho."
+
+#. module: liber_amazon_vendor
+#: model:ir.model.fields,help:liber_amazon_vendor.field_liber_amazon_account__partner_id
+msgid ""
+"The partner every quotation from this account is made out to. Amazon is the "
+"buyer in Vendor Central, so this is a customer, not a supplier."
+msgstr "O parceiro em nome de quem sai cada cotação desta conta. No Vendor Central a Amazon compra, então ela é cliente, não fornecedor."
+
+#. module: liber_amazon_vendor
+#: model_terms:ir.ui.view,arch_db:liber_amazon_vendor.res_config_settings_view_form
+msgid ""
+"The partner every quotation is made out to. In Vendor Central Amazon is the "
+"buyer, so this is a customer."
+msgstr "O parceiro em nome de quem sai cada cotação. No Vendor Central a Amazon compra, então ela é cliente."
+
+#. module: liber_amazon_vendor
+#: model_terms:ir.ui.view,arch_db:liber_amazon_vendor.res_config_settings_view_form
+msgid ""
+"The secret fields <strong>always arrive\n"
+"                            empty</strong>, on purpose: the stored value never\n"
+"                            goes back to the browser. Leaving one empty\n"
+"                            <strong>keeps</strong> what is already saved — fill\n"
+"                            it in only to replace it."
+msgstr "Os campos de segredo chegam <strong>sempre em branco</strong>, de propósito: o valor guardado não volta para o navegador. Deixar em branco <strong>mantém</strong> o que já está gravado — preencha só para trocar."
+
+#. module: liber_amazon_vendor
+#: model_terms:ir.ui.view,arch_db:liber_amazon_vendor.view_liber_amazon_import_form
+msgid ""
+"These orders will still be imported. Their lines simply\n"
+"                        carry no product, and a quotation cannot be made from\n"
+"                        them until the title is registered or the product is\n"
+"                        chosen by hand."
+msgstr "Estes pedidos serão importados mesmo assim. As linhas apenas ficam sem produto, e não dá para gerar cotação delas até o título ser cadastrado ou o produto ser escolhido à mão."
+
+#. module: liber_amazon_vendor
+#. odoo-python
+#: code:addons/liber_amazon_vendor/models/amazon_account.py:0
+msgid "This Amazon account is missing: %s."
+msgstr "Esta conta da Amazon está sem: %s."
+
+#. module: liber_amazon_vendor
+#: model:ir.model.constraint,message:liber_amazon_vendor.constraint_liber_amazon_account_name_company_uniq
+msgid "This company already has an Amazon account with that name."
+msgstr "Esta empresa já tem uma conta da Amazon com esse nome."
+
+#. module: liber_amazon_vendor
+#: model_terms:ir.ui.view,arch_db:liber_amazon_vendor.res_config_settings_view_form
+msgid ""
+"This company has <strong>no Amazon account</strong>\n"
+"                            yet. If you already configured one, it belongs to\n"
+"                            another company — switch it in the top-right\n"
+"                            selector. To create one here, fill in the fields\n"
+"                            below and save."
+msgstr "Esta empresa ainda <strong>não tem conta</strong> da Amazon. Se você já configurou uma, ela pertence a outra empresa — troque no seletor do canto superior direito. Para criar uma aqui, preencha abaixo e salve."
+
+#. module: liber_amazon_vendor
+#: model_terms:ir.ui.view,arch_db:liber_amazon_vendor.res_config_settings_view_form
+msgid ""
+"This module only <strong>reads</strong> from\n"
+"                            Amazon. It does not acknowledge orders, send ASNs or\n"
+"                            invoice — those carry an SLA deadline and are a\n"
+"                            person's decision, not an automated routine's."
+msgstr "Este módulo só <strong>lê</strong> da Amazon. Ele não confirma pedido, não manda ASN e não fatura — essas etapas têm prazo de SLA e são decisão de uma pessoa, não de uma rotina automática."
+
+#. module: liber_amazon_vendor
+#: model_terms:ir.ui.view,arch_db:liber_amazon_vendor.view_liber_amazon_account_form
+msgid ""
+"This module only <strong>reads</strong> from Amazon.\n"
+"                            It never acknowledges an order, never sends an ASN\n"
+"                            and never invoices — those carry an SLA and belong\n"
+"                            to a person, not to a cron."
+msgstr "Este módulo só <strong>lê</strong> da Amazon. Ele nunca confirma pedido, nunca manda ASN e nunca fatura — essas etapas têm prazo de SLA e são de uma pessoa, não de um cron."
+
+#. module: liber_amazon_vendor
+#: model:ir.model.constraint,message:liber_amazon_vendor.constraint_liber_amazon_order_po_account_uniq
+msgid "This purchase order was already imported for this account."
+msgstr "Este pedido de compra já foi importado para esta conta."
+
+#. module: liber_amazon_vendor
+#: model_terms:ir.ui.view,arch_db:liber_amazon_vendor.res_config_settings_view_form
+msgid ""
+"This screen configures the account of the\n"
+"                            <strong>company selected above</strong>. Each vendor\n"
+"                            has its own application at Amazon: one account per\n"
+"                            company."
+msgstr "Esta tela configura a conta da <strong>empresa selecionada acima</strong>. Cada vendor tem o seu próprio aplicativo na Amazon: uma conta por empresa."
+
+#. module: liber_amazon_vendor
+#: model_terms:ir.ui.view,arch_db:liber_amazon_vendor.view_liber_amazon_schedule_list
+msgid "Total"
+msgstr ""
+
+#. module: liber_amazon_vendor
+#: model:ir.model.fields,help:liber_amazon_vendor.field_liber_amazon_order_line__product_locked
+msgid ""
+"True once a person chose the product, so re-reading Amazon does not undo it."
+msgstr "Verdadeiro depois que uma pessoa escolheu o produto, para que reler a Amazon não desfaça a escolha."
+
+#. module: liber_amazon_vendor
+#: model:ir.model.fields.selection,name:liber_amazon_vendor.selection__liber_amazon_account__region__uk
+#: model:ir.model.fields.selection,name:liber_amazon_vendor.selection__res_config_settings__amazon_region__uk
+msgid "UK"
+msgstr ""
+
+#. module: liber_amazon_vendor
+#: model:ir.model.fields.selection,name:liber_amazon_vendor.selection__liber_amazon_account__region__us
+#: model:ir.model.fields.selection,name:liber_amazon_vendor.selection__res_config_settings__amazon_region__us
+msgid "US"
+msgstr ""
+
+#. module: liber_amazon_vendor
+#: model_terms:ir.ui.view,arch_db:liber_amazon_vendor.view_liber_amazon_order_search
+msgid "Unknown Amazon State"
+msgstr "Estado desconhecido na Amazon"
+
+#. module: liber_amazon_vendor
+#. odoo-python
+#: code:addons/liber_amazon_vendor/services/api.py:0
+msgid "Unknown Amazon region %(region)s. Known regions: %(known)s"
+msgstr "Região %(region)s desconhecida na Amazon. Conhecidas: %(known)s"
+
+#. module: liber_amazon_vendor
+#: model_terms:ir.ui.view,arch_db:liber_amazon_vendor.view_liber_amazon_order_list
+msgid "Unmatched"
+msgstr "Sem produto"
+
+#. module: liber_amazon_vendor
+#: model:ir.model.fields,field_description:liber_amazon_vendor.field_liber_amazon_order__unmatched_count
+msgid "Unmatched Count"
+msgstr "Linhas sem produto"
+
+#. module: liber_amazon_vendor
+#: model:ir.model.fields,field_description:liber_amazon_vendor.field_liber_amazon_import__unmatched_isbns
+msgid "Unmatched Isbns"
+msgstr "ISBNs sem produto"
+
+#. module: liber_amazon_vendor
+#: model_terms:ir.actions.act_window,help:liber_amazon_vendor.action_liber_amazon_order
+msgid ""
+"Use <strong>Import from Amazon</strong> to read a date range.\n"
+"               Nothing here is a commercial document until someone creates a\n"
+"               quotation from it."
+msgstr "Use <strong>Importar da Amazon</strong> para ler um intervalo de datas. Nada aqui é documento comercial até alguém gerar uma cotação."
+
+#. module: liber_amazon_vendor
+#: model:ir.model.fields,field_description:liber_amazon_vendor.field_liber_amazon_import__warnings
+msgid "Warnings"
+msgstr "Avisos"
+
+#. module: liber_amazon_vendor
+#: model:ir.model.fields,field_description:liber_amazon_vendor.field_liber_amazon_account__website_message_ids
+#: model:ir.model.fields,field_description:liber_amazon_vendor.field_liber_amazon_order__website_message_ids
+msgid "Website Messages"
+msgstr ""
+
+#. module: liber_amazon_vendor
+#: model:ir.model.fields,help:liber_amazon_vendor.field_liber_amazon_account__website_message_ids
+#: model:ir.model.fields,help:liber_amazon_vendor.field_liber_amazon_order__website_message_ids
+msgid "Website communication history"
+msgstr ""
+
+#. module: liber_amazon_vendor
+#: model_terms:ir.ui.view,arch_db:liber_amazon_vendor.view_liber_amazon_import_form
+msgid "What Amazon sent"
+msgstr "O que a Amazon mandou"
+
+#. module: liber_amazon_vendor
+#: model_terms:ir.ui.view,arch_db:liber_amazon_vendor.res_config_settings_view_form
+msgid "When this account last read from Amazon."
+msgstr "Quando esta conta leu da Amazon pela última vez."
+
+#. module: liber_amazon_vendor
+#: model_terms:ir.ui.view,arch_db:liber_amazon_vendor.res_config_settings_view_form
+msgid "Whether this company already has a working refresh token stored."
+msgstr "Se esta empresa já tem um refresh token gravado e funcionando."
+
+#. module: liber_amazon_vendor
+#: model:ir.model.fields,help:liber_amazon_vendor.field_liber_amazon_account__region
+msgid ""
+"Which Amazon regional endpoint answers for this account. Brazil is served by"
+" the North America endpoint -- there is no Brazilian host."
+msgstr "Qual endpoint regional da Amazon responde por esta conta. O Brasil é atendido pelo endpoint da América do Norte — não existe host brasileiro."
+
+#. module: liber_amazon_vendor
+#: model_terms:ir.ui.view,arch_db:liber_amazon_vendor.res_config_settings_view_form
+msgid ""
+"Which Amazon regional endpoint answers. Brazil is served by the North "
+"America endpoint -- there is no Brazilian host."
+msgstr "Qual endpoint regional da Amazon responde. O Brasil é atendido pelo endpoint da América do Norte — não existe host brasileiro."
+
+#. module: liber_amazon_vendor
+#: model_terms:ir.ui.view,arch_db:liber_amazon_vendor.view_liber_amazon_order_search
+#: model_terms:ir.ui.view,arch_db:liber_amazon_vendor.view_liber_amazon_schedule_search
+msgid "With Unmatched Titles"
+msgstr "Com títulos sem produto"
+
+#. module: liber_amazon_vendor
+#: model_terms:ir.ui.view,arch_db:liber_amazon_vendor.view_liber_amazon_order_search
+#: model_terms:ir.ui.view,arch_db:liber_amazon_vendor.view_liber_amazon_schedule_search
+msgid "Without Quotation"
+msgstr "Sem cotação"
+
+#. module: liber_amazon_vendor
+#. odoo-python
+#: code:addons/liber_amazon_vendor/models/amazon_account.py:0
+msgid "account_id"
+msgstr ""
+
+#. module: liber_amazon_vendor
+#: model_terms:ir.ui.view,arch_db:liber_amazon_vendor.res_config_settings_view_form
+msgid "leave empty to keep the current one"
+msgstr "deixe em branco para manter"
+
+#. module: liber_amazon_vendor
+#. odoo-python
+#: code:addons/liber_amazon_vendor/models/amazon_order.py:0
+msgid "line %(seq)s quantity: %(old)s -> %(new)s"
+msgstr "linha %(seq)s, quantidade: %(old)s -> %(new)s"
+
+#. module: liber_amazon_vendor
+#. odoo-python
+#: code:addons/liber_amazon_vendor/models/amazon_order.py:0
+msgid "state: %(old)s -> %(new)s"
+msgstr "estado: %(old)s -> %(new)s"

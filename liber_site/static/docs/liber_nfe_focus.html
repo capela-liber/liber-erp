@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Emissão de NF-e — Manuais do Liber</title>
+<link rel="icon" type="image/png" href="../logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;600;700&display=swap">
+<link rel="stylesheet" href="docs.css">
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="../index.html"><img src="../logo.png" alt="">liber<span>.</span></a>
+    <span class="doc-tag">Manuais</span>
+    <nav><a href="index.html">Índice</a><a href="../index.html">Site</a></nav>
+  </div>
+</header>
+<div class="wrap">
+  <div class="layout">
+    <aside class="sidebar" id="sidebar"></aside>
+    <article class="doc">
+      <div class="breadcrumb"><a href="index.html">Manuais</a><span class="sep">›</span>Fiscal<span class="sep">›</span>Emissão de NF-e</div>
+      <h1>Emissão de NF-e</h1>
+      <p class="lead">Emita a nota fiscal eletrônica modelo 55 direto da fatura, sem sair do sistema e sem redigitar nada num emissor à parte. A autorização vem da SEFAZ, e o XML e a DANFE voltam anexados à própria fatura.</p>
+
+      <h2 id="visao-geral">Visão geral</h2>
+      <p>Uma fatura de cliente confirmada ganha o botão <b>Emitir NFe</b>. Clicar nele monta a nota a partir do que já está na fatura — cliente, endereço, itens, quantidades, preços, impostos — e a envia para autorização. Quando a SEFAZ autoriza, a fatura recebe:</p>
+      <ul>
+        <li>a faixa verde <b>NFe autorizada</b> no topo;</li>
+        <li>a <b>chave de acesso</b> de 44 dígitos, o número e a série da nota e o protocolo de autorização;</li>
+        <li>o <b>XML</b> e a <b>DANFE em PDF</b> anexados, baixados automaticamente.</li>
+      </ul>
+      <p>A chave de acesso vai para o mesmo campo que a <a href="liber_nfe_xml.html">importação de XML de NF-e</a> usa. É o detalhe que faz a diferença: <b>uma nota que emitimos e uma nota que recebemos viram a mesma coisa</b> para o resto do sistema. O XML da nota emitida entra no painel de XMLs junto com todos os outros, e a <a href="liber_soc_audit.html">auditoria de consignação</a> passa a enxergar também as remessas que a própria editora emitiu.</p>
+
+      <div class="callout note"><span class="title">Nota</span>
+        <p>O <b>certificado digital A1 não fica aqui</b>. Quem assina e transmite à SEFAZ é o provedor de emissão (a Focus NFe); do lado do Liber existe apenas um token de acesso. Isso significa que não há certificado para instalar em máquina nenhuma, e que a renovação anual do certificado é feita no painel do provedor.</p>
+      </div>
+
+      <figure class="shot">
+        <img src="img/doc-liber_nfe_focus-fatura.png" alt="Fatura de cliente com a faixa NFe autorizada e os botões Emitir NFe, Consultar SEFAZ, Carta de Correção e Cancelar NFe">
+        <figcaption>A fatura com a nota autorizada: a faixa verde no topo e, no cabeçalho, os verbos da nota — emitir, consultar, corrigir e cancelar.</figcaption>
+      </figure>
+
+      <h3 id="assincrona">Por que a emissão tem dois tempos</h3>
+      <p>A SEFAZ não responde na hora. Ao clicar em <b>Emitir NFe</b>, a nota parte e a fatura fica com a situação <b>processando_autorizacao</b> — isso é normal e costuma durar de segundos a poucos minutos. A resposta definitiva chega numa consulta posterior, que acontece de dois jeitos:</p>
+      <ul>
+        <li><b>Sozinha</b>: um agendamento chamado <span class="field">NFe Focus - Consultar notas em processamento</span> varre as notas pendentes <b>a cada 10 minutos</b>.</li>
+        <li><b>Na hora</b>: o botão <b>Consultar SEFAZ</b>, para quem não quer esperar.</li>
+      </ul>
+      <div class="callout tip"><span class="title">Dica</span>
+        <p>Clicar em <b>Emitir NFe</b> duas vezes não emite duas notas. Cada fatura tem uma referência própria e estável (<span class="field">Ref</span>), e reenviar a mesma referência devolve a nota que já existe em vez de criar outra. A trava contra duplicidade é do desenho, não da sua atenção.</p>
+      </div>
+
+      <h2 id="configuracao">Configuração</h2>
+      <p>A emissão pressupõe cadastro. Esta seção é a lista completa do que precisa estar preenchido antes da primeira nota — e a maior parte se faz uma vez só, por empresa.</p>
+
+      <h3 id="config-empresa">A empresa emitente</h3>
+      <p>Abra <span class="menupath">Definições<i>‣</i>Usuários e empresas<i>‣</i>Empresas</span>, escolha a empresa e vá até o grupo <b>NFe — Focus NFe</b>.</p>
+      <p>Em <b>Credenciais</b>:</p>
+      <ol class="steps">
+        <li><span class="field">Ambiente</span> — <b>Homologação</b> para testar, <b>Produção</b> para valer. Comece sempre em homologação.</li>
+        <li><span class="field">Token de homologação</span> e <span class="field">Token de produção</span> — são <b>diferentes</b> e não intercambiáveis. Cole cada um no seu campo.</li>
+        <li><span class="field">Prefixo da referência</span> — o prefixo das referências desta empresa. Ver o aviso abaixo antes de escolher.</li>
+        <li>Clique em <b>Testar conexão</b> para confirmar que o token foi aceito, antes de gastar uma fatura real na descoberta.</li>
+      </ol>
+      <div class="callout warn"><span class="title">Atenção</span>
+        <p>O token que vai aqui é o <b>do emitente</b>, não o da conta. O provedor entrega os dois, eles se parecem e não fazem a mesma coisa: o da conta administra empresas e <b>não emite nota nenhuma</b>; o do emitente emite, e é um por ambiente. Colar o token da conta aqui resulta em <b>401 permissão negada</b> na hora de emitir — um erro que parece "token errado" quando na verdade é "token do lugar errado".</p>
+      </div>
+      <div class="callout warn"><span class="title">Atenção</span>
+        <p>O <span class="field">Prefixo da referência</span> precisa ser <b>novo</b> em cada banco de dados. A referência de cada nota é montada como <code>PREFIXO-empresa-fatura</code>, e um banco restaurado ou recriado reaproveita os mesmos números internos — com o mesmo prefixo, o provedor reconheceria as referências como já processadas e devolveria as notas antigas em vez de emitir as novas. Banco novo, prefixo novo.</p>
+      </div>
+      <p>Em <b>Dados fiscais e padrões</b>:</p>
+      <div class="tablewrap"><table>
+        <thead><tr><th>Campo</th><th>O que é</th></tr></thead>
+        <tbody>
+          <tr><td><span class="field">Regime tributário</span></td><td>Simples Nacional ou Normal (o lucro presumido é <b>Normal</b>). É o que decide se a nota leva CSOSN ou CST — errar aqui rejeita a nota inteira.</td></tr>
+          <tr><td><span class="field">Natureza da operação</span></td><td>O texto padrão que aparece na DANFE quando a operação não tiver um próprio.</td></tr>
+          <tr><td><span class="field">NCM padrão</span></td><td>Usado nos produtos que não tiverem NCM próprio. Para livro, é o NCM do livro.</td></tr>
+          <tr><td><span class="field">Código de benefício fiscal</span></td><td>O cBenef padrão. Ver <a href="#cbenef">a seção sobre ele</a> — em São Paulo, ele deixou de ser opcional.</td></tr>
+          <tr><td><span class="field">CST IBS/CBS</span> e <span class="field">Classificação IBS/CBS</span></td><td>Os campos da reforma tributária, já previstos no layout da nota.</td></tr>
+          <tr><td><span class="field">Código do produto</span></td><td>Qual campo do cadastro vai como código do item na nota (o código interno, na prática o ISBN).</td></tr>
+          <tr><td><span class="field">Forma de pagamento à vista</span></td><td>O meio de pagamento declarado quando a venda é à vista.</td></tr>
+          <tr><td><span class="field">Operação padrão</span></td><td>O último degrau da cascata: a operação usada quando nada mais disser qual é.</td></tr>
+        </tbody>
+      </table></div>
+      <p>Ainda nesse grupo há o botão <b>Gerar impostos por CFOP</b>. Ele cria um imposto de alíquota zero para cada CFOP configurado — e isso não é burocracia: <b>é pelo imposto que a posição fiscal entrega o CFOP à nota</b>. Sem eles, a cadeia se rompe no meio. Rode uma vez por empresa.</p>
+      <p>Complete também os dados de identificação fiscal da empresa que a nota exige: <b>inscrição estadual</b>, <b>número</b> e <b>bairro</b> do endereço.</p>
+
+      <figure class="shot">
+        <img src="img/doc-liber_nfe_focus-empresa.png" alt="Aba de configuração NFe na ficha da empresa, com os campos de ambiente, tokens, prefixo da referência e os padrões fiscais">
+        <figcaption>A configuração da empresa: credenciais à esquerda, padrões fiscais à direita, e os dois botões que evitam surpresa — testar a conexão e gerar os impostos por CFOP.</figcaption>
+      </figure>
+
+      <h3 id="config-destinatario">O destinatário</h3>
+      <p>A nota fiscal exige do cliente mais do que uma venda exige. Na ficha do contato, confira:</p>
+      <ul>
+        <li><span class="field">Inscrição estadual</span> e <span class="field">Indicador de IE</span> — contribuinte, isento ou não contribuinte;</li>
+        <li><span class="field">Número</span> e <span class="field">Bairro</span> do endereço — <b>sem bairro do destinatário a nota não sai</b>;</li>
+        <li>o documento: CNPJ para empresa, CPF para pessoa física.</li>
+      </ul>
+      <div class="callout tip"><span class="title">Dica</span>
+        <p>O sistema confere o que falta <b>antes</b> de enviar e diz o nome de cada campo ausente, em vez de gastar a chamada e trazer de volta uma rejeição críptica. Se a mensagem lista três campos, são esses três — não há um quarto escondido.</p>
+      </div>
+
+      <h3 id="config-produto">O produto</h3>
+      <p>Na ficha do produto, aba de faturamento, ficam <span class="field">NCM</span>, <span class="field">Origem</span> (nacional, importado), <span class="field">Código de benefício fiscal</span> e os campos de IBS/CBS. Preenchido no produto, prevalece sobre o padrão da empresa — o caminho normal é deixar a empresa resolver o catálogo inteiro e usar o produto só para a exceção.</p>
+      <p>Os padrões que vêm de fábrica são de <b>editora</b>: livro é imune de ICMS (CST 41, ou CSOSN 400 no Simples) e tem PIS/COFINS com alíquota zero. Quem vende outra coisa — camiseta de evento, serviço — troca no produto ou na linha da nota.</p>
+
+      <h2 id="operacoes">Operações fiscais: o CFOP sem o primeiro dígito</h2>
+      <p>Aqui mora a ideia central da configuração fiscal, e ela economiza metade do cadastro. Uma <b>operação fiscal</b> é o CFOP <b>sem o primeiro dígito</b>: 101 é venda, 917 é remessa em consignação, 113 é o acerto da consignação.</p>
+      <p>O primeiro dígito não se cadastra porque ele não é uma decisão — é uma consequência. Ele nasce na hora de emitir, comparando a UF do emitente com a do destinatário: <b>5</b> se a operação é dentro do estado, <b>6</b> se é para outro. Assim a casa cadastra <b>uma</b> operação de venda, e não duas redações do mesmo 5101/6101.</p>
+      <p>Cada operação carrega o que a nota precisa saber: natureza da operação, finalidade, CST/CSOSN, cBenef, se é consumidor final e o sentido (entrada ou saída).</p>
+      <p>Abra em <span class="menupath">Faturamento<i>‣</i>Configuração<i>‣</i>Operações fiscais</span>. O módulo já instala as operações da casa — venda, consignação, acerto, devolução, bonificação, feira, remessa — e também a <b>tabela oficial de CFOPs do CONFAZ</b>, em <span class="menupath">Faturamento<i>‣</i>Configuração<i>‣</i>CFOPs (tabela oficial)</span>, que é referência de consulta: a configuração da casa fica nas operações.</p>
+      <div class="callout warn"><span class="title">Atenção</span>
+        <p><b>Exportação não se deduz.</b> A mesma operação significa outra coisa fora do país — 5129 é insumo no mercado interno, 7129 é mercado externo — então o sistema <b>não adivinha</b>: ele bloqueia e pede o CFOP explícito na nota. É de propósito, e é a diferença entre uma nota errada e uma nota que não saiu.</p>
+      </div>
+
+      <h3 id="cascata">De onde vem a operação de cada nota</h3>
+      <p>O sistema procura em cascata e para no primeiro que responder:</p>
+      <ol class="steps">
+        <li>o <b>CFOP da linha</b> da fatura (é possível misturar operações numa nota só — venda e bonificação na mesma remessa);</li>
+        <li>o <b>imposto da linha</b>;</li>
+        <li>a <b>posição fiscal</b> do cliente;</li>
+        <li>o <b>CFOP da nota</b>, na aba NFe (Focus);</li>
+        <li>o <b>pedido de origem</b>;</li>
+        <li>a <b>operação padrão da empresa</b>.</li>
+      </ol>
+      <p>Na prática, quem faz o trabalho é a <b>posição fiscal</b> — e ela vem pronta.</p>
+
+      <h3 id="posicoes">As posições fiscais vêm prontas</h3>
+      <p>Cada operação da casa vira uma posição fiscal por empresa brasileira, criada pelo próprio módulo, com a operação já ligada e o nome num formato único:</p>
+      <div class="callout example"><span class="title">Exemplo</span>
+        <p><code>(B) Remessa em consignação mercantil — 5917/6917</code></p>
+        <p>Três coisas, nesta ordem: a letra da família, o que a operação é, e o par de CFOPs (dentro e fora do estado). O nome da empresa não entra — era justamente o que gerava catorze redações diferentes do mesmo 5101 no sistema antigo, e a posição fiscal já pertence a uma empresa só.</p>
+      </div>
+      <p>As famílias saem do que a casa de fato emitiu ao longo de 14.555 notas: <b>(A)</b> venda, <b>(B)</b> consignação nossa, <b>(C)</b> consignação de terceiros, <b>(D)</b> bonificação, <b>(E)</b> remessa, <b>(Z)</b> o resto. O alfabeto fica aberto — as letras livres continuam escolhíveis.</p>
+      <p>Empresa brasileira nova nasce com as posições prontas. Banco vindo de migração tem as suas <b>adotadas</b>: o sistema antigo escrevia o CFOP dentro do próprio nome da posição ("CFOP: 5917/6917") porque não tinha outro lugar para guardá-lo, e é essa pista que liga a posição herdada à operação certa.</p>
+      <div class="callout note"><span class="title">Nota</span>
+        <p>Uma posição fiscal <b>sem operação</b> não dá erro — e é por isso que merece atenção. Ela emite a nota com o CFOP errado, em silêncio, e o problema aparece semanas depois na apuração. Vale conferir a coluna de operação na lista de posições fiscais depois de qualquer migração.</p>
+      </div>
+
+      <h2 id="emitir">Emitir uma nota</h2>
+      <ol class="steps">
+        <li>Abra a fatura de cliente e <b>confirme</b> — só fatura confirmada emite.</li>
+        <li>Confira a aba <b>NFe (Focus)</b>: o <span class="field">CFOP</span>, se for o caso, e o <span class="field">Ambiente</span> que está valendo.</li>
+        <li>Clique em <b>Emitir NFe</b>.</li>
+        <li>A situação vai para <b>processando_autorizacao</b>. Aguarde o agendamento ou clique em <b>Consultar SEFAZ</b>.</li>
+      </ol>
+      <p>Autorizada, a fatura ganha a faixa verde, a chave, o número, a série e o protocolo; o XML e a DANFE aparecem nos anexos. Rejeitada, ganha a faixa vermelha <b>NFe rejeitada</b> e o campo <span class="field">Mensagem</span> traz o que a SEFAZ respondeu, com o texto original — corrija a causa e emita de novo.</p>
+      <div class="callout note"><span class="title">Nota</span>
+        <p>A chave de acesso só é gravada quando a SEFAZ <b>autoriza</b>. Nota rejeitada não deixa chave para trás: se deixasse, envenenaria o índice de chaves do painel de XMLs com um número que não existe na SEFAZ.</p>
+      </div>
+      <p>Na lista de faturas, a coluna <span class="field">Situação NFe</span> mostra o estado de cada uma, e três filtros prontos separam o que interessa: <b>NFe processando</b>, <b>NFe rejeitada</b> e <b>NFe autorizada</b>.</p>
+
+      <figure class="shot">
+        <img src="img/doc-liber_nfe_focus-aba.png" alt="Aba NFe (Focus) da fatura com chave de acesso, número, série, protocolo, CFOP, referência e ambiente">
+        <figcaption>A aba NFe (Focus): à esquerda o que a SEFAZ devolveu, à direita a operação fiscal que gerou a nota.</figcaption>
+      </figure>
+
+      <h2 id="correcao">Carta de correção</h2>
+      <p>A carta de correção eletrônica conserta <b>redação</b> — um nome escrito errado, uma observação incompleta. Ela <b>nunca</b> conserta valor, quantidade, imposto, data de emissão nem a identificação de quem comprou; para isso só cancelamento.</p>
+      <ol class="steps">
+        <li>Na fatura com a nota autorizada, clique em <b>Carta de Correção</b>.</li>
+        <li>Escreva o <span class="field">Texto da correção</span>.</li>
+        <li>Confirme.</li>
+      </ol>
+      <div class="callout warn"><span class="title">Atenção</span>
+        <p>Cada carta <b>substitui</b> a anterior — a última enviada é a que vale, inteira. Por isso o assistente já abre preenchido com o texto vigente e mostra as <span class="field">Cartas anteriores</span>: quem corrige uma segunda coisa precisa reescrever também a primeira, senão ela se perde.</p>
+      </div>
+      <p>As cartas emitidas ficam listadas na aba <b>NFe (Focus)</b>, e o XML de cada uma é guardado junto da nota no painel de XMLs.</p>
+
+      <h2 id="cancelar">Cancelar uma nota</h2>
+      <ol class="steps">
+        <li>Na fatura com a nota autorizada, clique em <b>Cancelar NFe</b>.</li>
+        <li>Escreva a <span class="field">Justificativa</span> — a SEFAZ exige, e ela vai no documento de cancelamento.</li>
+        <li>Confirme.</li>
+      </ol>
+      <p>Cancelada, a nota fica com a situação <b>cancelado</b>, o XML do cancelamento é baixado e a nota é marcada como cancelada também no painel de XMLs — o mesmo tratamento que um cancelamento que chegasse pela SEFAZ.</p>
+      <div class="callout warn"><span class="title">Atenção</span>
+        <p>O prazo de cancelamento é <b>curto</b> (24 horas na maioria dos estados) e conta a partir da autorização. Depois disso não há cancelamento: o caminho passa a ser a nota de devolução.</p>
+      </div>
+
+      <h2 id="devolucao">Devolução</h2>
+      <p>A devolução é uma nota nova que referencia a nota original. Na aba <b>NFe (Focus)</b> há dois campos para isso: <span class="field">Nota referenciada</span>, para escolher uma fatura que já tem chave, e <span class="field">Chave referenciada</span>, para digitar a chave de uma nota que não está no sistema.</p>
+      <div class="callout note"><span class="title">Nota</span>
+        <p>Três regras da devolução que só a prática ensina:</p>
+        <ul>
+          <li>O <b>sentido</b> vem do primeiro dígito do CFOP, não de quem emite: 1918 é <b>entrada</b> mesmo sendo nós a emitir a nota.</li>
+          <li>Referenciar a nota <b>no cabeçalho não basta</b> — a SEFAZ exige a referência <b>item a item</b>.</li>
+          <li>Os dois níveis são <b>mutuamente exclusivos</b>: havendo referência por item, a do cabeçalho sai.</li>
+        </ul>
+        <p>O sistema cuida disso sozinho; a lista está aqui para quem precisar conferir o resultado contra a legislação.</p>
+      </div>
+
+      <h2 id="homologacao">Homologação e produção</h2>
+      <p><b>Homologação</b> é o ambiente de treino da SEFAZ: a nota passa por todas as validações reais, recebe autorização real e <b>não tem valor fiscal nenhum</b>. É onde se descobre o campo que falta sem criar obrigação tributária.</p>
+      <p>Duas peculiaridades do ambiente de homologação, que confundem quem vê pela primeira vez:</p>
+      <ul>
+        <li>A SEFAZ <b>impõe o nome do destinatário</b>: toda nota de homologação sai para "NF-E EMITIDA EM AMBIENTE DE HOMOLOGACAO - SEM VALOR FISCAL". O sistema faz essa troca <b>no envio</b>, sem tocar no cadastro do cliente.</li>
+        <li>O ambiente <b>guarda notas antigas</b>, às vezes de anos atrás, e recusa por duplicidade um número que você jurava estar livre. Use uma <b>série própria de teste</b> (a série 9, por exemplo) e o problema desaparece.</li>
+      </ul>
+      <div class="callout warn"><span class="title">Atenção</span>
+        <p>Virar o campo <span class="field">Ambiente</span> para <b>Produção</b> é o único passo que separa um teste de uma obrigação fiscal. Uma nota emitida em produção é <b>real</b>: existe na SEFAZ, entra na apuração e só sai de lá por cancelamento (com prazo) ou devolução. Não existe "só uma para ver se funciona".</p>
+      </div>
+      <p>Por isso vale uma regra de higiene: o <b>token de produção não deve ficar guardado em banco de teste</b>. Basta alguém virar o seletor de ambiente para emitir nota de verdade a partir do laboratório.</p>
+
+      <h2 id="cbenef">O cBenef e a imunidade do livro</h2>
+      <p>O livro é imune de ICMS, e desde abril de 2026 <b>São Paulo exige que essa imunidade seja declarada</b> com um código de benefício fiscal — a nota sem ele é rejeitada com o código 930. O código da imunidade do livro em SP é <b>SP070130</b> ("não incidência: livro, jornal ou periódico"), válido para o CST 41 e para o Simples Nacional.</p>
+      <div class="callout warn"><span class="title">Atenção</span>
+        <p>O inverso também rejeita: <b>cBenef em item tributado</b> (CST 00, 02, 10, 15, 60, 61) é campo indevido. O código acompanha a imunidade, não a empresa — por isso ele existe no produto, e não só na configuração geral.</p>
+      </div>
+
+      <h2 id="regras">Regras e guardas</h2>
+      <div class="tablewrap"><table>
+        <thead><tr><th>Regra</th><th>O que ela garante</th></tr></thead>
+        <tbody>
+          <tr><td>Referência estável por fatura</td><td>Emitir duas vezes não gera duas notas: a segunda chamada devolve a primeira nota.</td></tr>
+          <tr><td>Só fatura de cliente confirmada emite</td><td>Rascunho e fatura de fornecedor não têm o botão.</td></tr>
+          <tr><td>Conferência antes do envio</td><td>O que falta é dito pelo nome, antes de gastar a chamada — não volta como rejeição críptica.</td></tr>
+          <tr><td>Chave só com autorização</td><td>Nota rejeitada não grava chave de acesso; o índice do painel de XMLs não recebe número inexistente.</td></tr>
+          <tr><td>Arredondamento meio-para-cima</td><td>A soma dos itens fecha com o total da nota. Um centavo de diferença é rejeição na SEFAZ.</td></tr>
+          <tr><td>CFOP travado depois de emitida</td><td>Nota autorizada, em processamento ou cancelada não deixa mais mexer na operação fiscal.</td></tr>
+          <tr><td>Exportação bloqueada sem CFOP explícito</td><td>O sistema recusa adivinhar o CFOP de operação com o exterior.</td></tr>
+          <tr><td>Uma carta de correção substitui a anterior</td><td>O assistente abre com o texto vigente, para que nada se perca na segunda correção.</td></tr>
+        </tbody>
+      </table></div>
+
+      <h2 id="problemas">Solução de problemas</h2>
+      <p><b>401 permissão negada ao emitir.</b> Quase sempre é o <b>token da conta</b> colado no campo do emitente. Os dois tokens do emitente (homologação e produção) aparecem por empresa no painel do provedor; o da conta é outro, e serve para administrar empresas. Use <b>Testar conexão</b> para separar os casos antes de emitir.</p>
+      <p><b>403 "CNPJ do emitente não autorizado".</b> Parece token errado e costuma ser <b>cadastro errado</b>: o documento da empresa emitente está gravado como CPF em vez de CNPJ. Confira o documento da empresa — e note que corrigir a empresa basta, os contatos-filhos herdam.</p>
+      <p><b>Rejeição 930 (São Paulo).</b> Falta o código de benefício fiscal na imunidade do livro. Ver <a href="#cbenef">a seção do cBenef</a>.</p>
+      <p><b>Rejeição 539 (duplicidade).</b> O ambiente de homologação guarda notas antigas e o número já foi usado, às vezes anos atrás. Emita a série de teste numa série própria.</p>
+      <p><b>"Já processado" em vez de nota nova, num banco recém-restaurado.</b> É o <span class="field">Prefixo da referência</span> repetido: o banco restaurado reaproveita números internos e monta referências que o provedor já conhece. Troque o prefixo dessa cópia.</p>
+      <p><b>A linha saiu sem imposto e a posição fiscal não fez efeito.</b> A posição fiscal <b>troca</b> impostos, ela não os cria — sem imposto na linha, não há o que substituir, e o CFOP não chega à nota. Confira se o imposto do produto pertence à mesma empresa da fatura e se <b>Gerar impostos por CFOP</b> já foi rodado.</p>
+      <p><b>A nota não sai e a mensagem cita o endereço.</b> Falta número ou bairro — do destinatário ou do emitente. São campos que a venda não exige e a nota fiscal exige.</p>
+
+      <div class="seealso">
+        <p><b>Veja também</b></p>
+        <ul>
+          <li><a href="liber_nfe_xml.html">Importação de XML de NF-e</a> — o outro sentido: as notas que chegam, e o painel onde as emitidas aqui também vão parar.</li>
+          <li><a href="liber_nfe_remessa.html">Notas de remessa</a> — os documentos que não cobram ninguém.</li>
+          <li><a href="liber_soc_fiscal_br.html">Fiscal da consignação</a> — CFOPs e contas da consignação, que esta emissão põe na rua.</li>
+        </ul>
+      </div>
+
+      <nav class="pager" id="pager"></nav>
+    </article>
+  </div>
+</div>
+<script src="docs.js"></script>
+</body>
+</html>

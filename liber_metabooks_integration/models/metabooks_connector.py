@@ -158,21 +158,38 @@ class MetabooksConnector(models.AbstractModel):
 
     def import_catalog_page(self, mvb_id, page, with_covers=True):
         """Import a single catalogue page. Returns dict with paging metadata so a
-        background job can iterate page by page and commit after each one."""
+        background job can iterate page by page and commit after each one.
+
+        Cada livro entra no seu próprio savepoint: um título que o banco recusa
+        — barcode que já é de outra ficha, campo que não passa numa constraint —
+        cai sozinho e vai para `failed`, em vez de levar junto a página inteira
+        e o catálogo todo com ela.
+        """
         client = self._get_client()
         data = client.catalog_page(mvb_id, page)
         if not data:
             return {"total_pages": 0, "total_elements": 0, "count": 0,
-                    "product_ids": []}
+                    "imported": 0, "failed": [], "product_ids": []}
         products = self.env["product.template"]
+        failed = []
         for item in data.get("content", []):
             parsed = self._parse_feed(item)
             parsed["_with_cover"] = with_covers
-            products |= self._upsert(parsed)
+            try:
+                with self.env.cr.savepoint():
+                    produto = self._upsert(parsed)
+            except Exception as exc:  # noqa: BLE001 - um livro ruim não para o resto
+                _logger.warning("Metabooks: ISBN %s não entrou: %s",
+                                parsed.get("isbn"), exc)
+                failed.append({"isbn": parsed.get("isbn"), "error": str(exc)})
+            else:
+                products |= produto
         return {
             "total_pages": data.get("totalPages", 1) or 1,
             "total_elements": data.get("totalElements", 0),
             "count": len(data.get("content", [])),
+            "imported": len(products),
+            "failed": failed,
             "product_ids": products.ids,
         }
 
@@ -748,8 +765,15 @@ class MetabooksConnector(models.AbstractModel):
 
         product = False
         if isbn:
-            product = Product.search(
-                ["|", ("default_code", "=", isbn), ("barcode", "=", isbn)], limit=1)
+            # A migração deixou ISBNs repetidos: duas fichas com o mesmo
+            # `default_code`, só uma delas segurando o barcode. Pegar a primeira
+            # (o velho `limit=1`) era escolher a errada com frequência — gravar
+            # o barcode nela esbarra na unicidade e derruba a página inteira.
+            # Quem tem o barcode é a ficha de verdade; as outras são sombra.
+            candidatos = Product.search(
+                ["|", ("default_code", "=", isbn), ("barcode", "=", isbn)])
+            product = candidatos.filtered(
+                lambda p: p.barcode == isbn)[:1] or candidatos[:1]
         if product:
             product.write(vals)
         else:

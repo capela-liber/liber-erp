@@ -12,6 +12,9 @@ test documented in the module description (Apps → Metabooks → Module Info).
 """
 from unittest.mock import MagicMock, patch
 
+from odoo.addons.liber_metabooks_integration.models import (
+    metabooks_import_job as job_mod,
+)
 from odoo.tests import TransactionCase, tagged
 
 
@@ -128,3 +131,126 @@ class TestMetabooksSync(TransactionCase):
         )
         self.assertTrue(all(p.metabooks_vendor_id == "BR0089701" for p in products))
         fake.iter_publisher_products.assert_called_once()
+
+    # ------------------------------------------------------------------ #
+    #  A página do catálogo contra um banco imperfeito                    #
+    # ------------------------------------------------------------------ #
+    def _fake_page(self, itens, total_pages=1):
+        fake = MagicMock()
+        fake.catalog_page.return_value = {
+            "content": itens, "totalPages": total_pages,
+            "totalElements": len(itens),
+        }
+        return self._connector_with_fake(fake)
+
+    def test_upsert_escolhe_a_ficha_que_tem_o_barcode(self):
+        """Com ISBN repetido em duas fichas, vale a que segura o barcode.
+
+        A migração deixou pares assim: mesma referência interna, só uma com
+        barcode. Gravar na outra esbarraria na unicidade do barcode.
+        """
+        Product = self.env["product.template"]
+        isbn = FEED_ITEMS[0]["isbn"]
+        sombra = Product.create({"name": "Sombra sem barcode", "default_code": isbn})
+        verdadeira = Product.create(
+            {"name": "Ficha de verdade", "default_code": isbn, "barcode": isbn})
+        connector = self._fake_page([FEED_ITEMS[0]])
+
+        res = connector.import_catalog_page("BR0089701", 1, with_covers=False)
+
+        self.assertEqual(res["failed"], [], "nenhum livro deveria ter sido recusado")
+        self.assertEqual(res["product_ids"], verdadeira.ids)
+        self.assertEqual(verdadeira.metabooks_vendor_id, "BR0089701")
+        self.assertFalse(sombra.metabooks_vendor_id, "a sombra não deve ser tocada")
+        self.assertEqual(
+            len(Product.search([("default_code", "=", isbn)])), 2,
+            "não pode nascer uma terceira ficha para o mesmo ISBN")
+
+    def test_um_livro_recusado_nao_derruba_a_pagina(self):
+        """Um título que o banco recusa cai sozinho; o resto da página entra."""
+        # preço que não é número: o ORM recusa a ficha na hora de gravar
+        quebrado = {
+            "isbn": "9788500000031", "title": "Preço podre",
+            "priceBrl": "trinta reais", "publisherMbId": "BR0089701",
+        }
+        connector = self._fake_page([FEED_ITEMS[0], quebrado, FEED_ITEMS[1]])
+
+        res = connector.import_catalog_page("BR0089701", 1, with_covers=False)
+
+        self.assertEqual(res["imported"], 2)
+        self.assertEqual(len(res["failed"]), 1)
+        self.assertEqual(res["count"], 3, "a página inteira foi percorrida")
+        entraram = self.env["product.template"].browse(res["product_ids"])
+        self.assertEqual(set(entraram.mapped("default_code")),
+                         {FEED_ITEMS[0]["isbn"], FEED_ITEMS[1]["isbn"]})
+
+    def test_job_conta_os_recusados_e_termina(self):
+        """O job soma só o que entrou, guarda os recusados e chega em `done`."""
+        job = self.env["metabooks.import.job"].create({"mvb_id": "BR0089701"})
+        pagina = {
+            "total_pages": 1, "total_elements": 3, "count": 3, "imported": 2,
+            "failed": [{"isbn": "9788500000031", "error": "barcode já usado"}],
+            "product_ids": [],
+        }
+        connector = self.env["metabooks.connector"]
+        patcher = patch.object(
+            type(connector), "import_catalog_page", return_value=pagina)
+        patcher.start()
+        self.addCleanup(patcher.stop)
+        # o job commita a cada página; dentro do teste isso é proibido, e o
+        # rollback do TransactionCase já garante o isolamento
+        sem_commit = patch.object(self.env.cr, "commit", lambda: None)
+        sem_commit.start()
+        self.addCleanup(sem_commit.stop)
+
+        job._process_batch()
+
+        self.assertEqual(job.state, "done")
+        self.assertEqual(job.imported, 2)
+        self.assertEqual(job.skipped, 1)
+        self.assertIn("9788500000031", job.message)
+
+    def test_job_devolvido_ao_cron_volta_a_ficar_na_fila(self):
+        """No fim do lote o job volta para `queued`, e o cron o reabre na hora.
+
+        Ficando `running`, o cron só o pegaria depois de dez minutos de
+        silêncio — o catálogo andaria uma página a cada dez minutos.
+        """
+        job = self.env["metabooks.import.job"].create({"mvb_id": "BR0089701"})
+        pagina = {
+            "total_pages": 9, "total_elements": 90, "count": 10, "imported": 10,
+            "failed": [], "product_ids": [],
+        }
+        connector = self.env["metabooks.connector"]
+        patcher = patch.object(
+            type(connector), "import_catalog_page", return_value=pagina)
+        patcher.start()
+        self.addCleanup(patcher.stop)
+        sem_commit = patch.object(self.env.cr, "commit", lambda: None)
+        sem_commit.start()
+        self.addCleanup(sem_commit.stop)
+        # prazo estourado já na primeira página
+        prazo = patch.object(job_mod, "BATCH_DEADLINE_SECONDS", -1)
+        prazo.start()
+        self.addCleanup(prazo.stop)
+
+        job._process_batch()
+
+        self.assertEqual(job.state, "queued")
+        self.assertEqual(job.next_page, 2, "retoma da página seguinte")
+        self.assertEqual(job.imported, 10)
+        pendentes = self.env["metabooks.import.job"].search([
+            ("state", "=", "queued"), ("id", "=", job.id)])
+        self.assertTrue(pendentes, "o cron enxerga o job na fila")
+
+    def test_pagina_vazia_nao_inventa_recusados(self):
+        """Editora sem catálogo: zero importado, zero recusado, nada quebrado."""
+        fake = MagicMock()
+        fake.catalog_page.return_value = None
+        connector = self._connector_with_fake(fake)
+
+        res = connector.import_catalog_page("BR0000000", 1)
+
+        self.assertEqual(res["imported"], 0)
+        self.assertEqual(res["failed"], [])
+        self.assertEqual(res["total_pages"], 0)

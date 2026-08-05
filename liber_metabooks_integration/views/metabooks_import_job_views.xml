@@ -41,6 +41,7 @@
                         <group>
                             <field name="total"/>
                             <field name="imported"/>
+                            <field name="skipped" invisible="skipped == 0"/>
                             <field name="progress" widget="progressbar"/>
                             <field name="total_pages" invisible="job_type == 'technical'"/>
                             <field name="next_page" invisible="job_type == 'technical'"/>

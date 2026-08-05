@@ -1,0 +1,9 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_liber_amazon_account_user,liber.amazon.account operator,model_liber_amazon_account,group_liber_amazon_user,1,0,0,0
+access_liber_amazon_account_manager,liber.amazon.account manager,model_liber_amazon_account,group_liber_amazon_manager,1,1,1,0
+access_liber_amazon_account_system,liber.amazon.account admin,model_liber_amazon_account,base.group_system,1,1,1,1
+access_liber_amazon_order_user,liber.amazon.order operator,model_liber_amazon_order,group_liber_amazon_user,1,1,1,0
+access_liber_amazon_order_manager,liber.amazon.order manager,model_liber_amazon_order,group_liber_amazon_manager,1,1,1,1
+access_liber_amazon_order_line_user,liber.amazon.order.line operator,model_liber_amazon_order_line,group_liber_amazon_user,1,1,1,1
+access_liber_amazon_order_line_manager,liber.amazon.order.line manager,model_liber_amazon_order_line,group_liber_amazon_manager,1,1,1,1
+access_liber_amazon_import_user,liber.amazon.import operator,model_liber_amazon_import,group_liber_amazon_user,1,1,1,1

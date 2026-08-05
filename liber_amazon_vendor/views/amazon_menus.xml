@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- O ícone da tela inicial vem daqui, do web_icon do menu raiz — não do
+         static/description/icon.png, que é o da tela de Aplicativos. São dois
+         lugares diferentes, e trocar um sem o outro deixa o app com duas
+         caras. Mudança em web_icon só aparece com -u do módulo. -->
+    <menuitem id="menu_liber_amazon_root" name="Amazon Vendor"
+              web_icon="liber_amazon_vendor,static/description/icon.png"
+              sequence="88"
+              groups="group_liber_amazon_user"/>
+
+    <menuitem id="menu_liber_amazon_orders" name="Purchase Orders"
+              parent="menu_liber_amazon_root"
+              action="action_liber_amazon_order" sequence="10"/>
+
+    <!-- Depois de importar e gerar cotações, a pergunta seguinte é sempre
+         de calendário: o que vence quando. -->
+    <menuitem id="menu_liber_amazon_schedule" name="Delivery Schedule"
+              parent="menu_liber_amazon_root"
+              action="action_liber_amazon_schedule" sequence="15"/>
+
+    <menuitem id="menu_liber_amazon_import" name="Import from Amazon"
+              parent="menu_liber_amazon_root"
+              action="action_liber_amazon_import" sequence="20"/>
+
+    <menuitem id="menu_liber_amazon_config" name="Configuration"
+              parent="menu_liber_amazon_root" sequence="90"
+              groups="group_liber_amazon_manager"/>
+
+    <!-- A mesma tela de Definições, alcançável de dentro do app. Quem já
+         está aqui não deveria ter de sair para configurar; quem chega por
+         Definições encontra do mesmo jeito. -->
+    <menuitem id="menu_liber_amazon_settings" name="Settings"
+              parent="menu_liber_amazon_config"
+              action="action_liber_amazon_settings" sequence="5"
+              groups="base.group_system"/>
+
+    <menuitem id="menu_liber_amazon_accounts" name="Accounts"
+              parent="menu_liber_amazon_config"
+              action="action_liber_amazon_account" sequence="10"/>
+
+</odoo>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+
+    <!-- Lê a Amazon e grava o espelho. NÃO cria cotação e NÃO confirma nada:
+         a rotina existe para que o estado no Odoo não envelheça, não para
+         tomar decisão comercial enquanto ninguém olha.
+
+         Fica ativa desde a instalação sem risco: ela varre as contas
+         cadastradas, e recém-instalado não existe nenhuma. A importação só
+         começa quando alguém configurar a primeira conta — que é justamente
+         o momento em que ela passa a ser desejada. -->
+    <record id="cron_liber_amazon_import" model="ir.cron">
+        <field name="name">Amazon Vendor: read purchase orders</field>
+        <field name="model_id" ref="model_liber_amazon_account"/>
+        <field name="state">code</field>
+        <field name="code">model._cron_import()</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <!-- 07:00 UTC = 04:00 em Brasília: a Amazon já fechou o dia dela e
+             ninguém está usando o sistema. -->
+        <field name="nextcall"
+               eval="(DateTime.now() + timedelta(days=1)).strftime('%Y-%m-%d 07:00:00')"/>
+        <field name="active" eval="True"/>
+    </record>
+
+</odoo>

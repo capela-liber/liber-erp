@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="res_config_settings_view_form" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.amazon.vendor</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="base_setup.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form" position="inside">
+                <app string="Amazon Vendor" name="liber_amazon_vendor"
+                     logo="/base/static/description/settings.png">
+
+                    <block title="Account" name="amazon_account_block">
+                        <field name="amazon_account_id" invisible="1"/>
+                        <div class="alert alert-info" role="status"
+                             invisible="not amazon_account_id">
+                            This screen configures the account of the
+                            <strong>company selected above</strong>. Each vendor
+                            has its own application at Amazon: one account per
+                            company.
+                        </div>
+                        <!-- Campos em branco sem explicação mandam a pessoa
+                             cadastrar de novo o que já existe. Quase sempre a
+                             causa não é falta de conta, é empresa errada no
+                             seletor. -->
+                        <div class="alert alert-warning" role="alert"
+                             invisible="amazon_account_id">
+                            This company has <strong>no Amazon account</strong>
+                            yet. If you already configured one, it belongs to
+                            another company — switch it in the top-right
+                            selector. To create one here, fill in the fields
+                            below and save.
+                        </div>
+                        <setting string="Account name"
+                                 help="How this account is called in lists and menus.">
+                            <field name="amazon_account_name"
+                                   placeholder="Amazon Vendor BR"/>
+                        </setting>
+                        <setting string="Region"
+                                 help="Which Amazon regional endpoint answers. Brazil is served by the North America endpoint -- there is no Brazilian host.">
+                            <field name="amazon_region"/>
+                        </setting>
+                        <setting string="Amazon as customer"
+                                 help="The partner every quotation is made out to. In Vendor Central Amazon is the buyer, so this is a customer.">
+                            <field name="amazon_partner_id"/>
+                        </setting>
+                    </block>
+
+                    <block title="Credentials" name="amazon_credentials_block"
+                           groups="base.group_system">
+                        <div class="alert alert-warning" role="alert">
+                            The secret fields <strong>always arrive
+                            empty</strong>, on purpose: the stored value never
+                            goes back to the browser. Leaving one empty
+                            <strong>keeps</strong> what is already saved — fill
+                            it in only to replace it.
+                        </div>
+                        <setting string="Credentials configured"
+                                 help="Whether this company already has a working refresh token stored.">
+                            <field name="amazon_credentials_set" readonly="1"
+                                   widget="boolean_toggle"/>
+                        </setting>
+                        <setting string="LWA Client ID"
+                                 help="Starts with amzn1.application-oa2-client.">
+                            <field name="amazon_client_id" password="True"
+                                   placeholder="leave empty to keep the current one"/>
+                        </setting>
+                        <setting string="LWA Client Secret">
+                            <field name="amazon_client_secret" password="True"
+                                   placeholder="leave empty to keep the current one"/>
+                        </setting>
+                        <setting string="Refresh Token"
+                                 help="The long-lived token from the authorisation. Starts with Atzr|. Not the access token, which lasts one hour and is fetched automatically.">
+                            <field name="amazon_refresh_token" password="True"
+                                   placeholder="leave empty to keep the current one"/>
+                        </setting>
+                    </block>
+
+                    <block title="Import" name="amazon_import_block">
+                        <div class="alert alert-info" role="status">
+                            This module only <strong>reads</strong> from
+                            Amazon. It does not acknowledge orders, send ASNs or
+                            invoice — those carry an SLA deadline and are a
+                            person's decision, not an automated routine's.
+                        </div>
+                        <setting string="Daily import"
+                                 help="Reads new and changed purchase orders every day at 07:00 UTC. It never creates quotations on its own.">
+                            <field name="amazon_cron_active"/>
+                        </setting>
+                        <setting string="Re-read window"
+                                 help="Every import also re-reads this many days before the last one. Amazon changes an order's state after it was created, so a watermark that only moves forward would never see it.">
+                            <div class="content-group">
+                                <div class="mt8">
+                                    <field name="amazon_import_days_back"
+                                           class="o_light_label"/>
+                                    <span class="ms-2">dias para trás</span>
+                                </div>
+                            </div>
+                        </setting>
+                        <setting string="Last import" help="When this account last read from Amazon.">
+                            <field name="amazon_last_import_date" readonly="1"/>
+                        </setting>
+                        <setting string="All accounts"
+                                 help="Every company's account in one list.">
+                            <button name="action_open_amazon_accounts"
+                                    type="object" string="Amazon Accounts"
+                                    class="btn-link" icon="fa-arrow-right"/>
+                        </setting>
+                    </block>
+                </app>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="action_liber_amazon_settings" model="ir.actions.act_window">
+        <field name="name">Settings</field>
+        <field name="res_model">res.config.settings</field>
+        <field name="view_mode">form</field>
+        <field name="target">current</field>
+        <field name="context">{'module': 'liber_amazon_vendor'}</field>
+    </record>
+
+</odoo>

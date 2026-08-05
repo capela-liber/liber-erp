@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Amazon Vendor Central — Manuais do Liber</title>
+<link rel="icon" type="image/png" href="../logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;600;700&display=swap">
+<link rel="stylesheet" href="docs.css">
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="../index.html"><img src="../logo.png" alt="">liber<span>.</span></a>
+    <span class="doc-tag">Manuais</span>
+    <nav><a href="index.html">Índice</a><a href="../index.html">Site</a></nav>
+  </div>
+</header>
+<div class="wrap">
+  <div class="layout">
+    <aside class="sidebar" id="sidebar"></aside>
+    <article class="doc">
+      <div class="breadcrumb"><a href="index.html">Manuais</a><span class="sep">›</span>Canais de venda<span class="sep">›</span>Amazon Vendor Central</div>
+      <h1>Amazon Vendor Central</h1>
+      <p class="lead">A Amazon manda o pedido; o Odoo o recebe, confere título por título contra o
+      seu cadastro e o transforma em cotação quando alguém manda. O que ele não faz — de propósito —
+      é responder à Amazon.</p>
+
+      <h2 id="visao-geral">Visão geral</h2>
+      <p>No Vendor Central <strong>a Amazon compra</strong>. Ela não é marketplace aqui: ela é
+      atacadista, emite um pedido de compra e depois revende por conta própria. Isso inverte o
+      vocabulário e é a primeira coisa a entender:</p>
+      <div class="tablewrap"><table>
+        <thead><tr><th>O que a Amazon chama</th><th>O que é do nosso lado</th></tr></thead>
+        <tbody>
+          <tr><td><strong>purchase order</strong> (pedido de compra)</td><td>Uma <strong>venda</strong>. Vira cotação e, depois, pedido de venda — nunca um pedido de compra do Odoo.</td></tr>
+          <tr><td><strong>vendor</strong></td><td>Nós. A editora que fornece.</td></tr>
+          <tr><td><strong>buying party</strong></td><td>O centro de distribuição da Amazon que está comprando — cada um com CNPJ próprio.</td></tr>
+          <tr><td><strong>net cost</strong></td><td>O que a Amazon paga por exemplar. É este o preço da linha.</td></tr>
+          <tr><td><strong>list price</strong></td><td>O preço de capa com que ela revende. Não entra na cotação.</td></tr>
+        </tbody>
+      </table></div>
+      <div class="callout warn"><span class="title">Atenção</span>
+      <p>Registrar o pedido da Amazon como <em>pedido de compra</em> inverteria estoque e
+      faturamento: o sistema passaria a achar que estamos comprando livros da Amazon. O erro não
+      aparece na tela — aparece no fechamento do mês, com estoque negativo e receita faltando.</p></div>
+
+      <p>O caminho tem três paradas, e a do meio é o ponto do módulo:</p>
+      <ol class="steps">
+        <li><strong>Importar</strong> — o módulo lê os pedidos da Amazon e guarda uma cópia fiel de cada um.</li>
+        <li><strong>Conferir</strong> — cada ISBN é casado com o código de barras do produto. O que não casa fica visível antes de virar documento.</li>
+        <li><strong>Gerar a cotação</strong> — um ato de alguém, nunca automático. A cotação nasce em rascunho e fica lá.</li>
+      </ol>
+
+      <h2 id="o-que-nao-faz">O que este módulo não faz</h2>
+      <p>Ele <strong>só lê</strong> da Amazon. Não confirma pedido (<em>acknowledgement</em>), não
+      manda aviso de embarque (ASN), não imprime etiqueta de caixa e não emite invoice por EDI.</p>
+      <p>Não é uma etapa que ficou para depois: é o desenho. Essas operações disparam relógio de SLA
+      na Amazon e assumem compromisso de entrega — decisão de uma pessoa olhando, não de uma rotina
+      às quatro da manhã. A limitação está no código, não num acordo: a camada que fala com a Amazon
+      tem um único caminho de saída, e ele só sabe ler.</p>
+      <div class="callout note"><span class="title">Nota</span>
+      <p>Enquanto a confirmação não estiver no sistema, ela continua sendo feita à mão no portal do
+      Vendor Central — e o portal segue sendo o dono do <em>estado</em> do pedido. É por isso que a
+      importação relê pedidos antigos em vez de só buscar os novos.</p></div>
+
+      <h2 id="configuracao">Configuração</h2>
+      <p><strong>Grupos de acesso:</strong> <em>Amazon Vendor / Operador</em> importa, corrige o
+      casamento de produto e gera cotação; <em>Amazon Vendor / Gerente</em> também configura a conta.
+      As credenciais em si são de <strong>administrador do sistema</strong> — quem opera nunca as vê.
+      O grupo de operador já implica <em>Vendedor</em>, porque a cotação é documento de vendas.</p>
+      <p><strong>Multiempresa por construção:</strong> a conta é um registro por empresa, não uma
+      configuração global. Cada vendor tem o seu próprio aplicativo e o seu próprio token na Amazon —
+      não existe credencial que sirva a duas editoras.</p>
+      <p><strong>A conta</strong> (uma vez por empresa, em
+      <span class="menupath">Definições<i>‣</i>Amazon Vendor</span> ou
+      <span class="menupath">Amazon Vendor<i>‣</i>Configuração<i>‣</i>Definições</span>):</p>
+      <ol class="steps">
+        <li>Dê um <span class="field">Nome da conta</span> e escolha a <span class="field">Região</span>.
+        Para o Brasil, <strong>BR</strong> — que fala com o endpoint da América do Norte. Não existe
+        host brasileiro; procurar por um é perder a tarde.</li>
+        <li>Preencha <span class="field">Amazon como cliente</span>: o parceiro em nome de quem as
+        cotações saem.</li>
+        <li>Cole as três credenciais do aplicativo criado no <em>Amazon Developer Central</em>:
+        <span class="field">Client ID do LWA</span>, <span class="field">Client Secret do LWA</span> e o
+        <span class="field">Refresh token</span> da autorização. O refresh token começa com
+        <code>Atzr|</code> e aparece uma única vez, na tela de autorização.</li>
+        <li>Salve e clique em <span class="field">Testar conexão</span> na ficha da conta. Ele fala com
+        a Amazon e não importa nada.</li>
+      </ol>
+      <div class="callout note"><span class="title">Nota</span>
+      <p>Os campos de segredo <strong>chegam sempre em branco</strong>, mesmo depois de configurados:
+      o valor guardado não volta para o navegador. Deixar em branco <strong>mantém</strong> o que já
+      está lá — preencha só para trocar. O indicador <span class="field">Credenciais configuradas</span>
+      diz se há um token gravado, sem revelá-lo.</p></div>
+      <div class="callout warn"><span class="title">Atenção</span>
+      <p>Se o teste falhar com <strong>HTTP 403</strong> depois de o login ter funcionado, não é senha
+      errada. É o aplicativo sem o papel <em>Vendor Orders</em> no Developer Central, ou uma
+      autorização dada para o <em>Seller</em> Central em vez do <em>Vendor</em>. O conserto é no painel
+      da Amazon.</p></div>
+
+      <h2 id="importar">Importar os pedidos</h2>
+      <p>Há dois caminhos, e eles fazem a mesma coisa:</p>
+      <ul>
+        <li><strong>À mão</strong>, em <span class="menupath">Amazon Vendor<i>‣</i>Importar da Amazon</span>:
+        escolha o intervalo e clique em <span class="field">Ler da Amazon</span>.</li>
+        <li><strong>Sozinho</strong>, pela rotina diária das 07:00 UTC — quatro da manhã em Brasília,
+        quando a Amazon já fechou o dia e ninguém está usando o sistema. Liga e desliga em Definições.</li>
+      </ul>
+      <p>A leitura à mão <strong>mostra a conta antes de gravar</strong>: quantos pedidos, quantos
+      exemplares, quanto em net cost, quantos ISBNs distintos e — o que mais importa — a lista exata
+      dos que não têm produto no cadastro. Só então <span class="field">Importar</span>.</p>
+      <div class="callout note"><span class="title">Nota</span>
+      <p>Reimportar o mesmo intervalo não duplica nada: a chave é o número do pedido. E a janela
+      <strong>recua alguns dias de propósito</strong> (o campo <span class="field">Janela de releitura</span>,
+      7 dias por padrão), porque a Amazon muda o estado de um pedido depois de criá-lo. Uma marca
+      d'água que só andasse para frente congelaria o estado no instante da primeira leitura.</p></div>
+
+      <h2 id="casamento">O casamento com o cadastro</h2>
+      <p>Cada linha traz o <strong>ISBN-13</strong> do título, que o módulo procura no
+      <span class="field">Código de barras</span> do produto. A comparação ignora hífen e espaço dos
+      dois lados — parte do catálogo está gravada com hífen, e a comparação crua daria por ausente um
+      título que existe.</p>
+      <div class="callout warn"><span class="title">Atenção</span>
+      <p>O outro identificador do pedido, o <strong>ASIN</strong>, é o código interno da Amazon.
+      Ele é guardado para conferência, mas <em>não</em> serve para casar com o nosso cadastro — não
+      existe lá.</p></div>
+      <p>Linha cujo ISBN não casa <strong>não impede nada</strong>: ela entra sem produto, é contada,
+      e simplesmente <strong>fica de fora da cotação</strong>. Travar o pedido inteiro por causa de um
+      título que talvez nem seja nosso seria pior — e a Amazon não espera.</p>
+      <div class="callout warn"><span class="title">Atenção</span>
+      <p>Ignorar é a decisão certa; ignorar em silêncio não é. Toda vez que uma linha fica de fora, o
+      <strong>histórico do pedido registra quais ISBNs foram deixados</strong> — porque a cotação passa
+      a prometer menos exemplares do que a Amazon pediu, e essa diferença apareceria só na entrega.</p></div>
+      <p>Para trazer o título de volta, há duas saídas:</p>
+      <ul>
+        <li>Cadastrar o título com o ISBN no código de barras, e reimportar.</li>
+        <li>Escolher o produto <strong>à mão</strong> na linha do pedido. Essa escolha fica travada e
+        <strong>sobrevive às próximas leituras</strong> — corrigir uma vez é corrigir para sempre.</li>
+      </ul>
+      <p>O filtro <span class="field">Com títulos sem produto</span>, na lista de pedidos, junta tudo
+      o que está saindo incompleto — é a fila de trabalho de quem cuida do cadastro.</p>
+
+      <h2 id="cotacao">Gerar a cotação</h2>
+      <p>No pedido, o botão <span class="field">Gerar cotação</span> cria o pedido de venda em
+      <strong>rascunho</strong>, com as linhas casadas, as quantidades pedidas e o net cost como preço.
+      O prazo final da janela de entrega da Amazon vira a <span class="field">Data de entrega</span>.</p>
+      <p>As linhas sem produto no cadastro ficam de fora, e o histórico do pedido diz quais foram.</p>
+      <p>Para trabalhar em lote: selecione os pedidos na lista, abra o menu de engrenagem e escolha
+      <span class="field">Gerar cotações</span>. Aqui a regra é o contrário da do botão individual —
+      <strong>o que não pode ser gerado é pulado, não interrompe os outros</strong>, e no fim aparece
+      um relatório do que ficou de fora e por quê. Numa seleção de cinquenta, parar no terceiro
+      jogaria fora o trabalho dos outros quarenta e sete. Pula-se pouca coisa: pedido que já tem
+      cotação, e pedido em que <em>nenhuma</em> linha casou — esse não tem o que cotar.</p>
+      <div class="callout warn"><span class="title">Atenção</span>
+      <p>A cotação <strong>nunca é confirmada</strong> pelo módulo. Confirmar assume compromisso de
+      entrega e move estoque — quem faz isso é uma pessoa, depois de olhar. E nada é enviado à Amazon
+      nesse momento: o que acontece aqui não chega ao Vendor Central.</p></div>
+      <p>Duas recusas que preferem falhar a acertar por acaso:</p>
+      <ul>
+        <li><strong>Moeda diferente da empresa</strong> — a cotação é recusada em vez de convertida.
+        Converter caladamente poria um número plausível e errado num documento que ninguém reconfere.</li>
+        <li><strong>Pedido que já tem cotação</strong> — não se gera a segunda. Se a primeira estiver
+        errada, ela é que deve ser corrigida ou cancelada.</li>
+        <li><strong>Pedido sem nenhuma linha casada</strong> — não há o que cotar, e uma cotação vazia
+        registraria uma venda de nada.</li>
+      </ul>
+
+      <h2 id="mudancas">Quando a Amazon muda o pedido</h2>
+      <p>Ela muda. O estado anda de <em>New</em> para <em>Acknowledged</em> e depois <em>Closed</em>,
+      e a quantidade aceita frequentemente é menor que a pedida.</p>
+      <p>Enquanto <strong>não existe cotação</strong>, mudança é só notícia: a cópia se atualiza e
+      pronto. Depois que a cotação existe, o módulo <strong>avisa e não reescreve</strong> — o pedido
+      ganha uma tarja vermelha dizendo exatamente o que mudou (estado, quantidade, em que linha), e o
+      documento comercial fica intacto.</p>
+      <p>É deliberado: a cotação pertence a quem a fez. Reescrevê-la por baixo trocaria um problema
+      visível por um invisível. Depois de resolver, o botão
+      <span class="field">Dar por lida a mudança</span> tira o aviso e guarda o texto no histórico.</p>
+      <div class="callout note"><span class="title">Nota</span>
+      <p>Se a Amazon inventar um estado que o módulo ainda não conhece, o pedido <strong>é importado
+      assim mesmo</strong> e fica marcado. O filtro <span class="field">Estado desconhecido na Amazon</span>
+      lista esses casos. Recusar a gravação por causa de um nome novo perderia a venda para preservar
+      a lista.</p></div>
+
+      <h2 id="limites">Limites conhecidos</h2>
+      <ul>
+        <li><strong>Um cliente por conta</strong> — a cotação sai sempre para o mesmo parceiro. Como
+        cada centro de distribuição da Amazon tem CNPJ próprio, o correto é resolver o cliente por
+        pedido, a partir do <em>buying party</em>. Está mapeado, ainda não implementado.</li>
+        <li><strong>Impostos</strong> — a linha nasce com o net cost e o Odoo aplica a posição fiscal
+        do parceiro. Vale conferir com um pedido real antes de confiar no total.</li>
+        <li><strong>Endereço de entrega</strong> — o pedido traz o centro de distribuição de destino,
+        mas ele ainda não vai para o endereço de entrega da cotação.</li>
+        <li><strong>Devoluções e chargebacks</strong> — fora do escopo. A Amazon os informa por outras
+        APIs.</li>
+      </ul>
+
+      <h2 id="faq">Perguntas frequentes</h2>
+      <p><strong>Importar avisa a Amazon de alguma coisa?</strong><br>
+      Não. Nenhuma operação do módulo escreve na Amazon — nem importar, nem gerar cotação, nem
+      confirmar o pedido de venda depois.</p>
+      <p><strong>A tela de configuração está vazia e eu já configurei a conta.</strong><br>
+      Você está em outra empresa. A conta pertence a uma empresa e a regra multiempresa a esconde das
+      demais — troque no seletor do canto superior direito. A própria tela avisa quando é esse o caso.</p>
+      <p><strong>Por que o preço da linha não é o preço de capa?</strong><br>
+      Porque a Amazon não paga o preço de capa: ela paga o <em>net cost</em>, que é o que a cotação
+      registra. O preço de capa fica guardado na linha, para conferência.</p>
+      <p><strong>Reimportei e o produto que eu tinha corrigido à mão voltou ao que era?</strong><br>
+      Não deveria — escolha humana fica travada. Se voltou, o produto foi trocado por outra
+      importação com o campo destravado; reabra a linha e escolha de novo.</p>
+      <p><strong>A cotação saiu com menos linhas que o pedido da Amazon.</strong><br>
+      Os títulos sem produto no cadastro ficam de fora. O histórico do pedido lista os ISBNs
+      deixados; cadastre-os (ou escolha o produto à mão na linha) e a próxima cotação sai completa.
+      A cotação já criada não se completa sozinha — corrija-a ou cancele e gere de novo.</p>
+      <p><strong>O pedido sumiu da lista.</strong><br>
+      Provavelmente foi fechado pela Amazon e você está com o filtro <span class="field">Ainda aberto</span>
+      ligado. Pedido fechado continua no sistema, apenas em cinza.</p>
+      <p><strong>Preciso instalar alguma biblioteca Python?</strong><br>
+      Não. A API da Amazon não exige mais assinatura AWS, e o módulo usa só o que o Odoo já tem.</p>
+
+      <div class="seealso">
+        <strong>Ver também</strong>
+        <ul>
+          <li><a href="liber_metabooks_integration.html">Integração Metabooks</a> — de onde vem o ISBN que faz o casamento funcionar.</li>
+          <li><a href="liber_roles.html">Papéis de acesso</a> — os grupos da casa e como eles se somam aos deste módulo.</li>
+        </ul>
+      </div>
+
+      <nav class="pager" id="pager"></nav>
+    </article>
+  </div>
+</div>
+<script src="docs.js"></script>
+</body>
+</html>

@@ -181,6 +181,13 @@
   .open h2 { font-size: clamp(26px, 3.4vw, 38px); margin-bottom: 14px; }
   .open p { color: var(--ink-soft); max-width: 62ch; margin: 0 auto 26px; }
 
+  /* quem somos — texto corrido: alinhado à esquerda, na largura de leitura */
+  .about { padding: 72px 0; border-bottom: 1px solid var(--line); }
+  .about h2 { font-size: clamp(26px, 3.4vw, 34px); margin: 8px 0 18px; }
+  .about p { color: var(--ink-soft); max-width: 68ch; margin-bottom: 14px; }
+  .about p strong { color: var(--ink); }
+  .about .thanks { border-left: 3px solid var(--accent); padding-left: 16px; margin-top: 26px; }
+
   /* licença */
   .license { padding: 72px 0; background: var(--paper-2); border-top: 1px solid var(--line); }
   .license h2 { font-size: clamp(24px, 3vw, 32px); margin-bottom: 12px; }
@@ -218,6 +225,7 @@
       <a href="#impressao">Impressão</a>
       <a href="#fiscal">Fiscal</a>
       <a href="#odoo">Odoo</a>
+      <a href="#quem-somos">Quem somos</a>
       <a href="docs/index.html">Manuais</a>
       <a href="#duvidas">Dúvidas</a>
     </nav>
@@ -244,7 +252,7 @@
   <div class="wrap">
     <div>
       <h3>Feito para o livro</h3>
-      <p>Consignação, acertos, bonificação e direitos autorais são cidadãos de primeira classe — não adaptações improvisadas.</p>
+      <p>Consignação, acertos e direitos autorais são cidadãos de primeira classe — não adaptações improvisadas.</p>
     </div>
     <div>
       <h3>Fiscalmente correto</h3>
@@ -347,15 +355,18 @@
 <section class="feature flip" id="fiscal">
   <div class="wrap">
     <div class="text">
-      <p class="kicker">Integração com a SEFAZ</p>
-      <h2>Suas notas fiscais, direto da fonte</h2>
-      <p>Com o certificado digital A1 da empresa, o Liber busca diariamente na SEFAZ as notas
-      emitidas contra o seu CNPJ e as traz para um painel único de XMLs.</p>
+      <p class="kicker">Nota fiscal eletrônica</p>
+      <h2>A nota fiscal, dos dois lados</h2>
+      <p>O Liber <strong>emite</strong> a NF-e da editora e <strong>recebe</strong> as notas emitidas contra ela.
+      Emitir é um botão na fatura confirmada: a nota vai à SEFAZ, e o XML e a DANFE voltam anexados,
+      com a chave de acesso gravada — a mesma chave das notas que chegam. Para o resto do sistema,
+      a nota que sai e a que entra são a mesma coisa.</p>
       <ul>
-        <li><strong>Download automático</strong> — varredura diária da Distribuição DF-e, por empresa, sem digitação.</li>
+        <li><strong>Emissão de NF-e modelo 55</strong> — direto da fatura, com o CFOP deduzido do destino e a imunidade do livro já configurada. <a href="docs/liber_nfe_focus.html">Ler o manual</a>.</li>
+        <li><strong>Cancelamento e carta de correção</strong> — os eventos que a SEFAZ prevê, com justificativa, histórico e o XML de cada um guardado junto da nota.</li>
+        <li><strong>Download automático</strong> — com o certificado digital A1 da empresa, varredura diária da Distribuição DF-e das notas emitidas contra o seu CNPJ, sem digitação.</li>
         <li><strong>Painel de XMLs</strong> — cada nota deduplicada pela chave de acesso; o lançamento contábil é um passo explícito, sob seu controle.</li>
-        <li><strong>Notas de remessa</strong> — documentos que não geram cobrança (consignação, bonificação, material de evento) com tratamento contábil próprio.</li>
-        <li><strong>Emissão de NF-e</strong> <span class="badge soon">em breve</span> — hoje via parceiros integrados; emissão nativa está no roteiro.</li>
+        <li><strong>Notas de remessa</strong> — documentos que não geram cobrança (consignação, material de evento) com tratamento contábil próprio.</li>
       </ul>
     </div>
     <figure class="shot">
@@ -386,27 +397,7 @@
   </div>
 </section>
 
-<section class="feature flip" id="bonificacao">
-  <div class="wrap">
-    <div class="text">
-      <p class="kicker">Divulgação</p>
-      <h2>Bonificação com começo, meio e resultado</h2>
-      <p>Exemplares de cortesia para autores, imprensa e influenciadores deixam de sumir do estoque:
-      cada bonificação é um documento com dono, motivo, custo e nota fiscal.</p>
-      <ul>
-        <li><strong>Cotas por título e campanha</strong>, incluindo os exemplares contratuais do autor.</li>
-        <li><strong>Listas reutilizáveis</strong> de destinatários (imprensa, VIPs) com importação e combinação.</li>
-        <li><strong>Custo no lugar certo</strong> — cada envio pesa na conta analítica do livro, e você avalia o retorno da campanha.</li>
-      </ul>
-    </div>
-    <figure class="shot">
-      <img src="img/bonificacao.png" alt="Documento de bonificação com lista de destinatários">
-      <figcaption>Campanha de bonificação: cota, destinatários e custo por título.</figcaption>
-    </figure>
-  </div>
-</section>
-
-<section class="feature" id="impressao">
+<section class="feature flip" id="impressao">
   <div class="wrap">
     <div class="text">
       <p class="kicker">Produção</p>
@@ -475,7 +466,6 @@
     <h2>No roteiro</h2>
     <p>O Liber está em desenvolvimento ativo e aberto. Estas são as próximas frentes:</p>
     <div class="grid">
-      <div class="card"><div class="ic"><i class="fa-solid fa-file-invoice"></i></div><h3>Emissão de NF-e <span class="badge soon">em breve</span></h3><p>Emissão nativa junto à SEFAZ; hoje a emissão acontece por parceiros integrados.</p></div>
       <div class="card"><div class="ic"><i class="fa-solid fa-book-open"></i></div><h3>BookInfo <span class="badge soon">em breve</span></h3><p>Metadados, pedidos e monitoramento de preço pela plataforma da BookInfo.</p></div>
       <div class="card"><div class="ic"><i class="fa-solid fa-cart-shopping"></i></div><h3>Amazon Vendor <span class="badge soon">em breve</span></h3><p>Pedidos, notas e catálogo integrados ao programa Vendor da Amazon.</p></div>
     </div>
@@ -486,6 +476,46 @@
   <img src="img/stock/sebo-livros.jpg" alt="Pilhas de livros em um sebo" loading="lazy">
   <figcaption>Todo acervo tem história. A sua fica com você.</figcaption>
 </figure>
+
+<section class="about" id="quem-somos">
+  <div class="wrap">
+    <p class="kicker">Quem somos</p>
+    <h2>Atrás do Liber há um caminho longo</h2>
+
+    <p>O projeto nasceu de <em>bateções</em> de cabeça, arapucas digitais em que caímos antes
+    de aprender a desviar, e saídas interessantes que foram surgindo na luta diária dentro da
+    editora <strong>Hedra</strong>, no meio do expediente, com o problema em cima da mesa e os
+    boletos chegando.</p>
+
+    <p>A <strong>Hedra</strong> usa o Odoo Community desde a versão 10, em 2016. De lá para cá
+    foram quase dez anos rodando a editora inteira dentro do sistema, e escrevendo, ano após
+    ano, novos processos.</p>
+
+    <p>Em 2018 fundamos o <strong>EdLab Press</strong>, com a proposta de ser um laboratório
+    que abrigasse um conjunto de pequenas editoras com operações muitas vezes bem diferentes
+    entre si. Foi ali que o código deixou de servir a uma casa só e passou a ter de servir a
+    várias, incluindo a finada livraria Casa Plana.</p>
+
+    <p><strong>Mas por que abrir nosso código?</strong> A questão é o contrário: por que guardar
+    somente conosco? E somando certa paranoia, ou receio de que a inteligência artificial vá
+    deixar o nosso mercado ainda mais atrasado, resolvemos liberar tudo. Editora pequena não
+    perde por dividir ferramenta — não somos uma corporação. E quanto mais gente usando esse
+    código, mais afinados ficaremos.</p>
+
+    <p><strong>Quem está por trás do código?</strong> Eu, <strong>Jorge Sallum</strong>, editor
+    da Hedra, sou responsável pelo desenho e pela codificação. O caminho até aqui foi feito de
+    conversa: o apoio e as inúmeras trocas com <strong>Alexandre Fonseca</strong> e
+    <strong>Sergio Eduardo</strong>; <strong>Rogério de Campos</strong>, da editora
+    <strong>Veneta</strong>, e suas ideias prá lá de revolucionárias; e
+    <strong>Tiago Quirino</strong>, da <strong>Capela</strong>, agência de marketing digital
+    para editoras, recém-criada.</p>
+
+    <p class="thanks">Agradecimento especial a <strong>Elio Viniski</strong>, da
+    <strong>Edoo.me</strong>, parceiro incansável e fiel, há mais de uma década, nessa história
+    com o Odoo. E a <strong>Anselmo Bortolin</strong>, o maior entusiasta das soluções de
+    tecnologia para o mercado editorial que conhecemos.</p>
+  </div>
+</section>
 
 <section class="open" id="open">
   <div class="wrap">
@@ -500,7 +530,7 @@
     </div>
     <p class="creds">Ambiente de demonstração aberto — entre com
       <code>demo</code> / <code>liber</code>. A conta percorre os módulos do Liber —
-      consignação, direitos autorais, bonificação, catálogo — e não grava nada;
+      consignação, direitos autorais, catálogo — e não grava nada;
       os dados são de teste e podem ser reiniciados a qualquer momento.</p>
   </div>
 </section>

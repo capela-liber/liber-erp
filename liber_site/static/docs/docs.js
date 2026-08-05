@@ -18,12 +18,16 @@ var DOCS = [
     { slug: "liber_copyright_contracts_payments", title: "Pagamento de royalties", desc: "Direitos em aberto viram fatura de fornecedor por beneficiário." },
     { slug: "liber_copyright_contracts_reports", title: "Prestação de contas", desc: "O extrato do autor em PDF, pronto para enviar." },
   ]},
-  { area: "Fiscal", desc: "Os XMLs das suas notas dentro do sistema — histórico, conferência e remessas.", items: [
+  { area: "Fiscal", desc: "A nota fiscal dos dois lados: a que sai, a que chega, e o histórico inteiro dentro do sistema.", items: [
+    { slug: "liber_nfe_focus", title: "Emissão de NF-e", desc: "Emita a nota modelo 55 direto da fatura; XML e DANFE voltam anexados." },
     { slug: "liber_nfe_xml", title: "Importação de XML de NF-e", desc: "Importe as notas emitidas e recebidas e reconstrua o histórico." },
     { slug: "liber_nfe_remessa", title: "Notas de remessa", desc: "Documentos sem cobrança — consignação, bonificação, eventos." },
   ]},
   { area: "Catálogo", desc: "Metadados do livro entrando e saindo do sistema pelos padrões do mercado.", items: [
     { slug: "liber_metabooks_integration", title: "Integração Metabooks", desc: "Importação por ISBN, catálogo completo e envio ONIX." },
+  ]},
+  { area: "Canais de venda", desc: "Os pedidos que chegam de fora — cada canal com o seu jeito de pedir.", items: [
+    { slug: "liber_amazon_vendor", title: "Amazon Vendor Central", desc: "Pedidos da Amazon lidos, conferidos contra o cadastro e transformados em cotação." },
   ]},
   { area: "Produção", desc: "O livro impresso quando alguém compra — tiragem, frete e entrega.", items: [
     { slug: "liber_metabrasil", title: "Impressão sob demanda (Metabrasil)", desc: "Preço por tiragem, cotação de frete, dropship e acompanhamento da gráfica." },

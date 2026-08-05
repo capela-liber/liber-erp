@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_liber_amazon_order_list" model="ir.ui.view">
+        <field name="name">liber.amazon.order.list</field>
+        <field name="model">liber.amazon.order</field>
+        <field name="arch" type="xml">
+            <list decoration-warning="unmatched_count > 0"
+                  decoration-danger="has_divergence == True"
+                  decoration-muted="is_open == False">
+                <field name="name"/>
+                <field name="order_date"/>
+                <field name="amazon_state"/>
+                <field name="line_count" string="Lines"/>
+                <field name="unmatched_count" string="Unmatched"/>
+                <field name="amount_total" widget="monetary"/>
+                <field name="currency_id" column_invisible="True"/>
+                <field name="state" widget="badge"/>
+                <field name="has_divergence" string="Changed" optional="show"/>
+                <field name="is_open" column_invisible="True"/>
+                <field name="delivery_end" optional="hide"/>
+                <field name="sale_order_id" optional="hide"/>
+                <field name="company_id" groups="base.group_multi_company"
+                       optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_liber_amazon_order_form" model="ir.ui.view">
+        <field name="name">liber.amazon.order.form</field>
+        <field name="model">liber.amazon.order</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <!-- Um botão só. Linha sem produto é ignorada e fica
+                         registrada no histórico — não trava mais o pedido,
+                         e por isso não há mais duas versões do mesmo botão. -->
+                    <button name="action_create_quotation" type="object"
+                            string="Create Quotation" class="btn-primary"
+                            invisible="sale_order_id or unmatched_count == 0"
+                            confirm="Lines with no product in the catalogue will be left out of the quotation. Their ISBNs are recorded in this order's log."/>
+                    <button name="action_create_quotation" type="object"
+                            string="Create Quotation" class="btn-primary"
+                            invisible="sale_order_id or unmatched_count > 0"/>
+                    <button name="action_clear_divergence" type="object"
+                            string="Acknowledge Change" class="btn-secondary"
+                            invisible="not has_divergence"/>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_quotation" type="object"
+                                class="oe_stat_button" icon="fa-file-text-o"
+                                invisible="not sale_order_id">
+                            <div class="o_stat_info">
+                                <span class="o_stat_text">Quotation</span>
+                                <field name="sale_order_id" nolabel="1"
+                                       class="o_stat_value" readonly="1"/>
+                            </div>
+                        </button>
+                    </div>
+
+                    <widget name="web_ribbon" title="Closed by Amazon"
+                            bg_color="text-bg-secondary"
+                            invisible="is_open"/>
+
+                    <div class="oe_title">
+                        <label for="name" string="Purchase Order"/>
+                        <h1><field name="name" readonly="1"/></h1>
+                    </div>
+
+                    <div class="alert alert-danger" role="alert"
+                         invisible="not has_divergence">
+                        <field name="divergence_note" nolabel="1" readonly="1"/>
+                    </div>
+
+                    <group>
+                        <group string="Amazon">
+                            <field name="account_id"/>
+                            <field name="amazon_state"/>
+                            <field name="state_known" invisible="state_known"
+                                   string="Known state"/>
+                            <field name="order_date"/>
+                            <field name="state_changed_date"/>
+                        </group>
+                        <group string="Delivery">
+                            <field name="delivery_start"/>
+                            <field name="delivery_end"/>
+                            <field name="ship_to_party"/>
+                            <field name="payment_method"/>
+                            <field name="last_sync"/>
+                        </group>
+                    </group>
+
+                    <notebook>
+                        <page string="Lines" name="lines">
+                            <field name="line_ids" readonly="0">
+                                <list editable="bottom"
+                                      decoration-warning="matched == False">
+                                    <field name="item_sequence" readonly="1"/>
+                                    <field name="isbn" readonly="1"/>
+                                    <field name="product_id"
+                                           options="{'no_create': True}"/>
+                                    <field name="product_locked" optional="hide"/>
+                                    <field name="quantity" readonly="1"/>
+                                    <field name="price_unit" readonly="1"/>
+                                    <field name="subtotal" readonly="1"/>
+                                    <field name="currency_code" optional="hide"
+                                           readonly="1"/>
+                                    <field name="asin" optional="hide" readonly="1"/>
+                                    <field name="backorder_allowed"
+                                           optional="hide" readonly="1"/>
+                                    <field name="matched" column_invisible="True"/>
+                                </list>
+                            </field>
+                            <group class="oe_subtotal_footer oe_right">
+                                <field name="amount_total"
+                                       widget="monetary" class="oe_subtotal_footer_separator"/>
+                                <field name="currency_id" invisible="1"/>
+                            </group>
+                        </page>
+                        <page string="Parties" name="parties">
+                            <group>
+                                <field name="buying_party"/>
+                                <field name="selling_party"/>
+                                <field name="order_type"/>
+                                <field name="company_id"
+                                       groups="base.group_multi_company"/>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_liber_amazon_order_search" model="ir.ui.view">
+        <field name="name">liber.amazon.order.search</field>
+        <field name="model">liber.amazon.order</field>
+        <field name="arch" type="xml">
+            <search>
+                <!-- Uma caixa só: quem procura chega com o número do PO ou com
+                     o ISBN de um título, e não deveria ter de saber em qual
+                     campo cada um mora. -->
+                <field name="name" string="PO or ISBN"
+                       filter_domain="['|', ('name', 'ilike', self),
+                                            ('line_ids.isbn', 'ilike', self)]"/>
+                <field name="account_id"/>
+                <filter name="open" string="Still Open"
+                        domain="[('is_open', '=', True)]"/>
+                <filter name="no_quotation" string="Without Quotation"
+                        domain="[('sale_order_id', '=', False)]"/>
+                <filter name="unmatched" string="With Unmatched Titles"
+                        domain="[('unmatched_count', '>', 0)]"/>
+                <filter name="divergent" string="Changed After Quotation"
+                        domain="[('has_divergence', '=', True)]"/>
+                <separator/>
+                <filter name="unknown_state" string="Unknown Amazon State"
+                        domain="[('state_known', '=', False)]"/>
+                <group>
+                    <filter name="group_state" string="Amazon State"
+                            context="{'group_by': 'amazon_state'}"/>
+                    <filter name="group_account" string="Account"
+                            context="{'group_by': 'account_id'}"/>
+                    <filter name="group_month" string="Order Month"
+                            context="{'group_by': 'order_date:month'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Ação em massa no menu de engrenagem da lista. Selecionar cinquenta
+         pedidos e gerar cotação de todos é o trabalho real de quem opera; ir
+         de um em um pelo formulário é o caminho para conferir um caso. -->
+    <record id="action_bulk_create_quotations" model="ir.actions.server">
+        <field name="name">Create Quotations</field>
+        <field name="model_id" ref="model_liber_amazon_order"/>
+        <field name="binding_model_id" ref="model_liber_amazon_order"/>
+        <field name="binding_view_types">list</field>
+        <field name="state">code</field>
+        <field name="code">action = records.action_create_quotations_bulk()</field>
+        <!-- v19: em ir.actions.server o campo é group_ids, não groups_id. -->
+        <field name="group_ids" eval="[(4, ref('group_liber_amazon_user'))]"/>
+    </record>
+
+    <record id="action_liber_amazon_order" model="ir.actions.act_window">
+        <field name="name">Amazon Purchase Orders</field>
+        <field name="res_model">liber.amazon.order</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_liber_amazon_order_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">No order imported yet</p>
+            <p>Use <strong>Import from Amazon</strong> to read a date range.
+               Nothing here is a commercial document until someone creates a
+               quotation from it.</p>
+        </field>
+    </record>
+
+</odoo>

@@ -12,7 +12,7 @@ URLs das páginas (site publicado ou instância local):
 - Local: `http://localhost:8069/liber_site/static/docs/<página>`
 - Índice: `http://localhost:8069/liber_site/static/docs/index.html`
 
-Total de capturas: 41 · Feitas: marque a caixa ao concluir.
+Total de capturas: 44 · Feitas: marque a caixa ao concluir.
 
 
 ## Acordos de consignação — `liber_soc_agreements.html`
@@ -133,6 +133,21 @@ Página: `/liber_site/static/docs/liber_copyright_contracts_reports.html`
 - [x] **`doc-liber_copyright_contracts_reports-pdf.png`**
   - O que capturar: PDF da prestação de contas: resumo com período, valor total, IRRF e valor a receber, seguido da tabela de obras
   - Legenda no manual: O extrato do autor: resumo no topo, depois obra por obra, faturas, vendas especiais e adiantamentos.
+
+
+## Emissão de NF-e — `liber_nfe_focus.html`
+
+Página: `/liber_site/static/docs/liber_nfe_focus.html`
+
+- [ ] **`doc-liber_nfe_focus-fatura.png`**
+  - O que capturar: Fatura de cliente com a faixa verde 'NFe autorizada' e, no cabeçalho, os botões Emitir NFe, Consultar SEFAZ, Carta de Correção e Cancelar NFe
+  - Legenda no manual: A fatura com a nota autorizada: a faixa verde no topo e, no cabeçalho, os verbos da nota — emitir, consultar, corrigir e cancelar.
+- [ ] **`doc-liber_nfe_focus-empresa.png`**
+  - O que capturar: Ficha da empresa, grupo 'NFe — Focus NFe': credenciais (ambiente, tokens mascarados, prefixo da referência, botão Testar conexão) e dados fiscais/padrões com o botão Gerar impostos por CFOP
+  - Legenda no manual: A configuração da empresa: credenciais à esquerda, padrões fiscais à direita, e os dois botões que evitam surpresa — testar a conexão e gerar os impostos por CFOP.
+- [ ] **`doc-liber_nfe_focus-aba.png`**
+  - O que capturar: Aba 'NFe (Focus)' de uma fatura autorizada, com chave de acesso, número, série, protocolo à esquerda e CFOP, referência e ambiente à direita
+  - Legenda no manual: A aba NFe (Focus): à esquerda o que a SEFAZ devolveu, à direita a operação fiscal que gerou a nota.
 
 
 ## Importação de XML de NF-e — `liber_nfe_xml.html`

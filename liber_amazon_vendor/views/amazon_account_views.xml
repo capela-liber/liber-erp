@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_liber_amazon_account_list" model="ir.ui.view">
+        <field name="name">liber.amazon.account.list</field>
+        <field name="model">liber.amazon.account</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="region"/>
+                <field name="partner_id"/>
+                <field name="last_import_date"/>
+                <field name="order_count" string="Orders"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_liber_amazon_account_form" model="ir.ui.view">
+        <field name="name">liber.amazon.account.form</field>
+        <field name="model">liber.amazon.account</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_test_connection" type="object"
+                            string="Test Connection" class="btn-secondary"/>
+                    <button name="action_import" type="object"
+                            string="Import Now" class="btn-primary"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_orders" type="object"
+                                class="oe_stat_button" icon="fa-list">
+                            <field name="order_count" widget="statinfo"
+                                   string="Orders"/>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <h1><field name="name" placeholder="Hedra — Vendor BR"/></h1>
+                    </div>
+                    <group>
+                        <group string="Account">
+                            <field name="region"/>
+                            <field name="partner_id"/>
+                            <field name="company_id"
+                                   groups="base.group_multi_company"/>
+                            <field name="active" widget="boolean_toggle"/>
+                        </group>
+                        <group string="Import">
+                            <field name="import_days_back"/>
+                            <field name="last_import_date"/>
+                        </group>
+                    </group>
+                    <group string="Credentials" groups="base.group_system">
+                        <div class="alert alert-info" role="status"
+                             colspan="2">
+                            This module only <strong>reads</strong> from Amazon.
+                            It never acknowledges an order, never sends an ASN
+                            and never invoices — those carry an SLA and belong
+                            to a person, not to a cron.
+                        </div>
+                        <field name="client_id" password="True"/>
+                        <field name="client_secret" password="True"/>
+                        <field name="refresh_token" password="True"/>
+                    </group>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_liber_amazon_account" model="ir.actions.act_window">
+        <field name="name">Amazon Accounts</field>
+        <field name="res_model">liber.amazon.account</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Connect a Vendor Central account</p>
+            <p>One account per company and region. The credentials come from
+               the Amazon Developer Central app: LWA client id, client secret
+               and the refresh token from the authorisation.</p>
+        </field>
+    </record>
+
+</odoo>

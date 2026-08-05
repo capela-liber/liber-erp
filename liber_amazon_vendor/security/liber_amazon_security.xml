@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="module_category_liber_amazon" model="ir.module.category">
+        <field name="name">Amazon Vendor</field>
+        <field name="sequence">24</field>
+    </record>
+
+    <!-- v19: res.groups não carrega mais category_id; quem carrega é a
+         res.groups.privilege, e os grupos apontam para ela. -->
+    <record id="privilege_liber_amazon" model="res.groups.privilege">
+        <field name="name">Amazon Vendor</field>
+        <field name="category_id" ref="module_category_liber_amazon"/>
+    </record>
+
+    <!-- Quem opera: importa, corrige o casamento de produto, gera cotação.
+         Nunca lê credencial — os campos do token são groups="base.group_system"
+         no modelo, e nenhum grupo daqui contorna isso. -->
+    <record id="group_liber_amazon_user" model="res.groups">
+        <field name="name">Operator</field>
+        <field name="privilege_id" ref="privilege_liber_amazon"/>
+        <!-- Implica vendedor porque a cotação é um documento de vendas: sem
+             isto o operador importa tudo e trava no único botão que importa,
+             com um erro de permissão que não explica nada. -->
+        <field name="implied_ids" eval="[(4, ref('sales_team.group_sale_salesman'))]"/>
+    </record>
+
+    <!-- Quem configura a conta. A credencial em si continua sendo do
+         administrador do sistema: o gerente cria a conta e escolhe o cliente,
+         o administrador cola o refresh token. -->
+    <record id="group_liber_amazon_manager" model="res.groups">
+        <field name="name">Manager</field>
+        <field name="privilege_id" ref="privilege_liber_amazon"/>
+        <field name="implied_ids" eval="[(4, ref('group_liber_amazon_user'))]"/>
+        <!-- Sem isto o módulo instala e some: os menus exigem o grupo, o
+             grupo não tem ninguém, e o app não aparece na lista — sem erro
+             nenhum, que é o pior jeito de falhar. É a convenção da casa,
+             igual ao liber_dropbox e ao liber_budget. -->
+        <field name="user_ids" eval="[(4, ref('base.user_admin'))]"/>
+    </record>
+
+    <!-- Multiempresa primeiro. O plano é servir outras editoras com este
+         módulo, e nesse dia o vazamento entre empresas deixa de ser
+         hipótese: é a conta de uma casa aparecendo para a outra. A regra é
+         global — vale para todo mundo, inclusive administrador. -->
+    <record id="rule_liber_amazon_account_company" model="ir.rule">
+        <field name="name">Amazon accounts of my companies</field>
+        <field name="model_id" ref="model_liber_amazon_account"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="rule_liber_amazon_order_company" model="ir.rule">
+        <field name="name">Amazon orders of my companies</field>
+        <field name="model_id" ref="model_liber_amazon_order"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="rule_liber_amazon_order_line_company" model="ir.rule">
+        <field name="name">Amazon order lines of my companies</field>
+        <field name="model_id" ref="model_liber_amazon_order_line"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+
+</odoo>

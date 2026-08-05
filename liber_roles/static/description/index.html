@@ -11,7 +11,7 @@
       <ul style="margin:0 0 14px 22px;padding:0;">
         <li style="margin:0 0 7px;"><strong style="color:#251d2b;">Assistente</strong> — opera o dia a dia: cria e edita os documentos da sua área.</li>
         <li style="margin:0 0 7px;"><strong style="color:#251d2b;">Gerente</strong> — tudo do assistente, mais aprovar, configurar e ver os relatórios da área.</li>
-        <li style="margin:0 0 7px;"><strong style="color:#251d2b;">Direção</strong> — transversal: opera os apps operacionais, lê a contabilidade e tem os boards financeiros; acumulável com uma função de área.</li>
+        <li style="margin:0 0 7px;"><strong style="color:#251d2b;">Direção</strong> — leitura ampla do sistema e os boards financeiros; acumulável com uma função de área.</li>
       </ul>
       <p style="margin:0 0 12px;">Fora da grade existe o <strong style="color:#251d2b;">Visitante</strong>: a conta da apresentação pública, tratada em seção própria abaixo.</p>
       <div class="callout note" style="border:1px solid #e5dbee;border-left:4px solid #6e2f91;border-radius:10px;background:#f1eaf6;padding:14px 18px;margin:0 0 16px;"><span class="title" style="font-weight:700;font-size:12px;letter-spacing:.08em;text-transform:uppercase;display:block;margin:0 0 4px;color:#6e2f91;">Nota</span><p style="margin:0 0 12px;">Os perfis por departamento são uma primeira versão, pouco rodada em produção — a régua "assistente opera / gerente aprova" vai apertar em alguns lugares e folgar em outros. O visitante é a parte com garantia de teste automatizado. Trate a grade como ponto de partida, e ajuste os perfis no próprio módulo quando a prática pedir.</p></div>
@@ -23,7 +23,7 @@
         <li style="margin:0 0 7px;">Escolha o nível do departamento da pessoa — <span class="field" style="font-weight:600;color:#251d2b;">Assistente</span> ou <span class="field" style="font-weight:600;color:#251d2b;">Gerente</span>. Só isso: os grupos de Vendas, Contabilidade, Estoque etc. são preenchidos automaticamente.</li>
         <li style="margin:0 0 7px;">Salve. No próximo login o usuário vê os menus da sua função.</li>
       </ol>
-      <div class="callout tip" style="border:1px solid #e5dbee;border-left:4px solid #6e2f91;border-radius:10px;padding:14px 18px;margin:0 0 16px;border-left-color:#2e6e4e;background:#eef5f0;border-color:#d8e7dd;"><span class="title" style="font-weight:700;font-size:12px;letter-spacing:.08em;text-transform:uppercase;display:block;margin:0 0 4px;color:#2e6e4e;">Dica</span><p style="margin:0 0 12px;">Um diretor que também opera uma área acumula as duas funções: marque <span class="field" style="font-weight:600;color:#251d2b;">Direção</span> <em>e</em> o nível da área (ex.: Editorial ‣ Gerente). Direção sozinha já opera os apps operacionais; o que a função da área acrescenta é o nível de <em>gerente</em> — aprovar, configurar, ver os relatórios da área.</p></div>
+      <div class="callout tip" style="border:1px solid #e5dbee;border-left:4px solid #6e2f91;border-radius:10px;padding:14px 18px;margin:0 0 16px;border-left-color:#2e6e4e;background:#eef5f0;border-color:#d8e7dd;"><span class="title" style="font-weight:700;font-size:12px;letter-spacing:.08em;text-transform:uppercase;display:block;margin:0 0 4px;color:#2e6e4e;">Dica</span><p style="margin:0 0 12px;">Um diretor que também opera uma área acumula as duas funções: marque <span class="field" style="font-weight:600;color:#251d2b;">Direção</span> <em>e</em> o nível da área (ex.: Editorial ‣ Gerente). Direção sozinha dá leitura ampla e os boards — não os botões de operação.</p></div>
       <div class="callout warn" style="border:1px solid #e5dbee;border-left:4px solid #6e2f91;border-radius:10px;padding:14px 18px;margin:0 0 16px;border-left-color:#b3831a;background:#faf3e3;border-color:#eddfba;"><span class="title" style="font-weight:700;font-size:12px;letter-spacing:.08em;text-transform:uppercase;display:block;margin:0 0 4px;color:#7a5a12;">Atenção</span><p style="margin:0 0 12px;">Evite marcar grupos de aplicativo à mão por cima de uma função: é exatamente a manutenção manual que este módulo aposenta. Se uma função precisa de mais (ou menos) acesso, a mudança certa é no próprio perfil, para valer para todos que o carregam.</p></div>
 
       <h2 id="grade" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">O que cada função enxerga e edita</h2>
@@ -33,9 +33,9 @@
         <tbody>
           <tr>
             <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;"><strong style="color:#251d2b;">Direção</strong></td>
-            <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Vendas, consignação, contratos de direitos, estoque, projetos; contabilidade analítica</td>
-            <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Relatórios contábeis (leitura) e boards do orçamento</td>
-            <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Configurar contabilidade; o nível de gerente das áreas (aprovar, configurar) — quem gerencia uma área acumula a função dela</td>
+            <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">— (perfil de leitura; quem opera acumula outra função)</td>
+            <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Relatórios contábeis (leitura), boards do orçamento, vendas, consignação, contratos de direitos, estoque, projetos</td>
+            <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Configurar contabilidade; a v1 ainda não bloqueia edição nos apps operacionais</td>
           </tr>
           <tr>
             <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;"><strong style="color:#251d2b;">Comercial ‣ Assistente</strong></td>
@@ -137,7 +137,7 @@
       <p style="margin:0 0 12px;"><strong style="color:#251d2b;">O assistente do Comercial vê pedidos dos colegas. É assim mesmo?</strong><br>
       Na v1, sim: o assistente vê todos os documentos de venda. Restringir a "só os próprios documentos" está previsto para uma fase seguinte.</p>
       <p style="margin:0 0 12px;"><strong style="color:#251d2b;">A Direção consegue editar um pedido. Não deveria ser só leitura?</strong><br>
-      Não — é o desenho, não uma trava faltando. A Direção opera: nos apps operacionais ela carrega grupos de nível usuário e cria e edita como qualquer operador, porque quem dirige a casa mexe no que precisar mexer. O que ela não tem é o nível de <em>gerente</em> das áreas (aprovar, configurar) nem a configuração contábil, onde o acesso é de leitura. Diretor que também gerencia uma área acumula a função dela.</p>
+      Na v1 a Direção enxerga tudo, mas ainda não está <em>impedida</em> de editar nos apps operacionais — o bloqueio de edição é fase 2. Se um diretor opera uma área, o caminho certo já é acumular a função da área.</p>
       <p style="margin:0 0 12px;"><strong style="color:#251d2b;">O visitante abriu um assistente de importação. Isso é um furo?</strong><br>
       Não: o assistente abre (é uma janela temporária), mas o efeito dele cai num documento real — e aí a gravação é recusada. É o comportamento desenhado.</p>
       <p style="margin:0 0 12px;"><strong style="color:#251d2b;">Posso usar o visitante como "usuário de consulta" interno?</strong><br>

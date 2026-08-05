@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- A agenda de entregas.
+
+         O relatório que a operação usa depois de gerar as cotações não é
+         "quanto vendemos" — é "o que vence quando". A lista de pedidos
+         responde pela conferência de um caso; esta responde pelo calendário:
+         o que já passou do prazo, o que vence esta semana, e quanto tempo a
+         Amazon costuma dar. -->
+
+    <record id="view_liber_amazon_schedule_list" model="ir.ui.view">
+        <field name="name">liber.amazon.order.schedule.list</field>
+        <field name="model">liber.amazon.order</field>
+        <field name="arch" type="xml">
+            <list default_order="delivery_end asc"
+                  decoration-danger="is_late"
+                  decoration-warning="days_to_deadline &gt;= 0 and days_to_deadline &lt;= 7 and is_open"
+                  decoration-muted="not is_open">
+                <field name="delivery_end" string="Deadline"/>
+                <field name="days_to_deadline" string="Days Left"/>
+                <field name="name"/>
+                <field name="order_date"/>
+                <field name="lead_time_days" string="Days Granted" optional="show"/>
+                <field name="delivery_start" optional="hide"/>
+                <field name="amazon_state"/>
+                <field name="ship_to_party" string="Destination" optional="show"/>
+                <field name="line_count" string="Lines" sum="Lines"/>
+                <field name="amount_total" widget="monetary" sum="Total"/>
+                <field name="currency_id" column_invisible="True"/>
+                <field name="state" widget="badge"/>
+                <field name="is_late" column_invisible="True"/>
+                <field name="is_open" column_invisible="True"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_liber_amazon_schedule_pivot" model="ir.ui.view">
+        <field name="name">liber.amazon.order.schedule.pivot</field>
+        <field name="model">liber.amazon.order</field>
+        <field name="arch" type="xml">
+            <pivot string="Delivery Schedule">
+                <field name="delivery_end" type="row" interval="month"/>
+                <field name="amazon_state" type="col"/>
+                <field name="amount_total" type="measure"/>
+                <field name="line_count" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="view_liber_amazon_schedule_graph" model="ir.ui.view">
+        <field name="name">liber.amazon.order.schedule.graph</field>
+        <field name="model">liber.amazon.order</field>
+        <field name="arch" type="xml">
+            <graph string="Delivery Schedule" type="bar" sample="1">
+                <field name="delivery_end" interval="week"/>
+                <field name="amount_total" type="measure"/>
+            </graph>
+        </field>
+    </record>
+
+    <record id="view_liber_amazon_schedule_search" model="ir.ui.view">
+        <field name="name">liber.amazon.order.schedule.search</field>
+        <field name="model">liber.amazon.order</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name" string="PO or ISBN"
+                       filter_domain="['|', ('name', 'ilike', self),
+                                            ('line_ids.isbn', 'ilike', self)]"/>
+                <field name="ship_to_party" string="Destination"/>
+
+                <!-- O filtro que abre a tela: o que passou do prazo e a
+                     Amazon ainda espera. -->
+                <filter name="late" string="Overdue"
+                        domain="[('is_late', '=', True)]"/>
+                <filter name="due_week" string="Due Within 7 Days"
+                        domain="[('is_open', '=', True),
+                                 ('delivery_end', '&gt;=', context_today().strftime('%Y-%m-%d')),
+                                 ('delivery_end', '&lt;=', (context_today() + datetime.timedelta(days=7)).strftime('%Y-%m-%d'))]"/>
+                <filter name="future" string="Deadline Ahead"
+                        domain="[('is_open', '=', True),
+                                 ('delivery_end', '&gt;', context_today().strftime('%Y-%m-%d'))]"/>
+                <separator/>
+                <filter name="open" string="Still Open"
+                        domain="[('is_open', '=', True)]"/>
+                <filter name="no_quotation" string="Without Quotation"
+                        domain="[('sale_order_id', '=', False)]"/>
+                <filter name="unmatched" string="With Unmatched Titles"
+                        domain="[('unmatched_count', '>', 0)]"/>
+                <separator/>
+                <filter name="deadline_month" string="Deadline This Month"
+                        date="delivery_end"/>
+                <filter name="ordered" string="Order Date" date="order_date"/>
+
+                <group>
+                    <filter name="g_deadline_week" string="Deadline Week"
+                            context="{'group_by': 'delivery_end:week'}"/>
+                    <filter name="g_deadline_month" string="Deadline Month"
+                            context="{'group_by': 'delivery_end:month'}"/>
+                    <filter name="g_order_month" string="Order Month"
+                            context="{'group_by': 'order_date:month'}"/>
+                    <filter name="g_state" string="Amazon State"
+                            context="{'group_by': 'amazon_state'}"/>
+                    <filter name="g_destination" string="Destination"
+                            context="{'group_by': 'ship_to_party'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_liber_amazon_schedule" model="ir.actions.act_window">
+        <field name="name">Delivery Schedule</field>
+        <field name="res_model">liber.amazon.order</field>
+        <field name="view_mode">list,pivot,graph</field>
+        <field name="search_view_id" ref="view_liber_amazon_schedule_search"/>
+        <!-- Abre no que ainda está aberto e ordenado pelo prazo mais próximo:
+             o pedido que vence amanhã tem de estar na primeira linha, não
+             perdido entre os cento e cinquenta já entregues. -->
+        <field name="context">{'search_default_open': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Nothing scheduled</p>
+            <p>Import purchase orders and their delivery windows show up here,
+               nearest deadline first.</p>
+        </field>
+    </record>
+
+    <record id="action_liber_amazon_schedule_list" model="ir.actions.act_window.view">
+        <field name="sequence">1</field>
+        <field name="view_mode">list</field>
+        <field name="view_id" ref="view_liber_amazon_schedule_list"/>
+        <field name="act_window_id" ref="action_liber_amazon_schedule"/>
+    </record>
+
+    <record id="action_liber_amazon_schedule_pivot" model="ir.actions.act_window.view">
+        <field name="sequence">2</field>
+        <field name="view_mode">pivot</field>
+        <field name="view_id" ref="view_liber_amazon_schedule_pivot"/>
+        <field name="act_window_id" ref="action_liber_amazon_schedule"/>
+    </record>
+
+    <record id="action_liber_amazon_schedule_graph" model="ir.actions.act_window.view">
+        <field name="sequence">3</field>
+        <field name="view_mode">graph</field>
+        <field name="view_id" ref="view_liber_amazon_schedule_graph"/>
+        <field name="act_window_id" ref="action_liber_amazon_schedule"/>
+    </record>
+
+</odoo>
