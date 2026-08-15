@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Sem noupdate de propósito: o que a casa edita é o texto de abertura,
+         que mora nas Definições (por empresa). O molde em volta é do sistema
+         e deve acompanhar as atualizações do módulo — inclusive a mudança de
+         modelo, quando a solicitação deixou de ser um registro temporário e
+         virou o lote COL/. -->
+    <record id="mail_template_pickup_request" model="mail.template">
+        <field name="name">Transport: Pickup Request</field>
+        <field name="model_id" ref="liber_transport.model_liber_transport_pickup_request"/>
+        <field name="subject">Solicitação de coleta {{ object.name }} — {{ object.company_id.name }}</field>
+        <field name="email_from">{{ (object.company_id.email_formatted or user.email_formatted) }}</field>
+        <field name="partner_to">{{ object.contact_id.id }}</field>
+        <!-- Honour partner_to (the carrier). With use_default_to=True
+             Odoo would ignore partner_to entirely. -->
+        <field name="use_default_to" eval="False"/>
+        <field name="auto_delete" eval="False"/>
+        <field name="body_html" type="html">
+            <div style="font-size: 13px;">
+                <t t-if="object.company_id.transport_pickup_request_text">
+                    <t t-out="object.company_id.transport_pickup_request_text"/>
+                </t>
+                <t t-else="">
+                    <p>Prezados,</p>
+                    <p>Solicitamos a <strong>coleta</strong> dos volumes
+                       relacionados abaixo em nosso endereço:</p>
+                </t>
+                <p style="white-space: pre-line; margin: 8px 0;"><strong><t t-out="object.company_id.name or ''"/></strong><br/><t t-out="object.company_id.partner_id.contact_address or ''"/></p>
+                <table style="border-collapse: collapse; margin: 8px 0;">
+                    <tr>
+                        <th style="text-align: left; border-bottom: 1px solid #ccc; padding: 4px 12px 4px 0;">Referência</th>
+                        <th style="text-align: left; border-bottom: 1px solid #ccc; padding: 4px 12px 4px 0;">Pedido</th>
+                        <th style="text-align: left; border-bottom: 1px solid #ccc; padding: 4px 12px 4px 0;">Destinatário</th>
+                        <th style="text-align: left; border-bottom: 1px solid #ccc; padding: 4px 12px 4px 0;">Cidade/UF</th>
+                        <th style="text-align: right; border-bottom: 1px solid #ccc; padding: 4px 12px 4px 0;">Caixas</th>
+                        <th style="text-align: right; border-bottom: 1px solid #ccc; padding: 4px 0;">Peso (kg)</th>
+                    </tr>
+                    <t t-foreach="object.picking_ids" t-as="picking">
+                        <tr>
+                            <td style="padding: 4px 12px 4px 0;"><t t-out="picking.name or ''"/></td>
+                            <td style="padding: 4px 12px 4px 0;"><t t-out="picking.origin or ''"/></td>
+                            <td style="padding: 4px 12px 4px 0;"><t t-out="picking.partner_id.display_name or ''"/></td>
+                            <td style="padding: 4px 12px 4px 0;"><t t-out="picking.partner_id.city or ''"/><t t-if="picking.partner_id.state_id">/<t t-out="picking.partner_id.state_id.code"/></t></td>
+                            <td style="text-align: right; padding: 4px 12px 4px 0;"><t t-out="picking.box_count or ''"/></td>
+                            <td style="text-align: right; padding: 4px 0;"><t t-set="peso" t-value="picking._liber_peso_para_transporte()"/><t t-out="'%.3f' % peso if peso else ''"/></td>
+                        </tr>
+                    </t>
+                    <tr>
+                        <td colspan="4" style="text-align: right; border-top: 1px solid #ccc; padding: 4px 12px 4px 0;"><strong>Total</strong></td>
+                        <td style="text-align: right; border-top: 1px solid #ccc; padding: 4px 12px 4px 0;"><strong><t t-out="object.total_box_count or ''"/></strong></td>
+                        <td style="text-align: right; border-top: 1px solid #ccc; padding: 4px 0;"><strong><t t-out="'%.3f' % object.total_weight if object.total_weight else ''"/></strong></td>
+                    </tr>
+                </table>
+                <p>Por favor, respondam este e-mail confirmando a data da
+                   coleta, citando a referência <strong><t t-out="object.name or ''"/></strong>.</p>
+                <p>Atenciosamente,<br/><t t-out="object.company_id.name or ''"/></p>
+            </div>
+        </field>
+    </record>
+</odoo>

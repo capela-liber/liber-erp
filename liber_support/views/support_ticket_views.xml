@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_support_ticket_kanban" model="ir.ui.view">
+        <field name="name">liber.support.ticket.kanban</field>
+        <field name="model">liber.support.ticket</field>
+        <field name="arch" type="xml">
+            <kanban default_group_by="stage_id" quick_create="false">
+                <progressbar field="sla_state"
+                             colors='{"ok": "success", "warn": "warning", "late": "danger"}'/>
+                <field name="stage_id"/>
+                <field name="number"/>
+                <field name="name"/>
+                <field name="partner_id"/>
+                <field name="email_from"/>
+                <field name="kind"/>
+                <field name="priority"/>
+                <field name="sla_state"/>
+                <field name="sale_order_id"/>
+                <field name="user_id"/>
+                <field name="company_id"/>
+                <templates>
+                    <t t-name="card">
+                        <div class="d-flex justify-content-between align-items-center mb-1">
+                            <strong class="fs-6">
+                                <t t-if="record.partner_id.raw_value">
+                                    <field name="partner_id"/>
+                                </t>
+                                <t t-else="">
+                                    <field name="email_from"/>
+                                </t>
+                            </strong>
+                            <field name="sla_state" widget="label_selection"
+                                   options="{'classes': {'ok': 'success', 'warn': 'warning', 'late': 'danger', 'met': 'success', 'missed': 'muted'}}"/>
+                        </div>
+                        <div class="text-muted small">
+                            <field name="number"/> · <field name="name"/>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center mt-2">
+                            <div class="text-muted">
+                                <span class="me-2 small" groups="base.group_multi_company">
+                                    <field name="company_id"/>
+                                </span>
+                                <field name="priority" widget="priority" class="me-2"/>
+                                <i t-if="record.sale_order_id.raw_value"
+                                   class="fa fa-file-text-o me-2" title="Order"/>
+                                <span class="badge text-bg-light">
+                                    <field name="kind"/>
+                                </span>
+                            </div>
+                            <field name="user_id" widget="many2one_avatar_user"/>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="view_support_ticket_list" model="ir.ui.view">
+        <field name="name">liber.support.ticket.list</field>
+        <field name="model">liber.support.ticket</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="number"/>
+                <field name="create_date" string="Received"/>
+                <field name="name"/>
+                <field name="partner_id"/>
+                <field name="kind"/>
+                <field name="team_id"/>
+                <field name="user_id" widget="many2one_avatar_user"/>
+                <field name="stage_id"/>
+                <field name="sla_state" widget="badge"
+                       decoration-success="sla_state in ('ok', 'met')"
+                       decoration-warning="sla_state == 'warn'"
+                       decoration-danger="sla_state in ('late', 'missed')"/>
+                <field name="priority" widget="priority" optional="show"/>
+                <field name="sale_order_id" optional="hide"/>
+                <field name="company_id" groups="base.group_multi_company"
+                       optional="show"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_support_ticket_form" model="ir.ui.view">
+        <field name="name">liber.support.ticket.form</field>
+        <field name="model">liber.support.ticket</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_assign_to_me" type="object"
+                            string="Assign to me"
+                            invisible="user_id != False"/>
+                    <field name="stage_id" widget="statusbar"
+                           options="{'clickable': '1'}"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <!-- O vínculo é botão, para não virar campo perdido
+                             no meio do formulário. O número do documento
+                             ficava aqui como rótulo até 13/08/2026, e era
+                             justamente isso que derrubava a ficha: ver a
+                             nota dentro do botão. -->
+                        <button name="action_open_sale_order" type="object"
+                                class="oe_stat_button" icon="fa-file-text-o"
+                                invisible="not sale_order_id">
+                            <!-- Nada de <field> AQUI DENTRO, e o detalhe importa: o que
+                             quebra não é campo dentro de botão (o
+                             liber_amazon_vendor faz isso e roda), é campo
+                             dentro do <span class="o_stat_value"> aninhado.
+                             Nesse nível o compilador do formulário pede o
+                             componente FormLabel, que não existe no slot do
+                             ViewButton, e a ficha inteira morre no cliente
+                             com o servidor respondendo 200 em tudo. O
+                             `nolabel="1"` não salva.
+
+                             Foi o "não consigo abrir chamados da Catavento"
+                             de 13/08/2026: o botão só acende com documento
+                             vinculado, e de 1.884 chamados só três tinham.
+                             As duas formas estão medidas em
+                             liber_support_soc/tests/test_tour_ficha_vinculada.py.
+                             O número do documento está no campo do grupo
+                             "what", logo abaixo. -->
+                            <div class="o_stat_info">
+                                <span class="o_stat_text">Sale order</span>
+                            </div>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <h1><field name="number" readonly="1"/></h1>
+                        <h2><field name="name" placeholder="Subject"/></h2>
+                    </div>
+                    <group>
+                        <group name="who">
+                            <!-- Sem quick-create: digitar um nome parecido
+                                 criava o terceiro "Livraria do Acerto" e a
+                                 CO nascia órfã de contrato (10/08). O
+                                 "Criar e editar…" completo continua. -->
+                            <field name="partner_id"
+                                   options="{'no_quick_create': True}"/>
+                            <field name="email_from"/>
+                            <field name="company_id"
+                                   groups="base.group_multi_company"/>
+                            <field name="team_id"/>
+                            <field name="user_id"
+                                   widget="many2one_avatar_user"/>
+                        </group>
+                        <group name="what">
+                            <field name="kind"/>
+                            <field name="priority" widget="priority"/>
+                            <!-- Um documento por vez: o campo do pedido só
+                                 aparece quando a conversa é de venda (ou
+                                 quando já está preenchido). -->
+                            <field name="sale_order_id"
+                                   invisible="kind != 'sale' and not sale_order_id"/>
+                            <field name="tag_ids" widget="many2many_tags"
+                                   options="{'color_field': 'color'}"/>
+                            <field name="channel"/>
+                            <field name="external_ref"
+                                   invisible="channel == 'email'"/>
+                        </group>
+                    </group>
+                    <group name="sla" string="SLA">
+                        <group>
+                            <field name="sla_state" widget="badge"
+                                   decoration-success="sla_state in ('ok', 'met')"
+                                   decoration-warning="sla_state == 'warn'"
+                                   decoration-danger="sla_state in ('late', 'missed')"/>
+                            <field name="sla_response_deadline"/>
+                            <field name="sla_response_done"/>
+                        </group>
+                        <group>
+                            <field name="sla_resolution_deadline"/>
+                            <field name="closed_date"/>
+                        </group>
+                    </group>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_support_ticket_search" model="ir.ui.view">
+        <field name="name">liber.support.ticket.search</field>
+        <field name="model">liber.support.ticket</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="number"/>
+                <field name="name"/>
+                <field name="partner_id"/>
+                <field name="email_from"/>
+                <field name="sale_order_id"/>
+                <filter string="My Tickets" name="my"
+                        domain="[('user_id', '=', uid)]"/>
+                <filter string="Unassigned" name="unassigned"
+                        domain="[('user_id', '=', False)]"/>
+                <filter string="Open" name="open"
+                        domain="[('stage_id.is_closed', '=', False)]"/>
+                <filter string="Late" name="late"
+                        domain="[('sla_state', 'in', ('late', 'missed'))]"/>
+                <filter string="Urgent" name="urgent"
+                        domain="[('priority', '=', '1')]"/>
+                <separator/>
+                <filter string="No Partner" name="no_partner"
+                        domain="[('partner_id', '=', False)]"/>
+                <group>
+                    <filter string="Stage" name="group_stage"
+                            context="{'group_by': 'stage_id'}"/>
+                    <filter string="Team" name="group_team"
+                            context="{'group_by': 'team_id'}"/>
+                    <filter string="Kind" name="group_kind"
+                            context="{'group_by': 'kind'}"/>
+                    <filter string="Assignee" name="group_user"
+                            context="{'group_by': 'user_id'}"/>
+                    <filter string="Month" name="group_month"
+                            context="{'group_by': 'create_date:month'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_support_ticket" model="ir.actions.act_window">
+        <field name="name">Tickets</field>
+        <field name="res_model">liber.support.ticket</field>
+        <field name="view_mode">kanban,list,form,activity</field>
+        <field name="search_view_id" ref="view_support_ticket_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No tickets yet
+            </p>
+            <p>
+                Emails sent to the commercial mailbox become tickets here.
+            </p>
+        </field>
+    </record>
+</odoo>

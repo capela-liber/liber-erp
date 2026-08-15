@@ -12,7 +12,7 @@ URLs das páginas (site publicado ou instância local):
 - Local: `http://localhost:8069/liber_site/static/docs/<página>`
 - Índice: `http://localhost:8069/liber_site/static/docs/index.html`
 
-Total de capturas: 44 · Feitas: marque a caixa ao concluir.
+Total de capturas: 49 · Feitas: marque a caixa ao concluir.
 
 
 ## Acordos de consignação — `liber_soc_agreements.html`
@@ -257,3 +257,24 @@ Página: `/liber_site/static/docs/liber_metabrasil.html`
 - [ ] **`doc-liber_metabrasil-frete.png`**
   - O que capturar: Janela "Adicionar envio" com a forma de entrega Dropship, depois de "Obter preço": o campo Transportadora preenchido e, abaixo, a lista das transportadoras cotadas com preço e prazo
   - Legenda no manual: Tudo que a gráfica cotou para aquele CEP, numa lista: a regra da forma de entrega pré-seleciona uma, e a escolha é sua.
+
+
+## Transportadora e coleta — `liber_transport.html`
+
+Página: `/liber_site/static/docs/liber_transport.html`
+
+- [x] **`doc-liber_transport-metodo-de-entrega.png`**
+  - O que capturar: Método de entrega Transpo com o campo Empresa transportadora preenchido
+  - Legenda no manual: O método de entrega leva o nome curto das telas; a Empresa transportadora aponta para o contato completo.
+- [x] **`doc-liber_transport-entrega-com-transportadora.png`**
+  - O que capturar: Transferência com transportadora, caixas, peso e o link da solicitação de coleta
+  - Legenda no manual: A entrega nasceu com a Transpo; na mesma aba estão as Caixas, o Peso e, depois do pedido, o link da solicitação de coleta.
+- [x] **`doc-liber_transport-pdf-da-entrega.png`**
+  - O que capturar: PDF do Picking com transportadora e caixas no cabeçalho
+  - Legenda no manual: O PDF da entrega (Imprimir ‣ Picking) declara a transportadora e as caixas no cabeçalho — é a folha que viaja com os volumes.
+- [x] **`doc-liber_transport-solicitar-coleta.png`**
+  - O que capturar: Janela Solicitar coleta com uma linha por transportadora e o aviso de entrega sem transportadora
+  - Legenda no manual: Uma linha por transportadora, com caixas e peso somados — e o aviso amarelo para a entrega que ficou sem transportadora, fora do envio sem travar as demais.
+- [x] **`doc-liber_transport-lote-de-coleta.png`**
+  - O que capturar: Solicitação COL/ com as entregas da Transpo e o e-mail enviado no histórico
+  - Legenda no manual: O lote COL/ com as entregas de uma transportadora: o e-mail enviado mora no histórico, e a Data combinada e o Protocolo guardam a resposta.

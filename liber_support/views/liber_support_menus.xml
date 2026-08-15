@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Root: the home tile. Short name (~12 chars max on the tile);
+         the icon comes from web_icon (needs -u to refresh). -->
+    <menuitem id="menu_support_root"
+              name="Support"
+              web_icon="liber_support,static/description/icon.png"
+              groups="liber_support.group_support_user"
+              sequence="36"/>
+
+    <menuitem id="menu_support_tickets"
+              name="Tickets"
+              parent="menu_support_root"
+              action="action_support_ticket"
+              sequence="10"/>
+
+    <menuitem id="menu_support_config"
+              name="Configuration"
+              parent="menu_support_root"
+              groups="liber_support.group_support_manager"
+              sequence="90"/>
+
+    <menuitem id="menu_support_teams"
+              name="Teams"
+              parent="menu_support_config"
+              action="action_support_team"
+              sequence="10"/>
+
+    <menuitem id="menu_support_stages"
+              name="Stages"
+              parent="menu_support_config"
+              action="action_support_stage"
+              sequence="20"/>
+
+    <menuitem id="menu_support_tags"
+              name="Tags"
+              parent="menu_support_config"
+              action="action_support_tag"
+              sequence="30"/>
+</odoo>

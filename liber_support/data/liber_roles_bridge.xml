@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- A ponte com o liber_roles, se ele estiver instalado. Roda na
+         instalação e em todo -u liber_support; sem o liber_roles é um no-op
+         silencioso. Ver models/res_groups.py para o porquê de a concessão
+         morar aqui e não lá. -->
+    <function model="res.groups" name="_liber_support_ligar_no_comercial"/>
+</odoo>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- A Settings section only (no home tile, no root menu): the module's
+         knobs live under Definições > Transport. -->
+    <record id="res_config_settings_view_form_transport" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.liber.transport</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="base.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form" position="inside">
+                <app data-string="Transport" string="Transport"
+                     name="liber_transport">
+                    <block title="Pickup Requests" name="transport_pickup">
+                        <setting id="transport_pickup_request_text_setting"
+                                 string="Pickup request e-mail text"
+                                 help="Intro text of the pickup-request e-mail sent to the carrier. Leave empty to use the built-in default.">
+                            <field name="transport_pickup_request_text" widget="html"/>
+                        </setting>
+                    </block>
+                </app>
+            </xpath>
+        </field>
+    </record>
+</odoo>

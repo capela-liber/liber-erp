@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="module_category_support" model="ir.module.category">
+        <field name="name">Support</field>
+        <field name="sequence">45</field>
+    </record>
+
+    <!-- v19: res.groups no longer carries category_id directly; it is
+         held by a res.groups.privilege the groups link to. -->
+    <record id="privilege_support" model="res.groups.privilege">
+        <field name="name">Support</field>
+        <field name="category_id" ref="module_category_support"/>
+    </record>
+
+    <record id="group_support_user" model="res.groups">
+        <field name="name">User</field>
+        <field name="privilege_id" ref="privilege_support"/>
+        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+        <field name="comment">Reads and writes the tickets of the teams they
+belong to — all of them, not only their own, otherwise nobody picks up
+what has no owner.</field>
+    </record>
+
+    <record id="group_support_manager" model="res.groups">
+        <field name="name">Manager</field>
+        <field name="privilege_id" ref="privilege_support"/>
+        <field name="implied_ids" eval="[(4, ref('group_support_user'))]"/>
+        <field name="user_ids" eval="[(4, ref('base.user_admin'))]"/>
+        <field name="comment">Sees everything; configures stages, teams and
+SLA targets.</field>
+    </record>
+
+    <!-- Multi-company: a ticket belongs to an imprint. -->
+    <record id="rule_support_ticket_company" model="ir.rule">
+        <field name="name">Support ticket: multi-company</field>
+        <field name="model_id" ref="model_liber_support_ticket"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="rule_support_team_company" model="ir.rule">
+        <field name="name">Support team: multi-company</field>
+        <field name="model_id" ref="model_liber_support_team"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <!-- A user reads/writes the tickets of their teams (or unrouted ones,
+         or their own); a manager reads them all. -->
+    <record id="rule_support_ticket_user" model="ir.rule">
+        <field name="name">Support ticket: own teams</field>
+        <field name="model_id" ref="model_liber_support_ticket"/>
+        <field name="groups" eval="[(4, ref('group_support_user'))]"/>
+        <field name="domain_force">['|', '|',
+            ('team_id', '=', False),
+            ('team_id.member_ids', 'in', [user.id]),
+            ('user_id', '=', user.id)]</field>
+    </record>
+
+    <record id="rule_support_ticket_manager" model="ir.rule">
+        <field name="name">Support ticket: manager sees all</field>
+        <field name="model_id" ref="model_liber_support_ticket"/>
+        <field name="groups" eval="[(4, ref('group_support_manager'))]"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+    </record>
+</odoo>

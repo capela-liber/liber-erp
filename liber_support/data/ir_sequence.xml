@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <!-- AT/ano/00001, in the house pattern (AC/, CO/, CR/). -->
+    <record id="seq_support_ticket" model="ir.sequence">
+        <field name="name">Support Ticket</field>
+        <field name="code">liber.support.ticket</field>
+        <field name="prefix">AT/%(year)s/</field>
+        <field name="padding">5</field>
+        <field name="company_id" eval="False"/>
+    </record>
+</odoo>

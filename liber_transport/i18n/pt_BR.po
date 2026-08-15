@@ -1,0 +1,711 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* liber_transport
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-08-10 17:30+0000\n"
+"PO-Revision-Date: 2026-08-10 17:30+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: pt_BR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#. module: liber_transport
+#. odoo-python
+#: code:addons/liber_transport/models/pickup_request.py:0
+msgid ""
+"%(carrier)s has no e-mail address. Fill it in on the carrier company "
+"(%(partner)s) and send again."
+msgstr "%(carrier)s está sem e-mail. Preencha no contato da transportadora (%(partner)s) e envie de novo."
+
+#. module: liber_transport
+#. odoo-python
+#: code:addons/liber_transport/models/pickup_request.py:0
+msgid "%s is cancelled — reopen it before sending."
+msgstr "%s está cancelada — reabra antes de enviar."
+
+#. module: liber_transport
+#: model:mail.template,body_html:liber_transport.mail_template_pickup_request
+msgid ""
+"<div style=\"font-size: 13px;\">\n"
+"                <t t-if=\"object.company_id.transport_pickup_request_text\">\n"
+"                    <t t-out=\"object.company_id.transport_pickup_request_text\"/>\n"
+"                </t>\n"
+"                <t t-else=\"\">\n"
+"                    <p>Prezados,</p>\n"
+"                    <p>Solicitamos a <strong>coleta</strong> dos volumes\n"
+"                       relacionados abaixo em nosso endereço:</p>\n"
+"                </t>\n"
+"                <p style=\"white-space: pre-line; margin: 8px 0;\"><strong><t t-out=\"object.company_id.name or ''\"/></strong><br/><t t-out=\"object.company_id.partner_id.contact_address or ''\"/></p>\n"
+"                <table style=\"border-collapse: collapse; margin: 8px 0;\">\n"
+"                    <tr>\n"
+"                        <th style=\"text-align: left; border-bottom: 1px solid #ccc; padding: 4px 12px 4px 0;\">Referência</th>\n"
+"                        <th style=\"text-align: left; border-bottom: 1px solid #ccc; padding: 4px 12px 4px 0;\">Pedido</th>\n"
+"                        <th style=\"text-align: left; border-bottom: 1px solid #ccc; padding: 4px 12px 4px 0;\">Destinatário</th>\n"
+"                        <th style=\"text-align: left; border-bottom: 1px solid #ccc; padding: 4px 12px 4px 0;\">Cidade/UF</th>\n"
+"                        <th style=\"text-align: right; border-bottom: 1px solid #ccc; padding: 4px 12px 4px 0;\">Caixas</th>\n"
+"                        <th style=\"text-align: right; border-bottom: 1px solid #ccc; padding: 4px 0;\">Peso (kg)</th>\n"
+"                    </tr>\n"
+"                    <t t-foreach=\"object.picking_ids\" t-as=\"picking\">\n"
+"                        <tr>\n"
+"                            <td style=\"padding: 4px 12px 4px 0;\"><t t-out=\"picking.name or ''\"/></td>\n"
+"                            <td style=\"padding: 4px 12px 4px 0;\"><t t-out=\"picking.origin or ''\"/></td>\n"
+"                            <td style=\"padding: 4px 12px 4px 0;\"><t t-out=\"picking.partner_id.display_name or ''\"/></td>\n"
+"                            <td style=\"padding: 4px 12px 4px 0;\"><t t-out=\"picking.partner_id.city or ''\"/><t t-if=\"picking.partner_id.state_id\">/<t t-out=\"picking.partner_id.state_id.code\"/></t></td>\n"
+"                            <td style=\"text-align: right; padding: 4px 12px 4px 0;\"><t t-out=\"picking.box_count or ''\"/></td>\n"
+"                            <td style=\"text-align: right; padding: 4px 0;\"><t t-set=\"peso\" t-value=\"picking.shipping_weight or picking.weight\"/><t t-out=\"'%.3f' % peso if peso else ''\"/></td>\n"
+"                        </tr>\n"
+"                    </t>\n"
+"                    <tr>\n"
+"                        <td colspan=\"4\" style=\"text-align: right; border-top: 1px solid #ccc; padding: 4px 12px 4px 0;\"><strong>Total</strong></td>\n"
+"                        <td style=\"text-align: right; border-top: 1px solid #ccc; padding: 4px 12px 4px 0;\"><strong><t t-out=\"object.total_box_count or ''\"/></strong></td>\n"
+"                        <td style=\"text-align: right; border-top: 1px solid #ccc; padding: 4px 0;\"><strong><t t-out=\"'%.3f' % object.total_weight if object.total_weight else ''\"/></strong></td>\n"
+"                    </tr>\n"
+"                </table>\n"
+"                <p>Por favor, respondam este e-mail confirmando a data da\n"
+"                   coleta, citando a referência <strong><t t-out=\"object.name or ''\"/></strong>.</p>\n"
+"                <p>Atenciosamente,<br/><t t-out=\"object.company_id.name or ''\"/></p>\n"
+"            </div>\n"
+"        "
+msgstr ""
+
+#. module: liber_transport
+#: model_terms:ir.ui.view,arch_db:liber_transport.view_pickup_request_wizard_form
+msgid ""
+"<strong>No carrier:</strong> these delivery orders have no\n"
+"                    carrier set and will be left out of the request."
+msgstr ""
+"<strong>Sem transportadora:</strong> estas entregas não têm\n"
+"                    transportadora definida e ficarão fora da solicitação."
+
+#. module: liber_transport
+#: model:ir.model.fields,field_description:liber_transport.field_liber_transport_pickup_request__message_needaction
+msgid "Action Needed"
+msgstr ""
+
+#. module: liber_transport
+#: model:ir.model.fields,field_description:liber_transport.field_liber_transport_pickup_request__activity_ids
+msgid "Activities"
+msgstr ""
+
+#. module: liber_transport
+#: model:ir.model.fields,field_description:liber_transport.field_liber_transport_pickup_request__activity_exception_decoration
+msgid "Activity Exception Decoration"
+msgstr ""
+
+#. module: liber_transport
+#: model:ir.model.fields,field_description:liber_transport.field_liber_transport_pickup_request__activity_state
+msgid "Activity State"
+msgstr ""
+
+#. module: liber_transport
+#: model:ir.model.fields,field_description:liber_transport.field_liber_transport_pickup_request__activity_type_icon
+msgid "Activity Type Icon"
+msgstr ""
+
+#. module: liber_transport
+#: model:ir.model.fields,field_description:liber_transport.field_liber_transport_pickup_request__scheduled_date
+msgid "Agreed Pickup Date"
+msgstr "Data combinada"
+
+#. module: liber_transport
+#: model:ir.model.fields,field_description:liber_transport.field_liber_transport_pickup_request__message_attachment_count
+msgid "Attachment Count"
+msgstr ""
+
+#. module: liber_transport
+#: model:ir.model.fields,field_description:liber_transport.field_liber_transport_pickup_line__box_count
+#: model:ir.model.fields,field_description:liber_transport.field_liber_transport_pickup_request__total_box_count
+#: model:ir.model.fields,field_description:liber_transport.field_stock_picking__box_count
+#: model_terms:ir.ui.view,arch_db:liber_transport.view_pickup_request_form
+#: model_terms:ir.ui.view,arch_db:liber_transport.view_pickup_request_list
+msgid "Boxes"
+msgstr "Caixas"
+
+#. module: liber_transport
+#: model_terms:ir.ui.view,arch_db:liber_transport.view_pickup_request_wizard_form
+msgid "Caixas"
+msgstr ""
+
+#. module: liber_transport
+#: model_terms:ir.ui.view,arch_db:liber_transport.view_pickup_request_form
+#: model_terms:ir.ui.view,arch_db:liber_transport.view_pickup_request_wizard_form
+msgid "Cancel"
+msgstr "Cancelar"
+
+#. module: liber_transport
+#: model:ir.model.fields.selection,name:liber_transport.selection__liber_transport_pickup_request__state__cancel
+msgid "Cancelled"
+msgstr "Cancelada"
+
+#. module: liber_transport
+#: model:ir.model.fields,field_description:liber_transport.field_liber_transport_pickup_line__carrier_id
+#: model:ir.model.fields,field_description:liber_transport.field_liber_transport_pickup_request__carrier_id
+#: model_terms:ir.ui.view,arch_db:liber_transport.view_pickup_request_search
+msgid "Carrier"
+msgstr "Transportadora"
+
+#. module: liber_transport
+#: model:ir.model.fields,field_description:liber_transport.field_delivery_carrier__partner_id
+#: model:ir.model.fields,field_description:liber_transport.field_liber_transport_pickup_line__partner_id
+#: model:ir.model.fields,field_description:liber_transport.field_liber_transport_pickup_request__partner_id
+msgid "Carrier Company"
+msgstr "Empresa transportadora"
+
+#. module: liber_transport
+#: model:ir.model.fields,field_description:liber_transport.field_liber_transport_pickup_request__carrier_reference
+msgid "Carrier Reference"
+msgstr "Protocolo da transportadora"
+
+#. module: liber_transport
+#: model:ir.model.fields.selection,name:liber_transport.selection__liber_transport_pickup_request__state__done
+#: model_terms:ir.ui.view,arch_db:liber_transport.view_pickup_request_search
+msgid "Collected"
+msgstr "Coletada"
+
+#. module: liber_transport
+#: model:ir.model,name:liber_transport.model_res_company
+msgid "Companies"
+msgstr ""
+
+#. module: liber_transport
+#: model:ir.model.fields,field_description:liber_transport.field_liber_transport_pickup_line__company_id
+#: model:ir.model.fields,field_description:liber_transport.field_liber_transport_pickup_request__company_id
+msgid "Company"
+msgstr ""
+
+#. module: liber_transport
+#: model:ir.model,name:liber_transport.model_res_config_settings
+msgid "Config Settings"
+msgstr ""
+
+#. module: liber_transport
+#: model:ir.model.fields,field_description:liber_transport.field_liber_transport_pickup_line__create_uid
+#: model:ir.model.fields,field_description:liber_transport.field_liber_transport_pickup_request__create_uid
+#: model:ir.model.fields,field_description:liber_transport.field_liber_transport_pickup_wizard__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: liber_transport
+#: model:ir.model.fields,field_description:liber_transport.field_liber_transport_pickup_line__create_date
+#: model:ir.model.fields,field_description:liber_transport.field_liber_transport_pickup_request__create_date
+#: model:ir.model.fields,field_description:liber_transport.field_liber_transport_pickup_wizard__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: liber_transport
+#: model:ir.model.fields,help:liber_transport.field_liber_transport_pickup_request__scheduled_date
+msgid ""
+"Date the carrier confirmed for the pickup. Filled by logistics when the "
+"answer arrives."
+msgstr "Data que a transportadora confirmou para a coleta. Preenchida pela logística quando a resposta chega."
+
+#. module: liber_transport
+#: model_terms:ir.ui.view,arch_db:liber_transport.view_pickup_request_form
+#: model_terms:ir.ui.view,arch_db:liber_transport.view_pickup_request_list
+msgid "Deliveries"
+msgstr "Entregas"
+
+#. module: liber_transport
+#: model:ir.model.fields,field_description:liber_transport.field_liber_transport_pickup_wizard__no_carrier_picking_ids
+msgid "Deliveries Without Carrier"
+msgstr "Entregas sem transportadora"
+
+#. module: liber_transport
+#: model_terms:ir.ui.view,arch_db:liber_transport.view_pickup_request_search
+msgid "Delivery Order"
+msgstr "Pedido de entrega"
+
+#. module: liber_transport
+#. odoo-python
+#: code:addons/liber_transport/models/pickup_request.py:0
+#: model:ir.model.fields,field_description:liber_transport.field_liber_transport_pickup_line__picking_ids
+#: model:ir.model.fields,field_description:liber_transport.field_liber_transport_pickup_request__picking_ids
+#: model_terms:ir.ui.view,arch_db:liber_transport.view_pickup_request_form
+msgid "Delivery Orders"
+msgstr "Pedidos de entrega"
+
+#. module: liber_transport
+#: model:ir.model.fields,field_description:liber_transport.field_delivery_carrier__display_name
+#: model:ir.model.fields,field_description:liber_transport.field_liber_transport_pickup_line__display_name
+#: model:ir.model.fields,field_description:liber_transport.field_liber_transport_pickup_request__display_name
+#: model:ir.model.fields,field_description:liber_transport.field_liber_transport_pickup_wizard__display_name
+#: model:ir.model.fields,field_description:liber_transport.field_res_company__display_name
+#: model:ir.model.fields,field_description:liber_transport.field_res_config_settings__display_name
+#: model:ir.model.fields,field_description:liber_transport.field_stock_picking__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: liber_transport
+#: model:ir.model.fields.selection,name:liber_transport.selection__liber_transport_pickup_request__state__draft
+#: model_terms:ir.ui.view,arch_db:liber_transport.view_pickup_request_search
+msgid "Draft"
+msgstr "Rascunho"
+
+#. module: liber_transport
+#: model:ir.model.fields,field_description:liber_transport.field_liber_transport_pickup_line__email
+#: model:ir.model.fields,field_description:liber_transport.field_liber_transport_pickup_request__email
+msgid "E-mail"
+msgstr "E-mail"
+
+#. module: liber_transport
+#: model:ir.model.fields,field_description:liber_transport.field_liber_transport_pickup_request__message_follower_ids
+msgid "Followers"
+msgstr ""
+
+#. module: liber_transport
+#: model:ir.model.fields,field_description:liber_transport.field_liber_transport_pickup_request__message_partner_ids
+msgid "Followers (Partners)"
+msgstr ""
+
+#. module: liber_transport
+#: model:ir.model.fields,help:liber_transport.field_liber_transport_pickup_request__activity_type_icon
+msgid "Font awesome icon e.g. fa-tasks"
+msgstr ""
+
+#. module: liber_transport
+#: model:ir.model.fields,field_description:liber_transport.field_liber_transport_pickup_request__has_message
+msgid "Has Message"
+msgstr ""
+
+#. module: liber_transport
+#: model:ir.model.fields,help:liber_transport.field_stock_picking__box_count
+msgid ""
+"How many boxes this delivery ships in. Counted by whoever packs it: the "
+"fiscal note declares it and the carrier plans the truck by it."
+msgstr "Em quantas caixas esta entrega vai. Quem embala é quem conta: é o que a nota fiscal declara e o que a transportadora usa para escolher o veículo."
+
+#. module: liber_transport
+#: model:ir.model.fields,field_description:liber_transport.field_delivery_carrier__id
+#: model:ir.model.fields,field_description:liber_transport.field_liber_transport_pickup_line__id
+#: model:ir.model.fields,field_description:liber_transport.field_liber_transport_pickup_request__id
+#: model:ir.model.fields,field_description:liber_transport.field_liber_transport_pickup_wizard__id
+#: model:ir.model.fields,field_description:liber_transport.field_res_company__id
+#: model:ir.model.fields,field_description:liber_transport.field_res_config_settings__id
+#: model:ir.model.fields,field_description:liber_transport.field_stock_picking__id
+msgid "ID"
+msgstr ""
+
+#. module: liber_transport
+#: model:ir.model.fields,field_description:liber_transport.field_liber_transport_pickup_request__activity_exception_icon
+msgid "Icon"
+msgstr ""
+
+#. module: liber_transport
+#: model:ir.model.fields,help:liber_transport.field_liber_transport_pickup_request__activity_exception_icon
+msgid "Icon to indicate an exception activity."
+msgstr ""
+
+#. module: liber_transport
+#: model:ir.model.fields,help:liber_transport.field_liber_transport_pickup_request__message_needaction
+msgid "If checked, new messages require your attention."
+msgstr ""
+
+#. module: liber_transport
+#: model:ir.model.fields,help:liber_transport.field_liber_transport_pickup_request__message_has_error
+#: model:ir.model.fields,help:liber_transport.field_liber_transport_pickup_request__message_has_sms_error
+msgid "If checked, some messages have a delivery error."
+msgstr ""
+
+#. module: liber_transport
+#: model_terms:ir.ui.view,arch_db:liber_transport.res_config_settings_view_form_transport
+msgid ""
+"Intro text of the pickup-request e-mail sent to the carrier. Leave empty to "
+"use the built-in default."
+msgstr "Texto de abertura do e-mail de solicitação de coleta enviado à transportadora. Vazio usa o texto padrão do sistema."
+
+#. module: liber_transport
+#: model:ir.model.fields,field_description:liber_transport.field_liber_transport_pickup_request__message_is_follower
+msgid "Is Follower"
+msgstr ""
+
+#. module: liber_transport
+#: model:ir.model.fields,field_description:liber_transport.field_liber_transport_pickup_line__write_uid
+#: model:ir.model.fields,field_description:liber_transport.field_liber_transport_pickup_request__write_uid
+#: model:ir.model.fields,field_description:liber_transport.field_liber_transport_pickup_wizard__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: liber_transport
+#: model:ir.model.fields,field_description:liber_transport.field_liber_transport_pickup_line__write_date
+#: model:ir.model.fields,field_description:liber_transport.field_liber_transport_pickup_request__write_date
+#: model:ir.model.fields,field_description:liber_transport.field_liber_transport_pickup_wizard__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: liber_transport
+#: model_terms:ir.ui.view,arch_db:liber_transport.view_pickup_request_form
+msgid "Mark as Collected"
+msgstr "Marcar como coletada"
+
+#. module: liber_transport
+#: model:ir.model.fields,field_description:liber_transport.field_liber_transport_pickup_request__message_has_error
+msgid "Message Delivery error"
+msgstr ""
+
+#. module: liber_transport
+#: model:ir.model.fields,field_description:liber_transport.field_liber_transport_pickup_request__message_ids
+msgid "Messages"
+msgstr ""
+
+#. module: liber_transport
+#: model:ir.model.fields,field_description:liber_transport.field_liber_transport_pickup_request__my_activity_date_deadline
+msgid "My Activity Deadline"
+msgstr ""
+
+#. module: liber_transport
+#. odoo-python
+#: code:addons/liber_transport/models/pickup_request.py:0
+msgid "New"
+msgstr "Novo"
+
+#. module: liber_transport
+#: model:ir.model.fields,field_description:liber_transport.field_liber_transport_pickup_request__activity_calendar_event_id
+msgid "Next Activity Calendar Event"
+msgstr ""
+
+#. module: liber_transport
+#: model:ir.model.fields,field_description:liber_transport.field_liber_transport_pickup_request__activity_date_deadline
+msgid "Next Activity Deadline"
+msgstr ""
+
+#. module: liber_transport
+#: model:ir.model.fields,field_description:liber_transport.field_liber_transport_pickup_request__activity_summary
+msgid "Next Activity Summary"
+msgstr ""
+
+#. module: liber_transport
+#: model:ir.model.fields,field_description:liber_transport.field_liber_transport_pickup_request__activity_type_id
+msgid "Next Activity Type"
+msgstr ""
+
+#. module: liber_transport
+#: model_terms:ir.ui.view,arch_db:liber_transport.view_picking_search_inherit_transport
+msgid "No Pickup Requested"
+msgstr "Sem coleta solicitada"
+
+#. module: liber_transport
+#: model_terms:ir.actions.act_window,help:liber_transport.action_pickup_request
+msgid "No pickup request yet"
+msgstr "Nenhuma solicitação de coleta ainda"
+
+#. module: liber_transport
+#: model:ir.model.fields,field_description:liber_transport.field_liber_transport_pickup_request__message_needaction_counter
+msgid "Number of Actions"
+msgstr ""
+
+#. module: liber_transport
+#: model:ir.model.fields,field_description:liber_transport.field_liber_transport_pickup_request__message_has_error_counter
+msgid "Number of errors"
+msgstr ""
+
+#. module: liber_transport
+#: model:ir.model.fields,help:liber_transport.field_liber_transport_pickup_request__message_needaction_counter
+msgid "Number of messages requiring action"
+msgstr ""
+
+#. module: liber_transport
+#: model:ir.model.fields,help:liber_transport.field_liber_transport_pickup_request__message_has_error_counter
+msgid "Number of messages with delivery error"
+msgstr ""
+
+#. module: liber_transport
+#: model_terms:ir.ui.view,arch_db:liber_transport.view_pickup_request_wizard_form
+msgid "Peso"
+msgstr ""
+
+#. module: liber_transport
+#: model:ir.model.fields,field_description:liber_transport.field_liber_transport_pickup_request__picking_count
+msgid "Picking Count"
+msgstr "Total de entregas"
+
+#. module: liber_transport
+#: model:ir.model.fields,field_description:liber_transport.field_liber_transport_pickup_line__contact_id
+#: model:ir.model.fields,field_description:liber_transport.field_liber_transport_pickup_request__contact_id
+msgid "Pickup Contact"
+msgstr "Contato de coleta"
+
+#. module: liber_transport
+#: model:ir.model,name:liber_transport.model_liber_transport_pickup_request
+#: model_terms:ir.ui.view,arch_db:liber_transport.view_pickup_request_form
+msgid "Pickup Request"
+msgstr "Solicitação de coleta"
+
+#. module: liber_transport
+#: model:ir.model.fields,field_description:liber_transport.field_res_company__transport_pickup_request_text
+#: model:ir.model.fields,field_description:liber_transport.field_res_config_settings__transport_pickup_request_text
+msgid "Pickup Request Text"
+msgstr "Texto da solicitação de coleta"
+
+#. module: liber_transport
+#: model:ir.model,name:liber_transport.model_liber_transport_pickup_line
+msgid "Pickup Request per Carrier"
+msgstr "Solicitação de coleta por transportadora"
+
+#. module: liber_transport
+#: model_terms:ir.ui.view,arch_db:liber_transport.view_picking_search_inherit_transport
+msgid "Pickup Requested"
+msgstr "Com coleta solicitada"
+
+#. module: liber_transport
+#: model:ir.model.fields,field_description:liber_transport.field_stock_picking__pickup_request_date
+msgid "Pickup Requested On"
+msgstr "Coleta solicitada em"
+
+#. module: liber_transport
+#. odoo-python
+#: code:addons/liber_transport/wizards/pickup_request_wizard.py:0
+#: model:ir.actions.act_window,name:liber_transport.action_pickup_request
+#: model:ir.model.fields,field_description:liber_transport.field_liber_transport_pickup_wizard__line_ids
+#: model:ir.model.fields,field_description:liber_transport.field_stock_picking__pickup_request_ids
+#: model:ir.ui.menu,name:liber_transport.menu_pickup_request
+#: model_terms:ir.ui.view,arch_db:liber_transport.res_config_settings_view_form_transport
+#: model_terms:ir.ui.view,arch_db:liber_transport.view_pickup_request_list
+#: model_terms:ir.ui.view,arch_db:liber_transport.view_pickup_request_search
+msgid "Pickup Requests"
+msgstr "Solicitações de coleta"
+
+#. module: liber_transport
+#: model_terms:ir.ui.view,arch_db:liber_transport.res_config_settings_view_form_transport
+msgid "Pickup request e-mail text"
+msgstr "Texto do e-mail de solicitação de coleta"
+
+#. module: liber_transport
+#. odoo-python
+#: code:addons/liber_transport/models/pickup_request.py:0
+msgid ""
+"Pickup requested from %(carrier)s (%(email)s) — request %(link)s, together "
+"with %(count)s other delivery order(s)."
+msgstr "Coleta solicitada à %(carrier)s (%(email)s) — solicitação %(link)s, junto com outra(s) %(count)s entrega(s)."
+
+#. module: liber_transport
+#. odoo-python
+#: code:addons/liber_transport/models/pickup_request.py:0
+msgid "Pickup requested from %(carrier)s (%(email)s) — request %(link)s."
+msgstr "Coleta solicitada à %(carrier)s (%(email)s) — solicitação %(link)s."
+
+#. module: liber_transport
+#: model_terms:ir.actions.act_window,help:liber_transport.action_pickup_request
+msgid ""
+"Pickup requests are created from the delivery orders list:\n"
+"                select the deliveries and use Actions &gt; Request Pickup.\n"
+"                One request per carrier, with every delivery it should collect."
+msgstr ""
+"As solicitações de coleta nascem na lista de pedidos de entrega:\n"
+"                selecione as entregas e use Ações &gt; Solicitar coleta.\n"
+"                Uma solicitação por transportadora, com tudo o que ela leva."
+
+#. module: liber_transport
+#: model:ir.model.fields,help:liber_transport.field_stock_picking__pickup_request_ids
+msgid "Pickup requests this delivery was included in."
+msgstr "As solicitações de coleta em que esta entrega entrou."
+
+#. module: liber_transport
+#: model:ir.model.fields,field_description:liber_transport.field_liber_transport_pickup_request__rating_ids
+msgid "Ratings"
+msgstr ""
+
+#. module: liber_transport
+#: model:ir.model.fields,field_description:liber_transport.field_liber_transport_pickup_request__name
+msgid "Reference"
+msgstr "Referência"
+
+#. module: liber_transport
+#: model:ir.actions.act_window,name:liber_transport.action_pickup_request_wizard
+#: model_terms:ir.ui.view,arch_db:liber_transport.view_pickup_request_wizard_form
+msgid "Request Pickup"
+msgstr "Solicitar coleta"
+
+#. module: liber_transport
+#: model:ir.model,name:liber_transport.model_liber_transport_pickup_wizard
+msgid "Request Pickup from Carriers"
+msgstr "Solicitar coleta às transportadoras"
+
+#. module: liber_transport
+#: model:ir.model.fields,field_description:liber_transport.field_liber_transport_pickup_request__request_date
+#: model_terms:ir.ui.view,arch_db:liber_transport.view_pickup_request_search
+msgid "Requested On"
+msgstr "Solicitada em"
+
+#. module: liber_transport
+#: model_terms:ir.ui.view,arch_db:liber_transport.view_pickup_request_form
+msgid "Reset to Draft"
+msgstr "Voltar a rascunho"
+
+#. module: liber_transport
+#: model:ir.model.fields,field_description:liber_transport.field_liber_transport_pickup_request__activity_user_id
+msgid "Responsible User"
+msgstr ""
+
+#. module: liber_transport
+#: model:ir.model.fields,field_description:liber_transport.field_liber_transport_pickup_request__message_has_sms_error
+msgid "SMS Delivery error"
+msgstr ""
+
+#. module: liber_transport
+#. odoo-python
+#: code:addons/liber_transport/wizards/pickup_request_wizard.py:0
+msgid "Select at least one delivery order (outgoing transfer, not cancelled)."
+msgstr "Selecione ao menos um pedido de entrega (transferência de saída, não cancelada)."
+
+#. module: liber_transport
+#: model_terms:ir.ui.view,arch_db:liber_transport.view_pickup_request_form
+#: model_terms:ir.ui.view,arch_db:liber_transport.view_pickup_request_wizard_form
+msgid "Send"
+msgstr "Enviar"
+
+#. module: liber_transport
+#: model_terms:ir.ui.view,arch_db:liber_transport.view_pickup_request_form
+msgid "Send again"
+msgstr "Enviar de novo"
+
+#. module: liber_transport
+#: model:ir.model.fields.selection,name:liber_transport.selection__liber_transport_pickup_request__state__sent
+#: model_terms:ir.ui.view,arch_db:liber_transport.view_pickup_request_search
+msgid "Sent"
+msgstr "Enviada"
+
+#. module: liber_transport
+#: model:ir.model,name:liber_transport.model_delivery_carrier
+msgid "Shipping Methods"
+msgstr ""
+
+#. module: liber_transport
+#: model:mail.template,subject:liber_transport.mail_template_pickup_request
+msgid "Solicitação de coleta {{ object.name }} — {{ object.company_id.name }}"
+msgstr ""
+
+#. module: liber_transport
+#: model:ir.model.fields,help:liber_transport.field_res_company__transport_pickup_request_text
+#: model:ir.model.fields,help:liber_transport.field_res_config_settings__transport_pickup_request_text
+msgid ""
+"Standard intro text of the pickup-request e-mail sent to the carrier. Leave "
+"empty to use the built-in default. Editable in the Transport settings."
+msgstr "Texto de abertura padrão do e-mail de solicitação de coleta enviado à transportadora. Vazio usa o texto padrão do sistema. Editável nas definições de Transporte."
+
+#. module: liber_transport
+#: model:ir.model.fields,field_description:liber_transport.field_liber_transport_pickup_request__state
+#: model_terms:ir.ui.view,arch_db:liber_transport.view_pickup_request_search
+msgid "Status"
+msgstr "Situação"
+
+#. module: liber_transport
+#: model:ir.model.fields,help:liber_transport.field_liber_transport_pickup_request__activity_state
+msgid ""
+"Status based on activities\n"
+"Overdue: Due date is already passed\n"
+"Today: Activity date is today\n"
+"Planned: Future activities."
+msgstr ""
+
+#. module: liber_transport
+#: model:ir.model.fields,help:liber_transport.field_liber_transport_pickup_request__carrier_reference
+msgid ""
+"The number the carrier gives to this pickup, if any. What you quote on the "
+"phone when chasing it."
+msgstr "O número que a transportadora dá a esta coleta, quando dá. É o que se cita ao telefone para cobrar."
+
+#. module: liber_transport
+#. odoo-python
+#: code:addons/liber_transport/models/pickup_request.py:0
+msgid "The pickup request e-mail template is missing."
+msgstr "O modelo de e-mail da solicitação de coleta não está instalado."
+
+#. module: liber_transport
+#: model:ir.model.fields,help:liber_transport.field_delivery_carrier__partner_id
+#: model:ir.model.fields,help:liber_transport.field_liber_transport_pickup_line__partner_id
+#: model:ir.model.fields,help:liber_transport.field_liber_transport_pickup_request__partner_id
+msgid ""
+"The transport company behind this delivery method. Its e-mail address "
+"receives the pickup requests sent from the delivery orders list — or the "
+"address of its Delivery contact, when it has one."
+msgstr "A empresa de transporte por trás deste método de entrega. É o e-mail dela que recebe as solicitações de coleta enviadas da lista de entregas — ou o do contato de Entregas dela, quando existe."
+
+#. module: liber_transport
+#: model:ir.model,name:liber_transport.model_stock_picking
+msgid "Transfer"
+msgstr ""
+
+#. module: liber_transport
+#: model_terms:ir.ui.view,arch_db:liber_transport.res_config_settings_view_form_transport
+msgid "Transport"
+msgstr "Transporte"
+
+#. module: liber_transport
+#: model:mail.template,name:liber_transport.mail_template_pickup_request
+msgid "Transport: Pickup Request"
+msgstr "Transporte: solicitação de coleta"
+
+#. module: liber_transport
+#: model:ir.model.fields,help:liber_transport.field_liber_transport_pickup_request__activity_exception_decoration
+msgid "Type of the exception activity on record."
+msgstr ""
+
+#. module: liber_transport
+#: model_terms:ir.ui.view,arch_db:liber_transport.view_pickup_request_search
+msgid "Waiting for Pickup"
+msgstr "Aguardando coleta"
+
+#. module: liber_transport
+#: model:ir.model.fields,field_description:liber_transport.field_liber_transport_pickup_request__website_message_ids
+msgid "Website Messages"
+msgstr ""
+
+#. module: liber_transport
+#: model:ir.model.fields,help:liber_transport.field_liber_transport_pickup_request__website_message_ids
+msgid "Website communication history"
+msgstr ""
+
+#. module: liber_transport
+#: model:ir.model.fields,field_description:liber_transport.field_liber_transport_pickup_line__weight
+#: model:ir.model.fields,field_description:liber_transport.field_liber_transport_pickup_request__total_weight
+#: model_terms:ir.ui.view,arch_db:liber_transport.view_pickup_request_form
+#: model_terms:ir.ui.view,arch_db:liber_transport.view_pickup_request_list
+msgid "Weight"
+msgstr "Peso"
+
+#. module: liber_transport
+#: model:ir.model.fields,help:liber_transport.field_stock_picking__pickup_request_date
+msgid ""
+"When the pickup request for this delivery was last e-mailed to the carrier."
+msgstr "Quando a solicitação de coleta desta entrega foi enviada pela última vez à transportadora."
+
+#. module: liber_transport
+#: model:ir.model.fields,help:liber_transport.field_liber_transport_pickup_request__request_date
+msgid "When the request was e-mailed to the carrier."
+msgstr "Quando a solicitação foi enviada por e-mail à transportadora."
+
+#. module: liber_transport
+#: model:ir.model.fields,help:liber_transport.field_liber_transport_pickup_request__contact_id
+msgid ""
+"Who receives this request at the carrier: its Delivery contact when there is"
+" one, otherwise the company itself."
+msgstr "Quem recebe esta solicitação na transportadora: o contato de Entregas dela, quando existe; senão, a própria empresa."
+
+#. module: liber_transport
+#: model:ir.model.fields,field_description:liber_transport.field_liber_transport_pickup_line__wizard_id
+msgid "Wizard"
+msgstr ""
+
+#. module: liber_transport
+#: model_terms:ir.ui.view,arch_db:liber_transport.view_pickup_request_form
+msgid "e.g. 4471-A"
+msgstr "ex.: 4471-A"
+
+#. module: liber_transport
+#. odoo-python
+#: code:addons/liber_transport/models/pickup_request.py:0
+msgid "id"
+msgstr ""
+
+#. module: liber_transport
+#. odoo-python
+#: code:addons/liber_transport/models/pickup_request.py:0
+msgid "missing"
+msgstr "não preenchido"

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_sale_order_form_support" model="ir.ui.view">
+        <field name="name">sale.order.form.support</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <div name="button_box" position="inside">
+                <button name="action_view_support_tickets" type="object"
+                        class="oe_stat_button" icon="fa-life-ring"
+                        invisible="support_ticket_count == 0">
+                    <field name="support_ticket_count" widget="statinfo"
+                           string="Support"/>
+                </button>
+            </div>
+            <!-- The seller registers the phone conversation from the order
+                 itself: the ticket is born glued to partner and order. -->
+            <header position="inside">
+                <button name="action_open_support_ticket" type="object"
+                        string="Open Ticket"
+                        groups="liber_support.group_support_user"/>
+            </header>
+        </field>
+    </record>
+</odoo>

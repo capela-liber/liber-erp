@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<script>
+/* Servido por /liber_site/static/docs/, este arquivo vem com uma semana de
+   cache e o docs.js sem versão -- e o índice monta a lista a partir dele. Foi
+   assim que a emissão de NF-e e o manual da Amazon ficaram invisíveis: o
+   catálogo em cache era anterior aos dois. A rota /liber/docs/ serve o mesmo
+   arquivo sem cache e com ?v=<mtime> nos assets. Quem chegar pelo caminho
+   antigo (favorito, link velho, resultado de busca) vai para lá antes de a
+   página montar qualquer coisa. */
+(function () {
+  var antigo = "/liber_site/static/docs/";
+  if (location.pathname.indexOf(antigo) === 0) {
+    location.replace("/liber/docs/" + location.pathname.slice(antigo.length) +
+                     location.search + location.hash);
+  }
+})();
+</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Transportadora e coleta — Manuais do Liber</title>
+<link rel="icon" type="image/png" href="../logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;600;700&display=swap">
+<link rel="stylesheet" href="docs.css">
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="../index.html"><img src="../logo.png" alt="">liber<span>.</span></a>
+    <span class="doc-tag">Manuais</span>
+    <nav><a href="index.html">Índice</a><a href="../index.html">Site</a></nav>
+  </div>
+</header>
+<div class="wrap">
+  <div class="layout">
+    <aside class="sidebar" id="sidebar"></aside>
+    <article class="doc">
+      <div class="breadcrumb"><a href="index.html">Manuais</a><span class="sep">›</span>Logística<span class="sep">›</span>Transportadora e coleta</div>
+      <h1>Transportadora e coleta</h1>
+      <p class="lead">Cada cliente tem a sua transportadora, e quem embala precisa de duas coisas:
+      ver na entrega quem a leva, e chamar a transportadora para buscar. Este manual mostra o caminho
+      inteiro — cadastrar a transportadora, apontá-la no cliente e pedir a coleta por e-mail.</p>
+
+      <h2 id="cadastrar">Como cadastro uma transportadora?</h2>
+      <p>São dois cadastros que se completam: a <strong>empresa</strong> (um contato comum) e o
+      <strong>método de entrega</strong> (o nome que aparece nas telas de venda e de entrega).</p>
+      <ol class="steps">
+        <li>Em <span class="menupath">Contatos</span>, crie a transportadora como <span class="field">Empresa</span>,
+            com CNPJ, telefone e principalmente o <span class="field">E-mail</span> — é para esse endereço
+            que os pedidos de coleta serão enviados.</li>
+        <li>Em <span class="menupath">Inventário<i>‣</i>Configuração<i>‣</i>Métodos de entrega</span>, crie (ou abra) o
+            método com o nome da transportadora e preencha o campo
+            <span class="field">Empresa transportadora</span> apontando para o contato do passo 1.</li>
+      </ol>
+      <figure class="shot">
+        <img src="img/doc-liber_transport-metodo-de-entrega.png"
+             alt="Método de entrega Transpo com o campo Empresa transportadora preenchido">
+        <figcaption>O método de entrega leva o nome curto das telas; a
+        <span class="field">Empresa transportadora</span> aponta para o contato completo.</figcaption>
+      </figure>
+      <p>Transportadora grande não atende coleta na caixa geral. Se a que você usa tem uma mesa de coletas
+      com endereço próprio, crie <strong>dentro da ficha dela</strong> um contato do tipo
+      <span class="field">Entregas</span> com esse e-mail: a solicitação passa a ir para ele, e o e-mail
+      geral da empresa fica só para o resto. O campo <span class="field">Contato de coleta</span>, na
+      solicitação, mostra sempre para quem vai — e pode ser trocado antes do envio.</p>
+      <div class="callout warn">Esse contato de "Entregas" vale <strong>dentro da transportadora</strong>.
+      Dentro de um cliente ele significa outra coisa: endereço de destino da mercadoria.</div>
+      <div class="callout">O <span class="field">Preço fixo</span> pode ficar em zero: nesta primeira etapa o
+      módulo não calcula frete — o campo existe para a fase seguinte, quando as regras de preço entrarem.</div>
+
+      <h2 id="cliente">Como digo qual transportadora um cliente usa?</h2>
+      <p>Na ficha do cliente, aba <span class="menupath">Vendas e Compras</span>, campo
+      <span class="field">Método de entrega</span>. É ali que se diz, por exemplo, que a livraria
+      Catavento usa a Transpo. Só isso: o resto acontece sozinho.</p>
+      <div class="callout warn">Não cadastre a transportadora como contato de "Entrega" dentro do cliente.
+      Contato de entrega é <strong>endereço de destino da mercadoria</strong>: colocar a Transpo ali faria
+      as entregas da Catavento apontarem para o endereço da Transpo.</div>
+
+      <h2 id="venda">O que acontece quando confirmo uma venda?</h2>
+      <p>A transferência de saída já nasce com a transportadora do cliente. Ela aparece na ficha da
+      entrega, aba <span class="menupath">Informações adicionais</span>, bloco
+      <span class="field">Informações de envio</span> — e pode ser trocada ali, entrega por entrega,
+      enquanto o movimento não foi validado.</p>
+      <p>Se o cliente não tem método de entrega preenchido, a entrega nasce sem transportadora — e vai
+      aparecer como aviso na hora de pedir a coleta.</p>
+      <figure class="shot">
+        <img src="img/doc-liber_transport-entrega-com-transportadora.png"
+             alt="Transferência com transportadora, caixas, peso e o link da solicitação de coleta">
+        <figcaption>A entrega nasceu com a Transpo; na mesma aba estão as
+        <span class="field">Caixas</span>, o <span class="field">Peso</span> e, depois do pedido,
+        o link da solicitação de coleta.</figcaption>
+      </figure>
+
+      <h2 id="caixas-e-peso">Caixas e peso: quem preenche o quê</h2>
+      <p>A nota fiscal precisa declarar <strong>quantos volumes</strong> vão e <strong>quanto pesam</strong> —
+      e é a movimentação que sabe. Na ficha da entrega, aba
+      <span class="menupath">Informações adicionais</span>, ao lado da transportadora:</p>
+      <div class="tablewrap"><table>
+        <tr><th>Campo</th><th>De onde vem</th></tr>
+        <tr><td><span class="field">Caixas</span></td>
+            <td>Ninguém calcula: quem embala conta e digita. É o número que a nota declara e que a
+                transportadora usa para escolher o veículo.</td></tr>
+        <tr><td><span class="field">Peso</span></td>
+            <td>Somado do peso dos livros da entrega. Se os livros não têm peso cadastrado, sai zero —
+                e aí quem fatura pesa a caixa e digita na nota.</td></tr>
+        <tr><td><span class="field">Peso para envio</span></td>
+            <td>Opcional: o peso medido na balança. Quando preenchido, ele vale no lugar da soma.</td></tr>
+      </table></div>
+      <div class="callout warn">Sem esses dois valores a <strong>NFe não é emitida</strong>: o botão Emitir
+      recusa e diz o que falta. Vale só para nota que move mercadoria — o acerto de consignação, que
+      fatura livro já entregue, passa direto.</div>
+      <p>Na fatura, aba <span class="menupath">NFe (Focus)</span>, bloco
+      <span class="field">Volumes e peso</span>: quem fatura confere, corrige se precisar, e tem o botão
+      <span class="field">Trazer da movimentação</span> para buscar de novo os números das transferências.</p>
+      <figure class="shot">
+        <img src="img/doc-liber_transport-pdf-da-entrega.png"
+             alt="PDF do Picking com transportadora e caixas no cabeçalho">
+        <figcaption>O PDF da entrega (<span class="menupath">Imprimir<i>‣</i>Picking</span>) declara a
+        transportadora e as caixas no cabeçalho — é a folha que viaja com os volumes.</figcaption>
+      </figure>
+
+      <h2 id="pedir-coleta">Como peço a coleta?</h2>
+      <p>Da lista de entregas, em lote — nunca uma por uma.</p>
+      <ol class="steps">
+        <li>Abra <span class="menupath">Inventário<i>‣</i>Pedidos de entrega</span> e marque as entregas que estão
+            prontas para viajar.</li>
+        <li>No menu <span class="menupath">Ações</span>, clique em <span class="field">Solicitar coleta</span>.</li>
+        <li>A janela mostra <strong>uma linha por transportadora</strong>, com o e-mail que vai receber o
+            pedido e as entregas de cada uma. Catorze entregas da Transpo são <strong>um</strong> e-mail
+            com uma tabela, não catorze e-mails.</li>
+        <li>Clique em <span class="field">Enviar</span>. O e-mail sai com o texto padrão da casa e a tabela
+            das entregas: referência, pedido de origem, destinatário, cidade/UF, <strong>caixas e
+            peso</strong> — com o total no rodapé, que é o que a transportadora lê para mandar o
+            veículo certo.</li>
+      </ol>
+      <figure class="shot">
+        <img src="img/doc-liber_transport-solicitar-coleta.png"
+             alt="Janela Solicitar coleta com uma linha por transportadora e o aviso de entrega sem transportadora">
+        <figcaption>Uma linha por transportadora, com caixas e peso somados — e o aviso amarelo
+        para a entrega que ficou sem transportadora, fora do envio sem travar as demais.</figcaption>
+      </figure>
+      <p>O Odoo leva você direto à <strong>solicitação</strong> criada — é lá que ela passa a morar.</p>
+
+      <h2 id="acompanhar">Onde acompanho o que já foi pedido?</h2>
+      <p>Em <span class="menupath">Inventário<i>‣</i>Operações<i>‣</i>Transferências<i>‣</i>Solicitações de coleta</span>. Cada solicitação é
+      um lote numerado (<span class="field">COL/2026/00001</span>) com uma transportadora e as entregas
+      que ela vem buscar. É esse número que se cita ao telefone.</p>
+      <p>Na ficha da solicitação estão o e-mail que saiu (no histórico, à direita, como foi escrito) e os
+      campos que a logística preenche quando a transportadora responde:</p>
+      <figure class="shot">
+        <img src="img/doc-liber_transport-lote-de-coleta.png"
+             alt="Solicitação COL/ com as entregas da Transpo e o e-mail enviado no histórico">
+        <figcaption>O lote <span class="field">COL/</span> com as entregas de uma transportadora:
+        o e-mail enviado mora no histórico, e a <span class="field">Data combinada</span> e o
+        <span class="field">Protocolo</span> guardam a resposta.</figcaption>
+      </figure>
+      <div class="tablewrap"><table>
+        <tr><th>Campo / botão</th><th>Para quê</th></tr>
+        <tr><td><span class="field">Data combinada</span></td>
+            <td>O dia que a transportadora confirmou para a coleta.</td></tr>
+        <tr><td><span class="field">Protocolo da transportadora</span></td>
+            <td>O número que ela dá à coleta, quando dá — o que se cita para cobrar.</td></tr>
+        <tr><td><span class="field">Marcar como coletada</span></td>
+            <td>Fecha a solicitação quando o caminhão passou e levou.</td></tr>
+        <tr><td><span class="field">Enviar de novo</span></td>
+            <td>Reenvia o mesmo pedido, sem criar outro lote — para quando ninguém responde.</td></tr>
+      </table></div>
+      <div class="callout">A resposta da transportadora, se ela responder ao e-mail, cai no histórico da própria
+      solicitação. Assim a conversa fica junto do pedido, e não perdida na caixa de alguém.</div>
+      <p>Cada entrega também guarda o seu rastro: a data em <span class="field">Coleta solicitada em</span>,
+      o link para a solicitação na aba <span class="menupath">Informações adicionais</span>, e uma nota no
+      histórico dizendo a quem foi pedida. Na lista de entregas, os filtros
+      <span class="field">Com coleta solicitada</span> e <span class="field">Sem coleta solicitada</span>
+      separam o que já foi chamado do que ainda espera.</p>
+      <div class="callout">Pedir de novo é permitido — recoleta acontece. Uma entrega pode entrar em mais de
+      uma solicitação, e as duas ficam no histórico dela.</div>
+
+      <h2 id="texto-do-email">Como mudo o texto do e-mail?</h2>
+      <p>Em <span class="menupath">Definições<i>‣</i>Transporte</span>, campo
+      <span class="field">Texto do e-mail de solicitação de coleta</span>. O texto é por empresa; vazio,
+      vale o padrão do sistema ("Solicitamos a coleta dos volumes relacionados abaixo…"). A tabela de
+      entregas e o endereço de coleta entram sempre, independentemente do texto.</p>
+
+      <h2 id="problemas">Quando algo não sai como esperado</h2>
+      <div class="tablewrap"><table>
+        <tr><th>O que aparece</th><th>Por quê</th><th>O que fazer</th></tr>
+        <tr>
+          <td>"Solicitar coleta" não está no menu Ações</td>
+          <td>Nenhuma linha marcada, ou a tela não é a lista de entregas.</td>
+          <td>Volte à lista de Pedidos de entrega e marque ao menos uma linha.</td>
+        </tr>
+        <tr>
+          <td>Aviso "Sem transportadora" na janela</td>
+          <td>Aquelas entregas não têm transportadora preenchida.</td>
+          <td>Elas ficam fora do envio, sem travar as demais. Preencha a transportadora na ficha da
+              entrega (ou no cliente, para as próximas) e peça de novo.</td>
+        </tr>
+        <tr>
+          <td>Linha vermelha na janela, e depois uma solicitação em <span class="field">Rascunho</span></td>
+          <td>O contato da transportadora está sem e-mail.</td>
+          <td>O agrupamento não se perde: a solicitação é criada em rascunho. Complete o e-mail no
+              contato da transportadora e clique <span class="field">Enviar</span> na ficha dela.</td>
+        </tr>
+        <tr>
+          <td>O e-mail ainda não chegou</td>
+          <td>O envio sai em lote pela fila do sistema, não na hora do clique.</td>
+          <td>Aguarde alguns minutos. Em ambiente de teste o envio externo fica contido de propósito.</td>
+        </tr>
+      </table></div>
+
+      <h2 id="nao-fazer">O que não fazer</h2>
+      <ul>
+        <li><strong>Não use o "Enviar e-mail" genérico da lista para falar com a transportadora.</strong>
+            Aquela ação escreve para o <em>cliente</em> de cada entrega — e uma por uma. Coleta é pela
+            ação <span class="field">Solicitar coleta</span>.</li>
+        <li><strong>Não cadastre a transportadora dentro do cliente.</strong> Transportadora é contato
+            próprio, ligado ao método de entrega — dentro do cliente ela viraria endereço de entrega.</li>
+      </ul>
+
+      <div class="callout">Dúvida sobre acesso ou empresa: fale com a administração do sistema.
+      Toda solicitação de coleta fica registrada no histórico da entrega, com data e hora.</div>
+
+      <nav class="pager" id="pager"></nav>
+    </article>
+  </div>
+</div>
+<script src="docs.js"></script>
+</body>
+</html>

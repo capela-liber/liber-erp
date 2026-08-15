@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <record id="stage_new" model="liber.support.stage">
+        <field name="name">New</field>
+        <field name="sequence">10</field>
+    </record>
+    <record id="stage_in_progress" model="liber.support.stage">
+        <field name="name">In Progress</field>
+        <field name="sequence">20</field>
+    </record>
+    <record id="stage_waiting_customer" model="liber.support.stage">
+        <field name="name">Waiting Customer</field>
+        <field name="sequence">30</field>
+        <field name="pause_sla" eval="True"/>
+    </record>
+    <record id="stage_waiting_internal" model="liber.support.stage">
+        <field name="name">Waiting Internal</field>
+        <field name="sequence">40</field>
+        <!-- The clock keeps running: the customer is not to blame for
+             the fiscal desk being slow. -->
+    </record>
+    <record id="stage_resolved" model="liber.support.stage">
+        <field name="name">Resolved</field>
+        <field name="sequence">50</field>
+        <field name="fold" eval="True"/>
+        <field name="is_closed" eval="True"/>
+    </record>
+    <record id="stage_closed" model="liber.support.stage">
+        <field name="name">Closed</field>
+        <field name="sequence">60</field>
+        <field name="fold" eval="True"/>
+        <field name="is_closed" eval="True"/>
+    </record>
+    <!-- The commercial box accepts unknown senders (a new bookstore writes
+         for the first time), so junk gets in. It is dragged here, never
+         deleted. -->
+    <record id="stage_spam" model="liber.support.stage">
+        <field name="name">Spam</field>
+        <field name="sequence">70</field>
+        <field name="fold" eval="True"/>
+        <field name="is_closed" eval="True"/>
+    </record>
+</odoo>

@@ -33,6 +33,9 @@ var DOCS = [
   { area: "Produção", desc: "O livro impresso quando alguém compra — tiragem, frete e entrega.", items: [
     { slug: "liber_metabrasil", title: "Impressão sob demanda (Metabrasil)", desc: "Preço por tiragem, cotação de frete, dropship e acompanhamento da gráfica." },
   ]},
+  { area: "Logística", desc: "Do depósito à porta do cliente — a transportadora de cada um, os volumes da nota e a coleta pedida em lote.", items: [
+    { slug: "liber_transport", title: "Transportadora e coleta", desc: "A transportadora do cliente na entrega, caixas e peso para a nota, e o pedido de coleta por e-mail." },
+  ]},
   { area: "Arquivos", desc: "O acervo da editora nas nuvens, com o Odoo de porteiro — mesma disciplina em três estantes.", items: [
     { slug: "liber_dropbox", title: "Arquivos no Dropbox", desc: "Leitura e escrita por pasta, envio, links com prazo e vínculos a autores e títulos." },
     { slug: "liber_gdrive", title: "Arquivos no Google Drive", desc: "O mesmo portão na frente do Drive: pastas por ID, download conferido, miniaturas até de PDF." },

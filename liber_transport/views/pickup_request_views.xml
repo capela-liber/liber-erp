@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_pickup_request_list" model="ir.ui.view">
+        <field name="name">liber.transport.pickup.request.list</field>
+        <field name="model">liber.transport.pickup.request</field>
+        <field name="arch" type="xml">
+            <list string="Pickup Requests" create="0"
+                  decoration-muted="state == 'cancel'"
+                  decoration-success="state == 'done'">
+                <field name="name"/>
+                <field name="request_date"/>
+                <field name="carrier_id"/>
+                <field name="partner_id" optional="show"/>
+                <field name="contact_id" optional="hide"/>
+                <field name="email" optional="show"/>
+                <field name="picking_count" string="Deliveries"/>
+                <field name="total_box_count" sum="Boxes"/>
+                <field name="total_weight" sum="Weight" optional="show"/>
+                <field name="scheduled_date" optional="show"/>
+                <field name="carrier_reference" optional="hide"/>
+                <field name="company_id" groups="base.group_multi_company" optional="hide"/>
+                <field name="state" widget="badge"
+                       decoration-info="state == 'sent'"
+                       decoration-success="state == 'done'"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_pickup_request_form" model="ir.ui.view">
+        <field name="name">liber.transport.pickup.request.form</field>
+        <field name="model">liber.transport.pickup.request</field>
+        <field name="arch" type="xml">
+            <form string="Pickup Request">
+                <header>
+                    <button name="action_send" type="object" string="Send"
+                            class="btn-primary" invisible="state != 'draft'"/>
+                    <button name="action_send" type="object" string="Send again"
+                            invisible="state != 'sent'"/>
+                    <button name="action_done" type="object" string="Mark as Collected"
+                            class="btn-primary" invisible="state != 'sent'"/>
+                    <button name="action_cancel" type="object" string="Cancel"
+                            invisible="state in ('cancel', 'done')"/>
+                    <button name="action_draft" type="object" string="Reset to Draft"
+                            invisible="state != 'cancel'"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,sent,done"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_pickings" type="object"
+                                class="oe_stat_button" icon="fa-truck">
+                            <field name="picking_count" widget="statinfo"
+                                   string="Deliveries"/>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <h1><field name="name" readonly="1"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="carrier_id" readonly="state != 'draft'"
+                                   options="{'no_create': True}"/>
+                            <field name="partner_id"/>
+                            <field name="contact_id"
+                                   readonly="state != 'draft'"
+                                   options="{'no_create': True}"/>
+                            <field name="email"/>
+                            <field name="company_id" groups="base.group_multi_company"
+                                   readonly="state != 'draft'"/>
+                        </group>
+                        <group>
+                            <field name="total_box_count"/>
+                            <field name="total_weight"/>
+                            <field name="request_date"/>
+                            <field name="scheduled_date"/>
+                            <field name="carrier_reference"
+                                   placeholder="e.g. 4471-A"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Delivery Orders" name="pickings">
+                            <field name="picking_ids" readonly="state != 'draft'">
+                                <list create="0">
+                                    <field name="name"/>
+                                    <field name="partner_id"/>
+                                    <field name="origin"/>
+                                    <field name="box_count" sum="Boxes"/>
+                                    <field name="shipping_weight" sum="Weight"/>
+                                    <field name="scheduled_date"/>
+                                    <field name="state"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_pickup_request_search" model="ir.ui.view">
+        <field name="name">liber.transport.pickup.request.search</field>
+        <field name="model">liber.transport.pickup.request</field>
+        <field name="arch" type="xml">
+            <search string="Pickup Requests">
+                <field name="name"/>
+                <field name="carrier_id"/>
+                <field name="partner_id"/>
+                <field name="picking_ids" string="Delivery Order"/>
+                <field name="carrier_reference"/>
+                <separator/>
+                <filter string="Draft" name="filter_draft"
+                        domain="[('state', '=', 'draft')]"/>
+                <filter string="Sent" name="filter_sent"
+                        domain="[('state', '=', 'sent')]"/>
+                <filter string="Collected" name="filter_done"
+                        domain="[('state', '=', 'done')]"/>
+                <separator/>
+                <filter string="Waiting for Pickup" name="filter_waiting"
+                        domain="[('state', '=', 'sent'), ('scheduled_date', '=', False)]"/>
+                <group>
+                    <filter string="Carrier" name="group_carrier"
+                            domain="[]" context="{'group_by': 'carrier_id'}"/>
+                    <filter string="Status" name="group_state"
+                            domain="[]" context="{'group_by': 'state'}"/>
+                    <filter string="Requested On" name="group_date"
+                            domain="[]" context="{'group_by': 'request_date'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_pickup_request" model="ir.actions.act_window">
+        <field name="name">Pickup Requests</field>
+        <field name="res_model">liber.transport.pickup.request</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_pickup_request_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No pickup request yet
+            </p>
+            <p>
+                Pickup requests are created from the delivery orders list:
+                select the deliveries and use Actions &gt; Request Pickup.
+                One request per carrier, with every delivery it should collect.
+            </p>
+        </field>
+    </record>
+
+    <!-- Dentro de Transferências, com Recebimentos e Entregas: a coleta é
+         movimento de mercadoria, não uma seção à parte do armazém. -->
+    <menuitem id="menu_pickup_request"
+              name="Pickup Requests"
+              parent="stock.menu_stock_transfers"
+              action="action_pickup_request"
+              sequence="40"/>
+</odoo>

@@ -1,0 +1,181 @@
+<!-- GERADO por scripts/gen_module_descriptions.py a partir de
+     liber_site/static/docs/liber_transport.html -- não edite aqui.
+     O Odoo mostra este arquivo em Apps > Module Info. -->
+<div class="oe_container liber_manual" style="max-width:900px;margin:0 auto;padding:8px 4px 24px;color:#251d2b;background:transparent;font:15px/1.7 Inter,'Segoe UI',system-ui,sans-serif;"><h1 style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:32px;line-height:1.2;letter-spacing:-.015em;margin:0 0 10px;color:#251d2b;">Transportadora e coleta</h1>
+      <p class="lead" style="font-size:17.5px;color:#5d5266;margin:0 0 26px;max-width:62ch;">Cada cliente tem a sua transportadora, e quem embala precisa de duas coisas:
+      ver na entrega quem a leva, e chamar a transportadora para buscar. Este manual mostra o caminho
+      inteiro — cadastrar a transportadora, apontá-la no cliente e pedir a coleta por e-mail.</p>
+
+      <h2 id="cadastrar" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">Como cadastro uma transportadora?</h2>
+      <p style="margin:0 0 12px;">São dois cadastros que se completam: a <strong style="color:#251d2b;">empresa</strong> (um contato comum) e o
+      <strong style="color:#251d2b;">método de entrega</strong> (o nome que aparece nas telas de venda e de entrega).</p>
+      <ol class="steps" style="margin:0 0 16px 22px;padding:0;">
+        <li style="margin:0 0 7px;">Em <span class="menupath" style="display:inline-block;background:#f1eaf6;border:1px solid #e5dbee;border-radius:6px;padding:1px 8px;font-size:13.5px;color:#251d2b;white-space:nowrap;">Contatos</span>, crie a transportadora como <span class="field" style="font-weight:600;color:#251d2b;">Empresa</span>,
+            com CNPJ, telefone e principalmente o <span class="field" style="font-weight:600;color:#251d2b;">E-mail</span> — é para esse endereço
+            que os pedidos de coleta serão enviados.</li>
+        <li style="margin:0 0 7px;">Em <span class="menupath" style="display:inline-block;background:#f1eaf6;border:1px solid #e5dbee;border-radius:6px;padding:1px 8px;font-size:13.5px;color:#251d2b;white-space:nowrap;">Inventário<i style="font-style:normal;color:#6e2f91;margin:0 4px;font-weight:700;">‣</i>Configuração<i style="font-style:normal;color:#6e2f91;margin:0 4px;font-weight:700;">‣</i>Métodos de entrega</span>, crie (ou abra) o
+            método com o nome da transportadora e preencha o campo
+            <span class="field" style="font-weight:600;color:#251d2b;">Empresa transportadora</span> apontando para o contato do passo 1.</li>
+      </ol>
+      <figure class="shot" style="margin:20px 0 24px;">
+        <img src="img/doc-liber_transport-metodo-de-entrega.png" alt="Método de entrega Transpo com o campo Empresa transportadora preenchido" style="max-width:100%;display:block;margin:0 auto;border-radius:12px;border:1px solid #e5dbee;">
+        <figcaption style="font-size:13px;color:#5d5266;margin-top:10px;text-align:center;">O método de entrega leva o nome curto das telas; a
+        <span class="field" style="font-weight:600;color:#251d2b;">Empresa transportadora</span> aponta para o contato completo.</figcaption>
+      </figure>
+      <p style="margin:0 0 12px;">Transportadora grande não atende coleta na caixa geral. Se a que você usa tem uma mesa de coletas
+      com endereço próprio, crie <strong style="color:#251d2b;">dentro da ficha dela</strong> um contato do tipo
+      <span class="field" style="font-weight:600;color:#251d2b;">Entregas</span> com esse e-mail: a solicitação passa a ir para ele, e o e-mail
+      geral da empresa fica só para o resto. O campo <span class="field" style="font-weight:600;color:#251d2b;">Contato de coleta</span>, na
+      solicitação, mostra sempre para quem vai — e pode ser trocado antes do envio.</p>
+      <div class="callout warn" style="border:1px solid #e5dbee;border-left:4px solid #6e2f91;border-radius:10px;padding:14px 18px;margin:0 0 16px;border-left-color:#b3831a;background:#faf3e3;border-color:#eddfba;">Esse contato de "Entregas" vale <strong style="color:#251d2b;">dentro da transportadora</strong>.
+      Dentro de um cliente ele significa outra coisa: endereço de destino da mercadoria.</div>
+      <div class="callout" style="border:1px solid #e5dbee;border-left:4px solid #6e2f91;border-radius:10px;background:#f1eaf6;padding:14px 18px;margin:0 0 16px;">O <span class="field" style="font-weight:600;color:#251d2b;">Preço fixo</span> pode ficar em zero: nesta primeira etapa o
+      módulo não calcula frete — o campo existe para a fase seguinte, quando as regras de preço entrarem.</div>
+
+      <h2 id="cliente" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">Como digo qual transportadora um cliente usa?</h2>
+      <p style="margin:0 0 12px;">Na ficha do cliente, aba <span class="menupath" style="display:inline-block;background:#f1eaf6;border:1px solid #e5dbee;border-radius:6px;padding:1px 8px;font-size:13.5px;color:#251d2b;white-space:nowrap;">Vendas e Compras</span>, campo
+      <span class="field" style="font-weight:600;color:#251d2b;">Método de entrega</span>. É ali que se diz, por exemplo, que a livraria
+      Catavento usa a Transpo. Só isso: o resto acontece sozinho.</p>
+      <div class="callout warn" style="border:1px solid #e5dbee;border-left:4px solid #6e2f91;border-radius:10px;padding:14px 18px;margin:0 0 16px;border-left-color:#b3831a;background:#faf3e3;border-color:#eddfba;">Não cadastre a transportadora como contato de "Entrega" dentro do cliente.
+      Contato de entrega é <strong style="color:#251d2b;">endereço de destino da mercadoria</strong>: colocar a Transpo ali faria
+      as entregas da Catavento apontarem para o endereço da Transpo.</div>
+
+      <h2 id="venda" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">O que acontece quando confirmo uma venda?</h2>
+      <p style="margin:0 0 12px;">A transferência de saída já nasce com a transportadora do cliente. Ela aparece na ficha da
+      entrega, aba <span class="menupath" style="display:inline-block;background:#f1eaf6;border:1px solid #e5dbee;border-radius:6px;padding:1px 8px;font-size:13.5px;color:#251d2b;white-space:nowrap;">Informações adicionais</span>, bloco
+      <span class="field" style="font-weight:600;color:#251d2b;">Informações de envio</span> — e pode ser trocada ali, entrega por entrega,
+      enquanto o movimento não foi validado.</p>
+      <p style="margin:0 0 12px;">Se o cliente não tem método de entrega preenchido, a entrega nasce sem transportadora — e vai
+      aparecer como aviso na hora de pedir a coleta.</p>
+      <figure class="shot" style="margin:20px 0 24px;">
+        <img src="img/doc-liber_transport-entrega-com-transportadora.png" alt="Transferência com transportadora, caixas, peso e o link da solicitação de coleta" style="max-width:100%;display:block;margin:0 auto;border-radius:12px;border:1px solid #e5dbee;">
+        <figcaption style="font-size:13px;color:#5d5266;margin-top:10px;text-align:center;">A entrega nasceu com a Transpo; na mesma aba estão as
+        <span class="field" style="font-weight:600;color:#251d2b;">Caixas</span>, o <span class="field" style="font-weight:600;color:#251d2b;">Peso</span> e, depois do pedido,
+        o link da solicitação de coleta.</figcaption>
+      </figure>
+
+      <h2 id="caixas-e-peso" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">Caixas e peso: quem preenche o quê</h2>
+      <p style="margin:0 0 12px;">A nota fiscal precisa declarar <strong style="color:#251d2b;">quantos volumes</strong> vão e <strong style="color:#251d2b;">quanto pesam</strong> —
+      e é a movimentação que sabe. Na ficha da entrega, aba
+      <span class="menupath" style="display:inline-block;background:#f1eaf6;border:1px solid #e5dbee;border-radius:6px;padding:1px 8px;font-size:13.5px;color:#251d2b;white-space:nowrap;">Informações adicionais</span>, ao lado da transportadora:</p>
+      <div class="tablewrap" style="overflow-x:auto;margin:0 0 16px;"><table style="border-collapse:collapse;width:100%;margin:0 0 16px;font-size:14px;">
+        <tr><th style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;background:#f1eaf6;font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:13.5px;">Campo</th><th style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;background:#f1eaf6;font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:13.5px;">De onde vem</th></tr>
+        <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;"><span class="field" style="font-weight:600;color:#251d2b;">Caixas</span></td>
+            <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Ninguém calcula: quem embala conta e digita. É o número que a nota declara e que a
+                transportadora usa para escolher o veículo.</td></tr>
+        <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;"><span class="field" style="font-weight:600;color:#251d2b;">Peso</span></td>
+            <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Somado do peso dos livros da entrega. Se os livros não têm peso cadastrado, sai zero —
+                e aí quem fatura pesa a caixa e digita na nota.</td></tr>
+        <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;"><span class="field" style="font-weight:600;color:#251d2b;">Peso para envio</span></td>
+            <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Opcional: o peso medido na balança. Quando preenchido, ele vale no lugar da soma.</td></tr>
+      </table></div>
+      <div class="callout warn" style="border:1px solid #e5dbee;border-left:4px solid #6e2f91;border-radius:10px;padding:14px 18px;margin:0 0 16px;border-left-color:#b3831a;background:#faf3e3;border-color:#eddfba;">Sem esses dois valores a <strong style="color:#251d2b;">NFe não é emitida</strong>: o botão Emitir
+      recusa e diz o que falta. Vale só para nota que move mercadoria — o acerto de consignação, que
+      fatura livro já entregue, passa direto.</div>
+      <p style="margin:0 0 12px;">Na fatura, aba <span class="menupath" style="display:inline-block;background:#f1eaf6;border:1px solid #e5dbee;border-radius:6px;padding:1px 8px;font-size:13.5px;color:#251d2b;white-space:nowrap;">NFe (Focus)</span>, bloco
+      <span class="field" style="font-weight:600;color:#251d2b;">Volumes e peso</span>: quem fatura confere, corrige se precisar, e tem o botão
+      <span class="field" style="font-weight:600;color:#251d2b;">Trazer da movimentação</span> para buscar de novo os números das transferências.</p>
+      <figure class="shot" style="margin:20px 0 24px;">
+        <img src="img/doc-liber_transport-pdf-da-entrega.png" alt="PDF do Picking com transportadora e caixas no cabeçalho" style="max-width:100%;display:block;margin:0 auto;border-radius:12px;border:1px solid #e5dbee;">
+        <figcaption style="font-size:13px;color:#5d5266;margin-top:10px;text-align:center;">O PDF da entrega (<span class="menupath" style="display:inline-block;background:#f1eaf6;border:1px solid #e5dbee;border-radius:6px;padding:1px 8px;font-size:13.5px;color:#251d2b;white-space:nowrap;">Imprimir<i style="font-style:normal;color:#6e2f91;margin:0 4px;font-weight:700;">‣</i>Picking</span>) declara a
+        transportadora e as caixas no cabeçalho — é a folha que viaja com os volumes.</figcaption>
+      </figure>
+
+      <h2 id="pedir-coleta" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">Como peço a coleta?</h2>
+      <p style="margin:0 0 12px;">Da lista de entregas, em lote — nunca uma por uma.</p>
+      <ol class="steps" style="margin:0 0 16px 22px;padding:0;">
+        <li style="margin:0 0 7px;">Abra <span class="menupath" style="display:inline-block;background:#f1eaf6;border:1px solid #e5dbee;border-radius:6px;padding:1px 8px;font-size:13.5px;color:#251d2b;white-space:nowrap;">Inventário<i style="font-style:normal;color:#6e2f91;margin:0 4px;font-weight:700;">‣</i>Pedidos de entrega</span> e marque as entregas que estão
+            prontas para viajar.</li>
+        <li style="margin:0 0 7px;">No menu <span class="menupath" style="display:inline-block;background:#f1eaf6;border:1px solid #e5dbee;border-radius:6px;padding:1px 8px;font-size:13.5px;color:#251d2b;white-space:nowrap;">Ações</span>, clique em <span class="field" style="font-weight:600;color:#251d2b;">Solicitar coleta</span>.</li>
+        <li style="margin:0 0 7px;">A janela mostra <strong style="color:#251d2b;">uma linha por transportadora</strong>, com o e-mail que vai receber o
+            pedido e as entregas de cada uma. Catorze entregas da Transpo são <strong style="color:#251d2b;">um</strong> e-mail
+            com uma tabela, não catorze e-mails.</li>
+        <li style="margin:0 0 7px;">Clique em <span class="field" style="font-weight:600;color:#251d2b;">Enviar</span>. O e-mail sai com o texto padrão da casa e a tabela
+            das entregas: referência, pedido de origem, destinatário, cidade/UF, <strong style="color:#251d2b;">caixas e
+            peso</strong> — com o total no rodapé, que é o que a transportadora lê para mandar o
+            veículo certo.</li>
+      </ol>
+      <figure class="shot" style="margin:20px 0 24px;">
+        <img src="img/doc-liber_transport-solicitar-coleta.png" alt="Janela Solicitar coleta com uma linha por transportadora e o aviso de entrega sem transportadora" style="max-width:100%;display:block;margin:0 auto;border-radius:12px;border:1px solid #e5dbee;">
+        <figcaption style="font-size:13px;color:#5d5266;margin-top:10px;text-align:center;">Uma linha por transportadora, com caixas e peso somados — e o aviso amarelo
+        para a entrega que ficou sem transportadora, fora do envio sem travar as demais.</figcaption>
+      </figure>
+      <p style="margin:0 0 12px;">O Odoo leva você direto à <strong style="color:#251d2b;">solicitação</strong> criada — é lá que ela passa a morar.</p>
+
+      <h2 id="acompanhar" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">Onde acompanho o que já foi pedido?</h2>
+      <p style="margin:0 0 12px;">Em <span class="menupath" style="display:inline-block;background:#f1eaf6;border:1px solid #e5dbee;border-radius:6px;padding:1px 8px;font-size:13.5px;color:#251d2b;white-space:nowrap;">Inventário<i style="font-style:normal;color:#6e2f91;margin:0 4px;font-weight:700;">‣</i>Operações<i style="font-style:normal;color:#6e2f91;margin:0 4px;font-weight:700;">‣</i>Transferências<i style="font-style:normal;color:#6e2f91;margin:0 4px;font-weight:700;">‣</i>Solicitações de coleta</span>. Cada solicitação é
+      um lote numerado (<span class="field" style="font-weight:600;color:#251d2b;">COL/2026/00001</span>) com uma transportadora e as entregas
+      que ela vem buscar. É esse número que se cita ao telefone.</p>
+      <p style="margin:0 0 12px;">Na ficha da solicitação estão o e-mail que saiu (no histórico, à direita, como foi escrito) e os
+      campos que a logística preenche quando a transportadora responde:</p>
+      <figure class="shot" style="margin:20px 0 24px;">
+        <img src="img/doc-liber_transport-lote-de-coleta.png" alt="Solicitação COL/ com as entregas da Transpo e o e-mail enviado no histórico" style="max-width:100%;display:block;margin:0 auto;border-radius:12px;border:1px solid #e5dbee;">
+        <figcaption style="font-size:13px;color:#5d5266;margin-top:10px;text-align:center;">O lote <span class="field" style="font-weight:600;color:#251d2b;">COL/</span> com as entregas de uma transportadora:
+        o e-mail enviado mora no histórico, e a <span class="field" style="font-weight:600;color:#251d2b;">Data combinada</span> e o
+        <span class="field" style="font-weight:600;color:#251d2b;">Protocolo</span> guardam a resposta.</figcaption>
+      </figure>
+      <div class="tablewrap" style="overflow-x:auto;margin:0 0 16px;"><table style="border-collapse:collapse;width:100%;margin:0 0 16px;font-size:14px;">
+        <tr><th style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;background:#f1eaf6;font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:13.5px;">Campo / botão</th><th style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;background:#f1eaf6;font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:13.5px;">Para quê</th></tr>
+        <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;"><span class="field" style="font-weight:600;color:#251d2b;">Data combinada</span></td>
+            <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">O dia que a transportadora confirmou para a coleta.</td></tr>
+        <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;"><span class="field" style="font-weight:600;color:#251d2b;">Protocolo da transportadora</span></td>
+            <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">O número que ela dá à coleta, quando dá — o que se cita para cobrar.</td></tr>
+        <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;"><span class="field" style="font-weight:600;color:#251d2b;">Marcar como coletada</span></td>
+            <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Fecha a solicitação quando o caminhão passou e levou.</td></tr>
+        <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;"><span class="field" style="font-weight:600;color:#251d2b;">Enviar de novo</span></td>
+            <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Reenvia o mesmo pedido, sem criar outro lote — para quando ninguém responde.</td></tr>
+      </table></div>
+      <div class="callout" style="border:1px solid #e5dbee;border-left:4px solid #6e2f91;border-radius:10px;background:#f1eaf6;padding:14px 18px;margin:0 0 16px;">A resposta da transportadora, se ela responder ao e-mail, cai no histórico da própria
+      solicitação. Assim a conversa fica junto do pedido, e não perdida na caixa de alguém.</div>
+      <p style="margin:0 0 12px;">Cada entrega também guarda o seu rastro: a data em <span class="field" style="font-weight:600;color:#251d2b;">Coleta solicitada em</span>,
+      o link para a solicitação na aba <span class="menupath" style="display:inline-block;background:#f1eaf6;border:1px solid #e5dbee;border-radius:6px;padding:1px 8px;font-size:13.5px;color:#251d2b;white-space:nowrap;">Informações adicionais</span>, e uma nota no
+      histórico dizendo a quem foi pedida. Na lista de entregas, os filtros
+      <span class="field" style="font-weight:600;color:#251d2b;">Com coleta solicitada</span> e <span class="field" style="font-weight:600;color:#251d2b;">Sem coleta solicitada</span>
+      separam o que já foi chamado do que ainda espera.</p>
+      <div class="callout" style="border:1px solid #e5dbee;border-left:4px solid #6e2f91;border-radius:10px;background:#f1eaf6;padding:14px 18px;margin:0 0 16px;">Pedir de novo é permitido — recoleta acontece. Uma entrega pode entrar em mais de
+      uma solicitação, e as duas ficam no histórico dela.</div>
+
+      <h2 id="texto-do-email" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">Como mudo o texto do e-mail?</h2>
+      <p style="margin:0 0 12px;">Em <span class="menupath" style="display:inline-block;background:#f1eaf6;border:1px solid #e5dbee;border-radius:6px;padding:1px 8px;font-size:13.5px;color:#251d2b;white-space:nowrap;">Definições<i style="font-style:normal;color:#6e2f91;margin:0 4px;font-weight:700;">‣</i>Transporte</span>, campo
+      <span class="field" style="font-weight:600;color:#251d2b;">Texto do e-mail de solicitação de coleta</span>. O texto é por empresa; vazio,
+      vale o padrão do sistema ("Solicitamos a coleta dos volumes relacionados abaixo…"). A tabela de
+      entregas e o endereço de coleta entram sempre, independentemente do texto.</p>
+
+      <h2 id="problemas" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">Quando algo não sai como esperado</h2>
+      <div class="tablewrap" style="overflow-x:auto;margin:0 0 16px;"><table style="border-collapse:collapse;width:100%;margin:0 0 16px;font-size:14px;">
+        <tr><th style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;background:#f1eaf6;font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:13.5px;">O que aparece</th><th style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;background:#f1eaf6;font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:13.5px;">Por quê</th><th style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;background:#f1eaf6;font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:13.5px;">O que fazer</th></tr>
+        <tr>
+          <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">"Solicitar coleta" não está no menu Ações</td>
+          <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Nenhuma linha marcada, ou a tela não é a lista de entregas.</td>
+          <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Volte à lista de Pedidos de entrega e marque ao menos uma linha.</td>
+        </tr>
+        <tr>
+          <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Aviso "Sem transportadora" na janela</td>
+          <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Aquelas entregas não têm transportadora preenchida.</td>
+          <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Elas ficam fora do envio, sem travar as demais. Preencha a transportadora na ficha da
+              entrega (ou no cliente, para as próximas) e peça de novo.</td>
+        </tr>
+        <tr>
+          <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Linha vermelha na janela, e depois uma solicitação em <span class="field" style="font-weight:600;color:#251d2b;">Rascunho</span></td>
+          <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">O contato da transportadora está sem e-mail.</td>
+          <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">O agrupamento não se perde: a solicitação é criada em rascunho. Complete o e-mail no
+              contato da transportadora e clique <span class="field" style="font-weight:600;color:#251d2b;">Enviar</span> na ficha dela.</td>
+        </tr>
+        <tr>
+          <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">O e-mail ainda não chegou</td>
+          <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">O envio sai em lote pela fila do sistema, não na hora do clique.</td>
+          <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Aguarde alguns minutos. Em ambiente de teste o envio externo fica contido de propósito.</td>
+        </tr>
+      </table></div>
+
+      <h2 id="nao-fazer" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">O que não fazer</h2>
+      <ul style="margin:0 0 14px 22px;padding:0;">
+        <li style="margin:0 0 7px;"><strong style="color:#251d2b;">Não use o "Enviar e-mail" genérico da lista para falar com a transportadora.</strong>
+            Aquela ação escreve para o <em>cliente</em> de cada entrega — e uma por uma. Coleta é pela
+            ação <span class="field" style="font-weight:600;color:#251d2b;">Solicitar coleta</span>.</li>
+        <li style="margin:0 0 7px;"><strong style="color:#251d2b;">Não cadastre a transportadora dentro do cliente.</strong> Transportadora é contato
+            próprio, ligado ao método de entrega — dentro do cliente ela viraria endereço de entrega.</li>
+      </ul>
+
+      <div class="callout" style="border:1px solid #e5dbee;border-left:4px solid #6e2f91;border-radius:10px;background:#f1eaf6;padding:14px 18px;margin:0 0 16px;">Dúvida sobre acesso ou empresa: fale com a administração do sistema.
+      Toda solicitação de coleta fica registrada no histórico da entrega, com data e hora.</div><p style="margin:28px 0 0;padding-top:14px;border-top:1px solid #e5dbee;font-size:13px;color:#5d5266;">Manual completo, com busca e as demais páginas: <a href="/liber_site/static/docs/liber_transport.html" target="_blank" rel="noopener" style="color:#6e2f91;">Transportadora e coleta</a>.</p></div>

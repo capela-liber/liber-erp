@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_picking_form_inherit_transport" model="ir.ui.view">
+        <field name="name">stock.picking.form.inherit.liber.transport</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock_delivery.view_picking_withcarrier_out_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group[@name='carrier_data']" position="inside">
+                <field name="box_count"/>
+                <field name="pickup_request_date" invisible="not pickup_request_date"/>
+                <field name="pickup_request_ids" widget="many2many_tags"
+                       invisible="not pickup_request_ids"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_picking_search_inherit_transport" model="ir.ui.view">
+        <field name="name">stock.picking.search.inherit.liber.transport</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_internal_search"/>
+        <field name="arch" type="xml">
+            <xpath expr="//search" position="inside">
+                <separator/>
+                <filter string="Pickup Requested" name="filter_pickup_requested"
+                        domain="[('pickup_request_date', '!=', False)]"/>
+                <filter string="No Pickup Requested" name="filter_no_pickup"
+                        domain="[('pickup_request_date', '=', False)]"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

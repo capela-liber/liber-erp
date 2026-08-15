@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Resposta de chamado é e-mail de GENTE: sem moldura de notificação,
+         sem botão "View Ticket", sem rodapé de sistema. É também o que
+         tira a conversa da aba "Atualizações" do Gmail — a moldura é
+         assinatura de e-mail transacional (10-11/08/2026). -->
+    <template id="mail_layout_clean">
+        <t t-out="message.body"/>
+    </template>
+</odoo>

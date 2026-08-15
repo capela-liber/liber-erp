@@ -1,0 +1,992 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* liber_support
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0-20260630\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-08-10 00:36+0000\n"
+"PO-Revision-Date: 2026-08-10 00:36+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#. module: liber_support
+#: model:ir.model.fields,help:liber_support.field_liber_support_team__sla_resolution_hours_normal
+msgid "24 working hours = 3 working days of 8 hours."
+msgstr "24 horas úteis = 3 dias úteis de 8 horas."
+
+#. module: liber_support
+#: model_terms:ir.ui.view,arch_db:liber_support.view_support_ticket_form
+msgid "<span class=\"o_stat_text\">Order</span>"
+msgstr "<span class=\"o_stat_text\">Pedido</span>"
+
+#. module: liber_support
+#: model:ir.model.fields,help:liber_support.field_liber_support_team__alias_defaults
+msgid ""
+"A Python dictionary that will be evaluated to provide default values when "
+"creating new records for this alias."
+msgstr ""
+
+#. module: liber_support
+#: model:ir.model.fields,field_description:liber_support.field_liber_support_ticket__message_needaction
+msgid "Action Needed"
+msgstr ""
+
+#. module: liber_support
+#: model:ir.model.fields,field_description:liber_support.field_liber_support_team__active
+msgid "Active"
+msgstr ""
+
+#. module: liber_support
+#: model:ir.model.fields,field_description:liber_support.field_liber_support_ticket__activity_ids
+msgid "Activities"
+msgstr ""
+
+#. module: liber_support
+#: model:ir.model.fields,field_description:liber_support.field_liber_support_ticket__activity_exception_decoration
+msgid "Activity Exception Decoration"
+msgstr ""
+
+#. module: liber_support
+#: model:ir.model.fields,field_description:liber_support.field_liber_support_ticket__activity_state
+msgid "Activity State"
+msgstr ""
+
+#. module: liber_support
+#: model:ir.model.fields,field_description:liber_support.field_liber_support_ticket__activity_type_icon
+msgid "Activity Type Icon"
+msgstr ""
+
+#. module: liber_support
+#: model:ir.model.fields,field_description:liber_support.field_liber_support_team__alias_id
+msgid "Alias"
+msgstr ""
+
+#. module: liber_support
+#: model:ir.model.fields,field_description:liber_support.field_liber_support_team__alias_contact
+msgid "Alias Contact Security"
+msgstr ""
+
+#. module: liber_support
+#: model:ir.model.fields,field_description:liber_support.field_liber_support_team__alias_domain_id
+msgid "Alias Domain"
+msgstr ""
+
+#. module: liber_support
+#: model:ir.model.fields,field_description:liber_support.field_liber_support_team__alias_domain
+msgid "Alias Domain Name"
+msgstr ""
+
+#. module: liber_support
+#: model:ir.model.fields,field_description:liber_support.field_liber_support_team__alias_full_name
+msgid "Alias Email"
+msgstr ""
+
+#. module: liber_support
+#: model:ir.model.fields,field_description:liber_support.field_liber_support_team__alias_name
+msgid "Alias Name"
+msgstr ""
+
+#. module: liber_support
+#: model:ir.model.fields,field_description:liber_support.field_liber_support_team__alias_status
+msgid "Alias Status"
+msgstr ""
+
+#. module: liber_support
+#: model:ir.model.fields,help:liber_support.field_liber_support_team__alias_status
+msgid "Alias status assessed on the last message received."
+msgstr ""
+
+#. module: liber_support
+#: model:ir.model.fields,field_description:liber_support.field_liber_support_team__alias_model_id
+msgid "Aliased Model"
+msgstr ""
+
+#. module: liber_support
+#: model:ir.model.fields.selection,name:liber_support.selection__liber_support_ticket__sla_state__warn
+msgid "Almost Due"
+msgstr "Perto do prazo"
+
+#. module: liber_support
+#: model:ir.model.fields,help:liber_support.field_liber_support_ticket__email_from
+msgid "Always kept, even when no partner could be matched."
+msgstr "Sempre preenchido, mesmo sem parceiro casado."
+
+#. module: liber_support
+#: model_terms:ir.ui.view,arch_db:liber_support.view_support_ticket_form
+msgid "Assign to me"
+msgstr "Assumir"
+
+#. module: liber_support
+#: model:ir.model.fields,field_description:liber_support.field_liber_support_ticket__user_id
+msgid "Assigned to"
+msgstr "Responsável"
+
+#. module: liber_support
+#: model_terms:ir.ui.view,arch_db:liber_support.view_support_ticket_search
+msgid "Assignee"
+msgstr "Responsável"
+
+#. module: liber_support
+#: model:ir.model.fields,field_description:liber_support.field_liber_support_ticket__message_attachment_count
+msgid "Attachment Count"
+msgstr ""
+
+#. module: liber_support
+#: model:ir.model.fields,help:liber_support.field_liber_support_ticket__partner_id
+msgid ""
+"Auto-linked only when the sender email is unique in the base — a duplicated "
+"email matching the wrong partner is worse than no match."
+msgstr "Vinculado automaticamente só quando o e-mail é único na base — e-mail duplicado casando o parceiro errado é pior que não casar."
+
+#. module: liber_support
+#: model:ir.model.fields.selection,name:liber_support.selection__liber_support_ticket__kind__billing
+msgid "Billing"
+msgstr "Cobrança"
+
+#. module: liber_support
+#: model:ir.model.fields,field_description:liber_support.field_liber_support_ticket__channel
+msgid "Channel"
+msgstr "Canal"
+
+#. module: liber_support
+#: model:liber.support.stage,name:liber_support.stage_closed
+msgid "Closed"
+msgstr "Fechado"
+
+#. module: liber_support
+#: model:ir.model.fields,field_description:liber_support.field_liber_support_ticket__closed_date
+msgid "Closed on"
+msgstr "Fechado em"
+
+#. module: liber_support
+#: model:ir.model.fields,field_description:liber_support.field_liber_support_stage__is_closed
+msgid "Closing Stage"
+msgstr "Estágio de fechamento"
+
+#. module: liber_support
+#: model:ir.model.fields,field_description:liber_support.field_liber_support_tag__color
+msgid "Color"
+msgstr ""
+
+#. module: liber_support
+#: model:ir.model.fields,field_description:liber_support.field_liber_support_team__company_id
+#: model:ir.model.fields,field_description:liber_support.field_liber_support_ticket__company_id
+msgid "Company"
+msgstr ""
+
+#. module: liber_support
+#: model:ir.ui.menu,name:liber_support.menu_support_config
+msgid "Configuration"
+msgstr "Configuração"
+
+#. module: liber_support
+#: model:ir.model.fields.selection,name:liber_support.selection__liber_support_ticket__kind__consignment
+msgid "Consignment"
+msgstr "Consignação"
+
+#. module: liber_support
+#: model:ir.model.fields,help:liber_support.field_liber_support_ticket__external_ref
+msgid "Conversation id on the external transport (e.g. Chatwoot)."
+msgstr "Id da conversa no transporte externo (ex.: Chatwoot)."
+
+#. module: liber_support
+#: model:ir.model.fields,field_description:liber_support.field_liber_support_stage__create_uid
+#: model:ir.model.fields,field_description:liber_support.field_liber_support_tag__create_uid
+#: model:ir.model.fields,field_description:liber_support.field_liber_support_team__create_uid
+#: model:ir.model.fields,field_description:liber_support.field_liber_support_ticket__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: liber_support
+#: model:ir.model.fields,field_description:liber_support.field_liber_support_stage__create_date
+#: model:ir.model.fields,field_description:liber_support.field_liber_support_tag__create_date
+#: model:ir.model.fields,field_description:liber_support.field_liber_support_team__create_date
+#: model:ir.model.fields,field_description:liber_support.field_liber_support_ticket__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: liber_support
+#: model:ir.model.fields,field_description:liber_support.field_liber_support_team__alias_bounced_content
+msgid "Custom Bounced Message"
+msgstr ""
+
+#. module: liber_support
+#: model:ir.model.fields,field_description:liber_support.field_liber_support_team__alias_defaults
+msgid "Default Values"
+msgstr ""
+
+#. module: liber_support
+#: model:ir.model.fields,field_description:liber_support.field_liber_support_stage__display_name
+#: model:ir.model.fields,field_description:liber_support.field_liber_support_tag__display_name
+#: model:ir.model.fields,field_description:liber_support.field_liber_support_team__display_name
+#: model:ir.model.fields,field_description:liber_support.field_liber_support_ticket__display_name
+#: model:ir.model.fields,field_description:liber_support.field_sale_order__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: liber_support
+#: model:ir.model.fields.selection,name:liber_support.selection__liber_support_ticket__channel__email
+msgid "Email"
+msgstr "E-mail"
+
+#. module: liber_support
+#: model:ir.model.fields,field_description:liber_support.field_liber_support_team__alias_email
+#: model_terms:ir.ui.view,arch_db:liber_support.view_support_team_form
+msgid "Email Alias"
+msgstr "Alias de e-mail"
+
+#. module: liber_support
+#: model:ir.model.fields,help:liber_support.field_liber_support_team__alias_domain
+msgid "Email domain e.g. 'example.com' in 'odoo@example.com'"
+msgstr ""
+
+#. module: liber_support
+#: model_terms:ir.actions.act_window,help:liber_support.action_support_ticket
+msgid "Emails sent to the commercial mailbox become tickets here."
+msgstr "Os e-mails da caixa comercial viram chamados aqui."
+
+#. module: liber_support
+#: model:ir.model.fields,help:liber_support.field_liber_support_ticket__user_id
+msgid "Empty means: not triaged yet."
+msgstr "Vazio significa: ainda não triado."
+
+#. module: liber_support
+#: model:ir.model.fields,help:liber_support.field_liber_support_stage__is_closed
+msgid ""
+"Entering this stage stamps the closing date and freezes both SLA clocks."
+msgstr "Entrar neste estágio carimba a data de fechamento e congela os dois relógios de SLA."
+
+#. module: liber_support
+#: model:ir.model.fields,field_description:liber_support.field_liber_support_ticket__external_ref
+msgid "External Reference"
+msgstr "Referência externa"
+
+#. module: liber_support
+#: model:ir.model.fields,field_description:liber_support.field_liber_support_team__sla_response_hours_normal
+msgid "First Response (Normal)"
+msgstr "Primeira resposta (normal)"
+
+#. module: liber_support
+#: model:ir.model.fields,field_description:liber_support.field_liber_support_team__sla_response_hours_urgent
+msgid "First Response (Urgent)"
+msgstr "Primeira resposta (urgente)"
+
+#. module: liber_support
+#: model:ir.model.fields,field_description:liber_support.field_liber_support_ticket__sla_response_done
+msgid "First Response At"
+msgstr "Primeira resposta em"
+
+#. module: liber_support
+#: model:ir.model.fields,field_description:liber_support.field_liber_support_ticket__sla_response_deadline
+msgid "First Response Due"
+msgstr "Primeira resposta até"
+
+#. module: liber_support
+#: model:ir.model.fields.selection,name:liber_support.selection__liber_support_ticket__kind__fiscal
+msgid "Fiscal / Invoice"
+msgstr "Fiscal / Nota"
+
+#. module: liber_support
+#: model:ir.model.fields,help:liber_support.field_liber_support_stage__fold
+msgid "Folded columns hold finished work: Resolved, Closed, Spam."
+msgstr "Colunas dobradas guardam trabalho terminado: Resolvido, Fechado, Spam."
+
+#. module: liber_support
+#: model:ir.model.fields,field_description:liber_support.field_liber_support_stage__fold
+msgid "Folded in Kanban"
+msgstr "Dobrado no kanban"
+
+#. module: liber_support
+#: model:ir.model.fields,field_description:liber_support.field_liber_support_ticket__message_follower_ids
+msgid "Followers"
+msgstr ""
+
+#. module: liber_support
+#: model:ir.model.fields,field_description:liber_support.field_liber_support_ticket__message_partner_ids
+msgid "Followers (Partners)"
+msgstr ""
+
+#. module: liber_support
+#: model:ir.model.fields,help:liber_support.field_liber_support_ticket__activity_type_icon
+msgid "Font awesome icon e.g. fa-tasks"
+msgstr ""
+
+#. module: liber_support
+#: model:ir.model.fields,field_description:liber_support.field_liber_support_ticket__email_from
+msgid "From Email"
+msgstr "E-mail do remetente"
+
+#. module: liber_support
+#: model:ir.model.fields,help:liber_support.field_liber_support_team__leader_id
+msgid "Gets the to-do activity when a ticket goes late."
+msgstr "Recebe a atividade quando um chamado atrasa."
+
+#. module: liber_support
+#: model:ir.model.fields,field_description:liber_support.field_liber_support_ticket__has_message
+msgid "Has Message"
+msgstr ""
+
+#. module: liber_support
+#: model:ir.model.fields,field_description:liber_support.field_liber_support_stage__id
+#: model:ir.model.fields,field_description:liber_support.field_liber_support_tag__id
+#: model:ir.model.fields,field_description:liber_support.field_liber_support_team__id
+#: model:ir.model.fields,field_description:liber_support.field_liber_support_ticket__id
+#: model:ir.model.fields,field_description:liber_support.field_sale_order__id
+msgid "ID"
+msgstr ""
+
+#. module: liber_support
+#: model:ir.model.fields,help:liber_support.field_liber_support_team__alias_parent_thread_id
+msgid ""
+"ID of the parent record holding the alias (example: project holding the task"
+" creation alias)"
+msgstr ""
+
+#. module: liber_support
+#: model:ir.model.fields,field_description:liber_support.field_liber_support_ticket__activity_exception_icon
+msgid "Icon"
+msgstr ""
+
+#. module: liber_support
+#: model:ir.model.fields,help:liber_support.field_liber_support_ticket__activity_exception_icon
+msgid "Icon to indicate an exception activity."
+msgstr ""
+
+#. module: liber_support
+#: model:ir.model.fields,help:liber_support.field_liber_support_ticket__message_needaction
+msgid "If checked, new messages require your attention."
+msgstr ""
+
+#. module: liber_support
+#: model:ir.model.fields,help:liber_support.field_liber_support_ticket__message_has_error
+#: model:ir.model.fields,help:liber_support.field_liber_support_ticket__message_has_sms_error
+msgid "If checked, some messages have a delivery error."
+msgstr ""
+
+#. module: liber_support
+#: model:ir.model.fields,help:liber_support.field_liber_support_team__alias_bounced_content
+msgid ""
+"If set, this content will automatically be sent out to unauthorized users "
+"instead of the default message."
+msgstr ""
+
+#. module: liber_support
+#: model:liber.support.stage,name:liber_support.stage_in_progress
+msgid "In Progress"
+msgstr "Em andamento"
+
+#. module: liber_support
+#: model:ir.model.fields,field_description:liber_support.field_liber_support_ticket__message_is_follower
+msgid "Is Follower"
+msgstr ""
+
+#. module: liber_support
+#: model:ir.model.fields,field_description:liber_support.field_liber_support_ticket__kind
+#: model_terms:ir.ui.view,arch_db:liber_support.view_support_ticket_search
+msgid "Kind"
+msgstr "Tipo"
+
+#. module: liber_support
+#: model:ir.model.fields,field_description:liber_support.field_liber_support_stage__write_uid
+#: model:ir.model.fields,field_description:liber_support.field_liber_support_tag__write_uid
+#: model:ir.model.fields,field_description:liber_support.field_liber_support_team__write_uid
+#: model:ir.model.fields,field_description:liber_support.field_liber_support_ticket__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: liber_support
+#: model:ir.model.fields,field_description:liber_support.field_liber_support_stage__write_date
+#: model:ir.model.fields,field_description:liber_support.field_liber_support_tag__write_date
+#: model:ir.model.fields,field_description:liber_support.field_liber_support_team__write_date
+#: model:ir.model.fields,field_description:liber_support.field_liber_support_ticket__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: liber_support
+#: model:ir.model.fields.selection,name:liber_support.selection__liber_support_ticket__sla_state__late
+#: model_terms:ir.ui.view,arch_db:liber_support.view_support_ticket_search
+msgid "Late"
+msgstr "Atrasado"
+
+#. module: liber_support
+#: model:ir.model.fields,field_description:liber_support.field_liber_support_team__alias_incoming_local
+msgid "Local-part based incoming detection"
+msgstr ""
+
+#. module: liber_support
+#: model:res.groups,name:liber_support.group_support_manager
+msgid "Manager"
+msgstr "Gerente"
+
+#. module: liber_support
+#: model:ir.model.fields.selection,name:liber_support.selection__liber_support_ticket__channel__manual
+msgid "Manual"
+msgstr ""
+
+#. module: liber_support
+#: model:ir.model.fields,field_description:liber_support.field_liber_support_team__member_ids
+msgid "Members"
+msgstr "Membros"
+
+#. module: liber_support
+#: model:ir.model.fields,field_description:liber_support.field_liber_support_ticket__message_has_error
+msgid "Message Delivery error"
+msgstr ""
+
+#. module: liber_support
+#: model:ir.model.fields,field_description:liber_support.field_liber_support_ticket__message_ids
+msgid "Messages"
+msgstr ""
+
+#. module: liber_support
+#: model:ir.model.fields.selection,name:liber_support.selection__liber_support_ticket__sla_state__met
+msgid "Met"
+msgstr "Cumprido"
+
+#. module: liber_support
+#: model:ir.model.fields.selection,name:liber_support.selection__liber_support_ticket__sla_state__missed
+msgid "Missed"
+msgstr "Perdido"
+
+#. module: liber_support
+#: model_terms:ir.ui.view,arch_db:liber_support.view_support_ticket_search
+msgid "Month"
+msgstr "Mês"
+
+#. module: liber_support
+#: model:ir.model.fields,field_description:liber_support.field_liber_support_ticket__my_activity_date_deadline
+msgid "My Activity Deadline"
+msgstr ""
+
+#. module: liber_support
+#: model_terms:ir.ui.view,arch_db:liber_support.view_support_ticket_search
+msgid "My Tickets"
+msgstr "Meus chamados"
+
+#. module: liber_support
+#: model:ir.model.fields,field_description:liber_support.field_liber_support_stage__name
+#: model:ir.model.fields,field_description:liber_support.field_liber_support_tag__name
+#: model:ir.model.fields,field_description:liber_support.field_liber_support_team__name
+msgid "Name"
+msgstr ""
+
+#. module: liber_support
+#. odoo-python
+#: code:addons/liber_support/models/support_ticket.py:0
+#: model:liber.support.stage,name:liber_support.stage_new
+msgid "New"
+msgstr "Novo"
+
+#. module: liber_support
+#: model:ir.model.fields,field_description:liber_support.field_liber_support_ticket__activity_calendar_event_id
+msgid "Next Activity Calendar Event"
+msgstr ""
+
+#. module: liber_support
+#: model:ir.model.fields,field_description:liber_support.field_liber_support_ticket__activity_date_deadline
+msgid "Next Activity Deadline"
+msgstr ""
+
+#. module: liber_support
+#: model:ir.model.fields,field_description:liber_support.field_liber_support_ticket__activity_summary
+msgid "Next Activity Summary"
+msgstr ""
+
+#. module: liber_support
+#: model:ir.model.fields,field_description:liber_support.field_liber_support_ticket__activity_type_id
+msgid "Next Activity Type"
+msgstr ""
+
+#. module: liber_support
+#: model_terms:ir.ui.view,arch_db:liber_support.view_support_ticket_search
+msgid "No Partner"
+msgstr "Sem parceiro"
+
+#. module: liber_support
+#. odoo-python
+#: code:addons/liber_support/models/support_ticket.py:0
+msgid "No subject"
+msgstr "Sem assunto"
+
+#. module: liber_support
+#: model_terms:ir.actions.act_window,help:liber_support.action_support_ticket
+msgid "No tickets yet"
+msgstr "Nenhum chamado ainda"
+
+#. module: liber_support
+#: model:ir.model.fields.selection,name:liber_support.selection__liber_support_ticket__priority__0
+msgid "Normal"
+msgstr ""
+
+#. module: liber_support
+#: model:ir.model.fields,field_description:liber_support.field_liber_support_ticket__number
+msgid "Number"
+msgstr "Número"
+
+#. module: liber_support
+#: model:ir.model.fields,field_description:liber_support.field_liber_support_ticket__message_needaction_counter
+msgid "Number of Actions"
+msgstr ""
+
+#. module: liber_support
+#: model:ir.model.fields,field_description:liber_support.field_liber_support_ticket__message_has_error_counter
+msgid "Number of errors"
+msgstr ""
+
+#. module: liber_support
+#: model:ir.model.fields,help:liber_support.field_liber_support_ticket__message_needaction_counter
+msgid "Number of messages requiring action"
+msgstr ""
+
+#. module: liber_support
+#: model:ir.model.fields,help:liber_support.field_liber_support_ticket__message_has_error_counter
+msgid "Number of messages with delivery error"
+msgstr ""
+
+#. module: liber_support
+#: model:ir.model.fields.selection,name:liber_support.selection__liber_support_ticket__sla_state__ok
+msgid "On Time"
+msgstr "No prazo"
+
+#. module: liber_support
+#: model_terms:ir.ui.view,arch_db:liber_support.view_support_ticket_search
+msgid "Open"
+msgstr "Abertos"
+
+#. module: liber_support
+#: model_terms:ir.ui.view,arch_db:liber_support.view_sale_order_form_support
+msgid "Open Support Ticket"
+msgstr "Abrir atendimento"
+
+#. module: liber_support
+#: model_terms:ir.ui.view,arch_db:liber_support.view_support_team_form
+#: model_terms:ir.ui.view,arch_db:liber_support.view_support_team_list
+msgid "Open Tickets"
+msgstr "Chamados abertos"
+
+#. module: liber_support
+#: model:ir.model.fields,help:liber_support.field_liber_support_team__alias_force_thread_id
+msgid ""
+"Optional ID of a thread (record) to which all incoming messages will be "
+"attached, even if they did not reply to it. If set, this will disable the "
+"creation of new records completely."
+msgstr ""
+
+#. module: liber_support
+#: model:ir.model.fields,field_description:liber_support.field_liber_support_ticket__sale_order_id
+#: model_terms:ir.ui.view,arch_db:liber_support.view_support_ticket_kanban
+msgid "Order"
+msgstr "Pedido"
+
+#. module: liber_support
+#: model:ir.model.fields.selection,name:liber_support.selection__liber_support_ticket__kind__other
+msgid "Other"
+msgstr "Outro"
+
+#. module: liber_support
+#: model:ir.model.fields,field_description:liber_support.field_liber_support_team__alias_parent_model_id
+msgid "Parent Model"
+msgstr ""
+
+#. module: liber_support
+#: model:ir.model.fields,field_description:liber_support.field_liber_support_team__alias_parent_thread_id
+msgid "Parent Record Thread ID"
+msgstr ""
+
+#. module: liber_support
+#: model:ir.model.fields,help:liber_support.field_liber_support_team__alias_parent_model_id
+msgid ""
+"Parent model holding the alias. The model holding the alias reference is not"
+" necessarily the model given by alias_model_id (example: project "
+"(parent_model) and task (model))"
+msgstr ""
+
+#. module: liber_support
+#: model:ir.model.fields,field_description:liber_support.field_liber_support_ticket__partner_id
+msgid "Partner"
+msgstr "Parceiro"
+
+#. module: liber_support
+#: model:ir.model.fields,field_description:liber_support.field_liber_support_stage__pause_sla
+msgid "Pauses SLA"
+msgstr "Pausa o SLA"
+
+#. module: liber_support
+#: model:ir.model.fields,help:liber_support.field_liber_support_team__alias_contact
+msgid ""
+"Policy to post a message on the document using the mailgateway.\n"
+"- everyone: everyone can post\n"
+"- partners: only authenticated partners\n"
+"- followers: only followers of the related document or members of following channels\n"
+msgstr ""
+
+#. module: liber_support
+#: model:ir.model.fields,field_description:liber_support.field_liber_support_ticket__priority
+msgid "Priority"
+msgstr "Prioridade"
+
+#. module: liber_support
+#: model:ir.model.fields,field_description:liber_support.field_liber_support_ticket__rating_ids
+msgid "Ratings"
+msgstr ""
+
+#. module: liber_support
+#: model:res.groups,comment:liber_support.group_support_user
+msgid ""
+"Reads and writes the tickets of the teams they\n"
+"belong to — all of them, not only their own, otherwise nobody picks up\n"
+"what has no owner."
+msgstr ""
+
+#. module: liber_support
+#: model_terms:ir.ui.view,arch_db:liber_support.view_support_ticket_list
+msgid "Received"
+msgstr "Recebido"
+
+#. module: liber_support
+#: model:ir.model.fields,field_description:liber_support.field_liber_support_team__alias_force_thread_id
+msgid "Record Thread ID"
+msgstr ""
+
+#. module: liber_support
+#: model:ir.model.fields.selection,name:liber_support.selection__liber_support_ticket__kind__registration
+msgid "Registration"
+msgstr "Cadastro"
+
+#. module: liber_support
+#. odoo-python
+#: code:addons/liber_support/models/support_ticket.py:0
+msgid ""
+"Reopened %(days)s days after closing — consider opening a new ticket "
+"instead."
+msgstr "Reaberto %(days)s dias depois do fechamento — considere abrir um chamado novo."
+
+#. module: liber_support
+#: model:ir.model.fields,field_description:liber_support.field_liber_support_team__sla_resolution_hours_normal
+msgid "Resolution (Normal)"
+msgstr "Resolução (normal)"
+
+#. module: liber_support
+#: model:ir.model.fields,field_description:liber_support.field_liber_support_team__sla_resolution_hours_urgent
+msgid "Resolution (Urgent)"
+msgstr "Resolução (urgente)"
+
+#. module: liber_support
+#: model:ir.model.fields,field_description:liber_support.field_liber_support_ticket__sla_resolution_deadline
+msgid "Resolution Due"
+msgstr "Resolução até"
+
+#. module: liber_support
+#: model:liber.support.stage,name:liber_support.stage_resolved
+msgid "Resolved"
+msgstr "Resolvido"
+
+#. module: liber_support
+#: model:ir.model.fields,field_description:liber_support.field_liber_support_ticket__activity_user_id
+msgid "Responsible User"
+msgstr ""
+
+#. module: liber_support
+#: model:ir.model.fields,field_description:liber_support.field_liber_support_ticket__sla_state
+#: model_terms:ir.ui.view,arch_db:liber_support.view_support_ticket_form
+msgid "SLA"
+msgstr ""
+
+#. module: liber_support
+#: model_terms:ir.ui.view,arch_db:liber_support.view_support_team_form
+msgid "SLA (working hours)"
+msgstr "SLA (horas úteis)"
+
+#. module: liber_support
+#: model:ir.model.fields,help:liber_support.field_liber_support_team__resource_calendar_id
+msgid ""
+"SLA deadlines are planned inside these hours — a Friday 6 PM email must not "
+"be late on Saturday."
+msgstr "Os prazos de SLA são plantados dentro deste horário — e-mail de sexta 18h não pode atrasar no sábado."
+
+#. module: liber_support
+#. odoo-python
+#: code:addons/liber_support/models/support_ticket.py:0
+msgid "SLA late: %s"
+msgstr "SLA atrasado: %s"
+
+#. module: liber_support
+#: model:ir.model.fields,field_description:liber_support.field_liber_support_ticket__message_has_sms_error
+msgid "SMS Delivery error"
+msgstr ""
+
+#. module: liber_support
+#: model:ir.model.fields.selection,name:liber_support.selection__liber_support_ticket__kind__sale
+msgid "Sale"
+msgstr "Venda"
+
+#. module: liber_support
+#: model:ir.model,name:liber_support.model_sale_order
+msgid "Sales Order"
+msgstr "Pedido de venda"
+
+#. module: liber_support
+#: model:res.groups,comment:liber_support.group_support_manager
+msgid ""
+"Sees everything; configures stages, teams and\n"
+"SLA targets."
+msgstr ""
+
+#. module: liber_support
+#: model:ir.model.fields,field_description:liber_support.field_liber_support_stage__sequence
+msgid "Sequence"
+msgstr ""
+
+#. module: liber_support
+#: model:ir.model.fields.selection,name:liber_support.selection__liber_support_ticket__kind__settlement
+msgid "Settlement / Return"
+msgstr "Acerto / Devolução"
+
+#. module: liber_support
+#: model:ir.model.fields.selection,name:liber_support.selection__liber_support_ticket__kind__shipment
+msgid "Shipment"
+msgstr "Envio"
+
+#. module: liber_support
+#: model:ir.model.fields,field_description:liber_support.field_liber_support_ticket__sla_paused_since
+msgid "Sla Paused Since"
+msgstr ""
+
+#. module: liber_support
+#: model:ir.model.fields,field_description:liber_support.field_liber_support_ticket__sla_resolution_remaining_hours
+msgid "Sla Resolution Remaining Hours"
+msgstr ""
+
+#. module: liber_support
+#: model:liber.support.stage,name:liber_support.stage_spam
+msgid "Spam"
+msgstr "Spam"
+
+#. module: liber_support
+#: model:ir.model.fields,field_description:liber_support.field_liber_support_ticket__stage_id
+#: model_terms:ir.ui.view,arch_db:liber_support.view_support_ticket_search
+msgid "Stage"
+msgstr "Estágio"
+
+#. module: liber_support
+#: model:ir.actions.act_window,name:liber_support.action_support_stage
+#: model:ir.ui.menu,name:liber_support.menu_support_stages
+msgid "Stages"
+msgstr "Estágios"
+
+#. module: liber_support
+#: model:ir.model.fields,help:liber_support.field_liber_support_ticket__activity_state
+msgid ""
+"Status based on activities\n"
+"Overdue: Due date is already passed\n"
+"Today: Activity date is today\n"
+"Planned: Future activities."
+msgstr ""
+
+#. module: liber_support
+#: model:ir.model.fields,field_description:liber_support.field_liber_support_ticket__name
+#: model_terms:ir.ui.view,arch_db:liber_support.view_support_ticket_form
+msgid "Subject"
+msgstr "Assunto"
+
+#. module: liber_support
+#: model:ir.module.category,name:liber_support.module_category_support
+#: model:ir.ui.menu,name:liber_support.menu_support_root
+#: model:res.groups.privilege,name:liber_support.privilege_support
+#: model_terms:ir.ui.view,arch_db:liber_support.view_sale_order_form_support
+msgid "Support"
+msgstr "Atendimento"
+
+#. module: liber_support
+#: model:ir.model,name:liber_support.model_liber_support_stage
+msgid "Support Stage"
+msgstr "Estágio de atendimento"
+
+#. module: liber_support
+#: model:ir.model,name:liber_support.model_liber_support_tag
+msgid "Support Tag"
+msgstr "Etiqueta de atendimento"
+
+#. module: liber_support
+#: model:ir.model,name:liber_support.model_liber_support_team
+msgid "Support Team"
+msgstr "Equipe de atendimento"
+
+#. module: liber_support
+#: model:ir.model,name:liber_support.model_liber_support_ticket
+msgid "Support Ticket"
+msgstr "Chamado de atendimento"
+
+#. module: liber_support
+#: model:ir.model.fields,field_description:liber_support.field_sale_order__support_ticket_count
+msgid "Support Ticket Count"
+msgstr "Total de chamados"
+
+#. module: liber_support
+#: model:ir.model.fields,field_description:liber_support.field_sale_order__support_ticket_ids
+msgid "Support Tickets"
+msgstr "Chamados de atendimento"
+
+#. module: liber_support
+#: model:ir.actions.server,name:liber_support.cron_support_sla_ir_actions_server
+msgid "Support: refresh SLA states"
+msgstr "Atendimento: atualizar estados de SLA"
+
+#. module: liber_support
+#: model:ir.model.constraint,message:liber_support.constraint_liber_support_tag_name_uniq
+msgid "Tag name already exists."
+msgstr "Já existe uma etiqueta com esse nome."
+
+#. module: liber_support
+#: model:ir.actions.act_window,name:liber_support.action_support_tag
+#: model:ir.model.fields,field_description:liber_support.field_liber_support_ticket__tag_ids
+#: model:ir.ui.menu,name:liber_support.menu_support_tags
+msgid "Tags"
+msgstr "Etiquetas"
+
+#. module: liber_support
+#: model:ir.model.fields,field_description:liber_support.field_liber_support_ticket__team_id
+#: model_terms:ir.ui.view,arch_db:liber_support.view_support_ticket_search
+msgid "Team"
+msgstr "Equipe"
+
+#. module: liber_support
+#: model:ir.model.fields,field_description:liber_support.field_liber_support_team__leader_id
+msgid "Team Leader"
+msgstr "Líder da equipe"
+
+#. module: liber_support
+#: model_terms:ir.ui.view,arch_db:liber_support.view_support_team_form
+msgid "Team name"
+msgstr "Nome da equipe"
+
+#. module: liber_support
+#: model:ir.actions.act_window,name:liber_support.action_support_team
+#: model:ir.ui.menu,name:liber_support.menu_support_teams
+msgid "Teams"
+msgstr "Equipes"
+
+#. module: liber_support
+#: model:ir.model.fields,help:liber_support.field_liber_support_ticket__sale_order_id
+msgid "The C (consignment) or S (sale) order this conversation is about."
+msgstr "O pedido C (consignação) ou S (venda) de que trata esta conversa."
+
+#. module: liber_support
+#: model:ir.model.fields,help:liber_support.field_liber_support_team__company_id
+msgid ""
+"The imprint this mailbox belongs to. Incoming mail lands on this company."
+msgstr "O selo dono desta caixa. O e-mail que chega cai nesta empresa."
+
+#. module: liber_support
+#: model:ir.model.fields,help:liber_support.field_liber_support_team__alias_model_id
+msgid ""
+"The model (Odoo Document Kind) to which this alias corresponds. Any incoming"
+" email that does not reply to an existing record will cause the creation of "
+"a new record of this model (e.g. a Project Task)"
+msgstr ""
+
+#. module: liber_support
+#: model:ir.model.fields,help:liber_support.field_liber_support_team__alias_name
+msgid ""
+"The name of the email alias, e.g. 'jobs' if you want to catch emails for "
+"<jobs@example.odoo.com>"
+msgstr ""
+
+#. module: liber_support
+#: model:ir.model.fields,field_description:liber_support.field_liber_support_team__ticket_count
+msgid "Ticket Count"
+msgstr "Total de chamados"
+
+#. module: liber_support
+#: model:ir.actions.act_window,name:liber_support.action_support_ticket
+#: model:ir.ui.menu,name:liber_support.menu_support_tickets
+msgid "Tickets"
+msgstr "Chamados"
+
+#. module: liber_support
+#: model:ir.model.fields,help:liber_support.field_liber_support_ticket__activity_exception_decoration
+msgid "Type of the exception activity on record."
+msgstr ""
+
+#. module: liber_support
+#: model_terms:ir.ui.view,arch_db:liber_support.view_support_ticket_search
+msgid "Unassigned"
+msgstr "Sem dono"
+
+#. module: liber_support
+#: model:ir.model.fields.selection,name:liber_support.selection__liber_support_ticket__priority__1
+#: model_terms:ir.ui.view,arch_db:liber_support.view_support_ticket_search
+msgid "Urgent"
+msgstr "Urgente"
+
+#. module: liber_support
+#: model:res.groups,name:liber_support.group_support_user
+msgid "User"
+msgstr "Usuário"
+
+#. module: liber_support
+#: model:liber.support.stage,name:liber_support.stage_waiting_customer
+msgid "Waiting Customer"
+msgstr "Aguardando cliente"
+
+#. module: liber_support
+#: model:liber.support.stage,name:liber_support.stage_waiting_internal
+msgid "Waiting Internal"
+msgstr "Aguardando interno"
+
+#. module: liber_support
+#: model:ir.model.fields,field_description:liber_support.field_liber_support_ticket__website_message_ids
+msgid "Website Messages"
+msgstr ""
+
+#. module: liber_support
+#: model:ir.model.fields,help:liber_support.field_liber_support_ticket__website_message_ids
+msgid "Website communication history"
+msgstr ""
+
+#. module: liber_support
+#: model:ir.model.fields.selection,name:liber_support.selection__liber_support_ticket__channel__whatsapp
+msgid "WhatsApp"
+msgstr ""
+
+#. module: liber_support
+#: model:ir.model.fields,help:liber_support.field_liber_support_ticket__channel
+msgid ""
+"WhatsApp is unused today; the field exists for the day Chatwoot comes in as "
+"transport."
+msgstr "WhatsApp não é usado hoje; o campo existe para o dia em que o Chatwoot entrar como transporte."
+
+#. module: liber_support
+#: model:ir.model.fields,help:liber_support.field_liber_support_stage__pause_sla
+msgid ""
+"While a ticket sits here the resolution clock does not run (the ball is in "
+"the customer's court)."
+msgstr "Enquanto o chamado está aqui o relógio de resolução não corre (a bola está com o cliente)."
+
+#. module: liber_support
+#: model:ir.model.fields,field_description:liber_support.field_liber_support_team__resource_calendar_id
+msgid "Working Hours"
+msgstr "Horário de trabalho"
+
+#. module: liber_support
+#: model:ir.model.fields,help:liber_support.field_liber_support_ticket__sla_resolution_remaining_hours
+msgid ""
+"Working hours left on the resolution clock, frozen when the ticket entered a"
+" pausing stage."
+msgstr "Horas úteis restantes no relógio de resolução, congeladas quando o chamado entrou num estágio de pausa."
+
+#. module: liber_support
+#: model_terms:ir.ui.view,arch_db:liber_support.view_support_team_form
+msgid "e.g. edlab.press"
+msgstr "ex.: edlab.press"
+
+#. module: liber_support
+#: model_terms:ir.ui.view,arch_db:liber_support.view_sale_order_form_support
+msgid "Open Ticket"
+msgstr "Atendimento"
