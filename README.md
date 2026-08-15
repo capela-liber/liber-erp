@@ -1,8 +1,9 @@
 # Liber ERP
 
 Módulos [Odoo 19 Community](https://github.com/odoo/odoo) para editoras: contratos de
-direito autoral, consignação (SOC), documentos fiscais a partir do XML da NF-e,
-bonificação e integração com a Metabooks.
+direito autoral, consignação (SOC), emissão de NF-e e documentos fiscais a partir do
+XML, canal de vendas no cadastro do cliente, e integrações com Metabooks, MetaBrasil
+e Amazon Vendor.
 
 Nasceram da operação de uma editora brasileira e são publicados aqui na esperança de
 que sirvam a outras. Não há versão paga, plano de suporte nem roadmap comercial.
@@ -52,8 +53,12 @@ são do administrador, e o Odoo é o porteiro de quem baixa o quê.
 | Módulo | O que faz |
 |---|---|
 | `liber_nfe_xml` | Painel de NF-e a partir do XML importado (**não emite** — só importa) |
+| `liber_nfe_focus` | Emissão de NF-e modelo 55 pela API da FocusNFe, a partir da fatura |
 | `liber_nfe_remessa` | Documentos fiscais que não geram cobrança (simples remessa) |
 | `liber_metabooks_integration` | Metadados de livros via Metabooks/MVB, exportação ONIX |
+| `liber_metabrasil` | Impressão sob demanda pela MetaBrasil: envia o pedido e o acompanha |
+| `liber_amazon_vendor` | Pedidos do Amazon Vendor Central viram cotação com o preço da casa |
+| `liber_partner_commercial` | Canal de vendas no cadastro do cliente, grade de canais e desconto visível |
 | `liber_budget` | Orçamentos sobre a contabilidade analítica, sem Enterprise |
 | `liber_site` | Site de apresentação servido em `/liber`, com os manuais em `/liber/docs` |
 | `liber_roles` | Perfis por função da casa, e a conta `visitante` que vê tudo sem gravar |
