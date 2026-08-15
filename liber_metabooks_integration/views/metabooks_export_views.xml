@@ -235,9 +235,12 @@
         <field name="context">{'search_default_group_product': 1}</field>
     </record>
 
+    <!-- Montar e mandar lote para a MVB é maquinaria, não ficha de livro:
+         fica com o metabooks_manager_group (10/08/2026). -->
     <menuitem id="menu_metabooks_exports"
               name="Envios"
               parent="menu_metabooks_root"
+              groups="liber_metabooks_integration.metabooks_manager_group"
               sequence="15"/>
 
     <menuitem id="menu_metabooks_export_batch"

@@ -85,7 +85,41 @@ class ProductTemplate(models.Model):
              "second, and a change that falls inside it would look older than "
              "the send that did not carry it.")
 
+    @staticmethod
+    def _metabooks_espelhar_peso(vals):
+        """Os dois campos de peso andam juntos, escreva-se em qual for.
+
+        São dois porque servem a mundos diferentes: `metabooks_weight` é do
+        catálogo (em GRAMAS, como o ONIX pede) e `weight` é do Odoo (em
+        QUILOS, e é o que o estoque soma numa entrega e a nota fiscal
+        declara). Quem preenche a ficha não tem por que saber disso — digita
+        num dos dois e espera que o livro passe a ter peso.
+
+        Sem o espelho, cada lado ficava cego para o outro: peso do painel não
+        chegava à movimentação (a entrega pesava zero com o catálogo sabendo
+        o peso), e peso digitado aqui não voltava para a Metabooks.
+
+        Espelhar em `vals` (e não depois) é o que faz a máquina de sempre
+        enxergar a mudança: campo vigiado alterado marca o livro pendente e o
+        histórico guarda o antes/depois que a planilha publica. Escrever os
+        dois na mesma chamada — como o sync faz — desliga o espelho: valor
+        explícito manda.
+
+        Zero nunca apaga o outro lado: apagar dado por engano custa mais do
+        que um número velho.
+        """
+        tem_kg = 'weight' in vals
+        tem_g = 'metabooks_weight' in vals
+        if tem_kg == tem_g:          # nenhum dos dois, ou os dois explícitos
+            return vals
+        if tem_kg:
+            gramas = round((vals.get('weight') or 0.0) * 1000.0, 2)
+            return dict(vals, metabooks_weight=gramas) if gramas else vals
+        quilos = round((vals.get('metabooks_weight') or 0.0) / 1000.0, 6)
+        return dict(vals, weight=quilos) if quilos else vals
+
     def write(self, vals):
+        vals = self._metabooks_espelhar_peso(vals)
         res = super().write(vals)
         # An import from Metabooks writes the same fields a person does. Left
         # alone it would mark every imported book as pending and send their own

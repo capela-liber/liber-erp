@@ -1078,3 +1078,13 @@ msgstr "Último Acerto"
 #: model:ir.model.fields,field_description:liber_soc_audit.field_consignment_audit_line__days_since_settlement
 msgid "Days Since Settlement"
 msgstr "Dias Desde o Acerto"
+
+#. module: liber_soc_audit
+#. odoo-python
+#: code:addons/liber_soc_audit/models/consignment_audit.py:0
+msgid ""
+"Only the consignment manager can accept an audit — accepting adjusts the "
+"shelf and posts its value."
+msgstr ""
+"Só o gerente de consignação pode aceitar uma auditoria — o aceite ajusta a "
+"prateleira e lança o valor."

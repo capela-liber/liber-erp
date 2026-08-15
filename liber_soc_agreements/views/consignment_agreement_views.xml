@@ -107,7 +107,7 @@
                 <group>
                     <filter string="Customer" name="g_partner" context="{'group_by': 'partner_id'}"/>
                     <filter string="Commercial Agent" name="g_user" context="{'group_by': 'user_id'}"/>
-                    <filter string="Sales Team" name="g_team" context="{'group_by': 'team_id'}"/>
+                    <filter string="Sales Channel" name="g_team" context="{'group_by': 'team_id'}"/>
                     <filter string="Status" name="g_state" context="{'group_by': 'state'}"/>
                 </group>
             </search>

@@ -1,17 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
+    <!-- ==================================================================
+         AS FUNÇÕES DA CASA — reescrito em 11/08/2026 a partir do _mds/PERFIS.md.
+
+         COMO LER ESTE ARQUIVO. Cada função é uma LISTA CHAPADA de grupos.
+         Só há concessão: nenhum `(3, ...)`, nenhuma ordem que importe,
+         nenhuma soma implícita a decifrar. O Gerente cita o Assistente e
+         acrescenta; a Direção cita os seis Gerentes e acrescenta. Fim.
+
+         COMO MEXER. A decisão se toma no `_mds/PERFIS.md`, que lista as 25
+         opções do formulário de usuário do Odoo e o que cada função marca em
+         cada uma. Aqui só se transcreve. Se a linha nova não estiver lá,
+         escreva-a lá primeiro — senão daqui a três meses ninguém sabe por quê.
+
+         O QUE NÃO MORA MAIS AQUI. Concessão de módulo opcional é ponte do
+         próprio módulo, não linha nossa: `liber_support` dá o Atendimento ao
+         Comercial, `liber_amazon_vendor` dá a Amazon, `capela_influencers` dá
+         a Bonificação. Assim o `liber_roles` não vira dependência de meio
+         mundo, e um `-u liber_roles` numa base sem esses módulos não quebra.
+
+         RETIRAR UM GRUPO NÃO SE FAZ AQUI. Apagar uma linha desta lista deixa
+         de mandar acrescentar a aresta; não manda tirá-la, e ela sobrevive em
+         qualquer base que já a tenha. Retirada é migração — ver
+         migrations/19.0.2.0.0/, que faz as duas metades (a aresta e a ficha
+         de cada usuário). Foi a armadilha de 31/07/2026: a separação existia
+         no repositório e não existia na base.
+         ================================================================== -->
+
     <record id="module_category_liber_roles" model="ir.module.category">
         <field name="name">Liber / Funções</field>
         <field name="description">Perfis por função da casa: um nível por departamento, mais a Direção. Os grupos do Odoo derivam daqui.</field>
         <field name="sequence">1</field>
     </record>
 
-    <!-- v19: res.groups no longer carries category_id directly; it is held by a
-         res.groups.privilege that the groups link to via privilege_id. One
-         privilege per DEPARTMENT: the user form then offers the levels of each
-         department as a single selection, and Direção (its own privilege)
-         can be accumulated by a director who also runs a department. -->
+    <!-- No Odoo 19 o res.groups não carrega mais category_id: quem carrega é
+         um res.groups.privilege, e o formulário do usuário mostra um
+         privilégio por linha, com os níveis como escolha única. Um privilégio
+         por DEPARTAMENTO — daí "escolher Comercial/Gerente" ser um clique. -->
     <record id="privilege_direcao" model="res.groups.privilege">
         <field name="name">Direção</field>
         <field name="sequence">1</field>
@@ -22,10 +48,6 @@
         <field name="sequence">2</field>
         <field name="category_id" ref="module_category_liber_roles"/>
     </record>
-    <!-- Logística vem logo depois do Comercial de propósito: as duas funções
-         são vizinhas no fluxo (uma vende, a outra despacha) e é justamente
-         essa vizinhança que fazia as duas caberem numa só ficha. Ver o
-         comentário do departamento, mais abaixo. -->
     <record id="privilege_logistica" model="res.groups.privilege">
         <field name="name">Logística</field>
         <field name="sequence">3</field>
@@ -41,76 +63,125 @@
         <field name="sequence">5</field>
         <field name="category_id" ref="module_category_liber_roles"/>
     </record>
+    <record id="privilege_juridico" model="res.groups.privilege">
+        <field name="name">Jurídico</field>
+        <field name="sequence">6</field>
+        <field name="category_id" ref="module_category_liber_roles"/>
+    </record>
     <record id="privilege_marketing" model="res.groups.privilege">
         <field name="name">Marketing</field>
-        <field name="sequence">6</field>
+        <field name="sequence">7</field>
         <field name="category_id" ref="module_category_liber_roles"/>
     </record>
     <record id="privilege_visitante" model="res.groups.privilege">
         <field name="name">Visitante</field>
-        <field name="sequence">7</field>
+        <field name="sequence">8</field>
         <field name="category_id" ref="module_category_liber_roles"/>
     </record>
 
-    <!-- ============================================================== -->
-    <!-- Direção. NÃO é perfil de consulta: os grupos abaixo são de     -->
-    <!-- nível usuário nos apps operacionais (vendas, consignação,      -->
-    <!-- contratos, estoque, projetos), e neles a Direção cria e edita  -->
-    <!-- como qualquer operador. Isso é deliberado, e não uma lacuna a  -->
-    <!-- fechar: quem dirige a casa mexe no que precisar mexer.         -->
-    <!--                                                                -->
-    <!-- O que ela não carrega é o nível de GERENTE (aprovar,           -->
-    <!-- configurar) das áreas; diretor que também gerencia uma área    -->
-    <!-- acumula a função dela. Em contabilidade o acesso é de leitura  -->
-    <!-- (account_readonly) — a exceção é o analítico, que o Odoo só    -->
-    <!-- publica em CRUD cheio, sem variante de leitura.                -->
-    <!-- ============================================================== -->
-    <record id="group_direcao" model="res.groups">
-        <field name="name">Diretor(a)</field>
-        <field name="privilege_id" ref="privilege_direcao"/>
-        <field name="implied_ids" eval="[
-            (4, ref('base.group_user')),
-            (4, ref('account.group_account_readonly')),
-            (4, ref('analytic.group_analytic_accounting')),
-            (4, ref('liber_budget.group_budget_user')),
-            (4, ref('sales_team.group_sale_salesman_all_leads')),
-            (4, ref('liber_soc_agreements.group_soc_user')),
-            (4, ref('liber_copyright_contracts.group_contract_user')),
-            (4, ref('stock.group_stock_user')),
-            (4, ref('project.group_project_user')),
-        ]"/>
-        <field name="comment">Sócios e diretores: acesso transversal à casa. Opera (cria e edita) vendas, consignação, contratos de direitos, estoque e projetos; lê os relatórios contábeis e os boards do orçamento; mexe na contabilidade analítica. Não é perfil de consulta. Fica de fora só o nível de gerente das áreas e a configuração contábil — quem gerencia uma área acumula a função dela.</field>
+    <!-- ==================================================================
+         OS DOIS DEGRAUS DE PROJETO QUE O ODOO NÃO TEM.
+
+         Conferido no banco em 11/08/2026, e vale registrar porque a tentação
+         de apagar estes dois grupos volta sempre: o `project.group_project_user`
+         nativo tem ACL cheio em project.task E uma regra `0111` — ele
+         escreve, CRIA e APAGA tarefa em projeto alheio. Não serve para "ler
+         os projetos" nem para "trabalhar nas minhas tarefas".
+
+         Daí os dois daqui, que são o degrau que falta:
+
+           reader       — não concede NADA. É só a chave do menu, que o core
+                          tranca em project_user/project_manager. A leitura já
+                          vem do usuário interno; o comentário lateral vem do
+                          models/mail_thread.py.
+           task_editor  — o reader + UMA regra de escrita (`0100`) na tarefa
+                          que a pessoa já enxerga. Não cria, não apaga.
+
+         Quem precisa do poder inteiro recebe `project.group_project_manager`.
+         O `project.group_project_user` segue sem uso na casa, de propósito.
+         ================================================================== -->
+    <record id="group_project_reader" model="res.groups">
+        <field name="name">Projects: read and comment</field>
+        <field name="comment">Grupo técnico: abre o app Projetos sem conceder permissão nenhuma — a leitura já vem do usuário interno, e o comentário lateral vem do mail_thread do liber_roles. Concedido por função, não à mão.</field>
     </record>
 
-    <!-- ============================================================== -->
-    <!-- Comercial. Até 31/07/2026 esta função carregava                -->
-    <!-- stock.group_stock_user, e com ele o app Inventário inteiro —   -->
-    <!-- inventário de contagem, cadastro de armazém e localização,     -->
-    <!-- tipos de operação, sucata. Quem vende não faz nada disso.      -->
-    <!--                                                                -->
-    <!-- O estoque estava ali por um motivo real, e ele não some: o     -->
-    <!-- código da consignação grava picking COMO O USUÁRIO — confirmar -->
-    <!-- uma remessa cria o COM/ (liber_soc_moves) e rodar um acerto    -->
-    <!-- cria e valida o ACERTO/ (liber_soc_settlement). Tirar o grupo  -->
-    <!-- e parar por aí não separaria função nenhuma: quebraria a       -->
-    <!-- consignação com AccessError no meio do acerto.                 -->
-    <!--                                                                -->
-    <!-- Por isso a troca é por um grupo estreito, declarado no módulo  -->
-    <!-- que precisa dele: só stock.picking e stock.move, sem menu. O   -->
-    <!-- app Inventário passa a ser da Logística.                       -->
-    <!-- ============================================================== -->
+    <record id="group_project_task_editor" model="res.groups">
+        <field name="name">Projects: work on tasks</field>
+        <field name="implied_ids" eval="[(4, ref('group_project_reader'))]"/>
+        <field name="comment">Grupo técnico: tudo do anterior + escrever nas tarefas dos projetos que a pessoa enxerga. Não cria tarefa e não toca no projeto, que segue somente leitura pelo ACL do próprio Odoo.</field>
+    </record>
+
+    <!-- Espelha o domínio da regra nativa de LEITURA do empregado: quem
+         escreve é quem enxerga. Uma tela onde metade das tarefas abre e não
+         salva é pior que uma tela fechada. `create` e `unlink` ficam falsos —
+         criar e apagar seguem com as regras nativas, que só alcançam a tarefa
+         privada ("Minhas tarefas"). -->
+    <record id="rule_project_task_editor" model="ir.rule">
+        <field name="name">Project/Task: write tasks of visible projects</field>
+        <field name="model_id" ref="project.model_project_task"/>
+        <field name="groups" eval="[(4, ref('group_project_task_editor'))]"/>
+        <field name="perm_read" eval="False"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_create" eval="False"/>
+        <field name="perm_unlink" eval="False"/>
+        <field name="domain_force">[
+            '|',
+                '&amp;',
+                    ('project_id', '!=', False),
+                    '|',
+                        ('project_id.privacy_visibility', 'in', ['employees', 'portal']),
+                        ('project_id.message_partner_ids', 'in', [user.partner_id.id]),
+                '|',
+                    ('message_partner_ids', 'in', [user.partner_id.id]),
+                    ('user_ids', 'in', user.id)
+        ]</field>
+    </record>
+
+    <!-- ==================================================================
+         EXPORTAR é de quem gerencia. `base.group_allow_export` aparece nos
+         seis Gerentes e na Direção, e em nenhum Assistente. Não é
+         desconfiança: exportar é tirar dado da casa, e isso é ato de quem
+         responde por ela. O Visitante segue de fora — a conta é pública.
+
+         APROVAR DESPESA é de quem chefia. `hr_expense.group_hr_expense_team_approver`
+         aparece nos seis Gerentes, e é a ÚNICA marcação de RH que a grade
+         precisa: lançar a própria despesa, ver a própria ficha e aprovar a
+         folga de quem se chefia já são o padrão de quem não tem grupo de RH
+         nenhum. O resto vem da árvore de funcionários, não daqui.
+         ================================================================== -->
+
+    <!-- ============================ COMERCIAL ============================ -->
+
+    <!-- Vende e fatura. NÃO cria produto (11/08/2026): produto é livro, livro
+         é metadado, e isso é do Editorial e do Marketing. Vender não exige
+         criar produto — ler o catálogo para montar o pedido já é o padrão de
+         qualquer usuário interno.
+
+         O `consignment_stock_docs` é um grupo estreito do liber_soc_moves:
+         só stock.picking e stock.move, sem menu. Existe porque o código da
+         consignação grava picking COMO O USUÁRIO, e sem ele o acerto quebra
+         com AccessError no meio. O app Inventário é da Logística. -->
     <record id="group_comercial_assistente" model="res.groups">
         <field name="name">Assistente</field>
         <field name="privilege_id" ref="privilege_comercial"/>
         <field name="implied_ids" eval="[
+            (4, ref('base.group_user')),
             (4, ref('sales_team.group_sale_salesman_all_leads')),
+            (4, ref('account.group_account_invoice')),
             (4, ref('liber_soc_agreements.group_soc_user')),
             (4, ref('liber_soc_moves.group_consignment_stock_docs')),
-            (4, ref('base.group_partner_manager')),
         ]"/>
-        <field name="comment">Opera o dia a dia comercial: pedidos, acertos de consignação, devoluções, clientes. Vê todos os documentos de venda (v1). Mexe nas transferências da consignação, mas não tem o app Inventário — esse é da Logística. Sem relatórios financeiros.</field>
+        <field name="comment">Opera o dia a dia comercial: pedidos, faturamento da venda, acertos de consignação, devoluções. Vê todos os documentos de venda. Mexe nas transferências da consignação, mas não tem o app Inventário — esse é da Logística. Não cria produto e não cadastra contato: os dois subiram para o Gerente.</field>
     </record>
 
+    <!-- O `stock.group_stock_user` (11/08/2026) é o que permite cancelar uma
+         transferência ainda não confirmada, atrás de um pedido que o cliente
+         desistiu. Não existe grupo mais estreito no Odoo para isso, e o
+         `consignment_stock_docs` cobre só os documentos da consignação.
+
+         O editor do site vem de carona com `sale_manager`, por aresta do
+         core. É aceito conscientemente (PERFIS.md, decisão 1 de 11/08): a
+         alternativa seria cortar a aresta para a casa inteira. -->
     <record id="group_comercial_gerente" model="res.groups">
         <field name="name">Gerente</field>
         <field name="privilege_id" ref="privilege_comercial"/>
@@ -118,31 +189,24 @@
             (4, ref('group_comercial_assistente')),
             (4, ref('sales_team.group_sale_manager')),
             (4, ref('liber_soc_agreements.group_soc_manager')),
+            (4, ref('stock.group_stock_user')),
+            (4, ref('base.group_partner_manager')),
+            (4, ref('base.group_allow_export')),
+            (4, ref('hr_expense.group_hr_expense_team_approver')),
         ]"/>
-        <field name="comment">Tudo do assistente + administra vendas e consignação: fecha contratos AC, cria campanhas, ajusta réguas de cobrança de devolução, relatórios do canal.</field>
+        <field name="comment">Tudo do assistente + administra vendas e consignação: fecha contratos AC, cria campanhas, ajusta réguas de cobrança de devolução, relatórios do canal. Cancela transferência não confirmada. Cadastra contatos. Aprova despesa da equipe. Exporta.</field>
     </record>
 
-    <!-- ============================================================== -->
-    <!-- Logística. O departamento que faltava, e a ausência tinha um   -->
-    <!-- custo concreto: quem trabalha no depósito não tem função na    -->
-    <!-- grade, então ou recebia a ficha do Comercial (e junto com ela  -->
-    <!-- os pedidos, os clientes e os acertos, que não são dele) ou     -->
-    <!-- recebia o grupo nativo do Odoo na mão — exatamente a tradução  -->
-    <!-- manual que este módulo existe para eliminar.                   -->
-    <!--                                                                -->
-    <!-- A régua é curta e é literal: o app Inventário, e só ele. As    -->
-    <!-- transferências da consignação (COM/, RET/, ACERTO/) aparecem   -->
-    <!-- ali dentro como qualquer outra, que é como o depósito precisa  -->
-    <!-- vê-las: uma fila de coisas a separar e despachar. O DOCUMENTO  -->
-    <!-- da consignação (o acordo, a campanha, o acerto) fica de fora   -->
-    <!-- de propósito — se um dia o depósito precisar abrir a remessa   -->
-    <!-- para conferir contra o acordo, é uma linha:                    -->
-    <!-- (4, ref('liber_soc_agreements.group_soc_user')).               -->
-    <!-- ============================================================== -->
+    <!-- ============================ LOGÍSTICA ============================ -->
+
+    <!-- O departamento mais simples da casa: é o app Inventário, e só ele,
+         em dois níveis. Não vê pedido, cliente, acerto nem número financeiro.
+         A bonificação chega aqui como transferência comum — não pede grupo. -->
     <record id="group_logistica_assistente" model="res.groups">
         <field name="name">Assistente</field>
         <field name="privilege_id" ref="privilege_logistica"/>
         <field name="implied_ids" eval="[
+            (4, ref('base.group_user')),
             (4, ref('stock.group_stock_user')),
         ]"/>
         <field name="comment">Opera o depósito: recebe, separa, valida entregas e as transferências da consignação (COM/, RET/, ACERTO/), faz contagem. Não vê pedido de venda, cliente, acerto nem número financeiro.</field>
@@ -154,52 +218,92 @@
         <field name="implied_ids" eval="[
             (4, ref('group_logistica_assistente')),
             (4, ref('stock.group_stock_manager')),
+            (4, ref('base.group_allow_export')),
+            (4, ref('hr_expense.group_hr_expense_team_approver')),
         ]"/>
-        <field name="comment">Tudo do assistente + configura o depósito: armazéns, localizações, tipos de operação, rotas e regras de reposição; valida ajustes de inventário e remaneja estoque entre localizações.</field>
+        <field name="comment">Tudo do assistente + configura o depósito: armazéns, localizações, tipos de operação, rotas e regras de reposição; valida ajustes de inventário e remaneja estoque entre localizações. Aprova despesa da equipe. Exporta.</field>
     </record>
 
-    <!-- ============================================================== -->
-    <!-- Financeiro. A regra de ouro dos boards mora aqui: o painel do  -->
-    <!-- orçamento exige os grupos do `budget` e os relatórios          -->
-    <!-- contábeis exigem account_readonly+, e só Gerente (e Direção)   -->
-    <!-- os recebem. O Assistente é Cobrança: fatura e paga, não lê     -->
-    <!-- consolidado.                                                   -->
-    <!-- ============================================================== -->
+    <!-- ============================ FINANCEIRO =========================== -->
+
+    <!-- COMPRAS É O REINO DO ASSISTENTE (11/08/2026). `purchase.group_purchase_user`
+         dá escrita completa sobre o pedido de compra E sobre a fatura; somado
+         ao `account_invoice`, ele leva a PO até a Bill e a confirma. As duas
+         linhas juntas são o processo inteiro.
+
+         Sem contabilidade, sem orçamento, sem analítica — e por consequência
+         sem painel e sem relatório de saldo, que não são grupo: aparecem
+         conforme os apps que a pessoa alcança. É assim que "o assistente não
+         vê relatório" se cumpre sem escrever nada. -->
     <record id="group_financeiro_assistente" model="res.groups">
         <field name="name">Assistente</field>
         <field name="privilege_id" ref="privilege_financeiro"/>
         <field name="implied_ids" eval="[
+            (4, ref('base.group_user')),
+            (4, ref('purchase.group_purchase_user')),
             (4, ref('account.group_account_invoice')),
             (4, ref('base.group_partner_manager')),
         ]"/>
-        <field name="comment">Cobrança: cria faturas, registra e prepara pagamentos, concilia. Sem relatórios contábeis, sem orçamento, sem boards.</field>
+        <field name="comment">Compras e cobrança: cria o pedido de compra, gera a fatura a partir dele e confirma; registra e prepara pagamentos, concilia. Sem relatórios contábeis, sem orçamento, sem painéis.</field>
     </record>
 
+    <!-- O GERENTE É UM CONTROLLER (11/08/2026), e é por isso que ele tem duas
+         linhas que nenhum outro gerente tem:
+
+         `spreadsheet_dashboard.group_dashboard_manager` — monta os próprios
+         painéis, não só consome os que existem.
+
+         `account.group_validate_bank_account` — o nome engana: NÃO é extrato
+         nem conciliação (esses vêm do account_manager/account_user, logo
+         acima). É o visto que libera uma conta bancária de FORNECEDOR
+         cadastrada ou alterada. Controle antifraude de pagamento, que é
+         exatamente o assunto de um controller. -->
     <record id="group_financeiro_gerente" model="res.groups">
         <field name="name">Gerente</field>
         <field name="privilege_id" ref="privilege_financeiro"/>
         <field name="implied_ids" eval="[
             (4, ref('group_financeiro_assistente')),
+            (4, ref('purchase.group_purchase_manager')),
             (4, ref('account.group_account_manager')),
+            (4, ref('account.group_account_user')),
+            (4, ref('account.group_validate_bank_account')),
             (4, ref('analytic.group_analytic_accounting')),
             (4, ref('liber_budget.group_budget_manager')),
+            (4, ref('spreadsheet_dashboard.group_dashboard_manager')),
+            (4, ref('base.group_allow_export')),
+            (4, ref('hr_expense.group_hr_expense_team_approver')),
         ]"/>
-        <field name="comment">Contabilidade completa: valida e estorna, configura plano de contas e impostos, administra o orçamento e a contabilidade analítica (contas, planos e modelos de distribuição), vê os boards financeiros. Pagamentos de royalties.</field>
+        <field name="comment">Controller: contabilidade completa (valida, estorna, configura plano de contas e impostos), orçamento, contabilidade analítica, extratos e conciliação, painéis próprios, aprovação de conta bancária de fornecedor, e a administração das compras. Aprova despesa da equipe. Exporta.</field>
     </record>
 
-    <!-- ============================================================== -->
-    <!-- Editorial. Autores são parceiros (partner_manager); o catálogo -->
-    <!-- (produtos/Metabooks) chega via stock_user.                     -->
-    <!-- ============================================================== -->
+    <!-- ============================ EDITORIAL ============================ -->
+
+    <!-- Faz o livro: catálogo, metadados no Metabooks, projetos, arquivos na
+         nuvem e os contratos de direitos.
+
+         SEM INVENTÁRIO desde 11/08/2026 — "editor edita texto". O grupo saiu
+         por migração, porque apagar a linha daqui não tira a aresta de quem
+         já a tem.
+
+         Contratos ficam em `contract_user`, que GRAVA. A descrição pedia "ler
+         e discutir, não editar", e isso não se cumpre: exigiria um nível
+         Leitor novo dentro do liber_copyright_contracts, e a casa decidiu não
+         criá-lo (PERFIS.md, decisão 9). O que se fechou foi só o acerto — ver
+         o ir.model.access.csv daquele módulo. -->
     <record id="group_editorial_assistente" model="res.groups">
         <field name="name">Assistente</field>
         <field name="privilege_id" ref="privilege_editorial"/>
         <field name="implied_ids" eval="[
+            (4, ref('base.group_user')),
             (4, ref('liber_copyright_contracts.group_contract_user')),
-            (4, ref('stock.group_stock_user')),
-            (4, ref('base.group_partner_manager')),
+            (4, ref('product.group_product_manager')),
+            (4, ref('liber_metabooks_integration.metabooks_product_group')),
+            (4, ref('group_project_task_editor')),
+            (4, ref('liber_dropbox.group_liber_dropbox_user')),
+            (4, ref('liber_gdrive.group_liber_gdrive_user')),
+            (4, ref('liber_github.group_liber_github_user')),
         ]"/>
-        <field name="comment">Opera contratos de direitos autorais e edita fichas do catálogo. Consulta os cálculos de royalty; não fecha períodos.</field>
+        <field name="comment">Faz o livro: edita a ficha do catálogo e os metadados no Metabooks, trabalha nas tarefas dos projetos que enxerga, usa os arquivos na nuvem, lê e redige contratos de direitos. Não mexe em acerto de royalty, não tem o app Inventário e não cadastra contato.</field>
     </record>
 
     <record id="group_editorial_gerente" model="res.groups">
@@ -207,23 +311,71 @@
         <field name="privilege_id" ref="privilege_editorial"/>
         <field name="implied_ids" eval="[
             (4, ref('group_editorial_assistente')),
-            (4, ref('liber_copyright_contracts.group_contract_manager')),
+            (4, ref('project.group_project_manager')),
+            (4, ref('liber_metabooks_integration.metadata_group')),
+            (4, ref('liber_dropbox.group_liber_dropbox_manager')),
+            (4, ref('liber_gdrive.group_liber_gdrive_manager')),
+            (4, ref('liber_github.group_liber_github_manager')),
+            (4, ref('base.group_partner_manager')),
+            (4, ref('base.group_allow_export')),
+            (4, ref('hr_expense.group_hr_expense_team_approver')),
         ]"/>
-        <field name="comment">Editor: administra contratos de direitos, fecha períodos de royalty, arquiva títulos. Vê valores a pagar dos contratos (pagar é do Financeiro).</field>
+        <field name="comment">Tudo do assistente + administra os projetos e os arquivos na nuvem, importa metadados no Metabooks, cadastra contatos (autores inclusive). Aprova despesa da equipe. Exporta.</field>
     </record>
 
-    <!-- ============================================================== -->
-    <!-- Marketing: conteúdo do site. Vê campanhas de consignação (via  -->
-    <!-- soc_user no Gerente); criá-las é do Comercial. mass_mailing    -->
-    <!-- não está instalado; quando entrar, os grupos entram aqui.      -->
-    <!-- ============================================================== -->
+    <!-- ============================= JURÍDICO ============================ -->
+
+    <!-- "Acessa os próprios projetos, mas principalmente contratos."
+         O projeto entrou em 11/08/2026, no degrau da casa (escrever na tarefa
+         que enxerga) e não no `project.group_project_user`, que criaria
+         tarefa em projeto alheio. -->
+    <record id="group_juridico_assistente" model="res.groups">
+        <field name="name">Assistente</field>
+        <field name="privilege_id" ref="privilege_juridico"/>
+        <field name="implied_ids" eval="[
+            (4, ref('base.group_user')),
+            (4, ref('liber_copyright_contracts.group_contract_user')),
+            (4, ref('group_project_task_editor')),
+        ]"/>
+        <field name="comment">Redige: cria e edita minutas de contrato e lê o app inteiro — contratos, contas analíticas, relatórios de royalty. Trabalha nas tarefas dos projetos que enxerga. Não confirma, não cancela, não renova (isso é assinatura, do Gerente), não cadastra contato e não configura.</field>
+    </record>
+
+    <!-- A analítica FICA (decisão de 11/08): fechar período de royalty é ler
+         conta analítica, e o Jurídico fecha período. -->
+    <record id="group_juridico_gerente" model="res.groups">
+        <field name="name">Gerente</field>
+        <field name="privilege_id" ref="privilege_juridico"/>
+        <field name="implied_ids" eval="[
+            (4, ref('group_juridico_assistente')),
+            (4, ref('liber_copyright_contracts.group_contract_manager')),
+            (4, ref('analytic.group_analytic_accounting')),
+            (4, ref('base.group_partner_manager')),
+            (4, ref('base.group_allow_export')),
+            (4, ref('hr_expense.group_hr_expense_team_approver')),
+        ]"/>
+        <field name="comment">Tudo do assistente + assina: valida, cancela e renova contratos, fecha períodos de royalty, mexe no acerto. Carrega a contabilidade analítica. Cadastra contatos — o contrato costuma ser o primeiro documento da casa a citar um autor. Aprova despesa da equipe. Exporta.</field>
+    </record>
+
+    <!-- ============================= MARKETING =========================== -->
+
+    <!-- O SITE É SÓ DELE (11/08/2026): é o único departamento que escolhe essa
+         linha na tela. O Gerente comercial ainda o enxerga por carona do
+         `sale_manager`, e isso é do core — ver o comentário do Comercial.
+
+         SEM CONSIGNAÇÃO desde 11/08: "marketing não tem nada a ver com
+         consignação". Saiu por migração, pelo mesmo motivo do Inventário do
+         Editorial. -->
     <record id="group_marketing_assistente" model="res.groups">
         <field name="name">Assistente</field>
         <field name="privilege_id" ref="privilege_marketing"/>
         <field name="implied_ids" eval="[
+            (4, ref('base.group_user')),
             (4, ref('website.group_website_restricted_editor')),
+            (4, ref('product.group_product_manager')),
+            (4, ref('liber_metabooks_integration.metabooks_product_group')),
+            (4, ref('group_project_reader')),
         ]"/>
-        <field name="comment">Edita conteúdo do site. Sem dados financeiros.</field>
+        <field name="comment">Edita conteúdo do site, a ficha do livro no catálogo e seus metadados no Metabooks. Lê e comenta nos projetos. Sem dados financeiros e sem exportar.</field>
     </record>
 
     <record id="group_marketing_gerente" model="res.groups">
@@ -232,93 +384,65 @@
         <field name="implied_ids" eval="[
             (4, ref('group_marketing_assistente')),
             (4, ref('website.group_website_designer')),
-            (4, ref('liber_soc_agreements.group_soc_user')),
+            (4, ref('liber_metabooks_integration.metabooks_manager_group')),
+            (4, ref('group_project_task_editor')),
+            (4, ref('base.group_allow_export')),
+            (4, ref('hr_expense.group_hr_expense_team_approver')),
         ]"/>
-        <field name="comment">Publica e configura o site; acompanha campanhas de consignação (criar é do Comercial). Sem dados financeiros.</field>
+        <field name="comment">Publica e configura o site; administra o Metabooks (sincronização e dados de referência); trabalha nas tarefas dos projetos. Aprova despesa da equipe. Exporta. Sem dados financeiros e sem consignação.</field>
     </record>
 
-    <!-- ============================================================== -->
-    <!-- Visitante: a conta da apresentação pública. Vê OS APPS DO      -->
-    <!-- LIBER em nível usuário, não grava nada.                        -->
-    <!--                                                                -->
-    <!-- A v1 era generosa (gerente em tudo): demonstrava o Odoo        -->
-    <!-- inteiro, não o produto. A v2 (20/07/2026) apertou para         -->
-    <!-- Consignação, Direitos autorais, Bonificação e Catálogo.        -->
-    <!--                                                                -->
-    <!-- A régua da v3 (27/07/2026) é outra, e é mais fácil de manter   -->
-    <!-- honesta: **a demo abre o que a demo promete**. Duas partes:    -->
-    <!--                                                                -->
-    <!-- 1. Toda tela com manual publicado em liber_site. O corte da    -->
-    <!--    v2 era por app, e por isso escondia telas que os manuais    -->
-    <!--    descreviam em detalhe — quem lia "Cálculo de royalties" e   -->
-    <!--    entrava na demo não achava a tela. Manual que promete o     -->
-    <!--    que a demo não mostra é pior que demo pequena.              -->
-    <!--                                                                -->
-    <!-- 2. Vendas e eCommerce. Não têm manual próprio por serem do     -->
-    <!--    Odoo cru, mas são a vitrine: quem abre a demonstração de    -->
-    <!--    um ERP de editora espera ver o pedido e a loja. Ficaram de  -->
-    <!--    fora da primeira rodada da v3 justamente porque a régua     -->
-    <!--    era só o manual — e a ausência apareceu na hora.            -->
-    <!--                                                                -->
-    <!-- O que isso trouxe para dentro, e por quê:                      -->
-    <!-- - contract_manager: os manuais de Cálculo de royalties, IRRF   -->
-    <!--   e Pagamento de royalties. As três telas são gated em         -->
-    <!--   manager, não em user — daí precisar do grupo "de gerente"    -->
-    <!--   para uma conta que não grava nada.                           -->
-    <!-- - account_readonly: os manuais de Importação de XML de NF-e e  -->
-    <!--   de Notas de remessa. Ambos os menus penduram em              -->
-    <!--   account.menu_finance.                                        -->
-    <!-- - budget_user: o manual de Orçamento.                          -->
-    <!-- - sale_salesman_all_leads: Vendas E eCommerce de uma vez —     -->
-    <!--   sale.sale_menu_root é livre, mas os filhos que importam      -->
-    <!--   (Pedidos, Cotações, Faturamento, Catálogo) e o               -->
-    <!--   website_sale.menu_ecommerce exigem group_sale_salesman.      -->
-    <!--   A variante _all_leads é deliberada: com o salesman simples   -->
-    <!--   a regra de registro filtra os pedidos pelo vendedor dono, o  -->
-    <!--   visitante não é dono de nenhum, e a tela abriria VAZIA.      -->
-    <!--   Demo vazia é pior que tela fechada. O group_sale_manager     -->
-    <!--   segue fora: ele traz configuração e relatórios gerenciais,   -->
-    <!--   que não são vitrine.                                         -->
-    <!--                                                                -->
-    <!-- O preço, dito em voz alta: esta conta é pública e circula, e   -->
-    <!-- agora ela lê Faturamento e Orçamento. São números da casa. A   -->
-    <!-- troca foi consciente — a demo existe para mostrar o produto —  -->
-    <!-- mas se um dia a base deixar de ser de demonstração e passar a  -->
-    <!-- ter movimento real, esta é a primeira linha a revisar.         -->
-    <!--                                                                -->
-    <!-- Fora do menu de propósito, mesmo tendo manual:                 -->
-    <!-- - liber_roles ("Papéis de acesso"): a tela é a administração   -->
-    <!--   de acesso. Manual documenta a ideia; a demo não precisa      -->
-    <!--   entregar o painel. Exigiria base.group_system.               -->
-    <!-- - Dropbox, Drive e GitHub: os módulos não estão instalados     -->
-    <!--   nesta base. Quando entrarem, os grupos deles entram aqui.    -->
-    <!--                                                                -->
-    <!-- Duas ausências que continuam deliberadas:                      -->
-    <!-- - a trava de escrita segue em models/ir_model_access.py: o     -->
-    <!--   nível dos grupos daqui é visibilidade, nunca poder.          -->
-    <!-- - base.group_allow_export: a conta é pública e circula. Sem     -->
-    <!--   escrita ela ainda poderia levar a base embora em .xlsx —      -->
-    <!--   e com Faturamento agora visível, isso pesa mais, não menos.   -->
-    <!-- ============================================================== -->
+    <!-- ============================== DIREÇÃO ============================ -->
+
+    <!-- A Direção é a SOMA dos seis Gerentes, e é definida assim de propósito:
+         o que qualquer função ganhar, ela ganha no mesmo `-u`, sem ninguém
+         precisar lembrar. Fora da soma fica só o Visitante, que é recorte
+         restritivo e não função da casa.
+
+         Precisa vir DEPOIS dos seis: `ref()` só resolve o que já foi lido.
+
+         Exclusivas dela: a configuração do app de contratos e a ficha de
+         todos os funcionários. O Officer de Folgas NÃO foi dado — aprovaria a
+         casa inteira; a Direção aprova a folga dos seus gerentes pela árvore
+         de funcionários, que é onde essa decisão pertence. -->
+    <record id="group_direcao" model="res.groups">
+        <field name="name">Diretor(a)</field>
+        <field name="privilege_id" ref="privilege_direcao"/>
+        <field name="implied_ids" eval="[
+            (4, ref('base.group_user')),
+            (4, ref('group_comercial_gerente')),
+            (4, ref('group_logistica_gerente')),
+            (4, ref('group_financeiro_gerente')),
+            (4, ref('group_editorial_gerente')),
+            (4, ref('group_juridico_gerente')),
+            (4, ref('group_marketing_gerente')),
+            (4, ref('liber_copyright_contracts.group_contract_config')),
+            (4, ref('hr.group_hr_user')),
+        ]"/>
+        <field name="comment">Sócios e diretores: o superconjunto da casa, definido como a soma dos seis Gerentes — o que qualquer função ganhar, a Direção ganha junto. Exclusivas dela: configurar o app de contratos e ver a ficha de todos os funcionários. Não é administrador do sistema.</field>
+    </record>
+
+    <!-- ============================= VISITANTE =========================== -->
+
+    <!-- A conta da demonstração pública, e a única exceção à regra deste
+         arquivo: ela SUBTRAI, e por isso conserva `(3, ...)`.
+
+         AQUI A ORDEM IMPORTA: concessões primeiro, remoções por último.
+         Conceder pode reintroduzir por cascata o que uma remoção anterior
+         tirou (incidente de 27/07/2026). É o único lugar do módulo onde ler a
+         lista de cima para baixo é obrigatório.
+
+         A trava de escrita é no ORM (models/ir_model_access.py), não no menu:
+         vale para RPC e URL colada, não só para a tela. Não mexer sem motivo. -->
     <record id="group_visitante" model="res.groups">
         <field name="name">Visitante (demonstração)</field>
         <field name="privilege_id" ref="privilege_visitante"/>
-        <!-- A ORDEM DESTA LISTA É SIGNIFICATIVA, e custou um susto.
-             Ela é uma sequência de comandos, executada de cima para baixo:
-             conceder um grupo dispara a cascata dos módulos que reagem a
-             ele, e essa cascata pode trazer grupos de volta. Quando os
-             (3, ...) vinham primeiro, conceder sale_salesman_all_leads no
-             fim re-introduziu project.group_project_user (via sale_project)
-             e website.group_website_restricted_editor (via website_sale) na
-             conta pública — dois apps que a régua manda esconder, sem
-             ninguém pedir e sem erro nenhum aparecer.
-             Concessões primeiro, remoções por último: assim a limpeza é a
-             última palavra, aconteça o que acontecer no meio. -->
         <field name="implied_ids" eval="[
             (4, ref('base.group_user')),
             (4, ref('liber_soc_agreements.group_soc_user')),
             (4, ref('liber_copyright_contracts.group_contract_user')),
             (4, ref('liber_copyright_contracts.group_contract_manager')),
+            (4, ref('liber_copyright_contracts.group_contract_config')),
             (4, ref('liber_metabooks_integration.metabooks_product_group')),
             (4, ref('liber_metabooks_integration.metadata_group')),
             (4, ref('liber_budget.group_budget_user')),
@@ -331,25 +455,7 @@
             (3, ref('liber_soc_agreements.group_soc_manager')),
             (3, ref('liber_budget.group_budget_manager')),
         ]"/>
-        <!-- Módulo de fora que queira somar (ou tirar) grupos do visitante faz
-             isso por conta própria, com comandos (4, ...) / (3, ...): eles são
-             incrementais e sobrevivem a um -u liber_roles. É assim que um módulo
-             que não vive neste repositório entra na conta pública sem que este
-             precise conhecê-lo, e sem que a lista acima cresça a cada
-             integração. Para tirar da conta um grupo que já esteja na ficha do
-             usuário, ver o `extras` em models/res_users.py. -->
         <field name="comment">Conta de demonstração pública: abre em leitura toda tela que tem manual publicado — consignação, direitos autorais e seus royalties, fiscal, catálogo e orçamento — mais Vendas e eCommerce, que são a vitrine. Escreve só no chatter; a trava de escrita é no ORM, não no menu.</field>
     </record>
-
-    <!-- A última palavra sobre o visitante, e ela precisa ser em Python.
-         As entradas (3, ...) acima desfazem o VÍNCULO entre dois grupos; não
-         alcançam grupo que o usuário carrega direto. E é assim que a carona
-         chega: conceder o grupo de vendas fez o sale_project acrescentar
-         project.group_project_user e o website_sale acrescentar
-         website.group_website_restricted_editor direto na conta pública.
-         Esta chamada roda em todo -u liber_roles e devolve a conta ao
-         recorte declarado. Vem por último de propósito: depois dos grupos,
-         depois da cascata. -->
-    <function model="res.users" name="_liber_faxina_do_visitante"/>
 
 </odoo>

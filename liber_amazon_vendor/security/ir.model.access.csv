@@ -7,3 +7,5 @@ access_liber_amazon_order_manager,liber.amazon.order manager,model_liber_amazon_
 access_liber_amazon_order_line_user,liber.amazon.order.line operator,model_liber_amazon_order_line,group_liber_amazon_user,1,1,1,1
 access_liber_amazon_order_line_manager,liber.amazon.order.line manager,model_liber_amazon_order_line,group_liber_amazon_manager,1,1,1,1
 access_liber_amazon_import_user,liber.amazon.import operator,model_liber_amazon_import,group_liber_amazon_user,1,1,1,1
+access_liber_amazon_unit_user,liber.amazon.unit operator,model_liber_amazon_unit,group_liber_amazon_user,1,0,0,0
+access_liber_amazon_unit_manager,liber.amazon.unit manager,model_liber_amazon_unit,group_liber_amazon_manager,1,1,1,1

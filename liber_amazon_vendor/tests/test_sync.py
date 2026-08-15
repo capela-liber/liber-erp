@@ -159,6 +159,27 @@ class TestAmazonSync(AmazonVendorCase):
         self.assertAlmostEqual(
             order.sale_order_id.order_line.product_uom_qty, 100, places=2)
 
+    def test_a_huge_divergence_stays_readable(self):
+        """
+        Um pedido grande que a Amazon reduz produz um aviso por linha. Sem
+        teto, o alerta vira um paredão que ninguém lê — e deixa de avisar
+        justamente quando havia mais o que dizer.
+        """
+        muitas = [amazon_item(str(n), '9786551590016', qty=n + 1)
+                  for n in range(1, 60)]
+        self._sync([amazon_order('BR-0035', muitas)])
+        ordem = self._order('BR-0035')
+        ordem.action_create_quotation()
+
+        # a Amazon devolve o pedido com uma linha só
+        self._sync([amazon_order('BR-0035', [
+            amazon_item('1', '9786551590016', qty=1)])])
+
+        nota = self._order('BR-0035').divergence_note
+        self.assertIn('59', nota, "o total precisa aparecer por inteiro")
+        self.assertLessEqual(nota.count('\n- '), 21,
+                             "a nota passou de vinte itens e ficou ilegível")
+
     def test_change_before_quotation_is_not_a_divergence(self):
         """Sem cotação, mudança é só notícia: o espelho se atualiza e pronto."""
         self._sync([amazon_order('BR-0031', [
@@ -211,3 +232,116 @@ class TestAmazonSync(AmazonVendorCase):
         que a próxima leitura duplicaria."""
         result = self._sync([amazon_order('', [amazon_item('1', '9786551590016')])])
         self.assertEqual(result['created'], 0)
+
+
+@tagged('post_install', '-at_install', 'amazon_vendor')
+class TestAmazonMenus(AmazonVendorCase):
+    """A estrutura do app: onde cada coisa é alcançada."""
+
+    def test_import_button_is_always_visible_on_the_order_list(self):
+        """
+        Sem `display="always"` o botão cai no bloco de ações de seleção, que o
+        Odoo só mostra quando há linhas marcadas — e sumiria justamente na
+        primeira importação, com a lista vazia. O erro não daria exceção
+        nenhuma: só um botão que ninguém acha.
+        """
+        from lxml import etree
+
+        view = self.env.ref('liber_amazon_vendor.view_liber_amazon_order_list')
+        arch = etree.fromstring(view.arch)
+        botoes = arch.xpath('//header/button')
+
+        self.assertEqual(len(botoes), 1, "a lista de Pedidos tem um botão só")
+        self.assertEqual(botoes[0].get('display'), 'always')
+        self.assertEqual(botoes[0].get('type'), 'action')
+
+    def test_orders_cannot_be_created_by_hand(self):
+        """
+        O espelho tem uma porta de entrada só: a importação. Um registro
+        criado à mão não corresponde a pedido nenhum na Amazon, e a próxima
+        releitura não saberia o que fazer com ele.
+        """
+        from lxml import etree
+
+        for xmlid in ('view_liber_amazon_order_list',
+                      'view_liber_amazon_order_form',
+                      'view_liber_amazon_schedule_list'):
+            view = self.env.ref('liber_amazon_vendor.%s' % xmlid)
+            raiz = etree.fromstring(view.arch)
+            self.assertEqual(raiz.get('create'), 'false',
+                             "%s deixaria criar pedido à mão" % xmlid)
+
+    def test_the_import_menu_entry_is_gone(self):
+        """A importação mora na lista de Pedidos, não num menu à parte."""
+        self.assertFalse(self.env.ref(
+            'liber_amazon_vendor.menu_liber_amazon_import',
+            raise_if_not_found=False))
+
+    def test_the_app_has_the_three_entries_and_configuration(self):
+        raiz = self.env.ref('liber_amazon_vendor.menu_liber_amazon_root')
+        filhos = raiz.child_id.sorted('sequence').mapped('name')
+        self.assertEqual(filhos, ['Orders', 'Schedule', 'Report',
+                                  'Configuration'])
+
+    def test_action_names_match_the_menus(self):
+        """
+        O rastro de navegação mostra o nome da AÇÃO, não o do menu. Renomear
+        um sem o outro deixa a tela dizendo "Pedidos" no menu e "Pedidos de
+        compra da Amazon" na trilha logo acima — dois nomes para o mesmo
+        lugar, e nenhum erro para denunciar.
+        """
+        raiz = self.env.ref('liber_amazon_vendor.menu_liber_amazon_root')
+        menus = self.env['ir.ui.menu'].search(
+            [('id', 'child_of', raiz.id), ('action', '!=', False)])
+        self.assertTrue(menus, "o app precisa ter menus com ação")
+
+        for menu in menus:
+            acao = menu.action
+            self.assertEqual(
+                menu.name, acao.name,
+                "menu '%s' e ação '%s' nomeiam o mesmo lugar de dois jeitos"
+                % (menu.name, acao.name))
+
+    def test_amazon_state_is_shown_translated_but_kept_raw(self):
+        """
+        O valor cru precisa sobreviver — é a chave das decorações, dos
+        filtros e do agrupamento, e é o que a Amazon de fato disse. O que
+        muda é só a exibição.
+        """
+        self._sync([amazon_order('BR-0050', [amazon_item('1', '9786551590016')],
+                                 state='Acknowledged')])
+        ordem = self._order('BR-0050')
+        self.assertEqual(ordem.amazon_state, 'Acknowledged')
+        self.assertEqual(ordem.amazon_state_label, 'Acknowledged')
+
+        # e um estado que a Amazon invente passa adiante como veio
+        self._sync([amazon_order('BR-0051', [amazon_item('1', '9786551590016')],
+                                 state='PartiallyShipped')])
+        outra = self._order('BR-0051')
+        self.assertEqual(outra.amazon_state_label, 'PartiallyShipped')
+
+    def test_every_badge_carries_colour(self):
+        """
+        Badge sem decoração sai cinza — e cinza não diz nada. O widget cai em
+        `text-bg-300` quando nenhuma condição casa, então esquecer a decoração
+        não dá erro: dá uma tela morta que parece pronta.
+        """
+        from lxml import etree
+
+        esperado = {
+            'view_liber_amazon_order_list': ('state', 'amazon_state_label'),
+            'view_liber_amazon_schedule_list': ('state', 'amazon_state_label'),
+            'view_liber_amazon_title_list': ('outcome', 'fulfilment_state',
+                                             'amazon_state_label'),
+        }
+        for xmlid, campos in esperado.items():
+            arch = etree.fromstring(
+                self.env.ref('liber_amazon_vendor.%s' % xmlid).arch)
+            for campo in campos:
+                no = arch.xpath('//field[@name="%s"][@widget="badge"]' % campo)
+                self.assertTrue(no, '%s: %s não é badge' % (xmlid, campo))
+                decoracoes = [a for a in no[0].attrib
+                              if a.startswith('decoration-')]
+                self.assertTrue(
+                    decoracoes,
+                    '%s: o badge de %s sairia cinza' % (xmlid, campo))

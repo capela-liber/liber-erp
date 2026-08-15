@@ -204,7 +204,7 @@ msgstr "Faixas de exemplares"
 #: model:ir.ui.menu,name:liber_copyright_contracts.menu_copyright_contracts_root
 #: model_terms:ir.ui.view,arch_db:liber_copyright_contracts.res_config_settings_view_form
 msgid "Copyright"
-msgstr "Direitos Autorais"
+msgstr "Direito autoral"
 
 #. module: liber_copyright_contracts
 #: model:ir.model,name:liber_copyright_contracts.model_edlab_contract
@@ -764,3 +764,18 @@ msgstr "anos"
 #: code:addons/liber_copyright_contracts/models/res_partner.py:0
 msgid "Contracts of %s"
 msgstr "Contratos de %s"
+
+#. module: liber_copyright_contracts
+#: model:res.groups,name:liber_copyright_contracts.group_contract_config
+msgid "Configuration"
+msgstr "Configuração"
+
+#. module: liber_copyright_contracts
+#. odoo-python
+#: code:addons/liber_copyright_contracts/models/contract.py:0
+msgid ""
+"Only Copyright Contract managers can change a contract's status (validate, "
+"cancel, renew)."
+msgstr ""
+"Somente gerentes de Contratos de Direitos Autorais podem mudar o status de "
+"um contrato (validar, cancelar, renovar)."

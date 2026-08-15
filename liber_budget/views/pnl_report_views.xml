@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="pnl_report_view_pivot" model="ir.ui.view">
+        <field name="name">budget.pnl.report.pivot</field>
+        <field name="model">budget.pnl.report</field>
+        <field name="arch" type="xml">
+            <!-- Tipo de conta nas linhas, período nas colunas: é o desenho que
+                 o demonstrativo do Enterprise não deixa mexer. Aqui o Grupo e a
+                 Conta entram e saem arrastando. -->
+            <pivot string="Profit &amp; Loss" sample="1">
+                <field name="account_type" type="row"/>
+                <field name="account_id" type="row"/>
+                <field name="date" type="col" interval="month"/>
+                <field name="amount" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="pnl_report_view_graph" model="ir.ui.view">
+        <field name="name">budget.pnl.report.graph</field>
+        <field name="model">budget.pnl.report</field>
+        <field name="arch" type="xml">
+            <graph string="Profit &amp; Loss" type="bar" stacked="1" sample="1">
+                <field name="date" interval="month"/>
+                <field name="account_type"/>
+                <field name="amount" type="measure"/>
+            </graph>
+        </field>
+    </record>
+
+    <record id="pnl_report_view_list" model="ir.ui.view">
+        <field name="name">budget.pnl.report.list</field>
+        <field name="model">budget.pnl.report</field>
+        <field name="arch" type="xml">
+            <list string="Profit &amp; Loss" create="0" edit="0" delete="0">
+                <field name="date"/>
+                <field name="move_id" optional="show"/>
+                <field name="code" optional="show"/>
+                <field name="account_id"/>
+                <field name="account_type" optional="show"/>
+                <field name="group_id" optional="hide"/>
+                <field name="journal_id" optional="hide"/>
+                <field name="partner_id" optional="show"/>
+                <field name="state" optional="hide"/>
+                <field name="amount" sum="Amount"/>
+                <field name="currency_id" column_invisible="1"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="pnl_report_view_search" model="ir.ui.view">
+        <field name="name">budget.pnl.report.search</field>
+        <field name="model">budget.pnl.report</field>
+        <field name="arch" type="xml">
+            <search string="Profit &amp; Loss">
+                <field name="account_id"/>
+                <field name="code"/>
+                <field name="partner_id"/>
+                <field name="move_id"/>
+                <field name="journal_id"/>
+                <filter name="posted" string="Posted Entries"
+                        domain="[('state', '=', 'posted')]"/>
+                <filter name="draft" string="Draft Entries"
+                        domain="[('state', '=', 'draft')]"/>
+                <separator/>
+                <!-- As três de sempre, agora recortando os seis tipos reais -->
+                <filter name="income" string="Income"
+                        domain="[('account_type', 'in', ['1_income', '2_income_other'])]"/>
+                <filter name="cost_of_revenue" string="Cost of Revenue"
+                        domain="[('account_type', '=', '3_expense_direct_cost')]"/>
+                <filter name="expense" string="Expenses"
+                        domain="[('account_type', 'in', ['4_expense', '5_expense_other', '6_expense_depreciation'])]"/>
+                <separator/>
+                <filter name="filter_date" string="Date" date="date"
+                        default_period="year"/>
+                <group>
+                    <filter name="group_account_type" string="Account Type"
+                            context="{'group_by': 'account_type'}"/>
+                    <filter name="group_account_group" string="Account Group"
+                            context="{'group_by': 'group_id'}"/>
+                    <filter name="group_account" string="Account"
+                            context="{'group_by': 'account_id'}"/>
+                    <filter name="group_partner" string="Partner"
+                            context="{'group_by': 'partner_id'}"/>
+                    <filter name="group_journal" string="Journal"
+                            context="{'group_by': 'journal_id'}"/>
+                    <filter name="group_month" string="Month"
+                            context="{'group_by': 'date:month'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="pnl_report_action" model="ir.actions.act_window">
+        <field name="name">Profit &amp; Loss</field>
+        <field name="res_model">budget.pnl.report</field>
+        <field name="view_mode">pivot,graph,list</field>
+        <field name="context">{'search_default_posted': 1, 'search_default_filter_date': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No journal item in a P&amp;L account yet
+            </p>
+            <p>
+                This statement sums the General Ledger accounts of type Income,
+                Cost of Revenue and Expenses, with the P&amp;L sign: income
+                positive, expense negative, grand total = net result.
+            </p>
+        </field>
+    </record>
+
+    <menuitem id="menu_budget_pnl_report" parent="menu_budget_reporting"
+              action="pnl_report_action" sequence="20"/>
+
+</odoo>

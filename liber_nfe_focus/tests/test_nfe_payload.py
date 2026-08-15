@@ -430,6 +430,103 @@ class TestNfePayload(TransactionCase):
 
         self.assertNotIn('duplicatas', payload)
 
+    # -- o centavo do arredondamento global ----------------------------
+    #
+    # Rejeição 866: "Ausência de troco quando o valor dos pagamentos informados
+    # for maior que o total da nota". Aconteceu na n-1 em 14/08/2026, com duas
+    # notas: o Odoo soma os valores exatos das linhas e arredonda no fim
+    # (`round_globally`), a NFe soma os itens já arredondados, e o rodapé
+    # divergiu em um centavo -- para cima.
+    def test_pagamento_maior_que_a_nota_cai_para_o_total(self):
+        payload = nfe_payload.build_payload(
+            self._nota(formas_pagamento=[
+                {'forma_pagamento': nfe_payload.FORMA_DUPLICATA,
+                 'valor_pagamento': 269.71}]),
+            self._emitente(), self._destinatario(), self._itens())
+
+        self.assertEqual(payload['valor_total'], '269.70')
+        self.assertEqual(payload['formas_pagamento'][0]['valor_pagamento'], '269.70')
+
+    def test_duplicata_maior_que_a_nota_e_ajustada_na_ultima(self):
+        """A sobra sai da última parcela, que é onde o comércio a põe."""
+        payload = nfe_payload.build_payload(
+            self._nota(duplicatas=[
+                {'numero': '001', 'data_vencimento': '2026-08-30', 'valor': 134.85},
+                {'numero': '002', 'data_vencimento': '2026-09-30', 'valor': 134.86}],
+                formas_pagamento=[{'forma_pagamento': nfe_payload.FORMA_DUPLICATA,
+                                   'valor_pagamento': 269.71}]),
+            self._emitente(), self._destinatario(), self._itens())
+
+        self.assertEqual(payload['duplicatas'][0]['valor'], '134.85')
+        self.assertEqual(payload['duplicatas'][1]['valor'], '134.85')
+        self.assertEqual(payload['valor_liquido_fatura'], '269.70')
+        self.assertEqual(payload['formas_pagamento'][0]['valor_pagamento'], '269.70')
+
+    def test_a_nota_de_verdade_da_n1_fecha(self):
+        """28 x 89,15 com 52% de desconto: 1.198,176 exatos. O item arredondado
+        dá 1.198,18 e o Odoo cobra 1.198,19 -- é a divergência que a SEFAZ
+        recusou."""
+        itens = [{
+            'codigo': 'LIV-020',
+            'descricao': 'Título com desconto de livraria',
+            'ncm': '4901.99.00',
+            'cfop': '5102',
+            'unidade': 'UN',
+            'quantidade': 28,
+            'valor_unitario': 89.15,
+            'valor_bruto': 2496.20,
+            'valor_desconto': 1298.02,
+        }]
+        payload = nfe_payload.build_payload(
+            self._nota(duplicatas=[
+                {'numero': '001', 'data_vencimento': '2026-11-12', 'valor': 1198.19}],
+                formas_pagamento=[{'forma_pagamento': nfe_payload.FORMA_DUPLICATA,
+                                   'valor_pagamento': 1198.19}]),
+            self._emitente(), self._destinatario(), itens)
+
+        self.assertEqual(payload['valor_total'], '1198.18')
+        self.assertEqual(payload['duplicatas'][0]['valor'], '1198.18')
+        self.assertEqual(payload['formas_pagamento'][0]['valor_pagamento'], '1198.18')
+
+    def test_sem_pagamento_continua_zerado_contra_nota_cheia(self):
+        """Remessa e consignação pagam MENOS que o total, e isso é legítimo: a
+        regra só proíbe pagar mais. É o que a fatura manda (forma 90, valor
+        zero) contra uma nota de valor cheio."""
+        payload = nfe_payload.build_payload(
+            self._nota(formas_pagamento=[
+                {'forma_pagamento': nfe_payload.FORMA_SEM_PAGAMENTO,
+                 'valor_pagamento': 0.0}]),
+            self._emitente(), self._destinatario(), self._itens())
+
+        self.assertEqual(payload['valor_total'], '269.70')
+        self.assertEqual(payload['formas_pagamento'][0]['forma_pagamento'],
+                         nfe_payload.FORMA_SEM_PAGAMENTO)
+        self.assertEqual(payload['formas_pagamento'][0]['valor_pagamento'], '0.00')
+
+    def test_duplicata_menor_que_a_nota_nao_e_inflada(self):
+        """Metade à vista, metade a prazo: só a parcela que vence depois vira
+        duplicata, e ela continua sendo o que é. Completar até o total da nota
+        seria inventar cobrança a prazo que ninguém combinou."""
+        payload = nfe_payload.build_payload(
+            self._nota(duplicatas=[
+                {'numero': '001', 'data_vencimento': '2026-09-30', 'valor': 134.85}]),
+            self._emitente(), self._destinatario(), self._itens())
+
+        self.assertEqual(payload['duplicatas'][0]['valor'], '134.85')
+        self.assertEqual(payload['valor_total'], '269.70')
+
+    def test_parcela_que_nao_cabe_na_nota_some(self):
+        """Caso de borda: a sobra come a última parcela inteira. Ela não entra
+        na nota em vez de entrar negativa."""
+        payload = nfe_payload.build_payload(
+            self._nota(duplicatas=[
+                {'numero': '001', 'data_vencimento': '2026-08-30', 'valor': 269.70},
+                {'numero': '002', 'data_vencimento': '2026-09-30', 'valor': 0.01}]),
+            self._emitente(), self._destinatario(), self._itens())
+
+        self.assertEqual(len(payload['duplicatas']), 1)
+        self.assertEqual(payload['duplicatas'][0]['valor'], '269.70')
+
     # -- ISBN ----------------------------------------------------------
     def test_isbn_vai_como_codigo_de_barras(self):
         itens = self._itens()
@@ -441,3 +538,110 @@ class TestNfePayload(TransactionCase):
 
         self.assertEqual(item['codigo_barras_comercial'], '9780000000002')
         self.assertEqual(item['codigo_barras_tributavel'], '9780000000002')
+
+    # --- volumes e peso (grupo transp/vol) --------------------------------
+
+    def test_volumes_e_peso_entram_no_payload(self):
+        payload = nfe_payload.build_payload(
+            nota=self._nota(volumes=3, peso_bruto=4.5),
+            emitente=self._emitente(),
+            destinatario=self._destinatario(),
+            itens=self._itens(),
+        )
+        # LISTA `volumes`, não campos soltos: campo solto a Focus descarta
+        # calada, e foi assim que a primeira nota de produção saiu sem o
+        # grupo de transporte.
+        self.assertEqual(payload['volumes'], [{
+            'quantidade': 3, 'especie': 'CAIXA', 'peso_bruto': '4.500'}])
+        self.assertNotIn('quantidade_volumes', payload)
+        self.assertNotIn('peso_bruto', payload)
+
+    def test_especie_de_volume_pode_ser_outra(self):
+        payload = nfe_payload.build_payload(
+            nota=self._nota(volumes=1, especie_volumes='FARDO'),
+            emitente=self._emitente(),
+            destinatario=self._destinatario(),
+            itens=self._itens(),
+        )
+        self.assertEqual(payload['volumes'][0]['especie'], 'FARDO')
+
+    def test_nota_sem_volume_nao_declara_transporte(self):
+        """O acerto fatura livro que já está com o cliente: não move caixa."""
+        payload = nfe_payload.build_payload(
+            nota=self._nota(),
+            emitente=self._emitente(),
+            destinatario=self._destinatario(),
+            itens=self._itens(),
+        )
+        self.assertNotIn('volumes', payload)
+
+    def test_peso_arredonda_meio_para_cima(self):
+        payload = nfe_payload.build_payload(
+            nota=self._nota(volumes=1, peso_bruto=1.0005),
+            emitente=self._emitente(),
+            destinatario=self._destinatario(),
+            itens=self._itens(),
+        )
+        self.assertEqual(payload['volumes'][0]['peso_bruto'], '1.001')
+
+    # -- transportadora --------------------------------------------------
+    def _transportador(self, **kw):
+        dados = {
+            'nome': 'Transportes Andorinha',
+            'cnpj': '11.222.333/0001-81',
+            'inscricao_estadual': '111.222.333.555',
+            'endereco': 'Rua das Gaivotas, 10',
+            'municipio': 'São Paulo',
+            'uf': 'sp',
+        }
+        dados.update(kw)
+        return dados
+
+    def test_transportador_entra_no_payload(self):
+        payload = nfe_payload.build_payload(
+            nota=self._nota(modalidade_frete=nfe_payload.FRETE_EMITENTE),
+            emitente=self._emitente(),
+            destinatario=self._destinatario(),
+            itens=self._itens(),
+            transportador=self._transportador(),
+        )
+        self.assertEqual(payload['modalidade_frete'],
+                         nfe_payload.FRETE_EMITENTE)
+        self.assertEqual(payload['nome_transportador'],
+                         'Transportes Andorinha')
+        # Pontuação some, como em todo documento do payload.
+        self.assertEqual(payload['cnpj_transportador'], '11222333000181')
+        self.assertNotIn('cpf_transportador', payload)
+        self.assertEqual(payload['inscricao_estadual_transportador'],
+                         '111222333555')
+        self.assertEqual(payload['endereco_transportador'],
+                         'Rua das Gaivotas, 10')
+        self.assertEqual(payload['municipio_transportador'], 'São Paulo')
+        self.assertEqual(payload['uf_transportador'], 'SP')
+
+    def test_transportador_autonomo_vai_por_cpf(self):
+        payload = nfe_payload.build_payload(
+            nota=self._nota(modalidade_frete=nfe_payload.FRETE_TERCEIROS),
+            emitente=self._emitente(),
+            destinatario=self._destinatario(),
+            itens=self._itens(),
+            transportador=self._transportador(
+                cnpj=None, cpf='123.456.789-09', inscricao_estadual=None),
+        )
+        self.assertEqual(payload['cpf_transportador'], '12345678909')
+        self.assertNotIn('cnpj_transportador', payload)
+        self.assertNotIn('inscricao_estadual_transportador', payload)
+
+    def test_sem_transportador_o_grupo_nao_viaja(self):
+        payload = nfe_payload.build_payload(
+            nota=self._nota(),
+            emitente=self._emitente(),
+            destinatario=self._destinatario(),
+            itens=self._itens(),
+        )
+        self.assertEqual(payload['modalidade_frete'], nfe_payload.FRETE_SEM)
+        for campo in ('nome_transportador', 'cnpj_transportador',
+                      'cpf_transportador', 'endereco_transportador',
+                      'municipio_transportador', 'uf_transportador'):
+            self.assertNotIn(campo, payload)
+

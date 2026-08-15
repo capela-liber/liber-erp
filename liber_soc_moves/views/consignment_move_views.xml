@@ -10,6 +10,7 @@
                 <field name="date"/>
                 <field name="agreement_id"/>
                 <field name="partner_id" optional="show"/>
+                <field name="team_id" optional="show"/>
                 <field name="move_kind"/>
                 <field name="picking_state" optional="hide"/>
                 <field name="state" widget="badge"
@@ -119,6 +120,7 @@
                 <filter string="Done" name="f_done" domain="[('state', '=', 'done')]"/>
                 <group>
                     <filter string="Customer" name="g_partner" context="{'group_by': 'partner_id'}"/>
+                    <filter string="Sales Channel" name="g_team" context="{'group_by': 'team_id'}"/>
                     <filter string="Type" name="g_kind" context="{'group_by': 'move_kind'}"/>
                     <filter string="Status" name="g_state" context="{'group_by': 'state'}"/>
                 </group>

@@ -15,6 +15,7 @@ var DOCS = [
     { slug: "liber_copyright_contracts", title: "Contratos de direitos autorais", desc: "Contratos com beneficiários, obras, vigência e renovação." },
     { slug: "liber_copyright_contracts_analytics", title: "Cálculo de royalties", desc: "Faixas de exemplares, base de cálculo e adiantamentos." },
     { slug: "liber_copyright_contracts_taxes", title: "IRRF sobre direitos", desc: "Retenção pela tabela progressiva e o redutor da Lei 15.270/2025." },
+    { slug: "liber_copyright_contracts_intercompany", title: "Cessão de uso entre empresas", desc: "A empresa que vende reembolsa a que detém os contratos, com fatura e espelho." },
     { slug: "liber_copyright_contracts_payments", title: "Pagamento de royalties", desc: "Direitos em aberto viram fatura de fornecedor por beneficiário." },
     { slug: "liber_copyright_contracts_reports", title: "Prestação de contas", desc: "O extrato do autor em PDF, pronto para enviar." },
   ]},
@@ -36,6 +37,9 @@ var DOCS = [
     { slug: "liber_dropbox", title: "Arquivos no Dropbox", desc: "Leitura e escrita por pasta, envio, links com prazo e vínculos a autores e títulos." },
     { slug: "liber_gdrive", title: "Arquivos no Google Drive", desc: "O mesmo portão na frente do Drive: pastas por ID, download conferido, miniaturas até de PDF." },
     { slug: "liber_github", title: "Arquivos no GitHub", desc: "Repositório vira pasta, envio vira commit, e o link compartilhado não fura o portão." },
+  ]},
+  { area: "Comercial", desc: "Como a editora classifica quem compra, e o que essa classificação decide.", items: [
+    { slug: "liber_partner_commercial", title: "Canal de vendas do cliente", desc: "A classificação comercial na ficha, herdada pelos documentos — e o desconto que não se dilui no preço." },
   ]},
   { area: "Gestão", desc: "Orçamento e controle de acesso.", items: [
     { slug: "liber_budget", title: "Orçamento", desc: "Orçado × realizado sobre a contabilidade analítica." },

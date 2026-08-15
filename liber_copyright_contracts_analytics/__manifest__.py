@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     'name': 'Copyright Contracts - Analytics',
-    'version': '19.0.1.0.0',
+    'version': '19.0.1.5.0',
     'summary': 'Analytic accounts and payment tracking for copyright contracts',
     'description': """
 Analytics layer for copyright contracts.
@@ -27,6 +27,11 @@ The last payment date can only be edited by a Contracts Administrator.
         'views/account_analytic_line_views.xml',
         'views/report_menu.xml',
     ],
+    'assets': {
+        'web.assets_backend': [
+            'liber_copyright_contracts_analytics/static/src/js/contract_links_tour.js',
+        ],
+    },
     'installable': True,
     'application': False,
     'license': 'AGPL-3',

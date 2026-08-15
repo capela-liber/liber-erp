@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_liber_amazon_unit_list" model="ir.ui.view">
+        <field name="name">liber.amazon.unit.list</field>
+        <field name="model">liber.amazon.unit</field>
+        <field name="arch" type="xml">
+            <list editable="bottom"
+                  decoration-danger="not partner_id">
+                <field name="code"/>
+                <field name="partner_id"/>
+                <field name="shipping_partner_id" optional="show"/>
+                <field name="account_id" optional="hide"/>
+                <field name="company_id" groups="base.group_multi_company"
+                       optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_liber_amazon_unit_form" model="ir.ui.view">
+        <field name="name">liber.amazon.unit.form</field>
+        <field name="model">liber.amazon.unit</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <div class="oe_title">
+                        <label for="code" string="Amazon Code"/>
+                        <h1><field name="code" placeholder="GRU8"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="account_id"/>
+                            <field name="partner_id"/>
+                            <field name="shipping_partner_id"/>
+                        </group>
+                        <group>
+                            <field name="active" widget="boolean_toggle"/>
+                            <field name="company_id"
+                                   groups="base.group_multi_company"/>
+                        </group>
+                    </group>
+                    <div class="alert alert-info" role="status">
+                        Amazon sends only the warehouse code on the order —
+                        <strong>no tax registration, no address, no legal
+                        name</strong>. This map is what turns it into a
+                        customer, and it is that customer's data that reaches
+                        the invoice.
+                    </div>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_liber_amazon_unit" model="ir.actions.act_window">
+        <field name="name">Amazon Units</field>
+        <field name="res_model">liber.amazon.unit</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Map the Amazon units</p>
+            <p>Each Amazon warehouse buys as a separate legal establishment,
+               with its own tax registration. The order names it by code only
+               — <em>GRU8</em>, <em>GIG1</em> — and this map says who that is
+               in your contacts.</p>
+            <p>The fastest way to start: open the account and use
+               <strong>Map units from orders</strong>. It lists every code
+               already seen and suggests a customer when one contact clearly
+               matches, for you to confirm.</p>
+        </field>
+    </record>
+
+</odoo>

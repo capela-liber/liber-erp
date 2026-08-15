@@ -131,3 +131,45 @@ class TestNfeXml(TransactionCase):
                 "partner_id": partner.id,
                 "nfe_key": KEY_1,
             })
+
+    def test_item_total_follows_price_and_qty(self):
+        """The stored Total Price recomputes on edit.
+
+        It was compute+store with an EMPTY @api.depends(), so the ORM only ran
+        it on create: the line showed a new Price next to a stale Total, and
+        the stale number is what pivot/graph measured.
+        """
+        panel = self.Panel._ingest_xml(nfe_xml(KEY_1), "total.xml")
+        panel.action_import_xml_file()
+        item = panel.panel_items[:1]
+        self.assertTrue(item, "the parse must produce one item")
+        self.assertAlmostEqual(item.ks_total_price,
+                               item.ks_price * item.ks_product_qty, places=2)
+
+        item.ks_price = 99.0
+        self.assertAlmostEqual(
+            item.ks_total_price, 99.0 * item.ks_product_qty, places=2,
+            msg="editing the price must recompute the stored total")
+
+        item.ks_product_qty = 3.0
+        self.assertAlmostEqual(
+            item.ks_total_price, 99.0 * 3.0, places=2,
+            msg="editing the quantity must recompute the stored total")
+
+    def test_no_two_fields_share_a_label_on_product(self):
+        """Two fields named the same on one model make Export/Import a guess.
+
+        'NCM' twice on product.template was the dangerous one: _focus_ncm()
+        prefers nfe_ncm, so filling the wrong one changes what goes out on the
+        NFe.
+        """
+        # 'modules' is computed and not stored, so it cannot go in the domain
+        on_product = self.env["ir.model.fields"].search([
+            ("model", "=", "product.template")])
+        ours = on_product.filtered(lambda f: "liber_" in (f.modules or ""))
+        labels = {}
+        for field in ours:
+            labels.setdefault(field.field_description, []).append(field.name)
+        clashes = {label: names for label, names in labels.items() if len(names) > 1}
+        self.assertFalse(
+            clashes, "fields sharing a label on product.template: %s" % clashes)

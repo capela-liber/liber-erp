@@ -54,11 +54,63 @@ class LiberAmazonAccount(models.Model):
              "Not the access token, which lasts one hour and is fetched "
              "automatically.")
 
+    # A tela nunca mostra os campos de cima: mostra este espelho de escrita.
+    # O compute devolve sempre vazio (o segredo gravado não volta ao
+    # navegador -- password="True" só mascara o desenho, o valor viaja no
+    # DOM) e o inverse grava apenas o que for digitado: em branco mantém.
+    # Mesmo contrato da tela de Definições, que já nasceu assim.
+    credentials_set = fields.Boolean(
+        string='Credentials configured',
+        compute='_compute_credentials_set',
+        help="Whether this company already has a working refresh token "
+             "stored.")
+    client_id_input = fields.Char(
+        string='LWA Client ID', groups='base.group_system',
+        compute='_compute_secret_inputs', inverse='_inverse_client_id',
+        help="Starts with amzn1.application-oa2-client.")
+    client_secret_input = fields.Char(
+        string='LWA Client Secret', groups='base.group_system',
+        compute='_compute_secret_inputs', inverse='_inverse_client_secret')
+    refresh_token_input = fields.Char(
+        string='Refresh Token', groups='base.group_system',
+        compute='_compute_secret_inputs', inverse='_inverse_refresh_token',
+        help="The long-lived token from the authorisation. Starts with "
+             "Atzr|. Not the access token, which lasts one hour and is "
+             "fetched automatically.")
+
+    @api.depends('refresh_token')
+    def _compute_credentials_set(self):
+        for account in self:
+            account.credentials_set = bool(account.refresh_token)
+
+    def _compute_secret_inputs(self):
+        for account in self:
+            account.client_id_input = False
+            account.client_secret_input = False
+            account.refresh_token_input = False
+
+    def _inverse_client_id(self):
+        for account in self:
+            if account.client_id_input:
+                account.client_id = account.client_id_input
+
+    def _inverse_client_secret(self):
+        for account in self:
+            if account.client_secret_input:
+                account.client_secret = account.client_secret_input
+
+    def _inverse_refresh_token(self):
+        for account in self:
+            if account.refresh_token_input:
+                account.refresh_token = account.refresh_token_input
+
     partner_id = fields.Many2one(
-        'res.partner', string='Amazon as Customer',
-        help="The partner every quotation from this account is made out to. "
-             "Amazon is the buyer in Vendor Central, so this is a customer, "
-             "not a supplier.")
+        'res.partner', string='Default Customer',
+        help="Used only for orders that carry no buying unit code. Normally "
+             "the customer comes from the unit map, because each Amazon "
+             "warehouse is a separate legal establishment with its own tax "
+             "registration.")
+    unit_count = fields.Integer(compute='_compute_unit_count')
 
     import_days_back = fields.Integer(
         string='Re-read Window (days)', default=7,
@@ -77,6 +129,12 @@ class LiberAmazonAccount(models.Model):
     def _compute_display_name(self):
         for record in self:
             record.display_name = '%s (%s)' % (record.name or '?', record.region)
+
+    def _compute_unit_count(self):
+        counts = dict(self.env['liber.amazon.unit']._read_group(
+            [('account_id', 'in', self.ids)], ['account_id'], ['__count']))
+        for record in self:
+            record.unit_count = counts.get(record, 0)
 
     def _compute_order_count(self):
         counts = dict(self.env['liber.amazon.order']._read_group(
@@ -170,6 +228,51 @@ class LiberAmazonAccount(models.Model):
                     created=summary['created'], updated=summary['updated']),
                 'sticky': False,
             },
+        }
+
+    def action_map_units(self):
+        """
+        Cria uma linha de mapa para cada sigla que apareceu nos pedidos.
+
+        O cliente vem em branco -- ou com um palpite, quando existe um
+        parceiro cujo nome contém a sigla. O palpite é sugestão de tela, não
+        regra do módulo: casar por nome funciona numa casa que batize os
+        contatos de "Amazon GRU8" e em nenhuma outra, e uma convenção de
+        cadastro de uma editora não pode virar comportamento embutido. Por
+        isso ele só acontece quando alguém aperta este botão, e fica visível
+        para conferência antes de qualquer nota ser emitida.
+        """
+        self.ensure_one()
+        Unit = self.env['liber.amazon.unit']
+
+        siglas = {
+            pedido.buying_party
+            for pedido in self.env['liber.amazon.order'].search(
+                [('account_id', '=', self.id), ('buying_party', '!=', False)])
+        }
+        ja_mapeadas = set(Unit.search(
+            [('account_id', '=', self.id)]).mapped('code'))
+        novas = sorted(siglas - ja_mapeadas)
+
+        criadas = Unit
+        for sigla in novas:
+            palpite = self.env['res.partner'].search(
+                [('name', 'ilike', sigla)], limit=2)
+            criadas |= Unit.create({
+                'account_id': self.id,
+                'code': sigla,
+                # Só aceita o palpite quando ele é único: dois candidatos são
+                # uma pergunta, não uma resposta.
+                'partner_id': palpite.id if len(palpite) == 1 else False,
+            })
+
+        return {
+            'type': 'ir.actions.act_window',
+            'name': _("Amazon Units"),
+            'res_model': 'liber.amazon.unit',
+            'view_mode': 'list,form',
+            'domain': [('account_id', '=', self.id)],
+            'context': {'default_account_id': self.id},
         }
 
     def action_view_orders(self):

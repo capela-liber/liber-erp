@@ -10,6 +10,5 @@ class EdlabContractTag(models.Model):
     name = fields.Char(required=True, translate=True)
     color = fields.Integer(string="Color")
 
-    _sql_constraints = [
-        ("name_uniq", "unique(name)", "This tag already exists."),
-    ]
+    # v19: `_sql_constraints` não é mais suportado; ver royalty_line.py.
+    _name_uniq = models.Constraint("unique(name)", "This tag already exists.")

@@ -5,6 +5,7 @@ Nada de dado de demo do core -- ele muda entre versões e transforma teste
 quebrado em caça ao tesouro. Tudo que os testes usam nasce aqui.
 """
 
+from odoo.exceptions import UserError
 from odoo.tests import TransactionCase
 
 
@@ -60,7 +61,19 @@ class AmazonVendorCase(TransactionCase):
         # provar o contrário do que a operação vive.
         cls.currency = cls.env.ref('base.BRL')
         cls.currency.active = True
-        cls.company.currency_id = cls.currency
+        if cls.company.currency_id != cls.currency:
+            try:
+                cls.company.currency_id = cls.currency
+            except UserError:
+                # Num banco de verdade a empresa padrão pode ter lançamentos,
+                # e moeda com lançamento não se troca. A operação que o teste
+                # encena continua a mesma; só muda o palco: uma empresa da
+                # base que já escriture em BRL.
+                cls.company = cls.env['res.company'].search(
+                    [('currency_id', '=', cls.currency.id)], limit=1)
+                assert cls.company, "nenhuma empresa em BRL nesta base"
+                cls.env = cls.env(context=dict(
+                    cls.env.context, allowed_company_ids=cls.company.ids))
         cls.currency_name = cls.company.currency_id.name
 
         cls.partner_amazon = cls.env['res.partner'].create({
@@ -77,6 +90,25 @@ class AmazonVendorCase(TransactionCase):
             'client_secret': 'amzn1.oa2-cs.v1.test',
             'refresh_token': 'Atzr|test',
         })
+
+        # O pedido do fixture compra como a unidade AMZN_BR; sem o mapa, o
+        # módulo (corretamente) recusa gerar cotação, porque não sabe contra
+        # qual estabelecimento fiscal a nota sairia.
+        cls.unit = cls.env['liber.amazon.unit'].create({
+            'account_id': cls.account.id,
+            'code': 'AMZN_BR',
+            'partner_id': cls.partner_amazon.id,
+        })
+
+        # Num banco real o acervo pode já ocupar os códigos do fixture --
+        # inclusive o que precisa NÃO existir. Afastar esses produtos aqui
+        # dentro da transação (o rollback do TransactionCase devolve tudo)
+        # é o que deixa a suíte valer em banco limpo e em banco de verdade.
+        fixture_codes = {'9786551590016', '9786551590085', '9788500000009'}
+        Product = cls.env['product.product'].with_context(active_test=False)
+        colliding = Product.search([('barcode', '!=', False)]).filtered(
+            lambda p: p.barcode.replace('-', '') in fixture_codes)
+        colliding.write({'barcode': False})
 
         # Dois títulos no cadastro. O segundo tem barcode COM hífen de
         # propósito: é assim que parte do catálogo real está gravada, e a

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <!--
+      A coluna Desc.% da fatura, acesa.
+
+      Ligar a opção "Descontos" (ver `data/sale_discount_data.xml`) acende a
+      coluna no Pedido C e no Pedido S, porque a do core pende do grupo. A da
+      fatura não pende de grupo nenhum: nasce `optional="hide"` e continuaria
+      escondida. A fatura saía mostrando Preço e Valor sem nada entre os dois,
+      exatamente onde o desconto deveria estar — e foi olhando a fatura que a
+      casa foi procurar o desconto e não achou.
+
+      O seletor de colunas continua com todas: isto muda o que vem LIGADO para
+      quem nunca mexeu nele.
+    -->
+    <record id="view_move_form_desconto_visivel" model="ir.ui.view">
+        <field name="name">account.move.form — desconto visível na linha</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='invoice_line_ids']/list/field[@name='discount']"
+                   position="attributes">
+                <attribute name="optional">show</attribute>
+            </xpath>
+        </field>
+    </record>
+</odoo>

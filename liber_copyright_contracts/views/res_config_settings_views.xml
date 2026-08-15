@@ -32,11 +32,13 @@
         <field name="context">{'module': 'liber_copyright_contracts'}</field>
     </record>
 
-    <!-- "Settings" section: groups all configuration (other modules add here) -->
+    <!-- "Settings" section: groups all configuration (other modules add here).
+         Gated no degrau de Configuração (Direção), não no gerente: o gerente
+         opera tudo, mas COMO a casa funciona é decisão da Direção. -->
     <menuitem id="menu_copyright_contracts_settings"
               name="Settings"
               parent="menu_copyright_contracts_root"
-              groups="liber_copyright_contracts.group_contract_manager"
+              groups="liber_copyright_contracts.group_contract_config"
               sequence="90"/>
     <!-- The section itself carries no action (keep it clean on upgrades too). -->
     <record id="menu_copyright_contracts_settings" model="ir.ui.menu">
@@ -46,6 +48,6 @@
               name="Preferences"
               parent="menu_copyright_contracts_settings"
               action="action_copyright_contracts_settings"
-              groups="liber_copyright_contracts.group_contract_manager"
+              groups="liber_copyright_contracts.group_contract_config"
               sequence="10"/>
 </odoo>

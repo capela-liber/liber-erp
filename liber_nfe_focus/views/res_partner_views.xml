@@ -10,6 +10,7 @@
             <field name="vat" position="after">
                 <field name="nfe_inscricao_estadual"/>
                 <field name="nfe_indicador_ie"/>
+                <field name="nfe_modalidade_frete"/>
             </field>
             <xpath expr="//field[@name='street2']" position="after">
                 <field name="nfe_numero" placeholder="Número"/>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_run_noshelf_wizard_form" model="ir.ui.view">
+        <field name="name">consignment.run.noshelf.wizard.form</field>
+        <field name="model">consignment.run.noshelf.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Settling without shelf stock">
+                <div class="alert alert-danger" role="alert">
+                    These titles report more sold than the shelf holds.
+                    You can run the CO without them; an activity will be
+                    left on the CO to fix the shelf stock.
+                </div>
+                <field name="settlement_id" invisible="1"/>
+                <field name="summary" nolabel="1" readonly="1"
+                       widget="text" class="o_field_text"/>
+                <footer>
+                    <button name="action_remove_and_run" type="object"
+                            string="Run without them" class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary"
+                            special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+</odoo>

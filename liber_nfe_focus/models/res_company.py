@@ -29,6 +29,84 @@ class ResCompany(models.Model):
              "devolve a nota do outro.")
 
     # -- dados fiscais do emitente -------------------------------------
+    # ==================================================================
+    # Numeração própria da NFe (12/08/2026)
+    #
+    # O caminho recomendado é a Focus numerar: ela guarda série e próximo
+    # número no cadastro da empresa e a nota sai sem que a gente diga nada.
+    # Foi assim até aqui, e para quem deixar estes campos em ZERO continua
+    # sendo -- nada muda.
+    #
+    # Por que a Edlab precisou de outro caminho: a numeração tinha de
+    # continuar de onde o Odoo 15 parou (11022), e o campo do painel da Focus
+    # não gravava. Duas notas de teste saíram na série 9 com o painel
+    # mostrando série 1, e não há como conferir o que ela guardou: ler o
+    # cadastro da empresa exige o token da CONTA, e o que temos é o da
+    # empresa -- a Focus responde 404. Ou seja: a numeração morava num lugar
+    # que não podíamos ler nem gravar, e cada tentativa custava uma nota
+    # emitida para descobrir o resultado.
+    #
+    # O preço de trazer para cá, dito em voz alta: a responsabilidade fiscal
+    # passa a ser nossa. Se a requisição falhar DEPOIS de a SEFAZ autorizar,
+    # o número já foi usado lá e aqui não avançou -- e a próxima nota repete.
+    # É por isso que o número é gravado na fatura assim que reservado: uma
+    # segunda tentativa da MESMA nota reusa o número, nunca tira outro.
+    # ==================================================================
+    nfe_serie_producao = fields.Integer(
+        string='Série da NFe (produção)', groups='base.group_system',
+        help="Série usada nas notas de produção. Zero deixa a Focus numerar, "
+             "que é o padrão.")
+    nfe_proximo_numero_producao = fields.Integer(
+        string='Próximo número da NFe (produção)', groups='base.group_system',
+        help="O número que a PRÓXIMA nota de produção vai receber. Avança "
+             "sozinho a cada emissão. Zero deixa a Focus numerar.")
+    nfe_serie_homologacao = fields.Integer(
+        string='Série da NFe (homologação)', groups='base.group_system',
+        help="O mesmo, no ambiente de teste. Homologação e produção têm "
+             "contadores separados -- é assim na SEFAZ e na Focus.")
+    nfe_proximo_numero_homologacao = fields.Integer(
+        string='Próximo número da NFe (homologação)', groups='base.group_system',
+        help="O número que a próxima nota de teste vai receber.")
+
+    def _nfe_campos_numeracao(self, ambiente):
+        """(campo_serie, campo_numero) do ambiente pedido."""
+        sufixo = 'producao' if ambiente == 'producao' else 'homologacao'
+        return 'nfe_serie_%s' % sufixo, 'nfe_proximo_numero_%s' % sufixo
+
+    def _nfe_reservar_numero(self, ambiente):
+        """Reserva o próximo número desta empresa. Devolve (serie, numero).
+
+        Devolve (0, 0) quando a numeração não está configurada -- e aí a nota
+        sai sem `numero`/`serie` no payload e quem numera é a Focus, como
+        sempre foi.
+
+        A trava de linha (`FOR UPDATE`) não é zelo excessivo: duas pessoas
+        emitindo ao mesmo tempo leriam o mesmo "próximo número" e mandariam
+        duas notas com o mesmo número, e a segunda seria rejeitada pela SEFAZ
+        depois de a primeira já ter sido autorizada. O banco resolve isso se
+        a gente pedir; em memória, não resolve.
+        """
+        self.ensure_one()
+        campo_serie, campo_numero = self._nfe_campos_numeracao(ambiente)
+        empresa = self.sudo()
+        # SQL cru não enxerga o que o ORM ainda não descarregou. Sem este
+        # flush, quem gravasse a série e emitisse na MESMA transação leria
+        # zero e a nota sairia sem número -- silenciosamente, com a Focus
+        # numerando de novo. Foi um teste que pegou; em produção seria um
+        # "às vezes não pega" impossível de reproduzir.
+        empresa.flush_recordset([campo_serie, campo_numero])
+        self.env.cr.execute(
+            "SELECT %s, %s FROM res_company WHERE id = %%s FOR UPDATE" % (
+                campo_serie, campo_numero), (empresa.id,))
+        serie, numero = self.env.cr.fetchone()
+        if not (serie and numero):
+            return 0, 0
+        self.env.cr.execute(
+            "UPDATE res_company SET %s = %%s WHERE id = %%s" % campo_numero,
+            (numero + 1, empresa.id))
+        empresa.invalidate_recordset([campo_numero])
+        return serie, numero
+
     focus_regime_tributario = fields.Selection(
         selection=[('1', 'Simples Nacional'),
                    ('2', 'Simples Nacional - excesso de sublimite'),

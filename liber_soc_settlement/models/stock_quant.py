@@ -61,18 +61,24 @@ class StockQuant(models.Model):
         teams = self.consignment_team_id
         if not teams:
             return
+        # A EMPRESA ENTRA NA CHAVE. Enquanto cada canal existia uma vez por
+        # editora, o `team_id` sozinho separava as campanhas sem querer -- a
+        # campanha da n-1 nunca esbarrava numa prateleira da Edlab porque o
+        # canal delas era outro registro. Com os canais unificados (um registro
+        # por nome, sem empresa), essa separação some, e é preciso dizê-la.
         campaigns = self.env['consignment.template'].search([
             ('is_running', '=', True), ('team_id', 'in', teams.ids)])
-        # {(team_id, product_id): highest target across running campaigns}
+        # {(company_id, team_id, product_id): highest target across campaigns}
         target_map = {}
         for campaign in campaigns:
-            team_id = campaign.team_id.id
+            chave_empresa = campaign.company_id.id
             for line in campaign.line_ids:
-                key = (team_id, line.product_id.id)
+                key = (chave_empresa, campaign.team_id.id, line.product_id.id)
                 target_map[key] = max(target_map.get(key, 0), line.product_uom_qty)
         for quant in self:
             quant.qty_target = target_map.get(
-                (quant.consignment_team_id.id, quant.product_id.id), 0)
+                ((quant.company_id or self.env.company).id,
+                 quant.consignment_team_id.id, quant.product_id.id), 0)
 
     @api.depends('product_id', 'location_id', 'quantity')
     def _compute_shelf_age(self):

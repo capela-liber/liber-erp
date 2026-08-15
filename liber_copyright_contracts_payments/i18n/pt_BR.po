@@ -220,6 +220,12 @@ msgstr ""
 #. module: liber_copyright_contracts_payments
 #. odoo-python
 #: code:addons/liber_copyright_contracts_payments/models/royalty_line.py:0
+msgid "Advance recouped %s - %s"
+msgstr "Adiantamento descontado %s - %s"
+
+#. module: liber_copyright_contracts_payments
+#. odoo-python
+#: code:addons/liber_copyright_contracts_payments/models/royalty_line.py:0
 msgid "Royalties %s - %s"
 msgstr "Direitos autorais %s - %s"
 

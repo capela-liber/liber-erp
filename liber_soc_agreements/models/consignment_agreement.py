@@ -23,9 +23,31 @@ class ConsignmentAgreement(models.Model):
     user_id = fields.Many2one(
         'res.users', string='Commercial Agent', tracking=True,
         default=lambda self: self.env.user)
+    # O CANAL NASCE DO CLIENTE, e não se digita duas vezes.
+    #
+    # Até 08/08/2026 o default era `_get_default_team_id()`, a heurística do
+    # Odoo -- que olha as equipes do VENDEDOR, não o cliente. Ela nunca teve
+    # como acertar: numa medição no `merge_02`, 77 dos 262 contratos diziam um
+    # canal diferente do da ficha do cliente, e um deles dizia "Sales", a
+    # equipe de fábrica. Ninguém tinha decidido nada disso; era o chute.
+    #
+    # `store` + `readonly=False` é herança COM exceção, e funciona como a lista
+    # de preço do pedido: trocou o cliente, o canal acompanha; depois disso,
+    # quem quiser muda à mão e o valor fica.
+    #
+    # O que NÃO reescreve o valor é corrigir a ficha do cliente depois: a
+    # dependência é `partner_id` (o vínculo), não `partner_id.team_id`. Por isso
+    # um contrato de 2024 continua no canal em que foi feito mesmo que a ficha
+    # seja reclassificada hoje -- e é essa a diferença entre carimbo e espelho.
     team_id = fields.Many2one(
-        'crm.team', string='Sales Team', tracking=True,
-        default=lambda self: self.env['crm.team']._get_default_team_id())
+        'crm.team', string='Sales Channel', tracking=True,
+        compute='_compute_team_id', store=True, readonly=False, precompute=True)
+
+    @api.depends('partner_id', 'company_id')
+    def _compute_team_id(self):
+        for acordo in self:
+            acordo.team_id = acordo.partner_id._soc_sales_channel(acordo.company_id) \
+                if acordo.partner_id else acordo.team_id
     report_contact_ids = fields.Many2many(
         'res.partner', 'consignment_agreement_report_contact_rel',
         'agreement_id', 'partner_id', string='Report Recipients',

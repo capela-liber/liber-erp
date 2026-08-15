@@ -29,7 +29,7 @@ class ResCompany(models.Model):
         help="Base URL of the Metabrasil sandbox, used while Mode is "
              "Testing.")
     metabrasil_access_key = fields.Char(
-        string='Access Key',
+        string='Access Key (Metabrasil)',
         help="The chaveCliente Metabrasil issued for this company; rides "
              "inside every request body.")
     metabrasil_username = fields.Char(string='API Username')

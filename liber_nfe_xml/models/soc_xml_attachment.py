@@ -134,8 +134,7 @@ class SocXmlPanelAttachment(models.Model):
                         return False
                     if len(cnpj) > 1:
                         cnpj_cpf = '{}{}.{}{}{}.{}{}{}/{}{}{}{}-{}{}'.format(*cnpj)
-                        partner_id = self.env['res.partner'].search(
-                            ['|', ('vat', '=', cnpj_cpf), ('vat', '=', cnpj)], limit=1)
+                        partner_id = self.env['res.partner']._find_by_document(cnpj)
                         if partner_id:
                             _logger.info('===== Read partner end %s=====', partner_id.id)
                             dict['partner_id'] = partner_id.id
@@ -165,9 +164,7 @@ class SocXmlPanelAttachment(models.Model):
                     except Exception as e:
                         return False
                     if len(company_cnpj) > 1:
-                        company = '{}{}.{}{}{}.{}{}{}/{}{}{}{}-{}{}'.format(*company_cnpj)
-                        partner = self.env['res.partner'].sudo().search(['|', ('vat', '=', company),
-                                                                         ('vat', '=', company_cnpj)], limit=1)
+                        partner = self.env['res.partner'].sudo()._find_by_document(company_cnpj)
                         if partner and partner.company_id:
                             _logger.info('===== Read XML company end %s=====', partner.company_id)
                             dict['company_id'] = partner.company_id.id

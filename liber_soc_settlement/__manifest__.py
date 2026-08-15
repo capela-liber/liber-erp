@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     'name': 'Consignment - Settlement',
-    'version': '19.0.2.3.0',
+    'version': '19.0.2.8.0',
     'summary': 'Consignment settlement: turn what the customer sold into a real sale',
     'description': """
 Consignment settlement (SOC redesign).
@@ -44,6 +44,7 @@ sold.
         'views/consignment_agreement_views.xml',
         'views/related_documents_views.xml',
         'wizards/run_overstock_wizard_views.xml',
+        'wizards/run_noshelf_wizard_views.xml',
         'wizards/generate_wizard_views.xml',
         'wizards/map_run_wizard_views.xml',
         'views/soc_settlement_menus.xml',

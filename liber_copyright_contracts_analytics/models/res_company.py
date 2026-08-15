@@ -30,7 +30,7 @@ class ResCompany(models.Model):
 
     contract_royalty_general_account_id = fields.Many2one(
         "account.account",
-        string="Expense Account",
+        string="Royalty Expense Account",
         domain="[('company_ids', 'in', id)]",
         help="Expense account recorded on royalty analytic lines while they are "
         "still within the operational window (not yet overdue as a liability).",
@@ -50,8 +50,8 @@ class ResCompany(models.Model):
     )
     contract_special_sales_team_ids = fields.Many2many(
         "crm.team",
-        string="Special Sales Teams",
-        help="Sales from these teams are treated as special sales: their "
+        string="Special Sales Channels",
+        help="Sales from these channels are treated as special sales: their "
         "royalties are always computed on the net invoiced amount (the "
         "invoice), never on the sales/cover price, no matter the royalty "
         "line's 'On Sales Price' setting. Requires the minimum discount below.",

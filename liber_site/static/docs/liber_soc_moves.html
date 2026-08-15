@@ -1,6 +1,22 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
+<script>
+/* Servido por /liber_site/static/docs/, este arquivo vem com uma semana de
+   cache e o docs.js sem versão -- e o índice monta a lista a partir dele. Foi
+   assim que a emissão de NF-e e o manual da Amazon ficaram invisíveis: o
+   catálogo em cache era anterior aos dois. A rota /liber/docs/ serve o mesmo
+   arquivo sem cache e com ?v=<mtime> nos assets. Quem chegar pelo caminho
+   antigo (favorito, link velho, resultado de busca) vai para lá antes de a
+   página montar qualquer coisa. */
+(function () {
+  var antigo = "/liber_site/static/docs/";
+  if (location.pathname.indexOf(antigo) === 0) {
+    location.replace("/liber/docs/" + location.pathname.slice(antigo.length) +
+                     location.search + location.hash);
+  }
+})();
+</script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Remessas e retornos — Manuais do Liber</title>
@@ -93,9 +109,21 @@
       <p>Uma <strong>campanha</strong> é uma lista pré-montada de títulos e quantidades — o kit que o comercial repete em vários clientes. Em <span class="menupath">Consignação<i>‣</i>Campanhas</span> você cria e mantém as listas; num CR em rascunho, escolha a <span class="field">Campanha</span> e clique em <span class="field">Carregar da Campanha</span> para preencher as linhas de uma vez.</p>
       <p>As campanhas ganham muito mais poder no módulo de acerto — canal de vendas, período de vigência, alvo por prateleira e relatórios de cobertura. Veja <a href="liber_soc_settlement.html#campanhas">Campanhas no manual do acerto</a>.</p>
 
+      <h2 id="canal">O canal de cada remessa</h2>
+      <p>Cada documento de consignação carrega o <span class="field">Canal de Vendas</span> do cliente — coluna na lista e agrupamento na busca, para responder "quanto saiu para cada canal este mês" sem cruzar planilha.</p>
+      <div class="tablewrap"><table>
+        <thead><tr><th>De onde vem</th><th>Quando</th></tr></thead>
+        <tbody>
+          <tr><td>Do <strong>contrato</strong> do cliente</td><td>Sempre que houver contrato — é ele quem manda na consignação.</td></tr>
+          <tr><td>Da <strong>ficha do cliente</strong></td><td>Quando ainda não há contrato. Uma filial sem canal herda o da matriz.</td></tr>
+        </tbody>
+      </table></div>
+      <p>Depois de gravado, o canal do documento não se reescreve sozinho: uma remessa de 2024 continua sendo do canal em que foi feita, mesmo que o cliente seja reclassificado depois. Você pode trocá-lo à mão numa remessa específica.</p>
+      <div class="callout note"><span class="title">Nota</span><p>O canal na ficha do cliente vem do módulo <a href="liber_partner_commercial.html">Canal de vendas do cliente</a>. Sem ele instalado, a consignação funciona igual — o canal simplesmente vem do contrato, ou fica vazio.</p></div>
+
       <h2 id="relatorios">Relatórios: onde estão os meus livros?</h2>
       <h3>Na Prateleira</h3>
-      <p><span class="menupath">Consignação<i>‣</i>Relatórios<i>‣</i>Na Prateleira</span> mostra tudo que está consignado agora, agrupado por cliente — com visões de lista, pivô e gráfico, e o eixo <span class="field">Canal de Vendas</span> para ler por equipe.</p>
+      <p><span class="menupath">Consignação<i>‣</i>Relatórios<i>‣</i>Na Prateleira</span> mostra tudo que está consignado agora, agrupado por cliente — com visões de lista, pivô e gráfico, e o eixo <span class="field">Canal de Vendas</span> para ler por canal.</p>
       <h3>Inventário</h3>
       <p><span class="menupath">Consignação<i>‣</i>Relatórios<i>‣</i>Inventário</span> é a contagem das prateleiras: digite (ou importe de planilha) a quantidade contada por título em cada cliente. Nada se move até você clicar em <em>Aplicar</em> — a contagem fica como ajuste em rascunho.</p>
       <h3>Razão</h3>

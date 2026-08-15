@@ -23,5 +23,40 @@
             <field name="privilege_id" ref="metabooks_access_privilege"/>
         </record>
 
+        <!-- ==============================================================
+             A maquinaria de sincronização, separada da ficha do livro.
+
+             Até 10/08/2026 o ir.model.access deste módulo tinha a coluna de
+             grupo VAZIA em todas as dezessete linhas. Coluna vazia não é
+             "sem opinião": é acesso concedido a todo usuário interno. Ou
+             seja, qualquer pessoa da casa podia disparar uma importação de
+             catálogo inteiro da MVB, montar um lote de envio ou reescrever a
+             tabela de códigos BISAC — e o menu, também sem trava, mostrava
+             tudo isso a todo mundo.
+
+             O corte que a direção pediu separa duas coisas que a tela
+             misturava:
+
+             - a FICHA do livro, que é trabalho de quem cuida do catálogo
+               editorial e comercial, e a sincronização de UM título (os dois
+               botões do formulário do produto, que seguem no
+               `metabooks_product_group`);
+             - a MAQUINARIA: importar catálogo por editora ou por ISBN,
+               montar e enviar lotes para a MVB, e editar as tabelas de
+               referência (autores, BISAC, disponibilidade, fornecedor). É
+               isto que este grupo guarda.
+
+             As tabelas de referência continuam LEGÍVEIS por todo usuário
+             interno, e isso não é descuido: elas são campos many2one no
+             formulário do livro. Fechar a leitura quebraria a ficha para
+             quem tem direito de editá-la.
+             ============================================================== -->
+        <record id="metabooks_manager_group" model="res.groups">
+            <field name="name">Metabooks: synchronisation and reference data</field>
+            <field name="privilege_id" ref="metabooks_access_privilege"/>
+            <field name="implied_ids" eval="[(4, ref('metabooks_product_group')), (4, ref('metadata_group'))]"/>
+            <field name="comment">Importa catálogo (por editora e por ISBN), monta e envia lotes para a MVB e edita as tabelas de referência. Quem só cuida da ficha do livro não precisa disto — a sincronização de um título é o metabooks_product_group.</field>
+        </record>
+
     </data>
 </odoo>

@@ -28,6 +28,7 @@ from odoo.exceptions import UserError
 from odoo.tools import html2plaintext
 
 from . import nfe_payload
+from .res_partner import MODALIDADE_FRETE
 from .focus_client import (
     FocusClient, FocusError, FocusNotFound, FocusValidationError,
     STATUS_AUTORIZADO, STATUS_CANCELADO, STATUS_PROCESSANDO,
@@ -71,6 +72,37 @@ class AccountMove(models.Model):
         string='Mensagem da SEFAZ', copy=False, readonly=True)
     focus_protocolo = fields.Char(
         string='Protocolo', copy=False, readonly=True)
+    # Volumes e peso viajam no grupo transp/vol da NFe. Nascem da movimentação
+    # (ver liber_nfe_picking, que sabe achar as transferências da nota), mas
+    # ficam graváveis: quem fatura confere a caixa fechada na bancada e é a
+    # última palavra. O que não se admite é seguir sem eles.
+    nfe_volumes = fields.Integer(
+        string='Volumes (caixas)', copy=False,
+        help="Quantas caixas esta nota acompanha. Vem da contagem feita na "
+             "transferência e pode ser corrigida aqui antes de emitir.")
+    nfe_peso_bruto = fields.Float(
+        string='Peso bruto (kg)', digits='Stock Weight', copy=False,
+        help="Peso total dos volumes, em quilos. Calculado a partir do peso "
+             "dos produtos da movimentação — quando o cadastro não tem o "
+             "peso, preencha aqui.")
+    nfe_especie_volumes = fields.Char(
+        string='Espécie dos volumes', default='CAIXA', copy=False,
+        help="Como os volumes são descritos na nota: CAIXA, PACOTE, FARDO.")
+    # Frete e transportadora viajam no mesmo grupo transp. Nascem no cadastro
+    # do cliente e no pedido (ver liber_nfe_picking, que os traz de lá), mas
+    # ficam graváveis pelo mesmo motivo dos volumes: quem fatura é a última
+    # palavra. Vazios, a nota sai como 9 -- sem ocorrência de transporte --,
+    # que é o caso do acerto de consignação.
+    nfe_modalidade_frete = fields.Selection(
+        selection=MODALIDADE_FRETE, string='Modalidade do frete', copy=False,
+        help="Quem contrata o transporte desta nota. Vem do pedido, que "
+             "herda do cadastro do cliente. Vazio emite como 9 — sem "
+             "ocorrência de transporte, o caso do acerto de consignação.")
+    nfe_transportadora_id = fields.Many2one(
+        'res.partner', string='Transportadora', copy=False,
+        help="A empresa que leva a carga, declarada no grupo transportador "
+             "da NFe. Vem do método de entrega da transferência do pedido. "
+             "Só viaja quando a modalidade declara transporte.")
     focus_numero = fields.Char(string='Número da NFe', copy=False, readonly=True)
     focus_serie = fields.Char(string='Série', copy=False, readonly=True)
     focus_danfe_url = fields.Char(string='DANFE (Focus)', copy=False, readonly=True)
@@ -130,6 +162,29 @@ class AccountMove(models.Model):
         self.ensure_one()
         prefixo = (self.company_id.focus_ref_prefix or 'ODOO').strip()
         return '%s-%s-%s' % (prefixo, self.company_id.id, self.id)
+
+    def _focus_ref_para_emissao(self):
+        """A referência desta tentativa de emissão.
+
+        Reaproveita a gravada -- é a idempotência que protege contra nota
+        duplicada quando um envio estoura depois de a Focus ter aceitado.
+        EXCETO depois de rejeição definitiva: a Focus congela a ref na nota
+        rejeitada e devolveria a recusa velha para sempre, por mais certo
+        que o payload novo esteja. Nesse caso a ref avança com sufixo -R2,
+        -R3..., preservando a fórmula e deixando o rastro das tentativas.
+
+        O sufixo só anda DEPOIS de um `erro_autorizacao`: uma repetição da
+        mesma tentativa (rollback, clique duplo) continua caindo na mesma
+        ref, que é o ponto da proteção.
+        """
+        self.ensure_one()
+        ref = self.focus_ref or self._focus_build_ref()
+        if self.focus_status != 'erro_autorizacao':
+            return ref
+        casado = re.match(r'^(.*)-R(\d+)$', ref)
+        if casado:
+            return '%s-R%d' % (casado.group(1), int(casado.group(2)) + 1)
+        return '%s-R2' % ref
 
     # ------------------------------------------------------------------
     # montagem do payload
@@ -449,6 +504,35 @@ class AccountMove(models.Model):
                 posicao=posicao.display_name,
                 novo=', '.join(deveriam.mapped('name')) or _('outro imposto')))
 
+    def _focus_informacoes_adicionais(self):
+        """O que vai em DADOS ADICIONAIS da DANFE.
+
+        O número do pedido entra aqui porque é por ele que o cliente casa a
+        nota com a compra que fez: a livraria confere o romaneio contra o
+        pedido dela, não contra o número da nota, que ela nunca viu antes.
+        A observação escrita à mão na fatura vem junto, quando existe.
+        """
+        self.ensure_one()
+        partes = []
+        pedido = self.invoice_origin or ', '.join(
+            self.invoice_line_ids.sale_line_ids.order_id.mapped('name'))
+        if pedido:
+            partes.append('Pedido: %s' % pedido)
+        if self.narration:
+            partes.append(html2plaintext(self.narration).strip())
+        return '\n'.join(p for p in partes if p) or None
+
+    def _focus_modalidade_frete(self):
+        """A modalidade que vai na nota, como inteiro do modFrete.
+
+        Vazio é 9 de propósito: a fatura sem transporte declarado (o acerto
+        de consignação, a nota de serviço) sai como "sem ocorrência", que é
+        o comportamento que o módulo sempre teve.
+        """
+        self.ensure_one()
+        return (int(self.nfe_modalidade_frete)
+                if self.nfe_modalidade_frete else nfe_payload.FRETE_SEM)
+
     def _focus_build_payload(self):
         """Payload completo da NFe desta fatura."""
         self.ensure_one()
@@ -505,8 +589,11 @@ class AccountMove(models.Model):
             # final, e a operação não é presencial.
             'consumidor_final': consumidor_final,
             'presenca_comprador': nfe_payload.PRESENCA_OUTROS,
-            'modalidade_frete': nfe_payload.FRETE_SEM,
-            'informacoes_adicionais': html2plaintext(self.narration) if self.narration else None,
+            'modalidade_frete': self._focus_modalidade_frete(),
+            'volumes': self.nfe_volumes,
+            'especie_volumes': self.nfe_especie_volumes,
+            'peso_bruto': self.nfe_peso_bruto,
+            'informacoes_adicionais': self._focus_informacoes_adicionais(),
         }
 
         destinatario = self.partner_id._focus_destinatario_data()
@@ -516,11 +603,22 @@ class AccountMove(models.Model):
         if (self.focus_ambiente or company.sudo().focus_ambiente) == 'homologacao':
             destinatario['nome'] = nfe_payload.NOME_DESTINATARIO_HOMOLOGACAO
 
+        # A transportadora só entra quando a modalidade declara transporte:
+        # com 9 (sem ocorrência) o grupo não viaja, ainda que o campo esteja
+        # preenchido -- nomear quem carrega uma carga que oficialmente não
+        # anda é contradição na nota.
+        transportador = None
+        if (self.nfe_transportadora_id
+                and self._focus_modalidade_frete() != nfe_payload.FRETE_SEM):
+            transportador = \
+                self.nfe_transportadora_id._focus_transportador_data()
+
         payload = nfe_payload.build_payload(
             nota=nota,
             emitente=company._focus_emitente_data(),
             destinatario=destinatario,
             itens=itens,
+            transportador=transportador,
         )
 
         faltando = nfe_payload.missing_fields(payload)
@@ -529,7 +627,45 @@ class AccountMove(models.Model):
                 "Faltam dados para emitir a NFe de %(fatura)s:\n\n%(campos)s\n\n"
                 "Confira o cadastro da empresa, do cliente e dos produtos.",
                 fatura=self.display_name, campos='\n'.join('- %s' % c for c in faltando)))
+
+        # A numeração entra POR ÚLTIMO, e de propósito: só depois de o payload
+        # passar pela conferência. Reservar antes queimaria um número a cada
+        # tentativa que morresse por cadastro incompleto -- e buraco em
+        # numeração fiscal se explica à SEFAZ, não ao programador.
+        self._focus_aplicar_numeracao(payload)
         return payload
+
+    def _focus_aplicar_numeracao(self, payload):
+        """Põe `serie` e `numero` no payload quando a numeração é nossa.
+
+        Sem numeração configurada na empresa, não mexe em nada e quem numera
+        é a Focus -- que é como sempre funcionou e segue valendo para as
+        outras empresas da casa.
+
+        REEMISSÃO REUSA O NÚMERO. Uma nota rejeitada pela SEFAZ (cadastro do
+        destinatário errado, imposto fora da regra) volta para a fila e é
+        reenviada; se cada tentativa tirasse um número novo, uma rejeição
+        boba abriria buraco na sequência. Rejeição não consome número na
+        SEFAZ, então reusar é o certo.
+        """
+        self.ensure_one()
+        company = self.company_id.sudo()
+        ambiente = self.focus_ambiente or company.focus_ambiente
+
+        if self.focus_numero and self.focus_serie:
+            payload['numero'] = int(self.focus_numero)
+            payload['serie'] = int(self.focus_serie)
+            return
+
+        serie, numero = self.company_id._nfe_reservar_numero(ambiente)
+        if not (serie and numero):
+            return
+
+        payload['numero'] = numero
+        payload['serie'] = serie
+        # Gravado na fatura na hora: é o que faz a reemissão reusar, e é onde
+        # alguém vai olhar quando a SEFAZ reclamar de número repetido.
+        self.sudo().write({'focus_numero': str(numero), 'focus_serie': str(serie)})
 
     # ------------------------------------------------------------------
     # ações
@@ -548,7 +684,7 @@ class AccountMove(models.Model):
                     fatura=move.display_name, status=move.focus_status))
 
             payload = move._focus_build_payload()
-            ref = move.focus_ref or move._focus_build_ref()
+            ref = move._focus_ref_para_emissao()
             ambiente = move.company_id.sudo().focus_ambiente
 
             move.write({'focus_ref': ref, 'focus_ambiente': ambiente})
@@ -688,11 +824,21 @@ class AccountMove(models.Model):
             or resposta.get('mensagem') or False,
             'focus_protocolo': resposta.get('protocolo')
             or resposta.get('numero_protocolo') or False,
-            'focus_numero': resposta.get('numero') or False,
-            'focus_serie': resposta.get('serie') or False,
-            'focus_danfe_url': resposta.get('caminho_danfe')
-            or resposta.get('url_danfe') or False,
         }
+        # Número e série só se ESCREVEM quando a resposta os traz. Antes eles
+        # eram sobrescritos sempre, e uma rejeição (que não traz número)
+        # apagava o que já estava lá. Isso não incomodava enquanto quem
+        # numerava era a Focus -- não havia nada nosso para perder. Passou a
+        # incomodar em 12/08/2026: com a numeração da casa, o número é
+        # reservado ANTES do envio e gravado na fatura, e apagá-lo na
+        # rejeição faria a tentativa seguinte tirar um número novo, deixando
+        # o anterior órfão. Buraco em numeração fiscal se explica à SEFAZ.
+        if resposta.get('numero'):
+            valores['focus_numero'] = resposta['numero']
+        if resposta.get('serie'):
+            valores['focus_serie'] = resposta['serie']
+        valores['focus_danfe_url'] = (resposta.get('caminho_danfe')
+                                      or resposta.get('url_danfe') or False)
 
         # A chave só se grava quando a nota existe de fato na SEFAZ. Gravar a
         # chave de uma nota rejeitada envenenaria o índice do liber_nfe_xml.
@@ -866,6 +1012,60 @@ class AccountMove(models.Model):
                         'mimetype': 'application/xml',
                         'res_model': 'nfe.xml.panel', 'res_id': painel.id,
                     })
+
+    # ------------------------------------------------------------------
+    # os documentos da nota, para quem os pede de fora
+    # ------------------------------------------------------------------
+    def _liber_documentos_da_nfe(self):
+        """DANFE e XML da nota autorizada, nesta ordem.
+
+        São os dois anexos que o `_focus_guardar_documentos` grava na fatura.
+        O nome deles é a referência da emissão, que ganha sufixo `-R2` depois
+        de uma rejeição -- procurar pela referência ATUAL é o que devolve os
+        documentos da nota que vale, e não os da tentativa que a SEFAZ recusou.
+
+        Nota não autorizada não tem documento: enquanto a SEFAZ não autoriza,
+        não existe DANFE nem XML, e o que houver na fatura é de outra coisa.
+        """
+        self.ensure_one()
+        nota = self._origin
+        if nota.focus_status != STATUS_AUTORIZADO or not nota.focus_ref:
+            return self.env['ir.attachment']
+        documentos = self.env['ir.attachment'].search([
+            ('res_model', '=', 'account.move'), ('res_id', '=', nota.id),
+            ('name', 'in', ['%s.pdf' % nota.focus_ref,
+                            '%s.xml' % nota.focus_ref]),
+        ])
+        # DANFE primeiro: é o que se abre para olhar. O XML é para arquivar.
+        return documentos.sorted(lambda anexo: not anexo.name.endswith('.pdf'))
+
+    def _liber_nome_do_documento(self, anexo):
+        """O nome com que o documento chega a quem recebe a nota.
+
+        Dentro de casa o anexo se chama pela referência da emissão
+        (`LIBER-3-14512.pdf`), que é o que dá idempotência ao download e não
+        diz nada a ninguém de fora. Para o cliente, o DANFE se procura pelo
+        número da nota e o XML pela chave de acesso -- é assim que o contador
+        dele arquiva, e é o nome que o programa dele espera.
+
+        Quem é qual se decide pelo SUFIXO, não pelo mimetype: o Odoo rebaixa
+        todo anexo parecido com XML para `text/plain` quando quem grava não é
+        usuário de sistema (é a proteção contra HTML injetado, no
+        `ir.attachment._check_contents`), e a emissão roda no usuário que
+        clicou. Olhando o mimetype, o XML da nota emitida em produção não seria
+        reconhecido -- e sairia no e-mail com a referência interna no nome.
+
+        Sem número ou sem chave, o nome guardado segue como está: um anexo com
+        nome feio é melhor do que um anexo que não vai.
+        """
+        self.ensure_one()
+        if not self.focus_ref:
+            return anexo.name
+        if anexo.name == '%s.pdf' % self.focus_ref and self.focus_numero:
+            return 'DANFE-%s.pdf' % self.focus_numero
+        if anexo.name == '%s.xml' % self.focus_ref and self.nfe_key:
+            return '%s-nfe.xml' % self.nfe_key
+        return anexo.name
 
     # ------------------------------------------------------------------
     # cron

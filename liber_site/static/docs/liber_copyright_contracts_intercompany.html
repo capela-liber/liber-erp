@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<script>
+/* Servido por /liber_site/static/docs/, este arquivo vem com uma semana de
+   cache e o docs.js sem versão -- e o índice monta a lista a partir dele. Foi
+   assim que a emissão de NF-e e o manual da Amazon ficaram invisíveis: o
+   catálogo em cache era anterior aos dois. A rota /liber/docs/ serve o mesmo
+   arquivo sem cache e com ?v=<mtime> nos assets. Quem chegar pelo caminho
+   antigo (favorito, link velho, resultado de busca) vai para lá antes de a
+   página montar qualquer coisa. */
+(function () {
+  var antigo = "/liber_site/static/docs/";
+  if (location.pathname.indexOf(antigo) === 0) {
+    location.replace("/liber/docs/" + location.pathname.slice(antigo.length) +
+                     location.search + location.hash);
+  }
+})();
+</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cessão de uso entre empresas — Manuais do Liber</title>
+<link rel="icon" type="image/png" href="../logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;600;700&display=swap">
+<link rel="stylesheet" href="docs.css">
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="../index.html"><img src="../logo.png" alt="">liber<span>.</span></a>
+    <span class="doc-tag">Manuais</span>
+    <nav><a href="index.html">Índice</a><a href="../index.html">Site</a></nav>
+  </div>
+</header>
+<div class="wrap">
+  <div class="layout">
+    <aside class="sidebar" id="sidebar"></aside>
+    <article class="doc">
+      <div class="breadcrumb"><a href="index.html">Manuais</a><span class="sep">›</span>Direitos autorais<span class="sep">›</span>Cessão de uso entre empresas</div>
+      <h1>Cessão de uso entre empresas</h1>
+      <p class="lead">Uma empresa do grupo detém os contratos de direitos autorais; outra vende os livros. Este módulo apura os royalties também sobre as vendas da empresa irmã — marcando de onde veio cada venda — e cobra dela a cessão de uso, com fatura de um lado e espelho do outro.</p>
+
+      <h2 id="visao-geral">Visão geral</h2>
+      <p>É comum no grupo editorial: a editora que assinou os contratos (chame-a de <strong>detentora</strong>) não é a mesma que emite as notas de venda (a <strong>vendedora</strong>). Sem este módulo, o <a href="liber_copyright_contracts_analytics.html">Cálculo de royalties</a> apura apenas o que a própria empresa vendeu. Com ele:</p>
+      <ul>
+        <li>A detentora declara, nas Definições, <strong>quais empresas vendedoras</strong> alimentam a sua apuração. O "Preencher linhas de royalties" passa a ler as vendas pagas dessas empresas também.</li>
+        <li>Cada lançamento de royalty ganha a <strong>empresa de origem</strong> da venda — a coluna aparece nas contas analíticas e no relatório de dívidas, com filtro e agrupamento.</li>
+        <li>Os royalties nascidos de vendas da empresa irmã vão se <strong>acumulando numa fatura de cliente em rascunho</strong> da detentora contra a vendedora — uma linha por contrato × obra × favorecido, com o produto de serviço <strong>"Royalties entre Empresas"</strong> e uma margem administrativa opcional.</li>
+        <li>Ao <strong>lançar</strong> essa fatura, nasce automaticamente a <strong>fatura de fornecedor espelho</strong> na vendedora, em rascunho, ligada à original. A próxima apuração abre um novo acumulador.</li>
+      </ul>
+      <p>O pagamento dos autores não muda: a detentora segue pagando pelo <a href="liber_copyright_contracts_payments.html">Pagamento de royalties</a> o valor integral apurado — o que este módulo faz é a vendedora reembolsá-la pela parte que nasceu das vendas dela.</p>
+      <div class="callout note"><span class="title">Nota</span>
+        <p>Com o módulo instalado e a lista de empresas-fonte <strong>vazia</strong>, a apuração lê somente as vendas da própria empresa do contrato. Instalar o módulo, portanto, também corrige o comportamento antigo de varrer as faturas de todas as empresas sem distinção.</p>
+      </div>
+
+      <h2 id="configuracao">Configuração</h2>
+      <p>Tudo fica em <span class="menupath">Configurações<i>‣</i>Direitos Autorais</span>, em duas seções que dizem de que lado cada campo vale — e vale <strong>por empresa</strong>: configure logada na empresa certa.</p>
+      <p>Na seção <strong>Intercompany Royalties — Contract Holder</strong>, logada na empresa <strong>detentora</strong> dos contratos:</p>
+      <ol class="steps">
+        <li>Em <span class="field">Empresas-fonte de royalties</span>, escolha as empresas vendedoras cujas vendas pagas devem alimentar a apuração (por exemplo, a distribuidora do grupo).</li>
+        <li>Se quiser, ajuste o <span class="field">Produto de royalties entre empresas</span> (vazio usa o "Royalties entre Empresas" que acompanha o módulo), o <span class="field">Diário de venda</span>, a <span class="field">Conta de receita</span> e a <span class="field">Margem (%)</span> — percentual administrativo somado ao royalty na cobrança; zero cobra o valor exato.</li>
+      </ol>
+      <p>Na seção <strong>Intercompany Royalties — Selling Company</strong>, logada na empresa <strong>vendedora</strong>:</p>
+      <ol class="steps">
+        <li>Se quiser, defina o <span class="field">Diário de compras</span> e a <span class="field">Conta de despesa</span> da fatura espelho (vazios usam os padrões da empresa e do produto).</li>
+      </ol>
+
+      <h3 id="contas">De onde vêm as contas contábeis</h3>
+      <p>As duas contas nas Definições são <strong>substituições</strong>, não a única entrada. Deixando-as vazias, cada linha resolve a conta como qualquer outra linha de fatura do Odoo, nesta ordem:</p>
+      <ol class="steps">
+        <li>a conta configurada aqui, se houver;</li>
+        <li>senão, a conta <strong>definida no próprio produto</strong> (aba Contabilidade do produto) — ou, na falta dela, a da <strong>categoria</strong> do produto;</li>
+        <li>senão, a <strong>conta padrão do diário</strong> usado.</li>
+      </ol>
+      <div class="callout note"><span class="title">Nota</span>
+        <p>As contas do produto são <strong>por empresa</strong>: o mesmo produto "Royalties entre Empresas" guarda a conta de <em>receita</em> da detentora e a de <em>despesa</em> da vendedora, cada uma cadastrada com a respectiva empresa ativa. Essa costuma ser a forma mais limpa de configurar — cadastre as contas no produto e deixe as Definições vazias.</p>
+        <p>Atenção ao passo 3: se nem o produto nem a categoria tiverem conta, o valor cai na conta padrão do <strong>diário</strong> — então vale conferir qual diário está escolhido. Os campos só oferecem diários do tipo certo (vendas na detentora, compras na vendedora) e contas de receita/despesa da empresa; se uma configuração antiga apontar para um diário de outro tipo, o módulo a <strong>ignora</strong> e usa o diário padrão, em vez de derrubar a apuração.</p>
+      </div>
+
+      <h2 id="fluxo">Como funciona no dia a dia</h2>
+      <ol class="steps">
+        <li>A vendedora emite e recebe as notas de venda dos livros, como sempre.</li>
+        <li>Na detentora, rode <strong>Preencher linhas de royalties</strong> no contrato (o mesmo botão de sempre). As vendas pagas das empresas-fonte entram na apuração, na conta analítica de cada favorecido, com a <span class="field">Empresa de origem</span> carimbada — e a faixa por quantidade acumulada continua uma só, misturando as vendas de todas as origens em ordem cronológica.</li>
+        <li>No mesmo passo, os royalties com origem na vendedora somam-se à <strong>fatura acumuladora</strong> em rascunho (numeração "Royalties entre Empresas/NNN" na referência). Rodou mais contratos? As linhas se acumulam ali, como na fatura de impostos do <a href="liber_copyright_contracts_taxes.html">IRRF</a>.</li>
+        <li>Quando quiser cobrar, <strong>lance a fatura</strong>. A fatura espelho de fornecedor nasce em rascunho na vendedora, com as mesmas linhas e a referência apontando para a original — os botões inteligentes ligam uma à outra.</li>
+        <li>Cada empresa segue o próprio fluxo contábil: a detentora recebe, a vendedora confere e paga.</li>
+      </ol>
+      <div class="callout example"><span class="title">Exemplo</span>
+        <p>Contrato na detentora com faixa de 7%. A vendedora vende 80 exemplares a R$ 10,00 (R$ 800,00) e a fatura é paga. A apuração lança <strong>R$ 56,00</strong> de royalty devido ao autor — origem: vendedora — e a fatura acumuladora ganha uma linha de R$ 56,00 contra ela. Com margem de 10%, a linha sai por R$ 61,60. O autor continua recebendo os R$ 56,00 da detentora, pelo fluxo normal de pagamento.</p>
+      </div>
+      <div class="callout note"><span class="title">Nota</span>
+        <p>Enquanto o acumulador está em rascunho, ele é <strong>recalculado por inteiro</strong> a cada apuração: estornos e correções encolhem a linha sozinhos, e rodar duas vezes não duplica nada. Depois de lançado, ele vira história — novas vendas abrem um acumulador novo, e cancelar uma cobrança devolve os royalties dela para a próxima.</p>
+      </div>
+
+      <h2 id="faq">Perguntas frequentes</h2>
+      <p><strong>A venda da própria detentora gera cobrança?</strong> Não. Só as vendas com origem em <em>outra</em> empresa entram na fatura acumuladora — ninguém fatura contra si mesmo. O royalty da venda própria é apurado normalmente.</p>
+      <p><strong>Adiantamentos e pagamentos entram na cobrança?</strong> Não. Só os royalties provisionados a partir de vendas têm empresa de origem; adiantamentos, liquidações e pagamentos são movimentos internos da detentora.</p>
+      <p><strong>Excluí o produto "Royalties entre Empresas". E agora?</strong> A apuração continua funcionando — a cobrança é opcional e nunca a bloqueia; apenas nenhuma fatura acumuladora é criada até haver um produto configurado nas Definições.</p>
+      <p><strong>Quem não enxerga a empresa vendedora consegue apurar?</strong> Sim. A leitura das vendas e a escrita da cobrança são feitas com privilégio elevado pelo próprio sistema; o usuário só precisa do acesso normal aos contratos. Abrir a fatura espelho na outra empresa, aí sim, pede acesso àquela empresa.</p>
+      <p><strong>Voltei a fatura acumuladora para rascunho depois de lançar.</strong> O espelho em rascunho na vendedora é descartado (voltou a acumular, ele nasceria de novo no próximo lançamento); um espelho já lançado é sinalizado no chatter para ajuste manual.</p>
+
+      <div class="seealso">
+        <span class="title">Veja também</span>
+        <ul>
+          <li><a href="liber_copyright_contracts_analytics.html">Cálculo de royalties</a> — o motor de apuração que este módulo estende.</li>
+          <li><a href="liber_copyright_contracts_payments.html">Pagamento de royalties</a> — o autor recebe da detentora, pelo valor integral.</li>
+          <li><a href="liber_copyright_contracts_taxes.html">IRRF sobre direitos</a> — a mesma mecânica de fatura acumuladora, aplicada ao imposto.</li>
+        </ul>
+      </div>
+
+      <nav class="pager" id="pager"></nav>
+    </article>
+  </div>
+</div>
+<script src="docs.js"></script>
+</body>
+</html>

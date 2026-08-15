@@ -1,6 +1,22 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
+<script>
+/* Servido por /liber_site/static/docs/, este arquivo vem com uma semana de
+   cache e o docs.js sem versão -- e o índice monta a lista a partir dele. Foi
+   assim que a emissão de NF-e e o manual da Amazon ficaram invisíveis: o
+   catálogo em cache era anterior aos dois. A rota /liber/docs/ serve o mesmo
+   arquivo sem cache e com ?v=<mtime> nos assets. Quem chegar pelo caminho
+   antigo (favorito, link velho, resultado de busca) vai para lá antes de a
+   página montar qualquer coisa. */
+(function () {
+  var antigo = "/liber_site/static/docs/";
+  if (location.pathname.indexOf(antigo) === 0) {
+    location.replace("/liber/docs/" + location.pathname.slice(antigo.length) +
+                     location.search + location.hash);
+  }
+})();
+</script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Acerto de consignação — Manuais do Liber</title>
@@ -69,7 +85,7 @@
       <h2 id="executar">Executar um acerto, passo a passo</h2>
       <ol class="steps">
         <li>Abra a operação do cliente em <span class="menupath">Consignação<i>‣</i>Consignações<i>‣</i>Operações</span> (ou crie uma: só o <span class="field">Cliente</span> basta — o contrato, a prateleira e o responsável se resolvem sozinhos).</li>
-        <li>Clique em <span class="field">Mapa</span>. As linhas se preenchem com tudo que está na prateleira do cliente, com preço da lista do contrato e o desconto padrão herdado.</li>
+        <li>Clique em <span class="field">Mapa</span>. As linhas se preenchem com tudo que está na prateleira do cliente, com o preço e o desconto que o contrato manda — ver <a href="#preco">Como o preço e o desconto se formam</a>.</li>
         <li>Leia as colunas de contexto de cada título:
           <ul>
             <li><span class="field">Em mãos</span> — seu estoque no armazém (o limite físico de qualquer reposição);</li>
@@ -90,7 +106,21 @@
       <h3>Depois do Executar: finalização automática</h3>
       <p>Não há botão de finalizar. Uma rotina de meia em meia hora verifica cada operação confirmada e, quando <em>todos</em> os documentos dela terminaram — a venda entregue e faturada, o Pedido C confirmado e entregue, a devolução validada no armazém —, muda o status para <strong>Finalizado</strong> e registra no histórico: <em>"Consignação finalizada: toda a logística e faturamento encerrados."</em></p>
       <h3>Cancelar e recomeçar</h3>
-      <p><span class="field">Cancelar</span> funciona em rascunho (operação aberta por engano ou adiada pelo cliente) e em confirmado — neste caso <strong>cancela em cascata</strong> os documentos que a operação gerou e registra quais. Uma operação cancelada que <em>nunca</em> gerou documentos pode voltar com <span class="field">Redefinir para Provisório</span>; uma que gerou, não — a tela explica: executá-la de novo não criaria nada, porque ela ainda aponta para os documentos antigos. <strong>Abra uma operação nova</strong>; a cancelada é história.</p>
+      <p><span class="field">Cancelar</span> funciona <strong>só em rascunho</strong> — operação aberta por engano ou adiada pelo cliente. Uma operação já <strong>executada não pode ser cancelada</strong>: o Executar valida a transferência na hora, então o estoque já saiu da prateleira do cliente e a venda já existe. Cancelar desfaria só o papel e deixaria a baixa de pé — mercadoria fora da prateleira sem venda atrás dela. O caminho de volta de um Executar errado é uma <strong>operação nova</strong> que compense, ou um ajuste pelo inventário de auditoria.</p>
+
+      <h2 id="preco">Como o preço e o desconto se formam</h2>
+      <p>Cada linha do acerto tem <span class="field">Preço Unitário</span> e <span class="field">Desc.%</span>, e os dois saem do contrato. Qual dos dois campos recebe a redução depende de o contrato ter lista de preços:</p>
+      <div class="tablewrap"><table>
+        <thead><tr><th>No contrato</th><th>Preço Unitário</th><th>Desc.%</th></tr></thead>
+        <tbody>
+          <tr><td>Lista de preços com regra de <strong>percentual</strong></td><td>O preço de tabela <strong>cheio</strong>.</td><td>O percentual da lista. O <span class="field">Desconto Padrão</span> do contrato <strong>não</strong> se aplica por cima.</td></tr>
+          <tr><td>Lista de preços com preço fixo ou fórmula</td><td>O preço que a lista determina.</td><td>Zero — o preço da lista <em>é</em> o preço, e não há percentual a declarar.</td></tr>
+          <tr><td>Sem lista de preços</td><td>O preço de tabela do produto.</td><td>O <span class="field">Desconto Padrão</span> do contrato.</td></tr>
+        </tbody>
+      </table></div>
+      <div class="callout warn"><span class="title">A lista manda — nunca as duas coisas</span><p>Uma lista de 30% e um contrato com desconto padrão de 40% descontavam <strong>duas vezes</strong>: R$ 100,00 viravam R$ 70,00 pela lista e R$ 42,00 com os 40% por cima, onde o combinado eram R$ 60,00. Os dois números são plausíveis, e o erro passava despercebido. Hoje, havendo lista, é ela quem diz o desconto.</p></div>
+      <p>Os dois campos são editáveis linha a linha, e o que você digitar prevalece. Eles seguem adiante: a venda S e o Pedido C de reposição nascem com o mesmo preço e o mesmo desconto do acerto, e a nota de remessa lê o desconto da linha para declarar o vDesc — um Pedido C sem desconto carimbado sai com DANFE sem desconto.</p>
+      <div class="callout note"><span class="title">Nota</span><p>Para o desconto viver no campo próprio em vez de se diluir no preço unitário, a opção <span class="field">Descontos</span> do Odoo precisa estar ligada. Ela é ligada automaticamente pelo módulo <a href="liber_partner_commercial.html#desconto">Canal de vendas do cliente</a>.</p></div>
 
       <h2 id="mapa-pdf">O mapa em PDF: imprimir e enviar</h2>
       <ul>
@@ -104,11 +134,12 @@
       <h2 id="campanhas">Campanhas: o sortimento-alvo por canal</h2>
       <p>Uma campanha (série <strong>CP/</strong>) define <em>quantos exemplares de cada título</em> as prateleiras de um canal devem ter. Em <span class="menupath">Consignação<i>‣</i>Campanhas</span>:</p>
       <ol class="steps">
-        <li>Crie a campanha com nome, <span class="field">Canal de Vendas</span> (o público: os clientes cujo contrato ativo está nesse canal — o contador <span class="field">Clientes</span> mostra quantos são) e a janela <span class="field">De</span> / <span class="field">Até</span>. Só campanhas <em>ativas e dentro da janela</em> ficam <span class="field">Em curso</span> e valem como meta.</li>
+        <li>Crie a campanha com nome, <span class="field">Canal de Vendas</span> (o público: os clientes cujo contrato ativo está nesse canal <em>e na mesma editora da campanha</em> — o contador <span class="field">Clientes</span> mostra quantos são) e a janela <span class="field">De</span> / <span class="field">Até</span>. Só campanhas <em>ativas e dentro da janela</em> ficam <span class="field">Em curso</span> e valem como meta.</li>
         <li>Monte a lista de títulos pelo <span class="field">Catálogo</span> — o mesmo navegador de produtos de Vendas e Compras: navegue, ajuste quantidades, e cada título vira uma linha com seu <span class="field">Alvo</span>. As colunas ISBN, publicação, disponibilidade e categoria ajudam a separar lançamento de catálogo.</li>
         <li>Acompanhe na própria linha a <strong>cobertura</strong>: <span class="field">Prateleiras</span> (quantos clientes o alvo precisa alcançar), <span class="field">Precisa</span> (alvo × prateleiras), <span class="field">Estoque</span>, <span class="field">A caminho</span>, <span class="field">Atende prat.</span>, <span class="field">Cobre %</span> e <span class="field">Faltará</span> — o que a campanha não consegue cobrir sem imprimir ou comprar mais. Atualizado toda manhã.</li>
       </ol>
-      <p>Na operação, <span class="field">Aplicar Campanhas</span> aplica <em>todas</em> as campanhas em curso do canal do cliente — não há o que escolher: o gestor define, a operação executa. Cada título ganha seu <span class="field">Alvo</span>; título que o cliente não tem entra como linha nova (em azul); título que nem você tem em estoque é pulado e listado no histórico. Quando duas campanhas pedem o mesmo título com alvos diferentes, <strong>vence o alvo maior</strong> — a única regra que nunca encolhe um sortimento. A reposição passa a mirar o alvo: <em>repor = alvo − (mapa − vendido)</em>, limitado ao <span class="field">Em mãos</span>; o que não dá para mandar aparece em <span class="field">Faltou</span>. E o resultado real de cada aplicação (quanto colocou, quanto faltou, o que nem foi) fica registrado no histórico <em>da campanha</em> — onde o gestor lê.</p>
+      <div class="callout note"><span class="title">A editora entra na conta</span><p>Um canal é um registro só, compartilhado por todas as editoras do grupo (ver <a href="liber_partner_commercial.html#grade">a grade dos canais</a>). Por isso campanha e acerto se encontram por canal <strong>e</strong> por empresa: uma campanha de um selo não vale num acerto de outro, ainda que o canal seja o mesmo.</p></div>
+      <p>Na operação, <span class="field">Aplicar Campanhas</span> aplica <em>todas</em> as campanhas em curso do canal do cliente, na editora da operação — não há o que escolher: o gestor define, a operação executa. Cada título ganha seu <span class="field">Alvo</span>; título que o cliente não tem entra como linha nova (em azul); título que nem você tem em estoque é pulado e listado no histórico. Quando duas campanhas pedem o mesmo título com alvos diferentes, <strong>vence o alvo maior</strong> — a única regra que nunca encolhe um sortimento. A reposição passa a mirar o alvo: <em>repor = alvo − (mapa − vendido)</em>, limitado ao <span class="field">Em mãos</span>; o que não dá para mandar aparece em <span class="field">Faltou</span>. E o resultado real de cada aplicação (quanto colocou, quanto faltou, o que nem foi) fica registrado no histórico <em>da campanha</em> — onde o gestor lê.</p>
 
       <h2 id="puxadas">Cobrança de devoluções (as "puxadas")</h2>
       <p>Toda devolução (CR) nasce com um relógio: o <span class="field">Prazo da Devolução</span> = data de criação + o prazo tolerável das Definições. A partir daí, uma rotina noturna sobe uma escada de cobrança — cada degrau numa porcentagem do prazo, então mudar os dias reflui o calendário inteiro:</p>
@@ -157,6 +188,7 @@
 
       <figure class="shot"><img src="img/doc-liber_soc_settlement-ruptura.png" alt="Relatório Ruptura em pivô, agrupado por natureza (Estoque, Manual, Falta, Tempo) e cliente, com a soma de exemplares faltantes"><figcaption>Ruptura com causa: quantos exemplares faltaram, onde, e — o que importa para agir — por quê.</figcaption></figure>
 
+      <p>Na lista de operações, a coluna <span class="field">Canal de Vendas</span> e o agrupamento de mesmo nome respondem "quanto acertou cada canal no mês". O canal vem do contrato (ou da ficha do cliente, na falta dele) e fica carimbado: o acerto é uma apuração fechada, e não muda de canal porque alguém corrigiu a ficha depois.</p>
       <p>Além dos relatórios, o menu <span class="menupath">Consignação<i>‣</i>Acertos</span> lista todas as vendas S nascidas de acertos — só leitura, criadas apenas pela operação, nunca à mão. No aplicativo Vendas, os filtros <span class="field">Acertos de Consignação</span> e <span class="field">Vendas Normais</span> e o agrupamento por <span class="field">Contrato</span> separam os dois mundos.</p>
 
       <h2 id="regras">Regras que o sistema garante</h2>

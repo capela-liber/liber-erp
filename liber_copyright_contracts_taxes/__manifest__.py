@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     'name': 'Copyright Contracts - Taxes (IRRF)',
-    'version': '19.0.1.0.0',
+    'version': '19.0.1.1.0',
     'summary': 'Withholding income tax (IRRF) on author royalty payments',
     'description': """
 Withholding tax layer for copyright contracts (Brazilian IRRF).

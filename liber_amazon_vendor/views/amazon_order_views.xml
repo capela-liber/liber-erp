@@ -5,18 +5,57 @@
         <field name="name">liber.amazon.order.list</field>
         <field name="model">liber.amazon.order</field>
         <field name="arch" type="xml">
-            <list decoration-warning="unmatched_count > 0"
+            <!-- Sem "Novo": este modelo é espelho do que a Amazon manda, e
+                 um registro criado à mão não corresponde a pedido nenhum lá.
+                 A próxima releitura não saberia o que fazer com ele. A porta
+                 de entrada é uma só, e é o botão de importar. -->
+            <!-- Duas cores de linha, não três.
+
+                 O âmbar marcava "tem título sem produto no cadastro". Fazia
+                 sentido enquanto isso travava a cotação; desde que a linha
+                 órfã passou a ser ignorada, virou apenas "a cotação sai um
+                 pouco menor" — coisa que a coluna Sem produto já diz com
+                 número e que o Relatório analisa por título. Cor de linha
+                 gasta em aviso que não pede ação treina a pessoa a ignorar
+                 cor de linha, e leva o vermelho junto. -->
+            <list create="false"
                   decoration-danger="has_divergence == True"
                   decoration-muted="is_open == False">
-                <field name="name"/>
-                <field name="order_date"/>
-                <field name="amazon_state"/>
-                <field name="line_count" string="Lines"/>
-                <field name="unmatched_count" string="Unmatched"/>
-                <field name="amount_total" widget="monetary"/>
+                <!-- A importação mora aqui, ao lado dos pedidos que ela traz,
+                     e não num menu à parte.
+
+                     `display="always"` não é detalhe: sem ele o botão cai no
+                     bloco de ações de seleção, que o Odoo só mostra quando há
+                     linhas marcadas. Ficaria invisível justamente na primeira
+                     vez, com a lista vazia — que é quando ele mais serve. -->
+                <header>
+                    <button name="%(action_liber_amazon_import)d" type="action"
+                            string="Import" display="always"
+                            class="btn-primary"/>
+                </header>
+                <field name="name" width="110px"/>
+                <field name="order_date" width="150px"/>
+                <field name="partner_id" string="Customer"/>
+                <!-- Dois estados na mesma linha, dois sentidos.
+
+                     O da Amazon é ciclo de vida dela: chegou (azul), foi
+                     confirmado e o relógio corre (âmbar), fechou (apagado).
+                     O nosso é trabalho: falta fazer (azul) ou está feito
+                     (verde). Usar a mesma paleta faria parecer que um é
+                     continuação do outro, e não são. -->
+                <field name="amazon_state" column_invisible="True"/>
+                <field name="amazon_state_label" widget="badge"
+                       decoration-info="amazon_state == 'New'"
+                       decoration-warning="amazon_state == 'Acknowledged'"
+                       decoration-muted="amazon_state == 'Closed'"/>
+                <field name="line_count" string="Lines" width="80px"/>
+                <field name="unmatched_count" string="Unmatched" width="110px"/>
+                <field name="amount_total" widget="monetary" width="130px"/>
                 <field name="currency_id" column_invisible="True"/>
-                <field name="state" widget="badge"/>
-                <field name="has_divergence" string="Changed" optional="show"/>
+                <field name="state" widget="badge"
+                       decoration-info="state == 'imported'"
+                       decoration-success="state == 'quoted'"/>
+                <field name="has_divergence" string="Divergence" optional="show"/>
                 <field name="is_open" column_invisible="True"/>
                 <field name="delivery_end" optional="hide"/>
                 <field name="sale_order_id" optional="hide"/>
@@ -30,18 +69,18 @@
         <field name="name">liber.amazon.order.form</field>
         <field name="model">liber.amazon.order</field>
         <field name="arch" type="xml">
-            <form>
+            <form create="false">
                 <header>
                     <!-- Um botão só. Linha sem produto é ignorada e fica
                          registrada no histórico — não trava mais o pedido,
                          e por isso não há mais duas versões do mesmo botão. -->
                     <button name="action_create_quotation" type="object"
                             string="Create Quotation" class="btn-primary"
-                            invisible="sale_order_id or unmatched_count == 0"
+                            invisible="sale_order_id or not is_open or unmatched_count == 0"
                             confirm="Lines with no product in the catalogue will be left out of the quotation. Their ISBNs are recorded in this order's log."/>
                     <button name="action_create_quotation" type="object"
                             string="Create Quotation" class="btn-primary"
-                            invisible="sale_order_id or unmatched_count > 0"/>
+                            invisible="sale_order_id or not is_open or unmatched_count > 0"/>
                     <button name="action_clear_divergence" type="object"
                             string="Acknowledge Change" class="btn-secondary"
                             invisible="not has_divergence"/>
@@ -60,13 +99,26 @@
                         </button>
                     </div>
 
-                    <widget name="web_ribbon" title="Closed by Amazon"
+                    <!-- Faixa curta: ela é impressa na diagonal e o texto longo
+                         sai cortado. Dentro do app da Amazon, "por quem"
+                         é redundante. -->
+                    <widget name="web_ribbon" title="Closed"
                             bg_color="text-bg-secondary"
                             invisible="is_open"/>
 
                     <div class="oe_title">
                         <label for="name" string="Purchase Order"/>
                         <h1><field name="name" readonly="1"/></h1>
+                    </div>
+
+                    <div class="alert alert-warning" role="alert"
+                         invisible="unit_mapped">
+                        <field name="unit_mapped" invisible="1"/>
+                        Amazon unit <field name="buying_party" nolabel="1"
+                        readonly="1" class="oe_inline"/> is not mapped to a
+                        customer yet. Each warehouse is its own legal
+                        establishment — without the map, the quotation would
+                        be made out against the wrong tax registration.
                     </div>
 
                     <div class="alert alert-danger" role="alert"
@@ -77,7 +129,9 @@
                     <group>
                         <group string="Amazon">
                             <field name="account_id"/>
-                            <field name="amazon_state"/>
+                            <field name="unit_id"/>
+                            <field name="partner_id"/>
+                            <field name="amazon_state_label"/>
                             <field name="state_known" invisible="state_known"
                                    string="Known state"/>
                             <field name="order_date"/>
@@ -185,7 +239,7 @@
     </record>
 
     <record id="action_liber_amazon_order" model="ir.actions.act_window">
-        <field name="name">Amazon Purchase Orders</field>
+        <field name="name">Orders</field>
         <field name="res_model">liber.amazon.order</field>
         <field name="view_mode">list,form</field>
         <field name="search_view_id" ref="view_liber_amazon_order_search"/>

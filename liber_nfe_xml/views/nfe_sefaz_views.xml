@@ -8,7 +8,7 @@
                 <header>
                     <button name="action_sync_now" type="object" string="Sync Now"
                             class="btn-primary" display="always"
-                            confirm="Run the SEFAZ sweep now for every company with sync enabled?"/>
+                            confirm="Schedule a SEFAZ sweep for every company with sync enabled? It runs in the background."/>
                 </header>
                 <field name="date_start"/>
                 <field name="company_id"/>

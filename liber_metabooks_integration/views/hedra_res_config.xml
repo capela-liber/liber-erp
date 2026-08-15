@@ -17,7 +17,7 @@
                                 <field name="metabooks_username"/>
                             </setting>
                             <setting string="Metabooks Password" help="Password">
-                                <field name="metabooks_password"/>
+                                <field name="metabooks_password" password="True"/>
                             </setting>
                             <!-- TODO v19 port: NCM setting disabled ('account.ncm' absent in v19 community)
                             <setting string="Default NCM code" help="Default NCM code">
@@ -25,7 +25,7 @@
                             </setting>
                             -->
                             <setting string="Metabooks Authorisation" help="Authorisation code">
-                                <field name="metabooks_authorisation_code"/>
+                                <field name="metabooks_authorisation_code" password="True"/>
                                 <div class="mt8">
                                     <button name="action_test_metabooks_connection" string="Test Connection"
                                             type="object" class="btn-primary"/>

@@ -189,7 +189,12 @@ class VendorMetabooksId(models.Model):
                             content['collection'] = ''
                             content['collection_volume'] = ''
                             content['pages'] = product.metabooks_page_count or ''
-                            content['weight'] = product.metabooks_weight or ''
+                            # A planilha pesa em GRAMAS. Sem o peso do painel
+                            # vale o do Odoo (quilos), que é onde a casa digita
+                            # o peso de livro que nunca veio do Metabooks.
+                            content['weight'] = product.metabooks_weight or (
+                                round(product.weight * 1000.0, 2)
+                                if product.weight else '')
                             content['width'] = product.metabooks_width or ''
                             content['height'] = product.metabooks_height or ''
                             content['thickness'] = product.metabooks_thickness or ''

@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
-    <record id="module_category_liber_dropbox" model="ir.module.category">
-        <field name="name">Dropbox Files</field>
-        <field name="sequence">23</field>
-    </record>
-
     <record id="privilege_liber_dropbox" model="res.groups.privilege">
-        <field name="name">Dropbox Files</field>
-        <field name="category_id" ref="module_category_liber_dropbox"/>
+        <!-- O cabeçalho da seção já diz "Cloud Files"; a linha diz o
+             provedor. Ver o comentário no liber_cloud_files. -->
+        <field name="name">Dropbox</field>
+        <field name="sequence">10</field>
+        <field name="category_id" ref="liber_cloud_files.module_category_liber_cloud"/>
     </record>
 
     <!-- Membership here only opens the Dropbox app; model permissions come

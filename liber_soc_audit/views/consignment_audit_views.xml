@@ -43,8 +43,11 @@
                             string="Accept Map" class="btn-secondary"
                             confirm="Keep the current map on every line?"
                             invisible="state not in ('computed', 'under_review')"/>
+                    <!-- Approval is the manager's signature: the assistant
+                         prepares (compute, resolve), the manager adjusts. -->
                     <button name="action_accept" type="object"
                             string="Accept &amp; Adjust" class="btn-primary"
+                            groups="liber_soc_agreements.group_soc_manager"
                             confirm="Generate the shelf adjustment for the accepted balances? This moves stock."
                             invisible="state not in ('computed', 'under_review')"/>
                     <button name="action_cancel" type="object" string="Cancel"

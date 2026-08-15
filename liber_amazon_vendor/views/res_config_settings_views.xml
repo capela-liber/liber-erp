@@ -40,9 +40,18 @@
                                  help="Which Amazon regional endpoint answers. Brazil is served by the North America endpoint -- there is no Brazilian host.">
                             <field name="amazon_region"/>
                         </setting>
-                        <setting string="Amazon as customer"
-                                 help="The partner every quotation is made out to. In Vendor Central Amazon is the buyer, so this is a customer.">
-                            <field name="amazon_partner_id"/>
+                        <setting string="Amazon units"
+                                 help="Amazon buys through several warehouses, each one a separate legal establishment with its own tax registration. The customer of each order comes from this map — not from a single partner.">
+                            <div class="content-group">
+                                <div class="mt8">
+                                    <field name="amazon_unit_count" readonly="1"
+                                           class="o_light_label"/>
+                                    <span class="ms-2">unidades mapeadas</span>
+                                </div>
+                            </div>
+                            <button name="action_open_amazon_units"
+                                    type="object" string="Amazon Units"
+                                    class="btn-link" icon="fa-arrow-right"/>
                         </setting>
                     </block>
 

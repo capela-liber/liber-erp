@@ -101,13 +101,13 @@
     <menuitem id="menu_edlab_reports"
               name="Reports"
               parent="liber_copyright_contracts.menu_copyright_contracts_root"
-              groups="liber_copyright_contracts.group_contract_manager"
+              groups="liber_copyright_contracts.group_contract_user"
               sequence="30"/>
     <menuitem id="menu_edlab_royalty_debts"
               name="Royalty Debts"
               parent="menu_edlab_reports"
               action="action_edlab_royalty_debts"
-              groups="liber_copyright_contracts.group_contract_manager"
+              groups="liber_copyright_contracts.group_contract_user"
               sequence="10"/>
 
 </odoo>

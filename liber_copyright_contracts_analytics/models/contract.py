@@ -27,6 +27,13 @@ class EdlabContract(models.Model):
         compute="_compute_edlab_analytic_count",
     )
 
+    # partner_ids (the beneficiaries) is computed and stored by the base
+    # module; this is just its size, for the stat button.
+    beneficiary_count = fields.Integer(
+        string="Beneficiary Count",
+        compute="_compute_beneficiary_count",
+    )
+
     def _special_sales_domain(self):
         """Special-sale customer invoices selling one of this contract's works."""
         self.ensure_one()
@@ -108,17 +115,54 @@ class EdlabContract(models.Model):
             )
 
     def action_view_contract_analytics(self):
-        """Open the analytic accounts of this contract's beneficiaries/works."""
+        """Open the analytic accounts of this contract's beneficiaries/works.
+
+        The usual contract has exactly ONE analytic account, and a list of one
+        is a detour: the button promises "take me to the analytic", so a single
+        account opens straight on its form. Several open as a list.
+        """
         self.ensure_one()
         accounts = self.royalty_line_ids.analytic_account_id
-        return {
+        action = {
             "type": "ir.actions.act_window",
             "name": _("Contract Analytics"),
             "res_model": "account.analytic.account",
-            "domain": [("id", "in", accounts.ids)],
-            "view_mode": "list,form",
             "context": {"create": False},
         }
+        if len(accounts) == 1:
+            action.update({"res_id": accounts.id, "view_mode": "form"})
+        else:
+            action.update({
+                "domain": [("id", "in", accounts.ids)],
+                "view_mode": "list,form",
+            })
+        return action
+
+    @api.depends("partner_ids")
+    def _compute_beneficiary_count(self):
+        for contract in self:
+            contract.beneficiary_count = len(contract.partner_ids)
+
+    def action_view_contract_beneficiaries(self):
+        """Open this contract's beneficiaries (the partners of its royalty
+        lines). Same rule as the analytics button: one beneficiary goes
+        straight to their card, several open as a list."""
+        self.ensure_one()
+        partners = self.partner_ids
+        action = {
+            "type": "ir.actions.act_window",
+            "name": _("Beneficiaries"),
+            "res_model": "res.partner",
+            "context": {"create": False},
+        }
+        if len(partners) == 1:
+            action.update({"res_id": partners.id, "view_mode": "form"})
+        else:
+            action.update({
+                "domain": [("id", "in", partners.ids)],
+                "view_mode": "list,form",
+            })
+        return action
 
     def _edlab_in_term(self, day):
         """Was this contract in force on `day`?
@@ -142,6 +186,17 @@ class EdlabContract(models.Model):
             return False
         return True
 
+    def _edlab_royalty_invoice_domain(self):
+        """Domain of the customer invoices whose sales feed this contract's
+        royalty accrual. Extension hook: the intercompany layer restricts it
+        to the contract company plus its configured source companies."""
+        self.ensure_one()
+        return [
+            ("move_type", "=", "out_invoice"),
+            ("state", "=", "posted"),
+            ("payment_state", "in", ("paid", "in_payment", "reversed")),
+        ]
+
     def action_fill_royalty_lines(self):
         """Fill the contract's analytic accounts with royalty lines.
 
@@ -151,15 +206,14 @@ class EdlabContract(models.Model):
         royalty_lines = self.mapped("royalty_line_ids").filtered(
             lambda line: line.analytic_account_id
         )
-        invoices = (
-            self.env["account.move"]
-            .sudo()
-            .search(
-                [
-                    ("move_type", "=", "out_invoice"),
-                    ("state", "=", "posted"),
-                    ("payment_state", "in", ("paid", "in_payment", "reversed")),
-                ]
-            )
-        )
+        Move = self.env["account.move"].sudo()
+        # The domain may differ per contract (per company, really), so search
+        # once per distinct domain instead of once per contract.
+        domains = {}
+        for contract in self:
+            domain = contract._edlab_royalty_invoice_domain()
+            domains.setdefault(repr(domain), domain)
+        invoices = Move.browse()
+        for domain in domains.values():
+            invoices |= Move.search(domain)
         return royalty_lines._book_royalties_from_invoices(invoices)

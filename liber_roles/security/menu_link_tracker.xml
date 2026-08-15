@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ==================================================================
+         O RASTREIO DE LINKS É DO MARKETING (11/08/2026).
+
+         Situação antes desta linha, conferida no banco: o Link Tracker não
+         tem grupo próprio no Odoo. Os menus dele — `Link Tracker`, `UTMs`,
+         `Campanhas`, `Meios`, `Origens` — são travados em `base.group_no_one`,
+         que é o modo debug. Ou seja: a ferramenta existia e **ninguém** a
+         via, marketing inclusive.
+
+         Aqui se abre a porta para o Marketing, nos dois níveis. O assistente
+         basta: o gerente o implica.
+
+         O QUE ESTA LINHA NÃO FAZ, e é preciso dizer para ninguém ler "só do
+         marketing" e concluir mais do que está escrito. O ACL do core dá
+         `link.tracker` em leitura, escrita e criação a `base.group_user` —
+         a todo usuário interno da casa. Isto é uma porta de MENU, não uma
+         trava de ORM: quem colar a URL certa continua chegando lá.
+
+         Estreitar o ACL foi considerado e NÃO foi feito, por um motivo
+         concreto: quem cria link tracker não é só gente, é o
+         `mail_render_mixin` do próprio core, ao renderizar um e-mail com
+         link rastreado. Trocar `base.group_user` pelo grupo do Marketing
+         quebraria o envio de e-mail de quem não é do Marketing, e o erro
+         apareceria longe daqui, no meio de um disparo. Se a casa quiser
+         mesmo a trava, o caminho é declarar um grupo de rastreio no core
+         override e mover o ACL inteiro — decisão maior que uma linha de menu,
+         e que merece estar no `_mds/PERFIS.md` antes de estar aqui.
+
+         `(6, 0, [...])` e não `(4, ...)`: aqui se SUBSTITUI o
+         `base.group_no_one`, senão o menu continuaria escondido atrás do modo
+         debug e a linha não teria efeito nenhum.
+         ================================================================== -->
+
+    <record id="utm.menu_link_tracker_root" model="ir.ui.menu">
+        <field name="group_ids" eval="[(6, 0, [ref('liber_roles.group_marketing_assistente')])]"/>
+    </record>
+
+    <record id="utm.marketing_utm" model="ir.ui.menu">
+        <field name="group_ids" eval="[(6, 0, [ref('liber_roles.group_marketing_assistente')])]"/>
+    </record>
+
+    <record id="utm.menu_utm_campaign_act" model="ir.ui.menu">
+        <field name="group_ids" eval="[(6, 0, [ref('liber_roles.group_marketing_assistente')])]"/>
+    </record>
+
+    <record id="utm.menu_utm_medium" model="ir.ui.menu">
+        <field name="group_ids" eval="[(6, 0, [ref('liber_roles.group_marketing_assistente')])]"/>
+    </record>
+
+    <record id="utm.menu_utm_source" model="ir.ui.menu">
+        <field name="group_ids" eval="[(6, 0, [ref('liber_roles.group_marketing_assistente')])]"/>
+    </record>
+
+</odoo>

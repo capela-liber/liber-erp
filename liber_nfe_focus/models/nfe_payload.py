@@ -145,6 +145,39 @@ def money(value, casas=2):
     return str(Decimal(str(value)).quantize(quant, rounding=ROUND_HALF_UP))
 
 
+def abater_excesso(itens, chave, total):
+    """Impede que a cobrança passe o total da nota, abatendo do fim.
+
+    São dois arredondamentos do mesmo dinheiro. A NFe soma os itens JÁ
+    arredondados -- é o que a SEFAZ confere. O Odoo, com a empresa arredondando
+    "globalmente" (`round_globally`, que é como as seis da casa estão), soma os
+    valores exatos das linhas, arredonda no fim, e joga a sobra na conta de uma
+    das linhas para o lançamento fechar. Meio centavo por linha vira um centavo
+    no rodapé, e a cobrança sai maior que a nota que ela cobra.
+
+    O abatimento começa pela ÚLTIMA parcela, que é onde o comércio sempre pôs a
+    sobra de arredondamento: as primeiras são redondas e a última fecha a conta.
+
+    SÓ SE TIRA, NUNCA SE PÕE. Cobrar menos que o total é legítimo e acontece
+    todo dia: a remessa em consignação sai com a forma 90 e valor zero contra
+    uma nota de valor cheio, e a fatura que se paga metade à vista manda só a
+    parcela que vence depois. Completar essas duas seria inventar cobrança.
+    """
+    itens = [dict(i) for i in itens]
+    excesso = (sum(Decimal(i.get(chave) or 0) for i in itens)
+               - Decimal(money(total) or '0'))
+    if excesso <= 0:
+        return itens
+    for item in reversed(itens):
+        valor = Decimal(item.get(chave) or 0)
+        abate = min(valor, excesso)
+        item[chave] = money(valor - abate)
+        excesso -= abate
+        if excesso <= 0:
+            break
+    return itens
+
+
 def texto(value, limite):
     """Corta no limite da SEFAZ e tira espaço duplicado."""
     if not value:
@@ -323,7 +356,7 @@ def build_item(indice, item, regime_tributario):
     return linha
 
 
-def build_payload(nota, emitente, destinatario, itens):
+def build_payload(nota, emitente, destinatario, itens, transportador=None):
     """Monta o JSON completo da NFe.
 
     :param nota: natureza_operacao, data_emissao (ISO 8601 com fuso),
@@ -332,6 +365,10 @@ def build_payload(nota, emitente, destinatario, itens):
     :param emitente: cnpj, nome, inscricao_estadual, regime_tributario e endereço.
     :param destinatario: nome, cnpj/cpf, inscricao_estadual, indicador_ie e endereço.
     :param itens: lista de dicionários no formato aceito por `build_item`.
+    :param transportador: nome, cnpj/cpf, inscricao_estadual, endereco (linha
+        única), municipio e uf -- ou None, quando a nota não declara
+        transportadora. Quem decide se o grupo entra é o chamador: com
+        modalidade 9 (sem ocorrência de transporte) ele não deve vir.
     :return: dicionário pronto para `FocusClient.emitir_nfe`.
     """
     regime = emitente.get('regime_tributario') or CRT_NORMAL
@@ -433,6 +470,30 @@ def build_payload(nota, emitente, destinatario, itens):
     elif documento and len(documento) == 11:
         payload['cpf_destinatario'] = documento
 
+    # Transportadora (grupo transp/transporta). Só quando o chamador mandou:
+    # nota sem transporte declarado (modalidade 9) não leva o grupo -- seria
+    # nomear quem carrega uma carga que oficialmente não anda.
+    if transportador:
+        payload['nome_transportador'] = texto(transportador.get('nome'), 60)
+        doc_transp = only_digits(transportador.get('cnpj')) or only_digits(
+            transportador.get('cpf'))
+        if doc_transp and len(doc_transp) == 14:
+            payload['cnpj_transportador'] = doc_transp
+        elif doc_transp and len(doc_transp) == 11:
+            payload['cpf_transportador'] = doc_transp
+        ie_transp = only_digits(transportador.get('inscricao_estadual'))
+        if ie_transp:
+            payload['inscricao_estadual_transportador'] = ie_transp
+        for origem, destino, tamanho in (
+                ('endereco', 'endereco_transportador', 60),
+                ('municipio', 'municipio_transportador', 60)):
+            valor = texto(transportador.get(origem), tamanho)
+            if valor:
+                payload[destino] = valor
+        if transportador.get('uf'):
+            payload['uf_transportador'] = (
+                transportador['uf'] or '').strip().upper()
+
     # A IE do destinatário só vai quando ele é contribuinte; nos outros casos o
     # indicador sozinho é que responde, e mandar IE junto é erro de schema.
     indicador = destinatario.get('indicador_ie')
@@ -450,6 +511,28 @@ def build_payload(nota, emitente, destinatario, itens):
         if nota.get(campo):
             payload[campo] = nota[campo]
 
+    # Volumes e peso (grupo transp/vol). Vão só quando a nota carrega caixa:
+    # o acerto de consignação fatura livro que já está na prateleira do
+    # cliente e não move volume nenhum -- declarar "1 caixa" ali seria
+    # descrever transporte que não houve.
+    #
+    # É uma LISTA `volumes`, não campos soltos. Campo solto a Focus aceita
+    # calada e descarta: a primeira nota de produção saiu com
+    # <transp><modFrete>9</modFrete></transp> e nada mais, com o Odoo
+    # sabendo o peso. Confirmado em homologação mandando os dois formatos na
+    # mesma nota -- só o da lista chegou ao XML (12/08/2026).
+    volume = {}
+    if nota.get('volumes'):
+        volume['quantidade'] = int(nota['volumes'])
+        volume['especie'] = texto(nota.get('especie_volumes') or 'CAIXA', 60)
+    if nota.get('peso_bruto'):
+        # Três casas é o que o schema da NFe aceita em pesoB/pesoL. Só o
+        # bruto: peso líquido é outra medida, e repetir o bruto ali seria
+        # declarar embalagem de peso zero.
+        volume['peso_bruto'] = money(nota['peso_bruto'], casas=3)
+    if volume:
+        payload['volumes'] = [volume]
+
     # Cobrança: fatura e duplicatas. Sem isto a nota não diz quando nem em
     # quantas vezes se paga -- e uma venda a prazo sem duplicata é documento
     # incompleto, ainda que a SEFAZ aceite.
@@ -463,6 +546,11 @@ def build_payload(nota, emitente, destinatario, itens):
             'data_vencimento': parcela.get('data_vencimento'),
             'valor': valor,
         })
+    # A cobrança não pode passar o total DESTA nota -- ver `abater_excesso`. A
+    # parcela zerada pelo abatimento não vira duplicata: duplicata de zero é
+    # cobrança que não existe.
+    duplicatas = [d for d in abater_excesso(duplicatas, 'valor', valor_total)
+                  if Decimal(d['valor']) > 0]
     if duplicatas:
         payload['duplicatas'] = duplicatas
         payload['numero_fatura'] = texto(nota.get('numero_fatura'), 60)
@@ -477,10 +565,14 @@ def build_payload(nota, emitente, destinatario, itens):
         formas = [{'forma_pagamento': (FORMA_DUPLICATA if duplicatas
                                        else FORMA_SEM_PAGAMENTO),
                    'valor_pagamento': valor_total}]
-    payload['formas_pagamento'] = [
-        {'forma_pagamento': f.get('forma_pagamento'),
-         'valor_pagamento': money(f.get('valor_pagamento'))}
-        for f in formas if f.get('forma_pagamento')]
+    # A rejeição 866 é esta: "Ausência de troco quando o valor dos pagamentos
+    # informados for maior que o total da nota". Troco é coisa de balcão; aqui
+    # o excedente é o centavo do arredondamento, e ele sai do pagamento.
+    payload['formas_pagamento'] = abater_excesso(
+        [{'forma_pagamento': f.get('forma_pagamento'),
+          'valor_pagamento': money(f.get('valor_pagamento'))}
+         for f in formas if f.get('forma_pagamento')],
+        'valor_pagamento', valor_total)
 
     # Notas referenciadas, no CABEÇALHO. Numa devolução é o que amarra a nota
     # nova à original -- sem isso a SEFAZ não sabe o que está sendo devolvido.

@@ -79,10 +79,32 @@
       autorização dada para o <em>Seller</em> Central em vez do <em>Vendor</em>. O conserto é no painel
       da Amazon.</p></div>
 
+      <h2 id="unidades" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">As unidades da Amazon</h2>
+      <p style="margin:0 0 12px;">A Amazon não compra como uma pessoa só. <strong style="color:#251d2b;">Cada centro de distribuição é um
+      estabelecimento fiscal próprio</strong> — no Brasil, mesma raiz de CNPJ e filial diferente —
+      e o pedido diz qual deles está comprando.</p>
+      <p style="margin:0 0 12px;">O que ela <em>não</em> manda é quem é esse estabelecimento. O pedido traz apenas a sigla:</p>
+      <pre style="background:#2b2233;color:#efe6f5;border-radius:12px;padding:16px 20px;overflow-x:auto;margin:0 0 16px;font-size:13px;line-height:1.6;">buyingParty  = {"partyId": "GRU8"}
+shipToParty  = {"partyId": "GRU8"}</pre>
+      <p style="margin:0 0 12px;">Sem CNPJ, sem endereço, sem razão social. Daí o mapa em
+      <span class="menupath" style="display:inline-block;background:#f1eaf6;border:1px solid #e5dbee;border-radius:6px;padding:1px 8px;font-size:13.5px;color:#251d2b;white-space:nowrap;">Amazon Vendor<i style="font-style:normal;color:#6e2f91;margin:0 4px;font-weight:700;">‣</i>Configuração<i style="font-style:normal;color:#6e2f91;margin:0 4px;font-weight:700;">‣</i>Unidades da Amazon</span>: uma
+      linha por sigla, dizendo quem ela é no seu cadastro — e, se a entrega for em outro endereço,
+      qual é.</p>
+      <div class="callout warn" style="border:1px solid #e5dbee;border-left:4px solid #6e2f91;border-radius:10px;padding:14px 18px;margin:0 0 16px;border-left-color:#b3831a;background:#faf3e3;border-color:#eddfba;"><span class="title" style="font-weight:700;font-size:12px;letter-spacing:.08em;text-transform:uppercase;display:block;margin:0 0 4px;color:#7a5a12;">Atenção</span>
+      <p style="margin:0 0 12px;">Unidade não mapeada <strong style="color:#251d2b;">não vira cotação</strong>. O pedido é importado e fica marcado,
+      mas a cotação é recusada com o nome da sigla. Cair num cliente padrão seria pior: a nota sairia
+      contra o CNPJ de outra filial, em silêncio e com número plausível.</p></div>
+      <p style="margin:0 0 12px;">Para começar, o botão <span class="field" style="font-weight:600;color:#251d2b;">Mapear unidades pelos pedidos</span>, na ficha da
+      conta, cria uma linha para cada sigla já vista e sugere um cliente quando um contato casa sem
+      ambiguidade. A sugestão é isso mesmo — sugestão, para você conferir. Casar pelo nome funcionaria
+      numa casa que batize os contatos de "Amazon GRU8" e em nenhuma outra, e convenção de cadastro de
+      uma editora não pode virar regra de um módulo.</p>
+
       <h2 id="importar" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">Importar os pedidos</h2>
       <p style="margin:0 0 12px;">Há dois caminhos, e eles fazem a mesma coisa:</p>
       <ul style="margin:0 0 14px 22px;padding:0;">
-        <li style="margin:0 0 7px;"><strong style="color:#251d2b;">À mão</strong>, em <span class="menupath" style="display:inline-block;background:#f1eaf6;border:1px solid #e5dbee;border-radius:6px;padding:1px 8px;font-size:13.5px;color:#251d2b;white-space:nowrap;">Amazon Vendor<i style="font-style:normal;color:#6e2f91;margin:0 4px;font-weight:700;">‣</i>Importar da Amazon</span>:
+        <li style="margin:0 0 7px;"><strong style="color:#251d2b;">À mão</strong>, em pelo botão <span class="field" style="font-weight:600;color:#251d2b;">Importar da Amazon</span> no
+        alto da lista em <span class="menupath" style="display:inline-block;background:#f1eaf6;border:1px solid #e5dbee;border-radius:6px;padding:1px 8px;font-size:13.5px;color:#251d2b;white-space:nowrap;">Amazon Vendor<i style="font-style:normal;color:#6e2f91;margin:0 4px;font-weight:700;">‣</i>Pedidos</span>:
         escolha o intervalo e clique em <span class="field" style="font-weight:600;color:#251d2b;">Ler da Amazon</span>.</li>
         <li style="margin:0 0 7px;"><strong style="color:#251d2b;">Sozinho</strong>, pela rotina diária das 07:00 UTC — quatro da manhã em Brasília,
         quando a Amazon já fechou o dia e ninguém está usando o sistema. Liga e desliga em Definições.</li>
@@ -161,6 +183,58 @@
       assim mesmo</strong> e fica marcado. O filtro <span class="field" style="font-weight:600;color:#251d2b;">Estado desconhecido na Amazon</span>
       lista esses casos. Recusar a gravação por causa de um nome novo perderia a venda para preservar
       a lista.</p></div>
+
+      <h2 id="titulos" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">O relatório por título</h2>
+      <p style="margin:0 0 12px;">A agenda responde por pedido; esta tela responde por <strong style="color:#251d2b;">livro</strong>. Em
+      <span class="menupath" style="display:inline-block;background:#f1eaf6;border:1px solid #e5dbee;border-radius:6px;padding:1px 8px;font-size:13.5px;color:#251d2b;white-space:nowrap;">Amazon Vendor<i style="font-style:normal;color:#6e2f91;margin:0 4px;font-weight:700;">‣</i>Relatório</span>, uma linha por título por
+      pedido, em pivô.</p>
+      <p style="margin:0 0 12px;">A tela abre pela pergunta que se faz primeiro — <strong style="color:#251d2b;">ainda dá para atender?</strong> —
+      na coluna <span class="field" style="font-weight:600;color:#251d2b;">Situação no Odoo</span>:</p>
+      <div class="tablewrap" style="overflow-x:auto;margin:0 0 16px;"><table style="border-collapse:collapse;width:100%;margin:0 0 16px;font-size:14px;">
+        <thead><tr><th style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;background:#f1eaf6;font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:13.5px;">Situação no Odoo</th><th style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;background:#f1eaf6;font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:13.5px;">O que significa</th></tr></thead>
+        <tbody>
+          <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;"><strong style="color:#251d2b;">Cotado aqui</strong></td><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">O título virou linha de uma cotação <em>por este módulo</em>.</td></tr>
+          <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;"><strong style="color:#251d2b;">Ainda dá</strong></td><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Não foi atendido, mas o pedido continua aberto na Amazon: cadastrar o título ou gerar a cotação ainda resolve.</td></tr>
+          <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;"><strong style="color:#251d2b;">Janela fechada</strong></td><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Não foi atendido e a Amazon já fechou o pedido. Daqui não sai mais nada.</td></tr>
+        </tbody>
+      </table></div>
+      <div class="callout warn" style="border:1px solid #e5dbee;border-left:4px solid #6e2f91;border-radius:10px;padding:14px 18px;margin:0 0 16px;border-left-color:#b3831a;background:#faf3e3;border-color:#eddfba;"><span class="title" style="font-weight:700;font-size:12px;letter-spacing:.08em;text-transform:uppercase;display:block;margin:0 0 4px;color:#7a5a12;">Atenção</span>
+      <p style="margin:0 0 12px;"><strong style="color:#251d2b;">O nome da coluna é literal: situação <em>no Odoo</em>, não no mundo.</strong>
+      "Cotado aqui" conta só o que passou por este módulo. Como um ano de histórico foi importado
+      depois do fato, quase nada antigo aparece cotado — aqueles livros saíram pelo portal, antes
+      deste módulo existir. Para esse período, "janela fechada" é o normal, não perda; use o filtro
+      de data para olhar só o que chegou desde que o módulo entrou em operação.</p>
+      <p style="margin:0 0 12px;"><strong style="color:#251d2b;">"Janela fechada" não quer dizer que o livro nunca foi entregue.</strong> Um pedido
+      atendido por fora — pelo portal, por planilha, do jeito que a casa fazia antes deste módulo —
+      também chega aqui fechado, e a Vendor Orders API não distingue um caso do outro. O que a coluna
+      afirma é apenas isto: <em>por dentro do Odoo, aquele título naquele pedido não vai mais a lugar
+      nenhum</em>. Para o histórico importado, espere números altos aqui — é passado, não perda.</p></div>
+      <p style="margin:0 0 12px;">Expandindo por <span class="field" style="font-weight:600;color:#251d2b;">Atendimento</span>, aparece <em>onde</em> parou — e essa é
+      a segunda pergunta, a da causa. Três paradas, e só a última é sucesso:</p>
+      <div class="tablewrap" style="overflow-x:auto;margin:0 0 16px;"><table style="border-collapse:collapse;width:100%;margin:0 0 16px;font-size:14px;">
+        <thead><tr><th style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;background:#f1eaf6;font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:13.5px;">Situação</th><th style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;background:#f1eaf6;font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:13.5px;">O que significa</th><th style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;background:#f1eaf6;font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:13.5px;">De quem é o problema</th></tr></thead>
+        <tbody>
+          <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;"><strong style="color:#251d2b;">Sem produto no cadastro</strong></td><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">O ISBN não existe em nenhum produto; a linha ficou de fora da cotação.</td><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">De quem cuida do cadastro.</td></tr>
+          <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;"><strong style="color:#251d2b;">Ainda sem cotação</strong></td><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">O título casou, mas ninguém transformou o pedido em cotação.</td><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">De quem opera.</td></tr>
+          <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;"><strong style="color:#251d2b;">Em cotação</strong></td><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Virou linha de um pedido de venda.</td><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">—</td></tr>
+        </tbody>
+      </table></div>
+      <p style="margin:0 0 12px;">Agrupe por <span class="field" style="font-weight:600;color:#251d2b;">Título</span> nas linhas e leia as colunas, com exemplares e
+      valor ao lado. Três filtros prontos: <span class="field" style="font-weight:600;color:#251d2b;">Janela fechada</span> (o que não foi e
+      não será mais), <span class="field" style="font-weight:600;color:#251d2b;">Ainda dá para atender</span> (a fila de trabalho de hoje) e
+      <span class="field" style="font-weight:600;color:#251d2b;">Não atendidos</span>, que junta os dois.</p>
+
+      <h3 id="tempo-de-ciclo" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:19px;line-height:1.25;margin:28px 0 10px;color:#251d2b;">Quanto tempo leva</h3>
+      <p style="margin:0 0 12px;">A medida <span class="field" style="font-weight:600;color:#251d2b;">Dias até fechar</span> conta do pedido até a Amazon encerrar o
+      documento. É o mais perto de um tempo de entrega que a Vendor Orders API oferece — ela não nos
+      diz quando recebeu, diz quando fechou.</p>
+      <div class="callout warn" style="border:1px solid #e5dbee;border-left:4px solid #6e2f91;border-radius:10px;padding:14px 18px;margin:0 0 16px;border-left-color:#b3831a;background:#faf3e3;border-color:#eddfba;"><span class="title" style="font-weight:700;font-size:12px;letter-spacing:.08em;text-transform:uppercase;display:block;margin:0 0 4px;color:#7a5a12;">Atenção</span>
+      <p style="margin:0 0 12px;">Ligue o filtro <span class="field" style="font-weight:600;color:#251d2b;">Ciclo concluído</span> antes de ler essa média. Pedido
+      ainda aberto vale zero e só puxaria o número para baixo. E lembre que a Amazon também fecha o
+      pedido que <em>cancelou</em>: um ciclo de poucas horas é quase certamente cancelamento, não
+      velocidade.</p></div>
+      <p style="margin:0 0 12px;">Ao lado dela, <span class="field" style="font-weight:600;color:#251d2b;">Dias concedidos</span> mostra o prazo que a Amazon deu —
+      comparar os dois é comparar o combinado com o acontecido.</p>
 
       <h2 id="limites" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">Limites conhecidos</h2>
       <ul style="margin:0 0 14px 22px;padding:0;">

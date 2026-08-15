@@ -33,8 +33,12 @@ class ResConfigSettings(models.TransientModel):
     amazon_region = fields.Selection(
         selection=[(code, code) for code in sorted(REGION_HOSTS)],
         string='Amazon Region', default='BR')
-    amazon_partner_id = fields.Many2one(
-        'res.partner', string='Amazon as Customer')
+    # O cliente NÃO se configura mais aqui. Cada galpão da Amazon é um
+    # estabelecimento fiscal próprio, e quem diz quem é quem é o mapa de
+    # unidades. Um campo único nesta tela dava a entender o contrário -- e a
+    # impressão custava caro, porque a nota sai contra o CNPJ que estiver aqui.
+    amazon_unit_count = fields.Integer(
+        string='Mapped Units', readonly=True)
     amazon_import_days_back = fields.Integer(
         string='Re-read Window (days)', default=7)
 
@@ -72,10 +76,11 @@ class ResConfigSettings(models.TransientModel):
             'amazon_account_id': account.id or False,
             'amazon_account_name': account.name or '',
             'amazon_region': account.region or 'BR',
-            'amazon_partner_id': account.partner_id.id or False,
             'amazon_import_days_back': account.import_days_back or 7,
             'amazon_last_import_date': account.last_import_date or False,
             'amazon_credentials_set': bool(account and account.refresh_token),
+            'amazon_unit_count': self.env['liber.amazon.unit'].search_count(
+                [('account_id', '=', account.id)]) if account else 0,
             'amazon_cron_active': bool(cron and cron.active),
             # Deliberadamente ausentes: 'amazon_client_id',
             # 'amazon_client_secret', 'amazon_refresh_token'. O que não é
@@ -94,7 +99,6 @@ class ResConfigSettings(models.TransientModel):
         values = {
             'region': self.amazon_region or 'BR',
             'import_days_back': self.amazon_import_days_back or 7,
-            'partner_id': self.amazon_partner_id.id or False,
         }
 
         # Campo de segredo em branco = não mexer. Sem esta regra, abrir
@@ -120,6 +124,15 @@ class ResConfigSettings(models.TransientModel):
                 'company_id': self.env.company.id,
             })
             self.env['liber.amazon.account'].sudo().create(values)
+
+    def action_open_amazon_units(self):
+        """A tela onde o cliente de verdade se define, uma por galpão."""
+        acao = self.env.ref('liber_amazon_vendor.action_liber_amazon_unit').read()[0]
+        conta = self._amazon_account()
+        if conta:
+            acao['domain'] = [('account_id', '=', conta.id)]
+            acao['context'] = {'default_account_id': conta.id}
+        return acao
 
     def action_open_amazon_accounts(self):
         """Para quem tem mais de uma empresa: a lista inteira, não só esta."""

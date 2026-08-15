@@ -66,6 +66,10 @@ def parse(xml_items, own_roots, root_label):
     notas, itens, unids = [], [], []
     uix = {}
     stats = {'recebidas': 0, 'invalidas': 0, 'eventos': 0}
+    # Which third-party roots the notes were issued by. When the panel comes
+    # back empty this is what tells apart "we really only received notes" from
+    # "our own CNPJ is not registered on the company" — see stats['emissores'].
+    emissores = Counter()
     for raw, ref in xml_items:
         try:
             root = ET.fromstring(raw)
@@ -88,6 +92,7 @@ def parse(xml_items, own_roots, root_label):
         ec = _t(emit, 'n:CNPJ')
         if ec[:8] not in own_roots:
             stats['recebidas'] += 1
+            emissores[(ec[:8], _t(emit, 'n:xNome'))] += 1
             continue
         lbl = root_label.get(ec[:8]) or ec[:8]
         if lbl not in uix:
@@ -111,6 +116,8 @@ def parse(xml_items, own_roots, root_label):
                 'cProd': _t(pr, 'n:cProd'), 'xProd': _t(pr, 'n:xProd'), 'ncm': _t(pr, 'n:NCM'), 'cfop': cf, 'categoria': cat,
                 'is_receita': rec, 'qCom': float(_t(pr, 'n:qCom') or 0), 'vUnCom': float(_t(pr, 'n:vUnCom') or 0),
                 'vProd': float(_t(pr, 'n:vProd') or 0), 'vDesc': float(_t(pr, 'n:vDesc') or 0)})
+    stats['emissores'] = [
+        {'raiz': root, 'nome': nome, 'n': n} for (root, nome), n in emissores.most_common(8)]
     return notas, itens, unids, stats
 
 
@@ -177,7 +184,8 @@ def build_payload(notas, itens, unids, own_roots, stats):
         nt = c2n.get(ch)
         NOTES[ix] = [ch, nt['nNF'], nt['data'], nt['path']] if nt else [ch, '', '', '']
     meta = {'ref': str(REF), 'periodo': [datas[0], datas[-1]], 'n_notas': len(noteIx), 'n_itens': len(ITENS), 'own': sorted(own_roots)}
-    meta.update(stats)
+    # 'emissores' is diagnostics for the empty case only - keep it out of the page payload
+    meta.update({k: v for k, v in stats.items() if k != 'emissores'})
     return {'meta': meta, 'months': MONTHS, 'cats': CATS, 'canais': CANAIS, 'cfops': CFOPS,
         'cli': cliL, 'prod': prodL, 'itens': ITENS, 'notes': NOTES, 'precons': PRECONS, 'precli': PRECLI,
         'unids': unids}
@@ -244,9 +252,16 @@ def build_consig_hist(notas, itens):
     return {'meta': {'periodo': [months[0], months[-1]], 'n_clientes': len(clients), 'rem': round(TR, 2), 'ace': round(TA, 2), 'ret': round(TD, 2), 'conv': round(100 * TA / TR, 1) if TR else 0}, 'months': months, 'titles': titles, 'clients': clients}
 
 
-def build(xml_items, own_roots, root_label):
-    """Full payload from XML bytes. Returns None when nothing parseable."""
+def build(xml_items, own_roots, root_label, stats_out=None):
+    """Full payload from XML bytes. Returns None when nothing parseable.
+
+    ``stats_out``: optional dict filled with the parse counters even when the
+    payload comes back None - that is the only case where the caller has
+    nothing else to explain the empty panel with.
+    """
     notas, itens, unids, stats = parse(xml_items, own_roots, root_label)
+    if stats_out is not None:
+        stats_out.update(stats)
     payload = build_payload(notas, itens, unids, own_roots, stats)
     if payload is not None:
         payload['consigHist'] = build_consig_hist(notas, itens)

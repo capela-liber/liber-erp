@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     'name': 'Amazon Vendor Central',
-    'version': '19.0.1.0.0',
+    'version': '19.0.1.3.0',
     'summary': 'Read purchase orders from Amazon Vendor Central and turn '
                'them into quotations — read-only towards Amazon',
     'description': """
@@ -40,10 +40,16 @@ so `requests` is the whole client.
         'security/ir.model.access.csv',
         'data/amazon_cron.xml',
         'views/amazon_account_views.xml',
+        'views/amazon_unit_views.xml',
+        # antes das views: a lista de pedidos referencia a ação
+        # do assistente no botão de cabeçalho.
+        'wizard/amazon_import_views.xml',
         'views/amazon_order_views.xml',
         'views/amazon_schedule_views.xml',
-        'wizard/amazon_import_views.xml',
+        'views/amazon_title_views.xml',
         'views/res_config_settings_views.xml',
+        # por último: a ponte precisa dos grupos deste módulo já carregados
+        'data/liber_roles_bridge.xml',
         'views/amazon_menus.xml',
     ],
     'installable': True,

@@ -1,0 +1,93 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* liber_partner_commercial
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0-20260630\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-08-08 22:55+0000\n"
+"PO-Revision-Date: 2026-08-08 22:55+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: liber_partner_commercial
+#: model:ir.model,name:liber_partner_commercial.model_res_partner
+msgid "Contact"
+msgstr "Contato"
+
+#. module: liber_partner_commercial
+#: model:ir.model,website_form_label:liber_partner_commercial.model_res_partner
+msgid "Create a Customer"
+msgstr "Criar um cliente"
+
+#. module: liber_partner_commercial
+#: model:ir.model.fields,field_description:liber_partner_commercial.field_account_move__display_name
+#: model:ir.model.fields,field_description:liber_partner_commercial.field_res_partner__display_name
+#: model:ir.model.fields,field_description:liber_partner_commercial.field_sale_order__display_name
+msgid "Display Name"
+msgstr "Nome exibido"
+
+#. module: liber_partner_commercial
+#: model:ir.model.fields,field_description:liber_partner_commercial.field_account_move__id
+#: model:ir.model.fields,field_description:liber_partner_commercial.field_res_partner__id
+#: model:ir.model.fields,field_description:liber_partner_commercial.field_sale_order__id
+msgid "ID"
+msgstr ""
+
+#. module: liber_partner_commercial
+#: model:ir.model,name:liber_partner_commercial.model_account_move
+msgid "Journal Entry"
+msgstr "Lançamento de diário"
+
+#. module: liber_partner_commercial
+#: model:ir.model.fields,field_description:liber_partner_commercial.field_account_bank_statement_line__team_id
+#: model:ir.model.fields,field_description:liber_partner_commercial.field_account_move__team_id
+#: model:ir.model.fields,field_description:liber_partner_commercial.field_res_partner__team_id
+#: model:ir.model.fields,field_description:liber_partner_commercial.field_res_users__team_id
+#: model:ir.model.fields,field_description:liber_partner_commercial.field_sale_order__team_id
+#: model_terms:ir.ui.view,arch_db:liber_partner_commercial.account_invoice_groupby_canal
+#: model_terms:ir.ui.view,arch_db:liber_partner_commercial.account_invoice_report_search_canal
+#: model_terms:ir.ui.view,arch_db:liber_partner_commercial.view_order_product_search_canal
+#: model_terms:ir.ui.view,arch_db:liber_partner_commercial.view_partner_filter_commercial
+#: model_terms:ir.ui.view,arch_db:liber_partner_commercial.view_sales_order_filter_canal
+msgid "Sales Channel"
+msgstr "Canal de Vendas"
+
+#. module: liber_partner_commercial
+#: model:ir.model,name:liber_partner_commercial.model_sale_order
+msgid "Sales Order"
+msgstr "Pedido de venda"
+
+#. module: liber_partner_commercial
+#: model:ir.model.fields,help:liber_partner_commercial.field_account_bank_statement_line__team_id
+#: model:ir.model.fields,help:liber_partner_commercial.field_account_move__team_id
+msgid ""
+"Sales team of this invoice. Sales from the company's special sales teams "
+"(with a qualifying discount) have their royalties computed on the net "
+"invoiced amount."
+msgstr ""
+"Canal de vendas desta fatura. Vendas dos canais especiais da empresa (com "
+"desconto qualificado) têm seus royalties calculados sobre o valor líquido "
+"faturado."
+
+#. module: liber_partner_commercial
+#: model:ir.model.fields,help:liber_partner_commercial.field_res_partner__team_id
+#: model:ir.model.fields,help:liber_partner_commercial.field_res_users__team_id
+msgid ""
+"The commercial channel this customer is served through. It is the default "
+"for their documents. In consignment the agreement wins: this field is where "
+"the agreement is born, not the other way around."
+msgstr ""
+"O canal comercial por onde este cliente é atendido. Serve de padrão para os "
+"documentos dele. Em consignação, o contrato manda: este campo é a origem de "
+"onde o contrato nasce, não o contrário."
+
+#. module: liber_partner_commercial
+#: model_terms:ir.ui.view,arch_db:liber_partner_commercial.view_partner_form_commercial
+msgid "e.g. Small bookshops"
+msgstr "ex.: Livrarias pequenas"

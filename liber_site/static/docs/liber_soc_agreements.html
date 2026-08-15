@@ -1,6 +1,22 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
+<script>
+/* Servido por /liber_site/static/docs/, este arquivo vem com uma semana de
+   cache e o docs.js sem versão -- e o índice monta a lista a partir dele. Foi
+   assim que a emissão de NF-e e o manual da Amazon ficaram invisíveis: o
+   catálogo em cache era anterior aos dois. A rota /liber/docs/ serve o mesmo
+   arquivo sem cache e com ?v=<mtime> nos assets. Quem chegar pelo caminho
+   antigo (favorito, link velho, resultado de busca) vai para lá antes de a
+   página montar qualquer coisa. */
+(function () {
+  var antigo = "/liber_site/static/docs/";
+  if (location.pathname.indexOf(antigo) === 0) {
+    location.replace("/liber/docs/" + location.pathname.slice(antigo.length) +
+                     location.search + location.hash);
+  }
+})();
+</script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Acordos de consignação — Manuais do Liber</title>
@@ -29,7 +45,7 @@
       <h2 id="visao-geral">Visão geral</h2>
       <p>A consignação editorial funciona assim: a editora deixa livros na livraria; eles continuam sendo da editora até que o cliente informe o que vendeu — e só então há uma venda. Para o sistema acompanhar isso, cada livraria precisa de duas coisas:</p>
       <ul>
-        <li><strong>O contrato</strong> — o registro comercial da relação: quem é o cliente, quem atende (agente comercial e equipe de vendas), qual a condição comercial (lista de preços e desconto), com que frequência se faz o acerto. Cada contrato recebe um número na série <strong>AC/</strong> (ex.: AC/2026/0001).</li>
+        <li><strong>O contrato</strong> — o registro comercial da relação: quem é o cliente, quem atende (agente comercial e canal de vendas), qual a condição comercial (lista de preços e desconto), com que frequência se faz o acerto. Cada contrato recebe um número na série <strong>AC/</strong> (ex.: AC/2026/0001).</li>
         <li><strong>A prateleira</strong> — um local de estoque interno com o nome do cliente, criado automaticamente quando o contrato é ativado. Tudo que a editora remete em consignação entra nessa prateleira; tudo que o cliente devolve ou vende sai dela. O saldo da prateleira é o <em>mapa</em> da consignação daquele cliente.</li>
       </ul>
       <div class="callout note"><span class="title">Nota</span><p>As prateleiras ficam agrupadas sob uma localização-raiz chamada <strong>CO</strong>, que vive deliberadamente <em>fora do armazém</em>. Por isso o estoque consignado <strong>não infla o "Em mãos"</strong> do Estoque: o que está na livraria não está disponível para vender nem expedir, e os números nativos do Odoo continuam dizendo a verdade sobre o que está de fato no seu armazém.</p></div>
@@ -56,7 +72,7 @@
       <ol class="steps">
         <li>Acesse <span class="menupath">Consignação<i>‣</i>Contratos<i>‣</i>Novo</span>.</li>
         <li>Em <span class="field">Cliente</span>, escolha a livraria. Só aparecem contatos marcados como <em>empresa</em> — consignação é um contrato com a livraria, não com uma pessoa.</li>
-        <li>Confira <span class="field">Agente Comercial</span> (preenchido com você) e <span class="field">Equipe de Vendas</span>. A equipe é importante: é por ela que as <a href="liber_soc_settlement.html#campanhas">campanhas</a> encontram este cliente.</li>
+        <li>Confira <span class="field">Agente Comercial</span> (preenchido com você) e <span class="field">Canal de Vendas</span>. O canal vem da ficha do cliente e é importante: é por ele que as <a href="liber_soc_settlement.html#campanhas">campanhas</a> encontram este cliente. Ver <a href="#canal">De onde vem o canal</a>.</li>
         <li>Se houver condição comercial combinada, informe a <span class="field">Lista de Preços</span> e o <span class="field">Desconto Padrão %</span>. As linhas do acerto herdam esse desconto (e continuam editáveis uma a uma).</li>
         <li>Em <span class="field">Destinatários dos Relatórios</span>, adicione os contatos da livraria que devem receber os relatórios da consignação por e-mail (mapa, pedidos de devolução).</li>
         <li>Escolha a <span class="field">Frequência do Acerto</span> — <em>Semanal</em>, <em>Quinzenal</em> ou <em>Mensal</em> — e a <span class="field">Política de Reposição</span> (<em>Manual</em>, <em>Mín / Máx</em> ou <em>Giro</em>).</li>
@@ -81,6 +97,19 @@
       <p>No topo do formulário do contrato, o botão <span class="field">Na prateleira</span> mostra quantas unidades estão agora no cliente. Clique nele para abrir a lista do estoque na prateleira, título a título. O campo <span class="field">Produtos na prateleira</span> conta quantos títulos diferentes estão lá.</p>
       <p>Também dá para chegar ao contrato pelo caminho inverso: na ficha do cliente (aplicativo Contatos), o botão inteligente <span class="field">Consignação</span> lista os contratos daquela livraria.</p>
       <figure class="shot"><img src="img/doc-liber_soc_agreements-shelf.png" alt="Lista do estoque na prateleira de um cliente, agrupada por produto, aberta pelo botão 'Na prateleira'"><figcaption>O saldo da prateleira: cada linha é um título que está fisicamente na livraria, mas ainda pertence à editora.</figcaption></figure>
+
+      <h2 id="canal">De onde vem o canal de vendas</h2>
+      <p>O campo <span class="field">Canal de Vendas</span> do contrato nasce preenchido com o canal da ficha do cliente, e daí em diante é do contrato: trocar o cliente traz o canal novo, mas o que você digitar à mão fica. É a mesma herança da lista de preços no pedido de venda.</p>
+      <div class="tablewrap"><table>
+        <thead><tr><th>Situação</th><th>O que acontece com o canal</th></tr></thead>
+        <tbody>
+          <tr><td>Cliente escolhido no contrato novo</td><td>Vem o canal da ficha dele. Se a ficha estiver vazia, sobe pela hierarquia: uma loja sem canal herda o da matriz.</td></tr>
+          <tr><td>Você troca o canal à mão</td><td>Vale o que você escolheu, e não se reescreve mais.</td></tr>
+          <tr><td>A ficha do cliente é reclassificada depois</td><td>O contrato <strong>não</strong> muda. Um contrato de 2024 continua no canal em que foi feito — carimbo, não espelho.</td></tr>
+          <tr><td>Operações e acertos deste contrato</td><td>Herdam o canal do contrato, porque na consignação é o contrato que manda.</td></tr>
+        </tbody>
+      </table></div>
+      <div class="callout note"><span class="title">Nota</span><p>O canal na ficha do cliente vem do módulo <a href="liber_partner_commercial.html">Canal de vendas do cliente</a>. Sem ele instalado, a consignação funciona igual — o contrato simplesmente nasce com o canal vazio, para você preencher.</p></div>
 
       <h2 id="ciclo">Suspender, reativar e encerrar</h2>
       <h3>Suspender</h3>

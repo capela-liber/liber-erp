@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_account_move_contract_user,account.move contract user,account.model_account_move,liber_copyright_contracts.group_contract_user,1,0,0,0
+access_account_move_line_contract_user,account.move.line contract user,account.model_account_move_line,liber_copyright_contracts.group_contract_user,1,0,0,0
+access_account_journal_contract_user,account.journal contract user,account.model_account_journal,liber_copyright_contracts.group_contract_user,1,0,0,0
+access_account_payment_term_contract_user,account.payment.term contract user,account.model_account_payment_term,liber_copyright_contracts.group_contract_user,1,0,0,0

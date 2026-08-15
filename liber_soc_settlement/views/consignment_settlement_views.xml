@@ -9,6 +9,7 @@
                 <field name="name"/>
                 <field name="date"/>
                 <field name="partner_id"/>
+                <field name="team_id" optional="show"/>
                 <field name="user_id" widget="many2one_avatar_user" optional="show"/>
                 <field name="amount_total" optional="show"/>
                 <field name="currency_id" column_invisible="1"/>
@@ -39,6 +40,7 @@
                 <field name="sale_order_id"/>
                 <field name="replenishment_order_id"/>
                 <field name="return_move_id"/>
+                <field name="company_id"/>
                 <templates>
                     <t t-name="card">
                         <div class="d-flex justify-content-between align-items-center mb-1">
@@ -49,6 +51,12 @@
                         <div><field name="amount_total" widget="monetary"/></div>
                         <div class="d-flex justify-content-between align-items-center mt-2">
                             <div class="text-muted">
+                                <!-- With two companies on, the card alone does
+                                     not say whose it is. Rides the icon row so
+                                     it costs no extra line. -->
+                                <span class="me-2 small" groups="base.group_multi_company">
+                                    <field name="company_id"/>
+                                </span>
                                 <i t-if="record.sale_order_id.raw_value"
                                    class="fa fa-usd me-2" title="Sale"/>
                                 <i t-if="record.replenishment_order_id.raw_value"
@@ -80,11 +88,14 @@
                             string="Print Map" class="btn-secondary"/>
                     <button name="action_send_map" type="object"
                             string="Send Map" class="btn-secondary"/>
-                    <!-- Cancel a DRAFT too: an operation opened by mistake, or
-                         postponed by the customer, had no way out. It just sat
-                         there forever, blocking the next one. -->
+                    <!-- Draft only. 'confirmed' is reached exclusively inside
+                         action_run, which validates the picking on the spot: by
+                         then the shelf was debited and the sale exists, and no
+                         cancel can undo that. Cancelling one used to cascade
+                         over the S/C/CR and leave the baixa standing - stock out
+                         of the customer's shelf with no sale behind it. -->
                     <button name="action_cancel" type="object" string="Cancel"
-                            invisible="state not in ('draft', 'confirmed')"/>
+                            invisible="state != 'draft'"/>
                     <!-- Back to draft only if it never fanned out. See action_draft:
                          the links to the cancelled S/C/CR survive, so a re-Run
                          would create nothing, silently. -->
@@ -163,7 +174,10 @@
                                     invisible="state != 'draft'"/>
                             <field name="line_ids"
                                    readonly="state != 'draft'">
-                                <list editable="bottom">
+                                <!-- Red = settling a book the shelf does not
+                                     have: the run will offer to drop it. -->
+                                <list editable="bottom"
+                                      decoration-danger="qty_reported > qty_on_shelf">
                                     <!-- Blue = the campaign put its hand here:
                                          a brand new title (not on the map) or a
                                          line whose replenishment it corrected. -->
@@ -242,6 +256,7 @@
                         help="Operations with a customer message you haven't read yet."/>
                 <group>
                     <filter string="Customer" name="g_partner" context="{'group_by': 'partner_id'}"/>
+                    <filter string="Sales Channel" name="g_team" context="{'group_by': 'team_id'}"/>
                     <filter string="Status" name="g_state" context="{'group_by': 'state'}"/>
                 </group>
             </search>

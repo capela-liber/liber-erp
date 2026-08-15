@@ -35,8 +35,8 @@
                     </setting>
                 </block>
                 <block title="Special Sales" name="copyright_special_sales_block">
-                    <setting string="Special sales teams"
-                             help="Sales from these teams always compute royalties on the net invoiced amount, never on the cover price, whatever the royalty line says.">
+                    <setting string="Special sales channels"
+                             help="Sales from these channels always compute royalties on the net invoiced amount, never on the cover price, whatever the royalty line says.">
                         <field name="contract_special_sales_team_ids" widget="many2many_tags"/>
                     </setting>
                     <setting string="Minimum discount"

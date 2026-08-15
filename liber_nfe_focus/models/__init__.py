@@ -10,3 +10,4 @@ from . import uom_uom
 from . import account_fiscal_position
 from . import account_tax
 from . import account_move
+from . import account_move_send

@@ -21,7 +21,7 @@
              titles, Actions, done. The pilot mechanism for a sweep that
              otherwise covers the whole catalogue. -->
         <record id="action_metabrasil_refresh_prices" model="ir.actions.server">
-            <field name="name">Update Metabrasil print prices</field>
+            <field name="name">Dropship Price</field>
             <field name="model_id" ref="product.model_product_template"/>
             <field name="binding_model_id" ref="product.model_product_template"/>
             <field name="binding_view_types">list,form</field>

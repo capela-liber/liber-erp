@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!--
+        A GRADE DAS EQUIPES DE VENDA.
+
+        A ação `Vendas > Configuração > Equipes de vendas` abre em kanban, e o
+        kanban é um cartão por equipe: serve para acompanhar UMA equipe, não
+        para organizar dezenas. Na fusão de 2026 eram 39 canais ativos para 21
+        nomes — um por editora, herdados do Odoo 15 —, a maioria sem líder, e o
+        trabalho era justamente olhar todos de uma vez, renomear e fundir. Foi
+        essa tela que sustentou a unificação de 08/08/2026 (um registro por
+        nome, sem empresa; ver o manifesto).
+
+        A lista do `sales_team` já existe e já vem com `multi_edit`: o que
+        faltava era ela aparecer na ação, e ser digitável.
+    -->
+    <record id="crm_team_view_tree_commercial" model="ir.ui.view">
+        <field name="name">crm.team.list.commercial</field>
+        <field name="model">crm.team</field>
+        <field name="inherit_id" ref="sales_team.crm_team_view_tree"/>
+        <field name="arch" type="xml">
+
+            <!--
+                `editable` é o que transforma a lista em grade: sem ele, clicar
+                numa linha abre o formulário e o trabalho vira setenta idas e
+                vindas. Com ele, a edição em bloco do `multi_edit` também passa
+                a valer para uma linha só.
+            -->
+            <list position="attributes">
+                <attribute name="editable">bottom</attribute>
+            </list>
+
+            <!--
+                O `sales_team` deixa o nome somente-leitura na lista. Faz
+                sentido no uso corrente (com registros selecionados, digitar um
+                nome renomearia todos), mas aqui renomear é metade da tarefa,
+                e o Odoo ainda pede confirmação antes de aplicar em bloco.
+            -->
+            <field name="name" position="attributes">
+                <attribute name="readonly"/>
+            </field>
+
+            <!--
+                `user_id` (líder) já está na lista herdada. Falta quem de fato
+                vende: `member_ids` é a lista de vendedores da equipe, e é o
+                campo que se quer preencher em bloco ao montar times novos.
+            -->
+            <field name="company_id" position="after">
+                <field name="member_ids" widget="many2many_tags"
+                       options="{'no_create': True}" optional="show"/>
+            </field>
+
+        </field>
+    </record>
+
+    <!--
+        A coluna Empresa vem da lista do `sales_team` com
+        `groups="base.group_multi_company"`, e continua assim de propósito: quem
+        só enxerga uma editora não tem o que decidir ali. No merge_02 o admin
+        tem as seis e vê a coluna — e o que ele decide, desde a unificação, é
+        deixá-la VAZIA. A coluna fica porque é ela que mostra quais registros
+        ainda estão presos a uma editora.
+
+        A lista entra na frente do kanban porque a ação existe, hoje, para
+        arrumar as equipes. Para devolver o kanban como tela de entrada, basta
+        inverter os dois primeiros nomes aqui.
+    -->
+    <record id="sales_team.crm_team_action_sales" model="ir.actions.act_window">
+        <field name="view_mode">list,kanban,form</field>
+    </record>
+
+</odoo>

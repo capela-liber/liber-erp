@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Análise por título.
+
+         Duas perguntas que o relatório de pedidos não responde, porque ambas
+         são por LIVRO e livro mora na linha:
+
+           quais títulos não foram atendidos, e quanto isso pesa
+           quanto tempo leva o ciclo, do pedido ao fechamento na Amazon -->
+
+    <record id="view_liber_amazon_title_pivot" model="ir.ui.view">
+        <field name="name">liber.amazon.order.line.pivot</field>
+        <field name="model">liber.amazon.order.line</field>
+        <field name="arch" type="xml">
+            <pivot string="Titles">
+                <!-- Rótulo curto na linha, não o produto: o pivô não tem
+                     largura de coluna, e o cabeçalho de linha fica tão largo
+                     quanto o maior título — um livro de nome comprido empurra
+                     a tabela inteira para fora da tela. Agrupar por "Título"
+                     continua disponível no menu, para quando o nome inteiro
+                     importar mais que a largura. -->
+                <field name="short_label" type="row"/>
+                <!-- A coluna de abertura é o desfecho, não a causa: a
+                     primeira pergunta é "ainda dá para atender?". A causa
+                     está a um clique, expandindo por Atendimento. -->
+                <field name="outcome" type="col"/>
+                <field name="quantity" type="measure"/>
+                <field name="subtotal" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="view_liber_amazon_title_graph" model="ir.ui.view">
+        <field name="name">liber.amazon.order.line.graph</field>
+        <field name="model">liber.amazon.order.line</field>
+        <field name="arch" type="xml">
+            <graph string="Titles" type="bar" sample="1">
+                <field name="outcome"/>
+                <field name="quantity" type="measure"/>
+            </graph>
+        </field>
+    </record>
+
+    <record id="view_liber_amazon_title_list" model="ir.ui.view">
+        <field name="name">liber.amazon.order.line.list</field>
+        <field name="model">liber.amazon.order.line</field>
+        <field name="arch" type="xml">
+            <!-- A cor forte da linha fica só para "janela fechada", que é o
+                 que se procura ao correr o olho; o atendido sai apagado, para
+                 não competir. O resto da paleta vive nos badges. -->
+            <list decoration-danger="outcome == 'missed'"
+                  decoration-muted="outcome == 'served'"
+                  create="false" edit="false">
+                <!-- Largura fixa no que tem tamanho previsível: número,
+                     data, badge. Sem isso o Odoo reparte a tabela em partes
+                     iguais e sobra espaço onde não varia nada, faltando
+                     justamente no ISBN e no título. -->
+                <field name="isbn" width="130px"/>
+                <field name="product_id"/>
+                <field name="quantity" sum="Copies" width="90px"/>
+                <field name="price_unit" width="110px"/>
+                <field name="subtotal" sum="Total" width="120px"/>
+                <!-- Duas paletas de propósito. O desfecho é semáforo:
+                     verde passou, âmbar dá para correr atrás, vermelho
+                     acabou. O atendimento é causa, não urgência — usa azul
+                     para "só falta cotar", que é espera, e âmbar para o que
+                     exige trabalho de cadastro. Repetir a mesma paleta nas
+                     duas colunas faria a segunda parecer eco da primeira. -->
+                <field name="outcome" widget="badge"
+                       decoration-success="outcome == 'served'"
+                       decoration-warning="outcome == 'open'"
+                       decoration-danger="outcome == 'missed'"/>
+                <field name="fulfilment_state" widget="badge"
+                       decoration-success="fulfilment_state == 'quoted'"
+                       decoration-info="fulfilment_state == 'pending'"
+                       decoration-warning="fulfilment_state == 'no_product'"/>
+                <field name="order_id" width="110px"/>
+                <field name="order_date" width="150px"/>
+                <field name="amazon_state" column_invisible="True"/>
+                <field name="amazon_state_label" widget="badge"
+                       decoration-info="amazon_state == 'New'"
+                       decoration-warning="amazon_state == 'Acknowledged'"
+                       decoration-muted="amazon_state == 'Closed'"/>
+                <field name="days_to_close" optional="show" width="100px"/>
+                <field name="lead_time_days" optional="hide" width="100px"/>
+                <field name="ship_to_party" optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_liber_amazon_title_search" model="ir.ui.view">
+        <field name="name">liber.amazon.order.line.search</field>
+        <field name="model">liber.amazon.order.line</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="isbn"/>
+                <field name="product_id"/>
+                <field name="order_id"/>
+
+                <!-- A pergunta que abre a tela: o que não foi atendido e
+                     não será mais. -->
+                <filter name="missed" string="Window Closed"
+                        domain="[('outcome', '=', 'missed')]"/>
+                <filter name="still_possible" string="Still Possible"
+                        domain="[('outcome', '=', 'open')]"/>
+                <filter name="not_served" string="Not Served"
+                        domain="[('outcome', '!=', 'served')]"/>
+                <separator/>
+                <filter name="no_product" string="No Product in Catalogue"
+                        domain="[('fulfilment_state', '=', 'no_product')]"/>
+                <filter name="pending" string="Not Quoted Yet"
+                        domain="[('fulfilment_state', '=', 'pending')]"/>
+                <separator/>
+                <!-- O tempo de ciclo só existe depois que a Amazon fecha o
+                     pedido. Sem este filtro a média vem diluída por todos os
+                     abertos, que valem zero e não deveriam entrar na conta. -->
+                <filter name="closed" string="Closed Cycle (measurable)"
+                        domain="[('amazon_state', '=', 'Closed')]"/>
+                <separator/>
+                <!-- Serve para separar o histórico importado do que chega
+                     agora: antes do módulo, "janela fechada" é normal. -->
+                <filter name="this_year" string="Order Date" date="order_date"/>
+
+                <group>
+                    <!-- Um "Título" só. Oferecer curto e inteiro obrigava a
+                         escolher entre duas coisas com o mesmo nome; o curto
+                         é o que serve numa tabela, e o inteiro está na lista
+                         e no pedido. -->
+                    <filter name="g_short" string="Title"
+                            context="{'group_by': 'short_label'}"/>
+                    <filter name="g_categ" string="Product Category"
+                            context="{'group_by': 'categ_id'}"/>
+                    <filter name="g_isbn" string="ISBN"
+                            context="{'group_by': 'isbn'}"/>
+                    <filter name="g_outcome" string="Status in Odoo"
+                            context="{'group_by': 'outcome'}"/>
+                    <filter name="g_fulfilment" string="Fulfilment"
+                            context="{'group_by': 'fulfilment_state'}"/>
+                    <filter name="g_month" string="Order Month"
+                            context="{'group_by': 'order_date:month'}"/>
+                    <filter name="g_state" string="Amazon State"
+                            context="{'group_by': 'amazon_state'}"/>
+                    <filter name="g_destination" string="Destination"
+                            context="{'group_by': 'ship_to_party'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_liber_amazon_titles" model="ir.actions.act_window">
+        <field name="name">Report</field>
+        <field name="res_model">liber.amazon.order.line</field>
+        <field name="view_mode">pivot,graph,list</field>
+        <field name="search_view_id" ref="view_liber_amazon_title_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">No line imported yet</p>
+            <p>Rows use a short label — ISBN plus the first words of the
+               title — because the pivot has no column width and one long
+               title would stretch the whole table. The full name is on the
+               list and on the order.</p>
+            <p>One row per title per order, grouped by where it stands
+               <strong>inside Odoo</strong>.</p>
+            <p><strong>Read the history with care.</strong> A year of orders
+               was imported after the fact, so almost nothing old shows as
+               quoted here — those books went out through the Vendor Central
+               portal, before this module existed. For that period,
+               <em>Window closed</em> is the normal case, not a loss. Use the
+               date filter to look only at what arrived since the module
+               started running: from there on, the columns mean what they
+               say.</p>
+            <p>For cycle time, turn on <strong>Closed Cycle</strong> and add
+               <em>Days to Close</em> as a measure — orders still open have no
+               cycle to measure and would only dilute the average.</p>
+        </field>
+    </record>
+
+    <record id="action_liber_amazon_titles_pivot" model="ir.actions.act_window.view">
+        <field name="sequence">1</field>
+        <field name="view_mode">pivot</field>
+        <field name="view_id" ref="view_liber_amazon_title_pivot"/>
+        <field name="act_window_id" ref="action_liber_amazon_titles"/>
+    </record>
+
+    <record id="action_liber_amazon_titles_graph" model="ir.actions.act_window.view">
+        <field name="sequence">2</field>
+        <field name="view_mode">graph</field>
+        <field name="view_id" ref="view_liber_amazon_title_graph"/>
+        <field name="act_window_id" ref="action_liber_amazon_titles"/>
+    </record>
+
+    <record id="action_liber_amazon_titles_list" model="ir.actions.act_window.view">
+        <field name="sequence">3</field>
+        <field name="view_mode">list</field>
+        <field name="view_id" ref="view_liber_amazon_title_list"/>
+        <field name="act_window_id" ref="action_liber_amazon_titles"/>
+    </record>
+
+</odoo>

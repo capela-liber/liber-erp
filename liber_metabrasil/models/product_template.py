@@ -301,7 +301,7 @@ class ProductTemplate(models.Model):
             'type': 'ir.actions.client',
             'tag': 'display_notification',
             'params': {'type': level,
-                       'title': _("Metabrasil print prices"),
+                       'title': _("Dropship Price"),
                        'message': message,
                        'sticky': level != 'success'},
         }

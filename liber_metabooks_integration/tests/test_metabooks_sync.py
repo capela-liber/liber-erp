@@ -29,6 +29,8 @@ ONIX_BOOK = {
         {"subjectSchemeIdentifier": "20", "subjectHeadingText": "brasil"},
     ],
     "publisherData": {"name": "Editora Teste", "shortName": "ET", "mvbId": "BR0089701"},
+    # ONIX pesa em gramas: 320 g de livro.
+    "form": {"productForm": "BC", "weight": 320.0, "height": 210.0, "width": 140.0},
 }
 
 # Two catalogue-feed items, as returned when importing a whole publisher (VL).
@@ -84,8 +86,34 @@ class TestMetabooksSync(TransactionCase):
         self.assertEqual(product.metabooks_publisher, "Editora Teste")
         self.assertEqual(product.metabooks_vendor_id, "BR0089701")
         self.assertEqual(product.metabooks_keywords, "literatura, brasil")
+        # O peso do ONIX vem em gramas e o Odoo pesa em quilos: sem esta
+        # conversão o armazém somava zero e a nota fiscal não tinha o que
+        # declarar, mesmo com o catálogo sabendo o peso do livro.
+        self.assertAlmostEqual(product.metabooks_weight, 320.0, places=2)
+        self.assertAlmostEqual(product.weight, 0.320, places=3)
         # the fake was used instead of any real client / credential
         fake.get_product_by_isbn.assert_called_once_with("9788599296264")
+
+    def test_enriquecer_nao_devolve_o_dado_deles_para_eles(self):
+        """A ficha técnica vem por chamada própria, livro a livro (o catálogo
+        não carrega peso). O que se escreve ali é dado DELES: sem a marca de
+        sync, cada livro enriquecido entrava na fila e a próxima planilha
+        devolveria à Metabooks o que ela acabou de mandar."""
+        book = self.env['product.template'].create({
+            'name': 'Livro do Catálogo', 'default_code': '9788599296264',
+            'barcode': '9788599296264'})
+        book.metabooks_export_pending = False
+        fake = MagicMock()
+        fake.get_product_by_isbn.return_value = ONIX_BOOK
+        connector = self._connector_with_fake(fake)
+
+        res = connector.enrich_isbns(['9788599296264'])
+
+        self.assertEqual(res['updated'], 1)
+        self.assertAlmostEqual(book.metabooks_weight, 320.0, places=2)
+        self.assertAlmostEqual(book.weight, 0.32, places=2)
+        self.assertFalse(book.metabooks_export_pending,
+                         "dado deles não volta para a fila de envio")
 
     def test_import_isbn_is_idempotent(self):
         """Re-importing the same ISBN updates, never duplicates."""
@@ -254,3 +282,101 @@ class TestMetabooksSync(TransactionCase):
         self.assertEqual(res["imported"], 0)
         self.assertEqual(res["failed"], [])
         self.assertEqual(res["total_pages"], 0)
+
+    # --- one bad ISBN must not cost the batch its other books --------------
+
+    def test_api_error_does_not_lose_the_batch(self):
+        """A MetabooksError mid-list is reported; the other books survive.
+
+        It used to raise UserError from inside the loop, rolling the whole
+        transaction back: the 50th of 100 ISBNs failing threw away the 49
+        already imported.
+        """
+        from odoo.addons.liber_metabooks_integration.services.metabooks_client import (
+            MetabooksError,
+        )
+
+        def by_isbn(isbn):
+            if isbn == "9788500000024":
+                raise MetabooksError("503 Service Unavailable")
+            return dict(ONIX_BOOK, identifiers=[
+                {"productIdentifierType": "03", "idValue": isbn}])
+
+        fake = MagicMock()
+        fake.get_product_by_isbn.side_effect = by_isbn
+        connector = self._connector_with_fake(fake)
+
+        res = connector.import_isbns(
+            ["9788500000017", "9788500000024", "9788500000031"])
+
+        self.assertEqual(res["created"], 2, "the two good ISBNs must be kept")
+        self.assertEqual([isbn for isbn, _msg in res["failed"]],
+                         ["9788500000024"])
+        self.assertIn("503", res["failed"][0][1])
+        self.assertEqual(len(res["products"]), 2)
+
+    def test_wizard_lists_the_codes_that_failed(self):
+        """The wizard names the failed and the not-found ISBNs, not just counts."""
+        from odoo.addons.liber_metabooks_integration.services.metabooks_client import (
+            MetabooksError,
+        )
+
+        def by_isbn(isbn):
+            if isbn == "9788500000024":
+                raise MetabooksError("timeout")
+            if isbn == "9788500000031":
+                return None
+            return dict(ONIX_BOOK, identifiers=[
+                {"productIdentifierType": "03", "idValue": isbn}])
+
+        fake = MagicMock()
+        fake.get_product_by_isbn.side_effect = by_isbn
+        self._connector_with_fake(fake)
+
+        # `lang="en_US"` is not decoration: the summary is built with `_()`,
+        # so once this module gained a pt_BR translation the assertion below
+        # started reading "1 novo(s)" and looking for the English "1 new" in
+        # it. Asserting on prose is fine; asserting on prose in whatever
+        # language the running user happens to have is a test that breaks on a
+        # translation commit, far from the code it guards.
+        wizard = self.env["metabooks.import.isbn"].with_context(
+            lang="en_US").create({
+                "isbns": "9788500000017 9788500000024 9788500000031"})
+        wizard.action_import()
+
+        self.assertEqual(wizard.state, "done")
+        self.assertIn("1 new", wizard.summary)
+        self.assertIn("9788500000031", wizard.not_found_isbns)
+        self.assertIn("9788500000024", wizard.failed_details)
+        self.assertIn("timeout", wizard.failed_details)
+        self.assertEqual(len(wizard.product_ids), 1)
+
+    def test_wizard_retry_puts_failed_codes_back(self):
+        """'Retry the failed ones' refills the box with just those codes."""
+        wizard = self.env["metabooks.import.isbn"].create({"isbns": "x"})
+        wizard.write({
+            "state": "done",
+            "failed_details": "9788500000024 - timeout\n9788500000048 - 503",
+        })
+
+        wizard.action_retry_failed()
+
+        self.assertEqual(wizard.state, "draft")
+        self.assertEqual(wizard.isbns, "9788500000024\n9788500000048")
+        self.assertFalse(wizard.failed_details)
+
+    def test_single_book_refresh_still_raises(self):
+        """Refreshing one book from its form has no batch to protect."""
+        from odoo.addons.liber_metabooks_integration.services.metabooks_client import (
+            MetabooksError,
+        )
+        from odoo.exceptions import UserError
+
+        fake = MagicMock()
+        fake.get_product_by_isbn.side_effect = MetabooksError("401 Unauthorized")
+        self._connector_with_fake(fake)
+        product = self.env["product.template"].create({
+            "name": "Livro sem sorte", "default_code": "9788500000055"})
+
+        with self.assertRaises(UserError):
+            product.update_metabooks_books()

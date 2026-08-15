@@ -50,13 +50,12 @@ class EdlabContractRoyaltyLine(models.Model):
         currency_field="currency_id",
     )
 
-    _sql_constraints = [
-        (
-            "partner_product_uniq",
-            "unique(contract_id, partner_id, product_id)",
-            "A line already exists for this beneficiary and this work in this contract.",
-        ),
-    ]
+    # v19: o atributo `_sql_constraints` deixou de existir (o ORM só loga um
+    # aviso e ignora), então a unicidade tem que ser um models.Constraint.
+    _partner_product_uniq = models.Constraint(
+        "unique(contract_id, partner_id, product_id)",
+        "A line already exists for this beneficiary and this work in this contract.",
+    )
 
 
 class EdlabContractRoyaltyTier(models.Model):

@@ -94,7 +94,7 @@ class SocXmlPanel(models.Model):
     vendor_order = fields.Char(string='Vendor Order')
     nfe_tag_ids = fields.Many2many('nfe.xml.tags', 'xml_panel_nfe_tag_rel', 'soc_xml_id', 'tag_id', string='Tags')
     current_company_id = fields.Many2one('res.company', string='Current Company', compute="_compute_company_id")
-    team_id = fields.Many2one("crm.team", string="Sales Team", store=True)
+    team_id = fields.Many2one("crm.team", string="Sales Channel", store=True)
     # LAB FORK: without edocs, every panel is an external XML.
     xml_type = fields.Selection([('internal', 'Internal Type'), ('external', 'External Type')], string="Type", default='external', store=True)
 
@@ -219,7 +219,7 @@ class SocXmlPanel(models.Model):
         if not digits:
             return self.env['res.partner']
         Partner = self.env['res.partner'].sudo()
-        partner = Partner.search(['|', ('vat', '=', doc), ('vat', '=', digits)], limit=1)
+        partner = Partner._find_by_document(doc)
         if not partner:
             # A partner born from an NFe has a CNPJ/CPF: it is Brazilian by
             # definition. Odoo renders the sale/quotation PDF in the CUSTOMER's
@@ -556,8 +556,8 @@ class SocXmlPanel(models.Model):
                         cnpj_cpf = '{}{}.{}{}{}.{}{}{}/{}{}{}{}-{}{}'.format(*cnpj)
                     if len(cnpj) == 11:
                         cnpj_cpf = '{}{}{}.{}{}{}.{}{}{}-{}{}'.format(*cnpj)
-                    partner_id = self.env['res.partner'].with_context(active_test=False).search(
-                        ['|', ('vat', '=', cnpj_cpf), ('vat', '=', cnpj)], limit=1)
+                    partner_id = self.env['res.partner'].with_context(
+                        active_test=False)._find_by_document(cnpj)
                     if partner_id:
                         _logger.info('===== NFe XML partner end %s=====', partner_id.id)
                     else:
@@ -800,8 +800,7 @@ class SocXmlPanel(models.Model):
                 except Exception as e:
                     return False
                 if len(company_cnpj) > 1:
-                    company = '{}{}.{}{}{}.{}{}{}/{}{}{}{}-{}{}'.format(*company_cnpj)
-                    partner_id = self.env['res.partner'].sudo().search([('vat', '=', company)], limit=1)
+                    partner_id = self.env['res.partner'].sudo()._find_by_document(company_cnpj)
                     company_with_cnpj = self.env['res.company'].sudo().search([('partner_id', '=', partner_id.id)],
                                                                               limit=1)
                     # partner = self.env['res.partner'].sudo().search(['|', ('cnpj_cpf', '=', company),
@@ -845,8 +844,8 @@ class SocXmlPanel(models.Model):
                         cnpj_cpf = '{}{}.{}{}{}.{}{}{}/{}{}{}{}-{}{}'.format(*cnpj)
                     if len(cnpj) == 11:
                         cnpj_cpf = '{}{}{}.{}{}{}.{}{}{}-{}{}'.format(*cnpj)
-                    partner_id = self.env['res.partner'].with_context(active_test=False).search(
-                        ['|', ('vat', '=', cnpj_cpf), ('vat', '=', cnpj)], limit=1)
+                    partner_id = self.env['res.partner'].with_context(
+                        active_test=False)._find_by_document(cnpj)
                     if partner_id:
                         _logger.info('===== NFe XML partner end %s=====', partner_id.id)
                     else:
@@ -933,28 +932,50 @@ class SocXmlPanel(models.Model):
             return ''
         return ET.fromstring(base64.b64decode(self.file))
 
+    # Why a candidate XML did not become a panel. is_valid_xml_and_nfe_key
+    # collapses all of these into a bare False - all an adapter needs, but it
+    # left the manual import unable to tell the user whether a file was a
+    # duplicate, a stray non-NFe XML or plain corrupt.
+    XML_OK = 'ok'
+    XML_MALFORMED = 'malformed'
+    XML_NOT_NFE = 'not_nfe'
+    XML_NO_PROTOCOL = 'no_protocol'
+    XML_DUPLICATE = 'duplicate'
+
     @api.model
-    def is_valid_xml_and_nfe_key(self, xml_file):
-        root = ''
+    def classify_nfe_xml(self, xml_file):
+        """Return ``(key, reason)`` for a candidate NFe XML.
+
+        The same walk as :meth:`is_valid_xml_and_nfe_key`, keeping the reason
+        it stopped. ``key`` is the 44-digit chNFe only when reason is
+        :attr:`XML_OK`; it is False for every other reason.
+        """
+        ns = '{http://www.portalfiscal.inf.br/nfe}'
         try:
             root = ET.fromstring(xml_file)
+        except Exception:
+            return False, self.XML_MALFORMED
+        if root.tag not in ('%snfeProc' % ns, '%senviNFe' % ns):
+            return False, self.XML_NOT_NFE
+        prot_nfe = root.find('.//%sprotNFe' % ns)
+        ch_nfe = prot_nfe.find('.//%schNFe' % ns) if prot_nfe is not None else None
+        key = ch_nfe.text if ch_nfe is not None else ''
+        if not key:
+            # An NFe with no protocol was never authorised by SEFAZ: there is
+            # no note to import yet, and no key to dedupe it by.
+            return False, self.XML_NO_PROTOCOL
+        if self.env['nfe.xml.panel'].sudo().search_count([('key', '=', key)]):
+            return False, self.XML_DUPLICATE
+        return key, self.XML_OK
 
-            if root != '' and root.tag in ['{http://www.portalfiscal.inf.br/nfe}nfeProc',
-                           '{http://www.portalfiscal.inf.br/nfe}enviNFe']:
-                try:
-                    protNFe = root.find('.//{http://www.portalfiscal.inf.br/nfe}protNFe')
-                    if protNFe.tag:
-                        xml_number = protNFe.find('.//{http://www.portalfiscal.inf.br/nfe}chNFe').text
-                except Exception as e:
-                    xml_number = ''
+    @api.model
+    def is_valid_xml_and_nfe_key(self, xml_file):
+        """The chNFe of an importable NFe, else False.
 
-                if xml_number:
-                    xml_nfe_exists = self.env['nfe.xml.panel'].sudo().search([('key', '=', xml_number)])
-                    if not xml_nfe_exists:
-                        return xml_number
-            return False
-        except Exception as e:
-            return False
+        Kept as THE guard every adapter calls (see :meth:`_ingest_xml`); the
+        reason behind a False is available from :meth:`classify_nfe_xml`.
+        """
+        return self.classify_nfe_xml(xml_file)[0]
 
     @api.model
     def _company_from_xml(self, xml_file):
@@ -1183,8 +1204,12 @@ class SocXmlItems(models.Model):
     xml_type = fields.Selection(related="soc_xml_id.xml_type", store=True)
 
 
-    @api.depends()
+    @api.depends('ks_price', 'ks_product_qty')
     def compute_xml_items_total_price(self):
+        # Without the depends the ORM only ran this on create: editing price or
+        # quantity afterwards (the item form is editable, and the embedded list
+        # is editable="bottom") left the STORED total at its old value, feeding
+        # the pivot and graph measures a number the line itself contradicted.
         for rec in self:
             rec.ks_total_price = rec.ks_price * rec.ks_product_qty
 

@@ -2,6 +2,7 @@
 from dateutil.relativedelta import relativedelta
 
 from odoo import _, api, fields, models
+from odoo.exceptions import AccessError
 
 
 class EdlabContract(models.Model):
@@ -163,9 +164,29 @@ class EdlabContract(models.Model):
                 else:
                     contract.time_left_display = year_part
 
+    def _check_state_change_allowed(self):
+        """Mudar estado de contrato é poder de gerente, e a trava é aqui.
+
+        Esconder o botão na view segura o clique; não segura um write RPC
+        com {'state': ...}. Quem pode LER e ESCREVER um contrato (o
+        assistente) ainda assim não pode confirmá-lo, cancelá-lo nem
+        renová-lo -- e uma regra que só existe na interface não é regra.
+        O superusuário passa porque os crons de renovação/expiração mudam
+        estado em nome do sistema.
+        """
+        if self.env.su:
+            return
+        if not self.env.user.has_group(
+                "liber_copyright_contracts.group_contract_manager"):
+            raise AccessError(_(
+                "Only Copyright Contract managers can change a contract's "
+                "status (validate, cancel, renew)."))
+
     @api.model_create_multi
     def create(self, vals_list):
         for vals in vals_list:
+            if vals.get("state", "draft") != "draft":
+                self._check_state_change_allowed()
             if vals.get("name", _("New")) == _("New"):
                 vals["name"] = self.env["ir.sequence"].next_by_code(
                     "edlab.contract",
@@ -179,6 +200,11 @@ class EdlabContract(models.Model):
                 if term:
                     vals["renewal_period_years"] = term
         return super().create(vals_list)
+
+    def write(self, vals):
+        if "state" in vals:
+            self._check_state_change_allowed()
+        return super().write(vals)
 
     # ------------------------------------------------------------------
     # State actions (buttons)

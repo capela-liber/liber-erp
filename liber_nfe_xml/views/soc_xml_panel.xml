@@ -252,7 +252,7 @@
                         <filter name="group_by_direction" string="Direction" context="{'group_by':'nfe_direction'}" help="Outgoing / Incoming"/>
                         <filter name="group_by_company" string="Company" context="{'group_by':'company_id'}" help="Company"/>
                         <filter name="group_by_partner_id" string="Client" context="{'group_by':'partner_id'}" help="Client"/>
-                        <filter name="group_by_team_id" string="Sales Team" context="{'group_by':'team_id'}" help="Sales Team"/>
+                        <filter name="group_by_team_id" string="Sales Channel" context="{'group_by':'team_id'}" help="Sales Channel"/>
                         <filter name="group_by_status" string="Status" context="{'group_by':'status'}" help="Status"/>
                         <filter name="group_by_cfop_id" string="CFOP" context="{'group_by':'cfop_id'}" help="CFOP"/>
                         <filter name="group_by_danfe_id" string="Danfe" context="{'group_by':'danfe_no'}" help="Danfe"/>
@@ -330,7 +330,7 @@
     </record>
 
     <record id="action_update_team_id" model="ir.actions.server">
-        <field name="name">Update Sales Team</field>
+        <field name="name">Update Sales Channel</field>
         <field name="model_id" ref="model_nfe_xml_panel"/>
         <field name="binding_model_id" ref="model_nfe_xml_panel"/>
         <field name="state">code</field>

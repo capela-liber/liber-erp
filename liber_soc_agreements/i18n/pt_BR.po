@@ -561,3 +561,9 @@ msgstr "location_id"
 #: code:addons/liber_soc_agreements/models/res_partner.py:0
 msgid "partner_id"
 msgstr "partner_id"
+
+#. module: liber_soc_agreements
+#: model:ir.model.fields,field_description:liber_soc_agreements.field_consignment_agreement__team_id
+#: model_terms:ir.ui.view,arch_db:liber_soc_agreements.view_consignment_agreement_search
+msgid "Sales Channel"
+msgstr "Canal de Vendas"

@@ -32,6 +32,15 @@ class ResCompany(models.Model):
         automatic valuation -- the value is posted explicitly instead. That is
         deliberate: it keeps the accounting deterministic regardless of the
         product's valuation method.
+
+        Both the location and the pointer to it are written as superuser. Only
+        an administrator can write on ``res.company``, and this field is
+        bookkeeping the module keeps for itself -- not a setting anyone chose.
+        Without ``sudo`` the FIRST audit accepted in a company died with
+        "you are not allowed to modify Companies", and every one after it
+        worked, because by then an administrator had already created the
+        location. Deciding *who accepts an audit* is a matter for the audit's
+        own groups, not a side effect of where the module files its location.
         """
         self.ensure_one()
         location = self.consignment_adjustment_location_id
@@ -41,7 +50,7 @@ class ResCompany(models.Model):
                 'usage': 'inventory',
                 'company_id': self.id,
             })
-            self.consignment_adjustment_location_id = location.id
+            self.sudo().consignment_adjustment_location_id = location.id
         return location
 
     def _get_consignment_adjustment_journal(self):

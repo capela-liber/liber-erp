@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     'name': 'GitHub Files',
-    'version': '19.0.0.1.0',
+    'version': '19.0.0.2.0',
     'summary': 'The GitHub shelf on the Cloud Files chassis',
     'description': """
 GitHub is the shelf, Odoo is the gate.

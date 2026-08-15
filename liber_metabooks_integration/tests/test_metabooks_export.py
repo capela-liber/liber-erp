@@ -129,6 +129,45 @@ class TestMetabooksExport(TransactionCase):
         self.assertTrue(self.book.metabooks_export_pending)
         self.assertTrue(self.book.metabooks_export_pending_since)
 
+    def test_peso_digitado_aqui_vai_para_a_planilha(self):
+        """Peso é digitado em quilo no Odoo; a planilha pede grama.
+
+        Sem o espelho, o número ficava em casa — e a Metabooks seguia sem
+        peso justamente nos livros em que só nós temos.
+        """
+        self.book.weight = 0.42
+
+        self.assertAlmostEqual(self.book.metabooks_weight, 420.0, places=2)
+        self.assertTrue(self.book.metabooks_export_pending,
+                        "peso novo é mudança que a Metabooks precisa receber")
+
+    def test_peso_do_painel_chega_ao_campo_do_odoo(self):
+        """O caminho de volta do espelho: quem digita no painel (gramas)
+        espera que o livro passe a ter peso — e é o campo do Odoo (quilos)
+        que o estoque soma e a nota declara."""
+        self.book.metabooks_weight = 529.0
+
+        # 0,53 e não 0,529: o campo do Odoo é arredondado pela precisão
+        # decimal "Stock Weight", que a casa deixa em duas casas.
+        self.assertAlmostEqual(self.book.weight, 0.53, places=2)
+
+    def test_peso_do_metabooks_nao_e_sobrescrito_pelo_espelho(self):
+        """Quem manda no par é o valor explícito: o sync escreve os dois."""
+        self.book.with_context(metabooks_from_sync=True).write({
+            'weight': 0.3, 'metabooks_weight': 305.0})
+        self.assertAlmostEqual(self.book.metabooks_weight, 305.0, places=2)
+
+    def test_zerar_o_painel_nao_apaga_o_peso_do_odoo(self):
+        self.book.weight = 0.4
+        self.book.metabooks_weight = 0.0
+        self.assertAlmostEqual(self.book.weight, 0.4, places=3)
+
+    def test_zerar_o_peso_nao_apaga_o_catalogo(self):
+        self.book.with_context(metabooks_from_sync=True).write(
+            {'metabooks_weight': 300.0})
+        self.book.weight = 0.0
+        self.assertAlmostEqual(self.book.metabooks_weight, 300.0, places=2)
+
     def test_editing_an_unmapped_field_leaves_the_book_alone(self):
         # description_sale is not a Metabooks column, so there is nothing to
         # send and queueing the book would be a false promise.

@@ -7,12 +7,18 @@
         <field name="arch" type="xml">
             <form>
                 <header>
+                    <!-- Os três botões são de gerente; a trava de verdade
+                         está no write() do modelo, isto aqui só poupa o
+                         assistente de um botão que daria AccessError. -->
                     <button name="action_validate" type="object" string="Validate"
                             class="btn-primary"
+                            groups="liber_copyright_contracts.group_contract_manager"
                             invisible="state == 'valid'"/>
                     <button name="action_renew" type="object" string="Renew"
+                            groups="liber_copyright_contracts.group_contract_manager"
                             invisible="state in ('draft', 'cancelled')"/>
                     <button name="action_cancel" type="object" string="Cancel"
+                            groups="liber_copyright_contracts.group_contract_manager"
                             invisible="state == 'cancelled'"/>
                     <field name="state" widget="statusbar"
                            statusbar_visible="draft,valid,expired,renewed,cancelled"/>

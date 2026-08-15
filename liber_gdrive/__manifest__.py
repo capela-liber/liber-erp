@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     'name': 'Google Drive Files',
-    'version': '19.0.0.1.0',
+    'version': '19.0.0.2.0',
     'summary': 'The Google Drive shelf on the Cloud Files chassis',
     'description': """
 Google Drive is the shelf, Odoo is the gate.

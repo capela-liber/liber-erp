@@ -14,6 +14,11 @@
                     <!-- Always visible, unlike the money buttons: a contract with
                          ZERO analytic accounts is exactly the one you need to see,
                          because nothing can be booked until they exist. -->
+                    <button name="action_view_contract_beneficiaries" type="object"
+                            class="oe_stat_button" icon="fa-users">
+                        <field name="beneficiary_count" widget="statinfo"
+                               string="Beneficiaries"/>
+                    </button>
                     <button name="action_view_contract_analytics" type="object"
                             class="oe_stat_button" icon="fa-th-list">
                         <field name="edlab_analytic_count" widget="statinfo"

@@ -188,6 +188,51 @@
   .about p strong { color: var(--ink); }
   .about .thanks { border-left: 3px solid var(--accent); padding-left: 16px; margin-top: 26px; }
 
+  /* dúvidas frequentes — acordeão: fechado é um índice, aberto é a resposta.
+     São vinte e tantas perguntas; abertas de uma vez elas viram um paredão que
+     ninguém lê, e o leitor perde de vista que a resposta dele está ali embaixo. */
+  .faq { padding: 76px 0; border-top: 1px solid var(--line); }
+  .faq > .wrap > h2 { font-size: clamp(26px, 3.4vw, 34px); margin: 8px 0 14px; }
+  .faq .intro { color: var(--ink-soft); max-width: 68ch; margin-bottom: 34px; }
+  .faq h3 { font-size: 15px; text-transform: uppercase; letter-spacing: .1em;
+    color: var(--accent); margin: 34px 0 10px; }
+  .faq h3:first-of-type { margin-top: 0; }
+  .faq details { border-bottom: 1px solid var(--line); }
+  .faq details:first-of-type { border-top: 1px solid var(--line); }
+  .faq summary {
+    cursor: pointer; list-style: none; padding: 15px 34px 15px 0; position: relative;
+    font-weight: 600; font-size: 17px; color: var(--ink);
+  }
+  .faq summary::-webkit-details-marker { display: none; }
+  .faq summary:hover { color: var(--accent); }
+  /* o sinal de abrir: um + que vira × ao expandir, desenhado em texto para não
+     depender do Font Awesome (sem internet o resto da página continua inteira) */
+  .faq summary::after {
+    content: "+"; position: absolute; right: 6px; top: 50%; transform: translateY(-50%);
+    font-size: 22px; line-height: 1; color: var(--accent); transition: transform .15s;
+  }
+  .faq details[open] summary::after { content: "×"; }
+  .faq details[open] summary { color: var(--accent); }
+  .faq .answer { padding: 0 34px 22px 0; max-width: 72ch; }
+  .faq .answer p { color: var(--ink-soft); margin-bottom: 12px; }
+  .faq .answer p:last-child { margin-bottom: 0; }
+  .faq .answer strong { color: var(--ink); }
+  .faq .answer ul { list-style: none; margin: 4px 0 12px; }
+  .faq .answer li { position: relative; padding-left: 18px; margin-bottom: 8px;
+    color: var(--ink-soft); }
+  .faq .answer li::before { content: "—"; position: absolute; left: 0; color: var(--accent); }
+  .faq .answer code { background: var(--paper-2); border-radius: 4px; padding: 2px 6px; font-size: 14px; }
+  .faq .answer pre {
+    background: var(--paper-2); border: 1px solid var(--line); border-radius: 8px;
+    padding: 14px 16px; margin: 12px 0; overflow-x: auto; font-size: 14px; line-height: 1.5;
+  }
+  .faq .answer pre code { background: none; padding: 0; }
+  .faq table { border-collapse: collapse; width: 100%; margin: 10px 0 14px; font-size: 15px; }
+  .faq table th, .faq table td { text-align: left; padding: 9px 12px; border-bottom: 1px solid var(--line);
+    vertical-align: top; color: var(--ink-soft); }
+  .faq table th { color: var(--ink); font-weight: 600; }
+  .faq table td code { white-space: nowrap; }
+
   /* licença */
   .license { padding: 72px 0; background: var(--paper-2); border-top: 1px solid var(--line); }
   .license h2 { font-size: clamp(24px, 3vw, 32px); margin-bottom: 12px; }
@@ -222,12 +267,12 @@
       <a href="#consignacao">Consignação</a>
       <a href="#direitos">Direitos autorais</a>
       <a href="#metadados">Metadados</a>
-      <a href="#impressao">Impressão</a>
-      <a href="#fiscal">Fiscal</a>
+      <a href="#amazon">Amazon</a>
+      <a href="#impressao">Dropship</a>
       <a href="#odoo">Odoo</a>
       <a href="#quem-somos">Quem somos</a>
       <a href="docs/index.html">Manuais</a>
-      <a href="#duvidas">Dúvidas</a>
+      <a href="#faq">Dúvidas</a>
     </nav>
   </div>
 </header>
@@ -352,31 +397,7 @@
   </div>
 </section>
 
-<section class="feature flip" id="fiscal">
-  <div class="wrap">
-    <div class="text">
-      <p class="kicker">Nota fiscal eletrônica</p>
-      <h2>A nota fiscal, dos dois lados</h2>
-      <p>O Liber <strong>emite</strong> a NF-e da editora e <strong>recebe</strong> as notas emitidas contra ela.
-      Emitir é um botão na fatura confirmada: a nota vai à SEFAZ, e o XML e a DANFE voltam anexados,
-      com a chave de acesso gravada — a mesma chave das notas que chegam. Para o resto do sistema,
-      a nota que sai e a que entra são a mesma coisa.</p>
-      <ul>
-        <li><strong>Emissão de NF-e modelo 55</strong> — direto da fatura, com o CFOP deduzido do destino e a imunidade do livro já configurada. <a href="docs/liber_nfe_focus.html">Ler o manual</a>.</li>
-        <li><strong>Cancelamento e carta de correção</strong> — os eventos que a SEFAZ prevê, com justificativa, histórico e o XML de cada um guardado junto da nota.</li>
-        <li><strong>Download automático</strong> — com o certificado digital A1 da empresa, varredura diária da Distribuição DF-e das notas emitidas contra o seu CNPJ, sem digitação.</li>
-        <li><strong>Painel de XMLs</strong> — cada nota deduplicada pela chave de acesso; o lançamento contábil é um passo explícito, sob seu controle.</li>
-        <li><strong>Notas de remessa</strong> — documentos que não geram cobrança (consignação, material de evento) com tratamento contábil próprio.</li>
-      </ul>
-    </div>
-    <figure class="shot">
-      <img src="img/sefaz-painel.png" alt="Painel de XMLs baixados da SEFAZ">
-      <figcaption>Painel de notas: XMLs baixados da SEFAZ, prontos para conferência e lançamento.</figcaption>
-    </figure>
-  </div>
-</section>
-
-<section class="feature" id="xml">
+<section class="feature flip" id="xml">
   <div class="wrap">
     <div class="text">
       <p class="kicker">Compatível com seus XMLs</p>
@@ -393,6 +414,39 @@
     <figure class="shot">
       <img src="img/xml-analise.png" alt="Análise do histórico importado de XMLs">
       <figcaption>Histórico importado: a empresa inteira reconstruída a partir das notas.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section class="feature" id="amazon">
+  <div class="wrap">
+    <div class="text">
+      <p class="kicker">Canais de venda</p>
+      <h2>Amazon Vendor: o pedido dela entra conferido</h2>
+      <p>No Vendor Central a <strong>Amazon compra</strong> — ela não é marketplace, é atacadista.
+      O que a API dela chama de <em>pedido de compra</em> é, do seu lado, uma venda. O Liber lê
+      esses pedidos, confere título por título contra o seu cadastro e monta a cotação quando
+      alguém manda.</p>
+      <ul>
+        <li><strong>Só lê da Amazon</strong> — nada de confirmação, aviso de embarque ou etiqueta
+        saindo sozinho às quatro da manhã. Compromisso de entrega é decisão de gente, e a trava
+        está no código, não numa promessa.</li>
+        <li><strong>Casamento por ISBN</strong> — cada linha procura o código de barras do produto.
+        O que não casa não trava o pedido: fica visível, contado e registrado, antes de virar
+        documento.</li>
+        <li><strong>Uma unidade, um CNPJ</strong> — cada centro de distribuição (GRU8 e companhia)
+        é mapeado ao cliente certo. Unidade não mapeada não vira cotação, para a nota não sair
+        contra a filial errada.</li>
+        <li><strong>Cotação em rascunho</strong> — e ela é sua: se a Amazon mudar o pedido depois,
+        o Liber marca a divergência em vermelho em vez de reescrever o que você já fez.</li>
+        <li><strong>Agenda e análise por título</strong> — o que vence quando, e o que não foi
+        atendido com a causa ao lado: faltou cadastro ou faltou cotar.</li>
+      </ul>
+      <p><a href="docs/liber_amazon_vendor.html">Ler o manual da Amazon Vendor</a>.</p>
+    </div>
+    <figure class="shot">
+      <img src="img/amazon-pedidos.png" alt="Pedidos da Amazon importados, com exemplares pedidos e atendidos">
+      <figcaption>Os pedidos da Amazon dentro do Odoo: o que veio, o que casou com o cadastro e o que virou cotação.</figcaption>
     </figure>
   </div>
 </section>
@@ -467,7 +521,7 @@
     <p>O Liber está em desenvolvimento ativo e aberto. Estas são as próximas frentes:</p>
     <div class="grid">
       <div class="card"><div class="ic"><i class="fa-solid fa-book-open"></i></div><h3>BookInfo <span class="badge soon">em breve</span></h3><p>Metadados, pedidos e monitoramento de preço pela plataforma da BookInfo.</p></div>
-      <div class="card"><div class="ic"><i class="fa-solid fa-cart-shopping"></i></div><h3>Amazon Vendor <span class="badge soon">em breve</span></h3><p>Pedidos, notas e catálogo integrados ao programa Vendor da Amazon.</p></div>
+      <div class="card"><div class="ic"><i class="fa-solid fa-cart-shopping"></i></div><h3>Amazon: responder pela API <span class="badge soon">em breve</span></h3><p>Hoje o Liber só lê os pedidos da Amazon. Confirmação, aviso de embarque e invoice por EDI — os passos que assumem compromisso de entrega — seguem no portal.</p></div>
     </div>
   </div>
 </section>
@@ -480,40 +534,47 @@
 <section class="about" id="quem-somos">
   <div class="wrap">
     <p class="kicker">Quem somos</p>
-    <h2>Atrás do Liber há um caminho longo</h2>
+    <h2>Somos editores — o Liber é a nossa ferramenta de trabalho</h2>
 
-    <p>O projeto nasceu de <em>bateções</em> de cabeça, arapucas digitais em que caímos antes
+    <p>Não somos uma empresa de software. Somos gente que fecha livro, negocia com livraria,
+    briga com gráfica e espera acerto. O Liber é o sistema que roda as nossas próprias editoras
+    todo dia, e que resolvemos abrir.</p>
+
+    <p>Ele nasceu de <em>bateções</em> de cabeça, arapucas digitais em que caímos antes
     de aprender a desviar, e saídas interessantes que foram surgindo na luta diária dentro da
-    editora <strong>Hedra</strong>, no meio do expediente, com o problema em cima da mesa e os
+    editora <strong>Hedra</strong> — no meio do expediente, com o problema em cima da mesa e os
     boletos chegando.</p>
 
     <p>A <strong>Hedra</strong> usa o Odoo Community desde a versão 10, em 2016. De lá para cá
     foram quase dez anos rodando a editora inteira dentro do sistema, e escrevendo, ano após
-    ano, novos processos.</p>
+    ano, novos processos: primeiro a consignação, depois os direitos autorais, o catálogo, a
+    nota fiscal.</p>
 
-    <p>Em 2018 fundamos o <strong>EdLab Press</strong>, com a proposta de ser um laboratório
-    que abrigasse um conjunto de pequenas editoras com operações muitas vezes bem diferentes
-    entre si. Foi ali que o código deixou de servir a uma casa só e passou a ter de servir a
-    várias, incluindo a finada livraria Casa Plana.</p>
+    <p>Em 2018 fundamos o <strong>EdLab Press</strong>, um laboratório para abrigar um conjunto
+    de pequenas editoras com operações muitas vezes bem diferentes entre si. Foi ali que o
+    <em>nosso Odoo</em> deixou de servir a uma casa só e passou a ter de servir a várias — a
+    <strong>Hedra</strong>, a finada livraria <strong>Casa Plana</strong> e a vários outros
+    pequenos editores.</p>
 
     <p><strong>Mas por que abrir nosso código?</strong> A questão é o contrário: por que guardar
-    somente conosco? E somando certa paranoia, ou receio de que a inteligência artificial vá
+    somente conosco? E somando certo receio de que a inteligência artificial vá
     deixar o nosso mercado ainda mais atrasado, resolvemos liberar tudo. Editora pequena não
     perde por dividir ferramenta — não somos uma corporação. E quanto mais gente usando esse
     código, mais afinados ficaremos.</p>
 
-    <p><strong>Quem está por trás do código?</strong> Eu, <strong>Jorge Sallum</strong>, editor
-    da Hedra, sou responsável pelo desenho e pela codificação. O caminho até aqui foi feito de
-    conversa: o apoio e as inúmeras trocas com <strong>Alexandre Fonseca</strong> e
-    <strong>Sergio Eduardo</strong>; <strong>Rogério de Campos</strong>, da editora
-    <strong>Veneta</strong>, e suas ideias prá lá de revolucionárias; e
-    <strong>Tiago Quirino</strong>, da <strong>Capela</strong>, agência de marketing digital
-    para editoras, recém-criada.</p>
+    <p><strong>Quem está por trás do código?</strong> <strong>Jorge Sallum</strong>, editor da
+    Hedra, responde pelo desenho e pela codificação com a incrível ajuda das inteligências
+    artificiais. O caminho até aqui foi feito mais de conversas do que de código. Contamos,
+    principalmente, com o apoio e as inúmeras trocas com os experientes
+    <strong>Alexandre Fonseca</strong> e <strong>Sergio Eduardo</strong>, da
+    <strong>Perspectiva</strong>; <strong>Rogério de Campos</strong>, da <strong>Veneta</strong>,
+    e suas ideias pra lá de revolucionárias; e <strong>Tiago Quirino</strong>, da
+    <strong>Capela</strong>, agência de marketing digital para editoras, recém-criada.</p>
 
     <p class="thanks">Agradecimento especial a <strong>Elio Viniski</strong>, da
     <strong>Edoo.me</strong>, parceiro incansável e fiel, há mais de uma década, nessa história
-    com o Odoo. E a <strong>Anselmo Bortolin</strong>, o maior entusiasta das soluções de
-    tecnologia para o mercado editorial que conhecemos.</p>
+    com o Odoo. E a <strong>Anselmo Bortolin</strong>, da <strong>MetaBrasil</strong>, o maior
+    entusiasta das soluções de tecnologia para o mercado editorial que conhecemos.</p>
   </div>
 </section>
 
@@ -535,9 +596,402 @@
   </div>
 </section>
 
+<section class="faq" id="faq">
+  <div class="wrap">
+    <p class="kicker">Dúvidas frequentes</p>
+    <h2>As perguntas que chegam</h2>
+    <p class="intro">De quem está avaliando o Liber para a própria editora. Se a sua não
+    estiver aqui, <a href="https://github.com/capela-liber/liber-erp/discussions/categories/q-a" rel="noopener">pergunte
+    no fórum</a>: a resposta fica pública, pesquisável, e serve para quem chegar depois.</p>
+
+    <h3>Instalar e experimentar</h3>
+
+    <details>
+      <summary>Como instalo o Liber?</summary>
+      <div class="answer">
+        <p>O Liber é um conjunto de módulos para o <strong>Odoo 19 Community</strong>. São três
+        passos: ter um Odoo no ar, colocar os módulos no caminho de addons, instalar os que
+        você quiser.</p>
+        <p><strong>1.</strong> Instale o Odoo 19 Community — pacote oficial, imagem Docker ou
+        código-fonte, pela <a href="https://www.odoo.com/documentation/19.0/administration/on_premise.html" rel="noopener">documentação
+        de instalação da Odoo</a>. Nada aqui é específico do Liber: é o Odoo padrão, com
+        PostgreSQL ao lado.</p>
+        <p><strong>2.</strong> Traga os módulos:</p>
+        <pre><code>git clone https://github.com/capela-liber/liber-erp.git</code></pre>
+        <p><strong>3.</strong> Aponte o Odoo para a pasta e instale o que interessa:</p>
+        <pre><code>odoo-bin --addons-path=/caminho/do/odoo/addons,/caminho/do/liber-erp \
+         -d suabase -i liber_soc_settlement,liber_copyright_contracts</code></pre>
+        <p>Os módulos declaram as dependências entre si — instalar o acerto de consignação puxa
+        o acordo e as movimentações junto. Daí em diante tudo acontece pela tela, em
+        <strong>Aplicativos</strong>, e cada módulo traz o próprio manual no Module Info.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>Preciso saber programar?</summary>
+      <div class="answer">
+        <p>Não para usar; para instalar, precisa de alguém que saiba administrar um servidor.
+        Pôr um Odoo no ar é instalar um pacote, criar um banco PostgreSQL e subir um serviço —
+        trabalho de administração de sistemas, não de desenvolvimento. Se ninguém na editora faz
+        isso hoje, é exatamente aí que vale contratar alguém.</p>
+        <p>Depois de no ar, o uso diário é de tela: quem opera nunca vê uma linha de comando.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>Dá para experimentar antes de instalar?</summary>
+      <div class="answer">
+        <p>Dá. O <a href="/web/login">ambiente de demonstração</a> é aberto: entre com
+        <code>demo</code> / <code>liber</code> e percorra os módulos do Liber — consignação,
+        direitos autorais, catálogo. Não grava nada: os dados são de teste e podem ser
+        reiniciados a qualquer momento.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>Onde o Liber roda? Preciso de servidor próprio?</summary>
+      <div class="answer">
+        <p>Onde você quiser — a pergunta é a mesma que “onde roda o Odoo”, e as respostas comuns
+        são três: uma máquina na própria editora, um servidor alugado na nuvem (o caminho mais
+        frequente), ou um provedor que hospeda para você. O Odoo é modesto: uma editora com
+        poucos usuários simultâneos roda folgada numa máquina pequena.</p>
+        <p>O que não é opcional é o backup, e ele tem duas metades: o banco PostgreSQL
+        <strong>e</strong> o filestore. Anexos, capas e XMLs de nota ficam em disco, fora do
+        banco — um dump que leva só o banco parece completo até o dia em que você precisa do XML.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>Posso instalar só uma parte — só direitos autorais, por exemplo?</summary>
+      <div class="answer">
+        <p>Pode, e é o recomendado. As famílias são independentes:</p>
+        <table>
+          <tr><th>Quero resolver</th><th>Instalo</th></tr>
+          <tr><td>Royalties, contratos, prestação de contas</td><td><code>liber_copyright_contracts</code> e os complementos de pagamento, IRRF e relatórios</td></tr>
+          <tr><td>Consignação, acerto, puxadas</td><td><code>liber_soc_agreements</code>, <code>liber_soc_moves</code>, <code>liber_soc_settlement</code></td></tr>
+          <tr><td>Notas fiscais: importar da SEFAZ, emitir</td><td><code>liber_nfe_xml</code>, <code>liber_nfe_focus</code></td></tr>
+          <tr><td>Catálogo e metadados por ISBN</td><td><code>liber_metabooks_integration</code></td></tr>
+          <tr><td>Pedidos da Amazon (Vendor Central)</td><td><code>liber_amazon_vendor</code></td></tr>
+          <tr><td>Arquivos no Dropbox, Drive ou GitHub</td><td><code>liber_dropbox</code>, <code>liber_gdrive</code>, <code>liber_github</code></td></tr>
+        </table>
+        <p>Uma editora que só quer parar de calcular royalties em planilha instala a família de
+        direitos autorais e ignora o resto. As duas peças que atravessam famílias são a
+        consignação fiscal e a auditoria por XML — elas conferem o mapa contra as notas, e por
+        isso puxam o módulo fiscal junto.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>Como atualizo quando sai versão nova?</summary>
+      <div class="answer">
+        <p>Um <code>git pull</code> no clone e um <code>-u</code> nos módulos alterados:</p>
+        <pre><code>odoo-bin --addons-path=... -d suabase -u liber_soc_settlement --stop-after-init</code></pre>
+        <p>Duas cautelas que valem sempre: teste a atualização numa cópia do banco antes de fazer
+        no que está em produção, e <strong>reinicie o serviço depois</strong> — o Odoo mantém em
+        memória as telas que já carregou, e sem reiniciar você continua vendo a versão antiga
+        achando que a atualização não funcionou.</p>
+      </div>
+    </details>
+
+    <h3>Ajuda, parceiros e suporte</h3>
+
+    <details id="parceiros">
+      <summary>Posso contar com alguém para implantar?</summary>
+      <div class="answer">
+        <p>Pode — e não precisa ser com a gente. Software aberto não quer dizer “se vire
+        sozinho”: quer dizer que você escolhe com quem trabalha, e pode trocar.</p>
+        <p><strong>A <a href="https://edoo.me" rel="noopener">Edoo.me</a>.</strong> É a nossa
+        recomendação de parceiro: conhece o Liber por dentro, e é com quem temos trabalhado. Se
+        você quer o caminho mais curto entre a decisão e o sistema no ar, comece por aí.</p>
+        <p><strong>Os parceiros oficiais da Odoo no Brasil.</strong> São dezenas de empresas
+        espalhadas pelo país, listadas no
+        <a href="https://www.odoo.com/partners/country/brazil-29" rel="noopener">diretório de
+        parceiros da Odoo</a>. Qualquer uma delas sabe instalar, hospedar e manter um Odoo — que
+        é a maior parte do serviço. Os módulos do Liber são addons como quaisquer outros: quem
+        trabalha com Odoo consegue instalá-los e dar manutenção, mesmo sem nunca ter ouvido
+        falar do Liber.</p>
+        <p><strong>A própria Odoo.</strong> A Odoo S.A. também vende implantação, em pacotes de
+        horas com consultor, junto com a assinatura Enterprise.</p>
+        <p>Na hora de escolher, três perguntas dizem mais que qualquer proposta: quem fica com a
+        senha do servidor, quem tem o backup, e o que acontece se a relação terminar. No Liber a
+        resposta da última é sempre a mesma — o código é aberto, o banco é seu, e o próximo
+        prestador pega o sistema de onde o anterior parou. Não existe fornecedor com a chave na
+        mão.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>Vocês da EdLab dão suporte?</summary>
+      <div class="answer">
+        <p>Não. Não há versão paga, plano de suporte nem roteiro comercial — o que oferecemos é
+        o código, os manuais e o fórum. Suporte com hora marcada e responsável de plantão é
+        serviço de parceiro, e é justo que seja pago.</p>
+        <p>Agora, se o que você procura é maior que suporte — uma operação de marketing
+        integrada ao ERP, com campanhas e módulos feitos para vender online — indicamos a
+        <a href="https://capela.press" rel="noopener">Capela.press</a>.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>Onde tiro dúvidas de graça?</summary>
+      <div class="answer">
+        <p>No <a href="https://github.com/capela-liber/liber-erp/discussions/categories/q-a" rel="noopener">fórum</a>,
+        para pergunta de instalação, configuração ou de como um módulo funciona. Se for erro no
+        programa ou pedido de recurso,
+        <a href="https://github.com/capela-liber/liber-erp/issues" rel="noopener">abra um
+        chamado</a> — assim cada coisa vai para o lugar certo e nenhuma se perde no meio da outra.</p>
+        <p>Para dúvidas do Odoo em si, que não são do Liber, a comunidade é grande: o fórum
+        oficial da Odoo e a <a href="https://odoo-community.org" rel="noopener">OCA</a>,
+        associação que mantém milhares de módulos abertos, inclusive boa parte da localização
+        fiscal brasileira.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>E se a EdLab parar de desenvolver o Liber?</summary>
+      <div class="answer">
+        <p>O código já está publicado, e a licença AGPL não se revoga. Quem estiver usando
+        continua usando, e qualquer pessoa ou empresa pode pegar de onde paramos, corrigir,
+        seguir.</p>
+        <p>É a diferença prática entre depender de um software aberto e depender de um
+        fornecedor: no primeiro caso o pior cenário é ter de contratar outro desenvolvedor; no
+        segundo, é o sistema parar de existir junto com o contrato.</p>
+      </div>
+    </details>
+
+    <h3>Odoo Community e Enterprise</h3>
+
+    <details>
+      <summary>O que é o Odoo, e o que é o Liber dentro dele?</summary>
+      <div class="answer">
+        <p>O Odoo é um ERP de código aberto usado por milhões de empresas no mundo: vendas,
+        compras, estoque, contabilidade, CRM, projetos, site. Ele resolve o que toda empresa tem,
+        e não sabe nada sobre livro.</p>
+        <p>O Liber é a camada que falta: consignação, direitos autorais, catálogo por ISBN,
+        documentos fiscais do mercado editorial. Instalado sobre o Odoo, dentro do mesmo sistema
+        e dos mesmos dados — não é outro programa conversando com o primeiro.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>Qual a diferença entre Odoo Community e Odoo Enterprise?</summary>
+      <div class="answer">
+        <p>São duas edições do mesmo produto, com o mesmo núcleo.</p>
+        <p><strong>Community</strong> é a edição aberta, sob licença LGPL-3. Gratuita, sem limite
+        de usuários, com o código à vista. Traz vendas e CRM, compras, estoque com múltiplos
+        depósitos, faturamento e contabilidade analítica, projetos, site e e-commerce, ponto de
+        venda, marketing por e-mail e a API completa.</p>
+        <p><strong>Enterprise</strong> é a edição proprietária, cobrada por usuário e por mês.
+        Inclui tudo do Community e acrescenta, entre outros: relatórios contábeis prontos
+        (balanço, DRE), conciliação bancária com sincronização automática, controle de ativos e
+        diferimentos, o Studio (personalizar telas sem programar), assinatura eletrônica, central
+        de atendimento, planejamento de equipes e aplicativos móveis nativos — mais o suporte
+        oficial da Odoo, a migração de versão assistida e a hospedagem gerenciada no Odoo.sh.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>Preciso do Enterprise para começar?</summary>
+      <div class="answer">
+        <p>Achamos que não — e a razão é concreta, não uma preferência ideológica.</p>
+        <p><strong>Nenhum módulo do Liber depende do Enterprise.</strong> As dependências
+        declaradas nos nossos módulos são todas de aplicativos do Community: <code>sale</code>,
+        <code>stock</code>, <code>account</code>, <code>purchase</code>, <code>analytic</code>,
+        <code>project</code>, <code>website</code>, <code>mail</code>. Não há uma única linha
+        apontando para um aplicativo proprietário, e isso é verificável: está nos arquivos
+        <code>__manifest__.py</code>, no repositório aberto, para quem quiser conferir.</p>
+        <p><strong>O que uma editora faz o dia inteiro cabe no Community mais o Liber.</strong>
+        Vender, comprar, movimentar estoque, faturar, mandar consignado e acertar, calcular
+        royalties e prestar contas ao autor, importar e emitir nota, cuidar do catálogo. Nenhuma
+        dessas coisas espera do outro lado de uma assinatura.</p>
+        <p><strong>Onde o Enterprise pesaria mais, nós abrimos.</strong> O acompanhamento de
+        orçamento (orçado × realizado) é aplicativo Enterprise; escrevemos o
+        <code>liber_budget</code>, aberto, sobre a contabilidade analítica do Community. É o
+        padrão que preferimos: quando falta alguma coisa, resolver no aberto em vez de mandar
+        você assinar.</p>
+        <p><strong>Licença por usuário muda o comportamento da equipe.</strong> Quando cada conta
+        custa por mês, a editora dá acesso a poucas pessoas — e as outras voltam para a planilha
+        mandada por e-mail, que é exatamente o problema que o ERP veio resolver. Sem licença por
+        usuário, todo mundo entra no sistema no primeiro dia: o editorial, o comercial, a
+        produção, o financeiro. É aí que um ERP começa a valer.</p>
+        <p><strong>Começar no Community não fecha nenhuma porta.</strong> Se um dia o Enterprise
+        fizer falta, é a mesma base de dados: assina, ativa e segue de onde estava.</p>
+        <p>E o que falta de verdade, para ser honesto: os relatórios contábeis prontos e a
+        conciliação bancária automática são Enterprise. Para boa parte das editoras isso é
+        assunto do contador, que trabalha no sistema dele com os dados que você exporta. Se você
+        quiser dentro do Odoo, a OCA publica alternativas abertas para os dois casos.</p>
+        <p>Afinal, todos os nossos módulos são de código aberto. O Liber não é isca para uma
+        licença paga adiante: não existe “versão completa” que a gente esteja guardando.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>Se eu começar no Community, posso mudar para o Enterprise depois?</summary>
+      <div class="answer">
+        <p>Pode. O Enterprise instala por cima do Community, na mesma base de dados, e os módulos
+        do Liber continuam funcionando — dependem só de aplicativos que existem nas duas edições.</p>
+        <p>O caminho contrário é que dá trabalho: sair do Enterprise para o Community deixa
+        órfãos os dados criados pelos aplicativos proprietários. Começar aberto é a decisão que
+        se desfaz mais fácil.</p>
+      </div>
+    </details>
+
+    <h3>Custo e licença</h3>
+
+    <details>
+      <summary>Quanto custa o Liber?</summary>
+      <div class="answer">
+        <p>Nada. Sem licença, sem mensalidade, sem limite de usuários, sem cobrança por módulo.
+        Os módulos são publicados sob AGPL-3 e o código inteiro está no GitHub.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>Então o que eu pago?</summary>
+      <div class="answer">
+        <p>Quatro coisas, nenhuma para nós:</p>
+        <ul>
+          <li><strong>Hospedagem</strong> — o servidor onde o sistema roda, seu ou alugado.</li>
+          <li><strong>Implantação, migração e suporte</strong>, se você contratar um parceiro. É
+          trabalho de gente, e é o custo real de um ERP em qualquer cenário.</li>
+          <li><strong>Serviços de terceiros que você escolher ligar</strong> — certificado
+          digital A1 (para falar com a SEFAZ), Focus NFe (emissão), Metabooks/MVB (metadados de
+          catálogo). Cada um tem preço próprio, cobrado pelo fornecedor, e nenhum é obrigatório:
+          o módulo correspondente simplesmente não se instala.</li>
+          <li><strong>Odoo Enterprise</strong>, se um dia você quiser.</li>
+        </ul>
+      </div>
+    </details>
+
+    <details>
+      <summary>Posso usar comercialmente, modificar, revender?</summary>
+      <div class="answer">
+        <p>Sim, sim e sim. A AGPL-3 garante o uso na sua editora sem pagar licença, o direito de
+        ler e mudar cada linha, e o de distribuir cópias — inclusive cobrando por serviço,
+        suporte, implantação e hospedagem.</p>
+        <p>A obrigação nasce quando você <strong>entrega</strong> o Liber a terceiros,
+        distribuindo ou servindo pela rede: aí o código, modificado ou não, vai junto, sob a
+        mesma licença. Uso interno na sua editora não obriga a publicar nada para o mundo. O
+        detalhamento está <a href="#licenca">na seção da licença</a>.</p>
+      </div>
+    </details>
+
+    <h3>Dados, migração e fiscal</h3>
+
+    <details>
+      <summary>Vou perder meu histórico ao trocar de sistema?</summary>
+      <div class="answer">
+        <p>Não. Todo o passado fiscal da editora está nos XMLs das suas notas, e o Liber sabe
+        lê-los: importe o arquivo de XMLs de qualquer sistema anterior e o histórico se
+        reconstrói — quem compra, o que gira, o que está parado.</p>
+        <p>O mapa de consignação pode nascer das próprias notas, pelos CFOPs de remessa e
+        retorno, sem ninguém digitar saldo. Para cadastros e movimentos que não estão em XML, há
+        uma bancada de migração com simulação antes de gravar.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>O Liber emite NF-e?</summary>
+      <div class="answer">
+        <p>Emite, hoje pela Focus NFe: o módulo <code>liber_nfe_focus</code> conversa com a API
+        deles, e a Focus faz o caminho até a SEFAZ. Emissão nativa, direto à SEFAZ e sem
+        intermediário, está no roteiro. O
+        <a href="docs/liber_nfe_focus.html">manual da emissão</a> conta o passo a passo.</p>
+        <p>A importação já é nativa e não depende de ninguém: com o certificado A1 da empresa, o
+        Liber varre diariamente a Distribuição DF-e e traz as notas emitidas contra o seu CNPJ
+        para um painel único, deduplicadas pela chave de acesso.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>Preciso de certificado digital?</summary>
+      <div class="answer">
+        <p>Para baixar notas da SEFAZ e para emitir, sim — certificado A1, o de arquivo. Sem ele,
+        o resto do Liber funciona igual: consignação, royalties, catálogo, estoque. Você só
+        continua trazendo os XMLs à mão em vez de recebê-los sozinhos.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>Onde ficam meus dados? Quem tem acesso?</summary>
+      <div class="answer">
+        <p>No servidor que é seu ou que você contratou. Não há serviço nosso no meio do caminho:
+        o Liber é código que roda na sua máquina, não um sistema que a gente hospeda.</p>
+        <p>As únicas conexões que saem são as integrações que você mesmo ligar — SEFAZ, Focus,
+        Metabooks, Dropbox, Drive, GitHub — cada uma com credencial sua, configurada por você, e
+        desligável.</p>
+      </div>
+    </details>
+
+    <h3>Alcance e limites</h3>
+
+    <details>
+      <summary>Serve para uma editora pequena?</summary>
+      <div class="answer">
+        <p>Serve — nasceu numa. Não há mínimo de usuários, de faturamento ou de catálogo. O custo
+        de entrada do Liber é técnico (alguém para pôr no ar e configurar), não financeiro, o que
+        inverte a conta usual: costuma valer mais para quem não tinha orçamento de ERP do que
+        para quem já tinha.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>Serve para distribuidora, livraria ou gráfica?</summary>
+      <div class="answer">
+        <p>Em parte, e vale ser exato. A consignação do Liber é modelada do lado de quem
+        <strong>envia</strong> — a editora ou o distribuidor que põe livro na prateleira do
+        cliente. A livraria que <strong>recebe</strong> consignado veria a imagem espelhada
+        disso, que não está implementada.</p>
+        <p>Para a livraria própria da editora, o ponto de venda do Odoo já serve, integrado ao
+        mesmo estoque. Impressão sob demanda e dropship são tratados do lado de quem compra a
+        impressão, não da gráfica.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>Funciona no celular?</summary>
+      <div class="answer">
+        <p>A interface é responsiva e funciona no navegador do computador, do tablet e do
+        celular. Os aplicativos móveis nativos da Odoo são da edição Enterprise.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>Tenho mais de um selo. Dá para trabalhar com várias empresas?</summary>
+      <div class="answer">
+        <p>Dá. O Odoo é multi-empresa de nascença, e o Liber respeita isso: as credenciais
+        fiscais são guardadas por empresa, não por instalação. Vários selos numa base só, com
+        contabilidade separada, é caso previsto.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>Em que estado está o projeto?</summary>
+      <div class="answer">
+        <p>Em desenvolvimento ativo contra o Odoo 19. Alguns módulos rodam em produção numa
+        editora; outros são ensaio. Vários trazem um <code>NOTES.md</code> na própria pasta, com
+        as ressalvas honestas do que ainda não está pronto — quando existir, leia antes de
+        confiar no módulo.</p>
+        <p>Como todo software livre, o Liber é fornecido como está, sem garantia: teste no seu
+        cenário antes de fechar o mês com ele.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>Posso contribuir?</summary>
+      <div class="answer">
+        <p>Pode, e é bem-vindo: correção de erro, módulo novo, tradução, um trecho de manual que
+        faltava, ou só relatar o que não funcionou na sua editora.</p>
+        <p>O relato de uso é a contribuição mais escassa e a mais útil — é o que diz se o que
+        serve para uma editora serve para as outras.</p>
+      </div>
+    </details>
+  </div>
+</section>
+
 <section class="open" id="duvidas">
   <div class="wrap">
-    <h2>Dúvidas?</h2>
+    <h2>Não achou a sua?</h2>
     <p>Pergunta de instalação, de configuração ou de como um módulo funciona vai para o fórum:
     a resposta fica pública, pesquisável, e serve para quem chegar depois. Se for erro no
     programa ou pedido de recurso, abra um chamado — assim cada coisa vai para o lugar certo.</p>
@@ -593,7 +1047,7 @@
 
 <footer>
   <div class="wrap">
-    <div><strong>liber.</strong> — ERP open source para editoras brasileiras · <a href="docs/index.html">Manuais</a></div>
+    <div><strong>liber.</strong> — ERP open source para editoras brasileiras · <a href="docs/index.html">Manuais</a> · Feito no <a href="https://www.edlab.press" rel="noopener">EdLab Press</a></div>
     <div>Construído sobre <a href="https://www.odoo.com" rel="noopener">Odoo Community</a> · Fotos: <a href="https://www.pexels.com" rel="noopener">Pexels</a> · Ícones: <a href="https://fontawesome.com" rel="noopener">Font Awesome</a>.</div>
   </div>
 </footer>

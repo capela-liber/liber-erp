@@ -10,9 +10,9 @@ class AccountMove(models.Model):
     # is installed later, both definitions merge on the same name/comodel.
     team_id = fields.Many2one(
         "crm.team",
-        string="Sales Team",
-        help="Sales team of this invoice. Sales from the company's special "
-        "sales teams (with a qualifying discount) have their royalties computed "
+        string="Sales Channel",
+        help="Sales channel of this invoice. Sales from the company's special "
+        "sales channels (with a qualifying discount) have their royalties computed "
         "on the net invoiced amount.",
     )
 

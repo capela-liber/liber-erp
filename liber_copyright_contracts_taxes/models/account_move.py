@@ -10,7 +10,7 @@ class AccountMove(models.Model):
     _inherit = "account.move"
 
     edlab_is_tax_bill = fields.Boolean(
-        string="IRRF Tax Bill",
+        string="Is an IRRF Tax Bill",
         copy=False,
         help="Accumulator vendor bill that gathers the IRRF withheld from the "
         "author payment bills (one line per work).",

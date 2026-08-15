@@ -148,8 +148,8 @@ msgstr "Acima do custo"
 #. module: liber_metabrasil
 #: model:ir.model.fields,field_description:liber_metabrasil.field_res_company__metabrasil_access_key
 #: model:ir.model.fields,field_description:liber_metabrasil.field_res_config_settings__metabrasil_access_key
-msgid "Access Key"
-msgstr "Chave de acesso"
+msgid "Access Key (Metabrasil)"
+msgstr "Chave de acesso (Metabrasil)"
 
 #. module: liber_metabrasil
 #: model_terms:ir.ui.view,arch_db:liber_metabrasil.res_config_settings_view_form
@@ -642,8 +642,9 @@ msgstr "A Metabrasil não oferece frete para este destino (%s)."
 #. odoo-python
 #: code:addons/liber_metabrasil/models/product_template.py:0
 #: code:addons/liber_metabrasil/models/res_config_settings.py:0
-msgid "Metabrasil print prices"
-msgstr "Preços de impressão da Metabrasil"
+#: model:ir.actions.server,name:liber_metabrasil.action_metabrasil_refresh_prices
+msgid "Dropship Price"
+msgstr "Preço Dropship"
 
 #. module: liber_metabrasil
 #. odoo-python
@@ -1293,11 +1294,6 @@ msgstr "Transferir"
 #: model:ir.model.fields,field_description:liber_metabrasil.field_metabrasil_freight_option__carrier_name
 msgid "Transporter"
 msgstr "Transportadora"
-
-#. module: liber_metabrasil
-#: model:ir.actions.server,name:liber_metabrasil.action_metabrasil_refresh_prices
-msgid "Update Metabrasil print prices"
-msgstr "Atualizar preços de impressão da Metabrasil"
 
 #. module: liber_metabrasil
 #: model_terms:ir.ui.view,arch_db:liber_metabrasil.res_config_settings_view_form

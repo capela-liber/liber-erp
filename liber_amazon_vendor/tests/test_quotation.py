@@ -17,6 +17,10 @@ class TestAmazonQuotation(AmazonVendorCase):
     # ------------------------------------------------------- caminho feliz
 
     def test_quotation_carries_lines_and_prices(self):
+        """A cotação nasce com o NOSSO preço de capa (decisão de
+        11/08/2026), não com o Net Cost da Amazon — assim a lista de
+        preços aplica o desconto interno e tudo segue pelo padrão. O
+        valor da Amazon continua no espelho da PO."""
         order = self._imported('BR-1000', [
             amazon_item('1', '9786551590016', qty=30, net_cost='45.50'),
             amazon_item('2', '9786551590085', qty=12, net_cost='40.00'),
@@ -31,7 +35,13 @@ class TestAmazonQuotation(AmazonVendorCase):
         line = quotation.order_line.filtered(
             lambda l: l.product_id == self.book_a)
         self.assertAlmostEqual(line.product_uom_qty, 30, places=2)
-        self.assertAlmostEqual(line.price_unit, 45.50, places=2)
+        # preço de capa do catálogo, não os 45,50 da Amazon
+        self.assertAlmostEqual(line.price_unit, 89.90, places=2)
+        self.assertNotAlmostEqual(line.price_unit, 45.50, places=2)
+        # e o espelho da PO guarda o valor da Amazon, intacto
+        mirror = order.line_ids.filtered(
+            lambda l: l.product_id == self.book_a)
+        self.assertAlmostEqual(mirror.price_unit, 45.50, places=2)
 
     def test_quotation_is_never_confirmed(self):
         """
@@ -105,17 +115,115 @@ class TestAmazonQuotation(AmazonVendorCase):
         # e o contador continua visível na lista
         self.assertEqual(order.unmatched_count, 1)
 
+    def test_closed_order_is_refused(self):
+        """
+        A Amazon fechou: entregue, cancelado ou expirado. Cotar agora criaria
+        compromisso comercial para uma janela que não existe mais — e, no
+        histórico importado, prometeria de novo o que já saiu pelo portal.
+        """
+        order = self._imported('BR-1020', [amazon_item('1', '9786551590016')],
+                               state='Closed')
+        self.assertFalse(order.is_open)
+        with self.assertRaises(UserError) as caught:
+            order.action_create_quotation()
+        self.assertIn('BR-1020', str(caught.exception))
+        self.assertFalse(order.sale_order_id)
+
+    def test_closing_after_the_quotation_does_not_undo_it(self):
+        """O que já virou cotação continua valendo: o bloqueio é para criar."""
+        order = self._imported('BR-1021', [amazon_item('1', '9786551590016')])
+        order.action_create_quotation()
+        cotacao = order.sale_order_id
+
+        self._sync([amazon_order('BR-1021', [amazon_item('1', '9786551590016')],
+                                 state='Closed')])
+        self.assertEqual(self._order('BR-1021').sale_order_id, cotacao)
+
+    def test_bulk_skips_closed_orders(self):
+        aberto = self._imported('BR-1022', [amazon_item('1', '9786551590016')])
+        fechado = self._imported('BR-1023', [amazon_item('1', '9786551590016')],
+                                 state='Closed')
+
+        resultado = (aberto | fechado).action_create_quotations_bulk()
+
+        self.assertTrue(aberto.sale_order_id)
+        self.assertFalse(fechado.sale_order_id)
+        self.assertIn('BR-1023', resultado['params']['message'])
+
     def test_second_quotation_is_refused(self):
         order = self._imported('BR-1012', [amazon_item('1', '9786551590016')])
         order.action_create_quotation()
         with self.assertRaises(UserError):
             order.action_create_quotation()
 
-    def test_account_without_customer_is_refused(self):
-        self.account.partner_id = False
+    def test_unmapped_unit_is_refused_and_names_the_code(self):
+        """
+        Cair no cliente da conta seria pior do que recusar: cada galpão da
+        Amazon é um estabelecimento fiscal com CNPJ próprio, e a nota sairia
+        contra o errado — em silêncio, com número plausível.
+        """
+        self.unit.unlink()
         order = self._imported('BR-1013', [amazon_item('1', '9786551590016')])
-        with self.assertRaises(UserError):
+        self.assertFalse(order.unit_mapped)
+        self.assertFalse(order.partner_id)
+
+        with self.assertRaises(UserError) as caught:
             order.action_create_quotation()
+        self.assertIn('AMZN_BR', str(caught.exception))
+
+    def test_mapping_the_unit_afterwards_fixes_the_order(self):
+        """
+        O campo do pedido não tem como depender do mapa. Sem o empurrão de
+        recálculo, mapear hoje não consertaria o pedido de ontem — ele ficaria
+        sem cliente e ninguém entenderia por quê.
+        """
+        self.unit.unlink()
+        order = self._imported('BR-1016', [amazon_item('1', '9786551590016')])
+        self.assertFalse(order.partner_id)
+
+        self.env['liber.amazon.unit'].create({
+            'account_id': self.account.id,
+            'code': 'AMZN_BR',
+            'partner_id': self.partner_amazon.id,
+        })
+        self.assertEqual(order.partner_id, self.partner_amazon)
+        order.action_create_quotation()
+        self.assertEqual(order.sale_order_id.partner_id, self.partner_amazon)
+
+    def test_the_unit_decides_the_customer_not_the_account(self):
+        """Dois galpões, dois clientes — que é o ponto do mapa."""
+        outro = self.env['res.partner'].create({'name': 'Amazon GIG1'})
+        self.env['liber.amazon.unit'].create({
+            'account_id': self.account.id, 'code': 'GIG1',
+            'partner_id': outro.id})
+
+        pedido = amazon_order('BR-1017', [amazon_item('1', '9786551590016')])
+        pedido['orderDetails']['buyingParty'] = {'partyId': 'GIG1'}
+        self._sync([pedido])
+
+        order = self._order('BR-1017')
+        self.assertEqual(order.partner_id, outro)
+        order.action_create_quotation()
+        self.assertEqual(order.sale_order_id.partner_id, outro)
+
+    def test_delivery_address_comes_from_the_unit(self):
+        entrega = self.env['res.partner'].create({
+            'name': 'CD Cajamar', 'type': 'delivery',
+            'parent_id': self.partner_amazon.id})
+        self.unit.shipping_partner_id = entrega
+
+        order = self._imported('BR-1018', [amazon_item('1', '9786551590016')])
+        order.action_create_quotation()
+        self.assertEqual(order.sale_order_id.partner_shipping_id, entrega)
+
+    def test_account_customer_is_only_for_orders_without_a_unit(self):
+        pedido = amazon_order('BR-1019', [amazon_item('1', '9786551590016')])
+        del pedido['orderDetails']['buyingParty']
+        self._sync([pedido])
+
+        order = self._order('BR-1019')
+        self.assertTrue(order.unit_mapped, "sem sigla não há o que mapear")
+        self.assertEqual(order.partner_id, self.account.partner_id)
 
     def test_foreign_currency_is_refused(self):
         """

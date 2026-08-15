@@ -31,6 +31,17 @@ class TestFiscalBr(TransactionCase):
         return agr
 
     def _cfop(self, code, kind):
+        # O código do CFOP é único no banco, e num banco com dados de verdade
+        # eles já existem: 5917 e 5113 vieram na carga de 17/07/2026, o 5911 em
+        # 02/08. Criar de novo bate no `nfe_cfop_codigo_unico` e o teste morre
+        # no setUp, sem chegar a testar nada. Reaproveitar é o certo mesmo num
+        # banco vazio: o que estes testes verificam é a REGRA entre CFOP e tipo
+        # de documento, não quem criou a linha. A escrita do `document_kind`
+        # cai no rollback da transação como qualquer outra.
+        existente = self.env["nfe.cfop"].search([("code", "=", code)], limit=1)
+        if existente:
+            existente.document_kind = kind
+            return existente
         return self.env["nfe.cfop"].create({
             "code": code,
             "name": "CFOP %s (%s)" % (code, kind),

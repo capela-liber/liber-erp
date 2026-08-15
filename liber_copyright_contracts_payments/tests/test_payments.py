@@ -89,6 +89,50 @@ class TestRoyaltyPayments(TransactionCase):
         self.assertEqual(self._bills(), first,
                          "an open bill must block a second one")
 
+    def test_bill_shows_the_advance_as_a_negative_line(self):
+        """Advance 5,00, royalties 10,00: the bill must read GROSS 10,00
+        minus a visible 'advance recouped' line of 5,00 — total 5,00 — not
+        an opaque net 5,00 the author cannot reconcile."""
+        line_a = self.lines.filtered(lambda l: l.product_id == self.book_a)
+        line_a.recoupable_advance = 5.0
+        self._sell_and_book(self.book_a, 10, 10.0)   # 100,00 @ 10% -> 10,00
+        self.contract.action_generate_royalty_bills()
+
+        bill = self._bills()
+        self.assertAlmostEqual(bill.amount_total, 5.0, places=2)
+        blines = bill.invoice_line_ids.filtered("edlab_royalty_line_id")
+        self.assertEqual(len(blines), 2)
+        amounts = sorted(blines.mapped("price_unit"))
+        self.assertAlmostEqual(amounts[0], -5.0, places=2)
+        self.assertAlmostEqual(amounts[1], 10.0, places=2)
+
+    def test_generation_books_a_stray_advance_first(self):
+        """An advance typed on the line but missing from the analytic (the
+        ordering hole) must NOT inflate the bill to the gross: generation
+        books it first, then computes."""
+        line_a = self.lines.filtered(lambda l: l.product_id == self.book_a)
+        # Bypass the ORM write hook on purpose: this is exactly the drifted
+        # state (field set, entry absent) the generator must repair.
+        self.env.cr.execute(
+            "UPDATE edlab_contract_royalty_line SET recoupable_advance=5.0 "
+            "WHERE id=%s", [line_a.id])
+        line_a.invalidate_recordset()
+        self._advance_entries = self.env["account.analytic.line"].sudo().search(
+            [("edlab_advance_line_id", "=", line_a.id)])
+        self.assertFalse(self._advance_entries, "drift precondition")
+
+        self._sell_and_book(self.book_a, 10, 10.0)   # booking also repairs
+        self.env["account.analytic.line"].sudo().search(
+            [("edlab_advance_line_id", "=", line_a.id)]).unlink()  # re-drift
+        self.contract.action_generate_royalty_bills()
+
+        bill = self._bills()
+        self.assertAlmostEqual(bill.amount_total, 5.0, places=2,
+                               msg="the bill must pay NET of the advance")
+        self.assertTrue(self.env["account.analytic.line"].sudo().search(
+            [("edlab_advance_line_id", "=", line_a.id)]),
+            "generation must (re)book the advance entry")
+
     def test_draft_bill_does_not_stamp_payment(self):
         self._sell_and_book(self.book_a, 10, 10.0)
         self.contract.action_generate_royalty_bills()

@@ -4,7 +4,8 @@ import logging
 import re
 import time
 
-from odoo import api, fields, models
+from odoo import _, api, fields, models
+from odoo.exceptions import UserError
 
 from . import sefaz_dfe_client as dfe
 
@@ -104,8 +105,34 @@ class NfeSefazSweep(models.Model):
         return sweeps
 
     def action_sync_now(self):
-        """List-header button: same as the daily cron, on demand."""
-        self.run_sweeps()
+        """List-header button: hand the sweep to the daily cron, right now.
+
+        A sweep is up to MAX_CALLS calls per company with DELAY_SECONDS
+        between them - minutes of a held HTTP request showing nothing but a
+        spinner, and a worker timeout would roll back even the log row, so the
+        manual sweep vanished without a trace. Out of the request it goes:
+        this list already badges running/done/error, so progress comes free.
+        """
+        cron = self.env.ref('liber_nfe_xml.cron_nfe_sefaz_sweep',
+                            raise_if_not_found=False)
+        if not cron or not cron.sudo().active:
+            raise UserError(_(
+                "The SEFAZ sweep cron is disabled, so there is nothing to run "
+                "the sync in the background. Enable it in Settings > "
+                "Technical > Scheduled Actions (\"NFe XML - SEFAZ DFe Daily "
+                "Sweep\")."))
+        cron.sudo()._trigger()
+        return {
+            'type': 'ir.actions.client',
+            'tag': 'display_notification',
+            'params': {
+                'title': _("SEFAZ sweep scheduled"),
+                'message': _("It runs in the background. Refresh this list in "
+                             "a moment to see how it went."),
+                'type': 'info',
+                'sticky': False,
+            },
+        }
 
     # -- one company ------------------------------------------------------
 

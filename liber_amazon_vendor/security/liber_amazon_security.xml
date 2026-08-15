@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
-    <record id="module_category_liber_amazon" model="ir.module.category">
-        <field name="name">Amazon Vendor</field>
-        <field name="sequence">24</field>
-    </record>
-
     <!-- v19: res.groups não carrega mais category_id; quem carrega é a
          res.groups.privilege, e os grupos apontam para ela. -->
+    <!-- Mora sob VENDAS (11/08/2026), e não numa seção só sua. A Amazon é um
+         canal de venda da casa: quem responde por ela responde pelo
+         comercial. Um cabeçalho inteiro para uma linha obrigava a caçar a
+         resposta pela tela. -->
     <record id="privilege_liber_amazon" model="res.groups.privilege">
         <field name="name">Amazon Vendor</field>
-        <field name="category_id" ref="module_category_liber_amazon"/>
+        <field name="sequence">20</field>
+        <field name="category_id" ref="base.module_category_sales"/>
     </record>
 
     <!-- Quem opera: importa, corrige o casamento de produto, gera cotação.
@@ -46,6 +46,12 @@
     <record id="rule_liber_amazon_account_company" model="ir.rule">
         <field name="name">Amazon accounts of my companies</field>
         <field name="model_id" ref="model_liber_amazon_account"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="rule_liber_amazon_unit_company" model="ir.rule">
+        <field name="name">Amazon units of my companies</field>
+        <field name="model_id" ref="model_liber_amazon_unit"/>
         <field name="domain_force">[('company_id', 'in', company_ids)]</field>
     </record>
 

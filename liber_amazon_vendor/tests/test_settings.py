@@ -63,7 +63,17 @@ class TestAmazonSettings(AmazonVendorCase):
         settings = self._settings()
         self.assertEqual(settings.amazon_account_id, self.account)
         self.assertEqual(settings.amazon_account_name, self.account.name)
-        self.assertEqual(settings.amazon_partner_id, self.partner_amazon)
+
+    def test_settings_point_at_the_unit_map_not_at_one_customer(self):
+        """
+        O cliente não se configura mais aqui. Um campo único nesta tela dava a
+        entender que uma parceira atende a Amazon inteira — e a impressão
+        custava caro, porque é o CNPJ dela que iria para a nota.
+        """
+        settings = self._settings()
+        self.assertFalse(hasattr(settings, 'amazon_partner_id') and
+                         'amazon_partner_id' in settings._fields)
+        self.assertEqual(settings.amazon_unit_count, 1)
 
     def test_settings_create_the_account_when_there_is_none(self):
         """Primeira configuração: nome e credencial numa tela só."""
@@ -99,6 +109,11 @@ class TestAmazonSettings(AmazonVendorCase):
         causa quase sempre é empresa errada no seletor, e a mensagem diz isso.
         """
         self.account.unlink()
+        # Num banco de verdade pode haver outras contas além da do fixture
+        # (a da casa, com pedidos -- que por isso não se apagam: arquivar
+        # basta, o rollback devolve). O cenário do teste é "nenhuma conta à
+        # vista", e é isso que se monta aqui.
+        self.env['liber.amazon.account'].search([]).write({'active': False})
         with self.assertRaises(UserError) as caught:
             self.env['liber.amazon.import'].create({})
         self.assertIn('Settings', str(caught.exception))

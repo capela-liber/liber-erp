@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     'name': 'Copyright Contracts - Payments',
-    'version': '19.0.1.0.0',
+    'version': '19.0.1.3.0',
     'summary': 'Generate vendor bills to pay authors from open royalties',
     'description': """
 Payments layer for copyright contracts.
@@ -18,6 +18,11 @@ the analytics layer settle the corresponding period.
     'category': 'Sales/Contracts',
     'depends': ['liber_copyright_contracts_analytics', 'account'],
     'data': [
+        # Grupo estreito, padrão da casa: quem tem o app de contratos LÊ as
+        # faturas de royalty (o menu Bills é dele) sem ganhar o Faturamento.
+        'security/ir.model.access.csv',
+        # a cerca que o CSV acima prometia e nunca teve (11/08/2026)
+        'security/contract_bills_rule.xml',
         'data/payment_product.xml',
         'views/res_company_views.xml',
         'views/res_config_settings_views.xml',

@@ -87,9 +87,8 @@ msgstr "Tag de arquivo na nuvem"
 
 #. module: liber_cloud_files
 #: model:ir.module.category,name:liber_cloud_files.module_category_liber_cloud
-#: model:res.groups.privilege,name:liber_cloud_files.privilege_liber_cloud
 msgid "Cloud Files"
-msgstr ""
+msgstr "Arquivos na nuvem"
 
 #. module: liber_cloud_files
 #: model:ir.actions.server,name:liber_cloud_files.cron_liber_cloud_sync_ir_actions_server

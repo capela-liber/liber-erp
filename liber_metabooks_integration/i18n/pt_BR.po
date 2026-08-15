@@ -148,13 +148,6 @@ msgstr "Livro de banho"
 msgid "Big book"
 msgstr "Livro gigante"
 
-#. module: liber_metabooks_integration
-#: model:ir.model.fields,field_description:liber_metabooks_integration.field_product_product__binding
-#: model:ir.model.fields,field_description:liber_metabooks_integration.field_product_product__metabooks_binding
-#: model:ir.model.fields,field_description:liber_metabooks_integration.field_product_template__binding
-#: model:ir.model.fields,field_description:liber_metabooks_integration.field_product_template__metabooks_binding
-msgid "Binding"
-msgstr "Encadernação"
 
 #. module: liber_metabooks_integration
 #: model:ir.model.fields,field_description:liber_metabooks_integration.field_metabooks_auther_publiser__auhor_biographical_note
@@ -1222,11 +1215,6 @@ msgstr "Produto com múltiplos componentes, retratilizado"
 msgid "Multiple-component retail product, slip-cased"
 msgstr "Produto com múltiplos componentes, em estojo"
 
-#. module: liber_metabooks_integration
-#: model:ir.model.fields,field_description:liber_metabooks_integration.field_product_product__metabooks_ncm
-#: model:ir.model.fields,field_description:liber_metabooks_integration.field_product_template__metabooks_ncm
-msgid "NCM"
-msgstr "NCM"
 
 #. module: liber_metabooks_integration
 #: model:ir.model.fields,field_description:liber_metabooks_integration.field_metabooks_auther_publiser__name
@@ -1922,3 +1910,95 @@ msgstr "Depois que o feed do catálogo termina, também busca a ficha técnica d
 #: model:ir.model.fields,help:liber_metabooks_integration.field_metabooks_import_vendor__with_technical
 msgid "Also fetch each book's technical sheet (dimensions, weight, page count, binding, NCM) after the catalogue import — one by-ISBN call per book, run as a follow-up background job."
 msgstr "Também busca a ficha técnica de cada livro (dimensões, peso, número de páginas, encadernação, NCM) após o import do catálogo — uma chamada por ISBN por livro, executada como job de acompanhamento em segundo plano."
+
+#. module: liber_metabooks_integration
+#. odoo-python
+#: code:addons/liber_metabooks_integration/wizards/metabooks_import_isbn.py:0
+msgid "%s failed"
+msgstr "%s com falha"
+
+#. module: liber_metabooks_integration
+#. odoo-python
+#: code:addons/liber_metabooks_integration/wizards/metabooks_import_isbn.py:0
+msgid "%s new"
+msgstr "%s novo(s)"
+
+#. module: liber_metabooks_integration
+#. odoo-python
+#: code:addons/liber_metabooks_integration/wizards/metabooks_import_isbn.py:0
+msgid "%s not found on Metabooks"
+msgstr "%s não encontrado(s) na Metabooks"
+
+#. module: liber_metabooks_integration
+#. odoo-python
+#: code:addons/liber_metabooks_integration/wizards/metabooks_import_isbn.py:0
+msgid "%s updated"
+msgstr "%s atualizado(s)"
+
+#. module: liber_metabooks_integration
+#. odoo-python
+#: code:addons/liber_metabooks_integration/wizards/metabooks_import_isbn.py:0
+msgid "Books from Metabooks"
+msgstr "Livros da Metabooks"
+
+#. module: liber_metabooks_integration
+#. odoo-python
+#: code:addons/liber_metabooks_integration/models/metabooks_product.py:0
+msgid ""
+"Metabooks error for ISBN %(isbn)s:\n"
+"%(msg)s"
+msgstr ""
+"Erro da Metabooks no ISBN %(isbn)s:\n"
+"%(msg)s"
+
+#. module: liber_metabooks_integration
+#. odoo-python
+#: code:addons/liber_metabooks_integration/models/metabooks_product.py:0
+msgid "Metabooks has no record for ISBN %s."
+msgstr "A Metabooks não tem registro para o ISBN %s."
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_metabooks_import_isbn__not_found_isbns
+#: model_terms:ir.ui.view,arch_db:liber_metabooks_integration.metabooks_import_isbn_form
+msgid "Not found on Metabooks"
+msgstr "Não encontrados na Metabooks"
+
+#. module: liber_metabooks_integration
+#. odoo-python
+#: code:addons/liber_metabooks_integration/wizards/metabooks_import_isbn.py:0
+msgid "Nothing imported."
+msgstr "Nada importado."
+
+#. module: liber_metabooks_integration
+#. odoo-python
+#: code:addons/liber_metabooks_integration/wizards/metabooks_import_isbn.py:0
+msgid "Nothing to retry."
+msgstr "Nada para repetir."
+
+#. module: liber_metabooks_integration
+#: model_terms:ir.ui.view,arch_db:liber_metabooks_integration.metabooks_import_isbn_form
+msgid "Retry the failed ones"
+msgstr "Repetir os que falharam"
+
+#. module: liber_metabooks_integration
+#: model_terms:ir.ui.view,arch_db:liber_metabooks_integration.metabooks_import_isbn_form
+msgid "View books"
+msgstr "Ver livros"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_product_product__binding
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_product_template__binding
+msgid "Binding (Metabooks feed)"
+msgstr "Encadernação (feed Metabooks)"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_product_product__metabooks_binding
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_product_template__metabooks_binding
+msgid "Binding (ONIX)"
+msgstr "Encadernação (ONIX)"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_product_product__metabooks_ncm
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_product_template__metabooks_ncm
+msgid "NCM (Metabooks)"
+msgstr "NCM (Metabooks)"

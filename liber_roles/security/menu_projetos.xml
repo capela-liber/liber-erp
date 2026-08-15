@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ==================================================================
+         A porta do app Projetos, aberta também para quem só lê.
+
+         O `project` declara o menu raiz com
+         groups="group_project_user,group_project_manager", e nenhum dos dois
+         serve a quem só lê: o `group_project_user` escreve E CRIA tarefa em
+         projeto alheio (ACL 1,1,1,1 em project.task, com regra r0 w1 c1 u1).
+         O porquê completo está no comentário dos dois grupos, em
+         liber_roles_groups.xml.
+
+         A chave é o `group_project_reader`, o degrau de baixo: quem escreve
+         tarefa (`group_project_task_editor`) o implica, então uma linha só
+         abre a porta para os dois níveis.
+
+         `(4, ...)` e não `(6, 0, [...])`: acrescentar, nunca reescrever. Os
+         dois grupos do Odoo continuam na porta; o nosso entra ao lado.
+
+         O que este arquivo NÃO garante, e é melhor dizer: se alguém rodar um
+         `-u project` sozinho, o `menuitem groups="..."` do core reescreve a
+         lista e derruba a nossa linha até o próximo `-u liber_roles`. Não há
+         como impedir de fora, e a dependência já está do lado certo (o
+         liber_roles depende de `project`, então numa atualização conjunta a
+         nossa palavra é a última). Fica anotado para quem investigar um dia
+         "o Editorial perdeu o Projetos e ninguém mexeu nisso".
+         ================================================================== -->
+
+    <record id="project.menu_main_pm" model="ir.ui.menu">
+        <field name="group_ids" eval="[(4, ref('liber_roles.group_project_reader'))]"/>
+    </record>
+
+</odoo>

@@ -58,6 +58,25 @@
                             <field name="focus_ambiente" readonly="1"/>
                         </group>
                     </group>
+                    <group>
+                        <group string="Transporte" name="nfe_transporte">
+                            <field name="nfe_modalidade_frete"
+                                   readonly="focus_status in ('autorizado', 'processando_autorizacao', 'cancelado')"/>
+                            <!-- Sem criação rápida: transportadora se cadastra
+                                 inteira (CNPJ, IE, endereço), não pelo nome. -->
+                            <field name="nfe_transportadora_id"
+                                   options="{'no_quick_create': True}"
+                                   readonly="focus_status in ('autorizado', 'processando_autorizacao', 'cancelado')"/>
+                        </group>
+                        <group string="Volumes e peso" name="nfe_volumes">
+                            <field name="nfe_volumes"
+                                   readonly="focus_status in ('autorizado', 'processando_autorizacao', 'cancelado')"/>
+                            <field name="nfe_especie_volumes"
+                                   readonly="focus_status in ('autorizado', 'processando_autorizacao', 'cancelado')"/>
+                            <field name="nfe_peso_bruto"
+                                   readonly="focus_status in ('autorizado', 'processando_autorizacao', 'cancelado')"/>
+                        </group>
+                    </group>
                     <field name="focus_mensagem" readonly="1"
                            invisible="not focus_mensagem"/>
                     <group string="Cartas de correção" invisible="not focus_correcoes">

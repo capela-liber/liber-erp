@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     'name': 'Copyright Contracts',
-    'version': '19.0.1.0.0',
+    'version': '19.0.1.1.0',
     'summary': 'Copyright contract management (beneficiaries, works and tiered royalties)',
     'description': """
 Copyright contract management for a publishing house.
@@ -13,6 +13,17 @@ non-recoupable advances. This version only records the contract terms
 
 Testes
 ======
+
+Além do tour, dois TransactionCase: ``tests/test_multi_company_rules.py``
+cobre as regras multiempresa (usuário de outra empresa não vê nem lê por id
+contrato, linha e faixa; entrar nas empresas permitidas volta a dar acesso) e
+``tests/test_unique_royalty_line.py`` garante que a unicidade
+beneficiário+obra por contrato chega ao banco (no v19 o ``_sql_constraints``
+é ignorado; tem que ser ``models.Constraint``). Rodar::
+
+    odoo -d testing -u liber_copyright_contracts --test-enable \\
+      --test-tags '/liber_copyright_contracts' --stop-after-init \\
+      --http-port=8072
 
 O módulo traz um *tour* de regressão que dirige a interface do início ao fim:
 cria um contrato, confere o prazo de renovação sugerido pelas datas, adiciona

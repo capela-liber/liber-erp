@@ -10,19 +10,20 @@
               sequence="88"
               groups="group_liber_amazon_user"/>
 
-    <menuitem id="menu_liber_amazon_orders" name="Purchase Orders"
+    <menuitem id="menu_liber_amazon_orders" name="Orders"
               parent="menu_liber_amazon_root"
               action="action_liber_amazon_order" sequence="10"/>
 
     <!-- Depois de importar e gerar cotações, a pergunta seguinte é sempre
          de calendário: o que vence quando. -->
-    <menuitem id="menu_liber_amazon_schedule" name="Delivery Schedule"
+    <menuitem id="menu_liber_amazon_schedule" name="Schedule"
               parent="menu_liber_amazon_root"
               action="action_liber_amazon_schedule" sequence="15"/>
 
-    <menuitem id="menu_liber_amazon_import" name="Import from Amazon"
+    <!-- A agenda responde por pedido; esta responde por livro. -->
+    <menuitem id="menu_liber_amazon_titles" name="Report"
               parent="menu_liber_amazon_root"
-              action="action_liber_amazon_import" sequence="20"/>
+              action="action_liber_amazon_titles" sequence="17"/>
 
     <menuitem id="menu_liber_amazon_config" name="Configuration"
               parent="menu_liber_amazon_root" sequence="90"
@@ -36,7 +37,11 @@
               action="action_liber_amazon_settings" sequence="5"
               groups="base.group_system"/>
 
-    <menuitem id="menu_liber_amazon_accounts" name="Accounts"
+    <menuitem id="menu_liber_amazon_units" name="Amazon Units"
+              parent="menu_liber_amazon_config"
+              action="action_liber_amazon_unit" sequence="15"/>
+
+    <menuitem id="menu_liber_amazon_accounts" name="Amazon Accounts"
               parent="menu_liber_amazon_config"
               action="action_liber_amazon_account" sequence="10"/>
 

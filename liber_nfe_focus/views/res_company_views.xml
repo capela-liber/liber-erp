@@ -16,6 +16,17 @@
                                 string="Testar conexão" class="btn-secondary"
                                 icon="fa-plug"/>
                     </group>
+                    <!-- O texto explicativo NÃO entra dentro do <group>:
+                         ver o comentário gêmeo no assistente do
+                         liber_support_soc. Aqui ele vira o `help` do próprio
+                         grupo, que é o lugar que o Odoo reserva para isso. -->
+                    <group string="Numeração da NFe"
+                           help="Deixe em ZERO para a Focus numerar, que é o padrão e o recomendado. Preencha só quando a numeração precisar continuar de outro sistema e o painel da Focus não resolver: aí a série e o número passam a sair daqui, e a responsabilidade pela sequência é da casa.">
+                        <field name="nfe_serie_producao"/>
+                        <field name="nfe_proximo_numero_producao"/>
+                        <field name="nfe_serie_homologacao"/>
+                        <field name="nfe_proximo_numero_homologacao"/>
+                    </group>
                     <group string="Dados fiscais e padrões">
                         <field name="focus_regime_tributario"/>
                         <field name="focus_natureza_operacao"/>

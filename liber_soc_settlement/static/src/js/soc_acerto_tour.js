@@ -113,7 +113,11 @@ registry.category("web_tour.tours").add("soc_acerto_tour", {
             run: "click",
         },
         {
-            trigger: ".o_statusbar_status button.o_arrow_button_current:contains('Confirmed')",
+            // Por VALOR, não pelo rótulo: o admin do banco de teste roda em
+            // pt_BR, e no dia em que a tradução do estado entrar no banco a
+            // barra passa a dizer "Confirmado" -- e um tour que cobra o texto
+            // inglês quebra sem que nada de verdade tenha quebrado.
+            trigger: ".o_statusbar_status button.o_arrow_button_current[data-value='confirmed']",
             content: "The operation is Confirmed",
         },
         {

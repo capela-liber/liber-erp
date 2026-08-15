@@ -31,11 +31,33 @@ class ConsignmentMove(models.Model):
         'consignment.template', string='Campaign', copy=False,
         help="Pre-set product list. Use 'Load from Campaign' to fill the lines.")
 
+    # O CANAL DA OPERAÇÃO, carimbado.
+    #
+    # Sem ele a tela de operações -- a mais usada da consignação -- não sabe
+    # dizer de que canal é cada remessa, e não há como agrupar: o Odoo não
+    # agrupa lista por campo que não está armazenado.
+    #
+    # Vem do contrato (é ele quem manda na consignação) e recua para a ficha do
+    # cliente quando ainda não há contrato. Depois de gravado não se reescreve
+    # sozinho: uma remessa de 2024 continua sendo do canal em que foi feita,
+    # mesmo que o cliente mude de canal depois.
+    team_id = fields.Many2one(
+        'crm.team', string='Sales Channel',
+        compute='_compute_team_id', store=True, readonly=False, index=True)
+
     @api.depends('partner_id', 'company_id')
     def _compute_agreement_id(self):
         Agreement = self.env['consignment.agreement']
         for mv in self:
             mv.agreement_id = Agreement._resolve_for(mv.partner_id, mv.company_id)
+
+    @api.depends('agreement_id', 'partner_id', 'company_id')
+    def _compute_team_id(self):
+        for mv in self:
+            if not mv.partner_id:
+                continue
+            mv.team_id = mv.agreement_id.team_id or \
+                mv.partner_id._soc_sales_channel(mv.company_id)
 
     move_kind = fields.Selection([
         ('shipment', 'Shipment'),

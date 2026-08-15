@@ -23,4 +23,38 @@
         <field name="implied_ids" eval="[(4, ref('group_contract_user'))]"/>
         <field name="user_ids" eval="[(4, ref('base.user_admin'))]"/>
     </record>
+
+    <!-- Configuração é um degrau ACIMA do gerente, de propósito: a régua da
+         casa (05/08/2026) é que o gerente opera tudo — confirma, cancela,
+         renova, fecha período — mas quem decide COMO a casa funciona
+         (Configurações do app) é a Direção. O grupo implica o gerente porque
+         quem configura também opera; o contrário é que não vale. -->
+    <record id="group_contract_config" model="res.groups">
+        <field name="name">Configuration</field>
+        <field name="privilege_id" ref="privilege_copyright_contracts"/>
+        <field name="implied_ids" eval="[(4, ref('group_contract_manager'))]"/>
+        <field name="user_ids" eval="[(4, ref('base.user_admin'))]"/>
+    </record>
+
+    <!-- Multi-company: without these rules any user sees every company's
+         contracts. company_id is required on the contract, so no False leg
+         there; lines/tiers keep it because their company is a stored related
+         that legacy rows might not have. -->
+    <record id="rule_contract_multi_company" model="ir.rule">
+        <field name="name">Copyright Contract: multi-company</field>
+        <field name="model_id" ref="model_edlab_contract"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="rule_royalty_line_multi_company" model="ir.rule">
+        <field name="name">Royalty Line: multi-company</field>
+        <field name="model_id" ref="model_edlab_contract_royalty_line"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="rule_royalty_tier_multi_company" model="ir.rule">
+        <field name="name">Royalty Tier: multi-company</field>
+        <field name="model_id" ref="model_edlab_contract_royalty_tier"/>
+        <field name="domain_force">['|', ('line_id.company_id', '=', False), ('line_id.company_id', 'in', company_ids)]</field>
+    </record>
 </odoo>

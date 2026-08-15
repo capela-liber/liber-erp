@@ -6,7 +6,7 @@ class ProductTemplate(models.Model):
     _inherit = 'product.template'
 
     nfe_ncm = fields.Char(
-        string='NCM', size=8,
+        string='NCM (NF-e)', size=8,
         help="Classificação fiscal (8 dígitos). Livro é 4901.99.00. Vazio usa "
              "o NCM padrão da empresa.")
     nfe_origem = fields.Selection(

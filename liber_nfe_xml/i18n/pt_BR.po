@@ -1464,8 +1464,8 @@ msgstr "Pedido de venda"
 #: model:ir.model.fields,field_description:liber_nfe_xml.field_nfe_xml_panel__team_id
 #: model_terms:ir.ui.view,arch_db:liber_nfe_xml.view_nfe_items_search
 #: model_terms:ir.ui.view,arch_db:liber_nfe_xml.view_soc_xml_panel_search
-msgid "Sales Team"
-msgstr "Equipe de vendas"
+msgid "Sales Channel"
+msgstr "Canal de Vendas"
 
 #. module: liber_nfe_xml
 #: model_terms:ir.ui.view,arch_db:liber_nfe_xml.view_nfe_items_search
@@ -1631,8 +1631,8 @@ msgstr "CFOP %s sem classificação (encontrado em NFe importada)"
 
 #. module: liber_nfe_xml
 #: model:ir.actions.server,name:liber_nfe_xml.action_update_team_id
-msgid "Update Sales Team"
-msgstr "Atualizar equipe de vendas"
+msgid "Update Sales Channel"
+msgstr "Atualizar canal de vendas"
 
 #. module: liber_nfe_xml
 #: model:ir.model.fields.selection,name:liber_nfe_xml.selection__nfe_xml_panel__status__valid
@@ -1753,3 +1753,206 @@ msgstr ""
 #: model:ir.model.fields.selection,name:liber_nfe_xml.selection__ir_attachment__status__issue
 msgid "issue"
 msgstr ""
+
+#. module: liber_nfe_xml
+#. odoo-python
+#: code:addons/liber_nfe_xml/wizard/import_xml_file.py:0
+msgid "%s already in the panel"
+msgstr "%s já no painel"
+
+#. module: liber_nfe_xml
+#. odoo-python
+#: code:addons/liber_nfe_xml/wizard/import_xml_file.py:0
+msgid "%s cancellation(s) applied"
+msgstr "%s cancelamento(s) aplicado(s)"
+
+#. module: liber_nfe_xml
+#. odoo-python
+#: code:addons/liber_nfe_xml/wizard/import_xml_file.py:0
+msgid "%s failed"
+msgstr "%s com falha"
+
+#. module: liber_nfe_xml
+#. odoo-python
+#: code:addons/liber_nfe_xml/wizard/import_xml_file.py:0
+msgid "%s non-XML file(s) ignored"
+msgstr "%s arquivo(s) não-XML ignorado(s)"
+
+#. module: liber_nfe_xml
+#. odoo-python
+#: code:addons/liber_nfe_xml/wizard/import_xml_file.py:0
+msgid "%s not an NFe"
+msgstr "%s não são NFe"
+
+#. module: liber_nfe_xml
+#. odoo-python
+#: code:addons/liber_nfe_xml/wizard/import_xml_file.py:0
+msgid "%s note(s) imported"
+msgstr "%s nota(s) importada(s)"
+
+#. module: liber_nfe_xml
+#. odoo-python
+#: code:addons/liber_nfe_xml/wizard/import_xml_file.py:0
+msgid "%s unreadable"
+msgstr "%s ilegível(is)"
+
+#. module: liber_nfe_xml
+#. odoo-python
+#: code:addons/liber_nfe_xml/wizard/import_xml_file.py:0
+msgid "%s with no SEFAZ protocol"
+msgstr "%s sem protocolo da SEFAZ"
+
+#. module: liber_nfe_xml
+#. odoo-python
+#: code:addons/liber_nfe_xml/wizard/import_xml_file.py:0
+msgid "... and %s more (see the server log)."
+msgstr "... e mais %s (veja o log do servidor)."
+
+#. module: liber_nfe_xml
+#. odoo-python
+#: code:addons/liber_nfe_xml/wizard/import_xml_file.py:0
+msgid "Attach at least one file to import (a ZIP archive, or the XML itself)."
+msgstr "Anexe ao menos um arquivo para importar (um ZIP, ou o próprio XML)."
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_res_partner__vat_digits
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_res_users__vat_digits
+msgid "CNPJ/CPF (digits only)"
+msgstr "CNPJ/CPF (só dígitos)"
+
+#. module: liber_nfe_xml
+#: model_terms:ir.ui.view,arch_db:liber_nfe_xml.import_xml_wizard_view
+msgid "Close"
+msgstr "Fechar"
+
+#. module: liber_nfe_xml
+#: model_terms:ir.ui.view,arch_db:liber_nfe_xml.import_xml_wizard_view
+msgid ""
+"Drop the ZIP archives or the loose XML files. Notes\n"
+"                        already in the panel are skipped."
+msgstr "Solte os arquivos ZIP ou os XML avulsos. Notas que já estão no painel são ignoradas."
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_import_xml_file__failure_details
+#: model_terms:ir.ui.view,arch_db:liber_nfe_xml.import_xml_wizard_view
+msgid "Files not imported"
+msgstr "Arquivos não importados"
+
+#. module: liber_nfe_xml
+#. odoo-python
+#: code:addons/liber_nfe_xml/wizard/import_xml_file.py:0
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_import_xml_file__panel_ids
+msgid "Imported notes"
+msgstr "Notas importadas"
+
+#. module: liber_nfe_xml
+#. odoo-python
+#: code:addons/liber_nfe_xml/models/nfe_sefaz.py:0
+msgid ""
+"It runs in the background. Refresh this list in a moment to see how it went."
+msgstr "Roda em segundo plano. Atualize esta lista daqui a pouco para ver como foi."
+
+#. module: liber_nfe_xml
+#. odoo-python
+#: code:addons/liber_nfe_xml/wizard/import_xml_file.py:0
+msgid "Nothing to import."
+msgstr "Nada a importar."
+
+#. module: liber_nfe_xml
+#. odoo-python
+#: code:addons/liber_nfe_xml/models/nfe_sefaz.py:0
+msgid "SEFAZ sweep scheduled"
+msgstr "Varredura da SEFAZ agendada"
+
+#. module: liber_nfe_xml
+#: model_terms:ir.ui.view,arch_db:liber_nfe_xml.view_nfe_sefaz_sweep_list
+msgid ""
+"Schedule a SEFAZ sweep for every company with sync enabled? It runs in the "
+"background."
+msgstr "Agendar uma varredura da SEFAZ para todas as empresas com sincronização ativa? Ela roda em segundo plano."
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_import_xml_file__summary
+msgid "Summary"
+msgstr "Resumo"
+
+#. module: liber_nfe_xml
+#. odoo-python
+#: code:addons/liber_nfe_xml/models/nfe_sefaz.py:0
+msgid ""
+"The SEFAZ sweep cron is disabled, so there is nothing to run the sync in the"
+" background. Enable it in Settings > Technical > Scheduled Actions (\"NFe "
+"XML - SEFAZ DFe Daily Sweep\")."
+msgstr "A rotina de varredura da SEFAZ está desligada, então não há o que rode a sincronização em segundo plano. Ligue em Definições > Técnico > Ações agendadas (\"NFe XML - SEFAZ DFe Daily Sweep\")."
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields,help:liber_nfe_xml.field_res_partner__vat_digits
+#: model:ir.model.fields,help:liber_nfe_xml.field_res_users__vat_digits
+msgid ""
+"The document with every separator stripped. The NFe carries it as bare "
+"digits while the register almost always holds it punctuated, so matching the"
+" two as plain strings never hits: this is the field the XML import looks the"
+" counterparty up by."
+msgstr "O documento sem nenhum separador. A NFe traz só os dígitos e o cadastro quase sempre guarda pontuado, então comparar os dois como texto nunca bate: é por este campo que o import de XML procura a contraparte."
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields.selection,name:liber_nfe_xml.selection__import_xml_file__state__upload
+msgid "Upload"
+msgstr "Envio"
+
+#. module: liber_nfe_xml
+#: model_terms:ir.ui.view,arch_db:liber_nfe_xml.import_xml_wizard_view
+msgid "View imported notes"
+msgstr "Ver notas importadas"
+
+#. module: liber_nfe_xml
+#. odoo-python
+#: code:addons/liber_nfe_xml/wizard/import_xml_file.py:0
+msgid "attachment"
+msgstr "anexo"
+
+#. module: liber_nfe_xml
+#. odoo-python
+#: code:addons/liber_nfe_xml/wizard/import_xml_file.py:0
+msgid "could not be imported"
+msgstr "não pôde ser importado"
+
+#. module: liber_nfe_xml
+#. odoo-python
+#: code:addons/liber_nfe_xml/wizard/import_xml_file.py:0
+msgid "file"
+msgstr "arquivo"
+
+#. module: liber_nfe_xml
+#. odoo-python
+#: code:addons/liber_nfe_xml/wizard/import_xml_file.py:0
+msgid "neither a ZIP archive nor an XML file"
+msgstr "não é um ZIP nem um arquivo XML"
+
+#. module: liber_nfe_xml
+#. odoo-python
+#: code:addons/liber_nfe_xml/models/res_partner.py:0
+msgid "Document out of shape"
+msgstr "Documento fora de formato"
+
+#. module: liber_nfe_xml
+#. odoo-python
+#: code:addons/liber_nfe_xml/models/res_partner.py:0
+msgid "%(doc)s has %(n)s digits: it is neither a CPF (11) nor a CNPJ (14)."
+msgstr "%(doc)s tem %(n)s dígitos: não é CPF (11) nem CNPJ (14)."
+
+#. module: liber_nfe_xml
+#. odoo-python
+#: code:addons/liber_nfe_xml/models/res_partner.py:0
+msgid "Invalid CPF/CNPJ"
+msgstr "CPF/CNPJ inválido"
+
+#. module: liber_nfe_xml
+#. odoo-python
+#: code:addons/liber_nfe_xml/models/res_partner.py:0
+msgid ""
+"The check digits of %(doc)s do not add up. The contact can still be saved, "
+"but do check the document."
+msgstr ""
+"O dígito verificador de %(doc)s não confere. O contato pode ser salvo assim, "
+"mas confira o documento."

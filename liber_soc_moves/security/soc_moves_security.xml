@@ -23,8 +23,21 @@
          operation type. What it removes is the Inventory app, the stock
          adjustments and the warehouse configuration.
          ================================================================== -->
+    <!-- The privilege (2026-08-11). Without it this group fell into the
+         "Extra Rights" section of the user form, which only shows in debug
+         mode — a real access decision hidden in the basement, next to sixty
+         global Settings switches. With a privilege it becomes a normal line
+         of the form. It stays a single-level ladder: there is nothing above
+         or below it, and that is the point. -->
+    <record id="privilege_consignment_stock_docs" model="res.groups.privilege">
+        <field name="name">Consignment stock documents</field>
+        <field name="sequence">30</field>
+        <field name="category_id" ref="liber_soc_agreements.module_category_consignment"/>
+    </record>
+
     <record id="group_consignment_stock_docs" model="res.groups">
         <field name="name">Consignment stock documents</field>
+        <field name="privilege_id" ref="privilege_consignment_stock_docs"/>
         <field name="comment">Technical group: write access to the shipment/return/settlement transfers of consignment, without the Inventory app. Granted through a role (liber_roles), not by hand.</field>
     </record>
 

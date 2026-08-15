@@ -26,6 +26,8 @@
                             string="Test Connection" class="btn-secondary"/>
                     <button name="action_import" type="object"
                             string="Import Now" class="btn-primary"/>
+                    <button name="action_map_units" type="object"
+                            string="Map Units from Orders" class="btn-secondary"/>
                 </header>
                 <sheet>
                     <div class="oe_button_box" name="button_box">
@@ -33,6 +35,11 @@
                                 class="oe_stat_button" icon="fa-list">
                             <field name="order_count" widget="statinfo"
                                    string="Orders"/>
+                        </button>
+                        <button name="action_map_units" type="object"
+                                class="oe_stat_button" icon="fa-map-signs">
+                            <field name="unit_count" widget="statinfo"
+                                   string="Units"/>
                         </button>
                     </div>
                     <div class="oe_title">
@@ -59,9 +66,25 @@
                             and never invoices — those carry an SLA and belong
                             to a person, not to a cron.
                         </div>
-                        <field name="client_id" password="True"/>
-                        <field name="client_secret" password="True"/>
-                        <field name="refresh_token" password="True"/>
+                        <!-- Mesmo contrato das Definições: o que está gravado
+                             nunca volta ao navegador; em branco mantém. Os
+                             campos reais ficam fora da view de propósito. -->
+                        <div class="alert alert-warning" role="alert"
+                             colspan="2">
+                            The secret fields <strong>always arrive
+                            empty</strong>, on purpose: the stored value never
+                            goes back to the browser. Leaving one empty
+                            <strong>keeps</strong> what is already saved — fill
+                            it in only to replace it.
+                        </div>
+                        <field name="credentials_set" readonly="1"
+                               widget="boolean_toggle"/>
+                        <field name="client_id_input" password="True"
+                               placeholder="leave empty to keep the current one"/>
+                        <field name="client_secret_input" password="True"
+                               placeholder="leave empty to keep the current one"/>
+                        <field name="refresh_token_input" password="True"
+                               placeholder="leave empty to keep the current one"/>
                     </group>
                 </sheet>
                 <chatter/>

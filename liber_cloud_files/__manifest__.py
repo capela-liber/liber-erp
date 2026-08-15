@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     'name': 'Cloud Files (base)',
-    'version': '19.0.0.1.0',
+    'version': '19.0.0.2.0',
     'summary': 'The chassis under Dropbox, Google Drive and GitHub: '
                'per-folder ACLs, sharing ledger, links and tags',
     'description': """

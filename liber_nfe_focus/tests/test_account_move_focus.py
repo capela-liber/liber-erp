@@ -5,6 +5,7 @@ Contra um banco de teste de verdade, sem mockar o ORM. O que é mockado é só a
 Focus (a rede), via um cliente falso injetado no lugar do real.
 """
 
+from decimal import Decimal
 from unittest.mock import patch
 
 from odoo.addons.account.tests.common import AccountTestInvoicingCommon
@@ -413,6 +414,44 @@ class TestAccountMoveFocus(AccountTestInvoicingCommon):
         self.assertEqual(move._focus_build_ref(), move._focus_build_ref())
         self.assertIn(str(move.id), move._focus_build_ref())
 
+    def test_rejeicao_deriva_ref_nova_na_reemissao(self):
+        """A Focus congela a ref na nota rejeitada: reemitir com a mesma ref
+        devolve a recusa velha para sempre. Depois de `erro_autorizacao` a
+        ref avança com -R2, e é a nova que vai no POST."""
+        move = self._fatura()
+        falso = FakeFocusClient({'status': 'processando_autorizacao'})
+
+        with patch.object(type(self.company), '_focus_client',
+                          return_value=falso):
+            move.action_focus_emitir()
+            ref_original = move.focus_ref
+
+            move.write({'focus_status': 'erro_autorizacao'})
+            move.action_focus_emitir()
+
+        self.assertEqual(move.focus_ref, '%s-R2' % ref_original)
+        self.assertEqual(falso.emissoes[-1][0], '%s-R2' % ref_original,
+                         "o POST não foi com a ref nova")
+
+    def test_rejeicoes_sucessivas_incrementam_o_sufixo(self):
+        """-R2 rejeitada vira -R3, não -R2-R2."""
+        move = self._fatura()
+        move.write({'focus_ref': 'EDLAB-1-77-R2',
+                    'focus_status': 'erro_autorizacao'})
+
+        self.assertEqual(move._focus_ref_para_emissao(), 'EDLAB-1-77-R3')
+
+    def test_repeticao_sem_rejeicao_mantem_a_ref(self):
+        """O sufixo só anda DEPOIS de rejeição definitiva: a repetição da
+        mesma tentativa (rollback, clique duplo) cai na mesma ref, que é a
+        proteção contra nota duplicada."""
+        move = self._fatura()
+        self.assertEqual(move._focus_ref_para_emissao(),
+                         move._focus_build_ref())
+
+        move.write({'focus_ref': 'EDLAB-1-77', 'focus_status': 'nao_enviado'})
+        self.assertEqual(move._focus_ref_para_emissao(), 'EDLAB-1-77')
+
     def test_prefixo_nfe_da_chave_e_removido(self):
         """A Focus devolve a chave prefixada com 'NFe', como no código de
         barras do DANFE. O nfe_key exige 44 dígitos e nada mais: sem limpar, a
@@ -568,6 +607,60 @@ class TestAccountMoveFocus(AccountTestInvoicingCommon):
         self.assertNotIn('valor_desconto', payload['items'][0])
         self.assertEqual(payload['valor_desconto'], '0.00')
 
+    # -- frete e transportadora ------------------------------------------
+    def _transportadora(self):
+        return self.env['res.partner'].create({
+            'name': 'Transportes Andorinha',
+            'is_company': True,
+            'vat': '11222333000181',
+            'street': 'Rua das Gaivotas',
+            'nfe_numero': '10',
+            'nfe_bairro': 'Centro',
+            'city': 'São Paulo',
+            'state_id': self.env.ref('base.state_br_sp').id,
+            'country_id': self.env.ref('base.br').id,
+            'nfe_inscricao_estadual': '111222333555',
+        })
+
+    def test_modalidade_e_transportadora_viajam_na_nota(self):
+        move = self._fatura(post=False)
+        move.write({'nfe_modalidade_frete': '0',
+                    'nfe_transportadora_id': self._transportadora().id})
+        move.action_post()
+
+        payload = move._focus_build_payload()
+
+        self.assertEqual(payload['modalidade_frete'],
+                         nfe_payload.FRETE_EMITENTE)
+        self.assertEqual(payload['nome_transportador'],
+                         'Transportes Andorinha')
+        self.assertEqual(payload['cnpj_transportador'], '11222333000181')
+        self.assertEqual(payload['inscricao_estadual_transportador'],
+                         '111222333555')
+        self.assertEqual(payload['endereco_transportador'],
+                         'Rua das Gaivotas, 10')
+        self.assertEqual(payload['uf_transportador'], 'SP')
+
+    def test_fatura_sem_frete_sai_sem_ocorrencia(self):
+        """O comportamento de sempre: nada preenchido, modalidade 9."""
+        payload = self._fatura()._focus_build_payload()
+
+        self.assertEqual(payload['modalidade_frete'], nfe_payload.FRETE_SEM)
+        self.assertNotIn('nome_transportador', payload)
+
+    def test_transportadora_nao_viaja_sem_ocorrencia_de_transporte(self):
+        """Modalidade 9 cala o grupo transportador, mesmo preenchido."""
+        move = self._fatura(post=False)
+        move.write({'nfe_modalidade_frete': '9',
+                    'nfe_transportadora_id': self._transportadora().id})
+        move.action_post()
+
+        payload = move._focus_build_payload()
+
+        self.assertEqual(payload['modalidade_frete'], nfe_payload.FRETE_SEM)
+        self.assertNotIn('nome_transportador', payload)
+        self.assertNotIn('cnpj_transportador', payload)
+
 @tagged('post_install', '-at_install', 'focus_nfe')
 class TestResPartnerFocus(AccountTestInvoicingCommon):
 
@@ -687,6 +780,50 @@ class TestNotaServivel(TestAccountMoveFocus):
         self.assertEqual(payload['formas_pagamento'][0]['forma_pagamento'], '14')
         self.assertEqual(payload['valor_liquido_fatura'], '269.70')
 
+    def test_o_centavo_do_arredondamento_global_nao_vira_rejeicao(self):
+        """Rejeição 866 na n-1, em 14/08/2026, em duas notas.
+
+        São dois arredondamentos do mesmo dinheiro. A NFe soma os itens JÁ
+        arredondados -- é o que a SEFAZ confere. O Odoo, com a empresa
+        arredondando globalmente (que é como as seis da casa estão), soma os
+        valores exatos das linhas e arredonda no fim, e depois joga a sobra na
+        conta de uma das linhas para o lançamento fechar.
+
+        Três linhas de 2 x 69,90 com 52%: 67,104 por linha, que vira 67,10 no
+        item e 201,31 no rodapé do Odoo contra 201,30 na nota. A cobrança saía
+        um centavo maior que a nota, e a SEFAZ pede troco -- que numa venda a
+        prazo não existe.
+
+        Com uma linha só nada disso aparece: é preciso mais de uma para haver
+        sobra a distribuir.
+        """
+        self.company.tax_calculation_rounding_method = 'round_globally'
+        linha = {
+            'product_id': self.livro.id, 'name': self.livro.name,
+            'quantity': 2, 'price_unit': 69.90, 'discount': 52.0,
+            'tax_ids': [(5, 0, 0)]}
+        move = self.env['account.move'].create({
+            'move_type': 'out_invoice', 'partner_id': self.cliente.id,
+            'invoice_date': '2026-07-30', 'invoice_date_due': '2026-11-12',
+            'invoice_line_ids': [(0, 0, dict(linha)) for _ in range(3)]})
+        preparar_documento_latam(move)
+        move.action_post()
+        # A divergência tem de existir de fato, senão o teste não prova nada.
+        self.assertEqual(move.amount_total, 201.31)
+        self.assertEqual(
+            round(sum(move.invoice_line_ids.mapped('price_subtotal')), 2), 201.30)
+
+        payload = move._focus_build_payload()
+
+        total = Decimal(payload['valor_total'])
+        self.assertEqual(total, Decimal('201.30'))
+        pago = sum(Decimal(f['valor_pagamento'])
+                   for f in payload['formas_pagamento'])
+        self.assertLessEqual(pago, total)
+        self.assertEqual(sum(Decimal(d['valor']) for d in payload['duplicatas']),
+                         Decimal(payload['valor_liquido_fatura']))
+        self.assertEqual(Decimal(payload['valor_liquido_fatura']), total)
+
 
 @tagged('post_install', '-at_install', 'focus_nfe')
 class TestHistoricoSefaz(TestAccountMoveFocus):
@@ -766,3 +903,28 @@ class TestHistoricoSefaz(TestAccountMoveFocus):
         corpo = ' '.join(self._mensagens(move).mapped('body'))
         self.assertNotIn('<script>', corpo)
         self.assertIn('&lt;script&gt;', corpo)
+
+    def test_pedido_vai_em_dados_adicionais(self):
+        """O cliente casa a nota com o pedido dele, não com o número dela."""
+        move = self._fatura()
+        move.invoice_origin = 'S00123'
+        move.narration = False
+
+        self.assertEqual(move._focus_informacoes_adicionais(), 'Pedido: S00123')
+
+    def test_observacao_da_fatura_acompanha_o_pedido(self):
+        move = self._fatura()
+        move.invoice_origin = 'S00123'
+        move.narration = '<p>Entregar pela manhã</p>'
+
+        texto = move._focus_informacoes_adicionais()
+        self.assertIn('Pedido: S00123', texto)
+        self.assertIn('Entregar pela manhã', texto)
+
+    def test_sem_pedido_e_sem_observacao_nao_vai_nada(self):
+        move = self._fatura()
+        move.invoice_origin = False
+        move.narration = False
+
+        self.assertFalse(move._focus_informacoes_adicionais())
+

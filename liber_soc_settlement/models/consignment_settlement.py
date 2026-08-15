@@ -28,6 +28,15 @@ class ConsignmentSettlement(models.Model):
         help="Resolved from the customer (one agreement per customer).")
     agreement_state = fields.Selection(
         related='agreement_id.state', string='Agreement Status')
+    # O CANAL DO ACERTO, carimbado -- a linha já tinha (`related` do contrato),
+    # o documento não. Sem ele a tela de acertos não agrupa por canal, que é a
+    # pergunta que o comercial faz primeiro: quanto acertou cada canal no mês.
+    #
+    # Carimbo, e não `related`: o acerto é uma apuração fechada, e o número não
+    # pode mudar de canal porque alguém corrigiu a ficha do cliente depois.
+    team_id = fields.Many2one(
+        'crm.team', string='Sales Channel',
+        compute='_compute_team_id', store=True, readonly=False, index=True)
     agreement_valid = fields.Boolean(
         string='Valid Agreement', compute='_compute_agreement_valid',
         help="The customer has an active consignment agreement.")
@@ -94,6 +103,14 @@ class ConsignmentSettlement(models.Model):
         Agreement = self.env['consignment.agreement']
         for st in self:
             st.agreement_id = Agreement._resolve_for(st.partner_id, st.company_id)
+
+    @api.depends('agreement_id', 'partner_id', 'company_id')
+    def _compute_team_id(self):
+        for st in self:
+            if not st.partner_id:
+                continue
+            st.team_id = st.agreement_id.team_id or \
+                st.partner_id._soc_sales_channel(st.company_id)
 
     @api.depends('agreement_id.state')
     def _compute_agreement_valid(self):
@@ -249,8 +266,13 @@ class ConsignmentSettlement(models.Model):
         team = self.agreement_id.team_id
         if not team:
             return self.env['consignment.template']
+        # A empresa é parte da pergunta, e não era: com um canal por editora, o
+        # `team_id` separava as campanhas por acidente. Canal unificado exige o
+        # filtro explícito, senão uma campanha da n-1 passa a valer num acerto
+        # da Edlab.
         return self.env['consignment.template'].search([
             ('is_running', '=', True), ('team_id', '=', team.id),
+            ('company_id', '=', (self.company_id or self.env.company).id),
         ])
 
     def action_apply_campaigns(self):
@@ -431,27 +453,66 @@ class ConsignmentSettlement(models.Model):
         Short._sync_for_settlement(self, vals)
 
     def action_populate_from_shelf(self):
+        """Fill the grid from the customer's shelf — MERGING, not wiping.
+
+        It used to ``line_ids.unlink()`` and rebuild, which silently
+        destroyed whatever the operator (or the support import) had
+        already typed: draft a CO from a conversation, press Map, lose
+        the import (caught 10/08/2026). Now typed lines survive, shelf
+        products that are missing get added, and only untouched lines
+        whose product is not on the shelf are dropped."""
         self.ensure_one()
         self._ensure_valid_agreement()
         if not self.location_id:
             raise UserError(_("The agreement has no shelf. Activate it first."))
-        self.line_ids.unlink()
         quants = self.env['stock.quant'].search([
             ('location_id', '=', self.location_id.id), ('quantity', '>', 0)])
-        pricelist = self.agreement_id.pricelist_id
         aggregated = {}
         for quant in quants:
             aggregated.setdefault(quant.product_id, 0.0)
             aggregated[quant.product_id] += quant.quantity
-        vals = []
-        for product, qty in aggregated.items():
-            price = pricelist._get_product_price(product, qty) if pricelist else product.list_price
-            # qty_on_shelf is computed live while draft -- no snapshot to write here.
-            vals.append((0, 0, {
-                'product_id': product.id,
-                'price_unit': price,
-            }))
-        self.line_ids = vals
+        # a linha digitada é trabalho feito; só a intocada e fora da
+        # prateleira é lixo de reconstrução
+        untouched = self.line_ids.filtered(
+            lambda l: not (l.qty_reported or l.qty_return
+                           or l.qty_replenish))
+        untouched.filtered(
+            lambda l: l.product_id not in aggregated).unlink()
+        # Price and discount are left to the line's own compute
+        # (`_price_and_discount`): written here too, this screen was the second
+        # place that had to know how a pricelist and the agreement's discount
+        # combine -- and it was the one that got it wrong, pouring the net price
+        # into `price_unit` while the discount went in whole on top of it.
+        # qty_on_shelf is computed live while draft -- no snapshot to write here.
+        present = set(self.line_ids.mapped('product_id'))
+        self.line_ids = [
+            (0, 0, {'product_id': product.id})
+            for product in aggregated if product not in present
+        ]
+
+    def _open_noshelf_wizard(self, ghost_lines):
+        self.ensure_one()
+        parts = []
+        for l in ghost_lines:
+            # _() fora de genexpr: dentro dele o detector de língua não
+            # acha o frame e pula a tradução (aviso no log)
+            parts.append(_(
+                "- %(product)s: settling %(rep)s, shelf has %(shelf)s",
+                product=l.product_id.display_name, rep=l.qty_reported,
+                shelf=l.qty_on_shelf))
+        summary = "\n".join(parts)
+        wizard = self.env['consignment.run.noshelf.wizard'].create({
+            'settlement_id': self.id,
+            'summary': summary,
+        })
+        return {
+            'type': 'ir.actions.act_window',
+            'name': _('Settling without shelf stock'),
+            'res_model': 'consignment.run.noshelf.wizard',
+            'view_mode': 'form',
+            'res_id': wizard.id,
+            'target': 'new',
+        }
 
     def _open_overstock_wizard(self, over_lines):
         self.ensure_one()
@@ -493,7 +554,28 @@ class ConsignmentSettlement(models.Model):
         self.write({'state': 'draft'})
 
     def action_cancel(self):
-        """Cancel the operation and cascade to the documents it generated."""
+        """Cancel a DRAFT operation. A confirmed one cannot be cancelled.
+
+        'confirmed' is only ever written inside action_run, which validates the
+        delivery picking in the same call. So a confirmed CO always means the
+        shelf was already debited and the sale already exists -- there is no
+        state here where "confirmed" means "nothing happened yet".
+
+        Cancelling one used to cascade over the sale, the remessa and the
+        devolucao, but skip any picking already 'done'. The books stayed off the
+        customer's shelf with no sale behind them, and the chatter listed only
+        what HAD been cancelled, so the hole was invisible. The way back from a
+        wrong Run is a compensating operation (or an audit adjustment), never a
+        cancel that reports success it did not deliver.
+        """
+        wrong_state = self.filtered(lambda s: s.state != 'draft')
+        if wrong_state:
+            raise UserError(_(
+                "%(co)s cannot be cancelled: it was already run, so the shelf "
+                "was debited and the sale exists. Cancelling would undo the "
+                "paperwork and leave the stock movement standing. Correct it "
+                "with a new operation, or with a stock audit adjustment.",
+                co=", ".join(wrong_state.mapped('name'))))
         for st in self:
             cancelled = []
             so = st.sale_order_id
@@ -542,6 +624,12 @@ class ConsignmentSettlement(models.Model):
                 raise UserError(_(
                     "Nothing to do: no sales reported, no replenishment and no "
                     "return planned."))
+            # Settling a book the shelf does not have is settling thin
+            # air — offer to run WITHOUT those titles, leaving an
+            # activity to fix the shelf stock (pedido de 10/08/2026).
+            ghost = sold.filtered(lambda l: l.qty_reported > l.qty_on_shelf)
+            if ghost:
+                return st._open_noshelf_wizard(ghost)
             over = to_replenish.filtered(lambda l: l.qty_replenish > l.qty_on_hand)
             if over:
                 return st._open_overstock_wizard(over)
@@ -670,7 +758,15 @@ class ConsignmentSettlement(models.Model):
 
         The dispatcher creates a *Pedido*, not a bare movement -- left in draft
         so the commercial team can review/edit/confirm it. It is a consignment
-        order (is_consignment), never a sale."""
+        order (is_consignment), never a sale.
+
+        Price and discount are STAMPED from the acerto's own lines, exactly as
+        _create_sale_order stamps them. Left unstamped, the Pedido fell back to
+        whatever pricelist the customer's card happens to carry and was born
+        outside the agreement that asked for it -- and, with the Discounts
+        setting off, with the reduction melted into the unit price and Desc.
+        at zero. The remessa note (REM/) reads `line.discount` to declare
+        vDesc: what is not stamped here leaves the DANFE with no discount."""
         self.ensure_one()
         return self.env['sale.order'].create({
             'partner_id': self.partner_id.id,
@@ -685,6 +781,8 @@ class ConsignmentSettlement(models.Model):
             'order_line': [(0, 0, {
                 'product_id': line.product_id.id,
                 'product_uom_qty': line.qty_replenish,
+                'price_unit': line.price_unit,
+                'discount': line.discount,
             }) for line in to_send],
         })
 
@@ -1149,19 +1247,48 @@ class ConsignmentSettlementLine(models.Model):
             'domain': [('id', 'in', self.sale_order_ids.ids)],
         }
 
-    @api.depends('product_id')
+    def _price_and_discount(self, product=None, qty=1.0):
+        """O preço BRUTO e o desconto em percentual, para este contrato.
+
+        A LISTA MANDA. Um contrato com lista de preços já tem, na lista, o
+        percentual que a casa concede a esse cliente -- e `_get_product_price`
+        devolve o preço com ele DENTRO. Aplicar por cima o `discount` do
+        contrato descontava duas vezes: lista de 30% sobre 100,00 dá 70,00, e
+        um contrato de 40% fechava em 42,00 onde o combinado eram 60,00. Os
+        dois números são plausíveis, e ninguém percebia.
+
+        Então: com lista, o preço é o de tabela CHEIO e o desconto é o dela; o
+        `discount` do contrato é o padrão de quem não tem lista. Regra fixa ou
+        fórmula não tem percentual a declarar -- o preço da lista É o preço, e
+        o contrato não desconta em cima dele.
+        """
+        self.ensure_one()
+        product = product or self.product_id
+        agreement = self.settlement_id.agreement_id
+        pricelist = agreement.pricelist_id
+        if not pricelist:
+            return product.list_price, agreement.discount
+        price, rule_id = pricelist._get_product_price_rule(product, qty)
+        rule = self.env['product.pricelist.item'].browse(rule_id)
+        if rule.compute_price != 'percentage':
+            return price, 0.0
+        bruto = rule._compute_price_before_discount(
+            product=product, quantity=qty, uom=product.uom_id,
+            date=fields.Date.context_today(self), currency=pricelist.currency_id)
+        return bruto, rule.percent_price
+
+    @api.depends('product_id', 'settlement_id.agreement_id')
     def _compute_price_unit(self):
         for line in self:
             if line.product_id:
-                pricelist = line.settlement_id.agreement_id.pricelist_id
-                line.price_unit = (
-                    pricelist._get_product_price(line.product_id, 1)
-                    if pricelist else line.product_id.list_price)
+                line.price_unit = line._price_and_discount()[0]
 
-    @api.depends('settlement_id.agreement_id')
+    @api.depends('product_id', 'settlement_id.agreement_id')
     def _compute_discount(self):
         for line in self:
-            line.discount = line.settlement_id.agreement_id.discount
+            line.discount = (
+                line._price_and_discount()[1] if line.product_id
+                else line.settlement_id.agreement_id.discount)
 
     @api.depends('qty_reported', 'qty_target', 'qty_on_shelf', 'settlement_id.state')
     def _compute_qty_replenish(self):

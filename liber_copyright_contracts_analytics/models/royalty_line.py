@@ -72,7 +72,12 @@ class EdlabContractRoyaltyLine(models.Model):
         account (the running total still advances so tiers stay correct on
         re-runs). Returns an ``ir.actions.client`` notification.
         """
-        AnalyticLine = self.env["account.analytic.line"]
+        # sudo: accruals carry the COMPANY OF THE SALE (which may not be among
+        # the user's allowed companies once cross-company sources are
+        # configured). Without it, the idempotency search_count would miss
+        # lines the user cannot see and book them again, and the create would
+        # be refused outright.
+        AnalyticLine = self.env["account.analytic.line"].sudo()
 
         # "Nothing to do" has three very different causes, and saying "already up
         # to date" for all of them is a lie by omission: it tells the user their
@@ -162,13 +167,25 @@ class EdlabContractRoyaltyLine(models.Model):
                 AnalyticLine.create(
                     {
                         "name": "%.2f%%" % percentage,
+                        # account_id is the family's internal spine (searches,
+                        # reports, group-bys); auto_account_id makes core fill
+                        # the account's PLAN column (x_planN_id), which is the
+                        # only thing core aggregates -- without it the account
+                        # form shows a zero balance over hundreds of entries.
                         "account_id": account.id,
+                        "auto_account_id": account.id,
                         "date": move.invoice_date or move.date,
                         "amount": -(base * percentage / 100.0),
                         "unit_amount": line.quantity,
                         "partner_id": royalty.partner_id.id,
                         "product_id": line.product_id.id,
-                        "company_id": line.company_id.id,
+                        # The accrual is an entry on the CONTRACT company's
+                        # ledger, whatever company made the sale -- and
+                        # check_company forbids stamping the sale's company on
+                        # an account of another one. The selling company is
+                        # tracked by the source move line (see the
+                        # intercompany layer's edlab_source_company_id).
+                        "company_id": royalty.company_id.id,
                         "edlab_royalty_percentage": percentage,
                         "ref": move.name,
                         "edlab_source_move_line_id": line.id,
@@ -221,6 +238,7 @@ class EdlabContractRoyaltyLine(models.Model):
                             {
                                 "name": _("Payment"),
                                 "account_id": account.id,
+                                "auto_account_id": account.id,
                                 "date": cutoff,
                                 "amount": desired,
                                 "partner_id": royalty.partner_id.id,
@@ -380,6 +398,7 @@ class EdlabContractRoyaltyLine(models.Model):
             vals = {
                 "name": _("Recoupable advance"),
                 "account_id": account.id,
+                "auto_account_id": account.id,
                 "date": date,
                 "amount": advance,
                 "partner_id": royalty.partner_id.id,

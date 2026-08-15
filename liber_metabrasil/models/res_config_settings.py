@@ -59,7 +59,7 @@ class ResConfigSettings(models.TransientModel):
             'tag': 'display_notification',
             'params': {
                 'type': 'info',
-                'title': _("Metabrasil print prices"),
+                'title': _("Dropship Price"),
                 'message': _(
                     "Sweep scheduled: it starts within the minute and runs in "
                     "the background. Follow it in Settings > Technical > "

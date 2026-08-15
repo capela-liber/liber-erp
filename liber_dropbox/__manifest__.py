@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     'name': 'Dropbox Files',
-    'version': '19.0.0.2.0',
+    'version': '19.0.0.3.0',
     'summary': 'The Dropbox shelf on the Cloud Files chassis',
     'description': """
 Dropbox is the shelf, Odoo is the gate.

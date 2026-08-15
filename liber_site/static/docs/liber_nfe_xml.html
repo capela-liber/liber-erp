@@ -1,6 +1,22 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
+<script>
+/* Servido por /liber_site/static/docs/, este arquivo vem com uma semana de
+   cache e o docs.js sem versão -- e o índice monta a lista a partir dele. Foi
+   assim que a emissão de NF-e e o manual da Amazon ficaram invisíveis: o
+   catálogo em cache era anterior aos dois. A rota /liber/docs/ serve o mesmo
+   arquivo sem cache e com ?v=<mtime> nos assets. Quem chegar pelo caminho
+   antigo (favorito, link velho, resultado de busca) vai para lá antes de a
+   página montar qualquer coisa. */
+(function () {
+  var antigo = "/liber_site/static/docs/";
+  if (location.pathname.indexOf(antigo) === 0) {
+    location.replace("/liber/docs/" + location.pathname.slice(antigo.length) +
+                     location.search + location.hash);
+  }
+})();
+</script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Importação de XML de NF-e — Manuais do Liber</title>
@@ -58,6 +74,20 @@
       </table></div>
       <p>O outro lado da nota (a livraria, o fornecedor) vira o <span class="field">Cliente</span> do registro. Se esse CNPJ ainda não existe no cadastro de contatos, o contato é <b>criado automaticamente</b> com o nome e o CNPJ que constam no XML — e se já existe com um nome diferente, o nome é atualizado, porque a razão social da nota fiscal é a fonte oficial.</p>
       <p>Cada usuário só enxerga as notas das empresas às quais tem acesso: a lista respeita o seletor de empresas no topo da tela.</p>
+
+      <h2 id="documento">O CPF/CNPJ no cadastro de contatos</h2>
+      <p>Casar nota com contato é casar documento com documento, e por isso o módulo também cuida de como o documento é escrito e do que ele diz sobre o contato. Vale para todo contato, digitado ou importado — não só para os que nascem de um XML.</p>
+      <div class="tablewrap"><table>
+        <thead><tr><th>Regra</th><th>O que acontece</th></tr></thead>
+        <tbody>
+          <tr><td><strong>A pontuação se escreve sozinha</strong></td><td>Digite <code>43791310000199</code> e o campo grava <code>43.791.310/0001-99</code>; onze dígitos viram <code>171.037.078-55</code>. Vale ao digitar e ao gravar, inclusive por importação de planilha.</td></tr>
+          <tr><td><strong>Quem tem CNPJ é empresa</strong></td><td>Um contato com CNPJ é marcado como <span class="field">Empresa</span> — um CNPJ é emitido a pessoa jurídica, e um cadastro que diga o contrário está errado.</td></tr>
+          <tr><td><strong>Quem tem CPF é pessoa — só ao nascer</strong></td><td>Um contato <em>novo</em> com CPF é marcado como <span class="field">Indivíduo</span>. Num contato já salvo, o sistema não mexe: ver o aviso abaixo.</td></tr>
+          <tr><td><strong>Dígito verificador confere, mas não barra</strong></td><td>Documento cujos dígitos não fecham gera um <strong>aviso</strong> na tela; o contato pode ser salvo assim mesmo.</td></tr>
+        </tbody>
+      </table></div>
+      <div class="callout warn"><span class="title">A regra vale num sentido só, de propósito</span><p>O CNPJ promove a empresa; o CPF <strong>não</strong> rebaixa uma empresa já cadastrada. É comum uma editora ter um CPF digitado no campo do documento — nesses casos o documento é que está errado, não o cadastro, e rebaixar a empresa a pessoa física corromperia a ficha, os contatos pendurados nela e os pedidos. Contato-filho cujo documento é o da matriz também fica de fora: o Odoo replica o CNPJ da empresa nos contatos dela, e promover a pessoa inventaria uma empresa que não existe.</p></div>
+      <div class="callout note"><span class="title">Por que não a validação do Odoo</span><p>O Odoo tem o módulo <code>base_vat</code>, que também valida CPF e CNPJ. Ele não é usado aqui por duas razões: ele <em>desfaz</em> a pontuação a cada gravação, e valida como <strong>impedimento</strong> — um cadastro migrado com documentos irregulares deixaria de poder ser salvo. Aqui a conferência avisa e deixa passar.</p></div>
 
       <h2 id="configuracao">Configuração</h2>
       <p>Para importar por ZIP não é preciso configurar nada: instale o módulo e importe. Duas configurações são opcionais:</p>

@@ -1095,3 +1095,10 @@ msgstr "Selecione uma campanha primeiro."
 #: model_terms:ir.ui.view,arch_db:liber_soc_moves.view_consigned_stock_search
 msgid "Sales Channel"
 msgstr "Canal de Vendas"
+
+#. module: liber_soc_moves
+#. module: liber_soc_moves
+#. odoo-python
+#: code:addons/liber_soc_moves/models/res_company.py:0
+msgid "Consignment Delivery"
+msgstr "Entrega de Consignação"

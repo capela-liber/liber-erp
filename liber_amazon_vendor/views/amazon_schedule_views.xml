@@ -13,22 +13,52 @@
         <field name="name">liber.amazon.order.schedule.list</field>
         <field name="model">liber.amazon.order</field>
         <field name="arch" type="xml">
-            <list default_order="delivery_end asc"
+            <!-- Só o atraso ganha cor.
+
+                 O âmbar marcava "vence em 7 dias", e com o filtro de abertos
+                 ligado quase toda linha caía numa das duas faixas: a tabela
+                 inteira colorida, e as duas cores próximas o bastante para
+                 parecerem uma só. A urgência já está dita duas vezes — a
+                 ordenação é pelo prazo mais próximo e a coluna Dias restantes
+                 mostra o número, com sinal. -->
+            <list create="false" default_order="delivery_end asc"
                   decoration-danger="is_late"
-                  decoration-warning="days_to_deadline &gt;= 0 and days_to_deadline &lt;= 7 and is_open"
                   decoration-muted="not is_open">
-                <field name="delivery_end" string="Deadline"/>
-                <field name="days_to_deadline" string="Days Left"/>
-                <field name="name"/>
-                <field name="order_date"/>
-                <field name="lead_time_days" string="Days Granted" optional="show"/>
-                <field name="delivery_start" optional="hide"/>
-                <field name="amazon_state"/>
-                <field name="ship_to_party" string="Destination" optional="show"/>
-                <field name="line_count" string="Lines" sum="Lines"/>
+                <!-- Largura fixa em tudo que tem tamanho previsível: data,
+                     contagem, sigla, badge. O que sobra vai para a coluna de
+                     valor, que é a única em que o texto varia de verdade.
+                     Sem isso o Odoo reparte em partes iguais e o PO fica com
+                     o dobro do espaço de que precisa. -->
+                <!-- O prazo mostrado como "faltam N dias", e ordenável.
+
+                     A coluna Dias restantes era calculada na hora, e o Odoo
+                     só ordena por coluna que exista no banco. Gravar o número
+                     resolveria a ordenação e criaria outro problema: ele muda
+                     sozinho à meia-noite e ficaria velho em silêncio. O
+                     widget `remaining_days` lê a própria data — ordena pela
+                     coluna real e conta os dias no navegador, sempre certo. -->
+                <field name="delivery_end" string="Deadline" width="170px"
+                       widget="remaining_days" options="{'allow_order': '1'}"/>
+                <field name="days_to_deadline" string="Days Left"
+                       optional="hide" width="100px"/>
+                <field name="name" width="130px"/>
+                <field name="order_date" width="150px"/>
+                <field name="lead_time_days" string="Days Granted"
+                       optional="show" width="120px"/>
+                <field name="delivery_start" optional="hide" width="150px"/>
+                <field name="amazon_state" column_invisible="True"/>
+                <field name="amazon_state_label" widget="badge" width="150px"
+                       decoration-info="amazon_state == 'New'"
+                       decoration-warning="amazon_state == 'Acknowledged'"
+                       decoration-muted="amazon_state == 'Closed'"/>
+                <field name="ship_to_party" string="Destination"
+                       optional="show" width="110px"/>
+                <field name="line_count" string="Lines" sum="Lines" width="80px"/>
                 <field name="amount_total" widget="monetary" sum="Total"/>
                 <field name="currency_id" column_invisible="True"/>
-                <field name="state" widget="badge"/>
+                <field name="state" widget="badge" width="150px"
+                       decoration-info="state == 'imported'"
+                       decoration-success="state == 'quoted'"/>
                 <field name="is_late" column_invisible="True"/>
                 <field name="is_open" column_invisible="True"/>
             </list>
@@ -109,7 +139,7 @@
     </record>
 
     <record id="action_liber_amazon_schedule" model="ir.actions.act_window">
-        <field name="name">Delivery Schedule</field>
+        <field name="name">Schedule</field>
         <field name="res_model">liber.amazon.order</field>
         <field name="view_mode">list,pivot,graph</field>
         <field name="search_view_id" ref="view_liber_amazon_schedule_search"/>

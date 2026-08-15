@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ==================================================================
+         O menu "Aplicativos" volta a ser do administrador.
+
+         Relato da direção em 10/08/2026: o Jurídico/Gerente estava vendo
+         Aplicativos. Estava mesmo — e todo mundo também, do assistente de
+         logística ao visitante da demonstração pública. Não era a nossa
+         grade que vazava: a lista de acessos deste módulo não concede nada
+         parecido com `base.group_system` a ninguém.
+
+         Quem abre o menu é o Odoo, de propósito. O `base` declara
+
+             <menuitem id="menu_management" name="Apps" sequence="500"
+                       groups="base.group_system"/>
+
+         e logo depois o módulo `base_install_request` — `auto_install: True`,
+         dependente só de `mail`, portanto presente em qualquer base nossa —
+         faz, no seu ir_module_module_views.xml:
+
+             <record id="base.menu_management" model="ir.ui.menu">
+                 <field name="group_ids" eval="[(5, 0, 0)]"/>
+             </record>
+
+         `(5, 0, 0)` é "esvazie a lista". O menu perde a trava para que o
+         usuário comum possa navegar o catálogo de apps e clicar em "Request
+         Access" (o botão de lá é `groups="!base.group_system"`, ou seja, só
+         aparece para quem NÃO é administrador). Instalar segue exigindo
+         administrador; ver a prateleira, não.
+
+         É uma decisão defensável para uma empresa que quer que a equipe peça
+         apps. Não é a nossa: aqui o catálogo de módulos é assunto de quem
+         administra o sistema, e uma tela que oferece "instalar" a quem não
+         pode instalar é convite a chamado de suporte.
+
+         Então devolvemos a trava que o `base` tinha escrito. Não é invenção
+         nossa — é o padrão do Odoo, restaurado.
+
+         Duas notas para quem mexer aqui:
+
+         - A ORDEM DE CARGA importa, e é por isso que o manifest deste módulo
+           passou a depender de `base_install_request`. Sem a dependência, os
+           dois módulos são irmãos sem relação, a ordem entre eles é livre, e
+           num dia qualquer o (5, 0, 0) dele rodaria depois do nosso (6, 0,
+           [...]) — devolvendo o menu a todo mundo sem erro nenhum e sem
+           ninguém perceber. A dependência não é enfeite: é o que garante que
+           a última palavra seja esta.
+         - Se um dia a casa QUISER o pedido de instalação, o caminho não é
+           apagar este arquivo: é trocar `base.group_system` pelo grupo de
+           quem deve pedir. Assim a decisão continua escrita.
+         ================================================================== -->
+
+    <record id="base.menu_management" model="ir.ui.menu">
+        <field name="group_ids" eval="[(6, 0, [ref('base.group_system')])]"/>
+    </record>
+
+</odoo>

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!--
+        O canal entra ao lado do VENDEDOR, e não numa aba própria: são a mesma
+        pergunta ("por onde este cliente é atendido"), e separá-las faria o
+        operador preencher uma e esquecer a outra.
+
+        `user_id` vem do `base`, então a âncora existe em qualquer banco — não
+        depende do `sale`, que este módulo traz por outros motivos.
+    -->
+    <record id="view_partner_form_commercial" model="ir.ui.view">
+        <field name="name">res.partner.form.commercial.team</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <field name="user_id" position="after">
+                <field name="team_id"
+                       options="{'no_create': True}"
+                       placeholder="e.g. Small bookshops"/>
+            </field>
+        </field>
+    </record>
+
+    <!--
+        E na LISTA de contatos, pelo mesmo motivo: ao lado do vendedor.
+
+        A edição em bloco não precisa ser acrescentada: a lista do `base` já
+        nasce com `multi_edit="1"`, que é como se troca o vendedor de trinta
+        clientes de uma vez. Faltava só a coluna existir para a equipe entrar
+        na mesma operação.
+
+        `optional="show"`: a coluna aparece, e quem não a quiser tira pelo
+        seletor de colunas. Vale lembrar que `team_id` é `company_dependent`,
+        então o que se lê e se grava aqui é o valor da empresa ativa.
+    -->
+    <record id="view_partner_tree_commercial" model="ir.ui.view">
+        <field name="name">res.partner.list.commercial.team</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_tree"/>
+        <field name="arch" type="xml">
+            <field name="user_id" position="after">
+                <field name="team_id" optional="show" options="{'no_create': True}"/>
+            </field>
+        </field>
+    </record>
+
+    <!--
+        E na BUSCA. Coluna que não se filtra nem se agrupa serve para olhar, não
+        para trabalhar: com dezessete mil contatos, "quais são os clientes do
+        canal livrarias médias" é a pergunta que se faz, e sem isto ela só se
+        responde rolando a lista.
+
+        O AGRUPAR entra em quarta posição: depois de Vendedor, Empresa e País,
+        antes de Propriedades. A âncora é o País e não o Propriedades porque o
+        filtro de propriedades depende de haver propriedades definidas, e um
+        `position` sobre algo que pode não estar lá quebra a instalação.
+
+        `team_id` é `company_dependent`: mora num jsonb, não numa coluna própria.
+        O `_read_group` e o `ilike` funcionam sobre ele no 19, e é justamente
+        por não ser óbvio que o teste agrupa de verdade, em vez de só conferir
+        que o XML tem o filtro.
+    -->
+    <record id="view_partner_filter_commercial" model="ir.ui.view">
+        <field name="name">res.partner.select.commercial.team</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_res_partner_filter"/>
+        <field name="arch" type="xml">
+            <field name="user_id" position="after">
+                <field name="team_id"/>
+            </field>
+            <filter name="group_country" position="after">
+                <filter name="group_by_team" string="Sales Channel"
+                        context="{'group_by': 'team_id'}"/>
+            </filter>
+        </field>
+    </record>
+
+</odoo>

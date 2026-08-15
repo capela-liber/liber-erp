@@ -3,6 +3,7 @@ import base64
 import gzip
 from unittest.mock import patch
 
+from odoo.exceptions import UserError
 from odoo.tests.common import TransactionCase, tagged
 
 from ..models import sefaz_dfe_client as dfe
@@ -137,3 +138,35 @@ class TestSefazSweep(TransactionCase):
         self.assertEqual(len(ret['docs']), 1)
         self.assertEqual(ret['docs'][0]['xml'], xml)
         self.assertEqual(dfe.doc_family(ret['docs'][0]), 'resNFe')
+
+    # --- Sync Now must not hold the request -------------------------------
+
+    def test_sync_now_schedules_instead_of_blocking(self):
+        """The button hands the sweep to the cron; it does not sweep inline.
+
+        Inline it was up to 20 SEFAZ calls per company with a 3s sleep between
+        them, inside the HTTP request.
+        """
+        cron = self.env.ref('liber_nfe_xml.cron_nfe_sefaz_sweep')
+        cron.write({'active': True, 'nextcall': '2099-01-01 00:00:00'})
+        cls = type(self.Sweep)
+        # this database carries real sweeps: count, do not assume empty
+        before = self.Sweep.search_count([])
+
+        with patch.object(cls, 'run_sweeps') as swept:
+            action = self.Sweep.action_sync_now()
+
+        swept.assert_not_called()
+        self.assertEqual(action['tag'], 'display_notification')
+        self.assertEqual(self.Sweep.search_count([]), before,
+                         "no sweep row is created by the click itself")
+        self.assertTrue(
+            self.env['ir.cron.trigger'].search_count([('cron_id', '=', cron.id)]),
+            "the cron must be queued to run at once")
+
+    def test_sync_now_says_so_when_the_cron_is_off(self):
+        """With the cron disabled the click explains itself instead of hanging."""
+        self.env.ref('liber_nfe_xml.cron_nfe_sefaz_sweep').active = False
+
+        with self.assertRaises(UserError):
+            self.Sweep.action_sync_now()

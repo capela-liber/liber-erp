@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ==================================================================
+         A CERCA QUE FALTAVA NAS FATURAS DE ROYALTY.
+
+         O ir.model.access.csv ao lado abre `account.move` em leitura para
+         `group_contract_user`, e o comentário dele diz a intenção com todas as
+         letras: "quem tem o app de contratos LÊ as faturas de royalty (o menu
+         Bills é dele) sem ganhar o Faturamento".
+
+         A intenção estava certa e nunca foi escrita. Sem uma regra de
+         registro alcançando esse grupo, o Odoo aplica só a regra global de
+         empresa — ou seja, TUDO. Medido no `testing` em 11/08/2026 com um
+         usuário real de Editorial/Assistente: 127 de 127 lançamentos, 62
+         notas de venda e 7 de compra, com valores e fornecedores. O mesmo
+         valia para o Jurídico, que carrega o mesmo grupo.
+
+         Esta regra devolve o que o CSV já prometia: só a nota que nasceu de
+         um contrato (`edlab_contract_id`), que é exatamente o menu Bills.
+
+         POR QUE ISTO NÃO ESTREITA NINGUÉM MAIS. Regras de grupos diferentes
+         se combinam por OU, não por E. Quem tem `account.group_account_invoice`
+         carrega a regra nativa "All Journal Entries", cujo domínio é "tudo", e
+         a união das duas continua sendo tudo. Então o Financeiro, a Direção e
+         o Visitante (que chega pelo `account_readonly`, com a regra "Readonly
+         Move") não perdem nada. Quem só tem contratos é que passa a ver só
+         contratos.
+
+         `perm_read` é a única marcada porque leitura é a única coisa que o
+         ACL concede: as outras três são `0` no CSV.
+         ================================================================== -->
+
+    <record id="rule_account_move_contract_user" model="ir.rule">
+        <field name="name">Royalty bills: contract users see only contract-linked moves</field>
+        <field name="model_id" ref="account.model_account_move"/>
+        <field name="groups" eval="[(4, ref('liber_copyright_contracts.group_contract_user'))]"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="False"/>
+        <field name="perm_create" eval="False"/>
+        <field name="perm_unlink" eval="False"/>
+        <field name="domain_force">[('edlab_contract_id', '!=', False)]</field>
+    </record>
+
+    <!-- A linha do lançamento acompanha o cabeçalho: a mesma abertura existe
+         para `account.move.line`, e sem esta segunda regra a cerca de cima
+         seria contornável abrindo a lista de linhas. -->
+    <record id="rule_account_move_line_contract_user" model="ir.rule">
+        <field name="name">Royalty bills: contract users see only contract-linked move lines</field>
+        <field name="model_id" ref="account.model_account_move_line"/>
+        <field name="groups" eval="[(4, ref('liber_copyright_contracts.group_contract_user'))]"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="False"/>
+        <field name="perm_create" eval="False"/>
+        <field name="perm_unlink" eval="False"/>
+        <field name="domain_force">[('move_id.edlab_contract_id', '!=', False)]</field>
+    </record>
+
+</odoo>

@@ -7,7 +7,7 @@ Panels are created directly (no XML file): the audit reads already-parsed
 ``nfe.xml.panel`` rows and never re-parses, so tests seed the parsed shape.
 """
 from odoo import fields
-from odoo.exceptions import UserError
+from odoo.exceptions import AccessError, UserError
 from odoo.tests import TransactionCase, tagged
 
 KEY_BASE = "352601112223330001815500100000%05d1000001236"
@@ -134,3 +134,83 @@ class TestConsignmentAudit(TransactionCase):
         # a computed-again audit is blocked once accepted
         with self.assertRaises(UserError):
             audit.action_compute()
+
+    def test_accept_as_manager_without_admin_rights(self):
+        """The commercial manager accepts an audit; no administrator needed.
+
+        The adjustment location is filed on ``res.company``, and only an
+        administrator may write there. The first accept in a company used to
+        die with "you are not allowed to modify Companies" -- and every accept
+        after it worked, because by then an administrator had created the
+        location. The pointer is written as superuser now: it is the module's
+        own bookkeeping, not a decision the user is making.
+        """
+        self.company.sudo().consignment_adjustment_location_id = False
+        manager = self.env["res.users"].create({
+            "name": "Gerente Comercial (teste)",
+            "login": "gerente.auditoria.teste",
+            "company_id": self.company.id,
+            "company_ids": [(6, 0, [self.company.id])],
+            # The commercial manager's real hand, spelled out in the modules
+            # that own each group (liber_roles is not a dependency here): the
+            # consignment, the stock documents it writes, and the invoicing
+            # group that lets the value entry be posted.
+            "group_ids": [(6, 0, [
+                self.env.ref("base.group_user").id,
+                self.env.ref("liber_soc_agreements.group_soc_manager").id,
+                self.env.ref("liber_soc_moves.group_consignment_stock_docs").id,
+                self.env.ref("stock.group_stock_user").id,
+                self.env.ref("account.group_account_invoice").id,
+            ])],
+        })
+
+        self._panel(self.cfop_ship, 10)
+        self._panel(self.cfop_sale, 3)
+        self.env["stock.quant"]._update_available_quantity(
+            self.product, self.agreement.location_id, 4)
+
+        audit = self._audit().with_user(manager)
+        audit.action_compute()
+        audit.action_accept_all_fiscal()
+        audit.action_accept()
+
+        self.assertEqual(audit.state, "accepted")
+        self.assertEqual(self.agreement.on_shelf_qty, 7)
+        self.assertTrue(
+            self.company.sudo().consignment_adjustment_location_id,
+            "the accept should have filed the adjustment location on the company")
+
+    def test_assistant_prepares_but_cannot_accept(self):
+        """Approval is the manager's signature.
+
+        The assistant's profile (soc_user, stock docs, invoicing -- but NOT
+        soc_manager) prepares the audit: computes it and resolves lines.
+        Accepting moves stock and posts value, so it raises for them.
+        """
+        assistant = self.env["res.users"].create({
+            "name": "Assistente Comercial (teste)",
+            "login": "assistente.auditoria.teste",
+            "company_id": self.company.id,
+            "company_ids": [(6, 0, [self.company.id])],
+            "group_ids": [(6, 0, [
+                self.env.ref("base.group_user").id,
+                self.env.ref("liber_soc_agreements.group_soc_user").id,
+                self.env.ref("liber_soc_moves.group_consignment_stock_docs").id,
+                self.env.ref("stock.group_stock_user").id,
+                self.env.ref("account.group_account_invoice").id,
+            ])],
+        })
+
+        self._panel(self.cfop_ship, 10)
+        self._panel(self.cfop_sale, 3)
+        self.env["stock.quant"]._update_available_quantity(
+            self.product, self.agreement.location_id, 4)
+
+        audit = self._audit().with_user(assistant)
+        audit.action_compute()
+        audit.action_accept_all_fiscal()   # preparing is theirs
+
+        with self.assertRaises(AccessError):
+            audit.action_accept()          # approving is not
+
+        self.assertNotEqual(audit.state, "accepted")

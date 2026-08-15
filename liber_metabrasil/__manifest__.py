@@ -35,7 +35,7 @@ in behind a switch; it degrades gracefully while Metabrasil finishes it.
     """,
     'author': "EdLab Press",
     'category': 'Inventory/Purchase',
-    'version': '19.0.2.1.0',
+    'version': '19.0.2.2.0',
     'license': 'AGPL-3',
     'depends': [
         'sale_stock',

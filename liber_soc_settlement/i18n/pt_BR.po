@@ -78,6 +78,7 @@ msgstr ""
 
 #. module: liber_soc_settlement
 #. odoo-python
+#. odoo-python
 #: code:addons/liber_soc_settlement/models/consignment_settlement.py:0
 msgid "- %(product)s: replenish %(rep)s, on hand %(oh)s"
 msgstr "- %(product)s: repor %(rep)s, em mãos %(oh)s"
@@ -741,6 +742,7 @@ msgstr "Nenhum contrato válido"
 
 #. module: liber_soc_settlement
 #. odoo-python
+#. odoo-python
 #: code:addons/liber_soc_settlement/models/consignment_settlement.py:0
 #: model_terms:ir.ui.view,arch_db:liber_soc_settlement.view_run_overstock_wizard_form
 msgid "Not enough stock"
@@ -841,6 +843,7 @@ msgstr "Operações com mensagem do cliente ainda não lida por você."
 
 #. module: liber_soc_settlement
 #. odoo-python
+#. odoo-python
 #: code:addons/liber_soc_settlement/models/consignment_settlement.py:0
 #: model_terms:ir.ui.view,arch_db:liber_soc_settlement.view_consignment_settlement_kanban
 msgid "Order"
@@ -865,7 +868,7 @@ msgstr ""
 msgid ""
 "Person in charge of this consignment operation. Defaults to the sales team's"
 " leader (from the contract's team), and is editable."
-msgstr "Responsável por esta operação de consignação. Padrão: o líder da equipe de vendas (da equipe do contrato); editável."
+msgstr "Responsável por esta operação de consignação. Padrão: o líder do canal de vendas (o canal do contrato); editável."
 
 #. module: liber_soc_settlement
 #: model:ir.model.fields,field_description:liber_soc_settlement.field_consignment_settlement_line__qty_replenish
@@ -2244,3 +2247,50 @@ msgstr "Nunca recebeu"
 msgid "Below target"
 msgstr "Abaixo do alvo"
 
+
+#. module: liber_soc_settlement
+#. odoo-python
+#: code:addons/liber_soc_settlement/models/consignment_settlement.py:0
+msgid "- %(product)s: settling %(rep)s, shelf has %(shelf)s"
+msgstr "- %(product)s: acertando %(rep)s, prateleira tem %(shelf)s"
+
+#. module: liber_soc_settlement
+#. odoo-python
+#: code:addons/liber_soc_settlement/models/consignment_settlement.py:0
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.view_run_noshelf_wizard_form
+msgid "Settling without shelf stock"
+msgstr "Acerto sem estoque na prateleira"
+
+#. module: liber_soc_settlement
+#. odoo-python
+#: code:addons/liber_soc_settlement/wizards/run_noshelf_wizard.py:0
+msgid "Titles removed from %s for lack of shelf stock — check the customer shelf:"
+msgstr "Títulos removidos de %s por falta de estoque na prateleira — confira a prateleira do cliente:"
+
+#. module: liber_soc_settlement
+#. odoo-python
+#: code:addons/liber_soc_settlement/wizards/run_noshelf_wizard.py:0
+msgid "Fix shelf stock: %s title(s) dropped from the settle"
+msgstr "Corrigir estoque da prateleira: %s título(s) saíram do acerto"
+
+#. module: liber_soc_settlement
+#: model:ir.model,name:liber_soc_settlement.model_consignment_run_noshelf_wizard
+msgid "Settle lines without shelf stock"
+msgstr "Linhas de acerto sem estoque na prateleira"
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_consignment_run_noshelf_wizard__summary
+msgid "Lines without shelf stock"
+msgstr "Linhas sem estoque na prateleira"
+
+#. module: liber_soc_settlement
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.view_run_noshelf_wizard_form
+msgid "These titles report more sold than the shelf holds.\n"
+"                    You can run the CO without them; an activity will be\n"
+"                    left on the CO to fix the shelf stock."
+msgstr "Estes títulos reportam mais vendas do que a prateleira tem. Dá para rodar a CO sem eles; fica uma Atividade na CO para corrigir o estoque."
+
+#. module: liber_soc_settlement
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.view_run_noshelf_wizard_form
+msgid "Run without them"
+msgstr "Rodar sem eles"

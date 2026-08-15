@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from odoo import api, fields, models, _
-from odoo.exceptions import UserError
+from odoo.exceptions import AccessError, UserError
 from odoo.tools.float_utils import float_compare, float_round
 
 # CFOP effects that feed the shelf equation.
@@ -321,6 +321,18 @@ class ConsignmentAudit(models.Model):
         consignment.move of kind 'adjustment' applies them (found stock or
         shrinkage), routing the value to the configured account.
         """
+        # Accepting is approval, and approval is the manager's signature:
+        # it moves stock and posts value. The assistant prepares the audit
+        # (compute, resolve lines); the ACL that lets them write lines is
+        # not a licence to adjust the shelf (pedido de 13/08/2026).
+        # Superuser and the system administrator pass: crons, shell fixes
+        # and the admin's own hand are not the assistant's.
+        user = self.env.user
+        if not (self.env.su or user._is_admin() or user.has_group(
+                'liber_soc_agreements.group_soc_manager')):
+            raise AccessError(_(
+                "Only the consignment manager can accept an audit — "
+                "accepting adjusts the shelf and posts its value."))
         rounding = 1.0  # books are whole units
         for audit in self:
             if audit.state not in ('computed', 'under_review'):

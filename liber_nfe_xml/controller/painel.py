@@ -4,6 +4,8 @@ import json
 import logging
 import re
 
+from markupsafe import escape
+
 from odoo import http
 from odoo.http import request
 from odoo.tools import file_open
@@ -26,14 +28,18 @@ class NfeXmlPainel(http.Controller):
         env = request.env
         panels = env['nfe.xml.panel'].search([('status', '!=', 'cancelled')])
         companies = tuple(env.companies.ids)
+        house = self._house_roots(env)
+        # The house roots join the signature: fixing a company's CNPJ changes
+        # what the panel accepts without touching a single NFe record, and the
+        # stale entry would otherwise survive it.
         sig = (env.uid, companies, len(panels),
-               max(panels.mapped('write_date'), default=None))
+               max(panels.mapped('write_date'), default=None), tuple(sorted(house[0])))
         key = (env.cr.dbname, companies)
         cached = _CACHE.get(key)
         if cached and cached[0] == sig:
             html = cached[1]
         else:
-            html = self._render(env, panels)
+            html = self._render(env, panels, house)
             _CACHE[key] = (sig, html)
         return request.make_response(html, [('Content-Type', 'text/html; charset=utf-8')])
 
@@ -57,13 +63,18 @@ class NfeXmlPainel(http.Controller):
         if allowed:
             request.update_context(allowed_company_ids=allowed)
 
-    def _render(self, env, panels):
-        own_roots, root_label = self._house_roots(env)
-        payload = pipeline.build(self._iter_xmls(panels), own_roots, root_label)
+    def _render(self, env, panels, house):
+        own_roots, root_label, sem_cnpj = house
+        stats = {}
+        payload = pipeline.build(self._iter_xmls(panels), own_roots, root_label, stats)
         if payload is None:
-            return ('<!DOCTYPE html><meta charset="utf-8"><body style="font-family:sans-serif">'
-                    '<h2>Painel de Notas Fiscais (XML)</h2>'
-                    '<p>Nenhum XML emitido pelas empresas da casa foi encontrado na base do NFe XML.</p>')
+            _logger.warning(
+                'nfe_xml painel: nada a analisar em %s notas (raizes da casa: %s; '
+                'empresas sem CNPJ: %s; parse: %s)',
+                len(panels), sorted(own_roots) or 'NENHUMA',
+                [n for n, _v in sem_cnpj] or 'nenhuma',
+                {k: v for k, v in stats.items() if k != 'emissores'})
+            return self._empty_page(len(panels), own_roots, root_label, sem_cnpj, stats)
         _logger.info(
             'nfe_xml painel: %s notas, %s itens (recebidas ignoradas: %s, invalidas: %s, eventos: %s)',
             payload['meta']['n_notas'], payload['meta']['n_itens'],
@@ -71,6 +82,51 @@ class NfeXmlPainel(http.Controller):
         with file_open('liber_nfe_xml/static/panel/panel_template.html', 'r') as f:
             template = f.read()
         return template.replace('__PAYLOAD__', json.dumps(payload, ensure_ascii=False, separators=(',', ':')))
+
+    @staticmethod
+    def _empty_page(n_panels, own_roots, root_label, sem_cnpj, stats):
+        """Empty state that says why it is empty.
+
+        The panel is seller-centric: a note only enters the analysis when its
+        issuer CNPJ root belongs to a house company. When that never happens
+        the cause is almost always the company register, not the XMLs - so
+        show both sides (roots we looked for, roots the notes actually carry).
+        """
+        e = escape
+        roots = ''.join(
+            f'<li><code>{e(r)}</code> — {e(root_label.get(r) or "")}</li>'
+            for r in sorted(own_roots)) or '<li><em>nenhuma</em></li>'
+        pendentes = ''.join(
+            f'<li>{e(name)} — {e(vat) if vat else "<em>sem documento</em>"}</li>'
+            for name, vat in sem_cnpj)
+        emissores = ''.join(
+            f'<tr><td><code>{e(x["raiz"])}</code></td><td>{e(x["nome"])}</td>'
+            f'<td style="text-align:right">{x["n"]}</td></tr>'
+            for x in stats.get('emissores') or [])
+        aviso = ''
+        if pendentes and emissores:
+            aviso = ('<p class="warn">Se alguma raiz da tabela acima é de uma empresa da casa, '
+                     'o CNPJ dela não está no cadastro da empresa — corrija em '
+                     '<b>Configurações → Empresas</b> e reimporte/reidentifique as notas.</p>')
+        return f"""<!DOCTYPE html><meta charset="utf-8">
+<title>Painel de Notas Fiscais (XML)</title>
+<body style="font-family:system-ui,sans-serif;max-width:52em;margin:2em auto;line-height:1.5;color:#222">
+<h2>Painel de Notas Fiscais (XML)</h2>
+<p>Nenhum XML <b>emitido pelas empresas da casa</b> foi encontrado — o painel é
+do lado vendedor, então notas recebidas de terceiros ficam de fora.</p>
+<h3>O que foi lido</h3>
+<ul>
+ <li>{n_panels} registro(s) de NFe XML visíveis nas empresas selecionadas</li>
+ <li>{stats.get('recebidas', 0)} descartada(s) por serem de emissor de fora da casa</li>
+ <li>{stats.get('invalidas', 0)} XML(s) ilegível(is), {stats.get('eventos', 0)} evento(s)</li>
+</ul>
+<h3>Raízes de CNPJ tidas como da casa</h3>
+<ul>{roots}</ul>
+{f'<h3>Empresas ignoradas (documento não é CNPJ)</h3><ul>{pendentes}</ul>' if pendentes else ''}
+{f'<h3>Emissores das notas descartadas</h3><table cellpadding="4" style="border-collapse:collapse"><tr><th align="left">Raiz</th><th align="left">Nome no XML</th><th>Notas</th></tr>{emissores}</table>' if emissores else ''}
+{aviso}
+<style>code{{background:#f2f2f2;padding:0 .3em}} .warn{{background:#fff4d6;padding:.8em 1em;border-left:3px solid #e0a800}} th,td{{border-bottom:1px solid #ddd}}</style>
+"""
 
     @staticmethod
     def _iter_xmls(panels):
@@ -90,12 +146,21 @@ class NfeXmlPainel(http.Controller):
     @staticmethod
     def _house_roots(env):
         """8-digit CNPJ roots of every house company (sudo: the house is the
-        whole database, regardless of the user's allowed companies)."""
-        own_roots, root_label = set(), {}
+        whole database, regardless of the user's allowed companies).
+
+        Also returns the companies whose registered document is not a CNPJ
+        (blank, or a CPF): those are invisible to the analysis, and a company
+        that issues NFe under a CNPJ absent from this set drops out of the
+        panel entirely.
+        """
+        own_roots, root_label, sem_cnpj = set(), {}, []
         for company in env['res.company'].sudo().search([]):
-            digits = re.sub(r'\D', '', company.partner_id.vat or '')
+            vat = company.partner_id.vat or ''
+            digits = re.sub(r'\D', '', vat)
             if len(digits) == 14:
                 root = digits[:8]
                 own_roots.add(root)
                 root_label.setdefault(root, company.name)
-        return own_roots, root_label
+            else:
+                sem_cnpj.append((company.name, vat))
+        return own_roots, root_label, sem_cnpj

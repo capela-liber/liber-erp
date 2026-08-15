@@ -67,7 +67,7 @@
     </record>
 
     <record id="action_liber_amazon_import" model="ir.actions.act_window">
-        <field name="name">Import from Amazon</field>
+        <field name="name">Import</field>
         <field name="res_model">liber.amazon.import</field>
         <field name="view_mode">form</field>
         <field name="target">new</field>

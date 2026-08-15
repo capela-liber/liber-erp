@@ -9,10 +9,47 @@
 
     <!-- Landing page: the imported books. Must be a normal (target=current) action
          so clicking the Metabooks app does not open a modal wizard by default. -->
+    <!-- ==================================================================
+         O ISBN sai do cartão, e só deste cartão.
+
+         Pedido da direção em 10/08/2026: "pode tirar o ISBN daqui; na busca
+         já localizamos, ninguém sabe de cor para filtrar lendo". É verdade —
+         o ISBN continua indexado (a busca acha por ele), e na estante ele
+         ocupava uma linha inteira dizendo o que ninguém lê.
+
+         O `[9788577154333]` vem do kanban do CORE (`product`), que renderiza
+         `<span t-if="record.default_code.value">[default_code]</span>`.
+         Herdar em modo `primary` cria uma VARIANTE: uma view nova, que só
+         vale onde for apontada. A ação Livros aponta para ela logo abaixo, e
+         Vendas ▸ Produtos e Inventário ▸ Produtos seguem com o código à
+         mostra — que é o que "daqui" quer dizer.
+
+         Se um dia a casa quiser o ISBN fora de TODO kanban de produto, o
+         caminho é o oposto: tirar o `mode="primary"` e o `view_ids` da ação,
+         e a herança passa a valer em todo lugar. Uma linha para cada lado.
+         ================================================================== -->
+    <record id="view_metabooks_books_kanban" model="ir.ui.view">
+        <field name="name">product.template.kanban.metabooks.books</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_kanban_view"/>
+        <field name="mode">primary</field>
+        <field name="priority">99</field>
+        <field name="arch" type="xml">
+            <xpath expr="//span[field[@name='default_code']]" position="replace"/>
+        </field>
+    </record>
+
     <record id="action_metabooks_books" model="ir.actions.act_window">
         <field name="name">Books</field>
         <field name="res_model">product.template</field>
         <field name="view_mode">kanban,list,form</field>
+        <!-- `view_ids` e não `view_id`: com três modos de visualização, o
+             `view_id` sozinho não diz A QUAL deles a view pertence. Lista e
+             formulário ficam sem view_id de propósito — seguem as padrão. -->
+        <field name="view_ids" eval="[(5, 0, 0),
+            (0, 0, {'sequence': 1, 'view_mode': 'kanban', 'view_id': ref('view_metabooks_books_kanban')}),
+            (0, 0, {'sequence': 2, 'view_mode': 'list'}),
+            (0, 0, {'sequence': 3, 'view_mode': 'form'})]"/>
         <field name="domain">[('metabooks_vendor_id', '!=', False)]</field>
         <field name="help" type="html">
             <p class="o_view_nocontent_smiling_face">No books imported yet</p>
@@ -27,13 +64,22 @@
               action="action_metabooks_books"
               sequence="1"/>
 
+    <!-- Imports e Catalogue são a MAQUINARIA (importar catálogo inteiro,
+         reescrever as tabelas de referência), não a ficha do livro. Ficam com
+         o metabooks_manager_group desde 10/08/2026; antes disso, como todo o
+         resto deste módulo, estavam abertos a qualquer usuário interno. O
+         "Books" acima segue aberto de propósito: quem edita a ficha precisa
+         chegar nela, e o que ele pode fazer lá é decidido pelo ACL do
+         product.template, não por este menu. -->
     <menuitem id="menu_metabooks_imports"
               name="Imports"
               parent="menu_metabooks_root"
+              groups="liber_metabooks_integration.metabooks_manager_group"
               sequence="10"/>
 
     <menuitem id="menu_metabooks_catalogue"
               name="Catalogue"
               parent="menu_metabooks_root"
+              groups="liber_metabooks_integration.metabooks_manager_group"
               sequence="20"/>
 </odoo>

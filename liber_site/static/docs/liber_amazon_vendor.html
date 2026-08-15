@@ -1,6 +1,22 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
+<script>
+/* Servido por /liber_site/static/docs/, este arquivo vem com uma semana de
+   cache e o docs.js sem versão -- e o índice monta a lista a partir dele. Foi
+   assim que a emissão de NF-e e o manual da Amazon ficaram invisíveis: o
+   catálogo em cache era anterior aos dois. A rota /liber/docs/ serve o mesmo
+   arquivo sem cache e com ?v=<mtime> nos assets. Quem chegar pelo caminho
+   antigo (favorito, link velho, resultado de busca) vai para lá antes de a
+   página montar qualquer coisa. */
+(function () {
+  var antigo = "/liber_site/static/docs/";
+  if (location.pathname.indexOf(antigo) === 0) {
+    location.replace("/liber/docs/" + location.pathname.slice(antigo.length) +
+                     location.search + location.hash);
+  }
+})();
+</script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Amazon Vendor Central — Manuais do Liber</title>
@@ -101,10 +117,32 @@
       autorização dada para o <em>Seller</em> Central em vez do <em>Vendor</em>. O conserto é no painel
       da Amazon.</p></div>
 
+      <h2 id="unidades">As unidades da Amazon</h2>
+      <p>A Amazon não compra como uma pessoa só. <strong>Cada centro de distribuição é um
+      estabelecimento fiscal próprio</strong> — no Brasil, mesma raiz de CNPJ e filial diferente —
+      e o pedido diz qual deles está comprando.</p>
+      <p>O que ela <em>não</em> manda é quem é esse estabelecimento. O pedido traz apenas a sigla:</p>
+      <pre>buyingParty  = {"partyId": "GRU8"}
+shipToParty  = {"partyId": "GRU8"}</pre>
+      <p>Sem CNPJ, sem endereço, sem razão social. Daí o mapa em
+      <span class="menupath">Amazon Vendor<i>‣</i>Configuração<i>‣</i>Unidades da Amazon</span>: uma
+      linha por sigla, dizendo quem ela é no seu cadastro — e, se a entrega for em outro endereço,
+      qual é.</p>
+      <div class="callout warn"><span class="title">Atenção</span>
+      <p>Unidade não mapeada <strong>não vira cotação</strong>. O pedido é importado e fica marcado,
+      mas a cotação é recusada com o nome da sigla. Cair num cliente padrão seria pior: a nota sairia
+      contra o CNPJ de outra filial, em silêncio e com número plausível.</p></div>
+      <p>Para começar, o botão <span class="field">Mapear unidades pelos pedidos</span>, na ficha da
+      conta, cria uma linha para cada sigla já vista e sugere um cliente quando um contato casa sem
+      ambiguidade. A sugestão é isso mesmo — sugestão, para você conferir. Casar pelo nome funcionaria
+      numa casa que batize os contatos de "Amazon GRU8" e em nenhuma outra, e convenção de cadastro de
+      uma editora não pode virar regra de um módulo.</p>
+
       <h2 id="importar">Importar os pedidos</h2>
       <p>Há dois caminhos, e eles fazem a mesma coisa:</p>
       <ul>
-        <li><strong>À mão</strong>, em <span class="menupath">Amazon Vendor<i>‣</i>Importar da Amazon</span>:
+        <li><strong>À mão</strong>, em pelo botão <span class="field">Importar da Amazon</span> no
+        alto da lista em <span class="menupath">Amazon Vendor<i>‣</i>Pedidos</span>:
         escolha o intervalo e clique em <span class="field">Ler da Amazon</span>.</li>
         <li><strong>Sozinho</strong>, pela rotina diária das 07:00 UTC — quatro da manhã em Brasília,
         quando a Amazon já fechou o dia e ninguém está usando o sistema. Liga e desliga em Definições.</li>
@@ -183,6 +221,58 @@
       assim mesmo</strong> e fica marcado. O filtro <span class="field">Estado desconhecido na Amazon</span>
       lista esses casos. Recusar a gravação por causa de um nome novo perderia a venda para preservar
       a lista.</p></div>
+
+      <h2 id="titulos">O relatório por título</h2>
+      <p>A agenda responde por pedido; esta tela responde por <strong>livro</strong>. Em
+      <span class="menupath">Amazon Vendor<i>‣</i>Relatório</span>, uma linha por título por
+      pedido, em pivô.</p>
+      <p>A tela abre pela pergunta que se faz primeiro — <strong>ainda dá para atender?</strong> —
+      na coluna <span class="field">Situação no Odoo</span>:</p>
+      <div class="tablewrap"><table>
+        <thead><tr><th>Situação no Odoo</th><th>O que significa</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Cotado aqui</strong></td><td>O título virou linha de uma cotação <em>por este módulo</em>.</td></tr>
+          <tr><td><strong>Ainda dá</strong></td><td>Não foi atendido, mas o pedido continua aberto na Amazon: cadastrar o título ou gerar a cotação ainda resolve.</td></tr>
+          <tr><td><strong>Janela fechada</strong></td><td>Não foi atendido e a Amazon já fechou o pedido. Daqui não sai mais nada.</td></tr>
+        </tbody>
+      </table></div>
+      <div class="callout warn"><span class="title">Atenção</span>
+      <p><strong>O nome da coluna é literal: situação <em>no Odoo</em>, não no mundo.</strong>
+      "Cotado aqui" conta só o que passou por este módulo. Como um ano de histórico foi importado
+      depois do fato, quase nada antigo aparece cotado — aqueles livros saíram pelo portal, antes
+      deste módulo existir. Para esse período, "janela fechada" é o normal, não perda; use o filtro
+      de data para olhar só o que chegou desde que o módulo entrou em operação.</p>
+      <p><strong>"Janela fechada" não quer dizer que o livro nunca foi entregue.</strong> Um pedido
+      atendido por fora — pelo portal, por planilha, do jeito que a casa fazia antes deste módulo —
+      também chega aqui fechado, e a Vendor Orders API não distingue um caso do outro. O que a coluna
+      afirma é apenas isto: <em>por dentro do Odoo, aquele título naquele pedido não vai mais a lugar
+      nenhum</em>. Para o histórico importado, espere números altos aqui — é passado, não perda.</p></div>
+      <p>Expandindo por <span class="field">Atendimento</span>, aparece <em>onde</em> parou — e essa é
+      a segunda pergunta, a da causa. Três paradas, e só a última é sucesso:</p>
+      <div class="tablewrap"><table>
+        <thead><tr><th>Situação</th><th>O que significa</th><th>De quem é o problema</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Sem produto no cadastro</strong></td><td>O ISBN não existe em nenhum produto; a linha ficou de fora da cotação.</td><td>De quem cuida do cadastro.</td></tr>
+          <tr><td><strong>Ainda sem cotação</strong></td><td>O título casou, mas ninguém transformou o pedido em cotação.</td><td>De quem opera.</td></tr>
+          <tr><td><strong>Em cotação</strong></td><td>Virou linha de um pedido de venda.</td><td>—</td></tr>
+        </tbody>
+      </table></div>
+      <p>Agrupe por <span class="field">Título</span> nas linhas e leia as colunas, com exemplares e
+      valor ao lado. Três filtros prontos: <span class="field">Janela fechada</span> (o que não foi e
+      não será mais), <span class="field">Ainda dá para atender</span> (a fila de trabalho de hoje) e
+      <span class="field">Não atendidos</span>, que junta os dois.</p>
+
+      <h3 id="tempo-de-ciclo">Quanto tempo leva</h3>
+      <p>A medida <span class="field">Dias até fechar</span> conta do pedido até a Amazon encerrar o
+      documento. É o mais perto de um tempo de entrega que a Vendor Orders API oferece — ela não nos
+      diz quando recebeu, diz quando fechou.</p>
+      <div class="callout warn"><span class="title">Atenção</span>
+      <p>Ligue o filtro <span class="field">Ciclo concluído</span> antes de ler essa média. Pedido
+      ainda aberto vale zero e só puxaria o número para baixo. E lembre que a Amazon também fecha o
+      pedido que <em>cancelou</em>: um ciclo de poucas horas é quase certamente cancelamento, não
+      velocidade.</p></div>
+      <p>Ao lado dela, <span class="field">Dias concedidos</span> mostra o prazo que a Amazon deu —
+      comparar os dois é comparar o combinado com o acontecido.</p>
 
       <h2 id="limites">Limites conhecidos</h2>
       <ul>

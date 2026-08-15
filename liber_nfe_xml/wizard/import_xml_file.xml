@@ -6,12 +6,37 @@
             <field name="model">import.xml.file</field>
             <field name="arch" type="xml">
                 <form string="Import XML File">
-                    <group>
-                        <field name="attachment_ids" widget="many2many_binary" string="ZIP Files"/>
+                    <field name="state" invisible="1"/>
+                    <group invisible="state == 'done'">
+                        <field name="attachment_ids" widget="many2many_binary"
+                               string="Files (ZIP or XML)"/>
                         <field name="company_id" options="{'no_create': True, 'no_open': True}"/>
                     </group>
+                    <div invisible="state == 'done'" class="text-muted">
+                        Drop the ZIP archives or the loose XML files. Notes
+                        already in the panel are skipped.
+                    </div>
+
+                    <div invisible="state != 'done'">
+                        <field name="summary" nolabel="1" readonly="1"
+                               widget="text"/>
+                        <group string="Files not imported"
+                               invisible="not failure_details">
+                            <field name="failure_details" nolabel="1"
+                                   readonly="1" widget="text"/>
+                        </group>
+                    </div>
+
                     <footer>
-                        <button name="import_xml_file" string="Import" type="object" />
+                        <button name="import_xml_file" string="Import"
+                                type="object" class="btn-primary"
+                                invisible="state == 'done'"/>
+                        <button name="action_view_panels" type="object"
+                                string="View imported notes" class="btn-primary"
+                                invisible="state != 'done' or not panel_ids"/>
+                        <field name="panel_ids" invisible="1"/>
+                        <button string="Close" class="btn-secondary"
+                                special="cancel"/>
                     </footer>
                 </form>
             </field>

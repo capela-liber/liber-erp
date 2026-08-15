@@ -109,9 +109,23 @@ msgid "Balance"
 msgstr "Saldo"
 
 #. module: liber_copyright_contracts_analytics
+#. odoo-python
+#: code:addons/liber_copyright_contracts_analytics/models/contract.py:0
 #: model:ir.model.fields,field_description:liber_copyright_contracts_analytics.field_edlab_contract_analytic_wizard__line_ids
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_analytics.view_edlab_contract_form_analytics
 msgid "Beneficiaries"
-msgstr "Beneficiários"
+msgstr "Favorecidos"
+
+#. module: liber_copyright_contracts_analytics
+#: model:ir.model.fields,field_description:liber_copyright_contracts_analytics.field_edlab_contract__beneficiary_count
+msgid "Beneficiary Count"
+msgstr "Contagem de favorecidos"
+
+#. module: liber_copyright_contracts_analytics
+#. odoo-python
+#: code:addons/liber_copyright_contracts_analytics/models/contract.py:0
+msgid "Contract Analytics"
+msgstr "Contas Analíticas do Contrato"
 
 #. module: liber_copyright_contracts_analytics
 #: model:ir.model.fields,field_description:liber_copyright_contracts_analytics.field_edlab_contract_analytic_wizard_line__partner_id
@@ -245,8 +259,8 @@ msgstr "Nome exibido"
 
 #. module: liber_copyright_contracts_analytics
 #: model:ir.model.fields,field_description:liber_copyright_contracts_analytics.field_res_company__contract_royalty_general_account_id
-msgid "Expense Account"
-msgstr "Conta de Despesa"
+msgid "Royalty Expense Account"
+msgstr "Conta de despesa de royalties"
 
 #. module: liber_copyright_contracts_analytics
 #: model:ir.model.fields,help:liber_copyright_contracts_analytics.field_res_company__contract_royalty_general_account_id
@@ -368,7 +382,7 @@ msgid ""
 "count as a special sale (computed on the net amount). 0 means any discount "
 "qualifies."
 msgstr ""
-"Desconto mínimo na linha da fatura para que uma venda da equipe de vendas "
+"Desconto mínimo na linha da fatura para que uma venda do canal de vendas "
 "especiais conte como venda especial (calculada sobre o líquido). 0 significa"
 " que qualquer desconto qualifica."
 
@@ -526,13 +540,13 @@ msgstr ""
 #. module: liber_copyright_contracts_analytics
 #: model:ir.model.fields,field_description:liber_copyright_contracts_analytics.field_account_bank_statement_line__team_id
 #: model:ir.model.fields,field_description:liber_copyright_contracts_analytics.field_account_move__team_id
-msgid "Sales Team"
-msgstr "Equipe de Vendas"
+msgid "Sales Channel"
+msgstr "Canal de Vendas"
 
 #. module: liber_copyright_contracts_analytics
 #: model:ir.model.fields,help:liber_copyright_contracts_analytics.field_res_company__contract_special_sales_team_ids
 msgid ""
-"Sales from these teams are treated as special sales: their royalties are "
+"Sales from these channels are treated as special sales: their royalties are "
 "always computed on the net invoiced amount (the invoice), never on the "
 "sales/cover price, no matter the royalty line's 'On Sales Price' setting. "
 "Requires the minimum discount below."
@@ -546,11 +560,11 @@ msgstr ""
 #: model:ir.model.fields,help:liber_copyright_contracts_analytics.field_account_bank_statement_line__team_id
 #: model:ir.model.fields,help:liber_copyright_contracts_analytics.field_account_move__team_id
 msgid ""
-"Sales team of this invoice. Sales from the company's special sales teams "
+"Sales channel of this invoice. Sales from the company's special sales channels "
 "(with a qualifying discount) have their royalties computed on the net "
 "invoiced amount."
 msgstr ""
-"Equipe de vendas desta fatura. Vendas das equipes de vendas especiais da "
+"Canal de vendas desta fatura. Vendas dos canais de venda especiais da "
 "empresa (com desconto qualificado) têm seus royalties calculados sobre o "
 "valor líquido faturado."
 
@@ -606,8 +620,8 @@ msgstr "Desconto Mínimo Venda Especial (%)"
 
 #. module: liber_copyright_contracts_analytics
 #: model:ir.model.fields,field_description:liber_copyright_contracts_analytics.field_res_company__contract_special_sales_team_ids
-msgid "Special Sales Teams"
-msgstr "Equipes de Vendas Especiais"
+msgid "Special Sales Channels"
+msgstr "Canais de Venda Especiais"
 
 #. module: liber_copyright_contracts_analytics
 #: model:ir.model.fields,help:liber_copyright_contracts_analytics.field_edlab_contract_analytic_wizard_line__analytic_name
@@ -749,12 +763,12 @@ msgstr "meses em atraso"
 
 #. module: liber_copyright_contracts_analytics
 #: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_analytics.res_config_settings_view_form_analytics
-msgid "Special sales teams"
-msgstr "Times de vendas especiais"
+msgid "Special sales channels"
+msgstr "Canais de venda especiais"
 
 #. module: liber_copyright_contracts_analytics
 #: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_analytics.res_config_settings_view_form_analytics
-msgid "Sales from these teams always compute royalties on the net invoiced amount, never on the cover price, whatever the royalty line says."
+msgid "Sales from these channels always compute royalties on the net invoiced amount, never on the cover price, whatever the royalty line says."
 msgstr "Vendas desses times sempre calculam royalty sobre o valor líquido faturado, nunca sobre o preço de capa, independentemente do que diz a linha de royalty."
 
 #. module: liber_copyright_contracts_analytics

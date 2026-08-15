@@ -30,19 +30,19 @@
     <menuitem id="menu_edlab_bills"
               name="Bills"
               parent="liber_copyright_contracts.menu_copyright_contracts_root"
-              groups="liber_copyright_contracts.group_contract_manager"
+              groups="liber_copyright_contracts.group_contract_user"
               sequence="40"/>
     <menuitem id="menu_edlab_bills_to_pay"
               name="To Pay"
               parent="menu_edlab_bills"
               action="action_edlab_bills_to_pay"
-              groups="liber_copyright_contracts.group_contract_manager"
+              groups="liber_copyright_contracts.group_contract_user"
               sequence="10"/>
     <menuitem id="menu_edlab_bills_paid"
               name="Paid"
               parent="menu_edlab_bills"
               action="action_edlab_bills_paid"
-              groups="liber_copyright_contracts.group_contract_manager"
+              groups="liber_copyright_contracts.group_contract_user"
               sequence="20"/>
 
 </odoo>

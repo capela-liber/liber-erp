@@ -19,11 +19,13 @@
         </field>
     </record>
 
+    <!-- Nível de usuário: o assistente LÊ o analítico (o CSV dá só read);
+         criar/editar conta segue sendo do gerente, pelo próprio CSV. -->
     <menuitem id="menu_edlab_analytic_accounts"
               name="Analytic Accounts"
               parent="liber_copyright_contracts.menu_copyright_contracts_root"
               action="action_edlab_analytic_accounts"
-              groups="liber_copyright_contracts.group_contract_manager"
+              groups="liber_copyright_contracts.group_contract_user"
               sequence="20"/>
 
 </odoo>

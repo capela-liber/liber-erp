@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
-    <record id="module_category_liber_gdrive" model="ir.module.category">
-        <field name="name">Google Drive Files</field>
-        <field name="sequence">24</field>
-    </record>
-
     <record id="privilege_liber_gdrive" model="res.groups.privilege">
-        <field name="name">Google Drive Files</field>
-        <field name="category_id" ref="module_category_liber_gdrive"/>
+        <!-- O cabeçalho da seção já diz "Cloud Files"; a linha diz o
+             provedor. Ver o comentário no liber_cloud_files. -->
+        <field name="name">Google Drive</field>
+        <field name="sequence">20</field>
+        <field name="category_id" ref="liber_cloud_files.module_category_liber_cloud"/>
     </record>
 
     <record id="group_liber_gdrive_user" model="res.groups">

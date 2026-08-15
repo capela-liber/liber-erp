@@ -151,6 +151,10 @@ class EdlabContract(models.Model):
         created = Move.browse()
         for contract in self:
             company = contract.company_id or self.env.company
+            # The bill is computed FROM the analytic account, so everything
+            # owed must be booked there first -- a typed-but-unbooked advance
+            # would silently inflate the bill to the gross (idempotent call).
+            contract.royalty_line_ids._edlab_book_advance()
             grouped = {}
             for line in contract.royalty_line_ids:
                 if not line.analytic_account_id:
@@ -193,8 +197,9 @@ class EdlabContract(models.Model):
         today = fields.Date.context_today(self)
         due = today + relativedelta(days=company.contract_payment_days or 0)
         line_cmds = [
-            (0, 0, line._prepare_payment_bill_line_vals(owed, company))
+            cmd
             for line, owed in items
+            for cmd in line._prepare_payment_bill_line_cmds(owed, company)
         ]
         vals = {
             "move_type": "in_invoice",

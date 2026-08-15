@@ -41,6 +41,11 @@ class LiberAmazonOrder(models.Model):
     # recusaria a gravação e perderia o pedido. `state_known` marca o
     # desconhecido sem impedir nada.
     amazon_state = fields.Char(readonly=True, tracking=True)
+    amazon_state_label = fields.Char(
+        string='Amazon State', compute='_compute_amazon_state_label',
+        help="Amazon's own state, in your language. The raw value is kept "
+             "underneath: a state Amazon invents tomorrow shows through as "
+             "it came, instead of breaking the import.")
     state_known = fields.Boolean(readonly=True)
     is_open = fields.Boolean(
         string='Still Open', readonly=True,
@@ -60,6 +65,23 @@ class LiberAmazonOrder(models.Model):
     buying_party = fields.Char(readonly=True)
     selling_party = fields.Char(readonly=True)
     ship_to_party = fields.Char(readonly=True)
+
+    # ------------------------------------------------ quem está comprando
+    # A Amazon manda só a sigla do galpão. Quem ela é aqui dentro sai do mapa
+    # de unidades -- ver models/amazon_unit.py.
+
+    unit_id = fields.Many2one(
+        'liber.amazon.unit', string='Amazon Unit',
+        compute='_compute_unit', store=True, readonly=True)
+    unit_mapped = fields.Boolean(
+        string='Unit Mapped', compute='_compute_unit', store=True,
+        help="False when the buying unit's code has no entry in the mapping. "
+             "The order is imported anyway; what it cannot do is become a "
+             "quotation, because nobody said which customer it belongs to.")
+    partner_id = fields.Many2one(
+        'res.partner', string='Customer', compute='_compute_unit', store=True,
+        help="Resolved from the buying unit. Falls back to the account's "
+             "customer only for orders that carry no unit code at all.")
 
     line_ids = fields.One2many('liber.amazon.order.line', 'order_id')
     sale_order_id = fields.Many2one(
@@ -90,6 +112,13 @@ class LiberAmazonOrder(models.Model):
     is_late = fields.Boolean(
         string='Overdue', compute='_compute_deadline', search='_search_is_late',
         help="Past the delivery deadline and still open at Amazon.")
+    days_to_close = fields.Integer(
+        string='Days to Close', compute='_compute_days_to_close', store=True,
+        help="Days from the order to the moment Amazon closed it. The closest "
+             "thing to a delivery time that the Vendor Orders API gives us -- "
+             "but Amazon also closes orders it cancelled, so a very short "
+             "cycle is more likely a cancellation than a fast delivery. Zero "
+             "while the order is still open.")
 
     last_sync = fields.Datetime(readonly=True)
     divergence_note = fields.Text(
@@ -102,6 +131,46 @@ class LiberAmazonOrder(models.Model):
     _po_account_uniq = models.Constraint(
         'unique(name, account_id)',
         'This purchase order was already imported for this account.')
+
+    @api.depends('amazon_state')
+    def _compute_amazon_state_label(self):
+        """
+        O estado da Amazon, na língua de quem lê.
+
+        NÃO é gravado: tradução gravada congela no idioma de quem salvou, e
+        aqui o valor cru já está guardado ao lado, em `amazon_state`. Estado
+        que não conhecemos passa adiante como veio -- que é o mesmo princípio
+        do resto do módulo: o desconhecido aparece, não some.
+        """
+        rotulos = {
+            'New': _("New"),
+            'Acknowledged': _("Acknowledged"),
+            'Closed': _("Closed"),
+        }
+        for record in self:
+            record.amazon_state_label = rotulos.get(
+                record.amazon_state, record.amazon_state or '')
+
+    @api.depends('buying_party', 'account_id')
+    def _compute_unit(self):
+        """
+        Da sigla ao cliente.
+
+        Depende de `buying_party` e da conta, e NÃO do mapa -- não há como um
+        campo calculado depender de "qualquer unidade com esta sigla". Por
+        isso o próprio mapa manda recalcular quando muda; ver
+        `liber.amazon.unit._recompute_orders`. Sem isso, criar o mapeamento
+        hoje não consertaria os pedidos importados ontem.
+        """
+        Unit = self.env['liber.amazon.unit']
+        for record in self:
+            unit = Unit._resolve(record.account_id, record.buying_party)
+            record.unit_id = unit
+            record.unit_mapped = bool(unit) or not record.buying_party
+            record.partner_id = (
+                unit.partner_id or
+                (record.account_id.partner_id if not record.buying_party
+                 else False))
 
     @api.depends('sale_order_id')
     def _compute_state(self):
@@ -121,6 +190,27 @@ class LiberAmazonOrder(models.Model):
                     record.delivery_end.date() - record.order_date.date()).days
             else:
                 record.lead_time_days = 0
+
+    @api.depends('amazon_state', 'order_date', 'state_changed_date')
+    def _compute_days_to_close(self):
+        """
+        Do pedido até a Amazon fechá-lo.
+
+        É o mais perto de "tempo de entrega" que a Vendor Orders API oferece:
+        ela não nos conta quando recebeu, conta quando encerrou o documento.
+        Serve como medida do ciclo, e não como prova de entrega -- pedido
+        cancelado também vira `Closed`, e por isso um ciclo de duas horas
+        quase certamente é cancelamento, não velocidade.
+
+        Zero enquanto o pedido está aberto: não há ciclo para medir.
+        """
+        for record in self:
+            if (record.amazon_state == 'Closed' and record.order_date
+                    and record.state_changed_date):
+                record.days_to_close = (
+                    record.state_changed_date.date() - record.order_date.date()).days
+            else:
+                record.days_to_close = 0
 
     def _compute_deadline(self):
         """
@@ -306,10 +396,21 @@ class LiberAmazonOrder(models.Model):
 
         if not changes:
             return False
+
+        # Teto na lista. Um pedido de 158 linhas que a Amazon reduz produz 158
+        # avisos, e o alerta vira um paredão que ninguém lê -- deixando de
+        # avisar justamente quando havia mais o que dizer. O número inteiro
+        # fica na primeira frase; o detalhe, nas primeiras vinte.
+        MOSTRAR = 20
+        resto = len(changes) - MOSTRAR
+        detalhe = changes[:MOSTRAR]
+        if resto > 0:
+            detalhe.append(_("… and %s more change(s).", resto))
+
         return _("Amazon changed this order after quotation %(quote)s was "
-                 "created:\n- %(changes)s",
-                 quote=self.sale_order_id.name,
-                 changes="\n- ".join(changes))
+                 "created (%(total)s change(s)):\n- %(changes)s",
+                 quote=self.sale_order_id.name, total=len(changes),
+                 changes="\n- ".join(detalhe))
 
     def _rebuild_lines(self, mapped_lines, products):
         """
@@ -372,10 +473,30 @@ class LiberAmazonOrder(models.Model):
                 "%(po)s already has quotation %(quote)s.",
                 po=self.name, quote=self.sale_order_id.name))
 
-        if not self.account_id.partner_id:
+        if not self.is_open:
+            # A Amazon fechou: entregue, cancelado ou expirado. Cotar agora
+            # criaria um compromisso comercial para uma janela que não existe
+            # mais -- e, no histórico importado, prometeria de novo o que já
+            # foi entregue pelo portal.
             blockers.append(_(
-                "Set 'Amazon as Customer' on account %s before creating "
-                "quotations.", self.account_id.display_name))
+                "Amazon already closed %s. There is no open window to quote "
+                "against.", self.name))
+
+        if not self.partner_id:
+            if self.buying_party:
+                # Cair no cliente da conta seria pior do que recusar: cada
+                # unidade da Amazon é um estabelecimento fiscal com CNPJ
+                # próprio, e a nota sairia contra o errado -- em silêncio,
+                # com número plausível.
+                blockers.append(_(
+                    "Amazon unit %(code)s is not mapped to a customer. Map it "
+                    "under Configuration > Amazon Units, or use 'Map units "
+                    "from orders' on the account.",
+                    code=self.buying_party))
+            else:
+                blockers.append(_(
+                    "Set 'Amazon as Customer' on account %s before creating "
+                    "quotations.", self.account_id.display_name))
 
         # Linha sem produto NÃO impede a cotação: ela fica de fora e o que
         # ficou de fora é registrado no histórico. Bloquear seria pior --
@@ -488,11 +609,13 @@ class LiberAmazonOrder(models.Model):
                 # descobrir o seguinte é fazê-la voltar três vezes.
                 raise UserError("\n\n".join(blockers))
 
-            partner = record.account_id.partner_id
             usable = record.line_ids.filtered(lambda line: line.product_id)
+            entrega = (record.unit_id.shipping_partner_id
+                       or record.partner_id)
 
             quotation = self.env['sale.order'].create({
-                'partner_id': partner.id,
+                'partner_id': record.partner_id.id,
+                'partner_shipping_id': entrega.id,
                 'company_id': record.company_id.id,
                 'origin': record.name,
                 'client_order_ref': record.name,
@@ -500,11 +623,15 @@ class LiberAmazonOrder(models.Model):
                 # A janela de entrega da Amazon é um intervalo; o fim é o
                 # prazo. Prometer o começo seria prometer mais do que ela pede.
                 'commitment_date': record.delivery_end or False,
+                # Sem price_unit de propósito (decisão de 11/08/2026): a
+                # cotação nasce com o NOSSO preço de capa, calculado pelo
+                # padrão do Odoo (lista de preços do parceiro, desconto e
+                # tudo). O valor da Amazon (Net Cost) não se perde: fica no
+                # espelho da PO, que é onde comparação e divergência moram.
                 'order_line': [
                     (0, 0, {
                         'product_id': line.product_id.id,
                         'product_uom_qty': line.quantity,
-                        'price_unit': line.price_unit,
                         'name': line.product_id.display_name,
                     })
                     for line in usable
@@ -583,6 +710,12 @@ class LiberAmazonOrderLine(models.Model):
         help="True once a person chose the product, so re-reading Amazon "
              "does not undo it.")
 
+    short_label = fields.Char(
+        string='Title', compute='_compute_short_label', store=True,
+        help="ISBN plus the first words of the title. Exists because the "
+             "pivot has no column width: a row header is as wide as its "
+             "longest label, and one long title stretches the whole table.")
+
     quantity = fields.Float(readonly=True)
     uom_label = fields.Char(string='Amazon UoM', readonly=True)
     # netCost, o que a Amazon paga -- nunca listPrice, que é a etiqueta com
@@ -593,14 +726,117 @@ class LiberAmazonOrderLine(models.Model):
     currency_code = fields.Char(readonly=True)
     backorder_allowed = fields.Boolean(readonly=True)
 
-    subtotal = fields.Float(compute='_compute_subtotal', digits='Product Price')
-    matched = fields.Boolean(compute='_compute_subtotal')
+    # Gravado, ao contrário de antes: medida de pivô precisa existir em coluna.
+    subtotal = fields.Float(
+        compute='_compute_subtotal', store=True, digits='Product Price')
+    matched = fields.Boolean(compute='_compute_subtotal', store=True)
+
+    # ------------------------------------------------- o pedido, espelhado
+    # A pergunta "quais livros não foram atendidos" é por TÍTULO, e título
+    # mora na linha. Para o pivô agrupar por mês, estado ou destino, esses
+    # campos do pedido precisam existir aqui -- relacionado sem `store` não
+    # entra em agrupamento.
+
+    categ_id = fields.Many2one(
+        'product.category', string='Product Category',
+        related='product_id.categ_id', store=True,
+        help="Category of the matched product. Empty for titles with no "
+             "product in the catalogue -- they group under 'None'.")
+
+    order_date = fields.Datetime(
+        related='order_id.order_date', store=True, index=True)
+    amazon_state = fields.Char(related='order_id.amazon_state', store=True)
+    amazon_state_label = fields.Char(
+        string='Amazon State', related='order_id.amazon_state_label')
+    ship_to_party = fields.Char(
+        string='Destination', related='order_id.ship_to_party', store=True)
+    days_to_close = fields.Integer(
+        related='order_id.days_to_close', store=True)
+    lead_time_days = fields.Integer(
+        related='order_id.lead_time_days', store=True)
+
+    fulfilment_state = fields.Selection(
+        [('no_product', 'No product in catalogue'),
+         ('pending', 'Not quoted yet'),
+         ('quoted', 'In a quotation')],
+        string='Fulfilment', compute='_compute_fulfilment', store=True,
+        help="Where this title stopped. 'No product in catalogue' means it "
+             "was left out of the quotation for having no product; 'Not "
+             "quoted yet' means nobody turned the order into a quotation.")
+
+    # `fulfilment_state` diz ONDE parou; este diz SE ainda dá para andar. São
+    # eixos diferentes, e juntá-los num campo só faria perder um dos dois: um
+    # título sem cadastro num pedido aberto ainda é recuperável, e o mesmo
+    # título num pedido que a Amazon fechou não é.
+    outcome = fields.Selection(
+        [('served', 'Quoted here'),
+         ('open', 'Still possible'),
+         ('missed', 'Window closed')],
+        string='Status in Odoo', compute='_compute_fulfilment', store=True,
+        help="Where this title stands INSIDE ODOO -- not what happened in the "
+             "world.\n\n"
+             "'Quoted here' counts only what became a quotation through this "
+             "module. A year of history was imported after the fact, so almost "
+             "nothing old can be quoted here: those books were delivered "
+             "through the Vendor Central portal, before this module existed.\n\n"
+             "'Window closed' means Amazon closed the order without this title "
+             "reaching a quotation. For the imported history that is the "
+             "normal case and not a loss; for orders that arrive from now on, "
+             "it is a miss worth looking at.")
+
+    # Comprimento do pedaço do título. 34 cabe numa coluna que não empurra o
+    # resto da tabela para fora da tela, e ainda deixa reconhecer o livro.
+    SHORT_TITLE = 34
+
+    @api.depends('isbn', 'product_id.name')
+    def _compute_short_label(self):
+        """
+        ISBN na frente, título cortado atrás.
+
+        O ISBN não está aí por capricho de catálogo: dois títulos de uma mesma
+        coleção costumam começar igual, e cortados no mesmo ponto virariam o
+        MESMO rótulo -- o pivô somaria os dois numa linha só e o número sairia
+        errado sem nada na tela denunciando. Com o ISBN na frente, cada linha
+        é única mesmo quando o texto colide.
+        """
+        for line in self:
+            nome = line.product_id.name or _("(not in catalogue)")
+            if len(nome) > line.SHORT_TITLE:
+                nome = nome[:line.SHORT_TITLE - 1].rstrip() + '…'
+            line.short_label = '%s · %s' % (line.isbn or '—', nome)
 
     @api.depends('quantity', 'price_unit', 'product_id')
     def _compute_subtotal(self):
         for line in self:
             line.subtotal = (line.quantity or 0.0) * (line.price_unit or 0.0)
             line.matched = bool(line.product_id)
+
+    @api.depends('product_id', 'order_id.sale_order_id', 'order_id.is_open')
+    def _compute_fulfilment(self):
+        """
+        Onde este título parou, e se ainda dá para fazer algo.
+
+        Duas perguntas, dois campos. A primeira é de causa -- e separar 'sem
+        produto' de 'sem cotação' importa porque são problemas de gente
+        diferente: um é do cadastro, o outro de quem opera. A segunda é de
+        prazo: enquanto o pedido está aberto na Amazon, cadastrar o título
+        ainda resolve; depois que ela fecha, aquele título naquele pedido não
+        vai mais a lugar nenhum.
+        """
+        for line in self:
+            if not line.product_id:
+                line.fulfilment_state = 'no_product'
+            elif not line.order_id.sale_order_id:
+                line.fulfilment_state = 'pending'
+            else:
+                line.fulfilment_state = 'quoted'
+
+            if line.fulfilment_state == 'quoted':
+                line.outcome = 'served'
+            elif line.order_id.is_open:
+                line.outcome = 'open'
+            else:
+                line.outcome = 'missed' 
 
     def write(self, vals):
         """

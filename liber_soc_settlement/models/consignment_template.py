@@ -105,18 +105,23 @@ class ConsignmentTemplate(models.Model):
                 and (not tmpl.date_start or tmpl.date_start <= today)
                 and (not tmpl.date_end or tmpl.date_end >= today))
 
-    @api.depends('team_id')
+    # A empresa entra junto do canal: o canal é um registro só para todas as
+    # editoras, então "quantos clientes esta campanha alcança" só faz sentido
+    # dentro da editora dela.
+    @api.depends('team_id', 'company_id')
     def _compute_partner_count(self):
         Agreement = self.env['consignment.agreement']
         for tmpl in self:
             tmpl.partner_count = Agreement.search_count([
                 ('state', '=', 'active'), ('team_id', '=', tmpl.team_id.id),
+                ('company_id', '=', (tmpl.company_id or self.env.company).id),
             ]) if tmpl.team_id else 0
 
     def action_view_partners(self):
         self.ensure_one()
         agreements = self.env['consignment.agreement'].search([
-            ('state', '=', 'active'), ('team_id', '=', self.team_id.id)])
+            ('state', '=', 'active'), ('team_id', '=', self.team_id.id),
+            ('company_id', '=', (self.company_id or self.env.company).id)])
         return {
             'type': 'ir.actions.act_window',
             'name': self.env._('Customers of %s', self.team_id.name or ''),

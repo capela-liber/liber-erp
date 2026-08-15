@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from odoo import _, models
+from odoo.tools import float_round
 
 
 class EdlabContractRoyaltyLine(models.Model):
@@ -47,6 +48,36 @@ class EdlabContractRoyaltyLine(models.Model):
                 ]
             )
         )
+
+    def _edlab_advance_deduction(self, owed):
+        """Portion of the recoupable advance netted out of what this bill
+        pays: the open accruals minus the net owed. Zero when there is no
+        advance left to recoup."""
+        self.ensure_one()
+        AnalyticLine = self.env["account.analytic.line"].sudo()
+        domain = self._edlab_accrual_entry_domain()
+        if self.last_payment_date:
+            domain.append(("date", ">", self.last_payment_date))
+        accrued = -sum(AnalyticLine.search(domain).mapped("amount"))
+        return max(float_round(accrued - owed, precision_digits=2), 0.0)
+
+    def _prepare_payment_bill_line_cmds(self, owed, company):
+        """Bill lines paying this royalty line.
+
+        When part of the royalties is eaten by the recoupable advance, the
+        bill must SAY so: a gross royalties line plus a visible negative
+        "advance recouped" line, instead of an opaque net total the author
+        cannot reconcile with the statement."""
+        self.ensure_one()
+        deduction = self._edlab_advance_deduction(owed)
+        if deduction <= 0:
+            return [(0, 0, self._prepare_payment_bill_line_vals(owed, company))]
+        gross = float_round(owed + deduction, precision_digits=2)
+        main = self._prepare_payment_bill_line_vals(gross, company)
+        recouped = self._prepare_payment_bill_line_vals(-deduction, company)
+        recouped["name"] = _("Advance recouped %s - %s") % (
+            self.contract_id.name or _("New"), self.product_id.display_name)
+        return [(0, 0, main), (0, 0, recouped)]
 
     def _prepare_payment_bill_line_vals(self, amount, company):
         """Vendor bill line paying this royalty line: the configured product and

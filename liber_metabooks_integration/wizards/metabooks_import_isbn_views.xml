@@ -5,14 +5,36 @@
         <field name="model">metabooks.import.isbn</field>
         <field name="arch" type="xml">
             <form string="Import from Metabooks (ISBN)">
-                <group>
+                <field name="state" invisible="1"/>
+                <field name="product_ids" invisible="1"/>
+                <group invisible="state == 'done'">
                     <field name="isbns" placeholder="9786551590153&#10;978-85-7715-049-6"
                            widget="text"/>
                 </group>
+
+                <div invisible="state != 'done'">
+                    <field name="summary" nolabel="1" readonly="1" widget="text"/>
+                    <group string="Not found on Metabooks"
+                           invisible="not not_found_isbns">
+                        <field name="not_found_isbns" nolabel="1" readonly="1"
+                               widget="text"/>
+                    </group>
+                    <group string="Failed" invisible="not failed_details">
+                        <field name="failed_details" nolabel="1" readonly="1"
+                               widget="text"/>
+                    </group>
+                </div>
+
                 <footer>
                     <button name="action_import" type="object" string="Import"
-                            class="btn-primary"/>
-                    <button string="Cancel" special="cancel" class="btn-secondary"/>
+                            class="btn-primary" invisible="state == 'done'"/>
+                    <button name="action_view_products" type="object"
+                            string="View books" class="btn-primary"
+                            invisible="state != 'done' or not product_ids"/>
+                    <button name="action_retry_failed" type="object"
+                            string="Retry the failed ones" class="btn-secondary"
+                            invisible="state != 'done' or not failed_details"/>
+                    <button string="Close" special="cancel" class="btn-secondary"/>
                 </footer>
             </form>
         </field>

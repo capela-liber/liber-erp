@@ -2,6 +2,7 @@
 from odoo.tests.common import TransactionCase, tagged
 
 from ..analysis import pipeline
+from ..controller.painel import NfeXmlPainel
 
 OWN = '03004307'          # Editora Hedra root used by the fixtures
 CLIENT = '60316817'
@@ -60,6 +61,42 @@ class TestPainelPipeline(TransactionCase):
         so_venda = _nfe(K[:-1] + '4', OWN, CLIENT, '5102', 'VENDA', 1, 10.0)
         payload = self._build([(so_venda.encode(), 4)])
         self.assertIsNone(payload['consigHist'])
+
+    def test_empresa_com_cpf_no_cadastro_nao_some_calada(self):
+        """A house company registered with a CPF issues notes nobody claims.
+
+        The panel then has nothing to analyse, and the empty page has to name
+        the issuer root it refused - otherwise the only symptom is a blank
+        report and the cause (the company register) stays invisible.
+        """
+        nota = _nfe(K[:-1] + '7', '35288052', CLIENT, '5102', 'VENDA', 1, 10.0)
+        stats = {}
+        # the house is registered with a CPF: no CNPJ root at all
+        payload = pipeline.build([(nota.encode(), 7)], set(), {}, stats)
+        self.assertIsNone(payload)
+        self.assertEqual(stats['recebidas'], 1)
+        self.assertEqual(stats['emissores'], [{'raiz': '35288052', 'nome': 'Emitente', 'n': 1}])
+
+        html = NfeXmlPainel._empty_page(
+            1, set(), {}, [('Edlab Press.', '437.913.978-69')], stats)
+        self.assertIn('35288052', html)
+        self.assertIn('Edlab Press.', html)
+        self.assertIn('437.913.978-69', html)
+        self.assertIn('Configura', html)          # points at Settings -> Companies
+
+    def test_empty_page_escapa_nome_de_empresa(self):
+        html = NfeXmlPainel._empty_page(
+            0, {OWN}, {OWN: '<script>x</script>'}, [], {})
+        self.assertNotIn('<script>', html)
+        self.assertIn('&lt;script&gt;', html)
+
+    def test_stats_out_nao_vaza_para_o_payload(self):
+        nota = _nfe(K[:-1] + '8', OWN, CLIENT, '5102', 'VENDA', 1, 10.0)
+        stats = {}
+        payload = pipeline.build([(nota.encode(), 8)], {OWN}, {OWN: 'Hedra'}, stats)
+        self.assertIn('emissores', stats)
+        self.assertNotIn('emissores', payload['meta'])
+        self.assertEqual(payload['meta']['recebidas'], 0)
 
     def test_consig_hist_agrega_por_grupo(self):
         remessa = _nfe(K[:-1] + '5', OWN, CLIENT, '5917', 'REMESSA EM CONSIGNACAO', 5, 50.0, day='2026-04-02')

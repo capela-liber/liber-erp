@@ -11,3 +11,5 @@ access_budget_tag_user,budget.tag.user,model_budget_tag,liber_budget.group_budge
 access_budget_tag_manager,budget.tag.manager,model_budget_tag,liber_budget.group_budget_manager,1,1,1,1
 access_budget_report_user,budget.report.user,model_budget_report,liber_budget.group_budget_user,1,0,0,0
 access_budget_report_manager,budget.report.manager,model_budget_report,liber_budget.group_budget_manager,1,0,0,0
+access_budget_pnl_report_user,budget.pnl.report.user,model_budget_pnl_report,liber_budget.group_budget_user,1,0,0,0
+access_budget_pnl_report_manager,budget.pnl.report.manager,model_budget_pnl_report,liber_budget.group_budget_manager,1,0,0,0

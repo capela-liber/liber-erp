@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <!--
+      O desconto se mostra, não se dilui no preço.
+
+      Ver `models/res_groups.py` para o porquê: o royalty sobre o preço de
+      venda, a venda especial e o vDesc da NFe leem o desconto no CAMPO, e
+      todos os três emudecem quando ele vira preço menor.
+
+      A coluna Desc.% do Pedido C e do Pedido S é do core e já tem
+      `groups="sale.group_discount_per_so_line"`: ligar a opção a acende. A da
+      fatura nasce `optional="hide"` e é acesa em `views/account_move_views.xml`.
+    -->
+    <function model="res.groups" name="_liber_ligar_desconto_por_linha"/>
+</odoo>

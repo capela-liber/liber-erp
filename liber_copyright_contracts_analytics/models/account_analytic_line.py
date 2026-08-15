@@ -121,3 +121,36 @@ class AccountAnalyticLine(models.Model):
         lines._compute_general_account_id()
         # v19: recordset.flush() is gone; flush_recordset() is its replacement.
         lines.flush_recordset(["general_account_id"])
+
+    @api.model
+    def _edlab_backfill_plan_columns(self):
+        """Mirror each royalty line's account into its PLAN column (x_planN_id).
+
+        The royalty engine used to write only ``account_id`` -- the Project
+        plan's column -- while the copyright accounts live in their own plan.
+        Everything core aggregates per plan (the account form's balance/"Gross
+        Margin", the plan reports) reads the plan column and therefore saw ZERO
+        over hundreds of entries. The engine now writes both columns; this
+        backfills the lines booked before it did. Idempotent; returns how many
+        lines were completed. Called by the 19.0.1.3.0 migration.
+        """
+        lines = self.sudo().search([
+            ("account_id", "!=", False),
+            "|", "|", "|",
+            ("edlab_source_move_line_id", "!=", False),
+            ("edlab_payment_cutoff_line_id", "!=", False),
+            ("edlab_advance_line_id", "!=", False),
+            # Manual entries on a copyright account are just as invisible to
+            # the plan aggregation as the booked ones -- carry them along.
+            ("account_id.is_copyright_analytic", "=", True),
+        ])
+        moved = 0
+        for account, todo in lines.grouped("account_id").items():
+            column = account.plan_id._column_name()
+            if column == "account_id":
+                continue
+            missing = todo.filtered(lambda line: not line[column])
+            if missing:
+                missing.write({column: account.id})
+                moved += len(missing)
+        return moved

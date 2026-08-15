@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!--
+        UMA LÍNGUA SÓ.
+
+        Trocar o `string` do campo (em `models/sale_order.py`) resolve a coluna
+        e o rótulo do formulário, mas NÃO resolve onde a view do núcleo escreve
+        o texto à mão. São quatro lugares, e todos são de busca/agrupamento —
+        justamente onde se trabalha em quantidade:
+
+          sale.view_sales_order_filter                    (pedidos)
+          sale.account_invoice_groupby_inherit            (faturas)
+          sale.view_order_product_search                  (análise de vendas)
+          sale.view_account_invoice_report_search_inherit (análise de faturas)
+
+        Repare no `name="sales_channel"` dos filtros: é o nome técnico que a
+        própria Odoo deu a eles. Só o rótulo é que ficou "Sales Team".
+    -->
+
+    <record id="view_sales_order_filter_canal" model="ir.ui.view">
+        <field name="name">sale.order.search.canal</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_sales_order_filter"/>
+        <field name="arch" type="xml">
+            <field name="team_id" position="attributes">
+                <attribute name="string">Sales Channel</attribute>
+            </field>
+        </field>
+    </record>
+
+    <record id="account_invoice_groupby_canal" model="ir.ui.view">
+        <field name="name">account.move.search.canal</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="sale.account_invoice_groupby_inherit"/>
+        <field name="arch" type="xml">
+            <filter name="sales_channel" position="attributes">
+                <attribute name="string">Sales Channel</attribute>
+            </filter>
+        </field>
+    </record>
+
+    <record id="view_order_product_search_canal" model="ir.ui.view">
+        <field name="name">sale.report.search.canal</field>
+        <field name="model">sale.report</field>
+        <field name="inherit_id" ref="sale.view_order_product_search"/>
+        <field name="arch" type="xml">
+            <filter name="sales_channel" position="attributes">
+                <attribute name="string">Sales Channel</attribute>
+            </filter>
+        </field>
+    </record>
+
+    <record id="account_invoice_report_search_canal" model="ir.ui.view">
+        <field name="name">account.invoice.report.search.canal</field>
+        <field name="model">account.invoice.report</field>
+        <field name="inherit_id" ref="sale.view_account_invoice_report_search_inherit"/>
+        <field name="arch" type="xml">
+            <filter name="sales_channel" position="attributes">
+                <attribute name="string">Sales Channel</attribute>
+            </filter>
+        </field>
+    </record>
+
+    <!--
+        E OS MENUS. Os dois que apontam para a lista de equipes ficam em
+        `Vendas > Configuração` e `Vendas > Relatórios`. Reescrever o `name`
+        aqui é durável: nosso módulo carrega depois do `sale`, e um `-u` do
+        `sale` não desfaz (o motor não sobrescreve dado de outro módulo).
+    -->
+    <record id="sale.sales_team_config" model="ir.ui.menu">
+        <field name="name">Sales Channels</field>
+    </record>
+
+    <record id="sale.report_sales_team" model="ir.ui.menu">
+        <field name="name">Sales Channels</field>
+    </record>
+
+</odoo>

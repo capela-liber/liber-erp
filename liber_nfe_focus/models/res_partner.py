@@ -30,6 +30,18 @@ CAMPOS_ENDERECO = (
     'l10n_br_ie_code', 'nfe_inscricao_estadual',
 )
 
+# Quem contrata o frete (modFrete do grupo transp). A tabela é da NFe; a
+# seleção mora aqui porque o padrão nasce no CADASTRO do cliente e desce por
+# pedido e fatura -- os três campos usam a mesma lista.
+MODALIDADE_FRETE = [
+    ('0', '0 — Por conta do remetente (CIF)'),
+    ('1', '1 — Por conta do destinatário (FOB)'),
+    ('2', '2 — Por conta de terceiros'),
+    ('3', '3 — Transporte próprio, do remetente'),
+    ('4', '4 — Transporte próprio, do destinatário'),
+    ('9', '9 — Sem ocorrência de transporte'),
+]
+
 
 def endereco_para_nfe(campos):
     """Escolhe a fonte de cada pedaço do endereço. Entra dicionário, sai dicionário.
@@ -113,6 +125,11 @@ class ResPartner(models.Model):
         string='Indicador de IE',
         help="Deixe vazio para deduzir: com IE preenchida é contribuinte; "
              "pessoa física é não contribuinte; o resto é isento.")
+    nfe_modalidade_frete = fields.Selection(
+        selection=MODALIDADE_FRETE, string='Modalidade de frete',
+        help="Quem costuma contratar o frete nas vendas para este cliente. "
+             "O pedido copia daqui e pode mudar caso a caso. Vazio, a nota "
+             "sai no padrão da casa: CIF, o remetente contrata.")
 
     @api.depends('street')
     def _compute_nfe_numero(self):
@@ -181,4 +198,25 @@ class ResPartner(models.Model):
             'telefone': self.phone,
             'email': self.email,
             'pais': self.country_id.name,
+        }
+
+    def _focus_transportador_data(self):
+        """Dicionário do transportador no formato do `nfe_payload`.
+
+        O grupo transportador da NFe é mais raso que o destinatário: o
+        endereço viaja num campo só, sem CEP nem telefone. Logradouro e
+        número são colados aqui porque a SEFAZ não os separa nesse grupo.
+        """
+        self.ensure_one()
+        documento = re.sub(r'\D', '', self.vat or '')
+        endereco = self._nfe_endereco()
+        pedacos = [endereco['logradouro'], endereco['numero']]
+        return {
+            'nome': self.name,
+            'cnpj': documento if len(documento) == 14 else None,
+            'cpf': documento if len(documento) == 11 else None,
+            'inscricao_estadual': endereco['inscricao_estadual'],
+            'endereco': ', '.join(p for p in pedacos if p),
+            'municipio': endereco['municipio'],
+            'uf': self.state_id.code,
         }

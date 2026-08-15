@@ -71,6 +71,22 @@ Só se recusa a cotação quando **nenhuma** linha casou: não há o que cotar.
 O preço da linha é o **netCost** (o que a Amazon paga), nunca o `listPrice`
 (a etiqueta com que ela revende).
 
+## As unidades da Amazon
+
+Cada centro de distribuição compra como um estabelecimento fiscal próprio, e o
+pedido o nomeia só pela sigla: `{"partyId": "GRU8"}`. Sem CNPJ, sem endereço —
+a especificação da SP-API prevê `taxInfo` e `address`, a Amazon não os
+preenche.
+
+Por isso o mapa `liber.amazon.unit`: sigla → cliente (e endereço de entrega,
+quando difere). Unidade não mapeada não vira cotação — cair num cliente padrão
+emitiria a nota contra o CNPJ da filial errada, em silêncio.
+
+O botão **Mapear unidades pelos pedidos** semeia o mapa com as siglas já
+vistas e sugere um cliente quando um contato casa sem ambiguidade. É sugestão
+de tela, não regra: casar por nome só funciona em quem batize os contatos de
+"Amazon GRU8".
+
 ## Configurar
 
 1. **Aplicativos → Amazon Vendor → Configuração → Contas → Novo**
@@ -95,6 +111,16 @@ e a lista exata dos ISBNs que não casam. Só então **Importar**.
 
 No pedido importado, **Gerar cotação** cria o `sale.order` em rascunho.
 
+Dois relatórios respondem perguntas diferentes: **Agenda de entregas** é por
+pedido — o que vence quando, o que já venceu. **Análise por título** é por
+livro — o que não foi atendido (e se a culpa é do cadastro ou de quem opera),
+e quanto tempo o ciclo levou. A coluna **Situação no Odoo** separa o que ainda dá para atender
+do que a Amazon já fechou. O nome é literal: "cotado aqui" conta só o que
+passou por este módulo, e como o histórico foi importado depois do fato,
+quase nada antigo aparece cotado — aqueles livros saíram pelo portal. Para o
+período importado, "janela fechada" é o normal, não perda. Para tempo de ciclo, ligue *Ciclo concluído*:
+pedido aberto vale zero e dilui a média.
+
 ## Erros que valem reconhecer
 
 - **HTTP 403 com o login tendo funcionado** não é credencial errada. É o app
@@ -118,5 +144,5 @@ odoo -d <base_de_teste> -i liber_amazon_vendor --test-enable \
      --test-tags amazon_vendor --stop-after-init
 ```
 
-84 testes. A tradução pura (datas, ISBN, netCost) também roda fora do Odoo,
+112 testes. A tradução pura (datas, ISBN, netCost) também roda fora do Odoo,
 em milissegundos, por `scripts/tests/test_amazon_vendor.py`.

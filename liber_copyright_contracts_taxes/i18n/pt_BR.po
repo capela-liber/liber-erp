@@ -222,12 +222,16 @@ msgid "IRRF Tables"
 msgstr "Tabelas de IRRF"
 
 #. module: liber_copyright_contracts_taxes
-#: model:ir.model.fields,field_description:liber_copyright_contracts_taxes.field_account_bank_statement_line__edlab_is_tax_bill
 #: model:ir.model.fields,field_description:liber_copyright_contracts_taxes.field_account_bank_statement_line__edlab_tax_move_id
-#: model:ir.model.fields,field_description:liber_copyright_contracts_taxes.field_account_move__edlab_is_tax_bill
 #: model:ir.model.fields,field_description:liber_copyright_contracts_taxes.field_account_move__edlab_tax_move_id
 msgid "IRRF Tax Bill"
 msgstr "Fatura de IRRF"
+
+#. module: liber_copyright_contracts_taxes
+#: model:ir.model.fields,field_description:liber_copyright_contracts_taxes.field_account_bank_statement_line__edlab_is_tax_bill
+#: model:ir.model.fields,field_description:liber_copyright_contracts_taxes.field_account_move__edlab_is_tax_bill
+msgid "Is an IRRF Tax Bill"
+msgstr "É nota de IRRF (acumuladora)"
 
 #. module: liber_copyright_contracts_taxes
 #: model:ir.model.fields,field_description:liber_copyright_contracts_taxes.field_account_move_line__edlab_irrf_withholding

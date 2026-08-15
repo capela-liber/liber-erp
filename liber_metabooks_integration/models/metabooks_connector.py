@@ -112,34 +112,54 @@ class MetabooksConnector(models.AbstractModel):
         """Import/update products for a list of ISBNs.
 
         Idempotent: an existing book (matched on ISBN) is updated, never duplicated.
-        Returns {'products': recordset, 'created': n, 'updated': n, 'not_found': [isbns]}.
+        Returns {'products': recordset, 'created': n, 'updated': n,
+        'not_found': [isbns], 'failed': [(isbn, message)]}.
+
+        One ISBN that the API refuses does not cost the caller the rest of the
+        batch: it used to raise, which rolled back the books already imported -
+        the 50th of 100 failing threw away the 49 before it. Failures come back
+        in ``failed`` for the caller to report.
         """
         client = self._get_client()
         Product = self.env["product.template"]
         products = Product
         created = updated = 0
         not_found = []
+        failed = []
         for raw in isbns:
             isbn = clean_isbn(raw)
             if not isbn:
                 continue
             try:
-                data = client.get_product_by_isbn(isbn)
+                # savepoint: an API error is not the only way one book can go
+                # wrong - a constraint on _upsert must not poison the cursor
+                # for the ISBNs that follow.
+                with self.env.cr.savepoint():
+                    data = client.get_product_by_isbn(isbn)
+                    if not data:
+                        _logger.info("Metabooks: ISBN %s not found, skipped", isbn)
+                        not_found.append(isbn)
+                        continue
+                    existed = bool(Product.search(
+                        ["|", ("default_code", "=", isbn), ("barcode", "=", isbn)],
+                        limit=1))
+                    product = self._upsert(self._parse_onix(data))
+                    product.flush_recordset()
             except MetabooksError as exc:
-                raise UserError(_("Metabooks error for ISBN %s:\n%s") % (isbn, exc))
-            if not data:
-                _logger.info("Metabooks: ISBN %s not found, skipped", isbn)
-                not_found.append(isbn)
+                _logger.warning("Metabooks: ISBN %s failed: %s", isbn, exc)
+                failed.append((isbn, str(exc)))
                 continue
-            existed = bool(Product.search(
-                ["|", ("default_code", "=", isbn), ("barcode", "=", isbn)], limit=1))
-            products |= self._upsert(self._parse_onix(data))
+            except Exception as exc:  # noqa: BLE001 - one book must not stop the batch
+                _logger.exception("Metabooks: ISBN %s failed", isbn)
+                failed.append((isbn, str(exc)))
+                continue
+            products |= product
             if existed:
                 updated += 1
             else:
                 created += 1
-        return {"products": products, "created": created,
-                "updated": updated, "not_found": not_found}
+        return {"products": products, "created": created, "updated": updated,
+                "not_found": not_found, "failed": failed}
 
     def import_publisher(self, mvb_id, limit=None, with_covers=True):
         """Import/update the whole catalogue of a publisher (VL / mvbId).
@@ -489,12 +509,18 @@ class MetabooksConnector(models.AbstractModel):
             _logger.warning("Metabooks: unknown product form %r", product_form)
             product_form = False
 
-        return {
+        # ONIX weighs in grams and Odoo in kilos, and by keeping the number
+        # only in `metabooks_weight` the catalogue knew the weight of every
+        # book while the warehouse did not: a delivery added up to zero, and
+        # a fiscal note that must declare weight had nothing to declare. The
+        # conversion goes in `weight`, where stock and invoicing look.
+        peso_gramas = form.get("weight") or 0.0
+        tecnicos = {
             # dimensions are millimetres, weight is grams
             "metabooks_height": form.get("height") or 0.0,
             "metabooks_width": form.get("width") or 0.0,
             "metabooks_thickness": form.get("thickness") or 0.0,
-            "metabooks_weight": form.get("weight") or 0.0,
+            "metabooks_weight": peso_gramas,
             "metabooks_product_form": product_form,
             "metabooks_binding": binding,
             "metabooks_form_detail": ", ".join(details) or False,
@@ -526,6 +552,11 @@ class MetabooksConnector(models.AbstractModel):
             "metabooks_publish_date": self._parse_date(data.get("publicationDate")),
             "metabooks_technical_sync": fields.Datetime.now(),
         }
+        # Only when ONIX brings a weight: writing 0.0 would erase a weight
+        # somebody put on the scale and typed by hand.
+        if peso_gramas:
+            tecnicos["weight"] = peso_gramas / 1000.0
+        return tecnicos
 
     def enrich_isbns(self, isbns):
         """Write only the technical sheet onto books that already exist.
@@ -536,7 +567,11 @@ class MetabooksConnector(models.AbstractModel):
         left as they are in Odoo.
         """
         client = self._get_client()
-        Product = self.env["product.template"]
+        # Mesmo cuidado do _upsert: o que se escreve aqui é dado DELES. Sem
+        # a marca, cada livro enriquecido entrava na fila de exportação e a
+        # próxima planilha devolveria à Metabooks o que ela acabou de mandar.
+        Product = self.env["product.template"].with_context(
+            metabooks_from_sync=True)
         updated = 0
         not_found = []
         for raw in isbns:

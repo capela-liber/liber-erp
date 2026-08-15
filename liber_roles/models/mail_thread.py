@@ -18,12 +18,29 @@ from odoo import models
 
 from .ir_model_access import VISITOR_GROUP
 
+#: Quem abre Projetos sem poder gravar. O comentário lateral é a única coisa
+#: que essa pessoa acrescenta ao documento -- e é o que a direção pediu para o
+#: Marketing/Assistente em 10/08/2026: "pode só ler e deixar comentários
+#: laterais". Sem esta exceção, o chatter de um projeto que ela enxerga fica
+#: aberto e mudo, que é a pior das duas opções.
+PROJECT_READER_GROUP = 'liber_roles.group_project_reader'
+
+#: E só nestes dois modelos. A exceção do visitante vale no sistema inteiro
+#: porque a conta dele é de leitura em tudo; esta aqui é de um empregado que
+#: escreve no resto da casa, então ela fica do tamanho do que foi pedido.
+PROJECT_MODELS = ('project.project', 'project.task')
+
 
 class Base(models.AbstractModel):
     _inherit = 'base'
 
     def _mail_get_operation_for_mail_message_operation(self, message_operation):
         operations = super()._mail_get_operation_for_mail_message_operation(message_operation)
-        if message_operation == 'create' and self.env.user.has_group(VISITOR_GROUP):
+        if message_operation != 'create':
+            return operations
+        if self.env.user.has_group(VISITOR_GROUP):
+            return dict.fromkeys(operations, 'read')
+        if (self._name in PROJECT_MODELS
+                and self.env.user.has_group(PROJECT_READER_GROUP)):
             return dict.fromkeys(operations, 'read')
         return operations

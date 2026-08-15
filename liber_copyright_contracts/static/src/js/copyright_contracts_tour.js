@@ -51,7 +51,7 @@ registry.category("web_tour.tours").add("copyright_contracts_tour", {
         },
         // --- royalty line: beneficiary x work, two tiers, an advance ----------
         {
-            trigger: ".o_notebook .nav-link:contains('Royalties')",
+            trigger: ".o_notebook .nav-link[name='royalties']",
             content: "Open the Royalties tab",
             run: "click",
         },
@@ -138,7 +138,7 @@ registry.category("web_tour.tours").add("copyright_contracts_tour", {
             run: "click",
         },
         {
-            trigger: ".o_statusbar_status button.o_arrow_button_current:contains('Valid')",
+            trigger: ".o_statusbar_status button.o_arrow_button_current[data-value='valid']",
             content: "The contract is now Valid",
         },
         {
@@ -147,7 +147,7 @@ registry.category("web_tour.tours").add("copyright_contracts_tour", {
             run: "click",
         },
         {
-            trigger: ".o_statusbar_status button.o_arrow_button_current:contains('Renewed')",
+            trigger: ".o_statusbar_status button.o_arrow_button_current[data-value='renewed']",
             content: "The contract is now Renewed",
         },
         // --- reassign the responsible through the ⚙ Action menu ---------------
@@ -186,7 +186,7 @@ registry.category("web_tour.tours").add("copyright_contracts_tour", {
             run: "click",
         },
         {
-            trigger: ".o_statusbar_status button.o_arrow_button_current:contains('Cancelled')",
+            trigger: ".o_statusbar_status button.o_arrow_button_current[data-value='cancelled']",
             content: "The contract is now Cancelled",
         },
     ],

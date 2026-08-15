@@ -31,6 +31,20 @@ Autorizada, a chave de acesso vai para `account.move.nfe_key` — o mesmo campo
 que o liber_nfe_xml usa para amarrar XML e fatura. Uma nota que emitimos e uma
 nota que recebemos viram a mesma coisa para o resto do sistema.
 
+O e-mail ao cliente leva a nota, não só a fatura
+------------------------------------------------
+
+Mandar a fatura em PDF é mandar o recibo e ficar com a nota. Quando a fatura vai
+por e-mail, o DANFE e o XML da nota autorizada vão anexos junto — o DANFE porque
+é o que se confere contra a mercadoria, o XML porque é o documento fiscal e o
+que a contabilidade do cliente guarda por cinco anos.
+
+Os dois aparecem listados no assistente de envio, já marcados e com o nome que o
+cliente vai receber (``DANFE-000000123.pdf`` e ``<chave>-nfe.xml``, e não a
+referência interna da emissão). Quem manda pode desmarcar; apagar da fatura,
+não. Nota ainda não autorizada não tem o que anexar, e documento que não baixou
+não segura o e-mail: vai o PDF da fatura e o resto entra na próxima consulta.
+
 As posições fiscais vêm prontas
 -------------------------------
 
@@ -95,6 +109,11 @@ Testes
   duas vezes não duplica) e a adoção (banco migrado: o CFOP escrito no nome
   herdado vira a ligação, a letra herdada cede à da operação, e o nome que
   colidiria com outro da mesma empresa é mapeado sem ser renomeado).
+- ``tests/test_email_documentos.py`` — o que sai anexo no e-mail ao cliente,
+  contra o assistente de envio do ``account`` de verdade. Cobre os dois
+  documentos com o nome que o cliente lê, a nota ainda não autorizada (não há o
+  que anexar), o download que falhou (o e-mail sai assim mesmo) e o desmarcar
+  no assistente.
 - ``tests/test_endereco_localizacao.py`` — a reconciliação com a localização
   brasileira da OCA. O módulo lê ``street_name``/``street_number``/``district``
   quando esses campos existem no registry e cai nos seus próprios quando não
@@ -114,7 +133,7 @@ errado" de "o cadastro na Focus está errado".
     """,
     'author': "EdLab Press",
     'category': 'Accounting',
-    'version': '19.0.1.6.0',
+    'version': '19.0.2.2.0',
     'license': 'AGPL-3',
     'depends': ['account', 'liber_nfe_xml'],
     'external_dependencies': {'python': ['requests', 'pytz']},

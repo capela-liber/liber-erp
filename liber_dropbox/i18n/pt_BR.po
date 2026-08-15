@@ -74,10 +74,9 @@ msgid "Dropbox"
 msgstr ""
 
 #. module: liber_dropbox
-#: model:ir.module.category,name:liber_dropbox.module_category_liber_dropbox
 #: model:res.groups.privilege,name:liber_dropbox.privilege_liber_dropbox
-msgid "Dropbox Files"
-msgstr "Arquivos Dropbox"
+msgid "Dropbox"
+msgstr "Dropbox"
 
 #. module: liber_dropbox
 #. odoo-python

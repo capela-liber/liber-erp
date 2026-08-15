@@ -2,7 +2,7 @@
 import logging
 
 from odoo import _, api, fields, models
-from odoo.exceptions import ValidationError
+from odoo.exceptions import UserError, ValidationError
 
 from ..services import onix_codes
 
@@ -50,7 +50,7 @@ class MetabooksProduct(models.Model):
     book_auther_ids = fields.Many2many('metabooks.auther.publiser', string='Author List', tracking=True)
     isbn_publisher_id = fields.Many2one('metabooks.auther.publiser', string='ISBN Publisher')
     publish_date = fields.Char("Publish Date(S)")
-    binding = fields.Char("Binding", tracking=True)
+    binding = fields.Char("Binding (Metabooks feed)", tracking=True)
     isbn = fields.Char("ISBN")
     edition = fields.Char("Edition", tracking=True)
     excerpt = fields.Char("Excerpt")
@@ -67,7 +67,7 @@ class MetabooksProduct(models.Model):
         onix_codes.PRODUCT_FORM, string='Product Form', tracking=True,
         help="ONIX product form (list 150): paperback, hardback, digital...")
     metabooks_binding = fields.Selection(
-        onix_codes.BINDING, string='Binding', tracking=True,
+        onix_codes.BINDING, string='Binding (ONIX)', tracking=True,
         help="How the block is bound (ONIX product form detail, B3xx). Sewn "
              "signatures and a glued spine are different jobs on a print order.")
     metabooks_form_detail = fields.Char(
@@ -86,7 +86,7 @@ class MetabooksProduct(models.Model):
     metabooks_illustration_count = fields.Integer('Illustrations', tracking=True)
     metabooks_illustration_note = fields.Char('Illustration Note', tracking=True)
     metabooks_ncm = fields.Char(
-        'NCM', tracking=True,
+        'NCM (Metabooks)', tracking=True,
         help="Brazilian fiscal classification, as declared to Metabooks "
              "(ONIX product classification type 10).")
     metabooks_language = fields.Char('Language', tracking=True)
@@ -157,7 +157,18 @@ class MetabooksProduct(models.Model):
                 raise ValidationError(_(
                     "This product has no ISBN (Internal Reference or Barcode) "
                     "to look up on Metabooks."))
-            self.env['metabooks.connector'].import_isbns([isbn])
+            result = self.env['metabooks.connector'].import_isbns([isbn])
+            # import_isbns collects failures instead of raising (one bad ISBN
+            # must not cost a batch its other books). Refreshing a single book
+            # from its form has no batch to protect, so the error is the
+            # answer the user is waiting for.
+            if result['failed']:
+                raise UserError(_("Metabooks error for ISBN %(isbn)s:\n%(msg)s") % {
+                    'isbn': result['failed'][0][0],
+                    'msg': result['failed'][0][1]})
+            if result['not_found']:
+                raise UserError(_(
+                    "Metabooks has no record for ISBN %s.") % isbn)
         return True
 
     def set_old_book(self):

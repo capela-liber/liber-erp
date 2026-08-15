@@ -142,7 +142,7 @@
                     <filter name="group_by_xml_date" string="XML Date" context="{'group_by':'ks_xml_date'}"
                             help="NFe items by XML Date"/>
                     <filter name="company_id" string="Company" context="{'group_by':'company_id'}"/>
-                    <filter name="team_id" string="Sales Team" context="{'group_by':'team_id'}"/>
+                    <filter name="team_id" string="Sales Channel" context="{'group_by':'team_id'}"/>
                     <filter name="group_by_purchase_id" string="Purchase Order" context="{'group_by':'ks_purchase_id'}"
                             help="NFe items by Purchase Order"/>
                     <filter name="group_by_cfop_id" string="CFOP" context="{'group_by':'ks_cfop_id'}"
