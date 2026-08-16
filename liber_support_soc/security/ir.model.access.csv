@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_co_wizard_user,support.co.wizard.user,model_liber_support_co_wizard,liber_support.group_support_user,1,1,1,1
+access_co_wizard_line_user,support.co.wizard.line.user,model_liber_support_co_wizard_line,liber_support.group_support_user,1,1,1,1

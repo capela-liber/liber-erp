@@ -12,7 +12,7 @@ URLs das páginas (site publicado ou instância local):
 - Local: `http://localhost:8069/liber_site/static/docs/<página>`
 - Índice: `http://localhost:8069/liber_site/static/docs/index.html`
 
-Total de capturas: 55 · Feitas: marque a caixa ao concluir.
+Total de capturas: 58 · Feitas: marque a caixa ao concluir.
 
 
 ## Acordos de consignação — `liber_soc_agreements.html`
@@ -287,6 +287,21 @@ Página: `/liber_site/static/docs/liber_support.html`
 - [x] **`doc-liber_support-resposta-no-chatter.png`**
   - O que capturar: Chamado resolvido com a pergunta do cliente e a resposta da equipe no histórico, e a Primeira resposta em preenchida
   - Legenda no manual: A conversa inteira mora no chamado: a pergunta que chegou por e-mail, a resposta da equipe — e a Primeira resposta em carimbada no SLA.
+
+
+## Atendimento e consignação — `liber_support_soc.html`
+
+Página: `/liber_site/static/docs/liber_support_soc.html`
+
+- [x] **`doc-liber_support_soc-chamado-vinculado-ao-acerto.png`**
+  - O que capturar: Ficha do chamado com os campos Consignação (CO) e Acordo preenchidos, o botão Consignment no topo e o histórico registrando os vínculos
+  - Legenda no manual: O chamado sabe de qual CO e de qual acordo a conversa trata — e o histórico registra quando o vínculo foi feito.
+- [x] **`doc-liber_support_soc-responder-com-o-mapa.png`**
+  - O que capturar: Janela de resposta do chamado com o destinatário preenchido e o PDF Mapa de consignação já anexado
+  - Legenda no manual: A resposta nasce com o mapa anexado; falta só o texto.
+- [x] **`doc-liber_support_soc-importar-da-conversa.png`**
+  - O que capturar: A tela Abrir CO desta conversa: opção Aplicar como, grade de linhas propostas com a confiança em cores, o botão Reler e o texto da conversa embaixo
+  - Legenda no manual: A conversa lida e conferível: quatro títulos exatos, e a assinatura da Marta denunciada como "Não achado".
 
 
 ## Transportadora e coleta — `liber_transport.html`

@@ -46,6 +46,7 @@ var DOCS = [
   ]},
   { area: "Atendimento", desc: "A conversa com o cliente dentro do sistema — quem escreveu, quem responde, e em quanto tempo.", items: [
     { slug: "liber_support", title: "Atendimento ao cliente", desc: "O e-mail da caixa comercial vira chamado, a triagem vira quadro e o prazo vira relógio em horas úteis." },
+    { slug: "liber_support_soc", title: "Atendimento e consignação", desc: "O chamado vinculado à CO, o mapa anexado num clique e o assistente que transforma a conversa em documento." },
   ]},
   { area: "Gestão", desc: "Orçamento e controle de acesso.", items: [
     { slug: "liber_budget", title: "Orçamento", desc: "Orçado × realizado sobre a contabilidade analítica." },

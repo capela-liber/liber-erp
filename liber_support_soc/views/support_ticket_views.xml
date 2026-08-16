@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_support_ticket_form_soc" model="ir.ui.view">
+        <field name="name">liber.support.ticket.form.soc</field>
+        <field name="model">liber.support.ticket</field>
+        <field name="inherit_id"
+               ref="liber_support.view_support_ticket_form"/>
+        <field name="arch" type="xml">
+            <!-- Um documento por vez: CO e acordo só aparecem quando a
+                 conversa é de consignação/acerto (ou quando já vinculados).
+                 O botão ao lado poupa a caça no dropdown. -->
+            <field name="sale_order_id" position="after">
+                <label for="settlement_id"
+                       invisible="kind not in ('consignment', 'settlement') and not settlement_id"/>
+                <div invisible="kind not in ('consignment', 'settlement') and not settlement_id"
+                     class="o_row">
+                    <field name="settlement_id" class="oe_inline"/>
+                    <button name="action_link_latest_settlement" type="object"
+                            string="Last CO" icon="fa-magic"
+                            class="btn-link oe_inline"
+                            invisible="settlement_id or not partner_id"/>
+                </div>
+                <field name="agreement_id"
+                       invisible="kind not in ('consignment', 'settlement') and not agreement_id"/>
+            </field>
+            <button name="action_assign_to_me" position="after">
+                <button name="action_reply_with_map" type="object"
+                        string="Map"
+                        invisible="not partner_id"
+                        help="Attach the partner's consignment map (what
+they hold on the shelf) to a reply."/>
+                <button name="action_open_co_wizard" type="object"
+                        string="Import"
+                        class="btn-secondary"
+                        help="Parse the conversation (or pasted text /
+Excel) into settlement lines, check them, and draft the CO."/>
+            </button>
+            <div name="button_box" position="inside">
+                <!-- O vínculo é botão: o número da CO é o rótulo. -->
+                <button name="action_open_settlement" type="object"
+                        class="oe_stat_button" icon="fa-handshake-o"
+                        invisible="not settlement_id">
+                    <!-- Sem <field> aqui dentro: ver a nota no botão do
+                         pedido, em liber_support. O número da CO está no
+                         campo logo abaixo. -->
+                    <div class="o_stat_info">
+                        <span class="o_stat_text">Consignment</span>
+                    </div>
+                </button>
+            </div>
+        </field>
+    </record>
+
+    <record id="view_consignment_settlement_form_support" model="ir.ui.view">
+        <field name="name">consignment.settlement.form.support</field>
+        <field name="model">consignment.settlement</field>
+        <field name="inherit_id"
+               ref="liber_soc_settlement.view_consignment_settlement_form"/>
+        <field name="arch" type="xml">
+            <div name="button_box" position="inside">
+                <button name="action_view_support_tickets" type="object"
+                        class="oe_stat_button" icon="fa-life-ring"
+                        invisible="support_ticket_count == 0">
+                    <field name="support_ticket_count" widget="statinfo"
+                           string="Support"/>
+                </button>
+            </div>
+        </field>
+    </record>
+</odoo>

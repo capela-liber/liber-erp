@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_co_from_conversation_form" model="ir.ui.view">
+        <field name="name">liber.support.co.wizard.form</field>
+        <field name="model">liber.support.co.wizard</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <group>
+                        <field name="ticket_id" readonly="1"/>
+                        <field name="partner_id"
+                               options="{'no_create': True}"/>
+                        <field name="default_dest" widget="radio"
+                               options="{'horizontal': true}"/>
+                    </group>
+                    <group>
+                        <field name="attachment_id"/>
+                        <field name="xlsx_file" filename="xlsx_filename"/>
+                        <field name="xlsx_filename" invisible="1"/>
+                    </group>
+                </group>
+                <!-- O aviso mora FORA do <group>. Dentro dele, o compilador
+                     do formulário trata cada filho como item de grupo e
+                     injeta um `FormLabel`; num contexto sem esse componente o
+                     cliente quebra com "Cannot find the definition of
+                     component FormLabel" — erro de JavaScript, com a view
+                     válida no servidor. Texto explicativo vai no corpo. -->
+                <!-- O aviso do cliente vem ANTES de tudo, e é o primeiro que
+                     a pessoa vê. Sem ele, o assistente só reclamava no clique
+                     final — depois de ler a planilha inteira e escolher a
+                     opção, que é o pior momento possível para descobrir. -->
+                <div class="alert alert-warning" role="alert"
+                     invisible="partner_id">
+                    This conversation has no <b>customer</b> yet. Fill in the
+                    partner above — it is saved on the ticket too — before
+                    creating the document.
+                </div>
+                <div class="alert alert-info" role="status"
+                     invisible="default_dest != 'sale'">
+                    Creates a <b>sale order</b> and no CO. Cover price of the
+                    product, with the <b>customer's pricelist</b> — the price
+                    written in the e-mail is ignored, and the consignment
+                    agreement is not read.
+                </div>
+                <!-- Ordem pedida (10/08): a grade primeiro — é nela que se
+                     trabalha; o botão e o texto bruto embaixo, para quando
+                     for preciso reler. -->
+                <field name="line_ids">
+                    <list editable="bottom">
+                        <field name="label_source"/>
+                        <field name="confidence" widget="badge"
+                               decoration-success="confidence == 'exact'"
+                               decoration-info="confidence == 'good'"
+                               decoration-warning="confidence == 'weak'"
+                               decoration-danger="confidence == 'none'"/>
+                        <field name="product_id"/>
+                        <field name="qty"/>
+                        <!-- Na venda o destino não existe: o pedido leva
+                             produto, quantidade e preço, e nada de
+                             prateleira. Esconder a coluna evita a pergunta
+                             "o que ponho aqui?" quando não há resposta. -->
+                        <field name="dest"
+                               column_invisible="parent.default_dest == 'sale'"/>
+                    </list>
+                </field>
+                <button name="action_parse" type="object"
+                        string="Re-read"
+                        icon="fa-refresh"
+                        class="btn-secondary mt-2 mb-2"
+                        confirm="Re-reading rebuilds every proposed line and discards manual edits on them. Continue?"/>
+                <field name="source_text" widget="text"
+                       placeholder="Paste here — free text or straight from Excel (one title per line)…"/>
+                <footer>
+                    <button name="action_create_co" type="object"
+                            string="Create" class="btn-primary"/>
+                    <button string="Close" special="cancel" help="Closing keeps the draft; reopen the ticket button to come back to it."
+                            class="btn-secondary"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>
