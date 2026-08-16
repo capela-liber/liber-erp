@@ -130,7 +130,7 @@
         <tbody>
           <tr><td><strong>Royalty sobre o preço de venda</strong> (<a href="liber_copyright_contracts_analytics.html">cálculo de royalties</a>)</td><td>A base é preço × quantidade. Com o preço já líquido, o autor recebe sobre R$ 24,705 em vez de R$ 54,90.</td></tr>
           <tr><td><strong>Venda especial</strong></td><td>É reconhecida quando o desconto da linha alcança o mínimo configurado. Com desconto zero, nenhuma alcança.</td></tr>
-          <tr><td><strong>vDesc da NF-e</strong> (<a href="liber_nfe_focus.html">emissão de NF-e</a>)</td><td>Sai da diferença entre o valor bruto e o subtotal. Um preço já líquido zera a diferença, e o DANFE vai sem desconto.</td></tr>
+          <tr><td><strong>vDesc da <abbr class="sigla" title="Nota Fiscal eletrônica: o documento fiscal da venda ou da remessa, autorizado pela SEFAZ.">NF-e</abbr></strong> (<a href="liber_nfe_focus.html">emissão de NF-e</a>)</td><td>Sai da diferença entre o valor bruto e o subtotal. Um preço já líquido zera a diferença, e o <abbr class="sigla" title="Documento Auxiliar da NF-e: a versão impressa (PDF) da nota, que acompanha a mercadoria.">DANFE</abbr> vai sem desconto.</td></tr>
         </tbody>
       </table></div>
       <p>Por isso a opção é ligada na instalação, e não deixada como preferência. Ligada, o Odoo devolve o preço de tabela ao preço unitário e o percentual ao campo próprio, no pedido e na fatura.</p>
@@ -139,7 +139,7 @@
              alt="Pedido de venda com as linhas mostrando preço unitário de tabela e a coluna de desconto em 30%">
         <figcaption>O pedido com a opção ligada: o preço de tabela na coluna
         <span class="field">Preço unitário</span> e os 30% na coluna própria — o número que o
-        royalty, a venda especial e o vDesc da NF-e leem.</figcaption>
+        royalty, a venda especial e o vDesc da <abbr class="sigla" title="Nota Fiscal eletrônica: o documento fiscal da venda ou da remessa, autorizado pela SEFAZ.">NF-e</abbr> leem.</figcaption>
       </figure>
       <div class="callout warn"><span class="title">Não desligue a opção "Descontos"</span><p>Desligá-la em <span class="field">Vendas › Configuração › Ajustes</span> não dá erro nem aviso: os três cálculos acima simplesmente passam a usar números errados, em silêncio. Uma atualização do módulo religa a opção.</p></div>
       <p>A coluna <span class="field">Desc.%</span> do pedido acende sozinha com a opção. A da fatura não — ela nasce escondida no Odoo, independentemente de qualquer configuração, e a fatura mostrava Preço e Valor sem nada entre os dois, exatamente onde o desconto deveria estar. O módulo a acende. Todas as colunas continuam no seletor, e quem já ajustou o seu mantém a escolha.</p>

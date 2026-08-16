@@ -53,7 +53,7 @@
         <tbody>
           <tr><td><strong>purchase order</strong> (pedido de compra)</td><td>Uma <strong>venda</strong>. Vira cotação e, depois, pedido de venda — nunca um pedido de compra do Odoo.</td></tr>
           <tr><td><strong>vendor</strong></td><td>Nós. A editora que fornece.</td></tr>
-          <tr><td><strong>buying party</strong></td><td>O centro de distribuição da Amazon que está comprando — cada um com CNPJ próprio.</td></tr>
+          <tr><td><strong>buying party</strong></td><td>O centro de distribuição da Amazon que está comprando — cada um com <abbr class="sigla" title="Cadastro Nacional da Pessoa Jurídica: o número que identifica a empresa.">CNPJ</abbr> próprio.</td></tr>
           <tr><td><strong>net cost</strong></td><td>O que a Amazon paga por exemplar. É este o preço da linha.</td></tr>
           <tr><td><strong>list price</strong></td><td>O preço de capa com que ela revende. Não entra na cotação.</td></tr>
         </tbody>
@@ -66,14 +66,14 @@
       <p>O caminho tem três paradas, e a do meio é o ponto do módulo:</p>
       <ol class="steps">
         <li><strong>Importar</strong> — o módulo lê os pedidos da Amazon e guarda uma cópia fiel de cada um.</li>
-        <li><strong>Conferir</strong> — cada ISBN é casado com o código de barras do produto. O que não casa fica visível antes de virar documento.</li>
+        <li><strong>Conferir</strong> — cada <abbr class="sigla" title="International Standard Book Number: o número internacional que identifica cada edição de livro.">ISBN</abbr> é casado com o código de barras do produto. O que não casa fica visível antes de virar documento.</li>
         <li><strong>Gerar a cotação</strong> — um ato de alguém, nunca automático. A cotação nasce em rascunho e fica lá.</li>
       </ol>
 
       <h2 id="o-que-nao-faz">O que este módulo não faz</h2>
       <p>Ele <strong>só lê</strong> da Amazon. Não confirma pedido (<em>acknowledgement</em>), não
       manda aviso de embarque (ASN), não imprime etiqueta de caixa e não emite invoice por EDI.</p>
-      <p>Não é uma etapa que ficou para depois: é o desenho. Essas operações disparam relógio de SLA
+      <p>Não é uma etapa que ficou para depois: é o desenho. Essas operações disparam relógio de <abbr class="sigla" title="Service Level Agreement: o prazo combinado para responder e resolver um chamado.">SLA</abbr>
       na Amazon e assumem compromisso de entrega — decisão de uma pessoa olhando, não de uma rotina
       às quatro da manhã. A limitação está no código, não num acordo: a camada que fala com a Amazon
       tem um único caminho de saída, e ele só sabe ler.</p>
@@ -100,7 +100,7 @@
         <li>Preencha <span class="field">Amazon como cliente</span>: o parceiro em nome de quem as
         cotações saem.</li>
         <li>Cole as três credenciais do aplicativo criado no <em>Amazon Developer Central</em>:
-        <span class="field">Client ID do LWA</span>, <span class="field">Client Secret do LWA</span> e o
+        <span class="field">Client ID do <abbr class="sigla" title="Login with Amazon: o sistema de credenciais que dá acesso à API da Amazon.">LWA</abbr></span>, <span class="field">Client Secret do LWA</span> e o
         <span class="field">Refresh token</span> da autorização. O refresh token começa com
         <code>Atzr|</code> e aparece uma única vez, na tela de autorização.</li>
         <li>Salve e clique em <span class="field">Testar conexão</span> na ficha da conta. Ele fala com
@@ -119,19 +119,19 @@
 
       <h2 id="unidades">As unidades da Amazon</h2>
       <p>A Amazon não compra como uma pessoa só. <strong>Cada centro de distribuição é um
-      estabelecimento fiscal próprio</strong> — no Brasil, mesma raiz de CNPJ e filial diferente —
+      estabelecimento fiscal próprio</strong> — no Brasil, mesma raiz de <abbr class="sigla" title="Cadastro Nacional da Pessoa Jurídica: o número que identifica a empresa.">CNPJ</abbr> e filial diferente —
       e o pedido diz qual deles está comprando.</p>
       <p>O que ela <em>não</em> manda é quem é esse estabelecimento. O pedido traz apenas a sigla:</p>
       <pre>buyingParty  = {"partyId": "GRU8"}
 shipToParty  = {"partyId": "GRU8"}</pre>
-      <p>Sem CNPJ, sem endereço, sem razão social. Daí o mapa em
+      <p>Sem <abbr class="sigla" title="Cadastro Nacional da Pessoa Jurídica: o número que identifica a empresa.">CNPJ</abbr>, sem endereço, sem razão social. Daí o mapa em
       <span class="menupath">Amazon Vendor<i>‣</i>Configuração<i>‣</i>Unidades da Amazon</span>: uma
       linha por sigla, dizendo quem ela é no seu cadastro — e, se a entrega for em outro endereço,
       qual é.</p>
       <div class="callout warn"><span class="title">Atenção</span>
       <p>Unidade não mapeada <strong>não vira cotação</strong>. O pedido é importado e fica marcado,
       mas a cotação é recusada com o nome da sigla. Cair num cliente padrão seria pior: a nota sairia
-      contra o CNPJ de outra filial, em silêncio e com número plausível.</p></div>
+      contra o <abbr class="sigla" title="Cadastro Nacional da Pessoa Jurídica: o número que identifica a empresa.">CNPJ</abbr> de outra filial, em silêncio e com número plausível.</p></div>
       <p>Para começar, o botão <span class="field">Mapear unidades pelos pedidos</span>, na ficha da
       conta, cria uma linha para cada sigla já vista e sugere um cliente quando um contato casa sem
       ambiguidade. A sugestão é isso mesmo — sugestão, para você conferir. Casar pelo nome funcionaria
@@ -148,7 +148,7 @@ shipToParty  = {"partyId": "GRU8"}</pre>
         quando a Amazon já fechou o dia e ninguém está usando o sistema. Liga e desliga em Definições.</li>
       </ul>
       <p>A leitura à mão <strong>mostra a conta antes de gravar</strong>: quantos pedidos, quantos
-      exemplares, quanto em net cost, quantos ISBNs distintos e — o que mais importa — a lista exata
+      exemplares, quanto em net cost, quantos <abbr class="sigla" title="International Standard Book Number: o número internacional que identifica cada edição de livro.">ISBNs</abbr> distintos e — o que mais importa — a lista exata
       dos que não têm produto no cadastro. Só então <span class="field">Importar</span>.</p>
       <div class="callout note"><span class="title">Nota</span>
       <p>Reimportar o mesmo intervalo não duplica nada: a chave é o número do pedido. E a janela
@@ -157,24 +157,24 @@ shipToParty  = {"partyId": "GRU8"}</pre>
       d'água que só andasse para frente congelaria o estado no instante da primeira leitura.</p></div>
 
       <h2 id="casamento">O casamento com o cadastro</h2>
-      <p>Cada linha traz o <strong>ISBN-13</strong> do título, que o módulo procura no
+      <p>Cada linha traz o <strong><abbr class="sigla" title="International Standard Book Number: o número internacional que identifica cada edição de livro.">ISBN</abbr>-13</strong> do título, que o módulo procura no
       <span class="field">Código de barras</span> do produto. A comparação ignora hífen e espaço dos
       dois lados — parte do catálogo está gravada com hífen, e a comparação crua daria por ausente um
       título que existe.</p>
       <div class="callout warn"><span class="title">Atenção</span>
-      <p>O outro identificador do pedido, o <strong>ASIN</strong>, é o código interno da Amazon.
+      <p>O outro identificador do pedido, o <strong><abbr class="sigla" title="Amazon Standard Identification Number: o código interno de produto da Amazon.">ASIN</abbr></strong>, é o código interno da Amazon.
       Ele é guardado para conferência, mas <em>não</em> serve para casar com o nosso cadastro — não
       existe lá.</p></div>
-      <p>Linha cujo ISBN não casa <strong>não impede nada</strong>: ela entra sem produto, é contada,
+      <p>Linha cujo <abbr class="sigla" title="International Standard Book Number: o número internacional que identifica cada edição de livro.">ISBN</abbr> não casa <strong>não impede nada</strong>: ela entra sem produto, é contada,
       e simplesmente <strong>fica de fora da cotação</strong>. Travar o pedido inteiro por causa de um
       título que talvez nem seja nosso seria pior — e a Amazon não espera.</p>
       <div class="callout warn"><span class="title">Atenção</span>
       <p>Ignorar é a decisão certa; ignorar em silêncio não é. Toda vez que uma linha fica de fora, o
-      <strong>histórico do pedido registra quais ISBNs foram deixados</strong> — porque a cotação passa
+      <strong>histórico do pedido registra quais <abbr class="sigla" title="International Standard Book Number: o número internacional que identifica cada edição de livro.">ISBNs</abbr> foram deixados</strong> — porque a cotação passa
       a prometer menos exemplares do que a Amazon pediu, e essa diferença apareceria só na entrega.</p></div>
       <p>Para trazer o título de volta, há duas saídas:</p>
       <ul>
-        <li>Cadastrar o título com o ISBN no código de barras, e reimportar.</li>
+        <li>Cadastrar o título com o <abbr class="sigla" title="International Standard Book Number: o número internacional que identifica cada edição de livro.">ISBN</abbr> no código de barras, e reimportar.</li>
         <li>Escolher o produto <strong>à mão</strong> na linha do pedido. Essa escolha fica travada e
         <strong>sobrevive às próximas leituras</strong> — corrigir uma vez é corrigir para sempre.</li>
       </ul>
@@ -244,7 +244,7 @@ shipToParty  = {"partyId": "GRU8"}</pre>
       de data para olhar só o que chegou desde que o módulo entrou em operação.</p>
       <p><strong>"Janela fechada" não quer dizer que o livro nunca foi entregue.</strong> Um pedido
       atendido por fora — pelo portal, por planilha, do jeito que a casa fazia antes deste módulo —
-      também chega aqui fechado, e a Vendor Orders API não distingue um caso do outro. O que a coluna
+      também chega aqui fechado, e a Vendor Orders <abbr class="sigla" title="Interface de programação: o canal por onde um sistema conversa com outro.">API</abbr> não distingue um caso do outro. O que a coluna
       afirma é apenas isto: <em>por dentro do Odoo, aquele título naquele pedido não vai mais a lugar
       nenhum</em>. Para o histórico importado, espere números altos aqui — é passado, não perda.</p></div>
       <p>Expandindo por <span class="field">Atendimento</span>, aparece <em>onde</em> parou — e essa é
@@ -252,7 +252,7 @@ shipToParty  = {"partyId": "GRU8"}</pre>
       <div class="tablewrap"><table>
         <thead><tr><th>Situação</th><th>O que significa</th><th>De quem é o problema</th></tr></thead>
         <tbody>
-          <tr><td><strong>Sem produto no cadastro</strong></td><td>O ISBN não existe em nenhum produto; a linha ficou de fora da cotação.</td><td>De quem cuida do cadastro.</td></tr>
+          <tr><td><strong>Sem produto no cadastro</strong></td><td>O <abbr class="sigla" title="International Standard Book Number: o número internacional que identifica cada edição de livro.">ISBN</abbr> não existe em nenhum produto; a linha ficou de fora da cotação.</td><td>De quem cuida do cadastro.</td></tr>
           <tr><td><strong>Ainda sem cotação</strong></td><td>O título casou, mas ninguém transformou o pedido em cotação.</td><td>De quem opera.</td></tr>
           <tr><td><strong>Em cotação</strong></td><td>Virou linha de um pedido de venda.</td><td>—</td></tr>
         </tbody>
@@ -264,7 +264,7 @@ shipToParty  = {"partyId": "GRU8"}</pre>
 
       <h3 id="tempo-de-ciclo">Quanto tempo leva</h3>
       <p>A medida <span class="field">Dias até fechar</span> conta do pedido até a Amazon encerrar o
-      documento. É o mais perto de um tempo de entrega que a Vendor Orders API oferece — ela não nos
+      documento. É o mais perto de um tempo de entrega que a Vendor Orders <abbr class="sigla" title="Interface de programação: o canal por onde um sistema conversa com outro.">API</abbr> oferece — ela não nos
       diz quando recebeu, diz quando fechou.</p>
       <div class="callout warn"><span class="title">Atenção</span>
       <p>Ligue o filtro <span class="field">Ciclo concluído</span> antes de ler essa média. Pedido
@@ -277,14 +277,14 @@ shipToParty  = {"partyId": "GRU8"}</pre>
       <h2 id="limites">Limites conhecidos</h2>
       <ul>
         <li><strong>Um cliente por conta</strong> — a cotação sai sempre para o mesmo parceiro. Como
-        cada centro de distribuição da Amazon tem CNPJ próprio, o correto é resolver o cliente por
+        cada centro de distribuição da Amazon tem <abbr class="sigla" title="Cadastro Nacional da Pessoa Jurídica: o número que identifica a empresa.">CNPJ</abbr> próprio, o correto é resolver o cliente por
         pedido, a partir do <em>buying party</em>. Está mapeado, ainda não implementado.</li>
         <li><strong>Impostos</strong> — a linha nasce com o net cost e o Odoo aplica a posição fiscal
         do parceiro. Vale conferir com um pedido real antes de confiar no total.</li>
         <li><strong>Endereço de entrega</strong> — o pedido traz o centro de distribuição de destino,
         mas ele ainda não vai para o endereço de entrega da cotação.</li>
         <li><strong>Devoluções e chargebacks</strong> — fora do escopo. A Amazon os informa por outras
-        APIs.</li>
+        <abbr class="sigla" title="Interface de programação: o canal por onde um sistema conversa com outro.">APIs</abbr>.</li>
       </ul>
 
       <h2 id="faq">Perguntas frequentes</h2>
@@ -301,19 +301,19 @@ shipToParty  = {"partyId": "GRU8"}</pre>
       Não deveria — escolha humana fica travada. Se voltou, o produto foi trocado por outra
       importação com o campo destravado; reabra a linha e escolha de novo.</p>
       <p><strong>A cotação saiu com menos linhas que o pedido da Amazon.</strong><br>
-      Os títulos sem produto no cadastro ficam de fora. O histórico do pedido lista os ISBNs
+      Os títulos sem produto no cadastro ficam de fora. O histórico do pedido lista os <abbr class="sigla" title="International Standard Book Number: o número internacional que identifica cada edição de livro.">ISBNs</abbr>
       deixados; cadastre-os (ou escolha o produto à mão na linha) e a próxima cotação sai completa.
       A cotação já criada não se completa sozinha — corrija-a ou cancele e gere de novo.</p>
       <p><strong>O pedido sumiu da lista.</strong><br>
       Provavelmente foi fechado pela Amazon e você está com o filtro <span class="field">Ainda aberto</span>
       ligado. Pedido fechado continua no sistema, apenas em cinza.</p>
       <p><strong>Preciso instalar alguma biblioteca Python?</strong><br>
-      Não. A API da Amazon não exige mais assinatura AWS, e o módulo usa só o que o Odoo já tem.</p>
+      Não. A <abbr class="sigla" title="Interface de programação: o canal por onde um sistema conversa com outro.">API</abbr> da Amazon não exige mais assinatura AWS, e o módulo usa só o que o Odoo já tem.</p>
 
       <div class="seealso">
         <strong>Ver também</strong>
         <ul>
-          <li><a href="liber_metabooks_integration.html">Integração Metabooks</a> — de onde vem o ISBN que faz o casamento funcionar.</li>
+          <li><a href="liber_metabooks_integration.html">Integração Metabooks</a> — de onde vem o <abbr class="sigla" title="International Standard Book Number: o número internacional que identifica cada edição de livro.">ISBN</abbr> que faz o casamento funcionar.</li>
           <li><a href="liber_roles.html">Papéis de acesso</a> — os grupos da casa e como eles se somam aos deste módulo.</li>
         </ul>
       </div>

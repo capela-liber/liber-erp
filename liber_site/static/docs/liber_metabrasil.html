@@ -41,15 +41,15 @@
       <div class="breadcrumb"><a href="index.html">Manuais</a><span class="sep">›</span>Produção<span class="sep">›</span>Impressão sob demanda</div>
       <h1>Impressão sob demanda (Metabrasil)</h1>
       <p class="lead">O pedido do cliente vira tiragem na gráfica e, se você quiser, caixa
-      despachada direto para a casa dele. O Liber conversa com a API PoD da Metabrasil para cotar
+      despachada direto para a casa dele. O Liber conversa com a <abbr class="sigla" title="Interface de programação: o canal por onde um sistema conversa com outro.">API</abbr> PoD da Metabrasil para cotar
       frete, guardar o preço de impressão por tiragem, enviar o pedido e acompanhar a produção até
       a entrega — sem estoque parado.</p>
 
       <div class="callout">
         <strong>Estado de hoje.</strong> A conexão, a cotação de frete, a escada de preços, o envio
         do pedido e o acompanhamento de status estão no ar e testados. Desde 27/07/2026, quando a
-        gráfica publicou a API de precificação e carregou o catálogo, <strong>411 dos 675 títulos
-        com ISBN já têm preço por tiragem</strong> — os demais ainda não estão no repositório PoD
+        gráfica publicou a <abbr class="sigla" title="Interface de programação: o canal por onde um sistema conversa com outro.">API</abbr> de precificação e carregou o catálogo, <strong>411 dos 675 títulos
+        com <abbr class="sigla" title="International Standard Book Number: o número internacional que identifica cada edição de livro.">ISBN</abbr> já têm preço por tiragem</strong> — os demais ainda não estão no repositório PoD
         dela. Veja <a href="#limitacoes">Limitações conhecidas</a>.
       </div>
 
@@ -77,7 +77,7 @@
         <li>Em <span class="menupath">Definições<i>‣</i>Metabrasil</span>, ligue
         <span class="field">Metabrasil PoD</span> e informe as credenciais que a gráfica emitiu:
         <span class="field">Chave de acesso</span> (a <em>chaveCliente</em>) e o par usuário/senha da
-        API.</li>
+        <abbr class="sigla" title="Interface de programação: o canal por onde um sistema conversa com outro.">API</abbr>.</li>
         <li>Preencha as duas URLs base com
         <span class="field">https://ws.umlivro.com.br:7081/pod-api</span>. A gráfica também atende
         em <span class="field">http://…:7080</span>, com as mesmas respostas, mas ali a senha
@@ -165,7 +165,7 @@
       <h2 id="envio">Enviar o pedido de impressão</h2>
       <p>Não há botão de "enviar": <strong>confirmar o pedido de compra é enviá-lo</strong>. Se a
       gráfica aceitar, o pedido confirma normalmente e passa a ser acompanhado. Se ela recusar —
-      endereço incompleto, ISBN fora do repositório PoD —, a confirmação é <strong>bloqueada</strong>
+      endereço incompleto, <abbr class="sigla" title="International Standard Book Number: o número internacional que identifica cada edição de livro.">ISBN</abbr> fora do repositório PoD —, a confirmação é <strong>bloqueada</strong>
       com o motivo em português na tela, e o documento continua como solicitação de cotação. Corrija
       a causa e confirme de novo; reconfirmar <em>é</em> o reenvio.</p>
       <p>A consequência prática é que não existe pedido "confirmado porém recusado" para alguém
@@ -190,16 +190,16 @@
       <h2 id="limitacoes">Limitações conhecidas</h2>
       <ul>
         <li><strong>O título precisa estar no repositório PoD da gráfica.</strong> Cerca de 260
-        títulos ainda não estão, e para esses a resposta é "ISBN não encontrado no repositório do
+        títulos ainda não estão, e para esses a resposta é "<abbr class="sigla" title="International Standard Book Number: o número internacional que identifica cada edição de livro.">ISBN</abbr> não encontrado no repositório do
         cliente". Carregar os títulos é trabalho junto à Metabrasil, não configuração do Liber —
         feito isso, os preços entram sozinhos na varredura seguinte.</li>
-        <li><strong>Valor zero não é livro grátis.</strong> Quando a gráfica reconhece o ISBN mas
+        <li><strong>Valor zero não é livro grátis.</strong> Quando a gráfica reconhece o <abbr class="sigla" title="International Standard Book Number: o número internacional que identifica cada edição de livro.">ISBN</abbr> mas
         ainda não configurou preço, ela responde zero. O Liber trata isso como <em>ausência de
         preço</em> e não grava linha nenhuma — uma linha de compra a custo zero seria mentira pior
         que preço velho.</li>
         <li><strong>Sem ambiente de homologação.</strong> Todo teste que envia pedido acontece contra
         a produção da gráfica; por isso o envio só ocorre na confirmação, deliberada.</li>
-        <li><strong>Sem emissão fiscal.</strong> O gancho para anexar a DANFE ao pedido existe, mas a
+        <li><strong>Sem emissão fiscal.</strong> O gancho para anexar a <abbr class="sigla" title="Documento Auxiliar da NF-e: a versão impressa (PDF) da nota, que acompanha a mercadoria.">DANFE</abbr> ao pedido existe, mas a
         emissão em si não faz parte deste módulo.</li>
       </ul>
 
@@ -207,7 +207,7 @@
         <strong>Ver também</strong>
         <ul>
           <li><a href="liber_metabooks_integration.html">Integração Metabooks</a> — de onde vêm os
-          metadados e o ISBN que a gráfica usa para reconhecer o título.</li>
+          metadados e o <abbr class="sigla" title="International Standard Book Number: o número internacional que identifica cada edição de livro.">ISBN</abbr> que a gráfica usa para reconhecer o título.</li>
           <li><a href="liber_nfe_remessa.html">Notas de remessa</a> — a documentação das saídas sem
           cobrança que acompanham a logística.</li>
         </ul>

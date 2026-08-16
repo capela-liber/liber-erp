@@ -40,16 +40,16 @@
     <article class="doc">
       <div class="breadcrumb"><a href="index.html">Manuais</a><span class="sep">›</span>Catálogo<span class="sep">›</span>Integração Metabooks</div>
       <h1>Integração Metabooks</h1>
-      <p class="lead">Os metadados dos seus livros — título, autores, sinopse, preço, medidas, capa — entrando no sistema direto da Metabooks, por ISBN ou por catálogo inteiro, sem digitação.</p>
+      <p class="lead">Os metadados dos seus livros — título, autores, sinopse, preço, medidas, capa — entrando no sistema direto da Metabooks, por <abbr class="sigla" title="International Standard Book Number: o número internacional que identifica cada edição de livro.">ISBN</abbr> ou por catálogo inteiro, sem digitação.</p>
 
       <h2 id="visao-geral">Visão geral</h2>
-      <p>A <b>Metabooks</b> é a plataforma brasileira de metadados do mercado editorial (da MVB): é nela que editoras cadastram seus títulos no padrão ONIX, e é dela que livrarias e distribuidores leem esses dados. Este módulo conecta o sistema à Metabooks em duas direções:</p>
+      <p>A <b>Metabooks</b> é a plataforma brasileira de metadados do mercado editorial (da <abbr class="sigla" title="A empresa do mercado editorial alemão que opera a Metabooks.">MVB</abbr>): é nela que editoras cadastram seus títulos no padrão <abbr class="sigla" title="O formato padrão internacional de metadados de livros do mercado editorial.">ONIX</abbr>, e é dela que livrarias e distribuidores leem esses dados. Este módulo conecta o sistema à Metabooks em duas direções:</p>
       <ul>
-        <li><b>Importação</b> (madura, o dia a dia): busca os dados de um livro pelo ISBN, ou o catálogo completo de uma editora, e cria/atualiza os produtos correspondentes — ficha editorial, ficha técnica, capa e tudo.</li>
+        <li><b>Importação</b> (madura, o dia a dia): busca os dados de um livro pelo <abbr class="sigla" title="International Standard Book Number: o número internacional que identifica cada edição de livro.">ISBN</abbr>, ou o catálogo completo de uma editora, e cria/atualiza os produtos correspondentes — ficha editorial, ficha técnica, capa e tudo.</li>
         <li><b>Envio</b> (em desenvolvimento): o caminho de volta — editar um livro aqui e mandar a alteração para a Metabooks por planilha, com conferência humana no meio.</li>
       </ul>
-      <p>Cada livro importado vira um <b>produto</b> comum do sistema, com o ISBN como código interno e código de barras. É esse mesmo ISBN que casa o livro com os itens das notas fiscais importadas e com o resto da casa: a Metabooks alimenta o catálogo, e o catálogo alimenta a consignação, a bonificação e as vendas.</p>
-      <p>Tudo mora no aplicativo <b>Metabooks</b> do menu principal: <b>Livros</b> (os produtos importados), <b>Importações</b>, <b>Envios</b>, <b>Catálogo</b> (autores, códigos BISAC, disponibilidades, editoras) e <b>Configuração</b>.</p>
+      <p>Cada livro importado vira um <b>produto</b> comum do sistema, com o <abbr class="sigla" title="International Standard Book Number: o número internacional que identifica cada edição de livro.">ISBN</abbr> como código interno e código de barras. É esse mesmo ISBN que casa o livro com os itens das notas fiscais importadas e com o resto da casa: a Metabooks alimenta o catálogo, e o catálogo alimenta a consignação, a bonificação e as vendas.</p>
+      <p>Tudo mora no aplicativo <b>Metabooks</b> do menu principal: <b>Livros</b> (os produtos importados), <b>Importações</b>, <b>Envios</b>, <b>Catálogo</b> (autores, códigos <abbr class="sigla" title="A classificação temática de livros do mercado norte-americano, usada nos metadados.">BISAC</abbr>, disponibilidades, editoras) e <b>Configuração</b>.</p>
 
       <h2 id="configuracao">Configuração</h2>
       <ol class="steps">
@@ -73,23 +73,23 @@
       <p>O caminho para poucos títulos — um lançamento, uma lista que chegou por e-mail:</p>
       <ol class="steps">
         <li>Abra <span class="menupath">Metabooks<i>‣</i>Importações<i>‣</i>Importar por ISBN</span>.</li>
-        <li>Cole os ISBNs no campo <span class="field">ISBNs</span> — um por linha, ou separados por vírgula ou espaço. Com ou sem hífens, tanto faz.</li>
+        <li>Cole os <abbr class="sigla" title="International Standard Book Number: o número internacional que identifica cada edição de livro.">ISBNs</abbr> no campo <span class="field">ISBNs</span> — um por linha, ou separados por vírgula ou espaço. Com ou sem hífens, tanto faz.</li>
         <li>Clique em <b>Importar</b>.</li>
       </ol>
-      <p>Ao final, o sistema abre a lista dos livros trazidos e resume o resultado: quantos são <b>novos</b>, quantos foram <b>atualizados</b> e quantos <b>não foram encontrados</b> na Metabooks. A importação é segura de repetir: um livro que já existe (mesmo ISBN) é atualizado, nunca duplicado.</p>
-      <p>A importação por ISBN traz o registro completo: ficha editorial, autores com seus papéis, sinopse, preço de capa, capa e a ficha técnica inteira (medidas, peso, páginas, acabamento, NCM, idiomas).</p>
+      <p>Ao final, o sistema abre a lista dos livros trazidos e resume o resultado: quantos são <b>novos</b>, quantos foram <b>atualizados</b> e quantos <b>não foram encontrados</b> na Metabooks. A importação é segura de repetir: um livro que já existe (mesmo <abbr class="sigla" title="International Standard Book Number: o número internacional que identifica cada edição de livro.">ISBN</abbr>) é atualizado, nunca duplicado.</p>
+      <p>A importação por <abbr class="sigla" title="International Standard Book Number: o número internacional que identifica cada edição de livro.">ISBN</abbr> traz o registro completo: ficha editorial, autores com seus papéis, sinopse, preço de capa, capa e a ficha técnica inteira (medidas, peso, páginas, acabamento, <abbr class="sigla" title="Nomenclatura Comum do Mercosul: o código que classifica o produto para o fisco.">NCM</abbr>, idiomas).</p>
 
       <h2 id="importar-catalogo">Importar o catálogo de uma editora</h2>
       <p>Para trazer (ou ressincronizar) tudo de uma vez:</p>
       <ol class="steps">
         <li>Abra <span class="menupath">Metabooks<i>‣</i>Importações<i>‣</i>Importar por ID da editora</span>.</li>
-        <li>Informe o <span class="field">ID da editora (MVB)</span> — o identificador da editora na Metabooks, por exemplo <code>BR0089701</code>.</li>
+        <li>Informe o <span class="field">ID da editora (<abbr class="sigla" title="A empresa do mercado editorial alemão que opera a Metabooks.">MVB</abbr>)</span> — o identificador da editora na Metabooks, por exemplo <code>BR0089701</code>.</li>
         <li>Opcionalmente, use <span class="field">Limite</span> para um teste pequeno (0 importa o catálogo inteiro), e escolha se quer <span class="field">Baixar capas</span> e <span class="field">Baixar fichas técnicas</span>.</li>
         <li>Clique em <b>Importar</b>. O sistema cria uma <b>importação de catálogo</b> e a processa em segundo plano, página a página.</li>
       </ol>
       <p>Acompanhe em <span class="menupath">Metabooks<i>‣</i>Importações<i>‣</i>Importações de catálogo</span>: cada registro mostra o tamanho do catálogo, quantos livros já entraram e a barra de progresso. O processamento salva o avanço a cada página — se for interrompido, retoma sozinho de onde parou. Os botões <b>Executar agora</b>, <b>Atualizar</b> e <b>Reexecutar</b> fazem o que dizem.</p>
       <div class="callout tip"><span class="title">Dica</span>
-        <p>O catálogo (feed) da Metabooks não carrega a ficha técnica — medidas, peso, páginas, acabamento e NCM só existem no registro individual de cada ISBN. Marcando <span class="field">Baixar fichas técnicas</span>, o sistema encadeia automaticamente um segundo trabalho que completa cada livro, um ISBN por vez, sem tocar em preço, nome, categoria nem capa. É mais lento; deixe correr em segundo plano.</p>
+        <p>O catálogo (feed) da Metabooks não carrega a ficha técnica — medidas, peso, páginas, acabamento e <abbr class="sigla" title="Nomenclatura Comum do Mercosul: o código que classifica o produto para o fisco.">NCM</abbr> só existem no registro individual de cada <abbr class="sigla" title="International Standard Book Number: o número internacional que identifica cada edição de livro.">ISBN</abbr>. Marcando <span class="field">Baixar fichas técnicas</span>, o sistema encadeia automaticamente um segundo trabalho que completa cada livro, um ISBN por vez, sem tocar em preço, nome, categoria nem capa. É mais lento; deixe correr em segundo plano.</p>
       </div>
       <p>Também dá para disparar do cadastro da editora: no contato, o grupo <b>Product</b> lista os IDs Metabooks da editora, cada um com o botão <b>Import Catalogue</b>.</p>
 
@@ -109,8 +109,8 @@
           <tr><td>Capa</td><td>Imagem do produto.</td></tr>
           <tr><td>Selo e coleção</td><td>Categoria do produto, na árvore <b>Selo / Coleção</b> — selos e coleções nunca se misturam.</td></tr>
           <tr><td>Palavras-chave e assuntos</td><td>Marcadores do produto (somados aos que já existiam, nunca apagando os manuais).</td></tr>
-          <tr><td>Disponibilidade (ONIX)</td><td>Situação legível ("Em estoque", "Esgotado"…), com filtros prontos de disponível/indisponível. Tabela em <span class="menupath">Metabooks<i>‣</i>Catálogo<i>‣</i>Disponibilidade</span>.</td></tr>
-          <tr><td>Ficha técnica ONIX</td><td>Aba <b>Ficha técnica</b> do produto: formato, acabamento, altura, largura, lombada, peso, orelhas, sobrecapa, fitilho, páginas (miolo, pré e pós-textuais), ilustrações, edição, idiomas, NCM, cidade e país de publicação, status de publicação.</td></tr>
+          <tr><td>Disponibilidade (<abbr class="sigla" title="O formato padrão internacional de metadados de livros do mercado editorial.">ONIX</abbr>)</td><td>Situação legível ("Em estoque", "Esgotado"…), com filtros prontos de disponível/indisponível. Tabela em <span class="menupath">Metabooks<i>‣</i>Catálogo<i>‣</i>Disponibilidade</span>.</td></tr>
+          <tr><td>Ficha técnica <abbr class="sigla" title="O formato padrão internacional de metadados de livros do mercado editorial.">ONIX</abbr></td><td>Aba <b>Ficha técnica</b> do produto: formato, acabamento, altura, largura, lombada, peso, orelhas, sobrecapa, fitilho, páginas (miolo, pré e pós-textuais), ilustrações, edição, idiomas, <abbr class="sigla" title="Nomenclatura Comum do Mercosul: o código que classifica o produto para o fisco.">NCM</abbr>, cidade e país de publicação, status de publicação.</td></tr>
           <tr><td>Tipo de produto</td><td>Livro impresso, e-book ou audiolivro — com filtros prontos na busca. Impressos entram com controle de estoque ligado; digitais, sem.</td></tr>
         </tbody>
       </table></div>
@@ -126,7 +126,7 @@
       <h2 id="envio">Envio para a Metabooks (o caminho de volta)</h2>
 
       <div class="callout warn"><span class="title">Em desenvolvimento</span>
-        <p>Esta frente está funcional até a geração da planilha, mas <b>a entrega à Metabooks ainda é manual</b>: o sistema não sobe o arquivo sozinho (nem por FTP, nem por API — o transporte automático depende de liberação da própria Metabooks). Baixe a planilha gerada, envie pelo canal combinado com eles e só então marque o envio como concluído. As tarefas de arquivamento (X) e reativação (R) existem na tela, mas ainda não foram exercitadas em produção.</p>
+        <p>Esta frente está funcional até a geração da planilha, mas <b>a entrega à Metabooks ainda é manual</b>: o sistema não sobe o arquivo sozinho (nem por <abbr class="sigla" title="File Transfer Protocol: o protocolo clássico de envio de arquivos entre servidores.">FTP</abbr>, nem por <abbr class="sigla" title="Interface de programação: o canal por onde um sistema conversa com outro.">API</abbr> — o transporte automático depende de liberação da própria Metabooks). Baixe a planilha gerada, envie pelo canal combinado com eles e só então marque o envio como concluído. As tarefas de arquivamento (X) e reativação (R) existem na tela, mas ainda não foram exercitadas em produção.</p>
       </div>
 
       <p>A lógica: quando alguém edita, em um livro, um campo que a Metabooks conhece (título, sinopse, preço, medidas, autores…), o livro entra numa <b>fila de pendências</b>. De tempos em tempos, alguém junta as pendências num <b>envio</b>, confere o antes/depois de cada alteração e gera a planilha no formato que a Metabooks aceita.</p>
@@ -135,7 +135,7 @@
         <li>Abra <span class="menupath">Metabooks<i>‣</i>Envios<i>‣</i>Envios para a Metabooks</span> e crie um envio. Escolha a <span class="field">Tarefa</span>: <b>Alteração (V)</b> para atualizar títulos que a Metabooks já tem, <b>Cadastro novo (Z)</b> para títulos inéditos lá.</li>
         <li>Clique em <b>Buscar alterações</b>. Cada livro pendente entra como uma linha, e a aba <b>Alterações</b> mostra o de/para de cada campo, lido do histórico do produto.</li>
         <li>Desmarque o que não deve ir — um livro inteiro, ou um campo isolado de um livro. Campo desmarcado simplesmente não é escrito, e coluna que a Metabooks não recebe é coluna que ela não mexe.</li>
-        <li>Clique em <b>Verificar</b>. O sistema barra tudo o que a Metabooks recusaria: livro sem ISBN, ISBN que não tem 13 dígitos, dois livros com o mesmo ISBN, cadastro novo sem os campos obrigatórios, e campo que foi <b>apagado</b> aqui (apagar um dado lá exige uma marca especial que este envio ainda não escreve — a verificação explica o que fazer).</li>
+        <li>Clique em <b>Verificar</b>. O sistema barra tudo o que a Metabooks recusaria: livro sem <abbr class="sigla" title="International Standard Book Number: o número internacional que identifica cada edição de livro.">ISBN</abbr>, ISBN que não tem 13 dígitos, dois livros com o mesmo ISBN, cadastro novo sem os campos obrigatórios, e campo que foi <b>apagado</b> aqui (apagar um dado lá exige uma marca especial que este envio ainda não escreve — a verificação explica o que fazer).</li>
         <li>Clique em <b>Gerar planilha</b>. O arquivo <code>.xlsx</code> sai com o nome que a Metabooks espera (por exemplo <code>V_BR5108985_20260720_Alteracoes.xlsx</code>) e com <b>as células alteradas em vermelho</b> — a própria planilha é o documento de conferência: o que está vermelho é o que estamos pedindo para mudar.</li>
         <li><b>Baixe</b> a planilha e envie à Metabooks pelo canal combinado com o atendimento deles.</li>
         <li>Só depois do upload dar certo, clique em <b>Marcar como enviada</b>. É esse passo — e não a geração do arquivo — que tira os livros da fila: se o upload falhar, nada se perde. A confirmação da Metabooks chega por e-mail consolidado, depois da meia-noite.</li>
@@ -148,14 +148,14 @@
       </figure>
 
       <div class="callout note"><span class="title">Nota</span>
-        <p>A atualização na Metabooks é <b>incremental</b>: a planilha leva só o ISBN, o título (para a linha ser legível) e as colunas que mudaram — o que não vai na planilha permanece intocado lá. Das 74 colunas do modelo oficial, o sistema sabe preencher as que de fato existem no cadastro daqui; as demais nunca são escritas.</p>
+        <p>A atualização na Metabooks é <b>incremental</b>: a planilha leva só o <abbr class="sigla" title="International Standard Book Number: o número internacional que identifica cada edição de livro.">ISBN</abbr>, o título (para a linha ser legível) e as colunas que mudaram — o que não vai na planilha permanece intocado lá. Das 74 colunas do modelo oficial, o sistema sabe preencher as que de fato existem no cadastro daqui; as demais nunca são escritas.</p>
       </div>
 
       <h2 id="regras">Regras e guardas</h2>
       <div class="tablewrap"><table>
         <thead><tr><th>Regra</th><th>O que ela garante</th></tr></thead>
         <tbody>
-          <tr><td>Um livro por ISBN</td><td>Importar de novo atualiza, nunca duplica. O ISBN é a identidade do livro em todo o sistema.</td></tr>
+          <tr><td>Um livro por <abbr class="sigla" title="International Standard Book Number: o número internacional que identifica cada edição de livro.">ISBN</abbr></td><td>Importar de novo atualiza, nunca duplica. O <abbr class="sigla" title="International Standard Book Number: o número internacional que identifica cada edição de livro.">ISBN</abbr> é a identidade do livro em todo o sistema.</td></tr>
           <tr><td>Importação não gera pendência de envio</td><td>Os dados que a própria Metabooks mandou não voltam para ela: só edições feitas por pessoas marcam o livro como pendente.</td></tr>
           <tr><td>O segundo envio leva só o que mudou</td><td>Cada envio registra um marco no histórico do livro; o próximo parte dali. Editar e desfazer no meio do caminho não gera envio de nada.</td></tr>
           <tr><td>Livro sem histórico legível vai completo</td><td>Se não há como saber o que mudou (coluna <b>Sem histórico</b> na tela do envio), todas as colunas mapeadas são enviadas — melhor do que uma linha vazia.</td></tr>
@@ -166,15 +166,15 @@
 
       <h2 id="problemas">Solução de problemas</h2>
       <p><b>"Set the Metabooks username and password…" ao importar.</b> As credenciais não estão salvas. Volte a <a href="#configuracao">Configuração</a>, preencha usuário e senha e use <b>Testar conexão</b>.</p>
-      <p><b>ISBN não encontrado.</b> O resumo da importação lista os ISBNs que a Metabooks não conhece. Confira a digitação; se o número estiver certo, o título ainda não foi cadastrado lá pela editora responsável.</p>
-      <p><b>A importação de catálogo parou em "Falhou".</b> Abra o registro em <b>Importações de catálogo</b>: o campo <span class="field">Mensagem</span> traz o motivo (credencial expirada, ID de editora errado, instabilidade da API). Resolvida a causa, <b>Reexecutar</b> recomeça do zero com segurança — o que já entrou será apenas atualizado.</p>
-      <p><b>Livros do catálogo vieram sem medidas ou sem autores.</b> É a limitação do feed: ele não carrega ficha técnica, e traz menos dados editoriais que o registro individual. Rode a importação com <span class="field">Baixar fichas técnicas</span> marcado, ou reimporte os títulos por ISBN.</p>
+      <p><b><abbr class="sigla" title="International Standard Book Number: o número internacional que identifica cada edição de livro.">ISBN</abbr> não encontrado.</b> O resumo da importação lista os ISBNs que a Metabooks não conhece. Confira a digitação; se o número estiver certo, o título ainda não foi cadastrado lá pela editora responsável.</p>
+      <p><b>A importação de catálogo parou em "Falhou".</b> Abra o registro em <b>Importações de catálogo</b>: o campo <span class="field">Mensagem</span> traz o motivo (credencial expirada, ID de editora errado, instabilidade da <abbr class="sigla" title="Interface de programação: o canal por onde um sistema conversa com outro.">API</abbr>). Resolvida a causa, <b>Reexecutar</b> recomeça do zero com segurança — o que já entrou será apenas atualizado.</p>
+      <p><b>Livros do catálogo vieram sem medidas ou sem autores.</b> É a limitação do feed: ele não carrega ficha técnica, e traz menos dados editoriais que o registro individual. Rode a importação com <span class="field">Baixar fichas técnicas</span> marcado, ou reimporte os títulos por <abbr class="sigla" title="International Standard Book Number: o número internacional que identifica cada edição de livro.">ISBN</abbr>.</p>
       <p><b>"Verificar" reclamou de um campo apagado.</b> Apagar um dado na Metabooks exige uma marca de exclusão que o envio ainda não escreve. Ou devolva o valor ao campo, ou deixe esse livro fora do envio e faça a exclusão diretamente no painel deles.</p>
 
       <div class="seealso">
         <p><b>Veja também</b></p>
         <ul>
-          <li><a href="liber_nfe_xml.html">Importação de XML de NF-e</a> — as notas importadas casam seus itens com os livros pelo mesmo ISBN que a Metabooks preenche.</li>
+          <li><a href="liber_nfe_xml.html">Importação de XML de NF-e</a> — as notas importadas casam seus itens com os livros pelo mesmo <abbr class="sigla" title="International Standard Book Number: o número internacional que identifica cada edição de livro.">ISBN</abbr> que a Metabooks preenche.</li>
           <li><a href="liber_soc_agreements.html">Acordos de consignação</a> — o catálogo importado é o que abastece as prateleiras consignadas.</li>
         </ul>
       </div>

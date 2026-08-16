@@ -45,10 +45,10 @@
       <h2 id="visao-geral">Visão geral</h2>
       <p>A consignação editorial funciona assim: a editora deixa livros na livraria; eles continuam sendo da editora até que o cliente informe o que vendeu — e só então há uma venda. Para o sistema acompanhar isso, cada livraria precisa de duas coisas:</p>
       <ul>
-        <li><strong>O contrato</strong> — o registro comercial da relação: quem é o cliente, quem atende (agente comercial e canal de vendas), qual a condição comercial (lista de preços e desconto), com que frequência se faz o acerto. Cada contrato recebe um número na série <strong>AC/</strong> (ex.: AC/2026/0001).</li>
+        <li><strong>O contrato</strong> — o registro comercial da relação: quem é o cliente, quem atende (agente comercial e canal de vendas), qual a condição comercial (lista de preços e desconto), com que frequência se faz o acerto. Cada contrato recebe um número na série <strong><abbr class="sigla" title="Acordo de Consignação: o contrato com a livraria, dono da prateleira.">AC</abbr>/</strong> (ex.: AC/2026/0001).</li>
         <li><strong>A prateleira</strong> — um local de estoque interno com o nome do cliente, criado automaticamente quando o contrato é ativado. Tudo que a editora remete em consignação entra nessa prateleira; tudo que o cliente devolve ou vende sai dela. O saldo da prateleira é o <em>mapa</em> da consignação daquele cliente.</li>
       </ul>
-      <div class="callout note"><span class="title">Nota</span><p>As prateleiras ficam agrupadas sob uma localização-raiz chamada <strong>CO</strong>, que vive deliberadamente <em>fora do armazém</em>. Por isso o estoque consignado <strong>não infla o "Em mãos"</strong> do Estoque: o que está na livraria não está disponível para vender nem expedir, e os números nativos do Odoo continuam dizendo a verdade sobre o que está de fato no seu armazém.</p></div>
+      <div class="callout note"><span class="title">Nota</span><p>As prateleiras ficam agrupadas sob uma localização-raiz chamada <strong><abbr class="sigla" title="Consignação: o documento do acerto — registra o que o cliente vendeu e vira venda.">CO</abbr></strong>, que vive deliberadamente <em>fora do armazém</em>. Por isso o estoque consignado <strong>não infla o "Em mãos"</strong> do Estoque: o que está na livraria não está disponível para vender nem expedir, e os números nativos do Odoo continuam dizendo a verdade sobre o que está de fato no seu armazém.</p></div>
       <p>Este módulo cuida só da <em>relação</em>: contrato e prateleira. Ele não movimenta estoque, não fatura e não emite documento fiscal — isso é papel dos módulos de <a href="liber_soc_moves.html">remessas e retornos</a>, <a href="liber_soc_settlement.html">acerto</a> e <a href="liber_soc_fiscal_br.html">fiscal</a>.</p>
 
       <figure class="shot"><img src="img/doc-liber_soc_agreements-form.png" alt="Formulário de um contrato de consignação ativo, com os botões Ativar/Suspender/Encerrar no topo e o contador 'Na prateleira'"><figcaption>O contrato de consignação: dados comerciais à esquerda, frequência do acerto e prateleira à direita, e o botão inteligente <em>Na prateleira</em> mostrando o saldo atual no cliente.</figcaption></figure>
@@ -66,7 +66,7 @@
       <h3>Multiempresa</h3>
       <p>Se a casa tem mais de uma empresa, cada usuário só enxerga os contratos das empresas selecionadas no seletor de empresas do topo da tela. A regra "um contrato aberto por cliente" também vale <em>por empresa</em>: a mesma livraria pode ter um contrato aberto em cada empresa do grupo.</p>
       <h3>Dependências</h3>
-      <p>O módulo usa os aplicativos padrão de Contatos, Produtos, Estoque e Vendas. Não há nada para configurar em Definições antes de criar o primeiro contrato — a localização-raiz CO e as prateleiras são criadas sozinhas na ativação.</p>
+      <p>O módulo usa os aplicativos padrão de Contatos, Produtos, Estoque e Vendas. Não há nada para configurar em Definições antes de criar o primeiro contrato — a localização-raiz <abbr class="sigla" title="Consignação: o documento do acerto — registra o que o cliente vendeu e vira venda.">CO</abbr> e as prateleiras são criadas sozinhas na ativação.</p>
 
       <h2 id="criar">Criar um contrato</h2>
       <ol class="steps">
@@ -87,7 +87,7 @@
       </ol>
       <p>Nesse momento o sistema:</p>
       <ul>
-        <li>cria a <strong>prateleira do cliente</strong> — um local de estoque interno com o nome da livraria, pendurado na raiz CO (fora do armazém) — e o mostra no campo <span class="field">Prateleira do Cliente</span>;</li>
+        <li>cria a <strong>prateleira do cliente</strong> — um local de estoque interno com o nome da livraria, pendurado na raiz <abbr class="sigla" title="Consignação: o documento do acerto — registra o que o cliente vendeu e vira venda.">CO</abbr> (fora do armazém) — e o mostra no campo <span class="field">Prateleira do Cliente</span>;</li>
         <li>marca a ficha do cliente com <span class="field">Permite Consignação</span> e aponta a prateleira nela;</li>
         <li>muda o status para <strong>Ativo</strong>. A partir daqui remessas, acertos e devoluções são aceitos.</li>
       </ul>
@@ -139,7 +139,7 @@
 
       <h2 id="faq">Perguntas frequentes</h2>
       <p><strong>Preciso criar a prateleira no Estoque antes?</strong><br>
-      Não. A prateleira é criada sozinha na ativação do contrato, já no lugar certo (sob a raiz CO, fora do armazém). Não crie localizações de consignação à mão.</p>
+      Não. A prateleira é criada sozinha na ativação do contrato, já no lugar certo (sob a raiz <abbr class="sigla" title="Consignação: o documento do acerto — registra o que o cliente vendeu e vira venda.">CO</abbr>, fora do armazém). Não crie localizações de consignação à mão.</p>
       <p><strong>A livraria aparece com estoque no relatório "Em mãos" do Estoque. É normal?</strong><br>
       Não deveria. O consignado é visível nos relatórios próprios da consignação (<span class="menupath">Consignação<i>‣</i>Relatórios<i>‣</i>Na Prateleira</span>) e não deve aparecer no "Em mãos" do armazém. Se aparecer, a prateleira foi criada fora do fluxo — avise quem administra o sistema.</p>
       <p><strong>Posso ter contrato com uma pessoa física?</strong><br>

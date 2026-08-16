@@ -102,6 +102,12 @@ pre { background: #2b2233; color: #efe6f5; border-radius: var(--radius); padding
 pre code { background: none; border: 0; padding: 0; color: inherit; font-size: inherit; }
 .field { font-weight: 600; color: var(--ink); }
 
+/* siglas explicadas: sublinhado pontilhado, um "?" pequeno e a definição de
+   uma linha no title (tooltip nativo do navegador ao passar o mouse) */
+abbr.sigla { text-decoration: none; border-bottom: 1px dotted var(--accent-soft); cursor: help; }
+abbr.sigla::after { content: "?"; font-size: .6em; font-weight: 700;
+  color: var(--accent-soft); vertical-align: super; margin-left: 2px; }
+
 /* chamadas: nota / dica / importante / exemplo */
 .callout { border: 1px solid var(--line); border-left: 4px solid var(--accent);
   border-radius: 10px; background: var(--paper-2); padding: 14px 18px; margin: 0 0 16px; }

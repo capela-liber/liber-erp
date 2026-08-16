@@ -44,7 +44,7 @@
 
       <h2 id="visao-geral">Visão geral</h2>
       <p>O dia a dia da consignação mantém o mapa <em>incrementalmente</em>: cada remessa soma, cada acerto e devolução subtrai. A auditoria faz o caminho inverso: pega <strong>todas as notas fiscais de consignação importadas</strong> (veja <a href="liber_nfe_xml.html">Importação de XML de NF-e</a>) de um cliente e refaz a conta do zero, por título:</p>
-      <div class="callout example"><span class="title">Exemplo</span><p><strong>Esperado</strong> = abertura + remessas (CFOP 5917/6917) − vendas efetivadas (5113/5114/6113/6114) − devoluções (5918/5919/6918/6919). Notas canceladas ficam de fora. <strong>Diferença</strong> = esperado (fiscal) − mapa (prateleira atual). Positiva: o fiscal diz que há mais na prateleira do que o mapa mostra; negativa: o contrário (perda/quebra).</p></div>
+      <div class="callout example"><span class="title">Exemplo</span><p><strong>Esperado</strong> = abertura + remessas (<abbr class="sigla" title="Código Fiscal de Operações e Prestações: diz a natureza fiscal de cada item da nota.">CFOP</abbr> 5917/6917) − vendas efetivadas (5113/5114/6113/6114) − devoluções (5918/5919/6918/6919). Notas canceladas ficam de fora. <strong>Diferença</strong> = esperado (fiscal) − mapa (prateleira atual). Positiva: o fiscal diz que há mais na prateleira do que o mapa mostra; negativa: o contrário (perda/quebra).</p></div>
       <p>Serve para dois momentos:</p>
       <ul>
         <li><strong>Inaugurar o mapa</strong> de um cliente que vem da migração — a prateleira nasce do histórico fiscal, e não de um chute;</li>
@@ -54,10 +54,10 @@
       <div class="callout note"><span class="title">Nota</span><p>O motor lê as notas <strong>já importadas e interpretadas</strong> — ele nunca reprocessa arquivos XML. Se falta nota, o problema (e a solução) está na importação, e a auditoria aponta isso em vez de esconder.</p></div>
 
       <h2 id="configuracao">Configuração</h2>
-      <h3>Efeitos de CFOP</h3>
-      <p>Cada CFOP diz à auditoria como um item de nota mexe na prateleira. A tabela vem pré-classificada com os CFOPs clássicos da consignação e é <strong>editável</strong> em <span class="menupath">Consignação<i>‣</i>Configuração<i>‣</i>Efeitos de CFOP</span> (menu de administrador):</p>
+      <h3>Efeitos de <abbr class="sigla" title="Código Fiscal de Operações e Prestações: diz a natureza fiscal de cada item da nota.">CFOP</abbr></h3>
+      <p>Cada <abbr class="sigla" title="Código Fiscal de Operações e Prestações: diz a natureza fiscal de cada item da nota.">CFOP</abbr> diz à auditoria como um item de nota mexe na prateleira. A tabela vem pré-classificada com os CFOPs clássicos da consignação e é <strong>editável</strong> em <span class="menupath">Consignação<i>‣</i>Configuração<i>‣</i>Efeitos de CFOP</span> (menu de administrador):</p>
       <div class="tablewrap"><table>
-        <thead><tr><th>Efeito</th><th>Significado</th><th>CFOPs pré-classificados</th></tr></thead>
+        <thead><tr><th>Efeito</th><th>Significado</th><th><abbr class="sigla" title="Código Fiscal de Operações e Prestações: diz a natureza fiscal de cada item da nota.">CFOPs</abbr> pré-classificados</th></tr></thead>
         <tbody>
           <tr><td><span class="field">Remessa (+ prateleira)</span></td><td>Livros indo para o cliente.</td><td>5917/6917 — e também 5914 (feira) e 5949/6949 ("outra saída"), porque na prática essas notas põem livro na prateleira do cliente e muitas vezes ele não volta.</td></tr>
           <tr><td><span class="field">Venda efetivada (− prateleira)</span></td><td>O acerto fiscal: o que vendeu.</td><td>5113/6113 (produção própria) e 5114/6114 (mercadoria de terceiros).</td></tr>
@@ -65,7 +65,7 @@
           <tr><td><span class="field">Ignorar</span></td><td>Nota que não mexe na prateleira, de propósito.</td><td>—</td></tr>
         </tbody>
       </table></div>
-      <div class="callout tip"><span class="title">Dica</span><p>Clientes erram CFOP com frequência — por isso a classificação é <em>dado</em>, não código. Use o filtro <span class="field">Não mapeados</span> para revisar CFOPs recém-aparecidos nas notas.</p></div>
+      <div class="callout tip"><span class="title">Dica</span><p>Clientes erram <abbr class="sigla" title="Código Fiscal de Operações e Prestações: diz a natureza fiscal de cada item da nota.">CFOP</abbr> com frequência — por isso a classificação é <em>dado</em>, não código. Use o filtro <span class="field">Não mapeados</span> para revisar CFOPs recém-aparecidos nas notas.</p></div>
       <h3>Contas e local do ajuste</h3>
       <p>Em <span class="menupath">Consignação<i>‣</i>Configuração<i>‣</i>Configurações</span>, bloco <strong>Auditoria de Consignação</strong>:</p>
       <ul>
@@ -79,8 +79,8 @@
         <li>Acesse <span class="menupath">Consignação<i>‣</i>Auditorias<i>‣</i>Novo</span>.</li>
         <li>Escolha o <span class="field">Cliente</span>. O <span class="field">Contrato</span> e a <span class="field">Prateleira do Cliente</span> se resolvem sozinhos.</li>
         <li>Defina o período: deixe <span class="field">De</span> vazio para voltar até a primeira nota do cliente (o caso normal — a série fiscal precisa estar completa para a conta fechar), e <span class="field">Até</span> em hoje.</li>
-        <li>Clique em <span class="field">Calcular</span>. A auditoria varre as notas do período, monta uma linha por título e fica <em>Calculada</em>. O histórico registra o resumo: quantas NFes, quantos produtos, quantas divergências.</li>
-        <li>Leia cada linha: <span class="field">Abertura</span> (saldo conhecido antes da série — editável), <span class="field">Remetido</span>, <span class="field">Vendido</span>, <span class="field">Devolvido</span>, <span class="field">Esperado</span>, <span class="field">Mapa</span> e <span class="field">Diferença</span>. As linhas divergentes vêm destacadas e primeiro; a coluna <span class="field">NFes</span> abre as notas exatas que alimentaram a linha — a trilha de auditoria. As colunas <span class="field">Último Acerto</span> e <span class="field">Situação</span> mostram a saúde de cada título reconstituída do próprio XML, na mesma régua Ok / Atenção / Crítico / Sem retorno do acerto.</li>
+        <li>Clique em <span class="field">Calcular</span>. A auditoria varre as notas do período, monta uma linha por título e fica <em>Calculada</em>. O histórico registra o resumo: quantas <abbr class="sigla" title="Nota Fiscal eletrônica: o documento fiscal da venda ou da remessa, autorizado pela SEFAZ.">NFes</abbr>, quantos produtos, quantas divergências.</li>
+        <li>Leia cada linha: <span class="field">Abertura</span> (saldo conhecido antes da série — editável), <span class="field">Remetido</span>, <span class="field">Vendido</span>, <span class="field">Devolvido</span>, <span class="field">Esperado</span>, <span class="field">Mapa</span> e <span class="field">Diferença</span>. As linhas divergentes vêm destacadas e primeiro; a coluna <span class="field"><abbr class="sigla" title="Nota Fiscal eletrônica: o documento fiscal da venda ou da remessa, autorizado pela SEFAZ.">NFes</abbr></span> abre as notas exatas que alimentaram a linha — a trilha de auditoria. As colunas <span class="field">Último Acerto</span> e <span class="field">Situação</span> mostram a saúde de cada título reconstituída do próprio XML, na mesma régua Ok / Atenção / Crítico / Sem retorno do acerto.</li>
       </ol>
       <figure class="shot"><img src="img/doc-liber_soc_audit-linhas.png" alt="Auditoria calculada com linhas divergentes destacadas, colunas Esperado, Mapa e Diferença, e a coluna Resolução por linha"><figcaption>A reconciliação: o que o fiscal diz (Esperado) contra o que a prateleira mostra (Mapa), com a Diferença destacada e a Resolução a decidir por linha.</figcaption></figure>
 
@@ -90,8 +90,8 @@
         <thead><tr><th>Aviso</th><th>O que significa</th><th>O que fazer</th></tr></thead>
         <tbody>
           <tr><td><strong>Itens fiscais sem produto</strong></td><td>Itens de nota cujo código de barras não bateu com nenhum produto do catálogo. Não entram em nenhuma linha.</td><td>Corrija o catálogo (ou o apelido do produto) e clique em <span class="field">Calcular</span> de novo.</td></tr>
-          <tr><td><strong>CFOPs não mapeados</strong></td><td>Notas do cliente com CFOP sem efeito configurado.</td><td>Se algum for movimento de consignação, mapeie em <span class="menupath">Configuração<i>‣</i>Efeitos de CFOP</span> e recalcule.</td></tr>
-          <tr><td><strong>Notas sem CFOP</strong></td><td>Notas cujo CFOP não foi lido na importação ou não existe na tabela. Também ficam de fora.</td><td>Cadastre o CFOP, revincule as notas e recalcule.</td></tr>
+          <tr><td><strong><abbr class="sigla" title="Código Fiscal de Operações e Prestações: diz a natureza fiscal de cada item da nota.">CFOPs</abbr> não mapeados</strong></td><td>Notas do cliente com <abbr class="sigla" title="Código Fiscal de Operações e Prestações: diz a natureza fiscal de cada item da nota.">CFOP</abbr> sem efeito configurado.</td><td>Se algum for movimento de consignação, mapeie em <span class="menupath">Configuração<i>‣</i>Efeitos de CFOP</span> e recalcule.</td></tr>
+          <tr><td><strong>Notas sem <abbr class="sigla" title="Código Fiscal de Operações e Prestações: diz a natureza fiscal de cada item da nota.">CFOP</abbr></strong></td><td>Notas cujo <abbr class="sigla" title="Código Fiscal de Operações e Prestações: diz a natureza fiscal de cada item da nota.">CFOP</abbr> não foi lido na importação ou não existe na tabela. Também ficam de fora.</td><td>Cadastre o <abbr class="sigla" title="Código Fiscal de Operações e Prestações: diz a natureza fiscal de cada item da nota.">CFOP</abbr>, revincule as notas e recalcule.</td></tr>
         </tbody>
       </table></div>
       <p>O campo <span class="field">Cobertura da Série</span> (<em>Desconhecida / Parcial / Completa</em>) é a sua anotação de confiança: marque <em>Completa</em> só depois de revisar os avisos — a auditoria não adivinha se todas as notas do cliente foram importadas.</p>
@@ -123,7 +123,7 @@
           <tr><td><strong>Auditoria aceita não se recalcula</strong> — é preciso voltá-la a rascunho primeiro.</td><td>O ajuste já foi para o estoque; recalcular por cima esconderia o que foi feito.</td></tr>
           <tr><td><strong>Um ajuste concluído não se cancela</strong> (<em>"…já moveu estoque e lançou seu valor. Faça um ajuste oposto."</em>).</td><td>Correção se corrige com outra correção — nunca apagando a primeira. O rastro fica inteiro.</td></tr>
           <tr><td><strong>Notas canceladas nunca contam.</strong></td><td>Nota cancelada não moveu livro nenhum.</td></tr>
-          <tr><td><strong>O que não pôde ser contado aparece em aviso</strong> — item sem produto, CFOP não mapeado, nota sem CFOP.</td><td>Uma diferença "resolvida" sobre série furada é pior que a diferença: os avisos impedem o fechamento cego.</td></tr>
+          <tr><td><strong>O que não pôde ser contado aparece em aviso</strong> — item sem produto, <abbr class="sigla" title="Código Fiscal de Operações e Prestações: diz a natureza fiscal de cada item da nota.">CFOP</abbr> não mapeado, nota sem CFOP.</td><td>Uma diferença "resolvida" sobre série furada é pior que a diferença: os avisos impedem o fechamento cego.</td></tr>
           <tr><td><strong>Aceitar exige contrato com prateleira ativa.</strong></td><td>O ajuste materializa <em>na prateleira</em>; sem contrato ativo não há onde aplicar. Ative o contrato antes (a auditoria de um contrato encerrado ainda calcula — só não ajusta).</td></tr>
         </tbody>
       </table></div>
@@ -132,7 +132,7 @@
       <p><strong>A auditoria substitui o inventário físico?</strong><br>
       Não — são réguas diferentes. A auditoria compara o mapa com a <em>verdade fiscal</em> (o que as notas dizem); o <a href="liber_soc_moves.html#relatorios">Inventário</a> compara com a <em>contagem física</em> na livraria. O ideal é usar as duas: o fiscal encontra nota faltando, a contagem encontra livro sumido.</p>
       <p><strong>Calculei e veio tudo zerado.</strong><br>
-      Ou não há notas importadas para esse cliente no período, ou as notas estão lá mas sem CFOP classificado — confira os avisos no topo e a tela de Efeitos de CFOP.</p>
+      Ou não há notas importadas para esse cliente no período, ou as notas estão lá mas sem <abbr class="sigla" title="Código Fiscal de Operações e Prestações: diz a natureza fiscal de cada item da nota.">CFOP</abbr> classificado — confira os avisos no topo e a tela de Efeitos de CFOP.</p>
       <p><strong>Posso auditar só o último trimestre?</strong><br>
       Pode, mas a conta só fecha se você preencher a <span class="field">Abertura</span> de cada título com o saldo no início do período. Sem abertura, período parcial produz diferenças falsas — na dúvida, deixe <span class="field">De</span> vazio e audite a série inteira.</p>
       <p><strong>O ajuste apareceu na lista de Devoluções?</strong><br>

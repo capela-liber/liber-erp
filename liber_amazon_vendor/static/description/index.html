@@ -15,7 +15,7 @@
         <tbody>
           <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;"><strong style="color:#251d2b;">purchase order</strong> (pedido de compra)</td><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Uma <strong style="color:#251d2b;">venda</strong>. Vira cotação e, depois, pedido de venda — nunca um pedido de compra do Odoo.</td></tr>
           <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;"><strong style="color:#251d2b;">vendor</strong></td><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Nós. A editora que fornece.</td></tr>
-          <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;"><strong style="color:#251d2b;">buying party</strong></td><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">O centro de distribuição da Amazon que está comprando — cada um com CNPJ próprio.</td></tr>
+          <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;"><strong style="color:#251d2b;">buying party</strong></td><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">O centro de distribuição da Amazon que está comprando — cada um com <abbr class="sigla" title="Cadastro Nacional da Pessoa Jurídica: o número que identifica a empresa." style="text-decoration:none;border-bottom:1px dotted #8a4bad;cursor:help;">CNPJ</abbr> próprio.</td></tr>
           <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;"><strong style="color:#251d2b;">net cost</strong></td><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">O que a Amazon paga por exemplar. É este o preço da linha.</td></tr>
           <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;"><strong style="color:#251d2b;">list price</strong></td><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">O preço de capa com que ela revende. Não entra na cotação.</td></tr>
         </tbody>
@@ -28,14 +28,14 @@
       <p style="margin:0 0 12px;">O caminho tem três paradas, e a do meio é o ponto do módulo:</p>
       <ol class="steps" style="margin:0 0 16px 22px;padding:0;">
         <li style="margin:0 0 7px;"><strong style="color:#251d2b;">Importar</strong> — o módulo lê os pedidos da Amazon e guarda uma cópia fiel de cada um.</li>
-        <li style="margin:0 0 7px;"><strong style="color:#251d2b;">Conferir</strong> — cada ISBN é casado com o código de barras do produto. O que não casa fica visível antes de virar documento.</li>
+        <li style="margin:0 0 7px;"><strong style="color:#251d2b;">Conferir</strong> — cada <abbr class="sigla" title="International Standard Book Number: o número internacional que identifica cada edição de livro." style="text-decoration:none;border-bottom:1px dotted #8a4bad;cursor:help;">ISBN</abbr> é casado com o código de barras do produto. O que não casa fica visível antes de virar documento.</li>
         <li style="margin:0 0 7px;"><strong style="color:#251d2b;">Gerar a cotação</strong> — um ato de alguém, nunca automático. A cotação nasce em rascunho e fica lá.</li>
       </ol>
 
       <h2 id="o-que-nao-faz" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">O que este módulo não faz</h2>
       <p style="margin:0 0 12px;">Ele <strong style="color:#251d2b;">só lê</strong> da Amazon. Não confirma pedido (<em>acknowledgement</em>), não
       manda aviso de embarque (ASN), não imprime etiqueta de caixa e não emite invoice por EDI.</p>
-      <p style="margin:0 0 12px;">Não é uma etapa que ficou para depois: é o desenho. Essas operações disparam relógio de SLA
+      <p style="margin:0 0 12px;">Não é uma etapa que ficou para depois: é o desenho. Essas operações disparam relógio de <abbr class="sigla" title="Service Level Agreement: o prazo combinado para responder e resolver um chamado." style="text-decoration:none;border-bottom:1px dotted #8a4bad;cursor:help;">SLA</abbr>
       na Amazon e assumem compromisso de entrega — decisão de uma pessoa olhando, não de uma rotina
       às quatro da manhã. A limitação está no código, não num acordo: a camada que fala com a Amazon
       tem um único caminho de saída, e ele só sabe ler.</p>
@@ -62,7 +62,7 @@
         <li style="margin:0 0 7px;">Preencha <span class="field" style="font-weight:600;color:#251d2b;">Amazon como cliente</span>: o parceiro em nome de quem as
         cotações saem.</li>
         <li style="margin:0 0 7px;">Cole as três credenciais do aplicativo criado no <em>Amazon Developer Central</em>:
-        <span class="field" style="font-weight:600;color:#251d2b;">Client ID do LWA</span>, <span class="field" style="font-weight:600;color:#251d2b;">Client Secret do LWA</span> e o
+        <span class="field" style="font-weight:600;color:#251d2b;">Client ID do <abbr class="sigla" title="Login with Amazon: o sistema de credenciais que dá acesso à API da Amazon." style="text-decoration:none;border-bottom:1px dotted #8a4bad;cursor:help;">LWA</abbr></span>, <span class="field" style="font-weight:600;color:#251d2b;">Client Secret do LWA</span> e o
         <span class="field" style="font-weight:600;color:#251d2b;">Refresh token</span> da autorização. O refresh token começa com
         <code style="background:#f1eaf6;border:1px solid #e5dbee;border-radius:5px;padding:1px 6px;font-size:13px;font-family:ui-monospace,Menlo,Consolas,monospace;">Atzr|</code> e aparece uma única vez, na tela de autorização.</li>
         <li style="margin:0 0 7px;">Salve e clique em <span class="field" style="font-weight:600;color:#251d2b;">Testar conexão</span> na ficha da conta. Ele fala com
@@ -81,19 +81,19 @@
 
       <h2 id="unidades" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">As unidades da Amazon</h2>
       <p style="margin:0 0 12px;">A Amazon não compra como uma pessoa só. <strong style="color:#251d2b;">Cada centro de distribuição é um
-      estabelecimento fiscal próprio</strong> — no Brasil, mesma raiz de CNPJ e filial diferente —
+      estabelecimento fiscal próprio</strong> — no Brasil, mesma raiz de <abbr class="sigla" title="Cadastro Nacional da Pessoa Jurídica: o número que identifica a empresa." style="text-decoration:none;border-bottom:1px dotted #8a4bad;cursor:help;">CNPJ</abbr> e filial diferente —
       e o pedido diz qual deles está comprando.</p>
       <p style="margin:0 0 12px;">O que ela <em>não</em> manda é quem é esse estabelecimento. O pedido traz apenas a sigla:</p>
       <pre style="background:#2b2233;color:#efe6f5;border-radius:12px;padding:16px 20px;overflow-x:auto;margin:0 0 16px;font-size:13px;line-height:1.6;">buyingParty  = {"partyId": "GRU8"}
 shipToParty  = {"partyId": "GRU8"}</pre>
-      <p style="margin:0 0 12px;">Sem CNPJ, sem endereço, sem razão social. Daí o mapa em
+      <p style="margin:0 0 12px;">Sem <abbr class="sigla" title="Cadastro Nacional da Pessoa Jurídica: o número que identifica a empresa." style="text-decoration:none;border-bottom:1px dotted #8a4bad;cursor:help;">CNPJ</abbr>, sem endereço, sem razão social. Daí o mapa em
       <span class="menupath" style="display:inline-block;background:#f1eaf6;border:1px solid #e5dbee;border-radius:6px;padding:1px 8px;font-size:13.5px;color:#251d2b;white-space:nowrap;">Amazon Vendor<i style="font-style:normal;color:#6e2f91;margin:0 4px;font-weight:700;">‣</i>Configuração<i style="font-style:normal;color:#6e2f91;margin:0 4px;font-weight:700;">‣</i>Unidades da Amazon</span>: uma
       linha por sigla, dizendo quem ela é no seu cadastro — e, se a entrega for em outro endereço,
       qual é.</p>
       <div class="callout warn" style="border:1px solid #e5dbee;border-left:4px solid #6e2f91;border-radius:10px;padding:14px 18px;margin:0 0 16px;border-left-color:#b3831a;background:#faf3e3;border-color:#eddfba;"><span class="title" style="font-weight:700;font-size:12px;letter-spacing:.08em;text-transform:uppercase;display:block;margin:0 0 4px;color:#7a5a12;">Atenção</span>
       <p style="margin:0 0 12px;">Unidade não mapeada <strong style="color:#251d2b;">não vira cotação</strong>. O pedido é importado e fica marcado,
       mas a cotação é recusada com o nome da sigla. Cair num cliente padrão seria pior: a nota sairia
-      contra o CNPJ de outra filial, em silêncio e com número plausível.</p></div>
+      contra o <abbr class="sigla" title="Cadastro Nacional da Pessoa Jurídica: o número que identifica a empresa." style="text-decoration:none;border-bottom:1px dotted #8a4bad;cursor:help;">CNPJ</abbr> de outra filial, em silêncio e com número plausível.</p></div>
       <p style="margin:0 0 12px;">Para começar, o botão <span class="field" style="font-weight:600;color:#251d2b;">Mapear unidades pelos pedidos</span>, na ficha da
       conta, cria uma linha para cada sigla já vista e sugere um cliente quando um contato casa sem
       ambiguidade. A sugestão é isso mesmo — sugestão, para você conferir. Casar pelo nome funcionaria
@@ -110,7 +110,7 @@ shipToParty  = {"partyId": "GRU8"}</pre>
         quando a Amazon já fechou o dia e ninguém está usando o sistema. Liga e desliga em Definições.</li>
       </ul>
       <p style="margin:0 0 12px;">A leitura à mão <strong style="color:#251d2b;">mostra a conta antes de gravar</strong>: quantos pedidos, quantos
-      exemplares, quanto em net cost, quantos ISBNs distintos e — o que mais importa — a lista exata
+      exemplares, quanto em net cost, quantos <abbr class="sigla" title="International Standard Book Number: o número internacional que identifica cada edição de livro." style="text-decoration:none;border-bottom:1px dotted #8a4bad;cursor:help;">ISBNs</abbr> distintos e — o que mais importa — a lista exata
       dos que não têm produto no cadastro. Só então <span class="field" style="font-weight:600;color:#251d2b;">Importar</span>.</p>
       <div class="callout note" style="border:1px solid #e5dbee;border-left:4px solid #6e2f91;border-radius:10px;background:#f1eaf6;padding:14px 18px;margin:0 0 16px;"><span class="title" style="font-weight:700;font-size:12px;letter-spacing:.08em;text-transform:uppercase;display:block;margin:0 0 4px;color:#6e2f91;">Nota</span>
       <p style="margin:0 0 12px;">Reimportar o mesmo intervalo não duplica nada: a chave é o número do pedido. E a janela
@@ -119,24 +119,24 @@ shipToParty  = {"partyId": "GRU8"}</pre>
       d'água que só andasse para frente congelaria o estado no instante da primeira leitura.</p></div>
 
       <h2 id="casamento" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">O casamento com o cadastro</h2>
-      <p style="margin:0 0 12px;">Cada linha traz o <strong style="color:#251d2b;">ISBN-13</strong> do título, que o módulo procura no
+      <p style="margin:0 0 12px;">Cada linha traz o <strong style="color:#251d2b;"><abbr class="sigla" title="International Standard Book Number: o número internacional que identifica cada edição de livro." style="text-decoration:none;border-bottom:1px dotted #8a4bad;cursor:help;">ISBN</abbr>-13</strong> do título, que o módulo procura no
       <span class="field" style="font-weight:600;color:#251d2b;">Código de barras</span> do produto. A comparação ignora hífen e espaço dos
       dois lados — parte do catálogo está gravada com hífen, e a comparação crua daria por ausente um
       título que existe.</p>
       <div class="callout warn" style="border:1px solid #e5dbee;border-left:4px solid #6e2f91;border-radius:10px;padding:14px 18px;margin:0 0 16px;border-left-color:#b3831a;background:#faf3e3;border-color:#eddfba;"><span class="title" style="font-weight:700;font-size:12px;letter-spacing:.08em;text-transform:uppercase;display:block;margin:0 0 4px;color:#7a5a12;">Atenção</span>
-      <p style="margin:0 0 12px;">O outro identificador do pedido, o <strong style="color:#251d2b;">ASIN</strong>, é o código interno da Amazon.
+      <p style="margin:0 0 12px;">O outro identificador do pedido, o <strong style="color:#251d2b;"><abbr class="sigla" title="Amazon Standard Identification Number: o código interno de produto da Amazon." style="text-decoration:none;border-bottom:1px dotted #8a4bad;cursor:help;">ASIN</abbr></strong>, é o código interno da Amazon.
       Ele é guardado para conferência, mas <em>não</em> serve para casar com o nosso cadastro — não
       existe lá.</p></div>
-      <p style="margin:0 0 12px;">Linha cujo ISBN não casa <strong style="color:#251d2b;">não impede nada</strong>: ela entra sem produto, é contada,
+      <p style="margin:0 0 12px;">Linha cujo <abbr class="sigla" title="International Standard Book Number: o número internacional que identifica cada edição de livro." style="text-decoration:none;border-bottom:1px dotted #8a4bad;cursor:help;">ISBN</abbr> não casa <strong style="color:#251d2b;">não impede nada</strong>: ela entra sem produto, é contada,
       e simplesmente <strong style="color:#251d2b;">fica de fora da cotação</strong>. Travar o pedido inteiro por causa de um
       título que talvez nem seja nosso seria pior — e a Amazon não espera.</p>
       <div class="callout warn" style="border:1px solid #e5dbee;border-left:4px solid #6e2f91;border-radius:10px;padding:14px 18px;margin:0 0 16px;border-left-color:#b3831a;background:#faf3e3;border-color:#eddfba;"><span class="title" style="font-weight:700;font-size:12px;letter-spacing:.08em;text-transform:uppercase;display:block;margin:0 0 4px;color:#7a5a12;">Atenção</span>
       <p style="margin:0 0 12px;">Ignorar é a decisão certa; ignorar em silêncio não é. Toda vez que uma linha fica de fora, o
-      <strong style="color:#251d2b;">histórico do pedido registra quais ISBNs foram deixados</strong> — porque a cotação passa
+      <strong style="color:#251d2b;">histórico do pedido registra quais <abbr class="sigla" title="International Standard Book Number: o número internacional que identifica cada edição de livro." style="text-decoration:none;border-bottom:1px dotted #8a4bad;cursor:help;">ISBNs</abbr> foram deixados</strong> — porque a cotação passa
       a prometer menos exemplares do que a Amazon pediu, e essa diferença apareceria só na entrega.</p></div>
       <p style="margin:0 0 12px;">Para trazer o título de volta, há duas saídas:</p>
       <ul style="margin:0 0 14px 22px;padding:0;">
-        <li style="margin:0 0 7px;">Cadastrar o título com o ISBN no código de barras, e reimportar.</li>
+        <li style="margin:0 0 7px;">Cadastrar o título com o <abbr class="sigla" title="International Standard Book Number: o número internacional que identifica cada edição de livro." style="text-decoration:none;border-bottom:1px dotted #8a4bad;cursor:help;">ISBN</abbr> no código de barras, e reimportar.</li>
         <li style="margin:0 0 7px;">Escolher o produto <strong style="color:#251d2b;">à mão</strong> na linha do pedido. Essa escolha fica travada e
         <strong style="color:#251d2b;">sobrevive às próximas leituras</strong> — corrigir uma vez é corrigir para sempre.</li>
       </ul>
@@ -206,7 +206,7 @@ shipToParty  = {"partyId": "GRU8"}</pre>
       de data para olhar só o que chegou desde que o módulo entrou em operação.</p>
       <p style="margin:0 0 12px;"><strong style="color:#251d2b;">"Janela fechada" não quer dizer que o livro nunca foi entregue.</strong> Um pedido
       atendido por fora — pelo portal, por planilha, do jeito que a casa fazia antes deste módulo —
-      também chega aqui fechado, e a Vendor Orders API não distingue um caso do outro. O que a coluna
+      também chega aqui fechado, e a Vendor Orders <abbr class="sigla" title="Interface de programação: o canal por onde um sistema conversa com outro." style="text-decoration:none;border-bottom:1px dotted #8a4bad;cursor:help;">API</abbr> não distingue um caso do outro. O que a coluna
       afirma é apenas isto: <em>por dentro do Odoo, aquele título naquele pedido não vai mais a lugar
       nenhum</em>. Para o histórico importado, espere números altos aqui — é passado, não perda.</p></div>
       <p style="margin:0 0 12px;">Expandindo por <span class="field" style="font-weight:600;color:#251d2b;">Atendimento</span>, aparece <em>onde</em> parou — e essa é
@@ -214,7 +214,7 @@ shipToParty  = {"partyId": "GRU8"}</pre>
       <div class="tablewrap" style="overflow-x:auto;margin:0 0 16px;"><table style="border-collapse:collapse;width:100%;margin:0 0 16px;font-size:14px;">
         <thead><tr><th style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;background:#f1eaf6;font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:13.5px;">Situação</th><th style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;background:#f1eaf6;font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:13.5px;">O que significa</th><th style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;background:#f1eaf6;font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:13.5px;">De quem é o problema</th></tr></thead>
         <tbody>
-          <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;"><strong style="color:#251d2b;">Sem produto no cadastro</strong></td><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">O ISBN não existe em nenhum produto; a linha ficou de fora da cotação.</td><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">De quem cuida do cadastro.</td></tr>
+          <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;"><strong style="color:#251d2b;">Sem produto no cadastro</strong></td><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">O <abbr class="sigla" title="International Standard Book Number: o número internacional que identifica cada edição de livro." style="text-decoration:none;border-bottom:1px dotted #8a4bad;cursor:help;">ISBN</abbr> não existe em nenhum produto; a linha ficou de fora da cotação.</td><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">De quem cuida do cadastro.</td></tr>
           <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;"><strong style="color:#251d2b;">Ainda sem cotação</strong></td><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">O título casou, mas ninguém transformou o pedido em cotação.</td><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">De quem opera.</td></tr>
           <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;"><strong style="color:#251d2b;">Em cotação</strong></td><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Virou linha de um pedido de venda.</td><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">—</td></tr>
         </tbody>
@@ -226,7 +226,7 @@ shipToParty  = {"partyId": "GRU8"}</pre>
 
       <h3 id="tempo-de-ciclo" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:19px;line-height:1.25;margin:28px 0 10px;color:#251d2b;">Quanto tempo leva</h3>
       <p style="margin:0 0 12px;">A medida <span class="field" style="font-weight:600;color:#251d2b;">Dias até fechar</span> conta do pedido até a Amazon encerrar o
-      documento. É o mais perto de um tempo de entrega que a Vendor Orders API oferece — ela não nos
+      documento. É o mais perto de um tempo de entrega que a Vendor Orders <abbr class="sigla" title="Interface de programação: o canal por onde um sistema conversa com outro." style="text-decoration:none;border-bottom:1px dotted #8a4bad;cursor:help;">API</abbr> oferece — ela não nos
       diz quando recebeu, diz quando fechou.</p>
       <div class="callout warn" style="border:1px solid #e5dbee;border-left:4px solid #6e2f91;border-radius:10px;padding:14px 18px;margin:0 0 16px;border-left-color:#b3831a;background:#faf3e3;border-color:#eddfba;"><span class="title" style="font-weight:700;font-size:12px;letter-spacing:.08em;text-transform:uppercase;display:block;margin:0 0 4px;color:#7a5a12;">Atenção</span>
       <p style="margin:0 0 12px;">Ligue o filtro <span class="field" style="font-weight:600;color:#251d2b;">Ciclo concluído</span> antes de ler essa média. Pedido
@@ -239,14 +239,14 @@ shipToParty  = {"partyId": "GRU8"}</pre>
       <h2 id="limites" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">Limites conhecidos</h2>
       <ul style="margin:0 0 14px 22px;padding:0;">
         <li style="margin:0 0 7px;"><strong style="color:#251d2b;">Um cliente por conta</strong> — a cotação sai sempre para o mesmo parceiro. Como
-        cada centro de distribuição da Amazon tem CNPJ próprio, o correto é resolver o cliente por
+        cada centro de distribuição da Amazon tem <abbr class="sigla" title="Cadastro Nacional da Pessoa Jurídica: o número que identifica a empresa." style="text-decoration:none;border-bottom:1px dotted #8a4bad;cursor:help;">CNPJ</abbr> próprio, o correto é resolver o cliente por
         pedido, a partir do <em>buying party</em>. Está mapeado, ainda não implementado.</li>
         <li style="margin:0 0 7px;"><strong style="color:#251d2b;">Impostos</strong> — a linha nasce com o net cost e o Odoo aplica a posição fiscal
         do parceiro. Vale conferir com um pedido real antes de confiar no total.</li>
         <li style="margin:0 0 7px;"><strong style="color:#251d2b;">Endereço de entrega</strong> — o pedido traz o centro de distribuição de destino,
         mas ele ainda não vai para o endereço de entrega da cotação.</li>
         <li style="margin:0 0 7px;"><strong style="color:#251d2b;">Devoluções e chargebacks</strong> — fora do escopo. A Amazon os informa por outras
-        APIs.</li>
+        <abbr class="sigla" title="Interface de programação: o canal por onde um sistema conversa com outro." style="text-decoration:none;border-bottom:1px dotted #8a4bad;cursor:help;">APIs</abbr>.</li>
       </ul>
 
       <h2 id="faq" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">Perguntas frequentes</h2>
@@ -263,19 +263,19 @@ shipToParty  = {"partyId": "GRU8"}</pre>
       Não deveria — escolha humana fica travada. Se voltou, o produto foi trocado por outra
       importação com o campo destravado; reabra a linha e escolha de novo.</p>
       <p style="margin:0 0 12px;"><strong style="color:#251d2b;">A cotação saiu com menos linhas que o pedido da Amazon.</strong><br>
-      Os títulos sem produto no cadastro ficam de fora. O histórico do pedido lista os ISBNs
+      Os títulos sem produto no cadastro ficam de fora. O histórico do pedido lista os <abbr class="sigla" title="International Standard Book Number: o número internacional que identifica cada edição de livro." style="text-decoration:none;border-bottom:1px dotted #8a4bad;cursor:help;">ISBNs</abbr>
       deixados; cadastre-os (ou escolha o produto à mão na linha) e a próxima cotação sai completa.
       A cotação já criada não se completa sozinha — corrija-a ou cancele e gere de novo.</p>
       <p style="margin:0 0 12px;"><strong style="color:#251d2b;">O pedido sumiu da lista.</strong><br>
       Provavelmente foi fechado pela Amazon e você está com o filtro <span class="field" style="font-weight:600;color:#251d2b;">Ainda aberto</span>
       ligado. Pedido fechado continua no sistema, apenas em cinza.</p>
       <p style="margin:0 0 12px;"><strong style="color:#251d2b;">Preciso instalar alguma biblioteca Python?</strong><br>
-      Não. A API da Amazon não exige mais assinatura AWS, e o módulo usa só o que o Odoo já tem.</p>
+      Não. A <abbr class="sigla" title="Interface de programação: o canal por onde um sistema conversa com outro." style="text-decoration:none;border-bottom:1px dotted #8a4bad;cursor:help;">API</abbr> da Amazon não exige mais assinatura AWS, e o módulo usa só o que o Odoo já tem.</p>
 
       <div class="seealso" style="border:1px solid #e5dbee;border-radius:12px;background:#f1eaf6;padding:16px 20px;margin:32px 0 0;">
         <strong style="font-weight:700;font-size:12px;letter-spacing:.08em;text-transform:uppercase;display:block;margin:0 0 8px;color:#5d5266;">Ver também</strong>
         <ul style="margin:0 0 14px 22px;padding:0;">
-          <li style="margin:0 0 7px;"><a href="/liber_site/static/docs/liber_metabooks_integration.html" target="_blank" rel="noopener" style="color:#6e2f91;">Integração Metabooks</a> — de onde vem o ISBN que faz o casamento funcionar.</li>
+          <li style="margin:0 0 7px;"><a href="/liber_site/static/docs/liber_metabooks_integration.html" target="_blank" rel="noopener" style="color:#6e2f91;">Integração Metabooks</a> — de onde vem o <abbr class="sigla" title="International Standard Book Number: o número internacional que identifica cada edição de livro." style="text-decoration:none;border-bottom:1px dotted #8a4bad;cursor:help;">ISBN</abbr> que faz o casamento funcionar.</li>
           <li style="margin:0 0 7px;"><a href="/liber_site/static/docs/liber_roles.html" target="_blank" rel="noopener" style="color:#6e2f91;">Papéis de acesso</a> — os grupos da casa e como eles se somam aos deste módulo.</li>
         </ul>
       </div><p style="margin:28px 0 0;padding-top:14px;border-top:1px solid #e5dbee;font-size:13px;color:#5d5266;">Manual completo, com busca e as demais páginas: <a href="/liber_site/static/docs/liber_amazon_vendor.html" target="_blank" rel="noopener" style="color:#6e2f91;">Amazon Vendor Central</a>.</p></div>
