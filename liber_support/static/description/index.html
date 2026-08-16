@@ -1,0 +1,164 @@
+<!-- GERADO por scripts/gen_module_descriptions.py a partir de
+     liber_site/static/docs/liber_support.html -- não edite aqui.
+     O Odoo mostra este arquivo em Apps > Module Info. -->
+<div class="oe_container liber_manual" style="max-width:900px;margin:0 auto;padding:8px 4px 24px;color:#251d2b;background:transparent;font:15px/1.7 Inter,'Segoe UI',system-ui,sans-serif;"><h1 style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:32px;line-height:1.2;letter-spacing:-.015em;margin:0 0 10px;color:#251d2b;">Atendimento ao cliente</h1>
+      <p class="lead" style="font-size:17.5px;color:#5d5266;margin:0 0 26px;max-width:62ch;">O e-mail que a livraria manda para a caixa comercial vira um chamado numerado,
+      num quadro que a equipe inteira enxerga. A resposta sai dali mesmo — e chega ao cliente como
+      um e-mail de gente, não como notificação de sistema. Dois relógios em horas úteis dizem o que
+      está no prazo e o que precisa de socorro.</p>
+
+      <h2 id="de-onde-vem" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">De onde vem um chamado?</h2>
+      <p style="margin:0 0 12px;">De dois lugares. O principal é o <strong style="color:#251d2b;">e-mail</strong>: cada caixa comercial da casa é o
+      endereço de uma equipe, e toda mensagem que chega nela cria um chamado
+      <span class="field" style="font-weight:600;color:#251d2b;">AT/2026/00001</span> na empresa daquela equipe — com o assunto, o texto e o
+      remetente guardados. O segundo é o <strong style="color:#251d2b;">telefone</strong>: quem atendeu uma ligação sobre um
+      pedido abre o chamado pelo botão <span class="field" style="font-weight:600;color:#251d2b;">Atendimento</span> no cabeçalho do próprio
+      pedido, e ele já nasce ligado ao cliente e ao documento.</p>
+      <p style="margin:0 0 12px;">Na chegada por e-mail, o sistema faz três amarrações sozinho — e só as seguras:</p>
+      <div class="tablewrap" style="overflow-x:auto;margin:0 0 16px;"><table style="border-collapse:collapse;width:100%;margin:0 0 16px;font-size:14px;">
+        <tr><th style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;background:#f1eaf6;font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:13.5px;">O que preenche</th><th style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;background:#f1eaf6;font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:13.5px;">Como decide</th></tr>
+        <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;"><span class="field" style="font-weight:600;color:#251d2b;">Parceiro</span></td>
+            <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Só quando o e-mail do remetente pertence a <strong style="color:#251d2b;">um único</strong> contato da base.
+                Havendo dois com o mesmo e-mail — e há milhares assim no cadastro —, o campo fica
+                vazio: ligar à livraria errada é pior do que não ligar.</td></tr>
+        <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;"><span class="field" style="font-weight:600;color:#251d2b;">Tipo</span></td>
+            <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Adivinhado pelas palavras do assunto e do texto: "envio de livros" vira Envio,
+                "acerto" vira Acerto/Devolução, "boleto" vira Cobrança, e assim por diante. É um
+                palpite para ordenar a fila — quem triar corrige num clique.</td></tr>
+        <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;"><span class="field" style="font-weight:600;color:#251d2b;">Empresa</span> e <span class="field" style="font-weight:600;color:#251d2b;">Equipe</span></td>
+            <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Vêm da caixa que recebeu: escrever para a caixa de uma editora põe o chamado na
+                equipe e na empresa dela.</td></tr>
+      </table></div>
+      <div class="callout" style="border:1px solid #e5dbee;border-left:4px solid #6e2f91;border-radius:10px;background:#f1eaf6;padding:14px 18px;margin:0 0 16px;">O e-mail do remetente fica guardado sempre, mesmo sem parceiro
+      identificado — a resposta sai para ele de qualquer forma.</div>
+
+      <h2 id="triagem" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">A triagem no quadro</h2>
+      <p style="margin:0 0 12px;">Em <span class="menupath" style="display:inline-block;background:#f1eaf6;border:1px solid #e5dbee;border-radius:6px;padding:1px 8px;font-size:13.5px;color:#251d2b;white-space:nowrap;">Atendimento<i style="font-style:normal;color:#6e2f91;margin:0 4px;font-weight:700;">‣</i>Chamados</span>, cada coluna é um estágio e cada
+      cartão é uma conversa: quem escreveu, o número, o assunto, o tipo, a etiqueta de SLA e o
+      responsável. Triar é arrastar o cartão — ou abrir o chamado e clicar no estágio na barra de
+      cima.</p>
+      <figure class="shot" style="margin:20px 0 24px;">
+        <img src="img/doc-liber_support-kanban-chamados.png" alt="Quadro de chamados com colunas Novo, Em andamento, Aguardando cliente e Aguardando interno" style="max-width:100%;display:block;margin:0 auto;border-radius:12px;border:1px solid #e5dbee;">
+        <figcaption style="font-size:13px;color:#5d5266;margin-top:10px;text-align:center;">O quadro de triagem: cada cartão diz quem escreveu, o tipo do assunto e a cor do
+        prazo — <span class="field" style="font-weight:600;color:#251d2b;">No prazo</span>, <span class="field" style="font-weight:600;color:#251d2b;">Perto do prazo</span> ou
+        <span class="field" style="font-weight:600;color:#251d2b;">Atrasado</span>.</figcaption>
+      </figure>
+      <div class="tablewrap" style="overflow-x:auto;margin:0 0 16px;"><table style="border-collapse:collapse;width:100%;margin:0 0 16px;font-size:14px;">
+        <tr><th style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;background:#f1eaf6;font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:13.5px;">Estágio</th><th style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;background:#f1eaf6;font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:13.5px;">O que significa</th></tr>
+        <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;"><span class="field" style="font-weight:600;color:#251d2b;">Novo</span></td>
+            <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Chegou e ninguém assumiu. O botão <span class="field" style="font-weight:600;color:#251d2b;">Assumir</span>, no chamado,
+                põe seu nome e já move para Em andamento.</td></tr>
+        <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;"><span class="field" style="font-weight:600;color:#251d2b;">Em andamento</span></td>
+            <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Alguém está cuidando. É para cá que o chamado volta sozinho quando o cliente
+                responde.</td></tr>
+        <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;"><span class="field" style="font-weight:600;color:#251d2b;">Aguardando cliente</span></td>
+            <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">A bola está com o cliente — perguntamos algo e esperamos. O relógio de resolução
+                <strong style="color:#251d2b;">pausa</strong> aqui.</td></tr>
+        <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;"><span class="field" style="font-weight:600;color:#251d2b;">Aguardando interno</span></td>
+            <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Depende de alguém da casa (fiscal, logística). O relógio <strong style="color:#251d2b;">continua
+                correndo</strong>: o cliente não tem culpa da mesa interna demorar.</td></tr>
+        <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;"><span class="field" style="font-weight:600;color:#251d2b;">Resolvido</span> / <span class="field" style="font-weight:600;color:#251d2b;">Fechado</span></td>
+            <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Terminou. A data de fechamento é carimbada e o veredito do SLA congela:
+                <span class="field" style="font-weight:600;color:#251d2b;">Cumprido</span> ou <span class="field" style="font-weight:600;color:#251d2b;">Perdido</span>.</td></tr>
+        <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;"><span class="field" style="font-weight:600;color:#251d2b;">Spam</span></td>
+            <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">A caixa aceita remetente desconhecido de propósito — livraria nova escreve pela
+                primeira vez —, então entra lixo. Lixo se arrasta para cá; não se apaga.</td></tr>
+      </table></div>
+      <p style="margin:0 0 12px;">Na busca, os filtros prontos fazem a rotina: <span class="field" style="font-weight:600;color:#251d2b;">Meus chamados</span>,
+      <span class="field" style="font-weight:600;color:#251d2b;">Não atribuídos</span>, <span class="field" style="font-weight:600;color:#251d2b;">Abertos</span>,
+      <span class="field" style="font-weight:600;color:#251d2b;">Atrasados</span>, <span class="field" style="font-weight:600;color:#251d2b;">Urgentes</span> e
+      <span class="field" style="font-weight:600;color:#251d2b;">Sem parceiro</span> — este último é a fila de amarração pendente, dos
+      remetentes que o sistema não reconheceu.</p>
+
+      <h2 id="responder" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">Como respondo ao cliente?</h2>
+      <p style="margin:0 0 12px;">Pelo histórico do próprio chamado, à direita. São dois botões, e a diferença é tudo:</p>
+      <div class="tablewrap" style="overflow-x:auto;margin:0 0 16px;"><table style="border-collapse:collapse;width:100%;margin:0 0 16px;font-size:14px;">
+        <tr><th style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;background:#f1eaf6;font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:13.5px;">Botão</th><th style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;background:#f1eaf6;font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:13.5px;">Para onde vai</th></tr>
+        <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;"><span class="field" style="font-weight:600;color:#251d2b;">Enviar mensagem</span></td>
+            <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Sai por e-mail para o cliente, como resposta na mesma conversa. Vai
+                <strong style="color:#251d2b;">sem moldura de sistema</strong> — sem botão "ver chamado", sem rodapé do
+                Odoo: o cliente recebe um e-mail de gente, que cai na caixa de entrada normal, não
+                na aba de notificações.</td></tr>
+        <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;"><span class="field" style="font-weight:600;color:#251d2b;">Nota de Registro</span></td>
+            <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Fica interna. O cliente nunca vê — é onde a equipe combina o que fazer antes de
+                responder.</td></tr>
+      </table></div>
+      <figure class="shot" style="margin:20px 0 24px;">
+        <img src="img/doc-liber_support-resposta-no-chatter.png" alt="Chamado resolvido com a pergunta do cliente e a resposta da equipe no histórico" style="max-width:100%;display:block;margin:0 auto;border-radius:12px;border:1px solid #e5dbee;">
+        <figcaption style="font-size:13px;color:#5d5266;margin-top:10px;text-align:center;">A conversa inteira mora no chamado: a pergunta que chegou por e-mail, a resposta
+        da equipe — e a <span class="field" style="font-weight:600;color:#251d2b;">Primeira resposta em</span> carimbada no SLA.</figcaption>
+      </figure>
+      <p style="margin:0 0 12px;">A resposta do cliente cai no mesmo chamado, e o chamado reage: se estava em
+      <span class="field" style="font-weight:600;color:#251d2b;">Aguardando cliente</span>, volta para <span class="field" style="font-weight:600;color:#251d2b;">Em
+      andamento</span> — a bola voltou. Se estava fechado, <strong style="color:#251d2b;">reabre</strong>; quando o
+      fechamento é antigo, uma nota interna sugere abrir chamado novo em vez de esticar a conversa
+      velha.</p>
+      <div class="callout" style="border:1px solid #e5dbee;border-left:4px solid #6e2f91;border-radius:10px;background:#f1eaf6;padding:14px 18px;margin:0 0 16px;">A primeira mensagem visível que alguém da equipe manda é o que para o
+      relógio de primeira resposta. Nota interna não conta — o cliente não a recebeu.</div>
+
+      <h2 id="sla" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">O SLA: dois relógios em horas úteis</h2>
+      <p style="margin:0 0 12px;">Todo chamado nasce com dois prazos, contados no <strong style="color:#251d2b;">calendário de trabalho da
+      equipe</strong> — um e-mail de sexta às 18h não está atrasado no sábado:</p>
+      <div class="tablewrap" style="overflow-x:auto;margin:0 0 16px;"><table style="border-collapse:collapse;width:100%;margin:0 0 16px;font-size:14px;">
+        <tr><th style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;background:#f1eaf6;font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:13.5px;">Relógio</th><th style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;background:#f1eaf6;font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:13.5px;">O que mede</th><th style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;background:#f1eaf6;font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:13.5px;">Padrão (normal / urgente)</th></tr>
+        <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;"><span class="field" style="font-weight:600;color:#251d2b;">Primeira resposta</span></td>
+            <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Do recebimento até a primeira mensagem da equipe ao cliente.</td>
+            <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">8 h úteis / 2 h úteis</td></tr>
+        <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;"><span class="field" style="font-weight:600;color:#251d2b;">Resolução</span></td>
+            <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Do recebimento até o fechamento.</td>
+            <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">24 h úteis / 8 h úteis</td></tr>
+      </table></div>
+      <p style="margin:0 0 12px;">Os alvos são da equipe e mudam com a <span class="field" style="font-weight:600;color:#251d2b;">Prioridade</span>: marcar a estrela
+      de <span class="field" style="font-weight:600;color:#251d2b;">Urgente</span> aperta os dois prazos na hora. Em
+      <span class="field" style="font-weight:600;color:#251d2b;">Aguardando cliente</span> o relógio de resolução congela com as horas que
+      restavam, e volta a correr de onde parou quando o chamado sai de lá.</p>
+      <figure class="shot" style="margin:20px 0 24px;">
+        <img src="img/doc-liber_support-chamado-com-sla.png" alt="Chamado urgente atrasado, com os prazos de primeira resposta e resolução no grupo SLA" style="max-width:100%;display:block;margin:0 auto;border-radius:12px;border:1px solid #e5dbee;">
+        <figcaption style="font-size:13px;color:#5d5266;margin-top:10px;text-align:center;">O grupo SLA do chamado: os dois prazos, o que já foi cumprido — e a etiqueta
+        <span class="field" style="font-weight:600;color:#251d2b;">Atrasado</span> quando algum estourou.</figcaption>
+      </figure>
+      <div class="tablewrap" style="overflow-x:auto;margin:0 0 16px;"><table style="border-collapse:collapse;width:100%;margin:0 0 16px;font-size:14px;">
+        <tr><th style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;background:#f1eaf6;font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:13.5px;">Etiqueta</th><th style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;background:#f1eaf6;font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:13.5px;">Quando</th></tr>
+        <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;"><span class="field" style="font-weight:600;color:#251d2b;">No prazo</span></td><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Nenhum relógio pendente estourou.</td></tr>
+        <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;"><span class="field" style="font-weight:600;color:#251d2b;">Perto do prazo</span></td><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Já se foi 80% do tempo até o prazo mais próximo.</td></tr>
+        <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;"><span class="field" style="font-weight:600;color:#251d2b;">Atrasado</span></td><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Algum prazo passou com o chamado aberto.</td></tr>
+        <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;"><span class="field" style="font-weight:600;color:#251d2b;">Cumprido</span> / <span class="field" style="font-weight:600;color:#251d2b;">Perdido</span></td>
+            <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">O veredito final, congelado no fechamento.</td></tr>
+      </table></div>
+      <p style="margin:0 0 12px;">Uma rotina do sistema reavalia as etiquetas a cada meia hora e, quando um chamado
+      <strong style="color:#251d2b;">vira</strong> atrasado, agenda uma atividade para o responsável — ou para o líder da
+      equipe, se ninguém assumiu. O atraso não fica esperando alguém olhar o quadro.</p>
+      <div class="callout" style="border:1px solid #e5dbee;border-left:4px solid #6e2f91;border-radius:10px;background:#f1eaf6;padding:14px 18px;margin:0 0 16px;">Chamado fechado sem primeira resposta registrada não é perdido por isso:
+      se fechou dentro do prazo, o próprio fechamento respondeu ao cliente.</div>
+
+      <h2 id="equipes" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">Equipes: a caixa, o calendário e os alvos</h2>
+      <p style="margin:0 0 12px;">Em <span class="menupath" style="display:inline-block;background:#f1eaf6;border:1px solid #e5dbee;border-radius:6px;padding:1px 8px;font-size:13.5px;color:#251d2b;white-space:nowrap;">Atendimento<i style="font-style:normal;color:#6e2f91;margin:0 4px;font-weight:700;">‣</i>Configuração<i style="font-style:normal;color:#6e2f91;margin:0 4px;font-weight:700;">‣</i>Equipes</span>. Uma equipe por
+      caixa de e-mail — numa casa com mais de uma editora, cada caixa comercial é uma equipe, e o
+      chamado nasce na empresa certa. Na ficha da equipe moram:</p>
+      <div class="tablewrap" style="overflow-x:auto;margin:0 0 16px;"><table style="border-collapse:collapse;width:100%;margin:0 0 16px;font-size:14px;">
+        <tr><th style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;background:#f1eaf6;font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:13.5px;">Campo</th><th style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;background:#f1eaf6;font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:13.5px;">Para quê</th></tr>
+        <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;"><span class="field" style="font-weight:600;color:#251d2b;">Alias de e-mail</span></td>
+            <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">O endereço que cria chamados. Aceita remetente desconhecido de propósito: cliente
+                novo não pode ser devolvido pela porta.</td></tr>
+        <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;"><span class="field" style="font-weight:600;color:#251d2b;">Empresa</span></td>
+            <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">A editora dona da caixa — é nela que os chamados desta equipe nascem.</td></tr>
+        <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;"><span class="field" style="font-weight:600;color:#251d2b;">Líder</span> e <span class="field" style="font-weight:600;color:#251d2b;">Membros</span></td>
+            <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">O líder recebe o aviso de atraso dos chamados sem responsável.</td></tr>
+        <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;"><span class="field" style="font-weight:600;color:#251d2b;">Horas de trabalho</span></td>
+            <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">O calendário em que os prazos contam.</td></tr>
+        <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;"><span class="field" style="font-weight:600;color:#251d2b;">SLA (horas úteis)</span></td>
+            <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Os quatro alvos: primeira resposta e resolução, normal e urgente.</td></tr>
+      </table></div>
+      <p style="margin:0 0 12px;">Ainda na configuração, <span class="field" style="font-weight:600;color:#251d2b;">Estágios</span> e
+      <span class="field" style="font-weight:600;color:#251d2b;">Etiquetas</span> valem para todas as equipes — três caixas, um fluxo só.</p>
+
+      <h2 id="pedido" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">O vínculo com o pedido</h2>
+      <p style="margin:0 0 12px;">A conversa que é sobre um pedido fica amarrada a ele. No chamado, o campo
+      <span class="field" style="font-weight:600;color:#251d2b;">Pedido</span> aparece quando o tipo é venda; no pedido, o botão
+      inteligente <span class="field" style="font-weight:600;color:#251d2b;">Atendimento</span> conta e abre os chamados daquele documento
+      — e o botão do cabeçalho abre um chamado novo, já preenchido com o cliente e o pedido.
+      É assim que a ligação de telefone vira registro sem digitação.</p>
+
+      <div class="callout" style="border:1px solid #e5dbee;border-left:4px solid #6e2f91;border-radius:10px;background:#f1eaf6;padding:14px 18px;margin:0 0 16px;">Quem vê o Atendimento: a equipe comercial (que atende) e a gerência (que
+      também configura equipes, estágios e alvos de SLA). A conta de visitante não vê chamado
+      nenhum — atendimento é conversa de cliente, não vitrine.</div><p style="margin:28px 0 0;padding-top:14px;border-top:1px solid #e5dbee;font-size:13px;color:#5d5266;">Manual completo, com busca e as demais páginas: <a href="/liber_site/static/docs/liber_support.html" target="_blank" rel="noopener" style="color:#6e2f91;">Atendimento</a>.</p></div>

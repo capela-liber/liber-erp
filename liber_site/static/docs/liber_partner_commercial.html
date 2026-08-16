@@ -71,6 +71,13 @@
 
       <h2 id="ficha">O canal na ficha do cliente</h2>
       <p>O campo <span class="field">Canal de Vendas</span> fica no formulário do contato, logo abaixo do <span class="field">Vendedor</span> — são a mesma pergunta ("por onde este cliente é atendido"), e ficam juntas para ninguém preencher uma e esquecer a outra.</p>
+      <figure class="shot">
+        <img src="img/doc-liber_partner_commercial-cliente-canal-de-vendas.png"
+             alt="Ficha de uma distribuidora com o campo Canal de Vendas preenchido na aba Vendas e Compras">
+        <figcaption>A ficha do cliente, aba <span class="field">Vendas e Compras</span>: o
+        <span class="field">Canal de Vendas</span> logo abaixo do Vendedor — é aqui que se diz que a
+        Catavento é atendida pelo canal Livrarias.</figcaption>
+      </figure>
       <div class="tablewrap"><table>
         <thead><tr><th>Onde</th><th>Como se usa</th></tr></thead>
         <tbody>
@@ -84,6 +91,13 @@
 
       <h2 id="grade">Arrumar a lista de canais</h2>
       <p>A tela <span class="field">Vendas › Configuração › Canais de Vendas</span> abre em lista editável, com as colunas que se precisa preencher ao organizar o comercial:</p>
+      <figure class="shot">
+        <img src="img/doc-liber_partner_commercial-canais-de-vendas.png"
+             alt="Menu Vendas, Configuração aberto no item Canais de Vendas, com a lista de canais atrás">
+        <figcaption>O caminho renomeado — <span class="field">Vendas › Configuração › Canais de
+        Vendas</span> — e, atrás do menu, a lista editável: um canal por linha, a coluna
+        <span class="field">Empresa</span> vazia de propósito e os vendedores de cada um.</figcaption>
+      </figure>
       <div class="tablewrap"><table>
         <thead><tr><th>Coluna</th><th>Para que serve</th></tr></thead>
         <tbody>
@@ -120,6 +134,13 @@
         </tbody>
       </table></div>
       <p>Por isso a opção é ligada na instalação, e não deixada como preferência. Ligada, o Odoo devolve o preço de tabela ao preço unitário e o percentual ao campo próprio, no pedido e na fatura.</p>
+      <figure class="shot">
+        <img src="img/doc-liber_partner_commercial-pedido-com-desconto.png"
+             alt="Pedido de venda com as linhas mostrando preço unitário de tabela e a coluna de desconto em 30%">
+        <figcaption>O pedido com a opção ligada: o preço de tabela na coluna
+        <span class="field">Preço unitário</span> e os 30% na coluna própria — o número que o
+        royalty, a venda especial e o vDesc da NF-e leem.</figcaption>
+      </figure>
       <div class="callout warn"><span class="title">Não desligue a opção "Descontos"</span><p>Desligá-la em <span class="field">Vendas › Configuração › Ajustes</span> não dá erro nem aviso: os três cálculos acima simplesmente passam a usar números errados, em silêncio. Uma atualização do módulo religa a opção.</p></div>
       <p>A coluna <span class="field">Desc.%</span> do pedido acende sozinha com a opção. A da fatura não — ela nasce escondida no Odoo, independentemente de qualquer configuração, e a fatura mostrava Preço e Valor sem nada entre os dois, exatamente onde o desconto deveria estar. O módulo a acende. Todas as colunas continuam no seletor, e quem já ajustou o seu mantém a escolha.</p>
 

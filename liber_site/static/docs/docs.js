@@ -44,6 +44,9 @@ var DOCS = [
   { area: "Comercial", desc: "Como a editora classifica quem compra, e o que essa classificação decide.", items: [
     { slug: "liber_partner_commercial", title: "Canal de vendas do cliente", desc: "A classificação comercial na ficha, herdada pelos documentos — e o desconto que não se dilui no preço." },
   ]},
+  { area: "Atendimento", desc: "A conversa com o cliente dentro do sistema — quem escreveu, quem responde, e em quanto tempo.", items: [
+    { slug: "liber_support", title: "Atendimento ao cliente", desc: "O e-mail da caixa comercial vira chamado, a triagem vira quadro e o prazo vira relógio em horas úteis." },
+  ]},
   { area: "Gestão", desc: "Orçamento e controle de acesso.", items: [
     { slug: "liber_budget", title: "Orçamento", desc: "Orçado × realizado sobre a contabilidade analítica." },
     { slug: "liber_roles", title: "Papéis de acesso", desc: "Perfis prontos por área e a conta de visitante somente-leitura." },

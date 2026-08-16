@@ -12,7 +12,7 @@ URLs das páginas (site publicado ou instância local):
 - Local: `http://localhost:8069/liber_site/static/docs/<página>`
 - Índice: `http://localhost:8069/liber_site/static/docs/index.html`
 
-Total de capturas: 49 · Feitas: marque a caixa ao concluir.
+Total de capturas: 55 · Feitas: marque a caixa ao concluir.
 
 
 ## Acordos de consignação — `liber_soc_agreements.html`
@@ -257,6 +257,36 @@ Página: `/liber_site/static/docs/liber_metabrasil.html`
 - [ ] **`doc-liber_metabrasil-frete.png`**
   - O que capturar: Janela "Adicionar envio" com a forma de entrega Dropship, depois de "Obter preço": o campo Transportadora preenchido e, abaixo, a lista das transportadoras cotadas com preço e prazo
   - Legenda no manual: Tudo que a gráfica cotou para aquele CEP, numa lista: a regra da forma de entrega pré-seleciona uma, e a escolha é sua.
+
+
+## Canal de vendas do cliente — `liber_partner_commercial.html`
+
+Página: `/liber_site/static/docs/liber_partner_commercial.html`
+
+- [x] **`doc-liber_partner_commercial-cliente-canal-de-vendas.png`**
+  - O que capturar: Ficha de uma distribuidora, aba Vendas e Compras, com o campo Canal de Vendas preenchido logo abaixo do Vendedor
+  - Legenda no manual: A ficha do cliente, aba Vendas e Compras: o Canal de Vendas logo abaixo do Vendedor — é aqui que se diz que a Catavento é atendida pelo canal Livrarias.
+- [x] **`doc-liber_partner_commercial-canais-de-vendas.png`**
+  - O que capturar: Menu Vendas ‣ Configuração aberto mostrando o item Canais de Vendas, com a lista editável de canais atrás (colunas Empresa e Vendedores)
+  - Legenda no manual: O caminho renomeado — Vendas › Configuração › Canais de Vendas — e, atrás do menu, a lista editável: um canal por linha, a coluna Empresa vazia de propósito e os vendedores de cada um.
+- [x] **`doc-liber_partner_commercial-pedido-com-desconto.png`**
+  - O que capturar: Pedido de venda com linhas mostrando o preço de tabela na coluna Preço unitário e a coluna de desconto com 30%
+  - Legenda no manual: O pedido com a opção ligada: o preço de tabela na coluna Preço unitário e os 30% na coluna própria — o número que o royalty, a venda especial e o vDesc da NF-e leem.
+
+
+## Atendimento ao cliente — `liber_support.html`
+
+Página: `/liber_site/static/docs/liber_support.html`
+
+- [x] **`doc-liber_support-kanban-chamados.png`**
+  - O que capturar: Quadro de chamados com as colunas Novo, Em andamento, Aguardando cliente e Aguardando interno, cartões com as etiquetas de SLA nas três cores
+  - Legenda no manual: O quadro de triagem: cada cartão diz quem escreveu, o tipo do assunto e a cor do prazo — No prazo, Perto do prazo ou Atrasado.
+- [x] **`doc-liber_support-chamado-com-sla.png`**
+  - O que capturar: Chamado urgente atrasado, com o grupo SLA mostrando os prazos de primeira resposta e resolução e a etiqueta Atrasado
+  - Legenda no manual: O grupo SLA do chamado: os dois prazos, o que já foi cumprido — e a etiqueta Atrasado quando algum estourou.
+- [x] **`doc-liber_support-resposta-no-chatter.png`**
+  - O que capturar: Chamado resolvido com a pergunta do cliente e a resposta da equipe no histórico, e a Primeira resposta em preenchida
+  - Legenda no manual: A conversa inteira mora no chamado: a pergunta que chegou por e-mail, a resposta da equipe — e a Primeira resposta em carimbada no SLA.
 
 
 ## Transportadora e coleta — `liber_transport.html`

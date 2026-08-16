@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<script>
+/* Servido por /liber_site/static/docs/, este arquivo vem com uma semana de
+   cache e o docs.js sem versão -- e o índice monta a lista a partir dele. Foi
+   assim que a emissão de NF-e e o manual da Amazon ficaram invisíveis: o
+   catálogo em cache era anterior aos dois. A rota /liber/docs/ serve o mesmo
+   arquivo sem cache e com ?v=<mtime> nos assets. Quem chegar pelo caminho
+   antigo (favorito, link velho, resultado de busca) vai para lá antes de a
+   página montar qualquer coisa. */
+(function () {
+  var antigo = "/liber_site/static/docs/";
+  if (location.pathname.indexOf(antigo) === 0) {
+    location.replace("/liber/docs/" + location.pathname.slice(antigo.length) +
+                     location.search + location.hash);
+  }
+})();
+</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Atendimento — Manuais do Liber</title>
+<link rel="icon" type="image/png" href="../logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;600;700&display=swap">
+<link rel="stylesheet" href="docs.css">
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="../index.html"><img src="../logo.png" alt="">liber<span>.</span></a>
+    <span class="doc-tag">Manuais</span>
+    <nav><a href="index.html">Índice</a><a href="../index.html">Site</a></nav>
+  </div>
+</header>
+<div class="wrap">
+  <div class="layout">
+    <aside class="sidebar" id="sidebar"></aside>
+    <article class="doc">
+      <div class="breadcrumb"><a href="index.html">Manuais</a><span class="sep">›</span>Atendimento<span class="sep">›</span>Atendimento ao cliente</div>
+      <h1>Atendimento ao cliente</h1>
+      <p class="lead">O e-mail que a livraria manda para a caixa comercial vira um chamado numerado,
+      num quadro que a equipe inteira enxerga. A resposta sai dali mesmo — e chega ao cliente como
+      um e-mail de gente, não como notificação de sistema. Dois relógios em horas úteis dizem o que
+      está no prazo e o que precisa de socorro.</p>
+
+      <h2 id="de-onde-vem">De onde vem um chamado?</h2>
+      <p>De dois lugares. O principal é o <strong>e-mail</strong>: cada caixa comercial da casa é o
+      endereço de uma equipe, e toda mensagem que chega nela cria um chamado
+      <span class="field">AT/2026/00001</span> na empresa daquela equipe — com o assunto, o texto e o
+      remetente guardados. O segundo é o <strong>telefone</strong>: quem atendeu uma ligação sobre um
+      pedido abre o chamado pelo botão <span class="field">Atendimento</span> no cabeçalho do próprio
+      pedido, e ele já nasce ligado ao cliente e ao documento.</p>
+      <p>Na chegada por e-mail, o sistema faz três amarrações sozinho — e só as seguras:</p>
+      <div class="tablewrap"><table>
+        <tr><th>O que preenche</th><th>Como decide</th></tr>
+        <tr><td><span class="field">Parceiro</span></td>
+            <td>Só quando o e-mail do remetente pertence a <strong>um único</strong> contato da base.
+                Havendo dois com o mesmo e-mail — e há milhares assim no cadastro —, o campo fica
+                vazio: ligar à livraria errada é pior do que não ligar.</td></tr>
+        <tr><td><span class="field">Tipo</span></td>
+            <td>Adivinhado pelas palavras do assunto e do texto: "envio de livros" vira Envio,
+                "acerto" vira Acerto/Devolução, "boleto" vira Cobrança, e assim por diante. É um
+                palpite para ordenar a fila — quem triar corrige num clique.</td></tr>
+        <tr><td><span class="field">Empresa</span> e <span class="field">Equipe</span></td>
+            <td>Vêm da caixa que recebeu: escrever para a caixa de uma editora põe o chamado na
+                equipe e na empresa dela.</td></tr>
+      </table></div>
+      <div class="callout">O e-mail do remetente fica guardado sempre, mesmo sem parceiro
+      identificado — a resposta sai para ele de qualquer forma.</div>
+
+      <h2 id="triagem">A triagem no quadro</h2>
+      <p>Em <span class="menupath">Atendimento<i>‣</i>Chamados</span>, cada coluna é um estágio e cada
+      cartão é uma conversa: quem escreveu, o número, o assunto, o tipo, a etiqueta de SLA e o
+      responsável. Triar é arrastar o cartão — ou abrir o chamado e clicar no estágio na barra de
+      cima.</p>
+      <figure class="shot">
+        <img src="img/doc-liber_support-kanban-chamados.png"
+             alt="Quadro de chamados com colunas Novo, Em andamento, Aguardando cliente e Aguardando interno">
+        <figcaption>O quadro de triagem: cada cartão diz quem escreveu, o tipo do assunto e a cor do
+        prazo — <span class="field">No prazo</span>, <span class="field">Perto do prazo</span> ou
+        <span class="field">Atrasado</span>.</figcaption>
+      </figure>
+      <div class="tablewrap"><table>
+        <tr><th>Estágio</th><th>O que significa</th></tr>
+        <tr><td><span class="field">Novo</span></td>
+            <td>Chegou e ninguém assumiu. O botão <span class="field">Assumir</span>, no chamado,
+                põe seu nome e já move para Em andamento.</td></tr>
+        <tr><td><span class="field">Em andamento</span></td>
+            <td>Alguém está cuidando. É para cá que o chamado volta sozinho quando o cliente
+                responde.</td></tr>
+        <tr><td><span class="field">Aguardando cliente</span></td>
+            <td>A bola está com o cliente — perguntamos algo e esperamos. O relógio de resolução
+                <strong>pausa</strong> aqui.</td></tr>
+        <tr><td><span class="field">Aguardando interno</span></td>
+            <td>Depende de alguém da casa (fiscal, logística). O relógio <strong>continua
+                correndo</strong>: o cliente não tem culpa da mesa interna demorar.</td></tr>
+        <tr><td><span class="field">Resolvido</span> / <span class="field">Fechado</span></td>
+            <td>Terminou. A data de fechamento é carimbada e o veredito do SLA congela:
+                <span class="field">Cumprido</span> ou <span class="field">Perdido</span>.</td></tr>
+        <tr><td><span class="field">Spam</span></td>
+            <td>A caixa aceita remetente desconhecido de propósito — livraria nova escreve pela
+                primeira vez —, então entra lixo. Lixo se arrasta para cá; não se apaga.</td></tr>
+      </table></div>
+      <p>Na busca, os filtros prontos fazem a rotina: <span class="field">Meus chamados</span>,
+      <span class="field">Não atribuídos</span>, <span class="field">Abertos</span>,
+      <span class="field">Atrasados</span>, <span class="field">Urgentes</span> e
+      <span class="field">Sem parceiro</span> — este último é a fila de amarração pendente, dos
+      remetentes que o sistema não reconheceu.</p>
+
+      <h2 id="responder">Como respondo ao cliente?</h2>
+      <p>Pelo histórico do próprio chamado, à direita. São dois botões, e a diferença é tudo:</p>
+      <div class="tablewrap"><table>
+        <tr><th>Botão</th><th>Para onde vai</th></tr>
+        <tr><td><span class="field">Enviar mensagem</span></td>
+            <td>Sai por e-mail para o cliente, como resposta na mesma conversa. Vai
+                <strong>sem moldura de sistema</strong> — sem botão "ver chamado", sem rodapé do
+                Odoo: o cliente recebe um e-mail de gente, que cai na caixa de entrada normal, não
+                na aba de notificações.</td></tr>
+        <tr><td><span class="field">Nota de Registro</span></td>
+            <td>Fica interna. O cliente nunca vê — é onde a equipe combina o que fazer antes de
+                responder.</td></tr>
+      </table></div>
+      <figure class="shot">
+        <img src="img/doc-liber_support-resposta-no-chatter.png"
+             alt="Chamado resolvido com a pergunta do cliente e a resposta da equipe no histórico">
+        <figcaption>A conversa inteira mora no chamado: a pergunta que chegou por e-mail, a resposta
+        da equipe — e a <span class="field">Primeira resposta em</span> carimbada no SLA.</figcaption>
+      </figure>
+      <p>A resposta do cliente cai no mesmo chamado, e o chamado reage: se estava em
+      <span class="field">Aguardando cliente</span>, volta para <span class="field">Em
+      andamento</span> — a bola voltou. Se estava fechado, <strong>reabre</strong>; quando o
+      fechamento é antigo, uma nota interna sugere abrir chamado novo em vez de esticar a conversa
+      velha.</p>
+      <div class="callout">A primeira mensagem visível que alguém da equipe manda é o que para o
+      relógio de primeira resposta. Nota interna não conta — o cliente não a recebeu.</div>
+
+      <h2 id="sla">O SLA: dois relógios em horas úteis</h2>
+      <p>Todo chamado nasce com dois prazos, contados no <strong>calendário de trabalho da
+      equipe</strong> — um e-mail de sexta às 18h não está atrasado no sábado:</p>
+      <div class="tablewrap"><table>
+        <tr><th>Relógio</th><th>O que mede</th><th>Padrão (normal / urgente)</th></tr>
+        <tr><td><span class="field">Primeira resposta</span></td>
+            <td>Do recebimento até a primeira mensagem da equipe ao cliente.</td>
+            <td>8 h úteis / 2 h úteis</td></tr>
+        <tr><td><span class="field">Resolução</span></td>
+            <td>Do recebimento até o fechamento.</td>
+            <td>24 h úteis / 8 h úteis</td></tr>
+      </table></div>
+      <p>Os alvos são da equipe e mudam com a <span class="field">Prioridade</span>: marcar a estrela
+      de <span class="field">Urgente</span> aperta os dois prazos na hora. Em
+      <span class="field">Aguardando cliente</span> o relógio de resolução congela com as horas que
+      restavam, e volta a correr de onde parou quando o chamado sai de lá.</p>
+      <figure class="shot">
+        <img src="img/doc-liber_support-chamado-com-sla.png"
+             alt="Chamado urgente atrasado, com os prazos de primeira resposta e resolução no grupo SLA">
+        <figcaption>O grupo SLA do chamado: os dois prazos, o que já foi cumprido — e a etiqueta
+        <span class="field">Atrasado</span> quando algum estourou.</figcaption>
+      </figure>
+      <div class="tablewrap"><table>
+        <tr><th>Etiqueta</th><th>Quando</th></tr>
+        <tr><td><span class="field">No prazo</span></td><td>Nenhum relógio pendente estourou.</td></tr>
+        <tr><td><span class="field">Perto do prazo</span></td><td>Já se foi 80% do tempo até o prazo mais próximo.</td></tr>
+        <tr><td><span class="field">Atrasado</span></td><td>Algum prazo passou com o chamado aberto.</td></tr>
+        <tr><td><span class="field">Cumprido</span> / <span class="field">Perdido</span></td>
+            <td>O veredito final, congelado no fechamento.</td></tr>
+      </table></div>
+      <p>Uma rotina do sistema reavalia as etiquetas a cada meia hora e, quando um chamado
+      <strong>vira</strong> atrasado, agenda uma atividade para o responsável — ou para o líder da
+      equipe, se ninguém assumiu. O atraso não fica esperando alguém olhar o quadro.</p>
+      <div class="callout">Chamado fechado sem primeira resposta registrada não é perdido por isso:
+      se fechou dentro do prazo, o próprio fechamento respondeu ao cliente.</div>
+
+      <h2 id="equipes">Equipes: a caixa, o calendário e os alvos</h2>
+      <p>Em <span class="menupath">Atendimento<i>‣</i>Configuração<i>‣</i>Equipes</span>. Uma equipe por
+      caixa de e-mail — numa casa com mais de uma editora, cada caixa comercial é uma equipe, e o
+      chamado nasce na empresa certa. Na ficha da equipe moram:</p>
+      <div class="tablewrap"><table>
+        <tr><th>Campo</th><th>Para quê</th></tr>
+        <tr><td><span class="field">Alias de e-mail</span></td>
+            <td>O endereço que cria chamados. Aceita remetente desconhecido de propósito: cliente
+                novo não pode ser devolvido pela porta.</td></tr>
+        <tr><td><span class="field">Empresa</span></td>
+            <td>A editora dona da caixa — é nela que os chamados desta equipe nascem.</td></tr>
+        <tr><td><span class="field">Líder</span> e <span class="field">Membros</span></td>
+            <td>O líder recebe o aviso de atraso dos chamados sem responsável.</td></tr>
+        <tr><td><span class="field">Horas de trabalho</span></td>
+            <td>O calendário em que os prazos contam.</td></tr>
+        <tr><td><span class="field">SLA (horas úteis)</span></td>
+            <td>Os quatro alvos: primeira resposta e resolução, normal e urgente.</td></tr>
+      </table></div>
+      <p>Ainda na configuração, <span class="field">Estágios</span> e
+      <span class="field">Etiquetas</span> valem para todas as equipes — três caixas, um fluxo só.</p>
+
+      <h2 id="pedido">O vínculo com o pedido</h2>
+      <p>A conversa que é sobre um pedido fica amarrada a ele. No chamado, o campo
+      <span class="field">Pedido</span> aparece quando o tipo é venda; no pedido, o botão
+      inteligente <span class="field">Atendimento</span> conta e abre os chamados daquele documento
+      — e o botão do cabeçalho abre um chamado novo, já preenchido com o cliente e o pedido.
+      É assim que a ligação de telefone vira registro sem digitação.</p>
+
+      <div class="callout">Quem vê o Atendimento: a equipe comercial (que atende) e a gerência (que
+      também configura equipes, estágios e alvos de SLA). A conta de visitante não vê chamado
+      nenhum — atendimento é conversa de cliente, não vitrine.</div>
+
+      <nav class="pager" id="pager"></nav>
+    </article>
+  </div>
+</div>
+<script src="docs.js"></script>
+</body>
+</html>
