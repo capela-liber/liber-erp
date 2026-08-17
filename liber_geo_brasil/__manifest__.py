@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 {
     'name': 'Liber Geo Brasil (o mapa que a casa usa)',
-    'version': '19.0.1.1.0',
-    'summary': 'Região "Brasil (UF)" nos gráficos geo, e o card do dashboard por UF',
+    'version': '19.0.1.2.0',
+    'summary': 'Região "Brasil (UF)" nos gráficos geo, e o dashboard de Vendas por UF e por quantidade',
     'description': """
 O mapa-múndi não diz nada para quem vende no Brasil. O card "Top Countries" do
 dashboard de Vendas pintava um país inteiro de azul e deixava a pergunta de pé:
@@ -64,6 +64,20 @@ agrupamento, e essa linha é o `country_id`. Junto vão duas coisas que não sã
   Sem isso a tabela traria de volta a linha sem UF -- a que o mapa ao lado não
   tem como desenhar. Um `country_id = <id>` no domínio, esse fica: filtrar por
   um país e agrupar por UF é exatamente o que a casa quer.
+
+## 4. A coluna "Quant" nas tabelas "Top ..."
+
+O dashboard de Vendas conta pedidos: as tabelas "Top Products", "Top Customers",
+"Top Sales Teams" e "Top Salespeople" têm a medida `order_reference` de
+cabeçalho "Orders". Para uma editora, "3 pedidos" diz menos que "412
+exemplares" -- então a medida de contagem vira a **soma de `product_uom_qty`**,
+de cabeçalho "Quant". O Revenue fica como está. A troca é de leitura, pela
+mesma razão do mapa, e a regra é estreita: só a medida com o cabeçalho
+"Orders", uma só por pivô, e só quando o modelo tem a quantidade para somar.
+Os pivôs de estatística do mesmo dashboard ("so stats") também contam
+`order_reference`, mas sem cabeçalho -- e as células os leem por fórmula
+`PIVOT.VALUE(..., "order_reference", ...)`, que quebraria se a medida mudasse
+de identidade. Esses ficam intactos por construção.
 
 **O que isto NÃO faz**: não mexe no dashboard quando ele é *editado* (a edição
 abre o dado gravado, que segue o do Odoo), e não converte gráfico nenhum fora de

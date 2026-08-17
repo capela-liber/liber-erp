@@ -32,6 +32,17 @@ TITULO = 'Top UFs'
 # cliente", que é outra coisa.
 TITULO_PIVO = 'UF'
 
+# A medida de contagem das tabelas "Top ..." do dashboard de Vendas. O core não
+# usa `__count`: ele conta o `order_reference` (a referência ao pedido), com o
+# cabeçalho "Orders" escrito no `userDefinedName`.
+MEDIDA_PEDIDOS = 'order_reference'
+ROTULO_PEDIDOS = 'Orders'
+
+# O que entra no lugar: a QUANTIDADE vendida, somada. Para uma editora, "3
+# pedidos" diz menos que "412 exemplares".
+CAMPO_QUANTIDADE = 'product_uom_qty'
+ROTULO_QUANT = 'Quant'
+
 
 class SpreadsheetDashboard(models.Model):
     """O mapa do dashboard é o do Brasil, e a divisão é a UF do cliente.
@@ -48,10 +59,11 @@ class SpreadsheetDashboard(models.Model):
         serializado = super()._get_serialized_readonly_dashboard()
         dados = json.loads(serializado)
         snapshot = dados.get('snapshot') or {}
-        # As duas trocas são independentes, e as duas têm de acontecer: sem a
-        # lista, `or` de curto-circuito deixaria os pivôs por país quando o
-        # gráfico já tivesse mudado.
-        mudou = [self._brasilizar_planilha(snapshot), self._brasilizar_pivos(snapshot)]
+        # As trocas são independentes, e todas têm de acontecer: sem a lista,
+        # `or` de curto-circuito deixaria os pivôs por país quando o gráfico já
+        # tivesse mudado.
+        mudou = [self._brasilizar_planilha(snapshot), self._brasilizar_pivos(snapshot),
+                 self._quantificar_pivos(snapshot)]
         if any(mudou):
             return json.dumps(dados)
         return serializado
@@ -164,3 +176,70 @@ class SpreadsheetDashboard(models.Model):
         if not modelo or modelo not in self.env:
             return False
         return CAMPO_UF in self.env[modelo]._fields
+
+    # ------------------------------------------------------- a coluna "Quant"
+    def _quantificar_pivos(self, snapshot):
+        """A coluna "Orders" das tabelas "Top ..." vira a quantidade vendida.
+
+        O dashboard de Vendas conta pedidos: as tabelas "Top Products", "Top
+        Customers", "Top Sales Teams" etc. têm a medida `order_reference` de
+        cabeçalho "Orders". Para uma editora, "3 pedidos" diz menos que "412
+        exemplares" -- então a medida passa a ser a SOMA de `product_uom_qty`,
+        de cabeçalho "Quant". A troca é de leitura, como a do mapa, e pela
+        mesma razão: o registro não é `noupdate` e um upgrade do core apagaria
+        a edição. O Revenue fica como está.
+        """
+        mudou = False
+        for pivo in (snapshot.get('pivots') or {}).values():
+            if self._quantificar_pivo(pivo):
+                mudou = True
+        return mudou
+
+    def _quantificar_pivo(self, pivo):
+        """Só a medida de contagem de cabeçalho "Orders", e uma só.
+
+        A regra é estreita como a da UF, e aqui a estreiteza tem um motivo a
+        mais: os pivôs de estatística do mesmo dashboard ("so stats") também
+        contam `order_reference`, mas SEM `userDefinedName` -- e as células os
+        leem por fórmula, `PIVOT.VALUE(11, "order_reference", ...)`, que
+        quebraria se a medida mudasse de identidade. Exigir o cabeçalho
+        "Orders" deixa esses de fora por construção. As tabelas "Top ...", ao
+        contrário, saem de uma fórmula `PIVOT(...)` inteira, que desenha as
+        medidas que o pivô tiver, com o `userDefinedName` de cabeçalho -- ali a
+        troca é segura, porque célula nenhuma menciona a medida pelo nome.
+        """
+        if not isinstance(pivo, dict):
+            return False
+        medidas = pivo.get('measures')
+        if not isinstance(medidas, list):
+            return False
+        if not self._modelo_sabe_a_quantidade(pivo.get('model')):
+            return False
+        alvos = [medida for medida in medidas if self._e_medida_de_pedidos(medida)]
+        if len(alvos) != 1:
+            return False
+        # Pivô que JÁ soma a quantidade ao lado da contagem é de alguém que
+        # quis as duas colunas -- e a troca criaria uma medida duplicada.
+        if any(isinstance(medida, dict)
+               and CAMPO_QUANTIDADE in (medida.get('id'), medida.get('fieldName'))
+               for medida in medidas):
+            return False
+
+        alvo = alvos[0]
+        alvo['id'] = CAMPO_QUANTIDADE
+        alvo['fieldName'] = CAMPO_QUANTIDADE
+        alvo['aggregator'] = 'sum'
+        alvo['userDefinedName'] = ROTULO_QUANT
+        return True
+
+    @staticmethod
+    def _e_medida_de_pedidos(medida):
+        return (isinstance(medida, dict)
+                and medida.get('fieldName') == MEDIDA_PEDIDOS
+                and medida.get('userDefinedName') == ROTULO_PEDIDOS)
+
+    def _modelo_sabe_a_quantidade(self, modelo):
+        """O modelo do pivô existe e tem a quantidade vendida para somar."""
+        if not modelo or modelo not in self.env:
+            return False
+        return CAMPO_QUANTIDADE in self.env[modelo]._fields
