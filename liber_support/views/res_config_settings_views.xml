@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="res_config_settings_view_form_support" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.liber.support</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="base.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form" position="inside">
+                <app data-string="Support" string="Support"
+                     name="liber_support">
+                    <block title="SLA Defaults" name="support_sla_defaults">
+                        <setting id="support_sla_defaults_setting"
+                                 string="SLA targets for new teams (working hours)"
+                                 help="Company defaults a NEW team is born with. Each team keeps its own four targets on its form; changing these numbers never rewrites an existing team.">
+                            <div class="content-group">
+                                <!-- Labels written in pt_BR at source on purpose:
+                                     Odoo translates the <setting> string/help
+                                     attributes from the .po but NOT loose <span>
+                                     text in this settings view, so a pt_BR.po
+                                     entry for these would never land. -->
+                                <div class="row">
+                                    <span class="col-lg-5 o_form_label">Primeira resposta — normal</span>
+                                    <field name="support_sla_response_hours_normal"
+                                           class="col-lg-2"/>
+                                    <span class="col-lg-2 o_form_label">h úteis</span>
+                                </div>
+                                <div class="row">
+                                    <span class="col-lg-5 o_form_label">Primeira resposta — urgente</span>
+                                    <field name="support_sla_response_hours_urgent"
+                                           class="col-lg-2"/>
+                                    <span class="col-lg-2 o_form_label">h úteis</span>
+                                </div>
+                                <div class="row">
+                                    <span class="col-lg-5 o_form_label">Resolução — normal</span>
+                                    <field name="support_sla_resolution_hours_normal"
+                                           class="col-lg-2"/>
+                                    <span class="col-lg-2 o_form_label">h úteis</span>
+                                </div>
+                                <div class="row">
+                                    <span class="col-lg-5 o_form_label">Resolução — urgente</span>
+                                    <field name="support_sla_resolution_hours_urgent"
+                                           class="col-lg-2"/>
+                                    <span class="col-lg-2 o_form_label">h úteis</span>
+                                </div>
+                            </div>
+                        </setting>
+                    </block>
+                </app>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="action_support_config_settings" model="ir.actions.act_window">
+        <field name="name">Settings</field>
+        <field name="res_model">res.config.settings</field>
+        <field name="view_mode">form</field>
+        <field name="target">current</field>
+        <field name="context">{'module': 'liber_support'}</field>
+    </record>
+
+</odoo>

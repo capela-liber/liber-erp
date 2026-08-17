@@ -990,3 +990,103 @@ msgstr "ex.: edlab.press"
 #: model_terms:ir.ui.view,arch_db:liber_support.view_sale_order_form_support
 msgid "Open Ticket"
 msgstr "Atendimento"
+
+#. module: liber_support
+#: model:ir.actions.act_window,name:liber_support.action_support_config_settings
+#: model:ir.ui.menu,name:liber_support.menu_support_settings
+msgid "Settings"
+msgstr "Definições"
+
+#. module: liber_support
+#: model_terms:ir.ui.view,arch_db:liber_support.res_config_settings_view_form_support
+msgid "SLA Defaults"
+msgstr "Padrões de SLA"
+
+#. module: liber_support
+#: model_terms:ir.ui.view,arch_db:liber_support.res_config_settings_view_form_support
+msgid "SLA targets for new teams (working hours)"
+msgstr "Alvos de SLA para equipe nova (horas úteis)"
+
+#. module: liber_support
+#: model_terms:ir.ui.view,arch_db:liber_support.res_config_settings_view_form_support
+msgid ""
+"Company defaults a NEW team is born with. Each team keeps its own four "
+"targets on its form; changing these numbers never rewrites an existing team."
+msgstr ""
+"Padrões da empresa com que uma equipe NOVA nasce. Cada equipe guarda seus "
+"quatro alvos na própria ficha; mudar estes números nunca reescreve uma "
+"equipe existente."
+
+#. module: liber_support
+#: model:ir.model.fields,help:liber_support.field_res_config_settings__support_sla_response_hours_normal
+msgid ""
+"Working hours a new team gets as the first-response target for normal "
+"tickets. Existing teams are not touched."
+msgstr ""
+"Horas úteis que uma equipe nova recebe como alvo de primeira resposta para "
+"chamados normais. Equipes existentes não são tocadas."
+
+#. module: liber_support
+#: model:ir.model.fields,help:liber_support.field_res_config_settings__support_sla_response_hours_urgent
+msgid ""
+"Working hours a new team gets as the first-response target for urgent "
+"tickets. Existing teams are not touched."
+msgstr ""
+"Horas úteis que uma equipe nova recebe como alvo de primeira resposta para "
+"chamados urgentes. Equipes existentes não são tocadas."
+
+#. module: liber_support
+#: model:ir.model.fields,help:liber_support.field_res_config_settings__support_sla_resolution_hours_normal
+msgid ""
+"Working hours a new team gets as the resolution target for normal tickets. "
+"24 working hours = 3 working days of 8 hours. Existing teams are not "
+"touched."
+msgstr ""
+"Horas úteis que uma equipe nova recebe como alvo de resolução para chamados "
+"normais. 24 horas úteis = 3 dias úteis de 8 horas. Equipes existentes não "
+"são tocadas."
+
+#. module: liber_support
+#: model:ir.model.fields,help:liber_support.field_res_config_settings__support_sla_resolution_hours_urgent
+msgid ""
+"Working hours a new team gets as the resolution target for urgent tickets. "
+"Existing teams are not touched."
+msgstr ""
+"Horas úteis que uma equipe nova recebe como alvo de resolução para chamados "
+"urgentes. Equipes existentes não são tocadas."
+
+#. module: liber_support
+#: model:ir.model.fields,help:liber_support.field_liber_support_team__sla_response_hours_normal
+msgid ""
+"Working hours until the first customer-visible reply, normal priority. New "
+"teams start from the company default in Settings."
+msgstr ""
+"Horas úteis até a primeira mensagem visível ao cliente, prioridade normal. "
+"Equipe nova nasce com o padrão da empresa nas Definições."
+
+#. module: liber_support
+#: model:ir.model.fields,help:liber_support.field_liber_support_team__sla_response_hours_urgent
+msgid ""
+"Working hours until the first customer-visible reply, urgent priority. New "
+"teams start from the company default in Settings."
+msgstr ""
+"Horas úteis até a primeira mensagem visível ao cliente, prioridade urgente. "
+"Equipe nova nasce com o padrão da empresa nas Definições."
+
+#. module: liber_support
+#: model:ir.model.fields,help:liber_support.field_liber_support_team__sla_resolution_hours_normal
+msgid ""
+"Working hours until closing, normal priority. 24 working hours = 3 working "
+"days of 8 hours. New teams start from the company default in Settings."
+msgstr ""
+"Horas úteis até o fechamento, prioridade normal. 24 horas úteis = 3 dias "
+"úteis de 8 horas. Equipe nova nasce com o padrão da empresa nas Definições."
+
+#. module: liber_support
+#: model:ir.model.fields,help:liber_support.field_liber_support_team__sla_resolution_hours_urgent
+msgid ""
+"Working hours until closing, urgent priority. New teams start from the "
+"company default in Settings."
+msgstr ""
+"Horas úteis até o fechamento, prioridade urgente. Equipe nova nasce com o "
+"padrão da empresa nas Definições."

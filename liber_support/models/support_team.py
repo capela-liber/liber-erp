@@ -3,6 +3,15 @@ import ast
 
 from odoo import api, fields, models
 
+# Fallback SLA targets, in working hours — used only while the company
+# default was never saved in Settings (ir.config_parameter empty).
+SLA_FALLBACK = {
+    'sla_response_hours_normal': 8.0,
+    'sla_response_hours_urgent': 2.0,
+    'sla_resolution_hours_normal': 24.0,
+    'sla_resolution_hours_urgent': 8.0,
+}
+
 
 class SupportTeam(models.Model):
     """One team per mailbox. Deliberately tiny: it exists because the alias
@@ -32,17 +41,52 @@ class SupportTeam(models.Model):
         help="SLA deadlines are planned inside these hours — a Friday 6 PM "
              "email must not be late on Saturday.")
 
-    # SLA targets, in working hours. On the team (not in Settings) because
-    # the calendar already lives here and each imprint may differ.
+    # SLA targets, in working hours. The value LIVES on the team (the
+    # calendar already lives here and each imprint may differ); Settings
+    # only holds the company default a NEW team is born with. Editing the
+    # default never rewrites an existing team.
     sla_response_hours_normal = fields.Float(
-        string='First Response (Normal)', default=8.0)
+        string='First Response (Normal)',
+        default=lambda self: self._sla_default(
+            'sla_response_hours_normal'),
+        help="Working hours until the first customer-visible reply, "
+             "normal priority. New teams start from the company default "
+             "in Settings.")
     sla_response_hours_urgent = fields.Float(
-        string='First Response (Urgent)', default=2.0)
+        string='First Response (Urgent)',
+        default=lambda self: self._sla_default(
+            'sla_response_hours_urgent'),
+        help="Working hours until the first customer-visible reply, "
+             "urgent priority. New teams start from the company default "
+             "in Settings.")
     sla_resolution_hours_normal = fields.Float(
-        string='Resolution (Normal)', default=24.0,
-        help="24 working hours = 3 working days of 8 hours.")
+        string='Resolution (Normal)',
+        default=lambda self: self._sla_default(
+            'sla_resolution_hours_normal'),
+        help="Working hours until closing, normal priority. 24 working "
+             "hours = 3 working days of 8 hours. New teams start from "
+             "the company default in Settings.")
     sla_resolution_hours_urgent = fields.Float(
-        string='Resolution (Urgent)', default=8.0)
+        string='Resolution (Urgent)',
+        default=lambda self: self._sla_default(
+            'sla_resolution_hours_urgent'),
+        help="Working hours until closing, urgent priority. New teams "
+             "start from the company default in Settings.")
+
+    @api.model
+    def _sla_default(self, field_name):
+        """Company default from Settings, or the shipped fallback while
+        no default was ever saved (get_param returns False then)."""
+        param = self.env['ir.config_parameter'].sudo().get_param(
+            'liber_support.%s' % field_name)
+        if not param:
+            # get_param answers False when unset — and float(False) is
+            # 0.0, not an error: guard BEFORE converting.
+            return SLA_FALLBACK[field_name]
+        try:
+            return float(param)
+        except ValueError:
+            return SLA_FALLBACK[field_name]
 
     ticket_count = fields.Integer(compute='_compute_ticket_count')
 

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     'name': 'Liber Support',
-    'version': '19.0.0.1.0',
+    'version': '19.0.0.2.0',
     'summary': 'Commercial support desk: email in, kanban triage, basic SLA, '
                'order link',
     'description': """
@@ -48,6 +48,7 @@ O que NÃO faz (de propósito)
         'views/support_ticket_views.xml',
         'views/support_team_views.xml',
         'views/support_stage_views.xml',
+        'views/res_config_settings_views.xml',
         'views/sale_order_views.xml',
         'views/liber_support_menus.xml',
         # por último: a ponte precisa dos grupos daqui já carregados

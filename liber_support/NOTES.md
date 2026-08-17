@@ -9,6 +9,10 @@ registra só o que o código fez **diferente** do desenho, e por quê.
    trabalho já mora na equipe, e cada selo pode ter prazo próprio — separar
    as horas num `res.config.settings` global obrigaria a escolher um prazo
    só para as três caixas. Quatro campos no formulário da equipe.
+   *Emenda (16/08/2026, pedido do usuário):* as Definições ganharam os
+   **padrões** da empresa (`liber_support.sla_*` em `ir.config_parameter`):
+   equipe **nova** nasce com eles via default; equipe existente nunca é
+   reescrita. O valor vigente continua sendo o da equipe.
 
 2. **Reabertura velha não abre chamado novo.** A regra dos 7 dias virou:
    resposta em chamado fechado **sempre reabre**, e se o fechamento tem mais

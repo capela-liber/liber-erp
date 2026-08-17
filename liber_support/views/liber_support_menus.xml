@@ -20,6 +20,13 @@
               groups="liber_support.group_support_manager"
               sequence="90"/>
 
+    <menuitem id="menu_support_settings"
+              name="Settings"
+              parent="menu_support_config"
+              action="action_support_config_settings"
+              sequence="5"
+              groups="base.group_system"/>
+
     <menuitem id="menu_support_teams"
               name="Teams"
               parent="menu_support_config"
