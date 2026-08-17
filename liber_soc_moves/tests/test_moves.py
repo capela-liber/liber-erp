@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
-"""Tests for consignment moves: the COM/RET flows get their own pickings
-(never WH/OUT), and the Pedido C never reaches invoicing."""
+"""Tests for consignment moves: the COM/MOV and COM/IN flows get their own
+pickings (never WH/OUT), and the Pedido C never reaches invoicing."""
 from odoo import fields
 from odoo.exceptions import UserError
 from odoo.tests import TransactionCase, tagged
@@ -38,7 +38,7 @@ class TestConsignmentMoves(TransactionCase):
             })],
         })
 
-    def test_shipment_uses_rem_picking_to_shelf(self):
+    def test_shipment_uses_com_mov_picking_to_shelf(self):
         self.env["stock.quant"]._update_available_quantity(
             self.product, self.stock_loc, 20)
         move = self._move("shipment")
@@ -49,24 +49,27 @@ class TestConsignmentMoves(TransactionCase):
         self.assertEqual(move.state, "confirmed")
         picking = move.picking_id
         self.assertTrue(picking)
-        # COM/ desde 18/07: REM/ passou ao documento fiscal (nfe_remessa)
-        self.assertTrue(picking.name.startswith("COM/"),
-                        "shipment picking got %r, wanted COM/*" % picking.name)
+        # COM/MOV/ desde o padrão direcional: o fluxo interno de prateleira
+        # tem série própria e não divide mais com a remessa ao cliente
+        self.assertTrue(picking.name.startswith("COM/MOV/"),
+                        "shipment picking got %r, wanted COM/MOV/*"
+                        % picking.name)
         self.assertEqual(picking.location_id, self.stock_loc)
         self.assertEqual(picking.location_dest_id, self.agreement.location_id)
         # validate: stock lands on the shelf
         picking.button_validate()
         self.assertEqual(self.agreement.on_shelf_qty, 10)
 
-    def test_return_uses_ret_picking_from_shelf(self):
+    def test_return_uses_com_in_picking_from_shelf(self):
         self.env["stock.quant"]._update_available_quantity(
             self.product, self.agreement.location_id, 10)
         move = self._move("return", qty=4)
         move.action_confirm()
         move.action_release()
         picking = move.picking_id
-        self.assertTrue(picking.name.startswith("RET/"),
-                        "return picking got %r, wanted RET/*" % picking.name)
+        self.assertTrue(picking.name.startswith("COM/IN/"),
+                        "return picking got %r, wanted COM/IN/*"
+                        % picking.name)
         self.assertEqual(picking.location_id, self.agreement.location_id)
         self.assertEqual(picking.location_dest_id, self.stock_loc)
 

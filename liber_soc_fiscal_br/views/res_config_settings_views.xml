@@ -48,7 +48,7 @@
                 </block>
                 <block title="Consignment Warehouse Operations" name="soc_operation_types">
                     <setting string="Operation types"
-                             help="Consignment has its own warehouse operation types, separate from sales (so the warehouse can prioritise sales). Auto-created on first use: COM/ (shipment) and RET/ (return).">
+                             help="Consignment has its own warehouse operation types, separate from sales (so the warehouse can prioritise sales). Auto-created on first use: COM/OUT (remessa ao cliente), COM/MOV (internal shelf flows) and COM/IN (return). Old bases keep their COM/ and RET/ history untouched.">
                         <field name="consignment_shipment_operation_type_id" options="{'no_create': True}"/>
                         <field name="consignment_return_operation_type_id" options="{'no_create': True}"/>
                     </setting>

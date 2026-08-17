@@ -41,7 +41,7 @@ class TestNotaRemessa(TransactionCase):
         })
 
     def test_journal_created_on_first_use_with_rem_code(self):
-        """REM/ belongs to the fiscal document (consignment moved to COM/)."""
+        """REM/ belongs to the fiscal document (consignment moved to COM/*)."""
         self.assertEqual(self.journal.code, 'REM')
         self.assertEqual(self.journal.type, 'sale')
         self.assertTrue(self.journal.is_remessa)

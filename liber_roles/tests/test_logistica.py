@@ -118,7 +118,7 @@ class TestLogisticaEComercial(TransactionCase):
         """O depósito despacha a remessa -- é literalmente o trabalho dele.
 
         O `action_release` do comercial "entrega para a logística" (o comentário
-        está no código): cria o COM/ e reserva. Validar é do armazém, e sem este
+        está no código): cria o COM/MOV/ e reserva. Validar é do armazém, e sem este
         teste a promessa fica só no comentário.
         """
         self.env['stock.quant']._update_available_quantity(
@@ -207,7 +207,7 @@ class TestLogisticaEComercial(TransactionCase):
         self.assertTrue(cr_move.picking_id,
                         'o comercial confirmou a remessa e nenhum picking '
                         'nasceu')
-        self.assertTrue(cr_move.picking_id.name.startswith('COM/'))
+        self.assertTrue(cr_move.picking_id.name.startswith('COM/MOV/'))
         self.assertEqual(cr_move.state, 'confirmed')
 
     def test_comercial_ainda_valida_o_picking_do_acerto(self):

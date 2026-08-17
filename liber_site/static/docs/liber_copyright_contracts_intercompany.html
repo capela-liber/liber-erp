@@ -121,8 +121,9 @@
         <tr><td><code>CA</code></td><td>Auditoria de consignação: reconstrói o saldo da prateleira do cliente pelas notas fiscais e registra o ajuste — CA00001.</td></tr>
         <tr><td><code>CP/</code></td><td>Campanha de consignação: o sortimento-alvo por canal — quantos exemplares de cada título as prateleiras devem ter — CP/2026/0001.</td></tr>
         <tr><td><code>AC/</code></td><td>Acordo de Consignação: o contrato com a livraria, dono da prateleira — AC/2026/00001.</td></tr>
-        <tr><td><code>COM/</code></td><td>A série das transferências de remessa e entrega de consignação do armazém — COM/2026/00001.</td></tr>
-        <tr><td><code>RET/</code></td><td>A série das transferências de retorno de consignação, da prateleira ao armazém — RET/2026/00001.</td></tr>
+        <tr><td><code>COM/OUT/</code></td><td>A série da remessa de consignação ao cliente, do armazém à livraria — COM/OUT/2026/00001, no espelho do WH/OUT.</td></tr>
+        <tr><td><code>COM/MOV/</code></td><td>A série dos fluxos internos de prateleira da consignação — COM/MOV/2026/00001.</td></tr>
+        <tr><td><code>COM/IN/</code></td><td>A série do retorno de consignação, da prateleira ao armazém — COM/IN/2026/00001, no espelho do WH/IN.</td></tr>
         <tr><td><code>REM/</code></td><td>Remessa: a nota de simples remessa, sem cobrança — a numeração vem do diário fiscal REM.</td></tr>
         <tr><td><code>COL/</code></td><td>Coleta: o lote do pedido de coleta às transportadoras — COL/2026/00001.</td></tr>
         <tr><td><code>AT/</code></td><td>Atendimento: o chamado nascido do e-mail comercial — AT/2026/00001.</td></tr>
@@ -134,6 +135,7 @@
         <tr><td><code>WH/OUT</code></td><td>Entrega comum do armazém: a transferência de saída padrão do Odoo.</td></tr>
         <tr><td><code>WH/IN</code></td><td>Recebimento do armazém: a transferência de entrada padrão do Odoo.</td></tr>
       </table></div>
+      <p>Bases antigas guardam transferências nas séries <code>COM/</code> e <code>RET/</code>, de antes da separação por direção — o histórico não é renumerado.</p>
       <!-- prefixos:end -->
 
       <nav class="pager" id="pager"></nav>

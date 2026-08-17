@@ -11,7 +11,7 @@ class ResCompany(models.Model):
         Mirrors how consignment operation types come to exist: nobody
         configures them, the first document needs one and it appears. Code
         REM -- the fiscal document owns the prefix; consignment logistics
-        moved to COM/.
+        moved to COM/ (today the directional COM/OUT, COM/MOV and COM/IN).
         """
         self.ensure_one()
         journal = self.env['account.journal'].search(

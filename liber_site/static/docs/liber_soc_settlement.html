@@ -152,7 +152,7 @@
           <tr><td><strong>Escalonamento</strong> — 100% (vencido)</td><td>O <abbr class="sigla" title="Retorno de consignação: o documento que pede a devolução dos exemplares da prateleira.">CR</abbr> está vencido: alerta no canal e uma atividade para o <span class="field">Gerente de escalonamento</span> assumir. Etiqueta: <em>Escalado</em>.</td></tr>
         </tbody>
       </table></div>
-      <p>Cada degrau dispara <strong>uma única vez</strong> (rodar a rotina de novo, ou recuperar um dia perdido, não duplica cobrança), e tudo para no momento em que a mercadoria volta (transferência validada) ou o <abbr class="sigla" title="Retorno de consignação: o documento que pede a devolução dos exemplares da prateleira.">CR</abbr> é cancelado. Na lista de <span class="menupath">Consignação<i>‣</i>Devoluções</span>, os filtros <span class="field">Vencidos</span> e <span class="field">Em cobrança</span> e a etiqueta colorida de <span class="field">Estágio da Cobrança</span> mostram a fila de puxadas de relance. Ao liberar o CR para a logística, o prazo combinado vira a data programada da transferência <abbr class="sigla" title="Série das transferências de retorno de consignação, da prateleira ao armazém.">RET</abbr>/ — o armazém também enxerga o prazo.</p>
+      <p>Cada degrau dispara <strong>uma única vez</strong> (rodar a rotina de novo, ou recuperar um dia perdido, não duplica cobrança), e tudo para no momento em que a mercadoria volta (transferência validada) ou o <abbr class="sigla" title="Retorno de consignação: o documento que pede a devolução dos exemplares da prateleira.">CR</abbr> é cancelado. Na lista de <span class="menupath">Consignação<i>‣</i>Devoluções</span>, os filtros <span class="field">Vencidos</span> e <span class="field">Em cobrança</span> e a etiqueta colorida de <span class="field">Estágio da Cobrança</span> mostram a fila de puxadas de relance. Ao liberar o CR para a logística, o prazo combinado vira a data programada da transferência <abbr class="sigla" title="Série histórica do retorno de consignação (hoje COM/IN); bases antigas guardam as transferências RET/.">RET</abbr>/ — o armazém também enxerga o prazo.</p>
       <div class="callout tip"><span class="title">Dica</span><p>Anote no <abbr class="sigla" title="Retorno de consignação: o documento que pede a devolução dos exemplares da prateleira.">CR</abbr> tudo que acontecer ("ligamos, prometeram sexta") — cada nota interna e cada resposta do cliente é replicada no canal <strong>Consignação / Devoluções</strong>, então a conversa inteira de cada puxada fica num lugar só.</p></div>
 
       <h2 id="saude">A saúde de cada título (Ok / Atenção / Crítico / Sem retorno)</h2>
@@ -223,7 +223,7 @@
         <span class="title">Ver também</span>
         <ul>
           <li><a href="liber_soc_agreements.html">Acordos de consignação</a> — o contrato, a lista de preços e o desconto que o acerto herda.</li>
-          <li><a href="liber_soc_moves.html">Remessas e retornos</a> — os documentos <abbr class="sigla" title="Série das transferências de remessa e entrega de consignação do armazém.">COM</abbr>/, <abbr class="sigla" title="Série das transferências de retorno de consignação, da prateleira ao armazém.">RET</abbr>/ e o fluxo do <abbr class="sigla" title="Retorno de consignação: o documento que pede a devolução dos exemplares da prateleira.">CR</abbr> depois do acerto.</li>
+          <li><a href="liber_soc_moves.html">Remessas e retornos</a> — os documentos <abbr class="sigla" title="Série das transferências de consignação do armazém: COM/OUT (remessa ao cliente), COM/MOV (fluxos internos de prateleira) e COM/IN (retorno). Bases antigas guardam histórico COM/ e RET/.">COM</abbr>/OUT/, COM/MOV/, COM/IN/ e o fluxo do <abbr class="sigla" title="Retorno de consignação: o documento que pede a devolução dos exemplares da prateleira.">CR</abbr> depois do acerto.</li>
           <li><a href="liber_soc_fiscal_br.html">Fiscal da consignação</a> — a posição fiscal da venda S e a nota do Pedido C.</li>
           <li><a href="liber_soc_audit.html">Auditoria pelo XML</a> — conferir o mapa contra as notas fiscais importadas.</li>
         </ul>
@@ -240,8 +240,9 @@
         <tr><td><code>CA</code></td><td>Auditoria de consignação: reconstrói o saldo da prateleira do cliente pelas notas fiscais e registra o ajuste — CA00001.</td></tr>
         <tr><td><code>CP/</code></td><td>Campanha de consignação: o sortimento-alvo por canal — quantos exemplares de cada título as prateleiras devem ter — CP/2026/0001.</td></tr>
         <tr><td><code>AC/</code></td><td>Acordo de Consignação: o contrato com a livraria, dono da prateleira — AC/2026/00001.</td></tr>
-        <tr><td><code>COM/</code></td><td>A série das transferências de remessa e entrega de consignação do armazém — COM/2026/00001.</td></tr>
-        <tr><td><code>RET/</code></td><td>A série das transferências de retorno de consignação, da prateleira ao armazém — RET/2026/00001.</td></tr>
+        <tr><td><code>COM/OUT/</code></td><td>A série da remessa de consignação ao cliente, do armazém à livraria — COM/OUT/2026/00001, no espelho do WH/OUT.</td></tr>
+        <tr><td><code>COM/MOV/</code></td><td>A série dos fluxos internos de prateleira da consignação — COM/MOV/2026/00001.</td></tr>
+        <tr><td><code>COM/IN/</code></td><td>A série do retorno de consignação, da prateleira ao armazém — COM/IN/2026/00001, no espelho do WH/IN.</td></tr>
         <tr><td><code>REM/</code></td><td>Remessa: a nota de simples remessa, sem cobrança — a numeração vem do diário fiscal REM.</td></tr>
         <tr><td><code>COL/</code></td><td>Coleta: o lote do pedido de coleta às transportadoras — COL/2026/00001.</td></tr>
         <tr><td><code>AT/</code></td><td>Atendimento: o chamado nascido do e-mail comercial — AT/2026/00001.</td></tr>
@@ -253,6 +254,7 @@
         <tr><td><code>WH/OUT</code></td><td>Entrega comum do armazém: a transferência de saída padrão do Odoo.</td></tr>
         <tr><td><code>WH/IN</code></td><td>Recebimento do armazém: a transferência de entrada padrão do Odoo.</td></tr>
       </table></div>
+      <p>Bases antigas guardam transferências nas séries <code>COM/</code> e <code>RET/</code>, de antes da separação por direção — o histórico não é renumerado.</p>
       <!-- prefixos:end -->
 
       <nav class="pager" id="pager"></nav>

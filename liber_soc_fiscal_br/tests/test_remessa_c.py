@@ -75,8 +75,8 @@ class TestRemessaC(TransactionCase):
             self.company.consignment_delivery_operation_type_id,
             "the delivery must ride the consignment operation type, "
             "not the warehouse's generic %s" % picking.picking_type_id.name)
-        self.assertTrue(picking.name.startswith("COM/"),
-                        "got %r, wanted COM/*" % picking.name)
+        self.assertTrue(picking.name.startswith("COM/OUT/"),
+                        "got %r, wanted COM/OUT/*" % picking.name)
 
     def test_ordinary_sale_keeps_its_generic_delivery(self):
         """The rule must not leak onto real sales."""

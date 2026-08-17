@@ -209,7 +209,7 @@
             (4, ref('base.group_user')),
             (4, ref('stock.group_stock_user')),
         ]"/>
-        <field name="comment">Opera o depósito: recebe, separa, valida entregas e as transferências da consignação (COM/, RET/, ACERTO/), faz contagem. Não vê pedido de venda, cliente, acerto nem número financeiro.</field>
+        <field name="comment">Opera o depósito: recebe, separa, valida entregas e as transferências da consignação (COM/OUT, COM/MOV, COM/IN, ACERTO/), faz contagem. Não vê pedido de venda, cliente, acerto nem número financeiro.</field>
     </record>
 
     <record id="group_logistica_gerente" model="res.groups">

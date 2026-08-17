@@ -26,8 +26,8 @@ class ResCompany(models.Model):
         domain="[('code', '=', 'outgoing')]",
         help="Warehouse operation type for Pedido C deliveries (warehouse -> "
              "customer). A consignment remessa on the generic Delivery Orders "
-             "reads as a sale somebody forgot to invoice; it is not. Shares "
-             "the COM/ numbering with the shelf flows.")
+             "reads as a sale somebody forgot to invoice; it is not. "
+             "Numbered COM/OUT/, its own series.")
 
     def _consignment_warehouse(self):
         self.ensure_one()
@@ -59,7 +59,9 @@ class ResCompany(models.Model):
             'name': name,
             'code': code,
             'sequence_id': seq.id,
-            'sequence_code': prefix.split('/')[0],
+            # 'COM/OUT/%(year)s/' -> 'COM/OUT' (and 'ACERTO/%(year)s/' ->
+            # 'ACERTO'): the sequence_code is the prefix minus the year part.
+            'sequence_code': prefix.replace('/%(year)s/', ''),
             'warehouse_id': warehouse.id if warehouse else False,
             'company_id': self.id,
         })
@@ -69,23 +71,17 @@ class ResCompany(models.Model):
 
         He caught it on the screen: C00003's delivery came out WH/OUT, on the
         warehouse's generic "Pedidos de entrega". A consignment remessa is not
-        a sale delivery -- it needs its own operation type. It shares the COM/
-        sequence with the internal shelf flows: one prefix for consignment
-        logistics, as he named it ("COM, ligado a consig em logística").
+        a sale delivery -- it needs its own operation type. Since the
+        directional redesign it no longer shares a sequence with the shelf
+        flows: the customer-facing remessa is COM/OUT, mirroring the core's
+        WH/OUT; the internal shelf flows keep their own COM/MOV series.
         """
         self.ensure_one()
         if not self.consignment_delivery_operation_type_id:
-            shipment = self._get_consignment_shipment_operation_type()
-            warehouse = self._consignment_warehouse()
             self.sudo().consignment_delivery_operation_type_id = \
-                self.env['stock.picking.type'].sudo().create({
-                    'name': _('Consignment Delivery'),
-                    'code': 'outgoing',
-                    'sequence_id': shipment.sequence_id.id,  # same COM/ numbering
-                    'sequence_code': 'COM',
-                    'warehouse_id': warehouse.id if warehouse else False,
-                    'company_id': self.id,
-                })
+                self._create_consignment_operation_type(
+                    _('Consignment Delivery'), 'COM/OUT/%(year)s/',
+                    'Consignment Delivery Operation', code='outgoing')
         return self.consignment_delivery_operation_type_id
 
     def _get_consignment_shipment_operation_type(self):
@@ -93,11 +89,15 @@ class ResCompany(models.Model):
         if not self.consignment_shipment_operation_type_id:
             self.sudo().consignment_shipment_operation_type_id = \
                 self._create_consignment_operation_type(
-                    # COM/, não mais REM/: o REM/ agora é do documento FISCAL
-                    # de remessa (nfe_remessa) — dois documentos de naturezas
-                    # diferentes não podem dividir um prefixo. Bases antigas
-                    # precisam de UPDATE em ir_sequence + sequence_code.
-                    _('Consignment Shipment'), 'COM/%(year)s/',
+                    # COM/MOV/, seguindo o padrão direcional do core (WH/OUT,
+                    # WH/IN): a remessa ao cliente é COM/OUT, o retorno é
+                    # COM/IN, e os fluxos internos de prateleira ficam em
+                    # COM/MOV -- sequence própria, que não divide mais com a
+                    # remessa. Como no precedente REM->COM, bases antigas
+                    # precisam de UPDATE em ir_sequence + sequence_code: é a
+                    # migração 19.0.2.6.0 (só as séries mudam; documento já
+                    # emitido NUNCA muda de nome).
+                    _('Consignment Shipment'), 'COM/MOV/%(year)s/',
                     'Consignment Shipment Operation')
         return self.consignment_shipment_operation_type_id
 
@@ -106,6 +106,6 @@ class ResCompany(models.Model):
         if not self.consignment_return_operation_type_id:
             self.sudo().consignment_return_operation_type_id = \
                 self._create_consignment_operation_type(
-                    _('Consignment Return'), 'RET/%(year)s/',
+                    _('Consignment Return'), 'COM/IN/%(year)s/',
                     'Consignment Return Operation')
         return self.consignment_return_operation_type_id
