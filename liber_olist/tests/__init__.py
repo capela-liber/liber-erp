@@ -13,3 +13,4 @@ from . import test_invoice
 from . import test_channels
 from . import test_telas
 from . import test_estoque_semeadura
+from . import test_security

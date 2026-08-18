@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Multiempresa: cada empresa só vê o SEU Olist.
+
+         Descoberto em 18/08/2026, testando com gente de verdade: sem estas
+         regras, qualquer usuário interno enxergava contas, espelhos e pedidos
+         de todas as empresas — o grupo roda várias, cada uma com sua conta
+         Olist, e o saldo/venda de um selo não é assunto do outro.
+
+         As regras são globais (sem grupo): valem para todo mundo, inclusive
+         administradores de uma empresa só. Não há escape para company_id
+         vazio de propósito — a conta exige empresa, e os espelhos herdam a
+         dela por related armazenado. -->
+
+    <record id="rule_olist_account_company" model="ir.rule">
+        <field name="name">Conta Olist: multiempresa</field>
+        <field name="model_id" ref="model_olist_account"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="rule_olist_product_company" model="ir.rule">
+        <field name="name">Espelho de produto do Olist: multiempresa</field>
+        <field name="model_id" ref="model_olist_product"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="rule_olist_product_field_company" model="ir.rule">
+        <field name="name">Ficha do produto no Olist: multiempresa</field>
+        <field name="model_id" ref="model_olist_product_field"/>
+        <field name="domain_force">[('mirror_id.company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="rule_olist_order_company" model="ir.rule">
+        <field name="name">Pedido do Olist: multiempresa</field>
+        <field name="model_id" ref="model_olist_order"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="rule_olist_order_line_company" model="ir.rule">
+        <field name="name">Item de pedido do Olist: multiempresa</field>
+        <field name="model_id" ref="model_olist_order_line"/>
+        <field name="domain_force">[('order_id.company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="rule_olist_channel_company" model="ir.rule">
+        <field name="name">Canal do Olist: multiempresa</field>
+        <field name="model_id" ref="model_olist_channel"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+
+</odoo>

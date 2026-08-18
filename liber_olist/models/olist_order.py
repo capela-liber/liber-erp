@@ -151,6 +151,7 @@ class OlistOrder(models.Model):
     state = fields.Selection([
         ('sem_detalhe', "Falta ler o detalhe"),
         ('cancelado', "Cancelado no Olist"),
+        ('anterior_corte', "Anterior ao corte"),
         ('nao_importado', "Não importado"),
         ('importado', "Importado"),
     ], string="Situação", compute='_compute_state', store=True, index=True)
@@ -200,10 +201,12 @@ class OlistOrder(models.Model):
                 pedido.line_ids.filtered(lambda l: not l.product_id))
 
     @api.depends('sale_order_id', 'sale_order_id.amount_total', 'valor',
-                 'situacao', 'detalhe_lido_em')
+                 'situacao', 'detalhe_lido_em', 'data_pedido',
+                 'account_id.order_stock_cutoff')
     def _compute_state(self):
         for pedido in self:
             pedido.divergencia_valor = 0.0
+            corte = pedido.account_id.order_stock_cutoff
             if pedido.sale_order_id:
                 pedido.state = 'importado'
                 pedido.divergencia_valor = (
@@ -212,6 +215,15 @@ class OlistOrder(models.Model):
                 # Cancelado no Olist não é pendência: não se importa, e não
                 # deve ficar pesando na fila do que falta trazer.
                 pedido.state = 'cancelado'
+            elif corte and pedido.data_pedido and pedido.data_pedido < corte:
+                # Anterior ao corte é história, não trabalho: sai da fila
+                # "A importar" e da frente do operador — importar continua
+                # possível (consolidação é ato deliberado, por seleção), e é
+                # por isso que a situação tem nome próprio em vez de sumir num
+                # filtro. Vence até o "falta ler o detalhe": o detalhe desses
+                # é assunto do cron, não de gente. Sem corte na conta, nada é
+                # marcado — o vocabulário só existe onde a operação começou.
+                pedido.state = 'anterior_corte'
             elif not pedido.detalhe_lido_em:
                 pedido.state = 'sem_detalhe'
             else:

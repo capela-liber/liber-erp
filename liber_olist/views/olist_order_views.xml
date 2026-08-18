@@ -8,7 +8,7 @@
             <!-- A tela de conferência do sentido de volta: o que o Olist
                  vendeu, o que já entrou aqui, e por qual canal. -->
             <list string="Pedidos do Olist" multi_edit="0"
-                  decoration-muted="state == 'cancelado'"
+                  decoration-muted="state in ('cancelado', 'anterior_corte')"
                   decoration-info="state == 'sem_detalhe'"
                   decoration-warning="state == 'nao_importado'">
                 <header>
@@ -229,6 +229,9 @@
                         domain="[('state', '=', 'importado')]"/>
                 <filter name="f_cancelado" string="Cancelados"
                         domain="[('state', '=', 'cancelado')]"/>
+                <filter name="f_anterior_corte" string="Anteriores ao corte"
+                        domain="[('state', '=', 'anterior_corte')]"
+                        help="História para consolidação: fora da fila do operador. Importar continua possível — selecione e clique."/>
                 <separator/>
                 <filter name="f_sem_produto" string="Com livro não localizado"
                         domain="[('itens_sem_produto', '&gt;', 0)]"

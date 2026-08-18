@@ -131,8 +131,9 @@ class OlistAccount(models.Model):
              "zero apenas porque os pedidos dele ainda não foram abertos.")
     order_pending_count = fields.Integer(
         "Pedidos a importar", compute='_compute_order_count',
-        help="Pedidos com detalhe lido, não cancelados, que ainda não entraram "
-             "no Odoo.")
+        help="Pedidos com detalhe lido, não cancelados e DENTRO do corte, que "
+             "ainda não entraram no Odoo. Os anteriores ao corte não contam: "
+             "são história para consolidação, não fila de trabalho.")
     channel_ids = fields.One2many('olist.channel', 'account_id',
                                   string="Canais do Olist")
     channel_count = fields.Integer("Canais", compute='_compute_channel_count')

@@ -9,7 +9,8 @@
 
       <h2 id="ligar" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">Como ligo a integração?</h2>
       <p style="margin:0 0 12px;">É uma conta por empresa: cada selo com a sua conta Olist, cada conta apontando para uma
-      empresa do sistema.</p>
+      empresa do sistema. E a cerca vale nos dois sentidos — quem é de uma empresa só vê a conta,
+      o catálogo e os pedidos <em>dela</em>; o Olist do selo vizinho nem aparece.</p>
       <ol class="steps" style="margin:0 0 16px 22px;padding:0;">
         <li style="margin:0 0 7px;">No Olist, em <span class="menupath" style="display:inline-block;background:#f1eaf6;border:1px solid #e5dbee;border-radius:6px;padding:1px 8px;font-size:13.5px;color:#251d2b;white-space:nowrap;">Extensões<i style="font-style:normal;color:#6e2f91;margin:0 4px;font-weight:700;">‣</i>Token API</span>, gere o token da <abbr class="sigla" title="Interface de programação: o canal por onde um sistema conversa com outro." style="text-decoration:none;border-bottom:1px dotted #8a4bad;cursor:help;">API</abbr> v2.</li>
         <li style="margin:0 0 7px;">Aqui, em <span class="menupath" style="display:inline-block;background:#f1eaf6;border:1px solid #e5dbee;border-radius:6px;padding:1px 8px;font-size:13.5px;color:#251d2b;white-space:nowrap;">Olist<i style="font-style:normal;color:#6e2f91;margin:0 4px;font-weight:700;">‣</i>Configurações<i style="font-style:normal;color:#6e2f91;margin:0 4px;font-weight:700;">‣</i>Contas</span>, crie a conta: nome,
@@ -113,6 +114,11 @@
             <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Nada — o agendamento chega lá; ou selecione e <span class="field" style="font-weight:600;color:#251d2b;">Ler detalhe</span>.</td></tr>
         <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;"><span class="field" style="font-weight:600;color:#251d2b;">Não importado</span></td>
             <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Pronto para importar, se todos os livros estiverem casados.</td></tr>
+        <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;"><span class="field" style="font-weight:600;color:#251d2b;">Anterior ao corte</span></td>
+            <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Mais antigo que a data de "Operar pedidos a partir de": é história para
+                consolidação, não fila de trabalho — sai do "A importar" e fica esmaecido.
+                Importar continua possível, selecionando e clicando; entra como registro,
+                e a fatura, se quiser, é decisão sua no <span class="field" style="font-weight:600;color:#251d2b;">Gerar fatura</span>.</td></tr>
         <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;"><span class="field" style="font-weight:600;color:#251d2b;">Livros não localizados</span> &gt; 0</td>
             <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Um item não tem produto casado. O pedido inteiro espera — entrar com menos livros do
                 que teve deixaria o número errado para sempre. Case o livro na

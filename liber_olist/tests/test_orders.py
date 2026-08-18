@@ -860,3 +860,63 @@ class TestOlistOrders(TransactionCase):
         self.assertEqual(acao['params']['type'], 'warning')
         self.assertIn('1 importados', acao['params']['message'])
         self.assertTrue(bom.sale_order_id)
+
+
+@tagged('post_install', '-at_install')
+class TestAnteriorAoCorte(TransactionCase):
+    """O corte tira o pedido antigo dos olhos do operador — com nome.
+
+    A fila "A importar" é lista de trabalho; pedido anterior ao corte é
+    história para consolidação. Ele ganha situação própria (e não um filtro
+    escondido) para o operador ver POR QUE aquele pedido não está na fila.
+    """
+
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.env['olist.account'].search([]).write({'active': False})
+        cls.account = cls.env['olist.account'].create({
+            'name': "Olist Corte", 'company_id': cls.env.company.id,
+            'token': "TOKEN-C", 'read_only': True,
+            'order_stock_cutoff': '2026-08-10'})
+
+    def _pedido(self, olist_id, data, **vals):
+        return self.env['olist.order'].create(dict({
+            'account_id': self.account.id, 'olist_id': olist_id,
+            'numero': olist_id, 'data_pedido': data,
+            'situacao': 'Entregue', 'detalhe_lido_em': '2026-08-18 12:00:00',
+        }, **vals))
+
+    def test_antes_do_corte_sai_da_fila_e_diz_por_que(self):
+        antigo = self._pedido('C-1', '2026-08-01')
+        recente = self._pedido('C-2', '2026-08-12')
+        self.assertEqual(antigo.state, 'anterior_corte')
+        self.assertEqual(recente.state, 'nao_importado')
+        # e o contador da conta (a fila do operador) só vê o recente
+        self.assertEqual(self.account.order_pending_count, 1)
+
+    def test_o_corte_vence_ate_o_falta_ler_detalhe(self):
+        """O detalhe dos antigos é assunto do cron, não de gente: um pedido
+        pré-corte sem detalhe não pode aparecer como pendência de leitura."""
+        sem_detalhe = self._pedido('C-3', '2026-08-01', detalhe_lido_em=False)
+        self.assertEqual(sem_detalhe.state, 'anterior_corte')
+
+    def test_mudar_o_corte_recarimba_o_que_ja_existe(self):
+        pedido = self._pedido('C-4', '2026-08-05')
+        self.assertEqual(pedido.state, 'anterior_corte')
+        self.account.order_stock_cutoff = '2026-08-01'
+        self.assertEqual(pedido.state, 'nao_importado',
+                         "recuar o corte tem de devolver o pedido à fila")
+        self.account.order_stock_cutoff = False
+        self.assertEqual(pedido.state, 'nao_importado',
+                         "sem corte não existe 'anterior ao corte'")
+
+    def test_cancelado_e_importado_nao_viram_anterior(self):
+        """Caso de erro/precedência: cancelado é cancelado, importado é
+        importado — o corte só fala sobre o que ainda não tem destino."""
+        cancelado = self._pedido('C-5', '2026-08-01', situacao='Cancelado')
+        self.assertEqual(cancelado.state, 'cancelado')
+        venda = self.env['sale.order'].create({
+            'partner_id': self.env.company.partner_id.id})
+        importado = self._pedido('C-6', '2026-08-01', sale_order_id=venda.id)
+        self.assertEqual(importado.state, 'importado')
