@@ -185,6 +185,20 @@ class OlistAccount(models.Model):
                     "só.",
                     account.company_id.display_name))
 
+    @api.model_create_multi
+    def create(self, vals_list):
+        """A caixa de despacho nasce JUNTO com a conta, não no primeiro uso.
+
+        O nascimento preguiçoso enganou na primeira olhada: o depósito abriu o
+        Inventário procurando o cartão Marketplaces e ele não existia porque
+        nenhum pedido tinha sido importado ainda. Cartão que só aparece depois
+        do primeiro pacote é cartão que ninguém encontra na hora de procurar.
+        """
+        contas = super().create(vals_list)
+        for conta in contas:
+            conta._marketplace_picking_type()
+        return contas
+
     def _marketplace_picking_type(self):
         """A caixa de despacho do marketplace — get-or-create, no primeiro uso.
 

@@ -67,8 +67,8 @@
             <field name="model_id" ref="model_olist_account"/>
             <field name="state">code</field>
             <field name="code">model.cron_pull_orders()</field>
-            <field name="interval_number">1</field>
-            <field name="interval_type">days</field>
+            <field name="interval_number">2</field>
+            <field name="interval_type">hours</field>
             <field name="nextcall"
                    eval="(DateTime.now() + timedelta(days=1)).strftime('%Y-%m-%d 03:00:00')"/>
             <field name="active" eval="False"/>
@@ -96,8 +96,8 @@
             <field name="model_id" ref="model_olist_order"/>
             <field name="state">code</field>
             <field name="code">model.cron_read_details(minutos=60)</field>
-            <field name="interval_number">1</field>
-            <field name="interval_type">days</field>
+            <field name="interval_number">2</field>
+            <field name="interval_type">hours</field>
             <field name="nextcall"
                    eval="(DateTime.now() + timedelta(days=1)).strftime('%Y-%m-%d 05:00:00')"/>
             <field name="active" eval="True"/>
