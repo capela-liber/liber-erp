@@ -13,8 +13,10 @@ class ResCompany(models.Model):
     consignment_shipment_operation_type_id = fields.Many2one(
         'stock.picking.type', string='Consignment Shipment Operation',
         domain="[('code', '=', 'internal')]",
-        help="Warehouse operation type used for consignment shipments/replenishments "
-             "(warehouse -> customer shelf).")
+        help="Warehouse operation type used for the internal shelf flows "
+             "(warehouse -> customer shelf), numbered COM/MOV. Archived so it "
+             "does not draw a card on the Inventory Overview: the remessa the "
+             "warehouse actually works is the Pedido C's, on COM/OUT.")
     consignment_return_operation_type_id = fields.Many2one(
         'stock.picking.type', string='Consignment Return Operation',
         domain="[('code', '=', 'internal')]",
@@ -85,9 +87,26 @@ class ResCompany(models.Model):
         return self.consignment_delivery_operation_type_id
 
     def _get_consignment_shipment_operation_type(self):
+        """The INTERNAL shelf flow -- off the Overview since 19.0.2.7.0.
+
+        Ele viu dois cartões de consignação lado a lado e perguntou qual era o
+        abstrato: "Remessa de Consignação" (COM/MOV) e "Entrega de Consignação"
+        (COM/OUT). Os nomes diziam o contrário do que cada um faz -- o que se
+        chamava Remessa era o movimento interno de prateleira, e o que se
+        chamava Entrega era a remessa física do Pedido C.
+
+        E o COM/MOV não é mais alcançável: a `consignment.move` virou o CR, cuja
+        ação tem domínio `move_kind = 'return'` e `create: False`, e a reposição
+        disparada pelo acerto nasce como Pedido C. Sobrou um cartão vazio
+        pedindo trabalho que ninguém pode criar.
+
+        Mesma saída do ACERTO (13/08/2026, opção A): o tipo continua existindo
+        -- o histórico das bases antigas tem número e nome --, mas nasce
+        arquivado e some da Visão geral.
+        """
         self.ensure_one()
         if not self.consignment_shipment_operation_type_id:
-            self.sudo().consignment_shipment_operation_type_id = \
+            operation_type = \
                 self._create_consignment_operation_type(
                     # COM/MOV/, seguindo o padrão direcional do core (WH/OUT,
                     # WH/IN): a remessa ao cliente é COM/OUT, o retorno é
@@ -99,6 +118,8 @@ class ResCompany(models.Model):
                     # emitido NUNCA muda de nome).
                     _('Consignment Shipment'), 'COM/MOV/%(year)s/',
                     'Consignment Shipment Operation')
+            operation_type.sudo().active = False
+            self.sudo().consignment_shipment_operation_type_id = operation_type
         return self.consignment_shipment_operation_type_id
 
     def _get_consignment_return_operation_type(self):

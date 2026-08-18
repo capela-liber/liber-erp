@@ -152,7 +152,10 @@ class OlistOrder(models.Model):
         ('sem_detalhe', "Falta ler o detalhe"),
         ('cancelado', "Cancelado no Olist"),
         ('anterior_corte', "Anterior ao corte"),
-        ('nao_importado', "Não importado"),
+        # O rótulo é ação, não descrição: "A importar" é o mesmo nome do
+        # filtro padrão e do contador da conta — o operador lê o badge
+        # amarelo e sabe o que fazer, sem traduzir "não importado" de cabeça.
+        ('nao_importado', "A importar"),
         ('importado', "Importado"),
     ], string="Situação", compute='_compute_state', store=True, index=True)
 
