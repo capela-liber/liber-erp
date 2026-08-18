@@ -114,7 +114,12 @@ class TestAcertoForaDoInventario(TransactionCase):
                          "what the customer sold must leave the shelf")
 
     def test_the_acerto_sale_still_does_not_deliver(self):
-        """The other half of the rule, unchanged: no WH/OUT behind the S."""
+        """The other half of the rule: no WH/OUT behind the S.
+
+        Since 19.0.2.9.0 the baixa's moves carry sale_line_id (so the sale
+        can invoice what left the shelf), which makes the ACERTO/ picking
+        show up as the S's transfer -- truthfully. What must NEVER show up
+        is a warehouse delivery."""
         agreement = self._agreement()
         self._place_on_shelf(agreement.partner_id, 4)
         settlement = self.env['consignment.settlement'].create({
@@ -125,6 +130,8 @@ class TestAcertoForaDoInventario(TransactionCase):
 
         settlement.action_run()
 
-        self.assertFalse(
+        self.assertEqual(
             settlement.sale_order_id.picking_ids,
-            "the acerto sale invoices, it does not deliver from the warehouse")
+            settlement.delivery_picking_id,
+            "the S's only transfer is the shelf baixa; the acerto sale "
+            "invoices, it does not deliver from the warehouse")

@@ -1,0 +1,310 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!--
+        A tela de PRODUTOS — o catálogo, não o saldo.
+
+        As duas telas leem o mesmo espelho (`olist.product`) e perguntam coisas
+        diferentes. Estoque pergunta "quantos?"; Produtos pergunta "é o mesmo
+        livro?", que é a pergunta séria: 219 dos 580 produtos do Olist não
+        casam por ISBN, e mais da metade deles é o MESMO livro cadastrado lá
+        com o código antigo.
+
+        Por isso aqui as colunas são identidade e preço, não quantidade.
+    -->
+    <record id="view_olist_catalog_list" model="ir.ui.view">
+        <field name="name">olist.product.catalog.list</field>
+        <field name="model">olist.product</field>
+        <field name="arch" type="xml">
+            <!-- `open_form_view` não é enfeite: numa lista editável o clique
+                 abre a edição inline e NÃO o formulário, e era por isso que
+                 não se chegava à ficha do livro. Com ele, a seta de abrir
+                 volta ao fim da linha. -->
+            <list string="Catálogo: Olist × Odoo" create="false"
+                  editable="bottom" open_form_view="True"
+                  decoration-muted="situacao_olist == 'I'"
+                  decoration-warning="not product_id">
+                <header>
+                    <button name="action_pull_from_olist" type="object"
+                            string="Ler catálogo do Olist" display="always"
+                            class="btn-primary"
+                            help="Traz os produtos do Olist para o espelho e casa por ISBN. Seis chamadas, só leitura."/>
+                    <button name="action_read_ficha" type="object"
+                            string="Ler ficha"
+                            help="Busca a ficha completa (preço, situação, marca, NCM, peso, descrição) das linhas escolhidas. Só leitura."/>
+                    <button name="action_suggest_match" type="object"
+                            string="Sugerir por título"/>
+                    <button name="action_accept_suggestion" type="object"
+                            string="Aceitar sugestão"/>
+                    <!-- Daqui para baixo é ESCRITA no catálogo vivo do Olist.
+                         Tudo passa pelo `read_only` da conta, que vem ligado. -->
+                    <button name="action_push_changes" type="object"
+                            string="Enviar alterações"
+                            confirm="Isto ESCREVE no Olist a ficha editada aqui (só os campos alterados; o resto da ficha volta como estava). Continuar?"/>
+                    <button name="action_push_price" type="object"
+                            string="Enviar preço"
+                            confirm="Isto ESCREVE no Olist: o preço de venda do Odoo passa a ser o preço de lá, nos livros escolhidos. Continuar?"/>
+                    <button name="action_push_isbn" type="object"
+                            string="Corrigir ISBN no Olist"
+                            confirm="Isto ESCREVE no Olist: o código do livro lá passa a ser o ISBN do Odoo (e o GTIN também). É o que faz o casamento passar a valer sozinho. Continuar?"/>
+                    <button name="action_deactivate_in_olist" type="object"
+                            string="Desativar no Olist"
+                            confirm="Isto ESCREVE no Olist: o livro sai da vitrine (situação Inativo). Não apaga venda nem nota. Continuar?"/>
+                    <button name="action_create_in_odoo" type="object"
+                            string="Criar no Odoo"
+                            confirm="Cria no Odoo os livros escolhidos a partir da ficha do Olist. Confira antes a coluna Sugestão: metade do que parece faltar é livro que já existe com outro ISBN. Continuar?"/>
+                </header>
+                <button name="action_open_ficha" type="object"
+                        icon="fa-external-link" title="Abrir a ficha do livro"/>
+                <field name="codigo" readonly="1"/>
+                <field name="gtin" optional="hide" readonly="1"/>
+                <field name="name" readonly="1"/>
+                <field name="marca" optional="hide" readonly="1"/>
+                <field name="categoria" optional="hide" readonly="1"/>
+                <field name="product_id" placeholder="casar à mão..."/>
+                <field name="suggested_product_id" optional="show" readonly="1"/>
+                <field name="match_origin" optional="hide" readonly="1"
+                       widget="badge" decoration-info="match_origin == 'manual'"/>
+                <field name="preco_olist" optional="hide" readonly="1"/>
+                <field name="preco_odoo" optional="hide"/>
+                <field name="divergencia_preco" optional="hide"
+                       decoration-danger="divergencia_preco != 0"/>
+                <field name="sold_qty" optional="show" readonly="1" sum="Vendido"/>
+                <field name="ncm" optional="hide" readonly="1"/>
+                <field name="peso_liquido" optional="hide" readonly="1"/>
+                <field name="situacao_olist" optional="show" readonly="1"
+                       widget="badge" decoration-muted="situacao_olist == 'I'"/>
+                <field name="tem_alteracao" optional="hide" readonly="1"
+                       string="Editado"/>
+                <field name="ficha_lida_em" optional="hide" readonly="1"/>
+                <field name="company_id" column_invisible="1"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_olist_catalog_form" model="ir.ui.view">
+        <field name="name">olist.product.catalog.form</field>
+        <field name="model">olist.product</field>
+        <field name="arch" type="xml">
+            <form string="Livro no Olist" create="false">
+                <header>
+                    <button name="action_read_ficha" type="object"
+                            string="Ler ficha no Olist" class="btn-primary"/>
+                    <button name="action_push_changes" type="object"
+                            string="Enviar alterações" invisible="not tem_alteracao"
+                            confirm="Isto ESCREVE no Olist os campos que você editou. O resto da ficha volta como estava. Continuar?"/>
+                    <button name="action_discard_changes" type="object"
+                            string="Descartar edição" invisible="not tem_alteracao"/>
+                    <button name="action_push_price" type="object"
+                            string="Enviar preço"
+                            invisible="not product_id"
+                            confirm="Isto ESCREVE no Olist: o preço do Odoo passa a ser o de lá. Continuar?"/>
+                    <button name="action_push_isbn" type="object"
+                            string="Corrigir ISBN no Olist"
+                            invisible="not product_id"
+                            confirm="Isto ESCREVE no Olist: o código do livro lá passa a ser o ISBN do Odoo. Continuar?"/>
+                    <button name="action_deactivate_in_olist" type="object"
+                            string="Desativar no Olist"
+                            invisible="situacao_olist == 'I'"
+                            confirm="Isto ESCREVE no Olist: o livro sai da vitrine. Continuar?"/>
+                    <button name="action_activate_in_olist" type="object"
+                            string="Reativar no Olist"
+                            invisible="situacao_olist != 'I'"
+                            confirm="Isto ESCREVE no Olist: o livro volta à vitrine. Continuar?"/>
+                    <button name="action_create_in_odoo" type="object"
+                            string="Criar no Odoo"
+                            invisible="product_id"
+                            confirm="Confira a Sugestão antes: metade do que parece faltar já existe com outro ISBN. Continuar?"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_open_product" type="object"
+                                class="oe_stat_button" icon="fa-book"
+                                invisible="not product_id">
+                            <div class="o_stat_info">
+                                <span class="o_stat_text">No Odoo</span>
+                                <field name="product_id" nolabel="1"
+                                       class="o_stat_value" readonly="1"/>
+                            </div>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <h1><field name="name" placeholder="Nome no Olist"/></h1>
+                        <h3><field name="codigo" placeholder="Código (ISBN) no Olist"/></h3>
+                    </div>
+                    <div class="alert alert-warning" role="alert"
+                         invisible="not tem_alteracao">
+                        <b>Editado aqui, ainda não enviado ao Olist.</b>
+                        Editar nesta tela muda só o espelho — o Olist só sabe
+                        quando você usa <b>Enviar alterações</b>.
+                        <field name="alteracoes_pendentes" readonly="1" nolabel="1"/>
+                    </div>
+                    <group>
+                        <group string="Identidade no Olist (editável)">
+                            <field name="olist_id" readonly="1"/>
+                            <field name="gtin"/>
+                            <field name="marca"/>
+                            <field name="categoria"/>
+                            <field name="ncm"/>
+                            <field name="unidade"/>
+                            <field name="situacao_olist"/>
+                        </group>
+                        <group string="Preço e medida (editável)">
+                            <field name="preco_olist"/>
+                            <field name="preco_promocional"/>
+                            <field name="preco_custo"/>
+                            <field name="peso_liquido"/>
+                            <field name="peso_bruto"/>
+                            <field name="preco_odoo" readonly="1"/>
+                            <field name="divergencia_preco" readonly="1"/>
+                        </group>
+                    </group>
+                    <group string="Casamento com o Odoo">
+                        <group>
+                            <field name="product_id"/>
+                            <field name="match_origin"/>
+                            <field name="suggested_product_id"
+                                   invisible="product_id"/>
+                        </group>
+                        <group>
+                            <field name="sold_qty"/>
+                            <field name="sold_orders"/>
+                            <field name="last_sale_date"/>
+                            <field name="ficha_lida_em"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Descrição no Olist" name="descricao">
+                            <field name="descricao"/>
+                        </page>
+                        <page string="Ficha completa no Olist" name="campos">
+                            <div class="text-muted">
+                                Os demais campos da ficha, como o Olist os
+                                devolve. O que é <b>escalar</b> pode ser
+                                editado; o que é estrutura (anexos, imagens,
+                                variações) aparece como JSON e fica travado —
+                                devolvê-lo como texto corromperia a ficha.
+                                Os campos que já têm lugar próprio acima não se
+                                repetem aqui, para não haver duas portas para o
+                                mesmo valor.
+                            </div>
+                            <field name="field_ids" readonly="0">
+                                <list editable="bottom" create="false"
+                                      delete="false"
+                                      decoration-warning="alterado">
+                                    <field name="chave" readonly="1"/>
+                                    <field name="valor"
+                                           readonly="not editavel"/>
+                                    <field name="valor_original" readonly="1"
+                                           optional="show"/>
+                                    <field name="editavel" readonly="1"
+                                           optional="hide"/>
+                                    <field name="alterado" readonly="1"
+                                           optional="hide"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Ficha crua" name="ficha"
+                              groups="base.group_system">
+                            <div class="text-muted">
+                                Os 52 campos como o Olist os devolve. É esta
+                                ficha inteira que volta ao Olist quando se
+                                altera um campo só — não se sabe se a API faz
+                                atualização parcial, e apostar que sim custaria
+                                o peso, o NCM e a descrição do livro.
+                            </div>
+                            <field name="ficha_json" readonly="1"/>
+                        </page>
+                        <page string="Última escrita" name="escrita"
+                              invisible="not last_write_result"
+                              groups="base.group_system">
+                            <field name="last_write_result" readonly="1"/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_olist_catalog_search" model="ir.ui.view">
+        <field name="name">olist.product.catalog.search</field>
+        <field name="model">olist.product</field>
+        <field name="arch" type="xml">
+            <search string="Catálogo Olist">
+                <field name="codigo" string="ISBN"/>
+                <field name="name"/>
+                <field name="product_id"/>
+                <field name="marca"/>
+                <filter name="sem_produto" string="Sem produto no Odoo"
+                        domain="[('product_id', '=', False)]"/>
+                <filter name="vale_casar" string="Sem produto E vendeu"
+                        domain="[('product_id', '=', False), ('sold_qty', '>', 0)]"
+                        help="O que realmente pede decisão."/>
+                <filter name="com_sugestao" string="Com sugestão a conferir"
+                        domain="[('product_id', '=', False),
+                                 ('suggested_product_id', '!=', False)]"/>
+                <separator/>
+                <filter name="isbn_diferente" string="ISBN diferente do Odoo"
+                        domain="[('product_id', '!=', False),
+                                 ('match_origin', '=', 'manual')]"
+                        help="Casados à mão: o código do Olist não é o ISBN do Odoo. Candidatos a 'Corrigir ISBN no Olist'."/>
+                <filter name="preco_diverge" string="Preço divergente"
+                        domain="[('product_id', '!=', False),
+                                 ('divergencia_preco', '!=', 0)]"/>
+                <filter name="sem_gtin" string="Sem GTIN no Olist"
+                        domain="[('gtin', '=', False)]"/>
+                <separator/>
+                <filter name="ativo" string="Ativos no Olist"
+                        domain="[('situacao_olist', '=', 'A')]"/>
+                <filter name="inativo" string="Inativos no Olist"
+                        domain="[('situacao_olist', '=', 'I')]"/>
+                <filter name="editado" string="Editado e não enviado"
+                        domain="[('tem_alteracao', '=', True)]"/>
+                <filter name="sem_ficha" string="Ficha nunca lida"
+                        domain="[('ficha_lida_em', '=', False)]"/>
+                <group>
+                    <filter name="g_marca" string="Marca/Selo"
+                            context="{'group_by': 'marca'}"/>
+                    <filter name="g_situacao" string="Situação no Olist"
+                            context="{'group_by': 'situacao_olist'}"/>
+                    <filter name="g_match" string="Casamento"
+                            context="{'group_by': 'match_origin'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_olist_catalog" model="ir.actions.act_window">
+        <field name="name">Produtos</field>
+        <field name="res_model">olist.product</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_olist_catalog_search"/>
+        <field name="context">{'search_default_sem_produto': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiley_face">O espelho do catálogo está vazio.</p>
+            <p>Use <b>Ler catálogo do Olist</b>: seis chamadas trazem os
+            produtos e casam por ISBN o que der.</p>
+        </field>
+    </record>
+
+    <record id="action_olist_catalog_list_view" model="ir.actions.act_window.view">
+        <field name="sequence" eval="1"/>
+        <field name="view_mode">list</field>
+        <field name="view_id" ref="view_olist_catalog_list"/>
+        <field name="act_window_id" ref="action_olist_catalog"/>
+    </record>
+
+    <record id="action_olist_catalog_form_view" model="ir.actions.act_window.view">
+        <field name="sequence" eval="2"/>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="view_olist_catalog_form"/>
+        <field name="act_window_id" ref="action_olist_catalog"/>
+    </record>
+
+    <menuitem id="menu_olist_catalog"
+              name="Produtos"
+              parent="menu_olist_root"
+              action="action_olist_catalog"
+              sequence="15"/>
+
+</odoo>

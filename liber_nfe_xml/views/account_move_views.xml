@@ -10,6 +10,19 @@
                 <field name="nfe_xml_panel_id" invisible="not nfe_key and not nfe_xml_panel_id"/>
                 <field name="nfe_danfe_no" invisible="not nfe_xml_panel_id"/>
             </xpath>
+            <!-- O XML é a verdade fiscal da fatura que nasceu dele (Olist e
+                 afins) — e o elo morava só na aba "Outras informações", onde
+                 o faturista nunca o achou. Botão na cara do formulário. -->
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button name="action_open_nfe_xml_panel" type="object"
+                        class="oe_stat_button" icon="fa-file-code-o"
+                        invisible="not nfe_xml_panel_id">
+                    <div class="o_stat_info">
+                        <span class="o_stat_text">NFe XML</span>
+                        <span class="o_stat_value"><field name="nfe_danfe_no" nolabel="1"/></span>
+                    </div>
+                </button>
+            </xpath>
         </field>
     </record>
 

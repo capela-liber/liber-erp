@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_olist_order_list" model="ir.ui.view">
+        <field name="name">olist.order.list</field>
+        <field name="model">olist.order</field>
+        <field name="arch" type="xml">
+            <!-- A tela de conferência do sentido de volta: o que o Olist
+                 vendeu, o que já entrou aqui, e por qual canal. -->
+            <list string="Pedidos do Olist" multi_edit="0"
+                  decoration-muted="state == 'cancelado'"
+                  decoration-info="state == 'sem_detalhe'"
+                  decoration-warning="state == 'nao_importado'">
+                <header>
+                    <!-- `display="always"` não é detalhe: sem ele o botão cai
+                         no bloco de ações de seleção, que o Odoo só mostra com
+                         linhas marcadas — ficaria invisível justamente na
+                         primeira vez, com a lista vazia, que é quando ele mais
+                         serve. Mesma lição do liber_amazon_vendor. -->
+                    <button name="action_pull_from_olist" type="object"
+                            string="Ler pedidos do Olist" display="always"
+                            class="btn-primary"
+                            help="Traz a listagem de pedidos do Olist para esta tela. Dez chamadas para mil pedidos, só leitura."/>
+                    <button name="action_read_detail" type="object"
+                            string="Ler detalhe"
+                            help="Busca no Olist o canal, os itens e o cliente das linhas selecionadas. Uma chamada por linha, só leitura."/>
+                    <button name="action_import_selected" type="object"
+                            string="Importar para o Odoo"
+                            help="Cria o pedido no Odoo para as linhas selecionadas. Escreve aqui, nunca no Olist."/>
+                    <button name="action_create_invoice" type="object"
+                            string="Gerar fatura"
+                            help="Monta a fatura a partir do XML da nota (não do pedido): o XML é o que a SEFAZ autorizou. Ela não emite nada — registra um fato fiscal já consumado."/>
+                    <button name="action_queue_detail" type="object"
+                            string="Ler em segundo plano"
+                            help="Põe os pedidos escolhidos na fila do cron das 2h. Use para lotes grandes: a leitura na tela não aguenta mais que 25 sem estourar o tempo."/>
+                    <button name="action_stamp_tracking" type="object"
+                            string="Carimbar rastreio"
+                            help="Leva o código de rastreio do Olist para o campo de rastreio da entrega no Odoo, onde o atendimento e o portal do cliente já olham."/>
+                </header>
+                <field name="data_pedido"/>
+                <field name="numero"/>
+                <field name="canal"/>
+                <field name="plataforma" optional="show"/>
+                <field name="team_id" optional="hide"/>
+                <field name="cliente_nome"/>
+                <field name="numero_ecommerce" optional="hide"/>
+                <field name="situacao" string="Situação no ERP do Olist"
+                       optional="show" widget="badge"
+                       decoration-muted="situacao == 'Cancelado'"/>
+                <field name="valor" sum="Total"/>
+                <field name="sale_order_id" optional="show"/>
+                <field name="codigo_rastreamento" optional="show"/>
+                <field name="transportadora" optional="hide"/>
+                <field name="forma_frete" optional="hide"/>
+                <field name="data_envio" optional="hide"/>
+                <field name="invoice_id" optional="show"/>
+                <field name="xml_status" optional="show" widget="badge"
+                       decoration-success="xml_status == 'arquivado'"
+                       decoration-warning="xml_status == 'sem_xml'"
+                       decoration-muted="xml_status == 'sem_nota'"/>
+                <field name="nfe_panel_id" optional="hide"/>
+                <field name="detalhe_pendente" optional="hide"
+                       string="Na fila"/>
+                <field name="itens_sem_produto" optional="show"
+                       string="Livros não localizados"/>
+                <field name="divergencia_valor" optional="hide"/>
+                <field name="state" widget="badge"
+                       decoration-success="state == 'importado'"
+                       decoration-warning="state == 'nao_importado'"/>
+                <field name="company_id" column_invisible="1"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_olist_order_form" model="ir.ui.view">
+        <field name="name">olist.order.form</field>
+        <field name="model">olist.order</field>
+        <field name="arch" type="xml">
+            <form string="Pedido do Olist">
+                <header>
+                    <button name="action_read_detail" type="object"
+                            string="Ler detalhe"/>
+                    <button name="action_import_selected" type="object"
+                            string="Importar para o Odoo" class="btn-primary"
+                            invisible="sale_order_id"/>
+                    <button name="action_stamp_tracking" type="object"
+                            string="Carimbar rastreio"
+                            invisible="not codigo_rastreamento or not sale_order_id"/>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_open_sale_order" type="object"
+                                class="oe_stat_button" icon="fa-shopping-cart"
+                                invisible="not sale_order_id">
+                            <div class="o_stat_info">
+                                <span class="o_stat_text">Pedido no Odoo</span>
+                                <field name="sale_order_id" nolabel="1"
+                                       class="o_stat_value" readonly="1"/>
+                            </div>
+                        </button>
+                        <button name="action_open_invoice" type="object"
+                                class="oe_stat_button" icon="fa-file-text"
+                                invisible="not invoice_id">
+                            <div class="o_stat_info">
+                                <span class="o_stat_text">Fatura</span>
+                                <field name="invoice_id" nolabel="1"
+                                       class="o_stat_value" readonly="1"/>
+                            </div>
+                        </button>
+                        <button name="action_open_nfe" type="object"
+                                class="oe_stat_button" icon="fa-file-text-o"
+                                invisible="not nfe_panel_id">
+                            <div class="o_stat_info">
+                                <span class="o_stat_text">NFe</span>
+                                <field name="nfe_panel_id" nolabel="1"
+                                       class="o_stat_value" readonly="1"/>
+                            </div>
+                        </button>
+                        <!-- O "Trazer XML" manual saiu daqui (17/08/2026): o
+                             Importar para o Odoo já busca o XML e recusa, com
+                             aviso, se ele não vier. A situação do XML segue
+                             visível no campo da seção "No Odoo". -->
+                    </div>
+                    <div class="oe_title">
+                        <h1><field name="numero" readonly="1"/></h1>
+                    </div>
+                    <group>
+                        <group string="No Olist">
+                            <field name="account_id" readonly="1"/>
+                            <field name="olist_id" readonly="1"/>
+                            <field name="data_pedido" readonly="1"/>
+                            <field name="situacao" readonly="1"/>
+                            <field name="valor" readonly="1"/>
+                            <field name="detalhe_lido_em" readonly="1"/>
+                        </group>
+                        <group string="Canal e cliente">
+                            <field name="canal" readonly="1"/>
+                            <field name="plataforma" readonly="1"/>
+                            <field name="team_id"/>
+                            <field name="marcadores" readonly="1"/>
+                            <field name="numero_ecommerce" readonly="1"/>
+                            <field name="cliente_nome" readonly="1"/>
+                            <field name="cliente_doc" readonly="1"/>
+                            <field name="cliente_email" readonly="1"/>
+                            <field name="cliente_uf" readonly="1"/>
+                        </group>
+                    </group>
+                    <group string="No Odoo">
+                        <group>
+                            <field name="partner_id"/>
+                            <field name="sale_order_id"/>
+                        </group>
+                        <group>
+                            <field name="id_nota_fiscal" readonly="1"/>
+                            <field name="xml_status" readonly="1"/>
+                            <field name="nfe_panel_id"/>
+                            <field name="invoice_id"/>
+                            <field name="data_faturamento" readonly="1"/>
+                            <field name="divergencia_valor"/>
+                        </group>
+                    </group>
+                    <group string="Entrega">
+                        <group>
+                            <field name="codigo_rastreamento" readonly="1"/>
+                            <field name="url_rastreamento" widget="url"
+                                   text="Rastrear no Olist" readonly="1"/>
+                            <field name="transportadora" readonly="1"/>
+                        </group>
+                        <group>
+                            <field name="forma_frete" readonly="1"/>
+                            <field name="forma_envio" readonly="1"/>
+                            <field name="data_envio" readonly="1"/>
+                            <field name="data_prevista" readonly="1"/>
+                            <field name="data_entrega" readonly="1"/>
+                            <field name="valor_frete" readonly="1"/>
+                            <field name="entrega_cidade" readonly="1"/>
+                            <field name="entrega_uf" readonly="1"/>
+                            <field name="deposito" readonly="1"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Itens" name="itens">
+                            <field name="line_ids" readonly="1">
+                                <list>
+                                    <field name="codigo"/>
+                                    <field name="descricao"/>
+                                    <field name="quantidade"/>
+                                    <field name="valor_unitario"/>
+                                    <field name="product_id"/>
+                                </list>
+                            </field>
+                            <div class="text-muted">
+                                Item sem <b>Produto no Odoo</b> impede a
+                                importação: o ISBN do pedido vem com hífen e o
+                                casamento é pelo código normalizado. Faltar
+                                aqui é notícia — o pedido não entra com menos
+                                livros do que teve.
+                            </div>
+                        </page>
+                        <page string="Payload cru" name="raw"
+                              groups="base.group_system">
+                            <field name="raw_json" readonly="1"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_olist_order_search" model="ir.ui.view">
+        <field name="name">olist.order.search</field>
+        <field name="model">olist.order</field>
+        <field name="arch" type="xml">
+            <search string="Pedidos do Olist">
+                <field name="numero"/>
+                <field name="cliente_nome"/>
+                <field name="numero_ecommerce"/>
+                <field name="canal"/>
+                <filter name="f_pendente" string="A importar"
+                        domain="[('state', '=', 'nao_importado')]"/>
+                <filter name="f_sem_detalhe" string="Falta ler o detalhe"
+                        domain="[('state', '=', 'sem_detalhe')]"/>
+                <filter name="f_na_fila" string="Na fila de leitura"
+                        domain="[('detalhe_pendente', '=', True)]"
+                        help="Esperando o cron das 2h."/>
+                <filter name="f_importado" string="Importados"
+                        domain="[('state', '=', 'importado')]"/>
+                <filter name="f_cancelado" string="Cancelados"
+                        domain="[('state', '=', 'cancelado')]"/>
+                <separator/>
+                <filter name="f_sem_produto" string="Com livro não localizado"
+                        domain="[('itens_sem_produto', '&gt;', 0)]"
+                        help="Os pedidos travados: têm item cujo ISBN não casa com produto nenhum do Odoo. O histórico de cada um lista quais."/>
+                <separator/>
+                <filter name="f_marketplace" string="De marketplace"
+                        domain="[('canal', '!=', False)]"/>
+                <filter name="f_com_rastreio" string="Com rastreio"
+                        domain="[('codigo_rastreamento', '!=', False)]"/>
+                <filter name="f_xml_falta" string="Nota emitida, XML não arquivado"
+                        domain="[('xml_status', '=', 'sem_xml')]"
+                        help="Fiscalmente resolvido no Olist e sem lastro aqui."/>
+                <filter name="f_sem_fatura" string="Com XML e sem fatura"
+                        domain="[('xml_status', '=', 'arquivado'),
+                                 ('invoice_id', '=', False)]"
+                        help="Prontos para faturar: a nota está aqui e o razão ainda não a conhece."/>
+                <filter name="f_com_fatura" string="Faturados"
+                        domain="[('invoice_id', '!=', False)]"/>
+                <separator/>
+                <filter name="f_com_nota" string="XML arquivado"
+                        domain="[('xml_status', '=', 'arquivado')]"/>
+                <group>
+                    <filter name="g_canal" string="Canal no Olist"
+                            context="{'group_by': 'canal'}"/>
+                    <filter name="g_team" string="Canal de Venda"
+                            context="{'group_by': 'team_id'}"/>
+                    <filter name="g_plataforma" string="Plataforma"
+                            context="{'group_by': 'plataforma'}"/>
+                    <filter name="g_xml" string="Situação do XML"
+                            context="{'group_by': 'xml_status'}"/>
+                    <filter name="g_situacao" string="Situação no ERP do Olist"
+                            context="{'group_by': 'situacao'}"/>
+                    <filter name="g_state" string="Situação"
+                            context="{'group_by': 'state'}"/>
+                    <filter name="g_data" string="Data do pedido"
+                            context="{'group_by': 'data_pedido'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_olist_order" model="ir.actions.act_window">
+        <field name="name">Pedidos do Olist</field>
+        <field name="res_model">olist.order</field>
+        <field name="view_mode">list,form</field>
+        <field name="context">{'search_default_f_pendente': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiley_face">Nenhum pedido espelhado ainda.</p>
+            <p>Use <b>Ler pedidos</b> na conta do Olist: uma varredura barata
+            traz a listagem. O canal de venda vem depois, no detalhe.</p>
+        </field>
+    </record>
+
+    <!-- Primeiro filho do menu raiz, e isso decide o que a home abre ao
+         clicar no ladrilho: o trabalho do dia é conferir o que o Olist
+         vendeu, não reabrir a configuração. -->
+    <menuitem id="menu_olist_order"
+              name="Pedidos"
+              parent="menu_olist_root"
+              action="action_olist_order"
+              sequence="10"/>
+
+</odoo>

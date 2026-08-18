@@ -31,6 +31,11 @@ Autorizada, a chave de acesso vai para `account.move.nfe_key` — o mesmo campo
 que o liber_nfe_xml usa para amarrar XML e fatura. Uma nota que emitimos e uma
 nota que recebemos viram a mesma coisa para o resto do sistema.
 
+No painel, porém, elas não podem virar a mesma coisa. A nota emitida entra
+marcada — origem **Focus NFe**, `system_generated`, tipo interno —, e é essa
+marca que separa o que a casa emitiu do que a casa recebeu numa lista de
+quarenta mil linhas.
+
 O e-mail ao cliente leva a nota, não só a fatura
 ------------------------------------------------
 
@@ -114,6 +119,10 @@ Testes
   documentos com o nome que o cliente lê, a nota ainda não autorizada (não há o
   que anexar), o download que falhou (o e-mail sai assim mesmo) e o desmarcar
   no assistente.
+- ``tests/test_painel_da_casa.py`` — a procedência no painel de XMLs. Nota da
+  casa entra com origem Focus NFe, ``system_generated`` e tipo interno; a linha
+  que a SEFAZ já tinha trazido é completada, não duplicada; e XML que não baixou
+  não inventa linha nenhuma.
 - ``tests/test_endereco_localizacao.py`` — a reconciliação com a localização
   brasileira da OCA. O módulo lê ``street_name``/``street_number``/``district``
   quando esses campos existem no registry e cai nos seus próprios quando não
@@ -133,7 +142,7 @@ errado" de "o cadastro na Focus está errado".
     """,
     'author': "EdLab Press",
     'category': 'Accounting',
-    'version': '19.0.2.2.0',
+    'version': '19.0.2.4.0',
     'license': 'AGPL-3',
     'depends': ['account', 'liber_nfe_xml'],
     'external_dependencies': {'python': ['requests', 'pytz']},

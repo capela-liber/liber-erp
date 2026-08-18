@@ -129,6 +129,20 @@ class TestLiberSite(HttpCase):
         self.assertEqual(
             self.url_open("/liber/docs/liber_nfe_focus.html").status_code, 200)
 
+    def test_a_chamada_do_olist_leva_ao_manual(self):
+        """Entrou em 18/08/2026 como card discreto no "E mais": o Liber é
+        aberto e mesmo assim alcança marketplace através de um serviço pago e
+        fechado — o argumento vive nesse card, e o caminho até o manual não
+        pode quebrar."""
+        html = self._pagina()
+        self.assertIn("Marketplaces via Olist", html,
+                      "o card do Olist saiu da home")
+        self.assertIn("/liber/docs/liber_olist.html", html,
+                      "o card do Olist perdeu o link do manual")
+        self.assertEqual(
+            self.url_open("/liber/docs/liber_olist.html").status_code, 200,
+            "o manual do Olist não responde — o card leva a lugar nenhum")
+
     def test_todo_manual_aparece_no_indice(self):
         """Manual que existe em docs/ mas não está no catálogo do docs.js é
         manual invisível: o índice monta os cartões a partir do DOCS, então

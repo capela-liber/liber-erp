@@ -10,9 +10,13 @@
             <header position="inside">
                 <field name="focus_status" invisible="1"/>
                 <field name="focus_ref" invisible="1"/>
+                <field name="nfe_xml_panel_id" invisible="1"/>
+                <!-- Fatura que nasceu de XML já autorizado (Olist e afins) não
+                     emite: a nota EXISTE, e uma segunda seria duplicação na
+                     SEFAZ. O action_focus_emitir tem a mesma porta por dentro. -->
                 <button name="action_focus_emitir" type="object"
                         string="Emitir NFe" class="btn-primary"
-                        invisible="state != 'posted' or move_type not in ('out_invoice', 'out_refund') or focus_status in ('processando_autorizacao', 'autorizado', 'cancelado')"/>
+                        invisible="state != 'posted' or move_type not in ('out_invoice', 'out_refund') or focus_status in ('processando_autorizacao', 'autorizado', 'cancelado') or nfe_xml_panel_id"/>
                 <button name="action_focus_consultar" type="object"
                         string="Consultar SEFAZ"
                         invisible="not focus_ref or focus_status in ('cancelado',)"/>

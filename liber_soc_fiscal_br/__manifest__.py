@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     'name': 'Consignment - Fiscal (BR)',
-    'version': '19.0.2.2.0',
+    'version': '19.0.2.3.0',
     'summary': 'Consignment stock valuation: consigned goods held in their own asset account',
     'description': """
 Consignment fiscal/accounting layer (SOC redesign).

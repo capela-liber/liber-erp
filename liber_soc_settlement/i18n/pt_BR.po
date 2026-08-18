@@ -1641,6 +1641,11 @@ msgstr "Acertos de Consignação"
 
 #. module: liber_soc_settlement
 #: model_terms:ir.ui.view,arch_db:liber_soc_settlement.view_sales_order_filter_settlement
+msgid "Settlements to Invoice"
+msgstr "Acertos a faturar"
+
+#. module: liber_soc_settlement
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.view_sales_order_filter_settlement
 msgid "Regular Sales"
 msgstr "Vendas Normais"
 

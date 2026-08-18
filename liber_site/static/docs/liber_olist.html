@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<script>
+/* Servido por /liber_site/static/docs/, este arquivo vem com uma semana de
+   cache e o docs.js sem versão -- e o índice monta a lista a partir dele. Foi
+   assim que a emissão de NF-e e o manual da Amazon ficaram invisíveis: o
+   catálogo em cache era anterior aos dois. A rota /liber/docs/ serve o mesmo
+   arquivo sem cache e com ?v=<mtime> nos assets. Quem chegar pelo caminho
+   antigo (favorito, link velho, resultado de busca) vai para lá antes de a
+   página montar qualquer coisa. */
+(function () {
+  var antigo = "/liber_site/static/docs/";
+  if (location.pathname.indexOf(antigo) === 0) {
+    location.replace("/liber/docs/" + location.pathname.slice(antigo.length) +
+                     location.search + location.hash);
+  }
+})();
+</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Marketplaces via Olist — Manuais do Liber</title>
+<link rel="icon" type="image/png" href="../logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;600;700&display=swap">
+<link rel="stylesheet" href="docs.css">
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="../index.html"><img src="../logo.png" alt="">liber<span>.</span></a>
+    <span class="doc-tag">Manuais</span>
+    <nav><a href="index.html">Índice</a><a href="../index.html">Site</a></nav>
+  </div>
+</header>
+<div class="wrap">
+  <div class="layout">
+    <aside class="sidebar" id="sidebar"></aside>
+    <article class="doc">
+      <div class="breadcrumb"><a href="index.html">Manuais</a><span class="sep">›</span>Canais de venda<span class="sep">›</span>Marketplaces via Olist</div>
+      <h1>Marketplaces via Olist</h1>
+      <p class="lead">O Olist é um serviço pago e fechado — e o Liber conversa com ele assim mesmo.
+      A venda do Mercado Livre desce com canal, cliente e nota fiscal; o estoque da prateleira sobe;
+      e o livro-razão continua sendo o seu. O Olist é um adaptador: se um dia sair, a integração sai
+      com ele e os seus dados ficam.</p>
+
+      <h2 id="ligar">Como ligo a integração?</h2>
+      <p>É uma conta por empresa: cada selo com a sua conta Olist, cada conta apontando para uma
+      empresa do sistema.</p>
+      <ol class="steps">
+        <li>No Olist, em <span class="menupath">Extensões<i>‣</i>Token API</span>, gere o token da <abbr class="sigla" title="Interface de programação: o canal por onde um sistema conversa com outro.">API</abbr> v2.</li>
+        <li>Aqui, em <span class="menupath">Olist<i>‣</i>Configurações<i>‣</i>Contas</span>, crie a conta: nome,
+            empresa e o token. A empresa precisa ter <abbr class="sigla" title="Cadastro Nacional da Pessoa Jurídica: o número que identifica a empresa.">CNPJ</abbr> preenchido — é ele que prova que
+            cada nota importada é dela.</li>
+        <li>Use os botões da conta na primeira vez: <span class="field">Ler catálogo</span>,
+            <span class="field">Ler pedidos</span>, <span class="field">Ler notas fiscais</span>.
+            Depois, os agendamentos mantêm tudo fresco sozinhos.</li>
+      </ol>
+      <figure class="shot">
+        <img src="img/doc-liber_olist-conta.png"
+             alt="Ficha da conta Olist com os botões de leitura e a opção Somente leitura ligada">
+        <figcaption>A conta reúne os botões de leitura, as datas de cada sincronia e as escolhas
+        da casa: margem de segurança, corte de operação e diário do recebimento.</figcaption>
+      </figure>
+      <div class="callout warn">A conta nasce em <strong>Somente leitura</strong>, e há um motivo
+      sério: o Olist não tem ambiente de teste — a conta é a que vende. Com a trava ligada, o sistema
+      lê tudo e não escreve <em>nada</em>, nem por engano. Desligar é a decisão deliberada de deixar
+      a sincronia escrever.</div>
+
+      <h2 id="estoque">O estoque, lado a lado</h2>
+      <p>Em <span class="menupath">Olist<i>‣</i>Estoque</span>, cada livro mostra três números: o saldo
+      que o <strong>Olist</strong> oferece, o <strong>estoque do armazém</strong> aqui, e o que seria
+      <strong>enviado</strong> (o armazém menos a margem de segurança). A lista ordena pela divergência —
+      o trabalho começa por onde a diferença é maior.</p>
+      <div class="tablewrap"><table>
+        <tr><th>Situação</th><th>O que significa</th></tr>
+        <tr><td><span class="field">Olist oferece a mais</span></td>
+            <td>O marketplace vende o que você não tem — risco de pedido cancelado.</td></tr>
+        <tr><td><span class="field">Olist oferece a menos</span></td>
+            <td>Você tem e não está vendendo lá.</td></tr>
+        <tr><td><span class="field">Igual</span></td><td>Nada a fazer.</td></tr>
+        <tr><td><span class="field">Sem produto no Odoo</span></td>
+            <td>O livro existe lá e não foi casado aqui — ver <a href="#produtos">a tela de Produtos</a>.</td></tr>
+      </table></div>
+      <figure class="shot">
+        <img src="img/doc-liber_olist-estoque.png"
+             alt="Lista de comparação de estoque com os saldos do Olist e do armazém lado a lado">
+        <figcaption>Os três números lado a lado, e a divergência mandando na ordem. Sincronizar é
+        marcar as linhas e usar a ação — nunca um botão que varre tudo por conta própria.</figcaption>
+      </figure>
+      <p>O número que sobe é o <strong>estoque do armazém</strong>, não o "Em mãos" — o que já está
+      numa caixa fechada com etiqueta de outro cliente não se oferece num marketplace. E a
+      <span class="field">Margem de segurança</span> da conta desconta os últimos exemplares: a
+      contagem erra, e vender o último de um número talvez errado é o que vira cancelamento.</p>
+      <div class="callout warn">O envio <strong>substitui</strong> o saldo no Olist, não soma. Antes
+      do primeiro envio de verdade, a pergunta não é "o código está certo?" — é "o que muda em cada
+      livro?". A tela existe para responder isso antes de qualquer clique.</div>
+
+      <h2 id="produtos">É o mesmo livro?</h2>
+      <p>Em <span class="menupath">Olist<i>‣</i>Produtos</span> mora o espelho do catálogo de lá: nome,
+      preço, <abbr class="sigla" title="International Standard Book Number: o número que identifica cada edição de um livro; na forma de 13 dígitos, é também o código de barras EAN-13.">ISBN</abbr> e a ficha completa. O casamento com o seu catálogo é por ISBN e acontece
+      sozinho. O que não casa — reedição com ISBN novo de um lado e cadastro antigo do outro é o caso
+      comum — se resolve nesta tela:</p>
+      <div class="tablewrap"><table>
+        <tr><th>Recurso</th><th>Para quê</th></tr>
+        <tr><td><span class="field">Sugestão</span></td>
+            <td>Um candidato achado pelo título. É sugestão: quem decide é gente, porque há livro
+                homônimo de editora diferente.</td></tr>
+        <tr><td>Casar à mão</td>
+            <td>Apontar o produto certo na linha. O casamento manual é protegido — a releitura do
+                catálogo não o desfaz.</td></tr>
+        <tr><td><span class="field">Vendido</span></td>
+            <td>Quanto aquele livro vendeu no Olist. É a régua para decidir onde gastar o olho:
+                livro que nunca vendeu pode esperar.</td></tr>
+        <tr><td>Ficha editável</td>
+            <td>Corrigir o cadastro de lá daqui: preço, <abbr class="sigla" title="International Standard Book Number: o número internacional que identifica cada edição de livro.">ISBN</abbr>, situação. Editar muda só o espelho —
+                o Olist só sabe quando você usa <span class="field">Enviar alterações</span>, e a
+                tela mostra o de/para do que está pendente.</td></tr>
+      </table></div>
+      <figure class="shot">
+        <img src="img/doc-liber_olist-produtos.png"
+             alt="Tela de produtos do Olist com a coluna de sugestão e o filtro de quem vendeu">
+        <figcaption>O catálogo de lá, com o casamento à vista: o que casou por <abbr class="sigla" title="International Standard Book Number: o número internacional que identifica cada edição de livro.">ISBN</abbr>, o que foi
+        casado à mão e o que ainda espera — com a sugestão por título ao lado.</figcaption>
+      </figure>
+      <p>O caminho inverso também existe: <span class="menupath">Olist<i>‣</i>Fora do Olist</span> lista os
+      livros do seu catálogo que ainda não estão à venda lá.</p>
+
+      <h2 id="canais">O canal de lá, o canal da casa</h2>
+      <p>O Olist diz de onde veio cada pedido — "Mercado Livre", o nome da loja própria. Esse nome é
+      deles; o canal de venda que os seus relatórios usam é seu. Em
+      <span class="menupath">Olist<i>‣</i>Configurações<i>‣</i>Canais do Olist</span>, cada nome descoberto nos
+      pedidos aparece como uma linha, e a casa escolhe a qual canal de venda ele corresponde. A linha
+      amarela é a que falta mapear — pedido que chega por ela entra sem canal até alguém decidir.</p>
+      <figure class="shot">
+        <img src="img/doc-liber_olist-canais.png"
+             alt="Lista de canais do Olist com um canal mapeado e outro em amarelo, sem mapear">
+        <figcaption>A descoberta é automática; o mapeamento é decisão da casa. Mapear depois
+        alcança os pedidos que já tinham sido lidos.</figcaption>
+      </figure>
+
+      <h2 id="pedidos">A venda desce pronta</h2>
+      <p>Em <span class="menupath">Olist<i>‣</i>Pedidos</span>, a lista traz os pedidos de lá com situação,
+      valor e rastreio. O canal e os itens vêm num segundo passo — <span class="field">Ler
+      detalhe</span> — porque custam uma consulta por pedido; o agendamento faz isso aos poucos, e a
+      conta mostra a cobertura ("47 de 978 lidos").</p>
+      <p><span class="field">Importar para o Odoo</span> é o ato que traz o pedido para dentro, por
+      linhas escolhidas — e ele traz a <strong>nota junto</strong>: a fatura nasce do
+      <abbr class="sigla" title="A representação estruturada da NF-e: o arquivo assinado que a SEFAZ autoriza.">XML</abbr> que a <abbr class="sigla" title="Secretaria da Fazenda: o fisco estadual, que autoriza e guarda as NF-e.">SEFAZ</abbr> autorizou, não do que o pedido diz. Quando os dois divergem
+      (frete, desconto), a diferença fica à vista em vez de silenciosa.</p>
+      <div class="tablewrap"><table>
+        <tr><th>Situação do pedido</th><th>O que fazer</th></tr>
+        <tr><td><span class="field">Falta ler o detalhe</span></td>
+            <td>Nada — o agendamento chega lá; ou selecione e <span class="field">Ler detalhe</span>.</td></tr>
+        <tr><td><span class="field">Não importado</span></td>
+            <td>Pronto para importar, se todos os livros estiverem casados.</td></tr>
+        <tr><td><span class="field">Livros não localizados</span> &gt; 0</td>
+            <td>Um item não tem produto casado. O pedido inteiro espera — entrar com menos livros do
+                que teve deixaria o número errado para sempre. Case o livro na
+                <a href="#produtos">tela de Produtos</a> e importe.</td></tr>
+        <tr><td><span class="field">Cancelado no Olist</span></td>
+            <td>Nada: cancelado não é pendência e sai da fila sozinho.</td></tr>
+      </table></div>
+      <figure class="shot">
+        <img src="img/doc-liber_olist-pedidos.png"
+             alt="Lista de pedidos do Olist com canal, situação e a fila de importação">
+        <figcaption>A fila de trabalho: o que falta detalhar, o que está pronto para importar e o
+        que espera um casamento de livro.</figcaption>
+      </figure>
+      <p>Duas escolhas da conta governam o efeito do pedido importado:</p>
+      <div class="tablewrap"><table>
+        <tr><th>Campo</th><th>O que decide</th></tr>
+        <tr><td><span class="field">Operar pedidos a partir de</span></td>
+            <td>A data em que o marketplace passa a produzir efeito: do corte em diante o pedido
+                confirma, baixa o estoque e fatura; antes dele, entra só como registro. Vazio,
+                nenhum pedido mexe em nada — importar o histórico não pode reescrever o estoque de
+                hoje.</td></tr>
+        <tr><td><span class="field">Diário do recebimento</span></td>
+            <td>Onde lançar o valor que o comprador <em>já pagou</em> ao Olist. Use um diário
+                próprio do marketplace, nunca a conta bancária: o dinheiro só chega no repasse, e é
+                a conciliação desse diário que revela as taxas. Vazio, o título fica em aberto.</td></tr>
+      </table></div>
+      <div class="callout">Cada equipe encontra a nota onde já trabalha: a logística na
+      transferência (com o filtro "Com nota" e o XML anexado), o comercial no pedido, o financeiro
+      no título. Ninguém precisa abrir a tela do Olist.</div>
+
+      <h2 id="problemas">Quando algo não sai como esperado</h2>
+      <div class="tablewrap"><table>
+        <tr><th>O que aparece</th><th>Por quê</th><th>O que fazer</th></tr>
+        <tr>
+          <td>"A conta está em somente leitura"</td>
+          <td>A trava da conta está ligada — e vem ligada de fábrica.</td>
+          <td>Se a intenção era escrever mesmo, desligue <span class="field">Somente leitura</span>
+              na ficha da conta. É uma decisão, não um defeito.</td>
+        </tr>
+        <tr>
+          <td>Um livro aparece duas vezes na comparação</td>
+          <td>Duas entradas do Olist casadas no mesmo produto (capa cinza e capa vinho).</td>
+          <td>O envio recusa até alguém decidir como dividir o saldo — a linha fica marcada.</td>
+        </tr>
+        <tr>
+          <td>"Vendido: 0" num livro que você sabe que vende</td>
+          <td>Os pedidos daquele livro ainda não tiveram o detalhe lido.</td>
+          <td>Confira a cobertura na conta; enquanto não for 100%, o número é um piso.</td>
+        </tr>
+        <tr>
+          <td>A leitura para no meio com aviso de limite</td>
+          <td>A cota de chamadas da conta Olist esgotou por ora.</td>
+          <td>Nada a fazer: o sistema recua e insiste sozinho, no ritmo que a conta aceita.</td>
+        </tr>
+        <tr>
+          <td>Pedido importado sem canal de venda</td>
+          <td>O canal do Olist ainda não foi mapeado.</td>
+          <td>Mapeie em <span class="menupath">Configurações<i>‣</i>Canais do Olist</span> — os pedidos já
+              lidos recebem o canal em seguida.</td>
+        </tr>
+      </table></div>
+
+      <h2 id="nao-fazer">O que não fazer</h2>
+      <ul>
+        <li><strong>Não desligue o "Somente leitura" para testar.</strong> Não existe conta de
+            homologação no Olist: toda escrita é na conta que vende. Teste lendo — é para isso que a
+            trava existe.</li>
+        <li><strong>Não crie produto para todo <abbr class="sigla" title="International Standard Book Number: o número internacional que identifica cada edição de livro.">ISBN</abbr> que não casa.</strong> Metade do que parece
+            faltar é livro que já existe com outro ISBN (reedição). Olhe a sugestão e case; criar
+            sem olhar duplica o catálogo da editora.</li>
+        <li><strong>Não lance o recebimento na conta bancária.</strong> O dinheiro está com o Olist
+            até o repasse cair. Diário próprio do marketplace — é ele que deixa as taxas visíveis.</li>
+      </ul>
+
+      <div class="callout">Dúvida sobre acesso ou empresa: fale com a administração do sistema.
+      Toda leitura e todo envio ficam registrados — a conta guarda as datas, e cada produto guarda o
+      que foi dito e o que voltou.</div>
+
+      <!-- prefixos:begin -->
+      <h2 id="prefixos">Glossário</h2>
+      <p>Todo documento do sistema carrega um prefixo na numeração — CO/2026/00001 é um acerto, AT/2026/00042 é um chamado. A lista é a mesma em todos os manuais:</p>
+      <div class="tablewrap"><table>
+        <tr><th>Prefixo</th><th>O que é</th></tr>
+        <tr><td><code>C</code></td><td>Pedido de consignação: o pedido que põe livros na prateleira do cliente — C00001, no lugar do S da venda comum.</td></tr>
+        <tr><td><code>CO/</code></td><td>Consignação, o documento do acerto: registra o que o cliente vendeu e vira venda — CO/2026/00001.</td></tr>
+        <tr><td><code>CR/</code></td><td>Retorno de consignação: o documento que pede a devolução dos exemplares da prateleira — CR/2026/00001.</td></tr>
+        <tr><td><code>CA</code></td><td>Auditoria de consignação: reconstrói o saldo da prateleira do cliente pelas notas fiscais e registra o ajuste — CA00001.</td></tr>
+        <tr><td><code>CP/</code></td><td>Campanha de consignação: o sortimento-alvo por canal — quantos exemplares de cada título as prateleiras devem ter — CP/2026/0001.</td></tr>
+        <tr><td><code>AC/</code></td><td>Acordo de Consignação: o contrato com a livraria, dono da prateleira — AC/2026/00001.</td></tr>
+        <tr><td><code>COM/OUT/</code></td><td>A série da remessa de consignação ao cliente, do armazém à livraria — COM/OUT/2026/00001, no espelho do WH/OUT.</td></tr>
+        <tr><td><code>COM/MOV/</code></td><td>A série dos fluxos internos de prateleira da consignação — COM/MOV/2026/00001.</td></tr>
+        <tr><td><code>COM/IN/</code></td><td>A série do retorno de consignação, da prateleira ao armazém — COM/IN/2026/00001, no espelho do WH/IN.</td></tr>
+        <tr><td><code>REM/</code></td><td>Remessa: a nota de simples remessa, sem cobrança — a numeração vem do diário fiscal REM.</td></tr>
+        <tr><td><code>COL/</code></td><td>Coleta: o lote do pedido de coleta às transportadoras — COL/2026/00001.</td></tr>
+        <tr><td><code>AT/</code></td><td>Atendimento: o chamado nascido do e-mail comercial — AT/2026/00001.</td></tr>
+        <tr><td><code>MBX/</code></td><td>O lote de envio de metadados à Metabooks — MBX/2026/00001.</td></tr>
+        <tr><td><code>Impostos de Direitos Autorais/</code></td><td>O lote da fatura acumuladora do IRRF retido dos autores no mês.</td></tr>
+        <tr><td><code>Royalties entre Empresas/</code></td><td>O lote da fatura acumuladora de royalties entre as empresas da casa.</td></tr>
+        <tr><th colspan="2">Do próprio Odoo</th></tr>
+        <tr><td><code>S</code></td><td>Pedido de venda comum — S00001; o pedido de consignação usa o C no lugar.</td></tr>
+        <tr><td><code>WH/OUT</code></td><td>Entrega comum do armazém: a transferência de saída padrão do Odoo.</td></tr>
+        <tr><td><code>WH/IN</code></td><td>Recebimento do armazém: a transferência de entrada padrão do Odoo.</td></tr>
+      </table></div>
+      <p>Bases antigas guardam transferências nas séries <code>COM/</code> e <code>RET/</code>, de antes da separação por direção — o histórico não é renumerado.</p>
+      <!-- prefixos:end -->
+
+      <nav class="pager" id="pager"></nav>
+    </article>
+  </div>
+</div>
+<script src="docs.js"></script>
+</body>
+</html>

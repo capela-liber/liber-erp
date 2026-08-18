@@ -45,7 +45,10 @@ class MetabooksImportJob(models.Model):
         help="The catalogue feed carries no dimensions, weight, page count, "
              "binding or NCM. A technical job tops those up on books already "
              "imported, one by-ISBN call each, without touching their price, "
-             "name, category or cover.")
+             "name, category or cover. It also adopts books with no publisher "
+             "link (e.g. migrated from the legacy system) that still lack "
+             "their sheet or weight -- the API answers by ISBN, whoever the "
+             "publisher is.")
     with_covers = fields.Boolean("Download covers", default=True)
     with_technical = fields.Boolean(
         "Download technical sheets", default=False,
@@ -69,6 +72,12 @@ class MetabooksImportJob(models.Model):
              "of the catalogue came in anyway.")
     total_pages = fields.Integer("Catalogue Pages", readonly=True)
     next_page = fields.Integer("Next Page", default=1, readonly=True)
+    technical_last_id = fields.Integer(
+        "Last Book Processed", default=0, readonly=True,
+        help="Resume cursor of a technical run: id of the last book already "
+             "processed. Books leave the job's domain as soon as they gain "
+             "their sheet, so paging by offset would skip one book for each "
+             "book enriched.")
     progress = fields.Float("Progress", compute="_compute_progress")
     message = fields.Text("Message", readonly=True)
     product_ids = fields.Many2many(
@@ -92,7 +101,7 @@ class MetabooksImportJob(models.Model):
 
     def action_requeue(self):
         self.write({"state": "queued", "next_page": 1, "imported": 0,
-                    "skipped": 0, "message": False})
+                    "skipped": 0, "message": False, "technical_last_id": 0})
         self._trigger_cron()
         return True
 
@@ -187,28 +196,42 @@ class MetabooksImportJob(models.Model):
 
     def _technical_domain(self):
         mvb = (self.mvb_id or "").strip()
-        return [("metabooks_vendor_id", "=", mvb),
-                ("default_code", "!=", False)]
+        # Livros migrados do legado não têm metabooks_vendor_id, então nenhum
+        # job por editora os alcançava e o peso nunca chegava ao armazém. A
+        # API responde por ISBN, seja de quem for a editora, e o job adota os
+        # órfãos -- mas só os que ainda devem ficha ou peso, para não refazer
+        # milhares de chamadas a cada reexecução.
+        return [
+            "&", ("default_code", "!=", False),
+            "|", ("metabooks_vendor_id", "=", mvb),
+            "&", ("metabooks_vendor_id", "=", False),
+            "|", ("metabooks_technical_sync", "=", False),
+            "|", ("weight", "=", False), ("weight", "=", 0.0),
+        ]
 
     def _process_technical_batch(self, start):
         """Top up the technical sheet of already-imported books, ISBN by ISBN.
 
-        Resumable: `imported` doubles as the offset into the (id-ordered) book
-        list, so a cron hand-back or a crash restarts exactly where it stopped.
+        Resumable: anda por cursor de id (`technical_last_id`), não por
+        offset -- um órfão SAI do domínio assim que ganha a ficha, e um
+        offset sobre um conjunto que encolhe pulava um livro a cada livro
+        enriquecido.
         """
         connector = self.env["metabooks.connector"]
         Product = self.env["product.template"]
         domain = self._technical_domain()
-        self.total = Product.search_count(domain)
         while True:
+            restantes = [("id", ">", self.technical_last_id)] + domain
+            self.total = self.imported + Product.search_count(restantes)
             books = Product.search(
-                domain, order="id", offset=self.imported, limit=TECHNICAL_BATCH_SIZE)
+                restantes, order="id", limit=TECHNICAL_BATCH_SIZE)
             if not books:
                 self.state = "done"
                 self.env.cr.commit()
                 return
             res = connector.enrich_isbns(
                 [b.default_code or b.barcode for b in books])
+            self.technical_last_id = books[-1].id
             self.imported += len(books)
             if res["not_found"]:
                 _logger.info("Metabooks job %s: %s ISBN(s) not found on this batch",

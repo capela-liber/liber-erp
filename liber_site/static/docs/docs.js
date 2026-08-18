@@ -29,6 +29,7 @@ var DOCS = [
   ]},
   { area: "Canais de venda", desc: "Os pedidos que chegam de fora — cada canal com o seu jeito de pedir.", items: [
     { slug: "liber_amazon_vendor", title: "Amazon Vendor Central", desc: "Pedidos da Amazon lidos, conferidos contra o cadastro e transformados em cotação." },
+    { slug: "liber_olist", title: "Marketplaces via Olist", desc: "A venda do Mercado Livre desce com canal e nota; o estoque da prateleira sobe. O razão continua sendo o seu." },
   ]},
   { area: "Produção", desc: "O livro impresso quando alguém compra — tiragem, frete e entrega.", items: [
     { slug: "liber_metabrasil", title: "Impressão sob demanda (Metabrasil)", desc: "Preço por tiragem, cotação de frete, dropship e acompanhamento da gráfica." },

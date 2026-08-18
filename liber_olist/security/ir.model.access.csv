@@ -1,0 +1,13 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_olist_account_user,olist.account.user,model_olist_account,base.group_user,1,0,0,0
+access_olist_account_manager,olist.account.manager,model_olist_account,base.group_system,1,1,1,1
+access_olist_product_user,olist.product.user,model_olist_product,base.group_user,1,0,0,0
+access_olist_product_manager,olist.product.manager,model_olist_product,base.group_system,1,1,1,1
+access_olist_order_user,olist.order.user,model_olist_order,base.group_user,1,0,0,0
+access_olist_order_manager,olist.order.manager,model_olist_order,base.group_system,1,1,1,1
+access_olist_order_line_user,olist.order.line.user,model_olist_order_line,base.group_user,1,0,0,0
+access_olist_order_line_manager,olist.order.line.manager,model_olist_order_line,base.group_system,1,1,1,1
+access_olist_product_field_user,olist.product.field.user,model_olist_product_field,base.group_user,1,0,0,0
+access_olist_product_field_manager,olist.product.field.manager,model_olist_product_field,base.group_system,1,1,1,1
+access_olist_channel_user,olist.channel.user,model_olist_channel,base.group_user,1,0,0,0
+access_olist_channel_manager,olist.channel.manager,model_olist_channel,base.group_system,1,1,1,1

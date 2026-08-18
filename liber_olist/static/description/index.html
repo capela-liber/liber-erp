@@ -1,0 +1,218 @@
+<!-- GERADO por scripts/gen_module_descriptions.py a partir de
+     liber_site/static/docs/liber_olist.html -- não edite aqui.
+     O Odoo mostra este arquivo em Apps > Module Info. -->
+<div class="oe_container liber_manual" style="max-width:900px;margin:0 auto;padding:8px 4px 24px;color:#251d2b;background:transparent;font:15px/1.7 Inter,'Segoe UI',system-ui,sans-serif;"><h1 style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:32px;line-height:1.2;letter-spacing:-.015em;margin:0 0 10px;color:#251d2b;">Marketplaces via Olist</h1>
+      <p class="lead" style="font-size:17.5px;color:#5d5266;margin:0 0 26px;max-width:62ch;">O Olist é um serviço pago e fechado — e o Liber conversa com ele assim mesmo.
+      A venda do Mercado Livre desce com canal, cliente e nota fiscal; o estoque da prateleira sobe;
+      e o livro-razão continua sendo o seu. O Olist é um adaptador: se um dia sair, a integração sai
+      com ele e os seus dados ficam.</p>
+
+      <h2 id="ligar" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">Como ligo a integração?</h2>
+      <p style="margin:0 0 12px;">É uma conta por empresa: cada selo com a sua conta Olist, cada conta apontando para uma
+      empresa do sistema.</p>
+      <ol class="steps" style="margin:0 0 16px 22px;padding:0;">
+        <li style="margin:0 0 7px;">No Olist, em <span class="menupath" style="display:inline-block;background:#f1eaf6;border:1px solid #e5dbee;border-radius:6px;padding:1px 8px;font-size:13.5px;color:#251d2b;white-space:nowrap;">Extensões<i style="font-style:normal;color:#6e2f91;margin:0 4px;font-weight:700;">‣</i>Token API</span>, gere o token da <abbr class="sigla" title="Interface de programação: o canal por onde um sistema conversa com outro." style="text-decoration:none;border-bottom:1px dotted #8a4bad;cursor:help;">API</abbr> v2.</li>
+        <li style="margin:0 0 7px;">Aqui, em <span class="menupath" style="display:inline-block;background:#f1eaf6;border:1px solid #e5dbee;border-radius:6px;padding:1px 8px;font-size:13.5px;color:#251d2b;white-space:nowrap;">Olist<i style="font-style:normal;color:#6e2f91;margin:0 4px;font-weight:700;">‣</i>Configurações<i style="font-style:normal;color:#6e2f91;margin:0 4px;font-weight:700;">‣</i>Contas</span>, crie a conta: nome,
+            empresa e o token. A empresa precisa ter <abbr class="sigla" title="Cadastro Nacional da Pessoa Jurídica: o número que identifica a empresa." style="text-decoration:none;border-bottom:1px dotted #8a4bad;cursor:help;">CNPJ</abbr> preenchido — é ele que prova que
+            cada nota importada é dela.</li>
+        <li style="margin:0 0 7px;">Use os botões da conta na primeira vez: <span class="field" style="font-weight:600;color:#251d2b;">Ler catálogo</span>,
+            <span class="field" style="font-weight:600;color:#251d2b;">Ler pedidos</span>, <span class="field" style="font-weight:600;color:#251d2b;">Ler notas fiscais</span>.
+            Depois, os agendamentos mantêm tudo fresco sozinhos.</li>
+      </ol>
+      <figure class="shot" style="margin:20px 0 24px;">
+        <img src="img/doc-liber_olist-conta.png" alt="Ficha da conta Olist com os botões de leitura e a opção Somente leitura ligada" style="max-width:100%;display:block;margin:0 auto;border-radius:12px;border:1px solid #e5dbee;">
+        <figcaption style="font-size:13px;color:#5d5266;margin-top:10px;text-align:center;">A conta reúne os botões de leitura, as datas de cada sincronia e as escolhas
+        da casa: margem de segurança, corte de operação e diário do recebimento.</figcaption>
+      </figure>
+      <div class="callout warn" style="border:1px solid #e5dbee;border-left:4px solid #6e2f91;border-radius:10px;padding:14px 18px;margin:0 0 16px;border-left-color:#b3831a;background:#faf3e3;border-color:#eddfba;">A conta nasce em <strong style="color:#251d2b;">Somente leitura</strong>, e há um motivo
+      sério: o Olist não tem ambiente de teste — a conta é a que vende. Com a trava ligada, o sistema
+      lê tudo e não escreve <em>nada</em>, nem por engano. Desligar é a decisão deliberada de deixar
+      a sincronia escrever.</div>
+
+      <h2 id="estoque" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">O estoque, lado a lado</h2>
+      <p style="margin:0 0 12px;">Em <span class="menupath" style="display:inline-block;background:#f1eaf6;border:1px solid #e5dbee;border-radius:6px;padding:1px 8px;font-size:13.5px;color:#251d2b;white-space:nowrap;">Olist<i style="font-style:normal;color:#6e2f91;margin:0 4px;font-weight:700;">‣</i>Estoque</span>, cada livro mostra três números: o saldo
+      que o <strong style="color:#251d2b;">Olist</strong> oferece, o <strong style="color:#251d2b;">estoque do armazém</strong> aqui, e o que seria
+      <strong style="color:#251d2b;">enviado</strong> (o armazém menos a margem de segurança). A lista ordena pela divergência —
+      o trabalho começa por onde a diferença é maior.</p>
+      <div class="tablewrap" style="overflow-x:auto;margin:0 0 16px;"><table style="border-collapse:collapse;width:100%;margin:0 0 16px;font-size:14px;">
+        <tr><th style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;background:#f1eaf6;font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:13.5px;">Situação</th><th style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;background:#f1eaf6;font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:13.5px;">O que significa</th></tr>
+        <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;"><span class="field" style="font-weight:600;color:#251d2b;">Olist oferece a mais</span></td>
+            <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">O marketplace vende o que você não tem — risco de pedido cancelado.</td></tr>
+        <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;"><span class="field" style="font-weight:600;color:#251d2b;">Olist oferece a menos</span></td>
+            <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Você tem e não está vendendo lá.</td></tr>
+        <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;"><span class="field" style="font-weight:600;color:#251d2b;">Igual</span></td><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Nada a fazer.</td></tr>
+        <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;"><span class="field" style="font-weight:600;color:#251d2b;">Sem produto no Odoo</span></td>
+            <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">O livro existe lá e não foi casado aqui — ver <a href="#produtos" style="color:#6e2f91;">a tela de Produtos</a>.</td></tr>
+      </table></div>
+      <figure class="shot" style="margin:20px 0 24px;">
+        <img src="img/doc-liber_olist-estoque.png" alt="Lista de comparação de estoque com os saldos do Olist e do armazém lado a lado" style="max-width:100%;display:block;margin:0 auto;border-radius:12px;border:1px solid #e5dbee;">
+        <figcaption style="font-size:13px;color:#5d5266;margin-top:10px;text-align:center;">Os três números lado a lado, e a divergência mandando na ordem. Sincronizar é
+        marcar as linhas e usar a ação — nunca um botão que varre tudo por conta própria.</figcaption>
+      </figure>
+      <p style="margin:0 0 12px;">O número que sobe é o <strong style="color:#251d2b;">estoque do armazém</strong>, não o "Em mãos" — o que já está
+      numa caixa fechada com etiqueta de outro cliente não se oferece num marketplace. E a
+      <span class="field" style="font-weight:600;color:#251d2b;">Margem de segurança</span> da conta desconta os últimos exemplares: a
+      contagem erra, e vender o último de um número talvez errado é o que vira cancelamento.</p>
+      <div class="callout warn" style="border:1px solid #e5dbee;border-left:4px solid #6e2f91;border-radius:10px;padding:14px 18px;margin:0 0 16px;border-left-color:#b3831a;background:#faf3e3;border-color:#eddfba;">O envio <strong style="color:#251d2b;">substitui</strong> o saldo no Olist, não soma. Antes
+      do primeiro envio de verdade, a pergunta não é "o código está certo?" — é "o que muda em cada
+      livro?". A tela existe para responder isso antes de qualquer clique.</div>
+
+      <h2 id="produtos" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">É o mesmo livro?</h2>
+      <p style="margin:0 0 12px;">Em <span class="menupath" style="display:inline-block;background:#f1eaf6;border:1px solid #e5dbee;border-radius:6px;padding:1px 8px;font-size:13.5px;color:#251d2b;white-space:nowrap;">Olist<i style="font-style:normal;color:#6e2f91;margin:0 4px;font-weight:700;">‣</i>Produtos</span> mora o espelho do catálogo de lá: nome,
+      preço, <abbr class="sigla" title="International Standard Book Number: o número que identifica cada edição de um livro; na forma de 13 dígitos, é também o código de barras EAN-13." style="text-decoration:none;border-bottom:1px dotted #8a4bad;cursor:help;">ISBN</abbr> e a ficha completa. O casamento com o seu catálogo é por ISBN e acontece
+      sozinho. O que não casa — reedição com ISBN novo de um lado e cadastro antigo do outro é o caso
+      comum — se resolve nesta tela:</p>
+      <div class="tablewrap" style="overflow-x:auto;margin:0 0 16px;"><table style="border-collapse:collapse;width:100%;margin:0 0 16px;font-size:14px;">
+        <tr><th style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;background:#f1eaf6;font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:13.5px;">Recurso</th><th style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;background:#f1eaf6;font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:13.5px;">Para quê</th></tr>
+        <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;"><span class="field" style="font-weight:600;color:#251d2b;">Sugestão</span></td>
+            <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Um candidato achado pelo título. É sugestão: quem decide é gente, porque há livro
+                homônimo de editora diferente.</td></tr>
+        <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Casar à mão</td>
+            <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Apontar o produto certo na linha. O casamento manual é protegido — a releitura do
+                catálogo não o desfaz.</td></tr>
+        <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;"><span class="field" style="font-weight:600;color:#251d2b;">Vendido</span></td>
+            <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Quanto aquele livro vendeu no Olist. É a régua para decidir onde gastar o olho:
+                livro que nunca vendeu pode esperar.</td></tr>
+        <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Ficha editável</td>
+            <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Corrigir o cadastro de lá daqui: preço, <abbr class="sigla" title="International Standard Book Number: o número internacional que identifica cada edição de livro." style="text-decoration:none;border-bottom:1px dotted #8a4bad;cursor:help;">ISBN</abbr>, situação. Editar muda só o espelho —
+                o Olist só sabe quando você usa <span class="field" style="font-weight:600;color:#251d2b;">Enviar alterações</span>, e a
+                tela mostra o de/para do que está pendente.</td></tr>
+      </table></div>
+      <figure class="shot" style="margin:20px 0 24px;">
+        <img src="img/doc-liber_olist-produtos.png" alt="Tela de produtos do Olist com a coluna de sugestão e o filtro de quem vendeu" style="max-width:100%;display:block;margin:0 auto;border-radius:12px;border:1px solid #e5dbee;">
+        <figcaption style="font-size:13px;color:#5d5266;margin-top:10px;text-align:center;">O catálogo de lá, com o casamento à vista: o que casou por <abbr class="sigla" title="International Standard Book Number: o número internacional que identifica cada edição de livro." style="text-decoration:none;border-bottom:1px dotted #8a4bad;cursor:help;">ISBN</abbr>, o que foi
+        casado à mão e o que ainda espera — com a sugestão por título ao lado.</figcaption>
+      </figure>
+      <p style="margin:0 0 12px;">O caminho inverso também existe: <span class="menupath" style="display:inline-block;background:#f1eaf6;border:1px solid #e5dbee;border-radius:6px;padding:1px 8px;font-size:13.5px;color:#251d2b;white-space:nowrap;">Olist<i style="font-style:normal;color:#6e2f91;margin:0 4px;font-weight:700;">‣</i>Fora do Olist</span> lista os
+      livros do seu catálogo que ainda não estão à venda lá.</p>
+
+      <h2 id="canais" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">O canal de lá, o canal da casa</h2>
+      <p style="margin:0 0 12px;">O Olist diz de onde veio cada pedido — "Mercado Livre", o nome da loja própria. Esse nome é
+      deles; o canal de venda que os seus relatórios usam é seu. Em
+      <span class="menupath" style="display:inline-block;background:#f1eaf6;border:1px solid #e5dbee;border-radius:6px;padding:1px 8px;font-size:13.5px;color:#251d2b;white-space:nowrap;">Olist<i style="font-style:normal;color:#6e2f91;margin:0 4px;font-weight:700;">‣</i>Configurações<i style="font-style:normal;color:#6e2f91;margin:0 4px;font-weight:700;">‣</i>Canais do Olist</span>, cada nome descoberto nos
+      pedidos aparece como uma linha, e a casa escolhe a qual canal de venda ele corresponde. A linha
+      amarela é a que falta mapear — pedido que chega por ela entra sem canal até alguém decidir.</p>
+      <figure class="shot" style="margin:20px 0 24px;">
+        <img src="img/doc-liber_olist-canais.png" alt="Lista de canais do Olist com um canal mapeado e outro em amarelo, sem mapear" style="max-width:100%;display:block;margin:0 auto;border-radius:12px;border:1px solid #e5dbee;">
+        <figcaption style="font-size:13px;color:#5d5266;margin-top:10px;text-align:center;">A descoberta é automática; o mapeamento é decisão da casa. Mapear depois
+        alcança os pedidos que já tinham sido lidos.</figcaption>
+      </figure>
+
+      <h2 id="pedidos" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">A venda desce pronta</h2>
+      <p style="margin:0 0 12px;">Em <span class="menupath" style="display:inline-block;background:#f1eaf6;border:1px solid #e5dbee;border-radius:6px;padding:1px 8px;font-size:13.5px;color:#251d2b;white-space:nowrap;">Olist<i style="font-style:normal;color:#6e2f91;margin:0 4px;font-weight:700;">‣</i>Pedidos</span>, a lista traz os pedidos de lá com situação,
+      valor e rastreio. O canal e os itens vêm num segundo passo — <span class="field" style="font-weight:600;color:#251d2b;">Ler
+      detalhe</span> — porque custam uma consulta por pedido; o agendamento faz isso aos poucos, e a
+      conta mostra a cobertura ("47 de 978 lidos").</p>
+      <p style="margin:0 0 12px;"><span class="field" style="font-weight:600;color:#251d2b;">Importar para o Odoo</span> é o ato que traz o pedido para dentro, por
+      linhas escolhidas — e ele traz a <strong style="color:#251d2b;">nota junto</strong>: a fatura nasce do
+      <abbr class="sigla" title="A representação estruturada da NF-e: o arquivo assinado que a SEFAZ autoriza." style="text-decoration:none;border-bottom:1px dotted #8a4bad;cursor:help;">XML</abbr> que a <abbr class="sigla" title="Secretaria da Fazenda: o fisco estadual, que autoriza e guarda as NF-e." style="text-decoration:none;border-bottom:1px dotted #8a4bad;cursor:help;">SEFAZ</abbr> autorizou, não do que o pedido diz. Quando os dois divergem
+      (frete, desconto), a diferença fica à vista em vez de silenciosa.</p>
+      <div class="tablewrap" style="overflow-x:auto;margin:0 0 16px;"><table style="border-collapse:collapse;width:100%;margin:0 0 16px;font-size:14px;">
+        <tr><th style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;background:#f1eaf6;font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:13.5px;">Situação do pedido</th><th style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;background:#f1eaf6;font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:13.5px;">O que fazer</th></tr>
+        <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;"><span class="field" style="font-weight:600;color:#251d2b;">Falta ler o detalhe</span></td>
+            <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Nada — o agendamento chega lá; ou selecione e <span class="field" style="font-weight:600;color:#251d2b;">Ler detalhe</span>.</td></tr>
+        <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;"><span class="field" style="font-weight:600;color:#251d2b;">Não importado</span></td>
+            <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Pronto para importar, se todos os livros estiverem casados.</td></tr>
+        <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;"><span class="field" style="font-weight:600;color:#251d2b;">Livros não localizados</span> &gt; 0</td>
+            <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Um item não tem produto casado. O pedido inteiro espera — entrar com menos livros do
+                que teve deixaria o número errado para sempre. Case o livro na
+                <a href="#produtos" style="color:#6e2f91;">tela de Produtos</a> e importe.</td></tr>
+        <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;"><span class="field" style="font-weight:600;color:#251d2b;">Cancelado no Olist</span></td>
+            <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Nada: cancelado não é pendência e sai da fila sozinho.</td></tr>
+      </table></div>
+      <figure class="shot" style="margin:20px 0 24px;">
+        <img src="img/doc-liber_olist-pedidos.png" alt="Lista de pedidos do Olist com canal, situação e a fila de importação" style="max-width:100%;display:block;margin:0 auto;border-radius:12px;border:1px solid #e5dbee;">
+        <figcaption style="font-size:13px;color:#5d5266;margin-top:10px;text-align:center;">A fila de trabalho: o que falta detalhar, o que está pronto para importar e o
+        que espera um casamento de livro.</figcaption>
+      </figure>
+      <p style="margin:0 0 12px;">Duas escolhas da conta governam o efeito do pedido importado:</p>
+      <div class="tablewrap" style="overflow-x:auto;margin:0 0 16px;"><table style="border-collapse:collapse;width:100%;margin:0 0 16px;font-size:14px;">
+        <tr><th style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;background:#f1eaf6;font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:13.5px;">Campo</th><th style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;background:#f1eaf6;font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:13.5px;">O que decide</th></tr>
+        <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;"><span class="field" style="font-weight:600;color:#251d2b;">Operar pedidos a partir de</span></td>
+            <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">A data em que o marketplace passa a produzir efeito: do corte em diante o pedido
+                confirma, baixa o estoque e fatura; antes dele, entra só como registro. Vazio,
+                nenhum pedido mexe em nada — importar o histórico não pode reescrever o estoque de
+                hoje.</td></tr>
+        <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;"><span class="field" style="font-weight:600;color:#251d2b;">Diário do recebimento</span></td>
+            <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Onde lançar o valor que o comprador <em>já pagou</em> ao Olist. Use um diário
+                próprio do marketplace, nunca a conta bancária: o dinheiro só chega no repasse, e é
+                a conciliação desse diário que revela as taxas. Vazio, o título fica em aberto.</td></tr>
+      </table></div>
+      <div class="callout" style="border:1px solid #e5dbee;border-left:4px solid #6e2f91;border-radius:10px;background:#f1eaf6;padding:14px 18px;margin:0 0 16px;">Cada equipe encontra a nota onde já trabalha: a logística na
+      transferência (com o filtro "Com nota" e o XML anexado), o comercial no pedido, o financeiro
+      no título. Ninguém precisa abrir a tela do Olist.</div>
+
+      <h2 id="problemas" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">Quando algo não sai como esperado</h2>
+      <div class="tablewrap" style="overflow-x:auto;margin:0 0 16px;"><table style="border-collapse:collapse;width:100%;margin:0 0 16px;font-size:14px;">
+        <tr><th style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;background:#f1eaf6;font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:13.5px;">O que aparece</th><th style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;background:#f1eaf6;font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:13.5px;">Por quê</th><th style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;background:#f1eaf6;font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:13.5px;">O que fazer</th></tr>
+        <tr>
+          <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">"A conta está em somente leitura"</td>
+          <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">A trava da conta está ligada — e vem ligada de fábrica.</td>
+          <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Se a intenção era escrever mesmo, desligue <span class="field" style="font-weight:600;color:#251d2b;">Somente leitura</span>
+              na ficha da conta. É uma decisão, não um defeito.</td>
+        </tr>
+        <tr>
+          <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Um livro aparece duas vezes na comparação</td>
+          <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Duas entradas do Olist casadas no mesmo produto (capa cinza e capa vinho).</td>
+          <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">O envio recusa até alguém decidir como dividir o saldo — a linha fica marcada.</td>
+        </tr>
+        <tr>
+          <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">"Vendido: 0" num livro que você sabe que vende</td>
+          <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Os pedidos daquele livro ainda não tiveram o detalhe lido.</td>
+          <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Confira a cobertura na conta; enquanto não for 100%, o número é um piso.</td>
+        </tr>
+        <tr>
+          <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">A leitura para no meio com aviso de limite</td>
+          <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">A cota de chamadas da conta Olist esgotou por ora.</td>
+          <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Nada a fazer: o sistema recua e insiste sozinho, no ritmo que a conta aceita.</td>
+        </tr>
+        <tr>
+          <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Pedido importado sem canal de venda</td>
+          <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">O canal do Olist ainda não foi mapeado.</td>
+          <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Mapeie em <span class="menupath" style="display:inline-block;background:#f1eaf6;border:1px solid #e5dbee;border-radius:6px;padding:1px 8px;font-size:13.5px;color:#251d2b;white-space:nowrap;">Configurações<i style="font-style:normal;color:#6e2f91;margin:0 4px;font-weight:700;">‣</i>Canais do Olist</span> — os pedidos já
+              lidos recebem o canal em seguida.</td>
+        </tr>
+      </table></div>
+
+      <h2 id="nao-fazer" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">O que não fazer</h2>
+      <ul style="margin:0 0 14px 22px;padding:0;">
+        <li style="margin:0 0 7px;"><strong style="color:#251d2b;">Não desligue o "Somente leitura" para testar.</strong> Não existe conta de
+            homologação no Olist: toda escrita é na conta que vende. Teste lendo — é para isso que a
+            trava existe.</li>
+        <li style="margin:0 0 7px;"><strong style="color:#251d2b;">Não crie produto para todo <abbr class="sigla" title="International Standard Book Number: o número internacional que identifica cada edição de livro." style="text-decoration:none;border-bottom:1px dotted #8a4bad;cursor:help;">ISBN</abbr> que não casa.</strong> Metade do que parece
+            faltar é livro que já existe com outro ISBN (reedição). Olhe a sugestão e case; criar
+            sem olhar duplica o catálogo da editora.</li>
+        <li style="margin:0 0 7px;"><strong style="color:#251d2b;">Não lance o recebimento na conta bancária.</strong> O dinheiro está com o Olist
+            até o repasse cair. Diário próprio do marketplace — é ele que deixa as taxas visíveis.</li>
+      </ul>
+
+      <div class="callout" style="border:1px solid #e5dbee;border-left:4px solid #6e2f91;border-radius:10px;background:#f1eaf6;padding:14px 18px;margin:0 0 16px;">Dúvida sobre acesso ou empresa: fale com a administração do sistema.
+      Toda leitura e todo envio ficam registrados — a conta guarda as datas, e cada produto guarda o
+      que foi dito e o que voltou.</div>
+
+      
+      <h2 id="prefixos" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">Glossário</h2>
+      <p style="margin:0 0 12px;">Todo documento do sistema carrega um prefixo na numeração — CO/2026/00001 é um acerto, AT/2026/00042 é um chamado. A lista é a mesma em todos os manuais:</p>
+      <div class="tablewrap" style="overflow-x:auto;margin:0 0 16px;"><table style="border-collapse:collapse;width:100%;margin:0 0 16px;font-size:14px;">
+        <tr><th style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;background:#f1eaf6;font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:13.5px;">Prefixo</th><th style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;background:#f1eaf6;font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:13.5px;">O que é</th></tr>
+        <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;"><code style="background:#f1eaf6;border:1px solid #e5dbee;border-radius:5px;padding:1px 6px;font-size:13px;font-family:ui-monospace,Menlo,Consolas,monospace;">C</code></td><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Pedido de consignação: o pedido que põe livros na prateleira do cliente — C00001, no lugar do S da venda comum.</td></tr>
+        <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;"><code style="background:#f1eaf6;border:1px solid #e5dbee;border-radius:5px;padding:1px 6px;font-size:13px;font-family:ui-monospace,Menlo,Consolas,monospace;">CO/</code></td><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Consignação, o documento do acerto: registra o que o cliente vendeu e vira venda — CO/2026/00001.</td></tr>
+        <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;"><code style="background:#f1eaf6;border:1px solid #e5dbee;border-radius:5px;padding:1px 6px;font-size:13px;font-family:ui-monospace,Menlo,Consolas,monospace;">CR/</code></td><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Retorno de consignação: o documento que pede a devolução dos exemplares da prateleira — CR/2026/00001.</td></tr>
+        <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;"><code style="background:#f1eaf6;border:1px solid #e5dbee;border-radius:5px;padding:1px 6px;font-size:13px;font-family:ui-monospace,Menlo,Consolas,monospace;">CA</code></td><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Auditoria de consignação: reconstrói o saldo da prateleira do cliente pelas notas fiscais e registra o ajuste — CA00001.</td></tr>
+        <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;"><code style="background:#f1eaf6;border:1px solid #e5dbee;border-radius:5px;padding:1px 6px;font-size:13px;font-family:ui-monospace,Menlo,Consolas,monospace;">CP/</code></td><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Campanha de consignação: o sortimento-alvo por canal — quantos exemplares de cada título as prateleiras devem ter — CP/2026/0001.</td></tr>
+        <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;"><code style="background:#f1eaf6;border:1px solid #e5dbee;border-radius:5px;padding:1px 6px;font-size:13px;font-family:ui-monospace,Menlo,Consolas,monospace;">AC/</code></td><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Acordo de Consignação: o contrato com a livraria, dono da prateleira — AC/2026/00001.</td></tr>
+        <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;"><code style="background:#f1eaf6;border:1px solid #e5dbee;border-radius:5px;padding:1px 6px;font-size:13px;font-family:ui-monospace,Menlo,Consolas,monospace;">COM/OUT/</code></td><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">A série da remessa de consignação ao cliente, do armazém à livraria — COM/OUT/2026/00001, no espelho do WH/OUT.</td></tr>
+        <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;"><code style="background:#f1eaf6;border:1px solid #e5dbee;border-radius:5px;padding:1px 6px;font-size:13px;font-family:ui-monospace,Menlo,Consolas,monospace;">COM/MOV/</code></td><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">A série dos fluxos internos de prateleira da consignação — COM/MOV/2026/00001.</td></tr>
+        <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;"><code style="background:#f1eaf6;border:1px solid #e5dbee;border-radius:5px;padding:1px 6px;font-size:13px;font-family:ui-monospace,Menlo,Consolas,monospace;">COM/IN/</code></td><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">A série do retorno de consignação, da prateleira ao armazém — COM/IN/2026/00001, no espelho do WH/IN.</td></tr>
+        <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;"><code style="background:#f1eaf6;border:1px solid #e5dbee;border-radius:5px;padding:1px 6px;font-size:13px;font-family:ui-monospace,Menlo,Consolas,monospace;">REM/</code></td><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Remessa: a nota de simples remessa, sem cobrança — a numeração vem do diário fiscal REM.</td></tr>
+        <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;"><code style="background:#f1eaf6;border:1px solid #e5dbee;border-radius:5px;padding:1px 6px;font-size:13px;font-family:ui-monospace,Menlo,Consolas,monospace;">COL/</code></td><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Coleta: o lote do pedido de coleta às transportadoras — COL/2026/00001.</td></tr>
+        <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;"><code style="background:#f1eaf6;border:1px solid #e5dbee;border-radius:5px;padding:1px 6px;font-size:13px;font-family:ui-monospace,Menlo,Consolas,monospace;">AT/</code></td><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Atendimento: o chamado nascido do e-mail comercial — AT/2026/00001.</td></tr>
+        <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;"><code style="background:#f1eaf6;border:1px solid #e5dbee;border-radius:5px;padding:1px 6px;font-size:13px;font-family:ui-monospace,Menlo,Consolas,monospace;">MBX/</code></td><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">O lote de envio de metadados à Metabooks — MBX/2026/00001.</td></tr>
+        <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;"><code style="background:#f1eaf6;border:1px solid #e5dbee;border-radius:5px;padding:1px 6px;font-size:13px;font-family:ui-monospace,Menlo,Consolas,monospace;">Impostos de Direitos Autorais/</code></td><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">O lote da fatura acumuladora do IRRF retido dos autores no mês.</td></tr>
+        <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;"><code style="background:#f1eaf6;border:1px solid #e5dbee;border-radius:5px;padding:1px 6px;font-size:13px;font-family:ui-monospace,Menlo,Consolas,monospace;">Royalties entre Empresas/</code></td><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">O lote da fatura acumuladora de royalties entre as empresas da casa.</td></tr>
+        <tr><th colspan="2" style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;background:#f1eaf6;font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:13.5px;">Do próprio Odoo</th></tr>
+        <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;"><code style="background:#f1eaf6;border:1px solid #e5dbee;border-radius:5px;padding:1px 6px;font-size:13px;font-family:ui-monospace,Menlo,Consolas,monospace;">S</code></td><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Pedido de venda comum — S00001; o pedido de consignação usa o C no lugar.</td></tr>
+        <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;"><code style="background:#f1eaf6;border:1px solid #e5dbee;border-radius:5px;padding:1px 6px;font-size:13px;font-family:ui-monospace,Menlo,Consolas,monospace;">WH/OUT</code></td><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Entrega comum do armazém: a transferência de saída padrão do Odoo.</td></tr>
+        <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;"><code style="background:#f1eaf6;border:1px solid #e5dbee;border-radius:5px;padding:1px 6px;font-size:13px;font-family:ui-monospace,Menlo,Consolas,monospace;">WH/IN</code></td><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Recebimento do armazém: a transferência de entrada padrão do Odoo.</td></tr>
+      </table></div>
+      <p style="margin:0 0 12px;">Bases antigas guardam transferências nas séries <code style="background:#f1eaf6;border:1px solid #e5dbee;border-radius:5px;padding:1px 6px;font-size:13px;font-family:ui-monospace,Menlo,Consolas,monospace;">COM/</code> e <code style="background:#f1eaf6;border:1px solid #e5dbee;border-radius:5px;padding:1px 6px;font-size:13px;font-family:ui-monospace,Menlo,Consolas,monospace;">RET/</code>, de antes da separação por direção — o histórico não é renumerado.</p><p style="margin:28px 0 0;padding-top:14px;border-top:1px solid #e5dbee;font-size:13px;color:#5d5266;">Manual completo, com busca e as demais páginas: <a href="/liber_site/static/docs/liber_olist.html" target="_blank" rel="noopener" style="color:#6e2f91;">Marketplaces via Olist</a>.</p></div>

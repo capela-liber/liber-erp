@@ -729,6 +729,22 @@ class ConsignmentSettlement(models.Model):
         picking_type = self.company_id._get_consignment_settlement_operation_type()
         customers = self.env.ref('stock.stock_location_customers')
         shelf = self.location_id
+        # Each move points at its S line (sale_line_id): the baixa IS the
+        # sale's delivery. Unlinked, the sale's delivered qty stays at zero
+        # forever -- and with the catalog on "delivered quantities" (most of
+        # it), an acerto could never be invoiced: Odoo saw a sale with nothing
+        # delivered and refused. The books left the shelf, this is the record.
+        so_lines = defaultdict(list)
+        for so_line in self.sale_order_id.order_line:
+            so_lines[so_line.product_id.id].append(so_line)
+
+        def _so_line_for(product):
+            candidates = so_lines.get(product.id)
+            if not candidates:
+                return False
+            return (candidates.pop(0) if len(candidates) > 1
+                    else candidates[0]).id
+
         picking = self.env['stock.picking'].create({
             'picking_type_id': picking_type.id,
             'partner_id': self.partner_id.id,
@@ -744,6 +760,7 @@ class ConsignmentSettlement(models.Model):
                 'location_id': shelf.id,
                 'location_dest_id': customers.id,
                 'company_id': self.company_id.id,
+                'sale_line_id': _so_line_for(line.product_id),
             }) for line in sold_lines],
         })
         picking.action_confirm()

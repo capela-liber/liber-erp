@@ -365,6 +365,120 @@ class TestMetabooksSync(TransactionCase):
         self.assertEqual(wizard.isbns, "9788500000024\n9788500000048")
         self.assertFalse(wizard.failed_details)
 
+    # ------------------------------------------------------------------ #
+    #  O job técnico e os órfãos da migração                              #
+    # ------------------------------------------------------------------ #
+    def _fake_por_isbn(self):
+        """Cliente falso que devolve a ficha ONIX para qualquer ISBN pedido."""
+        def by_isbn(isbn):
+            return dict(ONIX_BOOK, identifiers=[
+                {"productIdentifierType": "03", "idValue": isbn}])
+        fake = MagicMock()
+        fake.get_product_by_isbn.side_effect = by_isbn
+        self._connector_with_fake(fake)
+        return fake
+
+    def _sem_commit(self):
+        sem_commit = patch.object(self.env.cr, "commit", lambda: None)
+        sem_commit.start()
+        self.addCleanup(sem_commit.stop)
+
+    def test_job_tecnico_adota_orfaos_do_legado(self):
+        """Livro sem editora (migrado do legado) entra no job técnico de
+        qualquer editora — a API responde por ISBN — mas só enquanto dever
+        ficha ou peso; o órfão quitado não custa outra chamada."""
+        Product = self.env["product.template"]
+        da_editora = Product.create({
+            "name": "Da editora", "default_code": "9788500000101",
+            "barcode": "9788500000101", "metabooks_vendor_id": "BR0089701"})
+        orfao = Product.create({
+            "name": "Órfão do legado", "default_code": "9788500000118",
+            "barcode": "9788500000118"})
+        orfao_sem_peso = Product.create({
+            "name": "Órfão com ficha sem peso", "default_code": "9788500000125",
+            "barcode": "9788500000125",
+            "metabooks_technical_sync": "2026-08-10 00:00:00"})
+        orfao_quitado = Product.create({
+            "name": "Órfão quitado", "default_code": "9788500000132",
+            "barcode": "9788500000132", "weight": 0.4,
+            "metabooks_technical_sync": "2026-08-10 00:00:00"})
+        fake = self._fake_por_isbn()
+        self._sem_commit()
+        job = self.env["metabooks.import.job"].create(
+            {"mvb_id": "BR0089701", "job_type": "technical"})
+
+        job._process_batch()
+
+        self.assertEqual(job.state, "done")
+        chamados = {c.args[0] for c in fake.get_product_by_isbn.call_args_list}
+        self.assertIn(da_editora.default_code, chamados)
+        self.assertIn(orfao.default_code, chamados)
+        self.assertIn(orfao_sem_peso.default_code, chamados)
+        self.assertNotIn(orfao_quitado.default_code, chamados,
+                         "quem já tem ficha e peso não custa outra chamada")
+        self.assertAlmostEqual(orfao.weight, 0.32, places=2)
+        self.assertAlmostEqual(orfao_sem_peso.weight, 0.32, places=2)
+        self.assertAlmostEqual(orfao_quitado.weight, 0.4, places=2)
+
+    def test_cursor_nao_pula_livro_quando_o_dominio_encolhe(self):
+        """O órfão sai do domínio assim que ganha a ficha; com paginação por
+        offset, cada livro enriquecido fazia o lote seguinte pular um. O
+        cursor de id percorre todos."""
+        Product = self.env["product.template"]
+        orfaos = Product.create([{
+            "name": "Órfão %d" % i,
+            "default_code": "97885000002%02d" % i,
+            "barcode": "97885000002%02d" % i,
+        } for i in range(3)])
+        self._fake_por_isbn()
+        self._sem_commit()
+        # lote de 1 para forçar várias passadas, sem estourar o prazo
+        for nome, valor in (("TECHNICAL_BATCH_SIZE", 1),
+                            ("BATCH_DEADLINE_SECONDS", 9999)):
+            p = patch.object(job_mod, nome, valor)
+            p.start()
+            self.addCleanup(p.stop)
+        job = self.env["metabooks.import.job"].create(
+            {"mvb_id": "BR0089701", "job_type": "technical"})
+
+        job._process_batch()
+
+        self.assertEqual(job.state, "done")
+        for orfao in orfaos:
+            self.assertAlmostEqual(
+                orfao.weight, 0.32, places=2,
+                msg="%s ficou sem peso: o cursor pulou o livro" % orfao.name)
+
+    def test_flag_de_fichas_encadeia_o_job_tecnico(self):
+        """'Baixar fichas técnicas' num job de catálogo encadeia UM job
+        técnico da mesma editora ao terminar — e reexecutar não empilha um
+        segundo enquanto o primeiro espera na fila."""
+        pagina = {
+            "total_pages": 1, "total_elements": 2, "count": 2, "imported": 2,
+            "failed": [], "product_ids": [],
+        }
+        connector = self.env["metabooks.connector"]
+        patcher = patch.object(
+            type(connector), "import_catalog_page", return_value=pagina)
+        patcher.start()
+        self.addCleanup(patcher.stop)
+        self._sem_commit()
+        Job = self.env["metabooks.import.job"]
+        job = Job.create({"mvb_id": "BR0089701", "with_technical": True})
+
+        job._process_batch()
+        seguidores = Job.search([
+            ("job_type", "=", "technical"), ("mvb_id", "=", "BR0089701"),
+            ("state", "=", "queued")])
+        self.assertEqual(len(seguidores), 1, "o catálogo encadeia a ficha")
+
+        job.action_requeue()
+        job._process_batch()
+        seguidores = Job.search([
+            ("job_type", "=", "technical"), ("mvb_id", "=", "BR0089701"),
+            ("state", "=", "queued")])
+        self.assertEqual(len(seguidores), 1, "reexecutar não empilha outro")
+
     def test_single_book_refresh_still_raises(self):
         """Refreshing one book from its form has no batch to protect."""
         from odoo.addons.liber_metabooks_integration.services.metabooks_client import (

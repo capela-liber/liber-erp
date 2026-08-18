@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <!-- Hourly, not by the minute: the rate limit is shared with the ERP
+             itself and the marketplaces, and a full sweep already walks every
+             page of notas. New notes are picked up within the hour; the parse
+             is then done by nfe_xml's own cron. -->
+        <record id="cron_olist_sync" model="ir.cron">
+            <field name="name">Olist: ler XMLs das notas</field>
+            <field name="model_id" ref="model_olist_account"/>
+            <field name="state">code</field>
+            <field name="code">model.cron_sync()</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">hours</field>
+            <field name="active" eval="False"/>
+        </record>
+
+        <!-- Push on-hand UP to Olist. DAILY, at night: a full sweep is ~1s per
+             product (the shared rate limit), so it runs when the marketplaces
+             are quiet, not during the sales day. Absolute balance (tipo=B), so
+             running it twice is idempotent - the second run sends the same
+             number. Armed by hand (active=False): a recurring WRITE to a live
+             fiscal account is never turned on by an install. -->
+        <record id="cron_olist_push_stock" model="ir.cron">
+            <field name="name">Olist: subir estoque (balanço)</field>
+            <field name="model_id" ref="model_olist_account"/>
+            <field name="state">code</field>
+            <field name="code">model.cron_push_stock()</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="nextcall"
+                   eval="(DateTime.now() + timedelta(days=1)).strftime('%Y-%m-%d 02:00:00')"/>
+            <field name="active" eval="False"/>
+        </record>
+
+        <!-- LEITURA, 4x ao dia, durante o dia. Só a janela incremental: uma
+             chamada devolve os produtos cujo saldo mudou no Olist desde a
+             última passada (venda no marketplace, ajuste na mão de lá). Ler o
+             saldo do catálogo inteiro custaria ~580 chamadas e vinte minutos
+             de cota - não cabe quatro vezes por dia, e não precisa.
+
+             Nasce ATIVA sem risco: ela varre as contas cadastradas, e
+             recém-instalado não existe nenhuma. E ela nunca escreve, nem
+             quando a conta sai do somente-leitura: manter o espelho fresco e
+             decidir sincronizar são dois atos, e só o segundo é de gente. -->
+        <record id="cron_olist_pull_stock_window" model="ir.cron">
+            <field name="name">Olist: ler saldos alterados (janela)</field>
+            <field name="model_id" ref="model_olist_account"/>
+            <field name="state">code</field>
+            <field name="code">model.cron_pull_stock_window()</field>
+            <field name="interval_number">6</field>
+            <field name="interval_type">hours</field>
+            <!-- 09:00 / 15:00 / 21:00 / 03:00 em Brasília -->
+            <field name="nextcall"
+                   eval="(DateTime.now() + timedelta(days=1)).strftime('%Y-%m-%d 12:00:00')"/>
+            <field name="active" eval="True"/>
+        </record>
+
+        <!-- Olist -> Odoo. Relê a janela recente da listagem (barato) e busca
+             o detalhe do que ainda não tem, com teto por rodada: a cota é
+             dividida com o ERP e os marketplaces. Ele NUNCA importa pedido
+             sozinho — encher o espelho e decidir trazer para o Odoo são dois
+             atos, e só o segundo é de gente. Desarmado ao nascer. -->
+        <record id="cron_olist_pull_orders" model="ir.cron">
+            <field name="name">Olist: ler pedidos (espelho)</field>
+            <field name="model_id" ref="model_olist_account"/>
+            <field name="state">code</field>
+            <field name="code">model.cron_pull_orders()</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="nextcall"
+                   eval="(DateTime.now() + timedelta(days=1)).strftime('%Y-%m-%d 03:00:00')"/>
+            <field name="active" eval="False"/>
+        </record>
+
+        <!-- A fila de leitura de detalhe, às 2h da manhã de Brasília.
+
+             O HORÁRIO EM UTC, e isto não é detalhe: o `nextcall` do ir.cron é
+             UTC, e o Mac mini roda em America/Sao_Paulo (UTC-3). Marcar
+             "02:00" aqui faria o cron rodar às 23:00 do dia anterior, em pleno
+             expediente: a mesma armadilha de fuso que datou um pedido no dia
+             seguinte em julho (NOTES §6-quater). 05:00 UTC = 02:00 em
+             Brasília.
+
+             Por que 2h: o backup do Mac começa às 03:30, e a varredura dos
+             ~1000 pedidos leva meia hora. Começando às 2h e com teto de 60
+             minutos no próprio código, ela nunca alcança o backup.
+
+             Ativo ao nascer, ao contrário dos outros: ele é só LEITURA, e é
+             ele que faz o botão da tela funcionar, pois o que passa do lote de 25
+             fica na fila esperando por ele. Um cron desarmado aqui seria uma
+             fila que nunca anda. -->
+        <record id="cron_olist_read_details" model="ir.cron">
+            <field name="name">Olist: ler detalhe dos pedidos na fila</field>
+            <field name="model_id" ref="model_olist_order"/>
+            <field name="state">code</field>
+            <field name="code">model.cron_read_details(minutos=60)</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="nextcall"
+                   eval="(DateTime.now() + timedelta(days=1)).strftime('%Y-%m-%d 05:00:00')"/>
+            <field name="active" eval="True"/>
+        </record>
+
+    </data>
+</odoo>

@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_olist_account_list" model="ir.ui.view">
+        <field name="name">olist.account.list</field>
+        <field name="model">olist.account</field>
+        <field name="arch" type="xml">
+            <list string="Contas Olist">
+                <field name="name"/>
+                <field name="company_id"/>
+                <field name="panel_count" string="NFes"/>
+                <field name="last_sync"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_olist_account_form" model="ir.ui.view">
+        <field name="name">olist.account.form</field>
+        <field name="model">olist.account</field>
+        <field name="arch" type="xml">
+            <form string="Conta Olist">
+                <header>
+                    <button name="action_sync" type="object"
+                            string="Ler notas fiscais"
+                            class="btn-primary"
+                            help="Traz para o painel de NFe toda nota fiscal desta conta. Só leitura: nada é escrito no Olist."/>
+                    <button name="action_import_products" type="object"
+                            string="Casar produtos por ISBN"
+                            help="Percorre o catálogo do Olist e grava no produto do Odoo de mesmo ISBN o id interno de lá — é esse id que a sincronia de estoque usa. Só leitura no Olist."/>
+                    <button name="action_pull_catalogue" type="object"
+                            string="Ler catálogo"
+                            help="Traz os produtos do Olist para o espelho e casa cada um por ISBN. Só leitura, seis chamadas."/>
+                    <button name="action_read_all_saldos" type="object"
+                            string="Ler todos os saldos"
+                            confirm="Isto lê o saldo de CADA livro do espelho — uma chamada por livro (uns 20 minutos para 580). Para conferir poucos, use o botão na tela de Estoque. Continuar?"
+                            help="Varredura completa de leitura. Cara em cota; o dia a dia é a janela do cron."/>
+                    <button name="action_pull_orders" type="object"
+                            string="Ler pedidos"
+                            help="Varredura barata: enche o espelho de pedidos com a listagem do Olist (dez chamadas para mil pedidos). O canal de venda vem no detalhe, por seleção."/>
+                    <button name="action_read_all_order_details" type="object"
+                            string="Ler detalhe de todos os pedidos"
+                            confirm="Isto lê o detalhe de CADA pedido que ainda não tem — uma chamada por pedido (mais de meia hora para mil). É o que dá cobertura à coluna 'Vendido' da tela de catálogo. Continuar?"
+                            help="Varredura completa de leitura. Faz-se uma vez; daí em diante o cron mantém em dia."/>
+                    <button name="action_map_channels" type="object"
+                            string="Mapear canais"
+                            help="Registra no espelho os canais que os pedidos já detalhados informaram e abre a tela onde se escolhe o canal de venda da casa para cada um. Não cria canal de venda nenhum."/>
+                    <button name="action_push_stock" type="object"
+                            string="Subir estoque agora"
+                            confirm="Isto ENVIA o estoque do armazém (menos a margem de segurança) de todos os produtos que estão no Olist como balanço (tipo=B), SOBRESCREVENDO o estoque de lá. Continuar?"
+                            help="Dispara manualmente o mesmo push do cron noturno: para cada produto com id do Olist, envia o estoque do armazém menos a margem, como balanço."/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_panels" type="object"
+                                class="oe_stat_button" icon="fa-file-text-o">
+                            <field name="panel_count" widget="statinfo" string="NFes"/>
+                        </button>
+                        <button name="action_open_mirror" type="object"
+                                class="oe_stat_button" icon="fa-balance-scale">
+                            <field name="diverge_count" widget="statinfo"
+                                   string="Divergentes"/>
+                        </button>
+                        <button name="action_open_orders" type="object"
+                                class="oe_stat_button" icon="fa-shopping-cart">
+                            <field name="order_pending_count" widget="statinfo"
+                                   string="Pedidos a importar"/>
+                        </button>
+                        <button name="action_map_channels" type="object"
+                                class="oe_stat_button" icon="fa-sitemap">
+                            <field name="channel_unmapped_count"
+                                   widget="statinfo" string="Canais sem mapear"/>
+                        </button>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="name" placeholder="ex.: EdLab Press"/>
+                            <field name="company_id"/>
+                            <field name="active" widget="boolean_toggle"/>
+                            <field name="read_only" widget="boolean_toggle"/>
+                            <field name="create_missing_products"
+                                   widget="boolean_toggle"/>
+                        </group>
+                        <group>
+                            <field name="token" password="True"/>
+                            <field name="stock_reserve"/>
+                            <field name="order_stock_cutoff"/>
+                            <field name="invoice_auto_post" widget="boolean_toggle"/>
+                            <field name="payment_journal_id"/>
+                            <field name="last_sync"/>
+                            <field name="last_stock_push"/>
+                            <field name="last_orders_pull"/>
+                            <field name="order_detail_coverage"/>
+                        </group>
+                    </group>
+                    <div class="text-muted">
+                        Uma nota só é importada se o XML dela nomear o CNPJ desta
+                        empresa. É o que impede um token apontado para a empresa
+                        errada de arquivar documento fiscal em nome dela.
+                    </div>
+                    <div class="text-muted">
+                        O saldo enviado é o <b>Estoque</b> do armazém — o mesmo número
+                        que a ficha do produto mostra ao lado de <b>Consignado</b> —,
+                        e não "Em mãos", que soma o que está fora da prateleira.
+                        A margem de segurança é descontada dele, com piso em zero.
+                    </div>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_olist_account" model="ir.actions.act_window">
+        <field name="name">Contas Olist</field>
+        <field name="res_model">olist.account</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <!-- No fim, como manda o costume do Odoo: configuração se mexe uma vez
+         e se lê raramente. A conta É a configuração da integração (token,
+         empresa, margem, somente-leitura), então ela mora aqui. -->
+    <menuitem id="menu_olist_config"
+              name="Configurações"
+              parent="menu_olist_root"
+              sequence="90"/>
+
+    <menuitem id="menu_olist_account"
+              name="Contas"
+              parent="menu_olist_config"
+              action="action_olist_account"
+              sequence="10"/>
+
+</odoo>

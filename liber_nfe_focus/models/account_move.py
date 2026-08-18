@@ -682,6 +682,19 @@ class AccountMove(models.Model):
                     "%(fatura)s já foi enviada (%(status)s). Use 'Consultar' "
                     "para atualizar o status.",
                     fatura=move.display_name, status=move.focus_status))
+            # A nota desta fatura JÁ EXISTE: ela nasceu de um XML autorizado
+            # (Olist e afins) e o painel a segura. Emitir pela Focus criaria
+            # uma SEGUNDA NFe para a mesma venda na SEFAZ -- duplicação
+            # fiscal, não reemissão. O botão some da tela pela view; esta é a
+            # porta de dentro, para o caminho por código ou lista.
+            if move.nfe_xml_panel_id and not move.nfe_xml_panel_id.is_cancelled:
+                raise UserError(_(
+                    "%(fatura)s já tem NFe autorizada de origem externa "
+                    "(nº %(numero)s). O XML está no painel — veja o botão "
+                    "'NFe XML' da fatura. Emitir pela Focus criaria uma "
+                    "segunda nota para a mesma venda na SEFAZ.",
+                    fatura=move.display_name,
+                    numero=move.nfe_danfe_no or move.nfe_key))
 
             payload = move._focus_build_payload()
             ref = move._focus_ref_para_emissao()
@@ -977,6 +990,22 @@ class AccountMove(models.Model):
                 'file_name': '%s-nfe.xml' % chave,
                 'invoice_id': self.id,
                 'company_id': self.company_id.id,
+                # Os três campos que dizem, por ângulos diferentes, que esta
+                # nota é nossa -- e que ficavam nos padrões de nota recebida,
+                # porque ninguém os escrevia. O painel juntava tudo no mesmo
+                # balaio: das 40.845 linhas do prod, as 18 que a casa emitiu
+                # eram indistinguíveis das 40.827 que chegaram de terceiros.
+                #   source          quem trouxe o XML (a Focus, nesta emissão)
+                #   system_generated  nasceu aqui dentro, não veio de fora
+                #   xml_type        documento da casa, não documento recebido
+                # Escrevemos os três mesmo quando a linha já existe: a nota
+                # que emitimos volta pela varredura da SEFAZ e pode ter chegado
+                # primeiro por lá. Quem emitiu continua sendo a casa, e é isso
+                # que o painel precisa dizer -- a origem anterior está no
+                # rastro do próprio registro.
+                'source': 'focus',
+                'system_generated': True,
+                'xml_type': 'internal',
             }
             if painel:
                 painel.write(valores)

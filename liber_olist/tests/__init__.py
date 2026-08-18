@@ -1,0 +1,15 @@
+# -*- coding: utf-8 -*-
+from . import test_stock_push
+from . import test_stock_company
+from . import test_stock_quantity
+from . import test_import_products
+from . import test_mirror
+from . import test_orders
+from . import test_client_throttle
+from . import test_manual_match
+from . import test_catalog
+from . import test_ritmo
+from . import test_invoice
+from . import test_channels
+from . import test_telas
+from . import test_estoque_semeadura

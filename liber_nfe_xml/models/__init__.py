@@ -2,6 +2,8 @@
 
 # LAB FORK: edoo_mde, eletronic_document and nfe_pipeline (crm) removed -
 # they belong to the production-only edoo/l10n_br stack.
+from . import res_company
+from . import res_config_settings
 from . import soc_xml_panel
 from . import nfe_xml_cancel_event
 from . import soc_xml_attachment

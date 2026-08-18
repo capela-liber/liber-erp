@@ -236,6 +236,54 @@ class TestConsignmentFiscalPosition(TransactionCase):
         order = self.env["sale.order"].create({"partner_id": partner.id})
         self.assertFalse(order.consignment_fiscal_locked)
 
+    def _pedido_c(self):
+        partner = self.env["res.partner"].create({
+            "name": "Livraria do Pedido C", "is_company": True})
+        # A posição fiscal DA FICHA -- a errada para uma remessa.
+        partner.property_account_position_id = self.fp_venda
+        return self.env["sale.order"].create({
+            "partner_id": partner.id,
+            "company_id": self.company.id,
+            "is_consignment": True,
+            "order_line": [(0, 0, {
+                "product_id": self.product.id,
+                "product_uom_qty": 1, "price_unit": 50.0})],
+        })
+
+    def test_pedido_c_nasce_com_a_posicao_das_definicoes(self):
+        """'Se é uma consignação, definimos a posição fiscal e pronto.'
+
+        O C000 nascia com a posição da FICHA do cliente, editável -- no
+        staging, 23% deles estavam sem posição nenhuma. Agora as Definições
+        mandam, como já mandavam no S do acerto."""
+        self.company.consignment_shipment_fiscal_position_id = self.fp_consig
+        order = self._pedido_c()
+        self.assertEqual(
+            order.fiscal_position_id, self.fp_consig,
+            "o Pedido C pegou a posição da FICHA em vez da das Definições")
+
+    def test_pedido_c_sem_definicao_cai_na_ficha(self):
+        """Configuração em branco não pode parar a remessa."""
+        self.company.consignment_shipment_fiscal_position_id = False
+        order = self._pedido_c()
+        self.assertEqual(order.fiscal_position_id, self.fp_venda)
+
+    def test_pedido_c_travado_para_quem_opera(self):
+        """A trava do meio-termo cobre o C, não só o S do acerto."""
+        self.company.consignment_shipment_fiscal_position_id = self.fp_consig
+        order = self._pedido_c()
+        comum = self.env["res.users"].create({
+            "name": "Vendas", "login": "operadora_pedido_c_test",
+            "group_ids": [(6, 0, [
+                self.env.ref("sales_team.group_sale_manager").id])]})
+        self.assertTrue(order.with_user(comum).consignment_fiscal_locked)
+        gerente = self.env["res.users"].create({
+            "name": "Fiscal do C", "login": "fiscal_pedido_c_test",
+            "group_ids": [(6, 0, [
+                self.env.ref("sales_team.group_sale_manager").id,
+                self.env.ref("account.group_account_manager").id])]})
+        self.assertFalse(order.with_user(gerente).consignment_fiscal_locked)
+
     def test_no_dumb_config_fields(self):
         """Alerta quando criamos campo de configuração que ninguém lê.
 

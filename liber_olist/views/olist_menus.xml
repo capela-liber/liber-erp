@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!--
+        Menu raiz "Olist" (aparece na home / apps do Odoo).
+
+        Junta as superfícies da integração Olist num único lugar para que as
+        funcionalidades do adaptador sejam descobríveis sem caçar dentro do
+        painel do NFe. As entradas concretas (Contas, e mais adiante Estoque)
+        penduram-se aqui como filhas.
+
+        O web_icon é o que a home mostra no ladrilho; o static/description é a
+        tela de Aplicativos. São dois lugares diferentes, e por isso os dois
+        apontam para o mesmo arquivo.
+    -->
+    <menuitem id="menu_olist_root"
+              name="Olist"
+              web_icon="liber_olist,static/description/icon.png"
+              sequence="90"/>
+
+</odoo>

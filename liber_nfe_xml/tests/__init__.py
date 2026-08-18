@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+from . import test_danfe_render
+from . import test_sale_fiscal_position
 from . import test_nfe_xml
 from . import test_import_wizard
 from . import test_partner_match

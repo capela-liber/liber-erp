@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!--
+        A pergunta inversa: o que é NOSSO e ainda não está no Olist.
+
+        A tela de Produtos olha do lado de lá para cá ("o Olist tem este
+        código, o Odoo conhece?"). Esta olha daqui para lá — e foi ela que
+        mostrou 9.459 exemplares parados em 80 títulos que ninguém estava
+        oferecendo no marketplace.
+
+        O QUE É "nosso" foi definido em 17/08/2026: livro Metabooks do tipo
+        pbook. Antes disso a tela dizia "estocável", que parecia uma boa
+        aproximação e não era: trazia 3.632 registros no staging, com
+        serviço editorial, retirada de lucros e o catálogo de distribuição de
+        terceiros no meio. O corte por pbook desce isso para 428.
+    -->
+    <record id="view_olist_absent_list" model="ir.ui.view">
+        <field name="name">product.template.list.olist.absent</field>
+        <field name="model">product.template</field>
+        <field name="arch" type="xml">
+            <list string="Livros fora do Olist" create="false">
+                <header>
+                    <button name="action_publish_in_olist" type="object"
+                            string="Publicar no Olist"
+                            confirm="Isto CRIA os livros escolhidos no catálogo do Olist (código, nome, preço, unidade, peso). Categoria, imagens e descrição de vitrine ficam para se decidir lá. O saldo NÃO vai junto — quem manda estoque é a sincronia. Continuar?"/>
+                </header>
+                <field name="barcode" string="ISBN"/>
+                <field name="name"/>
+                <field name="list_price"/>
+                <field name="qty_available" string="Em mãos"/>
+                <field name="weight" optional="hide"/>
+                <field name="metabooks_product_type" string="Tipo"
+                       optional="hide"/>
+                <field name="metabooks_product_availability"
+                       string="Disponibilidade" optional="show"/>
+                <field name="olist_absent" column_invisible="1"/>
+                <field name="is_storable" column_invisible="1"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_olist_absent_search" model="ir.ui.view">
+        <field name="name">product.template.search.olist.absent</field>
+        <field name="model">product.template</field>
+        <field name="arch" type="xml">
+            <search string="Fora do Olist">
+                <field name="name"/>
+                <field name="barcode" string="ISBN"/>
+                <filter name="fora" string="Fora do Olist"
+                        domain="[('olist_absent', '=', True)]"/>
+                <filter name="dentro" string="Já no Olist"
+                        domain="[('olist_absent', '=', False)]"/>
+                <separator/>
+                <!-- Um separador entre cada um, e isso NÃO é estilo: filtros
+                     vizinhos no mesmo grupo o Odoo combina com OU. Sem os
+                     separadores, "Livro físico" e "Com estoque" viravam
+                     "físico OU com estoque" e a tela trazia 3.632 registros
+                     no lugar de algumas centenas. -->
+                <filter name="fisico" string="Livro físico (estocável)"
+                        domain="[('is_storable', '=', True)]"/>
+                <separator/>
+                <filter name="com_saldo" string="Com estoque"
+                        domain="[('qty_available', '>', 0)]"
+                        help="Os que pedem decisão: exemplar parado que não está à venda."/>
+                <separator/>
+                <!-- Dos 428 pbooks fora do Olist no staging, 227 estão
+                     "Disponível". O resto é indisponível, retirado de venda,
+                     esgotado ou substituído por edição nova: publicar esses no
+                     marketplace seria oferecer o que a editora já tirou de
+                     circulação. -->
+                <filter name="disponivel" string="Disponível"
+                        domain="[('metabooks_product_availability.product_definition',
+                                  '=', 'Disponível')]"
+                        help="A disponibilidade que o Metabooks declara. É ela que diz se o livro pode ser oferecido."/>
+                <separator/>
+                <filter name="com_isbn" string="Com ISBN"
+                        domain="[('barcode', '!=', False)]"
+                        help="Sem ISBN não há como criar o livro no Olist: é a identidade dele lá."/>
+                <group>
+                    <filter name="g_disp" string="Disponibilidade"
+                            context="{'group_by': 'metabooks_product_availability'}"/>
+                    <filter name="g_categ" string="Categoria"
+                            context="{'group_by': 'categ_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_olist_absent" model="ir.actions.act_window">
+        <field name="name">Fora do Olist</field>
+        <field name="res_model">product.template</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_olist_absent_search"/>
+        <!-- O CATÁLOGO da casa é livro Metabooks do tipo pbook (decisão de
+             17/08/2026). Isso é definição, não preferência de quem olha, por
+             isso mora no domínio e não num filtro removível: serviço
+             editorial, retirada de lucros e o catálogo de distribuição de
+             terceiros não são livro nosso para publicar. -->
+        <field name="domain">[('olist_absent', '=', True),
+                              ('metabooks_product_type.name', '=', 'pbook')]</field>
+        <field name="context">{'search_default_disponivel': 1,
+                               'search_default_com_saldo': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiley_face">Nada parado fora do Olist.</p>
+            <p>Todo <b>pbook</b> com estoque já está espelhado no marketplace.
+            Tire o filtro <b>Com estoque</b> para ver também o que está
+            esgotado.</p>
+            <p>Esta tela mostra só livro Metabooks do tipo <b>pbook</b>: é o
+            que a casa considera catálogo. Os filtros padrão acrescentam
+            <b>Disponível</b> e <b>Com estoque</b> — tire-os para ver também o
+            que a editora já retirou de circulação.</p>
+        </field>
+    </record>
+
+    <record id="action_olist_absent_list_view" model="ir.actions.act_window.view">
+        <field name="sequence" eval="1"/>
+        <field name="view_mode">list</field>
+        <field name="view_id" ref="view_olist_absent_list"/>
+        <field name="act_window_id" ref="action_olist_absent"/>
+    </record>
+
+    <menuitem id="menu_olist_absent"
+              name="Fora do Olist"
+              parent="menu_olist_root"
+              action="action_olist_absent"
+              sequence="18"/>
+
+</odoo>

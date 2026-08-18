@@ -31,18 +31,43 @@ class SaleOrder(models.Model):
     # substituição tributária) viraria chamado para o desenvolvedor. Então:
     # default aplicado, campo VISÍVEL para quem emite conferir antes da nota, e
     # editável só por quem tem responsabilidade fiscal na casa.
+    # Vale para os DOIS documentos da operação: o S do acerto (via
+    # consignment_operation_id) e o Pedido C (via is_consignment).
     consignment_fiscal_locked = fields.Boolean(
         compute='_compute_consignment_fiscal_locked',
         help="A posição fiscal deste pedido é ditada pela operação de "
              "consignação. Só o Administrador de faturamento pode trocá-la.")
 
-    @api.depends('consignment_operation_id')
+    @api.depends('consignment_operation_id', 'is_consignment')
     def _compute_consignment_fiscal_locked(self):
         # has_group uma vez, não por registro: é o mesmo usuário na lista toda.
         pode_editar = self.env.user.has_group('account.group_account_manager')
         for order in self:
             order.consignment_fiscal_locked = (
-                bool(order.consignment_operation_id) and not pode_editar)
+                (bool(order.consignment_operation_id) or order.is_consignment)
+                and not pode_editar)
+
+    @api.depends('is_consignment')
+    def _compute_fiscal_position_id(self):
+        """A posição fiscal do Pedido C vem das Definições, não da ficha.
+
+        Mesma tese do acerto (ver consignment_settlement.py deste módulo): o
+        parceiro tem UM campo de posição fiscal, e a mesma livraria recebe
+        remessa de consignação (5917) e compra em firme (5102) -- a ficha não
+        codifica as duas. O padrão do Odoo, que deriva da ficha, resolvia o
+        eixo errado em silêncio: no staging, 23% dos Pedidos C estavam sem
+        posição nenhuma, e os demais dependiam de cadastro certo.
+
+        Empresa sem configuração cai no padrão do Odoo em vez de estourar --
+        a operação não pode parar por configuração que nunca foi preenchida.
+        """
+        super()._compute_fiscal_position_id()
+        for order in self:
+            if not order.is_consignment:
+                continue
+            fp = order.company_id.consignment_shipment_fiscal_position_id
+            if fp:
+                order.fiscal_position_id = fp
 
     @api.onchange('cfop_id')
     def _onchange_cfop_id(self):

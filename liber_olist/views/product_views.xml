@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_product_template_form_olist" model="ir.ui.view">
+        <field name="name">product.template.form.olist</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_form_view"/>
+        <field name="arch" type="xml">
+
+            <!-- Product forms have no header of their own; add one that carries
+                 the pilot control: push THIS product's on-hand to Olist. -->
+            <xpath expr="//sheet" position="before">
+                <header>
+                    <button name="action_push_stock_to_olist" type="object"
+                            string="Subir estoque p/ Olist"
+                            groups="base.group_system"
+                            help="Envia ao Olist o estoque do armazém deste produto, menos a margem de segurança, como balanço (tipo=B). Exige ISBN casado com o Olist."/>
+                </header>
+            </xpath>
+
+            <!-- Where the exchange is read back. Kept on its own page so the
+                 raw request/response never crowds the product sheet. -->
+            <xpath expr="//notebook" position="inside">
+                <page string="Olist" name="olist" groups="base.group_system">
+                    <group>
+                        <field name="olist_produto_id"/>
+                    </group>
+                    <separator string="Último log de estoque"/>
+                    <field name="olist_stock_log" readonly="1"
+                           placeholder="Nenhuma atualização de estoque enviada ainda."/>
+                </page>
+            </xpath>
+
+        </field>
+    </record>
+
+    <!-- "Está no Olist?" is just "does it have an Olist id?" - so the filters
+         read olist_produto_id directly instead of a redundant boolean that
+         would need keeping in sync. -->
+    <record id="view_product_template_search_olist" model="ir.ui.view">
+        <field name="name">product.template.search.olist</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_search_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//search" position="inside">
+                <separator/>
+                <filter name="in_olist" string="No Olist"
+                        domain="[('olist_produto_id', '!=', False)]"/>
+                <filter name="not_in_olist" string="Fora do Olist"
+                        domain="[('olist_produto_id', '=', False)]"/>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Same push, from the list Action menu: select products -> push. -->
+    <record id="action_push_stock_server" model="ir.actions.server">
+        <field name="name">Subir estoque p/ Olist</field>
+        <field name="model_id" ref="product.model_product_template"/>
+        <field name="binding_model_id" ref="product.model_product_template"/>
+        <field name="binding_view_types">list,form</field>
+        <field name="state">code</field>
+        <field name="code">action = records.action_push_stock_to_olist()</field>
+    </record>
+
+</odoo>

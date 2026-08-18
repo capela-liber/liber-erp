@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <record id="res_config_settings_view_form_nfe_xml" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.nfe.xml</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="account.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <!-- Em Faturamento, que é onde quem responde pelo fiscal procura.
+                 As operações especiais (consignação e afins) declaram as suas
+                 nos módulos delas; esta é a venda comum. -->
+            <xpath expr="//block[@id='invoicing_settings']" position="inside">
+                <setting id="liber_sale_fiscal_position_setting"
+                         string="Posição fiscal da venda"
+                         help="A posição fiscal de uma venda comum, quando nenhuma operação especial diz outra coisa. Vazia, o Odoo segue derivando da ficha do cliente.">
+                    <field name="sale_fiscal_position_id"
+                           options="{'no_create': True}"/>
+                </setting>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

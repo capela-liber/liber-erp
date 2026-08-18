@@ -1,87 +1,88 @@
-# © 2017 Danimar Ribeiro, Trustcode
+# -*- coding: utf-8 -*-
+# © 2017 Danimar Ribeiro, Trustcode (o padrão de interceptar o relatório)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+"""A DANFE desenhada a partir do XML — o documento que a logística imprime.
 
-import pytz
+O renderizador original usava a pytrustnfe, abandonada no PyPI (o tarball nem
+instala) e ausente de todos os servidores da casa: o preview de DANFE nunca
+funcionou fora do papel. Trocado em 18/08/2026 pela brazilfiscalreport, que é
+mantida, roda no Python 3.12 e desenha a DANFE inteira (chave, protocolo,
+transportadora, impostos) a partir do nfeProc autorizado.
+"""
 import base64
 import logging
-from lxml import etree
-from io import BytesIO
+import re
+
 from odoo import models, _
 from odoo.exceptions import UserError
+from odoo.tools.pdf import merge_pdf
 
 _logger = logging.getLogger(__name__)
 
+# O Olist escreve HTML dentro do texto fiscal: o infCpl das notas dele vem
+# com "<br />" literais (escapados no XML). No desenho da DANFE eles viram
+# quebra de linha de verdade — o XML arquivado não muda, só a cópia que vai
+# ao papel.
+BR_HTML = re.compile(r'&lt;br\s*/?\s*&gt;', re.IGNORECASE)
+
 try:
-    from pytrustnfe.nfe.danfe import danfe
-    from pytrustnfe.nfe.danfce import danfce
+    from brazilfiscalreport.danfe import Danfe, DanfeConfig
 except ImportError:
-    danfe = danfce = None
-    _logger.info('pytrustnfe is not installed - the Print Danfe report '
-                 'will not be available.')
+    Danfe = DanfeConfig = None
+    _logger.info("brazilfiscalreport is not installed - the Print Danfe "
+                 "report will not be available.")
 
 
 class IrActionsReport(models.Model):
     _inherit = 'ir.actions.report'
 
     def _render_qweb_pdf(self, report_ref, res_ids=None, data=None):
-        #to generate Danfe from the XML files
         report = self._get_report(report_ref)
         if report.report_name != 'liber_nfe_xml.main_template_report_nfe_panel':
-            return super()._render_qweb_pdf(report_ref, res_ids=res_ids, data=data)
+            return super()._render_qweb_pdf(
+                report_ref, res_ids=res_ids, data=data)
 
-        panels = self.env['nfe.xml.panel'].search([('id', 'in', res_ids)])
-        for panel in panels:
-            if not (panel.cfop_id and panel.partner_id):
-                _logger.info("==========Might have some issues in %s file ", panel)
-            # nfe_xml = base64.decodestring(panel.file)
-            nfe_xml = base64.decodebytes(panel.file)
+        if Danfe is None:
+            raise UserError(_(
+                "A biblioteca 'brazilfiscalreport' não está instalada neste "
+                "servidor — é ela que desenha a DANFE a partir do XML.\n\n"
+                "Instale no ambiente do Odoo: pip install brazilfiscalreport"))
 
-            nfe_xml_element = []
-            query = """select id from ir_attachment where res_model = 'nfe.xml.panel' and res_id = %s limit 1""" % panel.id
-            self.env.cr.execute(query)
-            query_data = self.env.cr.fetchall()
+        pdfs = []
+        for panel in self.env['nfe.xml.panel'].browse(res_ids):
+            if not panel.file:
+                raise UserError(_(
+                    "%s não tem o XML anexado — sem ele não há DANFE. Traga "
+                    "o XML da nota antes de imprimir.", panel.display_name))
+            pdfs.append(self._liber_danfe_do_xml(panel))
+        return (pdfs[0] if len(pdfs) == 1 else merge_pdf(pdfs)), 'pdf'
 
-            if query_data:
-                for cce in query_data:
-                    nfe_attach = self.env['ir.attachment'].search([
-                        ('id', '=', cce[0]),
-                    ])
-                    # cce_xml = base64.decodestring(nfe_attach.datas)
-                    cce_xml = base64.decodebytes(nfe_attach.datas)
-                    nfe_xml_element.append(etree.fromstring(cce_xml))
+    @staticmethod
+    def _liber_infcpl_sem_html(xml):
+        """'<br />' vindo do Olist vira quebra de linha na DANFE (e nada mais:
+        a substituição é global porque o tag escapado só pode viver em texto)."""
+        return BR_HTML.sub('&#10;', xml)
 
-            logo = False
-            if panel.company_id.logo:
-                # logo = base64.decodestring(panel.company_id.logo)
-                logo = base64.decodebytes(panel.company_id.logo)
-            elif panel.company_id.logo_web:
-                # logo = base64.decodestring(panel.company_id.logo_web)
-                logo = base64.decodebytes(panel.company_id.logo_web)
-
-            if logo:
-                tmpLogo = BytesIO()
-                tmpLogo.write(logo)
-                tmpLogo.seek(0)
-            else:
-                tmpLogo = False
-
-            timezone = pytz.timezone(self.env.context.get('tz') or 'UTC')
-
-            xml_element = etree.fromstring(nfe_xml)
-            if panel:
-                try:
-                    oDanfe = danfe(
-                        list_xml=[xml_element], logo=tmpLogo, timezone=timezone)
-                except Exception:
-                    raise UserError(_("Invalid file!\n Unable to Create Danfe.Please check your File"))
-
-
-            tmpDanfe = BytesIO()
-            oDanfe.writeto_pdf(tmpDanfe)
-            danfe_file = tmpDanfe.getvalue()
-            tmpDanfe.close()
-
-            return danfe_file, 'pdf'
+    def _liber_danfe_do_xml(self, panel):
+        xml = self._liber_infcpl_sem_html(
+            base64.b64decode(panel.file).decode('utf-8'))
+        config = None
+        logo = panel.company_id.logo or panel.company_id.logo_web
+        if logo:
+            try:
+                config = DanfeConfig(logo=base64.b64decode(logo))
+            except Exception:
+                # Logo que a biblioteca não digere não pode derrubar a DANFE:
+                # o documento fiscal vale sem ele.
+                config = None
+        try:
+            danfe_pdf = Danfe(xml=xml, config=config) if config else Danfe(xml=xml)
+        except Exception as exc:
+            raise UserError(_(
+                "O XML de %(painel)s não virou DANFE: %(erro)s\n\n"
+                "Confira se o arquivo é um nfeProc autorizado e completo.",
+                painel=panel.display_name, erro=exc)) from exc
+        return bytes(danfe_pdf.output())
 
 
 class SOCXmlPanelPdf(models.Model):

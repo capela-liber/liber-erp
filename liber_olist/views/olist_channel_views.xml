@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!--
+        O espelho de canais: o nome que o Olist manda, e o canal de venda da
+        casa a que ele corresponde. A lista é EDITÁVEL porque o trabalho aqui
+        é exatamente esse - percorrer as linhas sem par e escolher o par.
+    -->
+    <record id="view_olist_channel_list" model="ir.ui.view">
+        <field name="name">olist.channel.list</field>
+        <field name="model">olist.channel</field>
+        <field name="arch" type="xml">
+            <list string="Canais do Olist" editable="bottom"
+                  decoration-warning="not team_id">
+                <field name="name" readonly="1"/>
+                <field name="platform" readonly="1" optional="show"/>
+                <field name="team_id"
+                       placeholder="escolha o canal de venda da casa"/>
+                <field name="order_count" string="Pedidos"/>
+                <field name="account_id" optional="hide" readonly="1"/>
+                <field name="company_id" groups="base.group_multi_company"
+                       optional="hide" readonly="1"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_olist_channel_form" model="ir.ui.view">
+        <field name="name">olist.channel.form</field>
+        <field name="model">olist.channel</field>
+        <field name="arch" type="xml">
+            <form string="Canal do Olist">
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_open_orders" type="object"
+                                class="oe_stat_button" icon="fa-shopping-cart">
+                            <field name="order_count" widget="statinfo"
+                                   string="Pedidos"/>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <label for="name" string="Canal no Olist"/>
+                        <h1><field name="name" placeholder="Mercado Livre"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="account_id"/>
+                            <field name="team_id"/>
+                        </group>
+                        <group>
+                            <field name="platform"/>
+                            <field name="active" widget="boolean_toggle"/>
+                            <field name="company_id"
+                                   groups="base.group_multi_company"/>
+                        </group>
+                    </group>
+                    <div class="alert alert-info" role="status">
+                        O Olist tem os canais dele ("Online: Hedra", "Mercado
+                        Livre") e a casa tem os seus ("Marketplaces",
+                        "Online"). São duas listas, e esta tela é a ponte
+                        entre elas. <strong>Nenhum canal de venda é criado
+                        pela integração</strong>: enquanto o par estiver
+                        vazio, o pedido daqui entra sem canal.
+                    </div>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_olist_channel_search" model="ir.ui.view">
+        <field name="name">olist.channel.search</field>
+        <field name="model">olist.channel</field>
+        <field name="arch" type="xml">
+            <search string="Canais do Olist">
+                <field name="name"/>
+                <field name="platform"/>
+                <field name="team_id"/>
+                <field name="account_id"/>
+                <filter name="sem_mapear" string="Sem mapear"
+                        domain="[('team_id', '=', False)]"/>
+                <filter name="mapeados" string="Mapeados"
+                        domain="[('team_id', '!=', False)]"/>
+                <separator/>
+                <filter name="inativos" string="Arquivados"
+                        domain="[('active', '=', False)]"/>
+                <group>
+                    <filter name="por_conta" string="Conta"
+                            context="{'group_by': 'account_id'}"/>
+                    <filter name="por_team" string="Canal de venda"
+                            context="{'group_by': 'team_id'}"/>
+                    <filter name="por_plataforma" string="Plataforma"
+                            context="{'group_by': 'platform'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_olist_channel" model="ir.actions.act_window">
+        <field name="name">Canais do Olist</field>
+        <field name="res_model">olist.channel</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Mapeie os canais do Olist</p>
+            <p>Cada canal aparece aqui sozinho, na primeira vez que um pedido
+               dele é detalhado. O que ele não ganha sozinho é o
+               <strong>canal de venda da casa</strong> — esse é escolhido
+               aqui, uma vez por canal.</p>
+            <p>Enquanto o par estiver vazio, os pedidos daquele canal entram
+               sem canal de venda. Nada quebra, e nada é inventado.</p>
+        </field>
+    </record>
+
+    <menuitem id="menu_olist_channel"
+              name="Canais do Olist"
+              parent="menu_olist_config"
+              action="action_olist_channel"
+              sequence="20"/>
+
+</odoo>

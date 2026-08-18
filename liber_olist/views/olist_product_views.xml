@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- A tela da conferência. As três colunas ficam lado a lado de propósito:
+         "o Olist diz", "nós temos", "mandaríamos". A divergência é o que ordena,
+         porque a pergunta que se faz aqui é "o que está fora do lugar?" e não
+         "o que existe?". -->
+    <record id="view_olist_product_list" model="ir.ui.view">
+        <field name="name">olist.product.list</field>
+        <field name="model">olist.product</field>
+        <field name="arch" type="xml">
+            <list string="Estoque: Olist × Odoo" create="false"
+                  editable="bottom" open_form_view="True"
+                  decoration-danger="state == 'olist_maior'"
+                  decoration-muted="state == 'sem_produto'"
+                  decoration-success="state == 'igual'">
+                <!-- A lista é editável por uma razão só: casar à mão os livros
+                     que o ISBN não casa. Metade do catálogo do Olist é livro
+                     que já existe no Odoo com outro ISBN (reedição), e criar
+                     produto para eles duplicaria o catálogo da editora. -->
+                <header>
+                    <!-- Botões de ESTOQUE, que é o assunto desta tela. Os de
+                         casamento por ISBN (ler catálogo, sugerir, aceitar,
+                         desfazer) moram na tela Produtos: estavam aqui de
+                         quando as duas telas abriam a mesma lista.
+                         Visível com a lista vazia: ver a lição do
+                         liber_amazon_vendor sobre `display="always"`. -->
+                    <button name="action_pull_all_stock" type="object"
+                            string="Ler estoques" display="always"
+                            class="btn-primary"
+                            help="Lê no Olist o saldo de todo o catálogo, numa chamada só. É o que SEMEIA o espelho: o cron da janela mantém em dia o que já foi lido, mas não preenche o que nunca foi."/>
+                    <button name="action_read_saldo" type="object"
+                            string="Ler estoque das linhas"
+                            help="Lê o saldo apenas das linhas escolhidas, uma chamada por linha. Para conferir um punhado antes de decidir."/>
+                    <button name="action_sync_selected" type="object"
+                            string="Subir estoque"
+                            confirm="Isto ENVIA ao Olist o estoque do armazém (menos a margem de segurança) das linhas escolhidas, SOBRESCREVENDO o saldo de lá. Continuar?"
+                            help="Envia ao Olist o estoque das linhas escolhidas. A conta em 'Somente leitura' bloqueia o envio."/>
+                </header>
+                <field name="codigo" readonly="1"/>
+                <field name="name" readonly="1"/>
+                <!-- Os quatro números vêm ANTES do casamento, e juntos: esta é
+                     a tela da COMPARAÇÃO, e o assunto dela é a diferença entre
+                     os dois estoques. Ficavam no fim, atrás de três colunas de
+                     texto largo (nome do livro, produto do Odoo, sugestão), e
+                     eram empurrados para fora da tela: o dono abriu a lista
+                     em 18/08/2026 e não achou as quantidades. -->
+                <field name="saldo_olist_texto" readonly="1"/>
+                <field name="saldo_olist" column_invisible="1"/>
+                <field name="odoo_qty" sum="Odoo"/>
+                <field name="qty_to_send" sum="Enviaria"/>
+                <field name="divergencia" sum="Divergência"/>
+                <field name="state" widget="badge"
+                       decoration-danger="state == 'olist_maior'"
+                       decoration-success="state == 'igual'"/>
+                <field name="product_id" optional="show"
+                       placeholder="casar à mão..."/>
+                <field name="suggested_product_id" optional="show" readonly="1"/>
+                <field name="match_origin" optional="show" readonly="1"
+                       widget="badge" decoration-info="match_origin == 'manual'"/>
+                <!-- A régua do trabalho: casar à mão 219 livros é caro, e o
+                     que vendeu é o que decide por onde começar. -->
+                <field name="sold_qty" optional="show" readonly="1"
+                       sum="Vendido"/>
+                <field name="sold_orders" optional="hide" readonly="1"/>
+                <field name="last_sale_date" optional="hide" readonly="1"/>
+                <field name="saldo_olist_date" optional="hide" readonly="1"/>
+                <field name="last_push_date" optional="hide" readonly="1"/>
+                <field name="duplicate_match" optional="hide" readonly="1"/>
+                <field name="divergencia_abs" column_invisible="1"/>
+                <field name="company_id" column_invisible="1"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_olist_product_form" model="ir.ui.view">
+        <field name="name">olist.product.form</field>
+        <field name="model">olist.product</field>
+        <field name="arch" type="xml">
+            <form string="Produto no Olist" create="false">
+                <header>
+                    <button name="action_read_saldo" type="object"
+                            string="Ler saldo no Olist"
+                            help="Consulta o saldo deste livro no Olist agora. Só leitura."/>
+                    <button name="action_sync_selected" type="object"
+                            string="Sincronizar estoque" class="btn-primary"
+                            confirm="Isto ESCREVE no Olist: o saldo de lá passa a ser o nosso. Continuar?"/>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_open_product" type="object"
+                                class="oe_stat_button" icon="fa-book"
+                                invisible="not product_id">
+                            <div class="o_stat_info">
+                                <span class="o_stat_text">Ficha do livro</span>
+                            </div>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <h1><field name="name" readonly="1"/></h1>
+                        <h3><field name="codigo" readonly="1"/></h3>
+                    </div>
+                    <!-- Os dois saldos lado a lado, no mesmo grupo: comparar é
+                         o que se faz aqui, e eles moravam em colunas opostas do
+                         formulário, obrigando a olhar em diagonal. -->
+                    <group string="Estoque">
+                        <group>
+                            <field name="saldo_olist"/>
+                            <field name="odoo_qty"/>
+                        </group>
+                        <group>
+                            <field name="qty_to_send"/>
+                            <field name="divergencia"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group string="No Olist">
+                            <field name="olist_id"/>
+                            <field name="saldo_olist_date"/>
+                            <field name="situacao"/>
+                            <field name="sold_qty"/>
+                            <field name="sold_orders"/>
+                            <field name="last_sale_date"/>
+                        </group>
+                        <group string="No Odoo">
+                            <field name="account_id"/>
+                            <field name="company_id"/>
+                            <field name="product_id"/>
+                            <field name="match_origin"/>
+                            <field name="suggested_product_id"
+                                   invisible="product_id"/>
+                        </group>
+                    </group>
+                    <group string="Último envio" invisible="not last_push_date">
+                        <field name="last_push_date"/>
+                        <field name="last_push_qty"/>
+                        <field name="last_push_result"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_olist_product_search" model="ir.ui.view">
+        <field name="name">olist.product.search</field>
+        <field name="model">olist.product</field>
+        <field name="arch" type="xml">
+            <search string="Estoque Olist × Odoo">
+                <field name="codigo" string="ISBN"/>
+                <field name="name"/>
+                <field name="product_id"/>
+                <!-- O filtro que interessa vem ligado por padrão na ação: o que
+                     está igual não pede decisão nenhuma. -->
+                <filter name="diverge" string="Divergentes"
+                        domain="[('state', 'in', ['olist_maior', 'olist_menor'])]"/>
+                <filter name="olist_maior" string="Olist oferece a mais"
+                        domain="[('state', '=', 'olist_maior')]"
+                        help="Risco de vender livro que não temos."/>
+                <filter name="olist_menor" string="Olist oferece a menos"
+                        domain="[('state', '=', 'olist_menor')]"
+                        help="Deixando de vender livro que temos."/>
+                <separator/>
+                <filter name="sem_produto" string="Sem produto no Odoo"
+                        domain="[('state', '=', 'sem_produto')]"
+                        help="A sincronia não toca nestes."/>
+                <filter name="com_produto" string="Casados"
+                        domain="[('product_id', '!=', False)]"/>
+                <filter name="casado_isbn" string="Casados por ISBN"
+                        domain="[('match_origin', '=', 'isbn')]"/>
+                <filter name="casado_mao" string="Casados à mão"
+                        domain="[('match_origin', '=', 'manual')]"
+                        help="Protegidos: a releitura do catálogo não desfaz."/>
+                <filter name="com_sugestao" string="Com sugestão a conferir"
+                        domain="[('product_id', '=', False),
+                                 ('suggested_product_id', '!=', False)]"/>
+                <separator/>
+                <filter name="vale_casar" string="Sem produto E vendeu"
+                        domain="[('product_id', '=', False), ('sold_qty', '>', 0)]"
+                        help="O que realmente pede casamento: livro que o Olist vende e o Odoo não conhece."/>
+                <filter name="vendeu" string="Vendeu alguma vez"
+                        domain="[('sold_qty', '>', 0)]"/>
+                <filter name="nunca_vendeu" string="Nunca vendeu"
+                        domain="[('sold_qty', '=', 0)]"
+                        help="Cobertura: só conta pedido cujo detalhe já foi lido."/>
+                <separator/>
+                <filter name="duplicado" string="Mesmo livro em duas linhas"
+                        domain="[('duplicate_match', '=', True)]"
+                        help="Dois itens do Olist casados no mesmo livro: o envio recusa até se decidir como dividir o saldo."/>
+                <separator/>
+                <filter name="nunca_lido" string="Saldo nunca lido"
+                        domain="[('saldo_olist_date', '=', False)]"/>
+                <group>
+                    <filter name="g_state" string="Situação"
+                            context="{'group_by': 'state'}"/>
+                    <filter name="g_account" string="Conta"
+                            context="{'group_by': 'account_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_olist_product" model="ir.actions.act_window">
+        <field name="name">Estoque: Olist × Odoo</field>
+        <field name="res_model">olist.product</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_olist_product_search"/>
+        <field name="context">{'search_default_diverge': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">O espelho ainda está vazio.</p>
+            <p>Abra a conta do Olist e use <b>Ler catálogo</b>. Depois, o saldo
+            entra pelo cron da janela ou pelo botão <b>Ler saldo</b> das linhas
+            que você escolher.</p>
+        </field>
+    </record>
+
+    <!-- A view vai AMARRADA, como a do catálogo já fazia. O modelo tem duas
+         listas (a da comparação de estoque e a do casamento por ISBN), e
+         uma ação sem amarração deixa o Odoo escolher entre elas: o menu
+         Estoque abria a lista do catálogo, sem as colunas de quantidade, e
+         as duas telas do app mostravam a mesma coisa (18/08/2026). -->
+    <record id="action_olist_product_list_view" model="ir.actions.act_window.view">
+        <field name="sequence" eval="1"/>
+        <field name="view_mode">list</field>
+        <field name="view_id" ref="view_olist_product_list"/>
+        <field name="act_window_id" ref="action_olist_product"/>
+    </record>
+
+    <record id="action_olist_product_form_view" model="ir.actions.act_window.view">
+        <field name="sequence" eval="2"/>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="view_olist_product_form"/>
+        <field name="act_window_id" ref="action_olist_product"/>
+    </record>
+
+    <menuitem id="menu_olist_stock"
+              name="Estoque"
+              parent="menu_olist_root"
+              action="action_olist_product"
+              sequence="20"/>
+
+    <!-- A ação sobre SELECIONADOS, que é como esta escrita deve começar:
+         três livros que a pessoa escolheu e sabe conferir. -->
+    <record id="action_sync_selected_server" model="ir.actions.server">
+        <field name="name">Sincronizar estoque com o Olist</field>
+        <field name="model_id" ref="model_olist_product"/>
+        <field name="binding_model_id" ref="model_olist_product"/>
+        <field name="binding_view_types">list,form</field>
+        <field name="state">code</field>
+        <field name="code">action = records.action_sync_selected()</field>
+    </record>
+
+    <record id="action_read_saldo_server" model="ir.actions.server">
+        <field name="name">Ler saldo no Olist</field>
+        <field name="model_id" ref="model_olist_product"/>
+        <field name="binding_model_id" ref="model_olist_product"/>
+        <field name="binding_view_types">list,form</field>
+        <field name="state">code</field>
+        <field name="code">action = records.action_read_saldo()</field>
+    </record>
+
+</odoo>

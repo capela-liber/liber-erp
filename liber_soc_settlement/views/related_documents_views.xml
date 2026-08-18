@@ -119,6 +119,12 @@
                 <separator/>
                 <filter string="Consignment Settlements" name="f_consignment_settlement"
                         domain="[('consignment_operation_id', '!=', False), ('is_consignment', '=', False)]"/>
+                <!-- The money watch: an acerto whose sale ran but whose invoice
+                     did not is revenue reported and not yet billed. Before the
+                     delivery link (19.0.2.9.0) these were invisible: the sale
+                     said "nothing to invoice" and nobody could even list them. -->
+                <filter string="Settlements to Invoice" name="f_settlement_to_invoice"
+                        domain="[('consignment_operation_id', '!=', False), ('is_consignment', '=', False), ('invoice_status', '=', 'to invoice')]"/>
                 <filter string="Regular Sales" name="f_regular_sales"
                         domain="[('consignment_operation_id', '=', False)]"/>
             </filter>
