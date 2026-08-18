@@ -18,7 +18,8 @@
             cada nota importada é dela.</li>
         <li style="margin:0 0 7px;">Use os botões da conta na primeira vez: <span class="field" style="font-weight:600;color:#251d2b;">Ler catálogo</span>,
             <span class="field" style="font-weight:600;color:#251d2b;">Ler pedidos</span>, <span class="field" style="font-weight:600;color:#251d2b;">Ler notas fiscais</span>.
-            Depois, os agendamentos mantêm tudo fresco sozinhos.</li>
+            Depois, os agendamentos mantêm tudo fresco sozinhos — os pedidos e os detalhes,
+            de duas em duas horas.</li>
       </ol>
       <figure class="shot" style="margin:20px 0 24px;">
         <img src="img/doc-liber_olist-conta.png" alt="Ficha da conta Olist com os botões de leitura e a opção Somente leitura ligada" style="max-width:100%;display:block;margin:0 auto;border-radius:12px;border:1px solid #e5dbee;">
@@ -33,8 +34,9 @@
       <h2 id="estoque" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">O estoque, lado a lado</h2>
       <p style="margin:0 0 12px;">Em <span class="menupath" style="display:inline-block;background:#f1eaf6;border:1px solid #e5dbee;border-radius:6px;padding:1px 8px;font-size:13.5px;color:#251d2b;white-space:nowrap;">Olist<i style="font-style:normal;color:#6e2f91;margin:0 4px;font-weight:700;">‣</i>Estoque</span>, cada livro mostra três números: o saldo
       que o <strong style="color:#251d2b;">Olist</strong> oferece, o <strong style="color:#251d2b;">estoque do armazém</strong> aqui, e o que seria
-      <strong style="color:#251d2b;">enviado</strong> (o armazém menos a margem de segurança). A lista ordena pela divergência —
-      o trabalho começa por onde a diferença é maior.</p>
+      <strong style="color:#251d2b;">enviado</strong> — o armazém, menos o que está <em>reservado</em> por entregas abertas
+      (o pacote que espera coleta ainda conta no armazém, mas tem dono), menos a margem de
+      segurança. A lista ordena pela divergência — o trabalho começa por onde a diferença é maior.</p>
       <div class="tablewrap" style="overflow-x:auto;margin:0 0 16px;"><table style="border-collapse:collapse;width:100%;margin:0 0 16px;font-size:14px;">
         <tr><th style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;background:#f1eaf6;font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:13.5px;">Situação</th><th style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;background:#f1eaf6;font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:13.5px;">O que significa</th></tr>
         <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;"><span class="field" style="font-weight:600;color:#251d2b;">Olist oferece a mais</span></td>
@@ -149,6 +151,12 @@
         <figcaption style="font-size:13px;color:#5d5266;margin-top:10px;text-align:center;">A fila de trabalho: o que falta detalhar, o que está pronto para importar e o
         que espera um casamento de livro.</figcaption>
       </figure>
+      <figure class="shot" style="margin:20px 0 24px;">
+        <img src="img/doc-liber_olist-caixa.png" alt="Visão geral do Inventário com o cartão Marketplaces e o contador A entregar" style="max-width:100%;display:block;margin:0 auto;border-radius:12px;border:1px solid #e5dbee;">
+        <figcaption style="font-size:13px;color:#5d5266;margin-top:10px;text-align:center;">A caixa do depósito: o cartão <span class="field" style="font-weight:600;color:#251d2b;">Marketplaces</span> na visão
+        geral do Inventário, com o contador do que espera embalagem — o pacote pequeno,
+        separado do palete.</figcaption>
+      </figure>
       <p style="margin:0 0 12px;">Duas escolhas da conta governam o efeito do pedido importado:</p>
       <div class="tablewrap" style="overflow-x:auto;margin:0 0 16px;"><table style="border-collapse:collapse;width:100%;margin:0 0 16px;font-size:14px;">
         <tr><th style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;background:#f1eaf6;font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:13.5px;">Campo</th><th style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;background:#f1eaf6;font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:13.5px;">O que decide</th></tr>
@@ -190,6 +198,13 @@
           <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">A leitura para no meio com aviso de limite</td>
           <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">A cota de chamadas da conta Olist esgotou por ora.</td>
           <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Nada a fazer: o sistema recua e insiste sozinho, no ritmo que a conta aceita.</td>
+        </tr>
+        <tr>
+          <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Um pedido que você espera não aparece no "A despachar"</td>
+          <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Ou ele ainda não tem nota (sem nota não há o que embalar), ou é anterior ao corte
+              (história), ou a entrega dele já foi validada — e aí está tudo certo.</td>
+          <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Confira a coluna "Situação do XML" e a situação do pedido; nota emitida e entrega
+              aberta é o único par que grita.</td>
         </tr>
         <tr>
           <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Pedido importado sem canal de venda</td>

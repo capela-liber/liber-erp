@@ -56,7 +56,8 @@
             cada nota importada é dela.</li>
         <li>Use os botões da conta na primeira vez: <span class="field">Ler catálogo</span>,
             <span class="field">Ler pedidos</span>, <span class="field">Ler notas fiscais</span>.
-            Depois, os agendamentos mantêm tudo fresco sozinhos.</li>
+            Depois, os agendamentos mantêm tudo fresco sozinhos — os pedidos e os detalhes,
+            de duas em duas horas.</li>
       </ol>
       <figure class="shot">
         <img src="img/doc-liber_olist-conta.png"
@@ -72,8 +73,9 @@
       <h2 id="estoque">O estoque, lado a lado</h2>
       <p>Em <span class="menupath">Olist<i>‣</i>Estoque</span>, cada livro mostra três números: o saldo
       que o <strong>Olist</strong> oferece, o <strong>estoque do armazém</strong> aqui, e o que seria
-      <strong>enviado</strong> (o armazém menos a margem de segurança). A lista ordena pela divergência —
-      o trabalho começa por onde a diferença é maior.</p>
+      <strong>enviado</strong> — o armazém, menos o que está <em>reservado</em> por entregas abertas
+      (o pacote que espera coleta ainda conta no armazém, mas tem dono), menos a margem de
+      segurança. A lista ordena pela divergência — o trabalho começa por onde a diferença é maior.</p>
       <div class="tablewrap"><table>
         <tr><th>Situação</th><th>O que significa</th></tr>
         <tr><td><span class="field">Olist oferece a mais</span></td>
@@ -192,6 +194,13 @@
         <figcaption>A fila de trabalho: o que falta detalhar, o que está pronto para importar e o
         que espera um casamento de livro.</figcaption>
       </figure>
+      <figure class="shot">
+        <img src="img/doc-liber_olist-caixa.png"
+             alt="Visão geral do Inventário com o cartão Marketplaces e o contador A entregar">
+        <figcaption>A caixa do depósito: o cartão <span class="field">Marketplaces</span> na visão
+        geral do Inventário, com o contador do que espera embalagem — o pacote pequeno,
+        separado do palete.</figcaption>
+      </figure>
       <p>Duas escolhas da conta governam o efeito do pedido importado:</p>
       <div class="tablewrap"><table>
         <tr><th>Campo</th><th>O que decide</th></tr>
@@ -233,6 +242,13 @@
           <td>A leitura para no meio com aviso de limite</td>
           <td>A cota de chamadas da conta Olist esgotou por ora.</td>
           <td>Nada a fazer: o sistema recua e insiste sozinho, no ritmo que a conta aceita.</td>
+        </tr>
+        <tr>
+          <td>Um pedido que você espera não aparece no "A despachar"</td>
+          <td>Ou ele ainda não tem nota (sem nota não há o que embalar), ou é anterior ao corte
+              (história), ou a entrega dele já foi validada — e aí está tudo certo.</td>
+          <td>Confira a coluna "Situação do XML" e a situação do pedido; nota emitida e entrega
+              aberta é o único par que grita.</td>
         </tr>
         <tr>
           <td>Pedido importado sem canal de venda</td>
