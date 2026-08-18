@@ -1101,4 +1101,4 @@ msgstr "Canal de Vendas"
 #. odoo-python
 #: code:addons/liber_soc_moves/models/res_company.py:0
 msgid "Consignment Delivery"
-msgstr "Entrega de Consignação"
+msgstr "Consignação"
