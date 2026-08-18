@@ -219,14 +219,18 @@
                 <field name="numero_ecommerce"/>
                 <field name="canal"/>
                 <!-- O grito da operação: nota emitida, rastreio na linha, e o
-                     pacote AINDA no depósito. A lista fechada fica do lado do
-                     "já viajou": situação nova/desconhecida cai aqui dentro,
-                     que é o lado seguro — errar para "esperar gente" custa um
-                     olhar; errar para "já foi" esconde um comprador esperando. -->
+                     pacote AINDA no depósito. Ficam de fora as duas listas
+                     fechadas conhecidas — o que JÁ VIAJOU e o que AINDA NÃO
+                     TEM NOTA (Em aberto/Aprovado/Preparando envio: sem nota
+                     não há o que despachar, ela viaja com a caixa). Situação
+                     nova/desconhecida cai aqui DENTRO, que é o lado seguro:
+                     errar para "esperar gente" custa um olhar; errar para
+                     "já foi" esconde um comprador esperando. -->
                 <filter name="f_a_despachar" string="A despachar"
                         domain="[('state', 'not in', ('anterior_corte', 'cancelado')),
-                                 ('situacao', 'not in', ('Enviado', 'Entregue', 'Não entregue', 'Cancelado'))]"
-                        help="Nota emitida e pacote ainda no depósito: o comprador espera — importe (se falta) e embale. Quando o Olist coletar e o pedido virar Enviado, a linha sai daqui sozinha."/>
+                                 ('situacao', 'not in', ('Enviado', 'Entregue', 'Não entregue', 'Cancelado',
+                                                         'Em aberto', 'Aprovado', 'Preparando envio'))]"
+                        help="Nota emitida e pacote ainda no depósito: o comprador espera — importe (se falta) e embale. Quando o Olist coletar e o pedido virar Enviado, a linha sai daqui sozinha. Pedido ainda sem nota (Em aberto) não entra: sem nota não há o que despachar."/>
                 <filter name="f_pendente" string="A importar"
                         domain="[('state', '=', 'nao_importado')]"/>
                 <filter name="f_sem_detalhe" string="Falta ler o detalhe"
