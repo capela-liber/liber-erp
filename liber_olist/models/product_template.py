@@ -161,9 +161,31 @@ class ProductTemplate(models.Model):
         sobe, senão ninguém consegue conferir um push.
 
         Sem armazém na empresa não há o que oferecer: zero, não "tudo".
+
+        E desconta o RESERVADO: entrega confirmada e ainda não validada — o
+        pacote de marketplace que espera coleta na prateleira, a remessa de
+        consignação em separação — é exemplar com dono. Ele ainda conta no
+        armazém (não saiu), mas oferecê-lo ao Olist é vender duas vezes o
+        mesmo livro no intervalo entre a importação e a coleta.
         """
         self.ensure_one()
-        return max(0.0, self._olist_wh_qty(account) - account.stock_reserve)
+        return max(0.0, self._olist_wh_qty(account)
+                   - self._olist_reservado_qty(account)
+                   - account.stock_reserve)
+
+    def _olist_reservado_qty(self, account):
+        """Quanto do armazém já tem dono (reservado por saídas abertas)."""
+        self.ensure_one()
+        company = account.company_id
+        product = self._in_olist_company(company)
+        warehouses = self.env['stock.warehouse'].sudo().search(
+            [('company_id', '=', company.id)])
+        if not warehouses:
+            return 0.0
+        quants = self.env['stock.quant'].sudo().search([
+            ('product_id', 'in', product.product_variant_ids.ids),
+            ('location_id', 'child_of', warehouses.lot_stock_id.ids)])
+        return sum(quants.mapped('reserved_quantity'))
 
     def _olist_wh_qty(self, account):
         """O estoque do armazém, cru — antes da margem.
@@ -249,13 +271,15 @@ class ProductTemplate(models.Model):
             "company: %s (conta %s)\n"
             "product: %s (ISBN %s)\n"
             "idProduto: %s\n"
-            "estoque do armazém: %s | margem: %s | em mãos (referência): %s\n"
+            "estoque do armazém: %s | reservado: %s | margem: %s | "
+            "em mãos (referência): %s\n"
             "qty sent (tipo=B): %s\n\n"
             "REQUEST estoque=%s\n\n"
             "RESPONSE %s"
         ) % (company.display_name, account.name,
              product.display_name, product.barcode or '-', id_produto,
-             product._olist_wh_qty(account), account.stock_reserve,
+             product._olist_wh_qty(account),
+             product._olist_reservado_qty(account), account.stock_reserve,
              product.qty_available, qty,
              request_body, raw)
         _logger.info("Olist stock push [%s] %s -> idProduto %s (qty %s): %s",

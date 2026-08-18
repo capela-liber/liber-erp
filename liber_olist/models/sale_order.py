@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from odoo import models
+from odoo import fields, models
 
 
 class SaleOrder(models.Model):
@@ -15,6 +15,11 @@ class SaleOrder(models.Model):
     logística confirma o S — horas depois.
     """
     _inherit = 'sale.order'
+
+    # O caminho de volta: é por ele que a lista de entregas filtra "Do Olist"
+    # — a fila de embalagem do marketplace, separada do resto da expedição.
+    olist_order_ids = fields.One2many('olist.order', 'sale_order_id',
+                                      string="Pedidos do Olist")
 
     def action_confirm(self):
         resultado = super().action_confirm()

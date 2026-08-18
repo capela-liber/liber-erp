@@ -209,6 +209,22 @@
         </field>
     </record>
 
+<!-- A fila de embalagem do funcionário: as entregas do marketplace no meio
+     das outras saídas confundem — este filtro separa. "Do Olist" = a entrega
+     nasceu de um pedido importado do espelho. -->
+    <record id="view_picking_search_olist" model="ir.ui.view">
+        <field name="name">stock.picking.search.olist</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_internal_search"/>
+        <field name="arch" type="xml">
+            <xpath expr="//search" position="inside">
+                <filter name="f_do_olist" string="Do Olist"
+                        domain="[('sale_id.olist_order_ids', '!=', False)]"
+                        help="Entregas nascidas de pedidos do Olist: a fila de embalagem do marketplace. Em Pronto, é pacote a fazer; validar é registrar que ele saiu na coleta."/>
+            </xpath>
+        </field>
+    </record>
+
     <record id="view_olist_order_search" model="ir.ui.view">
         <field name="name">olist.order.search</field>
         <field name="model">olist.order</field>
@@ -218,19 +234,15 @@
                 <field name="cliente_nome"/>
                 <field name="numero_ecommerce"/>
                 <field name="canal"/>
-                <!-- O grito da operação: nota emitida, rastreio na linha, e o
-                     pacote AINDA no depósito. Ficam de fora as duas listas
-                     fechadas conhecidas — o que JÁ VIAJOU e o que AINDA NÃO
-                     TEM NOTA (Em aberto/Aprovado/Preparando envio: sem nota
-                     não há o que despachar, ela viaja com a caixa). Situação
-                     nova/desconhecida cai aqui DENTRO, que é o lado seguro:
-                     errar para "esperar gente" custa um olhar; errar para
-                     "já foi" esconde um comprador esperando. -->
+                <!-- O grito da operação, pela régua da CASA: nota emitida e a
+                     entrega daqui ainda aberta. O status do Olist não manda —
+                     "Enviado" é o nascimento da etiqueta, não a saída do
+                     pacote (o PDF cai na nossa mão e a caixa espera coleta).
+                     A linha só sai quando o funcionário valida a entrega, ou
+                     quando o Olist PROVA que saiu (Entregue). -->
                 <filter name="f_a_despachar" string="A despachar"
-                        domain="[('state', 'not in', ('anterior_corte', 'cancelado')),
-                                 ('situacao', 'not in', ('Enviado', 'Entregue', 'Não entregue', 'Cancelado',
-                                                         'Em aberto', 'Aprovado', 'Preparando envio'))]"
-                        help="Nota emitida e pacote ainda no depósito: o comprador espera — importe (se falta) e embale. Quando o Olist coletar e o pedido virar Enviado, a linha sai daqui sozinha. Pedido ainda sem nota (Em aberto) não entra: sem nota não há o que despachar."/>
+                        domain="[('a_despachar', '=', True)]"
+                        help="Nota emitida e a entrega da casa ainda aberta: o pacote é nosso até a coleta. Importe (se falta), embale e valide a entrega — é o clique que tira a linha daqui. 'Enviado' no Olist é só a etiqueta nascendo; quem sabe se o pacote saiu somos nós."/>
                 <filter name="f_pendente" string="A importar"
                         domain="[('state', '=', 'nao_importado')]"/>
                 <filter name="f_sem_detalhe" string="Falta ler o detalhe"

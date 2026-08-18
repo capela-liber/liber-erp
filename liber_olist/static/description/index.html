@@ -104,9 +104,18 @@
       valor e rastreio. O canal e os itens vêm num segundo passo — <span class="field" style="font-weight:600;color:#251d2b;">Ler
       detalhe</span> — porque custam uma consulta por pedido; o agendamento faz isso aos poucos, e a
       conta mostra a cobertura ("47 de 978 lidos").</p>
-      <p style="margin:0 0 12px;">O filtro <span class="field" style="font-weight:600;color:#251d2b;">A despachar</span> é o grito da operação: nota emitida,
-      rastreio na linha e o pacote ainda no depósito — o comprador espera. Quando o Olist coleta e
-      o pedido vira Enviado, a linha sai do filtro sozinha.</p>
+      <p style="margin:0 0 12px;">O filtro <span class="field" style="font-weight:600;color:#251d2b;">A despachar</span> é o grito da operação — e a régua dele é
+      <strong style="color:#251d2b;">da casa</strong>, não do Olist. Quando a etiqueta nasce, o Olist marca "Enviado" e
+      entrega o PDF: o pacote continua na sua prateleira até a coleta, e só quem sabe disso é quem
+      embala. Por isso a linha só sai do filtro quando o funcionário <strong style="color:#251d2b;">valida a entrega</strong>
+      no Odoo (ou quando o Olist prova que saiu: "Entregue").</p>
+      <p style="margin:0 0 12px;">O fluxo do pacote, de ponta a ponta: a importação confirma a venda e a entrega nasce em
+      <span class="field" style="font-weight:600;color:#251d2b;">Pronto</span> — em <span class="menupath" style="display:inline-block;background:#f1eaf6;border:1px solid #e5dbee;border-radius:6px;padding:1px 8px;font-size:13.5px;color:#251d2b;white-space:nowrap;">Inventário<i style="font-style:normal;color:#6e2f91;margin:0 4px;font-weight:700;">‣</i>Pedidos de
+      entrega</span>, filtro <span class="field" style="font-weight:600;color:#251d2b;">Do Olist</span>, essa é a fila de embalagem, já com
+      o XML da nota no clipe e a impressão no menu. Embalou e a coleta levou? Validar é o clique que
+      registra a saída e baixa a prateleira. Se alguém esquecer, o sistema se corrige sozinho quando
+      o pedido virar "Entregue" no Olist. E o estoque oferecido ao marketplace desconta o que está
+      <strong style="color:#251d2b;">reservado</strong>: o pacote que espera coleta ainda conta no armazém, mas tem dono.</p>
       <p style="margin:0 0 12px;"><span class="field" style="font-weight:600;color:#251d2b;">Importar para o Odoo</span> é o ato que traz o pedido para dentro, por
       linhas escolhidas — e ele traz a <strong style="color:#251d2b;">nota junto</strong>: a fatura nasce do
       <abbr class="sigla" title="A representação estruturada da NF-e: o arquivo assinado que a SEFAZ autoriza." style="text-decoration:none;border-bottom:1px dotted #8a4bad;cursor:help;">XML</abbr> que a <abbr class="sigla" title="Secretaria da Fazenda: o fisco estadual, que autoriza e guarda as NF-e." style="text-decoration:none;border-bottom:1px dotted #8a4bad;cursor:help;">SEFAZ</abbr> autorizou, não do que o pedido diz. Quando os dois divergem
@@ -140,9 +149,10 @@
         <tr><th style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;background:#f1eaf6;font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:13.5px;">Campo</th><th style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;background:#f1eaf6;font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:13.5px;">O que decide</th></tr>
         <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;"><span class="field" style="font-weight:600;color:#251d2b;">Operar pedidos a partir de</span></td>
             <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">A data em que o marketplace passa a produzir efeito: do corte em diante o pedido
-                confirma, baixa o estoque e fatura; antes dele, entra só como registro. Vazio,
-                nenhum pedido mexe em nada — importar o histórico não pode reescrever o estoque de
-                hoje.</td></tr>
+                confirma, fatura e cria a entrega na fila de embalagem (a prateleira baixa quando o
+                funcionário valida — ou sozinha, se o Olist já disser "Entregue"); antes dele, entra
+                só como registro. Vazio, nenhum pedido mexe em nada — importar o histórico não pode
+                reescrever o estoque de hoje.</td></tr>
         <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;"><span class="field" style="font-weight:600;color:#251d2b;">Diário do recebimento</span></td>
             <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Onde lançar o valor que o comprador <em>já pagou</em> ao Olist. Use um diário
                 próprio do marketplace, nunca a conta bancária: o dinheiro só chega no repasse, e é

@@ -159,6 +159,14 @@ class OlistOrder(models.Model):
         ('importado', "Importado"),
     ], string="Situação", compute='_compute_state', store=True, index=True)
 
+    a_despachar = fields.Boolean(
+        "A despachar", compute='_compute_a_despachar', store=True, index=True,
+        help="Nota emitida e a CASA ainda não concluiu a entrega. A régua é "
+             "nossa, não do Olist: quando a etiqueta nasce o Olist marca "
+             "'Enviado' e lava as mãos — o pacote continua na prateleira até "
+             "a coleta. Só sai daqui quando o funcionário valida a entrega no "
+             "Odoo (ou quando o Olist prova que saiu: Entregue).")
+
     itens_sem_produto = fields.Integer(
         "Livros não localizados", compute='_compute_itens_sem_produto',
         store=True, index='btree_not_null',
@@ -231,6 +239,28 @@ class OlistOrder(models.Model):
                 pedido.state = 'sem_detalhe'
             else:
                 pedido.state = 'nao_importado'
+
+    @api.depends('state', 'situacao', 'id_nota_fiscal',
+                 'sale_order_id.picking_ids.state')
+    def _compute_a_despachar(self):
+        for pedido in self:
+            pendente = (
+                pedido.state not in ('anterior_corte', 'cancelado')
+                and bool(pedido.id_nota_fiscal)
+                and pedido.id_nota_fiscal != '0'
+                # O que o Olist PROVA que saiu não é a despachar — mas
+                # "Enviado" não prova nada: é o nascimento da etiqueta.
+                and (pedido.situacao or '').strip()
+                not in self.SITUACOES_FORA_DA_CASA)
+            if pendente and pedido.sale_order_id:
+                saidas = pedido.sale_order_id.picking_ids.filtered(
+                    lambda p: p.state != 'cancel')
+                # Importado: quem responde é a entrega da casa. Sem nenhuma
+                # saída (importou fora do corte) não há o que despachar por
+                # aqui — o pacote daquele é assunto do histórico.
+                pendente = bool(saidas) and any(
+                    p.state != 'done' for p in saidas)
+            pedido.a_despachar = pendente
 
     # ------------------------------------------------------------------
     # Ler o Olist (leitura)
@@ -736,30 +766,61 @@ class OlistOrder(models.Model):
             'order_line': [(0, 0, l._sale_line_vals()) for l in self.line_ids],
         }
 
+    # As situações do Olist que PROVAM que o pacote saiu da casa: o comprador
+    # recebeu, ou a entrega viajou e falhou. "Enviado" NÃO entra, e é o furo
+    # que o dono apontou (18/08/2026): o Olist marca Enviado quando a ETIQUETA
+    # nasce — o PDF cai na nossa mão e o pacote continua na prateleira,
+    # esperando a coleta. Daí em diante, só a CASA sabe se ele saiu.
+    SITUACOES_FORA_DA_CASA = ('Entregue', 'Não entregue')
+
     def _baixa_estoque_se_for_o_caso(self):
-        """Confirma e entrega — só a partir da data de corte da conta.
+        """Confirma a venda — e só CONCLUI a entrega do que comprovadamente saiu.
 
-        Sem corte (o padrão), nada de estoque se mexe: o pedido entra como
-        rascunho, para consolidação e rastreabilidade. O histórico de ~1000
-        pedidos antigos não pode sair baixando prateleira retroativamente.
-
-        A partir do corte é o contrário: se a venda de marketplace não baixa no
-        Odoo, o estoque daqui fica alto demais — e o push de estoque devolve
-        esse número inflado para o Olist, oferecendo livro já vendido. É este
-        passo que fecha o laço entre as duas direções.
+        Sem corte (o padrão), nada se mexe: o pedido entra como rascunho, para
+        consolidação. A partir do corte, a venda confirma (reservando o
+        estoque) e a entrega nasce PRONTA — é a fila de embalagem do
+        funcionário, que valida quando o pacote sai na coleta. Concluir
+        sozinho, só quando o Olist prova que o pacote já não está aqui
+        (Entregue): status de etiqueta não é status de prateleira.
         """
         self.ensure_one()
         if not self._dentro_do_corte():
             return False
-        pedido = self.sale_order_id
-        pedido.action_confirm()
-        for picking in pedido.picking_ids:
+        self.sale_order_id.action_confirm()
+        if (self.situacao or '').strip() in self.SITUACOES_FORA_DA_CASA:
+            self._concluir_entregas()
+        self._carimba_rastreio()
+        return True
+
+    def _concluir_entregas(self):
+        """Valida as entregas abertas do pedido: o pacote comprovadamente saiu."""
+        self.ensure_one()
+        for picking in self.sale_order_id.picking_ids:
+            if picking.state in ('done', 'cancel'):
+                continue
             for move in picking.move_ids:
                 move.quantity = move.product_uom_qty
                 move.picked = True
             picking.button_validate()
-        self._carimba_rastreio()
         return True
+
+    def write(self, vals):
+        """A releitura reconcilia: virou Entregue lá, conclui a entrega aqui.
+
+        Se o funcionário embalar e esquecer de validar, o mundo acaba
+        avisando — o comprador recebeu. O Odoo se corrige pela fonte, nunca o
+        contrário. Vale para qualquer caminho que atualize a situação:
+        listagem, detalhe, cron.
+        """
+        resultado = super().write(vals)
+        if (vals.get('situacao')
+                and vals['situacao'].strip() in self.SITUACOES_FORA_DA_CASA):
+            for pedido in self.filtered('sale_order_id'):
+                abertas = pedido.sale_order_id.picking_ids.filtered(
+                    lambda p: p.state not in ('done', 'cancel'))
+                if abertas:
+                    pedido._concluir_entregas()
+        return resultado
 
     def _carimba_rastreio(self):
         """Leva o código de rastreio do Olist para a entrega do Odoo.

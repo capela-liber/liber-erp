@@ -92,7 +92,9 @@ class OlistAccount(models.Model):
         string="Operar pedidos a partir de",
         help="A data em que o marketplace passa a produzir EFEITO na operação. "
              "Pedidos com data igual ou posterior a ela são confirmados e "
-             "entregues (baixando o estoque do armazém) e faturados.\n"
+             "faturados, e a entrega nasce PRONTA na fila de embalagem — a "
+             "prateleira baixa quando o funcionário valida (ou sozinha, se o "
+             "Olist já disser Entregue).\n"
              "Anteriores entram como REGISTRO: espelho, rastreabilidade e o "
              "XML arquivado, sem mexer em estoque e sem lançar fatura.\n"
              "Vazio (o padrão) = nenhum pedido produz efeito. É assim que se "

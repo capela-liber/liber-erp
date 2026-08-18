@@ -151,8 +151,10 @@ class OlistProduct(models.Model):
     qty_to_send = fields.Float(
         "Enviaria", compute='_compute_comparacao',
         digits='Product Unit of Measure',
-        help="O que a sincronia mandaria: estoque do armazém menos a margem "
-             "de segurança da conta, com piso em zero.")
+        help="O que a sincronia mandaria: estoque do armazém, menos o que já "
+             "está RESERVADO por entregas abertas (o pacote esperando coleta "
+             "ainda conta no armazém, mas tem dono), menos a margem de "
+             "segurança da conta — com piso em zero.")
     divergencia = fields.Float(
         "Divergência", compute='_compute_comparacao', store=True,
         digits='Product Unit of Measure',
