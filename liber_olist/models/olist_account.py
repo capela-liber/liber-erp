@@ -122,6 +122,16 @@ class OlistAccount(models.Model):
              "nasce lançada.\n"
              "Desligue para conferir antes: a fatura fica em rascunho e alguém "
              "lança à mão.")
+    marketplace_picking_type_id = fields.Many2one(
+        'stock.picking.type', string="Caixa de despacho", readonly=True,
+        copy=False,
+        help="O tipo de operação das entregas de marketplace (série MP/OUT/). "
+             "Nasce sozinho no primeiro pedido importado: o pacote de pessoa "
+             "física é outro trabalho — pequeno, um livro, a etiqueta do "
+             "Olist — e misturado ao WH/OUT genérico (o palete da Amazon, a "
+             "remessa da livraria) ele some. A caixa própria vira um cartão "
+             "no Inventário: a fila de embalagem, sem precisar de filtro.")
+
     order_ids = fields.One2many('olist.order', 'account_id',
                                 string="Espelho de pedidos")
     order_count = fields.Integer("Pedidos", compute='_compute_order_count')
@@ -174,6 +184,41 @@ class OlistAccount(models.Model):
                     "qual conta se escreve, então ela precisa apontar para uma "
                     "só.",
                     account.company_id.display_name))
+
+    def _marketplace_picking_type(self):
+        """A caixa de despacho do marketplace — get-or-create, no primeiro uso.
+
+        Tudo em sudo(), pela lição do liber_soc_moves: criar o tipo já era
+        sudo, mas gravar o resultado na conta não — e o primeiro usuário
+        não-administrador a importar um pedido levava AccessError. Não há
+        escalada: o valor gravado é o registro que o método acabou de criar.
+        """
+        self.ensure_one()
+        if self.marketplace_picking_type_id:
+            return self.marketplace_picking_type_id
+        warehouse = self.env['stock.warehouse'].sudo().search(
+            [('company_id', '=', self.company_id.id)], limit=1)
+        if not warehouse:
+            return False
+        seq = self.env['ir.sequence'].sudo().create({
+            'name': "Marketplaces (%s)" % self.company_id.name,
+            'prefix': 'MP/OUT/%(year)s/',
+            'padding': 5,
+            'company_id': self.company_id.id,
+        })
+        tipo = self.env['stock.picking.type'].sudo().create({
+            'name': "Marketplaces",
+            'code': 'outgoing',
+            'sequence_id': seq.id,
+            'sequence_code': 'MP/OUT',
+            'warehouse_id': warehouse.id,
+            'company_id': self.company_id.id,
+            'default_location_src_id': warehouse.lot_stock_id.id,
+            'default_location_dest_id':
+                self.env.ref('stock.stock_location_customers').id,
+        })
+        self.sudo().marketplace_picking_type_id = tipo
+        return tipo
 
     @api.depends('channel_ids.team_id')
     def _compute_channel_count(self):

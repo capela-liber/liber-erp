@@ -124,3 +124,34 @@ class TestDespachoDaCasa(TransactionCase):
         self.assertEqual(template._olist_stock_qty(self.account),
                          livre_antes - 2,
                          "o reservado saiu da oferta sem sair do armazém")
+
+    def test_a_caixa_marketplaces_nasce_no_primeiro_uso(self):
+        """O pacote de marketplace é outro trabalho: a entrega muda para o
+        tipo Marketplaces (MP/OUT/), que nasce sozinho e vira o cartão do
+        depósito no Inventário."""
+        pedido = self._pedido('D-8', 'Enviado', nota='706')
+        pedido._import_to_odoo()
+        entrega = pedido.sale_order_id.picking_ids[:1]
+        self.assertEqual(entrega.picking_type_id.name, "Marketplaces")
+        self.assertTrue(entrega.name.startswith('MP/OUT/'),
+                        "a série é MP/OUT/, não o WH/OUT genérico: %s"
+                        % entrega.name)
+        self.assertEqual(self.account.marketplace_picking_type_id,
+                         entrega.picking_type_id)
+        # segundo uso: a MESMA caixa, nunca uma segunda
+        pedido2 = self._pedido('D-9', 'Enviado', nota='707')
+        pedido2._import_to_odoo()
+        self.assertEqual(
+            pedido2.sale_order_id.picking_ids.picking_type_id,
+            entrega.picking_type_id)
+
+    def test_a_venda_comum_nao_muda_de_caixa(self):
+        """Caso de contraste: uma venda que não veio do Olist continua no
+        WH/OUT — a caixa Marketplaces é só do marketplace."""
+        venda = self.env['sale.order'].create({
+            'partner_id': self.cliente.id,
+            'order_line': [(0, 0, {'product_id': self.livro.id,
+                                   'product_uom_qty': 1})]})
+        venda.action_confirm()
+        tipos = venda.picking_ids.picking_type_id
+        self.assertNotIn("Marketplaces", tipos.mapped('name'))

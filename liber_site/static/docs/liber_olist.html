@@ -152,12 +152,17 @@
       embala. Por isso a linha só sai do filtro quando o funcionário <strong>valida a entrega</strong>
       no Odoo (ou quando o Olist prova que saiu: "Entregue").</p>
       <p>O fluxo do pacote, de ponta a ponta: a importação confirma a venda e a entrega nasce em
-      <span class="field">Pronto</span> — em <span class="menupath">Inventário<i>‣</i>Pedidos de
-      entrega</span>, filtro <span class="field">Do Olist</span>, essa é a fila de embalagem, já com
-      o XML da nota no clipe e a impressão no menu. Embalou e a coleta levou? Validar é o clique que
-      registra a saída e baixa a prateleira. Se alguém esquecer, o sistema se corrige sozinho quando
-      o pedido virar "Entregue" no Olist. E o estoque oferecido ao marketplace desconta o que está
-      <strong>reservado</strong>: o pacote que espera coleta ainda conta no armazém, mas tem dono.</p>
+      <span class="field">Pronto</span>, na <strong>caixa de despacho própria do depósito</strong> —
+      o tipo de operação <span class="field">Marketplaces</span> (série <span class="field">MP/OUT/</span>),
+      que nasce sozinho no primeiro pedido e vira um cartão só dele na visão geral do
+      <span class="menupath">Inventário</span>. O pacote de pessoa física é outro trabalho — pequeno,
+      um livro, a etiqueta do Olist — e não se mistura ao palete da Amazon nem à remessa da
+      livraria. A entrega já chega com o XML da nota no clipe e a impressão no menu. Embalou e a
+      coleta levou? Validar é o clique que registra a saída e baixa a prateleira. Se alguém
+      esquecer, o sistema se corrige sozinho quando o pedido virar "Entregue" no Olist. E o estoque
+      oferecido ao marketplace desconta o que está <strong>reservado</strong>: o pacote que espera
+      coleta ainda conta no armazém, mas tem dono. (Na lista geral de entregas, o filtro
+      <span class="field">Do Olist</span> também os acha.)</p>
       <p><span class="field">Importar para o Odoo</span> é o ato que traz o pedido para dentro, por
       linhas escolhidas — e ele traz a <strong>nota junto</strong>: a fatura nasce do
       <abbr class="sigla" title="A representação estruturada da NF-e: o arquivo assinado que a SEFAZ autoriza.">XML</abbr> que a <abbr class="sigla" title="Secretaria da Fazenda: o fisco estadual, que autoriza e guarda as NF-e.">SEFAZ</abbr> autorizou, não do que o pedido diz. Quando os dois divergem
@@ -265,6 +270,7 @@
         <tr><td><code>CP/</code></td><td>Campanha de consignação: o sortimento-alvo por canal — quantos exemplares de cada título as prateleiras devem ter — CP/2026/0001.</td></tr>
         <tr><td><code>AC/</code></td><td>Acordo de Consignação: o contrato com a livraria, dono da prateleira — AC/2026/00001.</td></tr>
         <tr><td><code>COM/OUT/</code></td><td>A série da remessa de consignação ao cliente, do armazém à livraria — COM/OUT/2026/00001, no espelho do WH/OUT.</td></tr>
+        <tr><td><code>MP/OUT/</code></td><td>A série das entregas de marketplace (Olist): o pacote de pessoa física, na caixa de despacho própria do depósito — MP/OUT/2026/00001.</td></tr>
         <tr><td><code>COM/MOV/</code></td><td>A série dos fluxos internos de prateleira da consignação — COM/MOV/2026/00001.</td></tr>
         <tr><td><code>COM/IN/</code></td><td>A série do retorno de consignação, da prateleira ao armazém — COM/IN/2026/00001, no espelho do WH/IN.</td></tr>
         <tr><td><code>REM/</code></td><td>Remessa: a nota de simples remessa, sem cobrança — a numeração vem do diário fiscal REM.</td></tr>

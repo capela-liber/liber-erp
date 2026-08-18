@@ -787,9 +787,32 @@ class OlistOrder(models.Model):
         if not self._dentro_do_corte():
             return False
         self.sale_order_id.action_confirm()
+        self._mover_para_a_caixa_marketplaces()
         if (self.situacao or '').strip() in self.SITUACOES_FORA_DA_CASA:
             self._concluir_entregas()
         self._carimba_rastreio()
+        return True
+
+    def _mover_para_a_caixa_marketplaces(self):
+        """A entrega muda para a caixa Marketplaces (série MP/OUT/).
+
+        Decisão do dono (18/08/2026): o pacote do marketplace é outro
+        trabalho — pequeno, pessoa física, etiqueta do Olist — e não pode se
+        misturar ao WH/OUT do palete da Amazon. O tipo próprio dá ao depósito
+        um cartão só dele no Inventário. Renomeia junto, antes de qualquer
+        conclusão: o número precisa contar a série certa desde o começo.
+        """
+        self.ensure_one()
+        tipo = self.account_id._marketplace_picking_type()
+        if not tipo:
+            return False
+        for picking in self.sale_order_id.picking_ids:
+            if picking.state in ('done', 'cancel'):
+                continue
+            if picking.picking_type_id == tipo:
+                continue
+            picking.write({'picking_type_id': tipo.id,
+                           'name': tipo.sequence_id.next_by_id()})
         return True
 
     def _concluir_entregas(self):
