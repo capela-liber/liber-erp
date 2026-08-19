@@ -391,11 +391,11 @@
         <field name="name">olist.order.list.fila</field>
         <field name="model">olist.order</field>
         <field name="arch" type="xml">
-            <list string="A importar" multi_edit="0" create="0">
+            <list string="Despachar" multi_edit="0" create="0">
                 <header>
                     <button name="action_import_selected" type="object"
-                            string="Importar para o Odoo" class="btn-primary"
-                            help="Um clique registra tudo: venda, entrega concluída na caixa Marketplaces, fatura do XML e recebimento."/>
+                            string="Despachar" class="btn-primary"
+                            help="Um clique registra tudo: venda, entrega concluída na caixa Marketplaces, fatura do XML e recebimento. Se o XML da nota ainda não estiver aqui, ele é buscado na hora."/>
                 </header>
                 <field name="data_pedido"/>
                 <field name="numero"/>
@@ -412,21 +412,27 @@
     </record>
 
     <record id="action_olist_fila" model="ir.actions.act_window">
-        <field name="name">A importar</field>
+        <field name="name">Despachar</field>
         <field name="res_model">olist.order</field>
         <field name="view_mode">list,form</field>
         <field name="view_id" ref="view_olist_order_list_fila"/>
-        <field name="domain">[('state', '=', 'nao_importado')]</field>
+        <!-- Só quem TEM nota entra na fila: a caixa viaja com a DANFE, e sem
+             nota não há ação possível — o pedido "Em aberto" espera o Olist
+             faturar e entra sozinho na releitura. O XML ainda não trazido não
+             barra: o Despachar o busca na hora. -->
+        <field name="domain">[('state', '=', 'nao_importado'),
+                              ('id_nota_fiscal', '!=', False),
+                              ('id_nota_fiscal', '!=', '0')]</field>
         <field name="help" type="html">
-            <p class="o_view_nocontent_smiling_face">Nada a importar</p>
-            <p>A fila está limpa. Os pedidos novos chegam sozinhos pelas
-               leituras de 2 em 2 horas e aparecem aqui quando estiverem
-               prontos para entrar.</p>
+            <p class="o_view_nocontent_smiling_face">Nada a despachar</p>
+            <p>A fila está limpa. Pedido novo chega sozinho pelas leituras de
+               2 em 2 horas — e só aparece aqui quando o Olist já tiver
+               emitido a nota dele.</p>
         </field>
     </record>
 
     <menuitem id="menu_olist_fila"
-              name="A importar"
+              name="Despachar"
               parent="menu_olist_root"
               action="action_olist_fila"
               sequence="5"/>

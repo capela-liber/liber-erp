@@ -168,9 +168,11 @@
       valor e rastreio. O canal e os itens vêm num segundo passo — <span class="field">Ler
       detalhe</span> — porque custam uma consulta por pedido; o agendamento faz isso aos poucos, e a
       conta mostra a cobertura ("47 de 978 lidos").</p>
-      <p>São <strong>duas telas, duas naturezas</strong>. <span class="menupath">Olist<i>‣</i>A
-      importar</span> é a <strong>fila da equipe</strong>: só o que está pronto para entrar, com um
-      botão único — Importar. Um clique registra tudo: a venda confirmada, a entrega
+      <p>São <strong>duas telas, duas naturezas</strong>.
+      <span class="menupath">Olist<i>‣</i>Despachar</span> é a <strong>fila da equipe</strong>: só o
+      que tem nota emitida e está pronto para entrar, com um botão único — Despachar. Pedido ainda
+      sem nota não aparece (sem nota não há o que despachar: a caixa viaja com a DANFE) — ele entra
+      sozinho quando o Olist faturar. Um clique registra tudo: a venda confirmada, a entrega
       <em>concluída</em> na caixa <span class="field">Marketplaces</span> (série
       <span class="field">MP/OUT/</span>, um cartão próprio na visão geral do
       <span class="menupath">Inventário</span>, com o XML da nota no clipe), a fatura lançada e o
@@ -273,9 +275,10 @@
           <td>Nada a fazer: o sistema recua e insiste sozinho, no ritmo que a conta aceita.</td>
         </tr>
         <tr>
-          <td>Um pedido que você espera não aparece na fila "A importar"</td>
-          <td>Ou o detalhe dele ainda não foi lido (o cron chega lá), ou é anterior ao corte
-              (história — mora na auditoria), ou já foi importado — e aí está tudo certo.</td>
+          <td>Um pedido que você espera não aparece na fila "Despachar"</td>
+          <td>Ou ainda não tem nota no Olist (sem nota não se despacha), ou o detalhe não foi
+              lido (o cron chega lá), ou é anterior ao corte (história — mora na auditoria), ou já
+              foi despachado — e aí está tudo certo.</td>
           <td>Procure-o na tela Pedidos (a auditoria mostra tudo) e confira a coluna
               Situação.</td>
         </tr>

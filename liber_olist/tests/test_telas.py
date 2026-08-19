@@ -89,6 +89,9 @@ class TestTelasDoOlist(TransactionCase):
         acao = self.env.ref('liber_olist.action_olist_fila')
         self.assertIn("'nao_importado'", acao.domain,
                       "a fila mostra só o que está pronto para importar")
+        self.assertIn('id_nota_fiscal', acao.domain,
+                      "sem nota não há o que despachar: a caixa viaja com a "
+                      "DANFE — o Em aberto espera o Olist faturar")
         fila = self.env.ref('liber_olist.view_olist_order_list_fila')
         self.assertIn('action_import_selected', fila.arch)
         for fora in ('action_pull_from_olist', 'action_read_detail',
