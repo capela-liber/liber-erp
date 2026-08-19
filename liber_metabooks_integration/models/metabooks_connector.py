@@ -312,6 +312,34 @@ class MetabooksConnector(models.AbstractModel):
         return bool(product_type) and str(product_type).strip().lower() \
             not in cls._DIGITAL_TYPES
 
+    def _house_invoice_policy(self):
+        """The invoicing policy every synced title must land on.
+
+        `product.template.invoice_policy` is a STORED COMPUTED field in Odoo 19
+        (sale/models/product_template.py):
+
+            @api.depends('type')
+            def _compute_invoice_policy(self):
+                self.filtered(lambda t: t.type == 'consu'
+                              or not t.invoice_policy).invoice_policy = 'order'
+
+        Every upsert here writes `type: 'consu'`, so until 18/08/2026 the sync
+        reset the policy on every run -- by accident, through a core `depends`,
+        with nothing in this module saying so. The house standard happens to be
+        the same value the core picks, which is exactly why it went unnoticed
+        for so long: `delivery` on a book leaves `qty_delivered` at 0 forever,
+        so the consignment settlement can never invoice (three settlements were
+        stuck in staging on 17/08/2026).
+
+        Writing it out loud makes the decision ours: it survives a change in the
+        core compute, it shows up in the chatter (the field is tracked), and it
+        reads from the one switch the house already has -- Sales > Invoicing >
+        Invoicing Policy, seeded by `edlab_stack`. The `or` is the floor for a
+        database whose setting was never filled in.
+        """
+        return self.env["ir.default"]._get(
+            "product.template", "invoice_policy") or "order"
+
     def _ensure_book_type(self, code):
         if not code:
             return False
@@ -792,6 +820,10 @@ class MetabooksConnector(models.AbstractModel):
             "metabooks_last_updatedate", "metabooks_product_type", "edition",
         } | set(TECHNICAL_KEYS)
         vals = {k: v for k, v in vals.items() if v is not False or k in keep_false}
+
+        # A ficha sai na política de faturamento da casa, dito aqui e não
+        # herdado do compute do core -- ver `_house_invoice_policy`.
+        vals["invoice_policy"] = self._house_invoice_policy()
 
         category = self._ensure_category(
             parsed.get("selo"), parsed.get("collection"))
