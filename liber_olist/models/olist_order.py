@@ -349,6 +349,19 @@ class OlistOrder(models.Model):
             source='olist',
             extra_vals={'olist_account_id': self.account_id.id,
                         'olist_nota_id': str(self.id_nota_fiscal)})
+        if not painel:
+            # O dedupe devolveu False: o XML JÁ está no painel — veio pelo
+            # legado, sem saber de que nota do Olist é. Adotar aqui é o que
+            # faltava (o 699, 19/08/2026: "sem XML arquivado" com o arquivo na
+            # casa) — a mesma adoção que a varredura de notas faz em lote.
+            chave = Panel.is_valid_xml_and_nfe_key(xml)
+            orfao = Panel.search([('key', '=', chave)], limit=1) if chave else Panel
+            if orfao and not orfao.olist_nota_id:
+                orfao.write({'olist_nota_id': str(self.id_nota_fiscal),
+                             'olist_account_id': self.account_id.id})
+                painel = orfao
+                _logger.info("Olist: painel %s adotado pela nota %s (pedido %s)",
+                             orfao.id, self.id_nota_fiscal, self.numero)
         # E LÊ na hora. A ingestão só arquiva o arquivo: quem extrai itens,
         # valor e CFOP é o `action_import_xml_file`, que normalmente roda pelo
         # cron do liber_nfe_xml. Esperar o cron significaria arquivar o XML e

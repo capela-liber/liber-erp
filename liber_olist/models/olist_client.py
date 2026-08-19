@@ -112,10 +112,23 @@ def call_json(token, endpoint, attempts=6, **params):
 
 
 def list_notas(token):
-    """Every nota fiscal in the account, walking all pages."""
+    """Every nota fiscal in the account, walking all pages.
+
+    "A consulta não retornou registros" NÃO é erro: é zero resultados — e a
+    cota estrangulada também se disfarça assim (lição 2 do NOTES §6-bis, que
+    em 19/08/2026 derrubou a varredura de adoção no prod). Devolver vazio
+    deixa o chamador decidir; estourar exceção matava o cron a cada rodada
+    sem nota nova.
+    """
     page, pages = 1, 1
     while page <= pages:
-        payload = call_json(token, "notas.fiscais.pesquisa.php", pagina=page)
+        try:
+            payload = call_json(token, "notas.fiscais.pesquisa.php",
+                                pagina=page)
+        except OlistError as exc:
+            if 'não retornou registros' in str(exc):
+                return
+            raise
         pages = int(payload.get("numero_paginas") or 1)
         for item in payload.get("notas_fiscais", []):
             yield item["nota_fiscal"]

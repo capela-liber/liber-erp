@@ -156,3 +156,35 @@ class TestConsolidarHistorico(TransactionCase):
             [('numero', '=', 'H-9')]), "reversível: o registro existe")
         pedido.action_unarchive()
         self.assertTrue(Order.search([('numero', '=', 'H-9')]))
+
+    def test_o_fetch_adota_o_painel_orfao_do_legado(self):
+        """O caso 699 (19/08/2026): o XML JÁ estava na casa (veio pelo
+        legado), o dedupe devolvia False e o fetch desistia — "sem XML
+        arquivado" com o arquivo do lado. Agora o fetch adota o órfão."""
+        from unittest.mock import patch
+        from odoo.addons.liber_olist.models import olist_client
+        Panel = self.env['nfe.xml.panel']
+        xml_falso = b"<xml/>"
+        chave = '35260311111111000111550010006996991000000015'
+        orfao = Panel.create({
+            'file': b"PHhtbC8+", 'file_name': "legado-699.xml",
+            'partner_id': self.cliente.id, 'danfe_no': '699699',
+            'key': chave, 'file_create_date': '2026-03-01'})
+        pedido = self.env['olist.order'].create({
+            'account_id': self.account.id, 'olist_id': 'H-699',
+            'numero': 'H-699', 'situacao': 'Entregue',
+            'data_pedido': '2026-03-01', 'id_nota_fiscal': '699699',
+            'detalhe_lido_em': '2026-08-19 12:00:00'})
+        self.assertEqual(pedido.xml_status, 'sem_xml')
+        with patch.object(olist_client, 'get_nota_xml',
+                          return_value=xml_falso), \
+             patch.object(type(Panel), '_company_from_xml',
+                          return_value=self.account.company_id), \
+             patch.object(type(Panel), 'is_valid_xml_and_nfe_key',
+                          return_value=chave), \
+             patch.object(type(Panel), '_ingest_xml', return_value=False):
+            status, _detalhe = pedido._fetch_xml()
+        self.assertEqual(status, 'OK')
+        self.assertEqual(orfao.olist_nota_id, '699699')
+        self.assertEqual(pedido.xml_status, 'arquivado',
+                         "o pedido achou o próprio XML depois da adoção")
