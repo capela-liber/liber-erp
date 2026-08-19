@@ -226,14 +226,6 @@
                 <field name="cliente_nome"/>
                 <field name="numero_ecommerce"/>
                 <field name="canal"/>
-                <!-- O grito da operação: nota emitida e pedido ainda sem registro
-                     completo no Odoo. Importar é o clique que zera — o
-                     trabalho físico do pacote segue dirigido pelo painel do
-                     Olist (decisão do dono, 19/08/2026: a fila de embalagem
-                     no Odoo durou um dia; validar aqui era burocracia dupla). -->
-                <filter name="f_a_despachar" string="A despachar"
-                        domain="[('a_despachar', '=', True)]"
-                        help="Nota emitida e ainda não registrado aqui: importe — um clique cria a venda, conclui a entrega, lança a fatura e o recebimento. O pacote físico é guiado pelo painel do Olist."/>
                 <filter name="f_pendente" string="A importar"
                         domain="[('state', '=', 'nao_importado')]"/>
                 <filter name="f_sem_detalhe" string="Falta ler o detalhe"
@@ -296,7 +288,10 @@
         <field name="name">Pedidos do Olist</field>
         <field name="res_model">olist.order</field>
         <field name="view_mode">list,form</field>
-        <field name="context">{'search_default_f_pendente': 1}</field>
+        <!-- Vazio EXPLÍCITO: a auditoria abre completa. Tirar a linha do XML
+             não apaga o valor gravado no banco — o -u só escreve o que está
+             declarado, e o search_default antigo sobreviveria calado. -->
+        <field name="context">{}</field>
         <field name="help" type="html">
             <p class="o_view_nocontent_smiley_face">Nenhum pedido espelhado ainda.</p>
             <p>Use <b>Ler pedidos</b> na conta do Olist: uma varredura barata
@@ -386,6 +381,55 @@
               parent="menu_olist_root"
               action="action_olist_dashboard"
               sequence="80"/>
+
+
+<!-- A FILA: a tela da equipe, com uma pergunta e um botão (desenho do dono,
+     19/08/2026, depois de a equipe se perder entre dois filtros gêmeos). O
+     que aparece aqui é o que se importa — um clique registra tudo. A lista
+     completa, com todos os botões e estados, é a tela Pedidos: a auditoria. -->
+    <record id="view_olist_order_list_fila" model="ir.ui.view">
+        <field name="name">olist.order.list.fila</field>
+        <field name="model">olist.order</field>
+        <field name="arch" type="xml">
+            <list string="A importar" multi_edit="0" create="0">
+                <header>
+                    <button name="action_import_selected" type="object"
+                            string="Importar para o Odoo" class="btn-primary"
+                            help="Um clique registra tudo: venda, entrega concluída na caixa Marketplaces, fatura do XML e recebimento."/>
+                </header>
+                <field name="data_pedido"/>
+                <field name="numero"/>
+                <field name="canal"/>
+                <field name="cliente_nome"/>
+                <field name="valor" sum="Total"/>
+                <field name="xml_status" widget="badge"
+                       decoration-success="xml_status == 'arquivado'"
+                       decoration-warning="xml_status == 'sem_xml'"/>
+                <field name="itens_sem_produto" string="Livros não localizados"/>
+                <field name="company_id" column_invisible="1"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="action_olist_fila" model="ir.actions.act_window">
+        <field name="name">A importar</field>
+        <field name="res_model">olist.order</field>
+        <field name="view_mode">list,form</field>
+        <field name="view_id" ref="view_olist_order_list_fila"/>
+        <field name="domain">[('state', '=', 'nao_importado')]</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Nada a importar</p>
+            <p>A fila está limpa. Os pedidos novos chegam sozinhos pelas
+               leituras de 2 em 2 horas e aparecem aqui quando estiverem
+               prontos para entrar.</p>
+        </field>
+    </record>
+
+    <menuitem id="menu_olist_fila"
+              name="A importar"
+              parent="menu_olist_root"
+              action="action_olist_fila"
+              sequence="5"/>
 
     <menuitem id="menu_olist_order"
               name="Pedidos"

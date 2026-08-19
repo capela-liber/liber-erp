@@ -81,3 +81,27 @@ class TestTelasDoOlist(TransactionCase):
                      'action_consolidar_historico'):
             self.assertIn(vivo, lista.arch,
                           "a poda levou botão demais: %s" % vivo)
+
+    def test_a_fila_e_uma_tela_com_um_botao_so(self):
+        """Desenho do dono (19/08/2026), depois de a equipe se perder entre
+        dois filtros gêmeos: a FILA (o que importar, um botão) é uma tela; a
+        lista completa é outra — a auditoria, que abre sem filtro padrão."""
+        acao = self.env.ref('liber_olist.action_olist_fila')
+        self.assertIn("'nao_importado'", acao.domain,
+                      "a fila mostra só o que está pronto para importar")
+        fila = self.env.ref('liber_olist.view_olist_order_list_fila')
+        self.assertIn('action_import_selected', fila.arch)
+        for fora in ('action_pull_from_olist', 'action_read_detail',
+                     'action_consolidar_historico', 'action_create_invoice'):
+            self.assertNotIn(fora, fila.arch,
+                             "a fila tem UM botão; %s é da auditoria" % fora)
+        self.assertLess(
+            self.env.ref('liber_olist.menu_olist_fila').sequence,
+            self.env.ref('liber_olist.menu_olist_order').sequence,
+            "a fila vem antes da auditoria: o app abre no trabalho")
+        auditoria = self.env.ref('liber_olist.action_olist_order')
+        self.assertNotIn('search_default', auditoria.context or '{}',
+                         "a auditoria abre completa, sem filtro escondendo")
+        busca = self.env.ref('liber_olist.view_olist_order_search')
+        self.assertNotIn('f_a_despachar', busca.arch,
+                         "o filtro gêmeo morreu com a criação da fila")

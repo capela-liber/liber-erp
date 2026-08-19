@@ -168,12 +168,16 @@
       valor e rastreio. O canal e os itens vêm num segundo passo — <span class="field">Ler
       detalhe</span> — porque custam uma consulta por pedido; o agendamento faz isso aos poucos, e a
       conta mostra a cobertura ("47 de 978 lidos").</p>
-      <p>O filtro <span class="field">A despachar</span> é o grito da operação: <strong>nota
-      emitida e pedido ainda sem registro completo aqui</strong>. Importar é o clique que zera —
-      um só, que registra tudo: a venda confirmada, a entrega <em>concluída</em> na caixa
-      <span class="field">Marketplaces</span> (série <span class="field">MP/OUT/</span>, um cartão
-      próprio na visão geral do <span class="menupath">Inventário</span>, com o XML da nota no
-      clipe), a fatura lançada e o recebimento no diário. A prateleira baixa nesse registro.</p>
+      <p>São <strong>duas telas, duas naturezas</strong>. <span class="menupath">Olist<i>‣</i>A
+      importar</span> é a <strong>fila da equipe</strong>: só o que está pronto para entrar, com um
+      botão único — Importar. Um clique registra tudo: a venda confirmada, a entrega
+      <em>concluída</em> na caixa <span class="field">Marketplaces</span> (série
+      <span class="field">MP/OUT/</span>, um cartão próprio na visão geral do
+      <span class="menupath">Inventário</span>, com o XML da nota no clipe), a fatura lançada e o
+      recebimento no diário. A prateleira baixa nesse registro. Já
+      <span class="menupath">Olist<i>‣</i>Pedidos</span> é a <strong>auditoria</strong>: o espelho
+      completo, com todos os estados, filtros e os botões de leitura e consolidação — abre sem
+      filtro nenhum, mostrando tudo.</p>
       <p>O trabalho físico do pacote — embalar e esperar a coleta — segue dirigido pelo
       <strong>painel do Olist</strong>, com a etiqueta em PDF que ele entrega; o Odoo registra a
       operação, não a dirige. Na lista geral de entregas, o filtro <span class="field">Do
@@ -269,11 +273,11 @@
           <td>Nada a fazer: o sistema recua e insiste sozinho, no ritmo que a conta aceita.</td>
         </tr>
         <tr>
-          <td>Um pedido que você espera não aparece no "A despachar"</td>
-          <td>Ou ele ainda não tem nota (sem nota não há o que registrar), ou é anterior ao corte
-              (história), ou já foi importado — e aí está tudo certo.</td>
-          <td>Confira a coluna "Situação do XML" e a situação do pedido; nota emitida e registro
-              faltando é o único par que grita.</td>
+          <td>Um pedido que você espera não aparece na fila "A importar"</td>
+          <td>Ou o detalhe dele ainda não foi lido (o cron chega lá), ou é anterior ao corte
+              (história — mora na auditoria), ou já foi importado — e aí está tudo certo.</td>
+          <td>Procure-o na tela Pedidos (a auditoria mostra tudo) e confira a coluna
+              Situação.</td>
         </tr>
         <tr>
           <td>Pedido importado sem canal de venda</td>
