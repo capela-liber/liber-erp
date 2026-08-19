@@ -1,12 +1,15 @@
 # -*- coding: utf-8 -*-
-"""O despacho é da CASA, não do status do Olist (decisão do dono, 18/08/2026).
+"""Importar é registrar TUDO: venda, entrega concluída, fatura, recebimento.
 
-O furo que motivou tudo: quando a etiqueta nasce, o Olist marca "Enviado" e
-lava as mãos — o PDF cai na nossa mão e o pacote continua na prateleira até a
-coleta. Logo "Enviado" não prova saída; só "Entregue" prova. A importação
-confirma a venda e deixa a entrega PRONTA (a fila de embalagem); concluir é o
-clique do funcionário — e o push de estoque desconta o reservado, senão o
-marketplace revende o exemplar que espera coleta.
+A fila de embalagem no Odoo durou um dia (18/08/2026): a entrega ficava
+Pronta esperando o funcionário validar na coleta. O dono experimentou e
+mandou voltar (19/08, "seria melhor voltar") — o trabalho físico do pacote é
+dirigido pelo painel/PDF do Olist, e validar aqui era burocracia dupla. O
+Odoo REGISTRA a operação; quem a dirige é o Olist.
+
+O que sobreviveu daquele dia, porque continuou bom: o "A despachar" (nota
+emitida e pedido sem registro completo — importar zera), a caixa
+Marketplaces (MP/OUT/) e o push descontando o reservado.
 """
 from odoo.tests import TransactionCase, tagged
 
@@ -55,51 +58,39 @@ class TestDespachoDaCasa(TransactionCase):
                                  'valor_unitario': 50.0,
                                  'product_id': self.livro.id})]})
 
-    def test_enviado_e_etiqueta_nao_saida(self):
-        """Caminho central: 'Enviado' importa com a entrega PRONTA — a fila
-        de embalagem —, sem baixar a prateleira, e gritando no filtro."""
+    def test_importar_registra_tudo_de_uma_vez(self):
+        """Caminho central: importar conclui a entrega e baixa a prateleira —
+        o registro fiel do que o Olist já deu por encaminhado."""
         antes = self.livro.product_tmpl_id._olist_wh_qty(self.account)
         pedido = self._pedido('D-1', 'Enviado')
         self.assertTrue(pedido.a_despachar,
-                        "com nota e sem importar, já é a despachar")
+                        "com nota e sem registro, o filtro grita")
         pedido._import_to_odoo()
         entregas = pedido.sale_order_id.picking_ids
         self.assertTrue(entregas)
-        self.assertTrue(all(p.state != 'done' for p in entregas),
-                        "'Enviado' é etiqueta, não saída: nada a concluir")
+        self.assertTrue(all(p.state == 'done' for p in entregas),
+                        "importar é registrar: a entrega conclui junto")
         self.assertEqual(
-            self.livro.product_tmpl_id._olist_wh_qty(self.account), antes,
-            "a prateleira só baixa quando o funcionário valida")
-        self.assertTrue(pedido.a_despachar, "o grito continua até a coleta")
+            self.livro.product_tmpl_id._olist_wh_qty(self.account), antes - 2,
+            "a prateleira baixa no registro")
+        self.assertFalse(pedido.a_despachar,
+                         "registrado: o grito cala no mesmo clique")
 
-    def test_validar_e_o_clique_que_cala_o_grito(self):
-        pedido = self._pedido('D-2', 'Enviado', nota='701')
+    def test_entregue_registra_igual(self):
+        pedido = self._pedido('D-3', 'Entregue', nota='702')
         pedido._import_to_odoo()
-        pedido._concluir_entregas()          # o funcionário embalou e validou
         self.assertTrue(all(p.state == 'done'
                             for p in pedido.sale_order_id.picking_ids))
         self.assertFalse(pedido.a_despachar)
 
-    def test_entregue_prova_que_saiu_e_conclui_sozinho(self):
-        pedido = self._pedido('D-3', 'Entregue', nota='702')
-        self.assertFalse(pedido.a_despachar,
-                         "Entregue não é a despachar nem antes de importar")
-        pedido._import_to_odoo()
-        self.assertTrue(all(p.state == 'done'
-                            for p in pedido.sale_order_id.picking_ids),
-                        "o comprador recebeu: fato consumado, conclui")
-
-    def test_a_releitura_reconcilia_o_esquecimento(self):
-        """Caso de erro humano: embalou, coletaram, ninguém validou. Quando o
-        Olist disser Entregue, o Odoo se corrige pela fonte."""
+    def test_situacao_nova_no_olist_nao_reabre_nada(self):
+        """Caso de borda: o pedido já registrado recebe atualização de
+        situação na releitura — nada se move, nada estoura."""
         pedido = self._pedido('D-4', 'Enviado', nota='703')
         pedido._import_to_odoo()
-        self.assertTrue(any(p.state != 'done'
-                            for p in pedido.sale_order_id.picking_ids))
         pedido.write({'situacao': 'Entregue'})
         self.assertTrue(all(p.state == 'done'
                             for p in pedido.sale_order_id.picking_ids))
-        self.assertFalse(pedido.a_despachar)
 
     def test_sem_nota_nao_ha_o_que_despachar(self):
         pedido = self.env['olist.order'].create({
@@ -114,21 +105,22 @@ class TestDespachoDaCasa(TransactionCase):
         self.assertFalse(pedido.a_despachar)
 
     def test_o_push_desconta_o_reservado(self):
-        """O pacote que espera coleta ainda conta no armazém — mas tem dono.
-        Oferecê-lo ao Olist seria vender o mesmo exemplar duas vezes."""
+        """A subtração do reservado ficou: uma remessa de consignação em
+        separação, por exemplo, não pode ser oferecida ao marketplace."""
         template = self.livro.product_tmpl_id
-        livre_antes = template._olist_stock_qty(self.account)
-        pedido = self._pedido('D-7', 'Enviado', nota='705')
-        pedido._import_to_odoo()             # confirma: reserva 2, não baixa
-        self.assertEqual(template._olist_reservado_qty(self.account), 2)
+        venda = self.env['sale.order'].create({
+            'partner_id': self.cliente.id,
+            'order_line': [(0, 0, {'product_id': self.livro.id,
+                                   'product_uom_qty': 3})]})
+        venda.action_confirm()          # reserva 3 sem mover
+        self.assertEqual(template._olist_reservado_qty(self.account), 3)
         self.assertEqual(template._olist_stock_qty(self.account),
-                         livre_antes - 2,
-                         "o reservado saiu da oferta sem sair do armazém")
+                         template._olist_wh_qty(self.account) - 3,
+                         "o reservado sai da oferta sem sair do armazém")
 
     def test_a_caixa_marketplaces_nasce_no_primeiro_uso(self):
-        """O pacote de marketplace é outro trabalho: a entrega muda para o
-        tipo Marketplaces (MP/OUT/), que nasce sozinho e vira o cartão do
-        depósito no Inventário."""
+        """A caixa ficou: registro das saídas de marketplace (MP/OUT/),
+        separado do palete — mesmo com a entrega concluindo no registro."""
         pedido = self._pedido('D-8', 'Enviado', nota='706')
         pedido._import_to_odoo()
         entrega = pedido.sale_order_id.picking_ids[:1]
@@ -138,7 +130,6 @@ class TestDespachoDaCasa(TransactionCase):
                         % entrega.name)
         self.assertEqual(self.account.marketplace_picking_type_id,
                          entrega.picking_type_id)
-        # segundo uso: a MESMA caixa, nunca uma segunda
         pedido2 = self._pedido('D-9', 'Enviado', nota='707')
         pedido2._import_to_odoo()
         self.assertEqual(
@@ -146,8 +137,6 @@ class TestDespachoDaCasa(TransactionCase):
             entrega.picking_type_id)
 
     def test_a_venda_comum_nao_muda_de_caixa(self):
-        """Caso de contraste: uma venda que não veio do Olist continua no
-        WH/OUT — a caixa Marketplaces é só do marketplace."""
         venda = self.env['sale.order'].create({
             'partner_id': self.cliente.id,
             'order_line': [(0, 0, {'product_id': self.livro.id,

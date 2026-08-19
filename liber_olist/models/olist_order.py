@@ -161,11 +161,11 @@ class OlistOrder(models.Model):
 
     a_despachar = fields.Boolean(
         "A despachar", compute='_compute_a_despachar', store=True, index=True,
-        help="Nota emitida e a CASA ainda não concluiu a entrega. A régua é "
-             "nossa, não do Olist: quando a etiqueta nasce o Olist marca "
-             "'Enviado' e lava as mãos — o pacote continua na prateleira até "
-             "a coleta. Só sai daqui quando o funcionário valida a entrega no "
-             "Odoo (ou quando o Olist prova que saiu: Entregue).")
+        help="Nota emitida e o pedido ainda sem registro completo aqui: "
+             "importar é o clique que zera — cria a venda, conclui a entrega "
+             "na caixa Marketplaces, lança a fatura e o recebimento. O "
+             "trabalho físico do pacote é dirigido pelo painel do Olist; o "
+             "Odoo registra.")
 
     itens_sem_produto = fields.Integer(
         "Livros não localizados", compute='_compute_itens_sem_produto',
@@ -774,22 +774,27 @@ class OlistOrder(models.Model):
     SITUACOES_FORA_DA_CASA = ('Entregue', 'Não entregue')
 
     def _baixa_estoque_se_for_o_caso(self):
-        """Confirma a venda — e só CONCLUI a entrega do que comprovadamente saiu.
+        """Confirma a venda e CONCLUI a entrega: importar é registrar tudo.
 
         Sem corte (o padrão), nada se mexe: o pedido entra como rascunho, para
-        consolidação. A partir do corte, a venda confirma (reservando o
-        estoque) e a entrega nasce PRONTA — é a fila de embalagem do
-        funcionário, que valida quando o pacote sai na coleta. Concluir
-        sozinho, só quando o Olist prova que o pacote já não está aqui
-        (Entregue): status de etiqueta não é status de prateleira.
+        consolidação. A partir do corte, um clique registra o pedido inteiro —
+        venda confirmada, entrega concluída na caixa Marketplaces, e (na
+        sequência do import) fatura e recebimento.
+
+        Houve um dia (18/08/2026) em que a entrega ficava PRONTA esperando o
+        funcionário validar na coleta — a "fila de embalagem". O dono
+        experimentou e mandou voltar (19/08, "seria melhor voltar"): o
+        trabalho físico é dirigido pelo painel/PDF do Olist, e validar no
+        Odoo era burocracia dupla. O Odoo REGISTRA a operação; quem a dirige
+        é o Olist. A entrega concluída aqui espelha o que o marketplace já
+        deu por encaminhado.
         """
         self.ensure_one()
         if not self._dentro_do_corte():
             return False
         self.sale_order_id.action_confirm()
         self._mover_para_a_caixa_marketplaces()
-        if (self.situacao or '').strip() in self.SITUACOES_FORA_DA_CASA:
-            self._concluir_entregas()
+        self._concluir_entregas()
         self._carimba_rastreio()
         return True
 

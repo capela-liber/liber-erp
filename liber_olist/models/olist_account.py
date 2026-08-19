@@ -91,10 +91,10 @@ class OlistAccount(models.Model):
     order_stock_cutoff = fields.Date(
         string="Operar pedidos a partir de",
         help="A data em que o marketplace passa a produzir EFEITO na operação. "
-             "Pedidos com data igual ou posterior a ela são confirmados e "
-             "faturados, e a entrega nasce PRONTA na fila de embalagem — a "
-             "prateleira baixa quando o funcionário valida (ou sozinha, se o "
-             "Olist já disser Entregue).\n"
+             "Pedidos com data igual ou posterior a ela são registrados por "
+             "inteiro na importação: venda confirmada, entrega concluída na "
+             "caixa Marketplaces (baixando o estoque do armazém) e fatura "
+             "lançada.\n"
              "Anteriores entram como REGISTRO: espelho, rastreabilidade e o "
              "XML arquivado, sem mexer em estoque e sem lançar fatura.\n"
              "Vazio (o padrão) = nenhum pedido produz efeito. É assim que se "
