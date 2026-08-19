@@ -7,16 +7,12 @@
         <field name="inherit_id" ref="product.product_template_form_view"/>
         <field name="arch" type="xml">
 
-            <!-- Product forms have no header of their own; add one that carries
-                 the pilot control: push THIS product's on-hand to Olist. -->
-            <xpath expr="//sheet" position="before">
-                <header>
-                    <button name="action_push_stock_to_olist" type="object"
-                            string="Subir estoque p/ Olist"
-                            groups="base.group_system"
-                            help="Envia ao Olist o estoque do armazém deste produto, menos a margem de segurança, como balanço (tipo=B). Exige ISBN casado com o Olist."/>
-                </header>
-            </xpath>
+            <!-- The pilot-era header button ("Subir estoque p/ Olist") left on
+                 19/08/2026, at the owner's request: pushing stock is an act of
+                 the Estoque comparison screen (chosen lines, numbers in sight)
+                 or of the list Action menu - not of a product form where the
+                 button sat above unrelated apps' tabs. The method stays; only
+                 this door closed. -->
 
             <!-- Where the exchange is read back. Kept on its own page so the
                  raw request/response never crowds the product sheet. -->
@@ -52,12 +48,13 @@
         </field>
     </record>
 
-    <!-- Same push, from the list Action menu: select products -> push. -->
+    <!-- Same push, from the LIST Action menu only: select products -> push.
+         The form binding left with the header button (19/08/2026). -->
     <record id="action_push_stock_server" model="ir.actions.server">
         <field name="name">Subir estoque p/ Olist</field>
         <field name="model_id" ref="product.model_product_template"/>
         <field name="binding_model_id" ref="product.model_product_template"/>
-        <field name="binding_view_types">list,form</field>
+        <field name="binding_view_types">list</field>
         <field name="state">code</field>
         <field name="code">action = records.action_push_stock_to_olist()</field>
     </record>
