@@ -1157,6 +1157,20 @@ class OlistOrderLine(models.Model):
              "portanto o que vale a pena casar primeiro.")
     order_situacao = fields.Char(related='order_id.situacao', store=True)
     order_data = fields.Date(related='order_id.data_pedido', store=True)
+    # As medidas do Relatório: a linha é quem sabe livro e quantidade — o
+    # pedido só sabe o total (com frete). Valor aqui é mercadoria, sem frete.
+    canal = fields.Char(related='order_id.canal', store=True,
+                        string="Canal no Olist")
+    valor_total = fields.Float(
+        "Valor", compute='_compute_valor_total', store=True,
+        help="Quantidade × valor unitário da linha — mercadoria, sem o frete "
+             "do pedido. É a medida de valor do Relatório.")
+
+    @api.depends('quantidade', 'valor_unitario')
+    def _compute_valor_total(self):
+        for linha in self:
+            linha.valor_total = (linha.quantidade or 0.0) * (
+                linha.valor_unitario or 0.0)
 
     def _sale_line_vals(self):
         self.ensure_one()

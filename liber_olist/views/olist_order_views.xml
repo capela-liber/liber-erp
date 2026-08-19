@@ -316,54 +316,82 @@
     <!-- Primeiro filho do menu raiz, e isso decide o que a home abre ao
          clicar no ladrilho: o trabalho do dia é conferir o que o Olist
          vendeu, não reabrir a configuração. -->
-<!-- O painel da abertura: vendas diárias em barras, no padrão do Odoo (view
-     graph do próprio espelho — nada de modelo novo). Empilha por canal, abre
-     nos últimos 30 dias, e dois cliques viram pivô ou lista. Cancelado não é
-     venda e fica fora pelo domínio da ação. -->
-    <record id="view_olist_order_graph" model="ir.ui.view">
-        <field name="name">olist.order.graph</field>
-        <field name="model">olist.order</field>
+<!-- O Relatório: vendas por dia, canal e LIVRO, no padrão do Odoo — views
+     graph e pivô sobre a LINHA do pedido, que é quem sabe produto e
+     quantidade (o pedido só sabe o total, com frete). Duas medidas:
+     Quantidade e Valor (mercadoria, sem frete); cancelado não é venda e o
+     domínio da ação o exclui. Pedido sem detalhe lido não tem linha e não
+     aparece — o número é um piso enquanto a cobertura não fecha. -->
+    <record id="view_olist_order_line_graph" model="ir.ui.view">
+        <field name="name">olist.order.line.graph</field>
+        <field name="model">olist.order.line</field>
         <field name="arch" type="xml">
-            <graph string="Vendas diárias" type="bar" stacked="1" sample="1">
-                <field name="data_pedido" interval="day"/>
+            <graph string="Vendas do Olist" type="bar" stacked="1" sample="1">
+                <field name="order_data" interval="day"/>
                 <field name="canal"/>
-                <field name="valor" type="measure"/>
+                <field name="valor_total" type="measure"/>
             </graph>
         </field>
     </record>
 
-    <record id="view_olist_order_pivot" model="ir.ui.view">
-        <field name="name">olist.order.pivot</field>
-        <field name="model">olist.order</field>
+    <record id="view_olist_order_line_pivot" model="ir.ui.view">
+        <field name="name">olist.order.line.pivot</field>
+        <field name="model">olist.order.line</field>
         <field name="arch" type="xml">
             <pivot string="Vendas do Olist" sample="1">
-                <field name="data_pedido" interval="day" type="row"/>
+                <field name="order_data" interval="day" type="row"/>
                 <field name="canal" type="col"/>
-                <field name="valor" type="measure"/>
+                <field name="quantidade" type="measure"/>
+                <field name="valor_total" type="measure"/>
             </pivot>
         </field>
     </record>
 
+    <record id="view_olist_order_line_search" model="ir.ui.view">
+        <field name="name">olist.order.line.search</field>
+        <field name="model">olist.order.line</field>
+        <field name="arch" type="xml">
+            <search string="Vendas do Olist">
+                <field name="descricao"/>
+                <field name="codigo"/>
+                <field name="canal"/>
+                <filter name="f_30_dias" string="Últimos 30 dias"
+                        domain="[('order_data', '&gt;=', (context_today() - datetime.timedelta(days=30)).strftime('%Y-%m-%d'))]"/>
+                <group>
+                    <filter name="g_produto" string="Livro"
+                            context="{'group_by': 'product_id'}"/>
+                    <filter name="g_descricao" string="Descrição no Olist"
+                            context="{'group_by': 'descricao'}"/>
+                    <filter name="g_canal" string="Canal no Olist"
+                            context="{'group_by': 'canal'}"/>
+                    <filter name="g_dia" string="Dia"
+                            context="{'group_by': 'order_data:day'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
     <record id="action_olist_dashboard" model="ir.actions.act_window">
-        <field name="name">Painel</field>
-        <field name="res_model">olist.order</field>
-        <field name="view_mode">graph,pivot,list</field>
-        <field name="view_id" ref="view_olist_order_graph"/>
-        <field name="domain">[('state', '!=', 'cancelado')]</field>
+        <field name="name">Relatório</field>
+        <field name="res_model">olist.order.line</field>
+        <field name="view_mode">graph,pivot</field>
+        <field name="view_id" ref="view_olist_order_line_graph"/>
+        <field name="search_view_id" ref="view_olist_order_line_search"/>
+        <field name="domain">[('order_situacao', '!=', 'Cancelado')]</field>
         <field name="context">{'search_default_f_30_dias': 1}</field>
         <field name="help" type="html">
             <p class="o_view_nocontent_smiling_face">Ainda sem vendas para mostrar</p>
-            <p>O painel soma o valor dos pedidos do Olist por dia, empilhado
-               por canal. Ele enche sozinho conforme as leituras trazem os
-               pedidos — cancelados ficam de fora.</p>
+            <p>O Relatório soma quantidade e valor das linhas dos pedidos do
+               Olist — por dia, por canal e por livro. Ele enche conforme as
+               leituras trazem o detalhe dos pedidos; cancelados ficam de fora.</p>
         </field>
     </record>
 
     <menuitem id="menu_olist_dashboard"
-              name="Painel"
+              name="Relatório"
               parent="menu_olist_root"
               action="action_olist_dashboard"
-              sequence="1"/>
+              sequence="80"/>
 
     <menuitem id="menu_olist_order"
               name="Pedidos"

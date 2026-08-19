@@ -43,20 +43,25 @@ class TestTelasDoOlist(TransactionCase):
             self._lista_da_acao('action_olist_catalog'),
             "Estoque e Produtos respondem perguntas diferentes")
 
-    def test_o_painel_abre_no_grafico_de_vendas(self):
-        """A abertura do app é o painel: barras por dia, empilhadas por
-        canal, últimos 30 dias — e cancelado não é venda."""
+    def test_o_relatorio_mede_quantidade_e_valor_por_livro(self):
+        """O Relatório nasce da LINHA (quem sabe livro e quantidade), abre no
+        gráfico, exclui cancelados e mora antes das Configurações."""
         acao = self.env.ref('liber_olist.action_olist_dashboard')
-        self.assertTrue(acao.view_mode.startswith('graph'),
-                        "o painel tem de abrir no gráfico, não numa lista")
-        self.assertIn("'cancelado'", acao.domain,
-                      "cancelado contaria como venda no painel")
+        self.assertEqual(acao.res_model, 'olist.order.line',
+                         "só a linha sabe produto e quantidade")
+        self.assertTrue(acao.view_mode.startswith('graph'))
+        self.assertIn("Cancelado", acao.domain,
+                      "cancelado contaria como venda no relatório")
         self.assertIn('f_30_dias', acao.context,
                       "sem a janela de 30 dias o gráfico vira a história toda")
-        grafico = self.env.ref('liber_olist.view_olist_order_graph')
-        for campo in ('data_pedido', 'canal', 'valor'):
-            self.assertIn(campo, grafico.arch,
-                          "o gráfico perdeu o eixo/medida %s" % campo)
+        pivo = self.env.ref('liber_olist.view_olist_order_line_pivot')
+        for medida in ('quantidade', 'valor_total'):
+            self.assertIn(medida, pivo.arch,
+                          "o pivô perdeu a medida %s" % medida)
+        busca = self.env.ref('liber_olist.view_olist_order_line_search')
+        self.assertIn('product_id', busca.arch,
+                      "o agrupamento por livro é o pedido do dono")
         menu = self.env.ref('liber_olist.menu_olist_dashboard')
-        self.assertEqual(menu.sequence, 1,
-                         "o painel tem de ser a primeira tela da abertura")
+        config = self.env.ref('liber_olist.menu_olist_config')
+        self.assertLess(menu.sequence, config.sequence,
+                        "o Relatório mora antes das Configurações")
