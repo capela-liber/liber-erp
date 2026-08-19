@@ -59,8 +59,9 @@ class TestTelasDoOlist(TransactionCase):
             self.assertIn(medida, pivo.arch,
                           "o pivô perdeu a medida %s" % medida)
         busca = self.env.ref('liber_olist.view_olist_order_line_search')
-        self.assertIn('product_id', busca.arch,
-                      "o agrupamento por livro é o pedido do dono")
+        self.assertIn("'livro'", busca.arch,
+                      "o agrupamento usa o rótulo CURTO (ISBN · título…), "
+                      "não o nome completo da ficha")
         menu = self.env.ref('liber_olist.menu_olist_dashboard')
         config = self.env.ref('liber_olist.menu_olist_config')
         self.assertLess(menu.sequence, config.sequence,

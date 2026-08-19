@@ -358,8 +358,11 @@
                 <filter name="f_30_dias" string="Últimos 30 dias"
                         domain="[('order_data', '&gt;=', (context_today() - datetime.timedelta(days=30)).strftime('%Y-%m-%d'))]"/>
                 <group>
+                    <!-- Agrupa pelo rótulo CURTO (ISBN · título…), não pelo
+                         nome da ficha: o completo carrega autores e editora
+                         e atravessa a tela do pivô. -->
                     <filter name="g_produto" string="Livro"
-                            context="{'group_by': 'product_id'}"/>
+                            context="{'group_by': 'livro'}"/>
                     <filter name="g_descricao" string="Descrição no Olist"
                             context="{'group_by': 'descricao'}"/>
                     <filter name="g_canal" string="Canal no Olist"

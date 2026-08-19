@@ -920,3 +920,52 @@ class TestAnteriorAoCorte(TransactionCase):
             'partner_id': self.env.company.partner_id.id})
         importado = self._pedido('C-6', '2026-08-01', sale_order_id=venda.id)
         self.assertEqual(importado.state, 'importado')
+
+
+@tagged('post_install', '-at_install')
+class TestRotuloDoLivro(TransactionCase):
+    """O rótulo curto do Relatório: ISBN · título cortado (padrão da Amazon).
+
+    O nome da ficha carrega autores e editora entre parênteses e atravessa a
+    tela do pivô; e dois títulos de coleção cortados no mesmo ponto virariam o
+    MESMO rótulo — o ISBN na frente mantém cada linha única.
+    """
+
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.env['olist.account'].search([]).write({'active': False})
+        cls.account = cls.env['olist.account'].create({
+            'name': "Olist Rótulo", 'company_id': cls.env.company.id,
+            'token': "TOKEN-R", 'read_only': True})
+        cls.pedido = cls.env['olist.order'].create({
+            'account_id': cls.account.id, 'olist_id': 'R-1', 'numero': 'R-1'})
+
+    def _linha(self, codigo, nome_produto):
+        produto = self.env['product.product'].create({
+            'name': nome_produto, 'list_price': 10.0})
+        return self.env['olist.order.line'].create({
+            'order_id': self.pedido.id, 'codigo': codigo,
+            'quantidade': 1, 'valor_unitario': 10.0,
+            'product_id': produto.id})
+
+    def test_o_rotulo_corta_autores_e_poe_reticencias(self):
+        linha = self._linha('9786551590016',
+                            "A miséria brasileira: Do golpe militar à crise "
+                            "social (José Chasin; Vânia Noeli)")
+        self.assertEqual(
+            linha.livro, '9786551590016 · A miséria brasileira: Do golpe mi…')
+
+    def test_titulo_curto_fica_inteiro_e_sem_parenteses(self):
+        linha = self._linha('978-65-5159-008-5', "Teia (Orides Fontela; Ieda)")
+        self.assertEqual(linha.livro, '9786551590085 · Teia',
+                         "o ISBN sai sem hífen e os autores caem fora")
+
+    def test_colisao_de_titulo_nao_soma_linhas(self):
+        """Caso de erro do pivô: dois livros de coleção com o mesmo começo
+        de título têm rótulos DIFERENTES, graças ao ISBN."""
+        a = self._linha('9780000000010', "Coleção Repente: volume um da série "
+                                         "de cordel (Org. Alguém)")
+        b = self._linha('9780000000027', "Coleção Repente: volume um da série "
+                                         "de cordel especial (Org. Outrem)")
+        self.assertNotEqual(a.livro, b.livro)

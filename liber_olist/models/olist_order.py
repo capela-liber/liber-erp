@@ -1172,6 +1172,34 @@ class OlistOrderLine(models.Model):
             linha.valor_total = (linha.quantidade or 0.0) * (
                 linha.valor_unitario or 0.0)
 
+    # O mesmo 34 do relatório da Amazon: cabe numa coluna de pivô sem empurrar
+    # a tabela para fora da tela, e ainda deixa reconhecer o livro.
+    SHORT_TITLE = 34
+
+    livro = fields.Char(
+        "Livro", compute='_compute_livro', store=True, index=True,
+        help="O rótulo curto do Relatório: ISBN · título cortado. O nome "
+             "completo da ficha carrega autores e editora entre parênteses — "
+             "num pivô isso vira uma linha que atravessa a tela.")
+
+    @api.depends('codigo', 'descricao', 'product_id.name')
+    def _compute_livro(self):
+        """ISBN na frente, título cortado atrás — o padrão da Amazon Vendor.
+
+        O ISBN não é capricho: dois títulos de coleção cortados no mesmo
+        ponto virariam o MESMO rótulo, o pivô somaria os dois numa linha só e
+        o número sairia errado sem nada na tela denunciando. Com o ISBN na
+        frente, cada linha é única mesmo quando o texto colide. O corte no
+        ' (' tira os autores/editora que a casa embute no nome da ficha.
+        """
+        for linha in self:
+            nome = (linha.product_id.name or linha.descricao or '?')
+            nome = nome.split(' (')[0].strip()
+            if len(nome) > linha.SHORT_TITLE:
+                nome = nome[:linha.SHORT_TITLE - 1].rstrip() + '…'
+            codigo = re.sub(r'\D', '', linha.codigo or '') or '—'
+            linha.livro = '%s · %s' % (codigo, nome)
+
     def _sale_line_vals(self):
         self.ensure_one()
         return {
