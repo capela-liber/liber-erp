@@ -113,3 +113,29 @@ class TestConsolidarHistorico(TransactionCase):
         self.assertEqual(resultado['adopted'], 1)
         self.assertEqual(orfao.olist_nota_id, '901901')
         self.assertEqual(orfao.olist_account_id, self.account)
+
+    def test_completa_o_registro_que_ficou_pela_metade(self):
+        """O caso 927 (19/08/2026): importado como registro (S em rascunho),
+        confirmado à mão pelo dono esperando a nota — "confirmei e nada". A
+        consolidação assume dali: conclui com data histórica, fatura e âncora.
+        """
+        pedido = self._pedido_antigo('H-4', '801804')
+        pedido._import_to_odoo()             # fora do corte: só registro
+        venda = pedido.sale_order_id
+        self.assertTrue(venda)
+        self.assertFalse(pedido.invoice_id)
+        venda.action_confirm()               # o clique à mão
+        self.assertTrue(venda.picking_ids)
+        template = self.livro.product_tmpl_id
+        antes = template._olist_wh_qty(self.account)
+
+        pedido.action_consolidar_historico()
+
+        self.assertTrue(pedido.invoice_id)
+        self.assertTrue(all(p.state == 'done' for p in venda.picking_ids))
+        self.assertEqual(str(venda.picking_ids[0].date_done)[:10],
+                         '2026-02-10', "a conclusão leva a data histórica")
+        self.assertEqual(template._olist_wh_qty(self.account), antes,
+                         "a âncora vale também para o completamento")
+        with self.assertRaises(UserError):
+            pedido._consolidar_um({})        # de novo: já consolidado

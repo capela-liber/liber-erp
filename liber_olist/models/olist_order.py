@@ -862,10 +862,14 @@ class OlistOrder(models.Model):
 
     def _consolidar_um(self, devolver):
         self.ensure_one()
-        if self.state != 'anterior_corte':
+        # A régua é a DATA, não o estado: um histórico já importado como
+        # registro tem state 'importado', e é exatamente o caso a completar.
+        if self._dentro_do_corte():
             raise UserError(_(
                 "não é anterior ao corte — dentro do corte o caminho é o "
                 "Importar comum"))
+        if (self.situacao or '').strip().lower() == 'cancelado':
+            raise UserError(_("cancelado no Olist — não se consolida"))
         if not self.detalhe_lido_em:
             raise UserError(_("falta ler o detalhe"))
         if not self.line_ids:
@@ -878,21 +882,35 @@ class OlistOrder(models.Model):
         if sem_produto:
             raise UserError(_("ISBN sem produto no Odoo: %s",
                               ", ".join(sem_produto.mapped('codigo'))))
-        if self.sale_order_id:
-            raise UserError(_("já tem pedido S — nada a consolidar"))
+
+        # Pedido que JÁ tem S não é recusa — é trabalho pela metade a
+        # completar. O caso real (927, 19/08/2026): importado como registro,
+        # o S ficou em rascunho e o dono o confirmou à mão esperando a nota;
+        # a consolidação assume dali. Só o completo de verdade é recusado.
+        venda = self.sale_order_id
+        if venda and self.invoice_id and venda.picking_ids and all(
+                p.state in ('done', 'cancel') for p in venda.picking_ids):
+            raise UserError(_("já consolidado"))
 
         data = self.data_pedido
-        venda = self.env['sale.order'].create(self._sale_order_vals())
-        self.sale_order_id = venda
-        self._carimbar_posicao_fiscal(venda)
-        venda.action_confirm()
+        if not venda:
+            venda = self.env['sale.order'].create(self._sale_order_vals())
+            self.sale_order_id = venda
+            self._carimbar_posicao_fiscal(venda)
+        if venda.state in ('draft', 'sent'):
+            venda.action_confirm()
         self._mover_para_a_caixa_marketplaces()
+        # Só o que ESTE lote conclui entra na âncora e ganha data histórica:
+        # entrega que já estava concluída teve a sua própria história (e o
+        # estoque dela já se acertou na época).
+        abertas = venda.picking_ids.filtered(
+            lambda p: p.state not in ('done', 'cancel'))
         self._concluir_entregas()
         # A data conta a história certa: movimento de fevereiro é de
         # fevereiro. O quant não olha a data (é estado presente) — é a âncora,
         # no fim do lote, que devolve a prateleira ao número de hoje.
         momento = fields.Datetime.to_datetime(data)
-        for picking in venda.picking_ids:
+        for picking in abertas:
             picking.move_line_ids.write({'date': momento})
             picking.move_ids.write({'date': momento})
             picking.write({'date_done': momento})
@@ -901,7 +919,8 @@ class OlistOrder(models.Model):
                 if local.usage == 'internal':
                     chave = (ml.product_id, local)
                     devolver[chave] = devolver.get(chave, 0.0) + ml.quantity
-        self._create_invoice()
+        if not self.invoice_id:
+            self._create_invoice()
         self._carimba_rastreio()
         return True
 
