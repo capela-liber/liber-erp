@@ -30,6 +30,10 @@
                     <button name="action_create_invoice" type="object"
                             string="Gerar fatura"
                             help="Monta a fatura a partir do XML da nota (não do pedido): o XML é o que a SEFAZ autorizou. Ela não emite nada — registra um fato fiscal já consumado."/>
+                    <button name="action_consolidar_historico" type="object"
+                            string="Consolidar histórico"
+                            groups="base.group_system"
+                            help="Só para pedidos ANTERIORES ao corte: registra o passado por inteiro — S, entrega concluída datada no dia do pedido, fatura datada na emissão e recebimento — e fecha com um ajuste de inventário que devolve cada prateleira tocada ao número de hoje. O livro que saiu há meses já não está na estante; o movimento vira história, o físico fica intacto."/>
                     <button name="action_queue_detail" type="object"
                             string="Ler em segundo plano"
                             help="Põe os pedidos escolhidos na fila do cron das 2h. Use para lotes grandes: a leitura na tela não aguenta mais que 25 sem estourar o tempo."/>

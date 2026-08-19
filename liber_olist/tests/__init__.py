@@ -15,3 +15,4 @@ from . import test_telas
 from . import test_estoque_semeadura
 from . import test_security
 from . import test_despacho
+from . import test_consolidar

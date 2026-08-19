@@ -294,7 +294,7 @@ class OlistAccount(models.Model):
                 "A empresa %s não tem CNPJ. Sem ele não há como provar que uma "
                 "nota é dela.", self.company_id.name))
 
-        imported = cancelled = skipped = 0
+        imported = cancelled = skipped = adopted = 0
         for nota in olist_client.list_notas(token):
             key = nota.get('chave_acesso')
             # No access key means SEFAZ never authorised it (pending, or
@@ -315,6 +315,15 @@ class OlistAccount(models.Model):
                 continue
 
             if existing:
+                # ADOÇÃO: o painel veio por outro caminho (o legado, um upload)
+                # e não sabe que é desta nota do Olist. Sem o carimbo, o pedido
+                # do espelho nunca acha o próprio XML — foram 843 assim no prod
+                # em 19/08/2026, e é o que trava a consolidação do histórico.
+                # Carimbar não muda o documento: só o apresenta ao pedido.
+                if not existing.olist_nota_id:
+                    existing.write({'olist_nota_id': str(nota['id']),
+                                    'olist_account_id': self.id})
+                    adopted += 1
                 skipped += 1
                 continue
 
@@ -344,9 +353,11 @@ class OlistAccount(models.Model):
                 imported += 1
 
         self.last_sync = fields.Datetime.now()
-        _logger.info("Olist %s: %s imported, %s cancelled, %s already known.",
-                     self.name, imported, cancelled, skipped)
-        return {'imported': imported, 'cancelled': cancelled, 'skipped': skipped}
+        _logger.info("Olist %s: %s imported, %s cancelled, %s already known "
+                     "(%s adopted).",
+                     self.name, imported, cancelled, skipped, adopted)
+        return {'imported': imported, 'cancelled': cancelled,
+                'skipped': skipped, 'adopted': adopted}
 
     # ------------------------------------------------------------------
     # Products

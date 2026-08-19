@@ -820,6 +820,116 @@ class OlistOrder(models.Model):
                            'name': tipo.sequence_id.next_by_id()})
         return True
 
+    # ------------------------------------------------------------------
+    # Consolidar o histórico (anterior ao corte) — decisão do dono, 19/08/2026
+    # ------------------------------------------------------------------
+    def action_consolidar_historico(self):
+        """O passado profundo entra POR INTEIRO, sem mexer na prateleira de hoje.
+
+        O corte protege o dia a dia: anterior a ele, a importação normal só
+        registra. Esta ação é a exceção deliberada, por seleção: cria o S, a
+        entrega concluída DATADA no dia do pedido, a fatura datada na emissão
+        e o recebimento — e fecha com a ÂNCORA: um ajuste de inventário que
+        devolve cada prateleira tocada exatamente ao número de antes. O livro
+        que saiu em fevereiro já não está na estante — a contagem de hoje já o
+        desconta; o movimento histórico existe para os relatórios, e o físico
+        termina onde estava.
+
+        Verificado antes de construir (19/08): zero chaves do histórico já
+        lançadas no razão — consolidar cria, não duplica.
+        """
+        feitos, erros = 0, []
+        devolver = {}          # (product, location) -> qty a devolver na âncora
+        for pedido in self:
+            try:
+                with self.env.cr.savepoint():
+                    pedido._consolidar_um(devolver)
+                    feitos += 1
+            except UserError as exc:
+                erros.append("%s: %s" % (pedido.numero or pedido.olist_id,
+                                         exc.args[0] if exc.args else exc))
+        self._ancorar_estoque(devolver)
+        if not erros:
+            return self._notificacao(
+                _("Histórico consolidado"),
+                _("%(n)s pedido(s) registrados com data histórica; estoque "
+                  "re-ancorado ao número de hoje.", n=feitos), 'success')
+        return self._notificacao(
+            _("Consolidação parcial"),
+            _("%(n)s consolidados, %(e)s com problema:\n%(lista)s",
+              n=feitos, e=len(erros), lista="\n".join(erros[:8])),
+            'warning', sticky=True)
+
+    def _consolidar_um(self, devolver):
+        self.ensure_one()
+        if self.state != 'anterior_corte':
+            raise UserError(_(
+                "não é anterior ao corte — dentro do corte o caminho é o "
+                "Importar comum"))
+        if not self.detalhe_lido_em:
+            raise UserError(_("falta ler o detalhe"))
+        if not self.line_ids:
+            raise UserError(_("sem itens"))
+        if self.xml_status == 'sem_xml':
+            self._fetch_xml()
+        if self.xml_status != 'arquivado':
+            raise UserError(_("sem XML arquivado (a fatura sai dele)"))
+        sem_produto = self.line_ids.filtered(lambda l: not l.product_id)
+        if sem_produto:
+            raise UserError(_("ISBN sem produto no Odoo: %s",
+                              ", ".join(sem_produto.mapped('codigo'))))
+        if self.sale_order_id:
+            raise UserError(_("já tem pedido S — nada a consolidar"))
+
+        data = self.data_pedido
+        venda = self.env['sale.order'].create(self._sale_order_vals())
+        self.sale_order_id = venda
+        self._carimbar_posicao_fiscal(venda)
+        venda.action_confirm()
+        self._mover_para_a_caixa_marketplaces()
+        self._concluir_entregas()
+        # A data conta a história certa: movimento de fevereiro é de
+        # fevereiro. O quant não olha a data (é estado presente) — é a âncora,
+        # no fim do lote, que devolve a prateleira ao número de hoje.
+        momento = fields.Datetime.to_datetime(data)
+        for picking in venda.picking_ids:
+            picking.move_line_ids.write({'date': momento})
+            picking.move_ids.write({'date': momento})
+            picking.write({'date_done': momento})
+            for ml in picking.move_line_ids:
+                local = ml.location_id
+                if local.usage == 'internal':
+                    chave = (ml.product_id, local)
+                    devolver[chave] = devolver.get(chave, 0.0) + ml.quantity
+        self._create_invoice()
+        self._carimba_rastreio()
+        return True
+
+    def _ancorar_estoque(self, devolver):
+        """Devolve cada prateleira tocada ao número de antes do lote.
+
+        Por ajuste de inventário (visível, auditável, datado de hoje) — nunca
+        pelo remendo silencioso do quant. O par movimento-histórico +
+        ajuste-âncora deixa o rastro completo: saiu no passado, re-contado
+        hoje, físico intacto.
+        """
+        Quant = self.env['stock.quant'].sudo()
+        for (produto, local), qty in devolver.items():
+            if not qty:
+                continue
+            quant = Quant.search([('product_id', '=', produto.id),
+                                  ('location_id', '=', local.id)], limit=1)
+            if quant:
+                quant.inventory_quantity = quant.quantity + qty
+                quant.action_apply_inventory()
+            else:
+                Quant.create({
+                    'product_id': produto.id,
+                    'location_id': local.id,
+                    'inventory_quantity': qty,
+                }).action_apply_inventory()
+        return True
+
     def _concluir_entregas(self):
         """Valida as entregas abertas do pedido: o pacote comprovadamente saiu."""
         self.ensure_one()
