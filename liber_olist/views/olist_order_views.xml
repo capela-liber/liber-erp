@@ -264,6 +264,10 @@
                 <separator/>
                 <filter name="f_30_dias" string="Últimos 30 dias"
                         domain="[('data_pedido', '&gt;=', (context_today() - datetime.timedelta(days=30)).strftime('%Y-%m-%d'))]"/>
+                <separator/>
+                <filter name="f_arquivados" string="Arquivados"
+                        domain="[('active', '=', False)]"
+                        help="O histórico ignorado de propósito. Arquivar é reversível: selecione e use Ações &#8250; Desarquivar."/>
                 <group>
                     <filter name="g_canal" string="Canal no Olist"
                             context="{'group_by': 'canal'}"/>

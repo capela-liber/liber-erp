@@ -139,3 +139,20 @@ class TestConsolidarHistorico(TransactionCase):
                          "a âncora vale também para o completamento")
         with self.assertRaises(UserError):
             pedido._consolidar_um({})        # de novo: já consolidado
+
+    def test_arquivar_e_ignorar_sem_apagar(self):
+        """O gesto de ignorar histórico: arquivado some da busca padrão, da
+        fila e do Relatório (a linha segue o pedido) — e volta pelo filtro."""
+        pedido = self._pedido_antigo('H-9', '801809')
+        linha = pedido.line_ids
+        pedido.action_archive()
+        Order = self.env['olist.order']
+        self.assertFalse(Order.search([('numero', '=', 'H-9')]),
+                         "arquivado não aparece na busca padrão")
+        self.assertFalse(self.env['olist.order.line'].search(
+            [('id', '=', linha.id)]),
+            "a linha segue o pedido — senão o Relatório somaria o ignorado")
+        self.assertTrue(Order.with_context(active_test=False).search(
+            [('numero', '=', 'H-9')]), "reversível: o registro existe")
+        pedido.action_unarchive()
+        self.assertTrue(Order.search([('numero', '=', 'H-9')]))

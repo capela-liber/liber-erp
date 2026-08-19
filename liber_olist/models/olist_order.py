@@ -48,6 +48,11 @@ class OlistOrder(models.Model):
     _order = 'data_pedido desc, numero desc'
     _rec_name = 'numero'
 
+    # O gesto de IGNORAR parte do histórico (dono, 19/08/2026): arquivar.
+    # Reversível, e o arquivado some de tudo — fila, auditoria, Relatório,
+    # contadores — sem apagar nada. O filtro Arquivados o traz de volta.
+    active = fields.Boolean(default=True)
+
     account_id = fields.Many2one(
         'olist.account', string="Conta", required=True, ondelete='cascade',
         index=True)
@@ -1296,6 +1301,9 @@ class OlistOrderLine(models.Model):
         help="A linha do espelho de catálogo a que este item pertence. É por "
              "ela que a tela de casamento sabe o que cada livro vendeu — e "
              "portanto o que vale a pena casar primeiro.")
+    # A linha segue o pedido no arquivamento: sem isto, o Relatório (que é
+    # feito de linhas) continuaria somando as vendas do histórico ignorado.
+    active = fields.Boolean(related='order_id.active', store=True)
     order_situacao = fields.Char(related='order_id.situacao', store=True)
     order_data = fields.Date(related='order_id.data_pedido', store=True)
     # As medidas do Relatório: a linha é quem sabe livro e quantidade — o
