@@ -66,3 +66,18 @@ class TestTelasDoOlist(TransactionCase):
         config = self.env.ref('liber_olist.menu_olist_config')
         self.assertLess(menu.sequence, config.sequence,
                         "o Relatório mora antes das Configurações")
+
+    def test_a_poda_dos_botoes_nao_volta(self):
+        """Poda de 19/08/2026: Gerar fatura, Ler em segundo plano e Carimbar
+        rastreio saíram da fileira — o presente fatura no Importar, a fila de
+        detalhe anda sozinha (cron 2/2h) e o rastreio carimba no write. Se um
+        voltar, volta por decisão, não por copy-paste."""
+        lista = self.env.ref('liber_olist.view_olist_order_list')
+        for morto in ('action_create_invoice', 'action_queue_detail',
+                      'action_stamp_tracking'):
+            self.assertNotIn(morto, lista.arch,
+                             "o botão podado voltou à fileira: %s" % morto)
+        for vivo in ('action_read_detail', 'action_import_selected',
+                     'action_consolidar_historico'):
+            self.assertIn(vivo, lista.arch,
+                          "a poda levou botão demais: %s" % vivo)

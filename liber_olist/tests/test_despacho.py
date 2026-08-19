@@ -144,3 +144,15 @@ class TestDespachoDaCasa(TransactionCase):
         venda.action_confirm()
         tipos = venda.picking_ids.picking_type_id
         self.assertNotIn("Marketplaces", tipos.mapped('name'))
+
+    def test_o_rastreio_tardio_carimba_sozinho(self):
+        """O botão morreu, o gesto ficou: rastreio que chega numa releitura
+        DEPOIS da importação vai direto para a entrega."""
+        pedido = self._pedido('D-10', 'Enviado', nota='708')
+        pedido._import_to_odoo()
+        entrega = pedido.sale_order_id.picking_ids[:1]
+        if 'carrier_tracking_ref' not in entrega._fields:
+            self.skipTest("stock_delivery não está instalado")
+        self.assertFalse(entrega.carrier_tracking_ref)
+        pedido.write({'codigo_rastreamento': 'BR999888777SP'})
+        self.assertEqual(entrega.carrier_tracking_ref, 'BR999888777SP')

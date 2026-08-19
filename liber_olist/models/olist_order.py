@@ -977,6 +977,13 @@ class OlistOrder(models.Model):
                     lambda p: p.state not in ('done', 'cancel'))
                 if abertas:
                     pedido._concluir_entregas()
+        # O rastreio que chega DEPOIS da importação carimba sozinho — era o
+        # botão "Carimbar rastreio", aposentado na poda de 19/08/2026: a
+        # releitura já traz o código; deixar o carimbo para um clique era
+        # pedir que ninguém clicasse.
+        if vals.get('codigo_rastreamento'):
+            for pedido in self.filtered('sale_order_id'):
+                pedido._carimba_rastreio()
         return resultado
 
     def _carimba_rastreio(self):
