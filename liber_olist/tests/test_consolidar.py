@@ -164,7 +164,6 @@ class TestConsolidarHistorico(TransactionCase):
         from unittest.mock import patch
         from odoo.addons.liber_olist.models import olist_client
         Panel = self.env['nfe.xml.panel']
-        xml_falso = b"<xml/>"
         chave = '35260311111111000111550010006996991000000015'
         orfao = Panel.create({
             'file': b"PHhtbC8+", 'file_name': "legado-699.xml",
@@ -176,13 +175,18 @@ class TestConsolidarHistorico(TransactionCase):
             'data_pedido': '2026-03-01', 'id_nota_fiscal': '699699',
             'detalhe_lido_em': '2026-08-19 12:00:00'})
         self.assertEqual(pedido.xml_status, 'sem_xml')
+        # XML REAL mínimo, validador REAL: o teste anterior mockava o
+        # is_valid_xml_and_nfe_key e o mock mentia — na vida real ele devolve
+        # False para duplicado, e a adoção nunca achava a chave.
+        xml_real = (
+            b'<nfeProc xmlns="http://www.portalfiscal.inf.br/nfe" versao="4.00">'
+            b'<NFe><infNFe versao="4.00" Id="NFe' + chave.encode() + b'"/></NFe>'
+            b'<protNFe><infProt><chNFe>' + chave.encode() +
+            b'</chNFe></infProt></protNFe></nfeProc>')
         with patch.object(olist_client, 'get_nota_xml',
-                          return_value=xml_falso), \
+                          return_value=xml_real), \
              patch.object(type(Panel), '_company_from_xml',
-                          return_value=self.account.company_id), \
-             patch.object(type(Panel), 'is_valid_xml_and_nfe_key',
-                          return_value=chave), \
-             patch.object(type(Panel), '_ingest_xml', return_value=False):
+                          return_value=self.account.company_id):
             status, _detalhe = pedido._fetch_xml()
         self.assertEqual(status, 'OK')
         self.assertEqual(orfao.olist_nota_id, '699699')
