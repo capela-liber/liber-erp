@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     'name': 'Consignment - Settlement',
-    'version': '19.0.2.9.0',
+    'version': '19.0.2.9.1',
     'summary': 'Consignment settlement: turn what the customer sold into a real sale',
     'description': """
 Consignment settlement (SOC redesign).

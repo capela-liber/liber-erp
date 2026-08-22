@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ==================================================================
+         O EDITORIAL LÊ AS COMPRAS (22/08/2026).
+
+         "O editorial deve ler POs, principalmente as que têm livros." Faz
+         sentido: quem decide a edição precisa ver a tiragem comprada, o que
+         a gráfica cobrou e o que já está a caminho, sem ter que pedir para
+         o financeiro abrir a tela.
+
+         Leitura e só. O ACL abaixo dá 1,0,0,0: e a trava de verdade é ele,
+         não este arquivo. Aqui é a PORTA: sem o menu, o editorial teria o
+         direito de ler e nenhum caminho até a tela, porque os menus de
+         Compras são travados nos grupos do `purchase` e o editorial não
+         está em nenhum deles.
+
+         `(4, ...)` e não `(6, 0, [...])`: aqui se SOMA o editorial aos
+         grupos que já veem o menu. Substituir tiraria Compras de quem
+         compra, que é o oposto do pedido.
+
+         O que este arquivo NÃO faz, e é preciso dizer: o editorial vai ver
+         os botões de criar e confirmar pedido, e vai levar uma recusa do
+         ACL se clicar. Esconder botão por grupo exigiria uma segunda view
+         de cada tela; preferiu-se a recusa explícita a uma tela que promete
+         o que não cumpre. Se o barulho incomodar, o caminho é uma tela de
+         leitura própria do Editorial, e aí é decisão maior que uma linha
+         de menu.
+         ================================================================== -->
+
+    <record id="purchase.menu_purchase_root" model="ir.ui.menu">
+        <field name="group_ids" eval="[(4, ref('liber_roles.group_editorial_assistente'))]"/>
+    </record>
+
+    <record id="purchase.menu_procurement_management" model="ir.ui.menu">
+        <field name="group_ids" eval="[(4, ref('liber_roles.group_editorial_assistente'))]"/>
+    </record>
+
+    <record id="purchase.menu_purchase_form_action" model="ir.ui.menu">
+        <field name="group_ids" eval="[(4, ref('liber_roles.group_editorial_assistente'))]"/>
+    </record>
+
+    <!-- O filtro que responde ao "principalmente as que têm livros": ele
+         separa, não esconde. Restringir o editorial às POs com livro foi
+         considerado e recusado: hoje as 7 POs da base TÊM livro, então a
+         trava não filtraria nada, e amanhã ela esconderia justamente a
+         compra de gráfica e de papel, que é assunto editorial como poucos.
+         O título vem do Metabooks, que é onde o livro se declara livro. -->
+    <record id="view_purchase_order_filter_livros" model="ir.ui.view">
+        <field name="name">purchase.order.search.livros</field>
+        <field name="model">purchase.order</field>
+        <!-- `purchase_order_view_search` e não `view_purchase_order_filter`:
+             a segunda é a busca das COTAÇÕES, e é onde o filtro caiu na
+             primeira tentativa. Quem contou foi o tour, que não achou o item
+             no menu: a ação dos Pedidos de compra usa esta aqui. -->
+        <field name="inherit_id" ref="purchase.purchase_order_view_search"/>
+        <field name="arch" type="xml">
+            <filter name="my_Orders" position="before">
+                <filter string="Com livros" name="com_livros"
+                        domain="[('order_line.product_id.product_tmpl_id.metabooks_book_title', '!=', False)]"/>
+                <separator/>
+            </filter>
+        </field>
+    </record>
+
+</odoo>

@@ -8,7 +8,7 @@
             <!-- A tela de conferência do sentido de volta: o que o Olist
                  vendeu, o que já entrou aqui, e por qual canal. -->
             <list string="Pedidos do Olist" multi_edit="0"
-                  decoration-muted="state in ('cancelado', 'anterior_corte')"
+                  decoration-muted="state == 'cancelado'"
                   decoration-info="state == 'sem_detalhe'"
                   decoration-warning="state == 'nao_importado'">
                 <header>
@@ -27,10 +27,6 @@
                     <button name="action_import_selected" type="object"
                             string="Importar para o Odoo"
                             help="Cria o pedido no Odoo para as linhas selecionadas. Escreve aqui, nunca no Olist."/>
-                    <button name="action_consolidar_historico" type="object"
-                            string="Consolidar histórico"
-                            groups="base.group_system"
-                            help="Só para pedidos ANTERIORES ao corte: registra o passado por inteiro — S, entrega concluída datada no dia do pedido, fatura datada na emissão e recebimento — e fecha com um ajuste de inventário que devolve cada prateleira tocada ao número de hoje. O livro que saiu há meses já não está na estante; o movimento vira história, o físico fica intacto."/>
                 </header>
                 <field name="data_pedido"/>
                 <field name="numero"/>
@@ -237,9 +233,6 @@
                         domain="[('state', '=', 'importado')]"/>
                 <filter name="f_cancelado" string="Cancelados"
                         domain="[('state', '=', 'cancelado')]"/>
-                <filter name="f_anterior_corte" string="Anteriores ao corte"
-                        domain="[('state', '=', 'anterior_corte')]"
-                        help="História para consolidação: fora da fila do operador. Importar continua possível — selecione e clique."/>
                 <separator/>
                 <filter name="f_sem_produto" string="Com livro não localizado"
                         domain="[('itens_sem_produto', '&gt;', 0)]"
@@ -420,17 +413,20 @@
         <field name="res_model">olist.order</field>
         <field name="view_mode">list,form</field>
         <field name="view_id" ref="view_olist_order_list_fila"/>
-        <!-- Só quem TEM nota entra na fila: a caixa viaja com a DANFE, e sem
-             nota não há ação possível — o pedido "Em aberto" espera o Olist
-             faturar e entra sozinho na releitura. O XML ainda não trazido não
-             barra: o Despachar o busca na hora. -->
+        <!-- Quem entra na fila é decisão da política das Definições
+             (Despachar pedidos do Olist). "Só com nota", o padrão: a caixa
+             viaja com a DANFE, e o pedido "Em aberto" espera o Olist faturar.
+             "Com ou sem nota": o pedido entra assim que chega, e a fatura o
+             alcança quando a nota vier pelo sync. O XML ainda não trazido
+             nunca barra: o Despachar o busca na hora. O critério vive no
+             search do campo, não aqui, para a opção valer na hora, sem -u. -->
         <field name="domain">[('state', '=', 'nao_importado'),
-                              ('id_nota_fiscal', '!=', False),
-                              ('id_nota_fiscal', '!=', '0')]</field>
+                              ('despachavel', '=', True)]</field>
         <field name="help" type="html">
             <p class="o_view_nocontent_smiling_face">Nada a despachar</p>
             <p>A fila está limpa. Pedido novo chega sozinho pelas leituras de
-               2 em 2 horas — e só aparece aqui quando o Olist já tiver
+               2 em 2 horas — e, na política padrão (Definições, "Despachar
+               pedidos do Olist"), só aparece aqui quando o Olist já tiver
                emitido a nota dele.</p>
         </field>
     </record>

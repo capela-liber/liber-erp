@@ -148,6 +148,20 @@
          precisa: lançar a própria despesa, ver a própria ficha e aprovar a
          folga de quem se chefia já são o padrão de quem não tem grupo de RH
          nenhum. O resto vem da árvore de funcionários, não daqui.
+
+         CADASTRAR CONTATO é de quem gerencia (20/08/2026). Deixou de ser
+         concessão de departamento e virou marca de nível, como a exportação:
+         `base.group_partner_manager` nos seis Gerentes, e LEITURA em todos os
+         Assistentes. A leitura não tem linha aqui porque não precisa de uma:
+         o ACL do core já dá `res.partner` em leitura a `base.group_user`
+         (`1,0,0,0`), e toda função começa por ele — o menu do app Contatos
+         inclusive. Quem trava isso é o teste, não o XML.
+
+         Duas exceções conscientes, ambas no nível de baixo e nenhuma delas
+         esquecimento: o assistente FINANCEIRO cadastra (a Cobrança abre o
+         cliente para faturá-lo) e o assistente COMERCIAL cadastra por ACL do
+         `crm`, que não é nosso — ver o comentário do Comercial e o
+         test_acessos.py.
          ================================================================== -->
 
     <!-- ============================ COMERCIAL ============================ -->
@@ -212,16 +226,23 @@
         <field name="comment">Opera o depósito: recebe, separa, valida entregas e as transferências da consignação (COM/OUT, COM/MOV, COM/IN, ACERTO/), faz contagem. Não vê pedido de venda, cliente, acerto nem número financeiro.</field>
     </record>
 
+    <!-- CONTATO É DE GERÊNCIA, SEM EXCEÇÃO (20/08/2026). O cadastro deixou de
+         ser concessão de departamento e virou marca de nível: todo Gerente
+         cadastra e edita contato, todo Assistente só lê. Aqui a linha é nova
+         — a Logística não cadastrava; o endereço de coleta e a transportadora
+         nascem no depósito, e mandar quem despacha pedir cadastro a outro
+         departamento é inventar fila onde não havia trabalho. -->
     <record id="group_logistica_gerente" model="res.groups">
         <field name="name">Gerente</field>
         <field name="privilege_id" ref="privilege_logistica"/>
         <field name="implied_ids" eval="[
             (4, ref('group_logistica_assistente')),
             (4, ref('stock.group_stock_manager')),
+            (4, ref('base.group_partner_manager')),
             (4, ref('base.group_allow_export')),
             (4, ref('hr_expense.group_hr_expense_team_approver')),
         ]"/>
-        <field name="comment">Tudo do assistente + configura o depósito: armazéns, localizações, tipos de operação, rotas e regras de reposição; valida ajustes de inventário e remaneja estoque entre localizações. Aprova despesa da equipe. Exporta.</field>
+        <field name="comment">Tudo do assistente + configura o depósito: armazéns, localizações, tipos de operação, rotas e regras de reposição; valida ajustes de inventário e remaneja estoque entre localizações. Cadastra contatos (transportadora e endereço de coleta inclusive). Aprova despesa da equipe. Exporta.</field>
     </record>
 
     <!-- ============================ FINANCEIRO =========================== -->
@@ -341,7 +362,35 @@
     </record>
 
     <!-- A analítica FICA (decisão de 11/08): fechar período de royalty é ler
-         conta analítica, e o Jurídico fecha período. -->
+         conta analítica, e o Jurídico fecha período.
+
+         FATURAMENTO E COMPRAS (20/08/2026). O acerto de royalty termina em
+         dinheiro: a nota do autor é uma fatura de fornecedor, e o pedido que
+         a origina é um pedido de compra. Até aqui o Jurídico LIA `account.move`
+         inteiro — carona do `group_contract_user`, ver PERFIS.md — e não
+         escrevia linha nenhuma, então o documento que ele mesmo apura tinha
+         de ser digitado por outro departamento.
+
+         `account.group_account_invoice` — faturas e pagamentos, sem
+         contabilidade: nem plano de contas, nem lançamento, nem relatório
+         (isso segue no Financeiro/Gerente).
+
+         `purchase.group_purchase_user` — o pedido de compra e a Bill que sai
+         dele; o degrau de Administrador de compras segue só no Financeiro.
+
+         DROPBOX E DRIVE NO NÍVEL GERENTE (20/08/2026). O contrato assinado
+         mora na nuvem, e quem assina responde pela pasta: o Jurídico/Gerente
+         entra em Dropbox e Google Drive como *Manager*, não como usuário —
+         cria e configura conta e pasta, não só lê a que o Editorial montou.
+         O `Manager` de cada provedor já implica o `User` dele e o gerente do
+         chassi `liber_cloud_files`; não se marcam os dois. O GitHub fica de
+         fora: lá mora código, não contrato.
+
+         O ASSISTENTE NÃO SOBE JUNTO: quem redige minuta não emite documento
+         financeiro nem configura pasta na nuvem. E vale registrar o efeito colateral, que é do core: o
+         `group_account_invoice` carrega a regra "All Journal Entries", de
+         domínio "tudo" — qualquer cerca futura em account.move não alcança
+         mais o Jurídico/Gerente (PERFIS.md, "as regras se somam"). -->
     <record id="group_juridico_gerente" model="res.groups">
         <field name="name">Gerente</field>
         <field name="privilege_id" ref="privilege_juridico"/>
@@ -349,11 +398,15 @@
             (4, ref('group_juridico_assistente')),
             (4, ref('liber_copyright_contracts.group_contract_manager')),
             (4, ref('analytic.group_analytic_accounting')),
+            (4, ref('account.group_account_invoice')),
+            (4, ref('purchase.group_purchase_user')),
+            (4, ref('liber_dropbox.group_liber_dropbox_manager')),
+            (4, ref('liber_gdrive.group_liber_gdrive_manager')),
             (4, ref('base.group_partner_manager')),
             (4, ref('base.group_allow_export')),
             (4, ref('hr_expense.group_hr_expense_team_approver')),
         ]"/>
-        <field name="comment">Tudo do assistente + assina: valida, cancela e renova contratos, fecha períodos de royalty, mexe no acerto. Carrega a contabilidade analítica. Cadastra contatos — o contrato costuma ser o primeiro documento da casa a citar um autor. Aprova despesa da equipe. Exporta.</field>
+        <field name="comment">Tudo do assistente + assina: valida, cancela e renova contratos, fecha períodos de royalty, mexe no acerto. Carrega a contabilidade analítica. Emite e paga a nota do autor (Financeiro: Faturamento) e abre o pedido de compra que a origina (Compras: Usuário) — sem contabilidade e sem administrar compras. Administra os arquivos no Dropbox e no Google Drive, onde mora o contrato assinado. Cadastra contatos — o contrato costuma ser o primeiro documento da casa a citar um autor. Aprova despesa da equipe. Exporta.</field>
     </record>
 
     <!-- ============================= MARKETING =========================== -->
@@ -378,6 +431,9 @@
         <field name="comment">Edita conteúdo do site, a ficha do livro no catálogo e seus metadados no Metabooks. Lê e comenta nos projetos. Sem dados financeiros e sem exportar.</field>
     </record>
 
+    <!-- O contato entrou em 20/08/2026 pela régua de nível — ver a nota da
+         Logística. No Marketing ele tem uso próprio: a lista de contatos é o
+         mailing, e quem faz campanha cadastra e corrige quem a recebe. -->
     <record id="group_marketing_gerente" model="res.groups">
         <field name="name">Gerente</field>
         <field name="privilege_id" ref="privilege_marketing"/>
@@ -386,10 +442,11 @@
             (4, ref('website.group_website_designer')),
             (4, ref('liber_metabooks_integration.metabooks_manager_group')),
             (4, ref('group_project_task_editor')),
+            (4, ref('base.group_partner_manager')),
             (4, ref('base.group_allow_export')),
             (4, ref('hr_expense.group_hr_expense_team_approver')),
         ]"/>
-        <field name="comment">Publica e configura o site; administra o Metabooks (sincronização e dados de referência); trabalha nas tarefas dos projetos. Aprova despesa da equipe. Exporta. Sem dados financeiros e sem consignação.</field>
+        <field name="comment">Publica e configura o site; administra o Metabooks (sincronização e dados de referência); trabalha nas tarefas dos projetos. Cadastra contatos — a lista é o mailing da campanha. Aprova despesa da equipe. Exporta. Sem dados financeiros e sem consignação.</field>
     </record>
 
     <!-- ============================== DIREÇÃO ============================ -->

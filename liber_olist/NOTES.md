@@ -179,3 +179,127 @@ válidos, valor batendo em todos, zero na empresa errada, e segunda rodada idemp
 [Obter pedido](https://tiny.com.br/api-docs/api2-pedidos-obter) ·
 [Atualizar estoque](https://tiny.com.br/api-docs/api2-produtos-atualizar-estoque) ·
 [Limites da API](https://tiny.com.br/api-docs/api2-limites-api)
+
+## 19. A etiqueta: desenhar, não. Buscar, sim (2026-08-20)
+
+Pergunta do usuário: dá para fazer a etiqueta dentro do Odoo? Duas respostas, e elas são
+opostas.
+
+### 19.1 Desenhar a etiqueta nós mesmos: não — e seria errado mesmo se desse
+
+A etiqueta de exemplo (Olist Envios / Pax) tem duas metades. Uma é nossa: a **DANFE
+simplificada**, com a chave de acesso — sabemos desenhar. A outra **não é**: o código de
+volume (`EBBM5V3`), o código de rastreio (`P0XRM8KU9VPXWJ`), a zona de triagem (`SSP-050-A`),
+o desenho do transportador. Esses são atribuídos pela **transportadora** quando o envio é
+criado, e nenhum deles vem no payload do pedido da v2 (as sete chaves de envio do §12.6 não os
+incluem).
+
+Reproduzir esse código de barras seria **inventar roteirização**: o pacote é mal encaminhado
+ou recusado no balcão. A etiqueta é um contrato com a transportadora, não um documento nosso.
+Meia etiqueta não é etiqueta.
+
+### 19.2 Buscar a etiqueta pronta: sim, e a chave já está no Odoo
+
+A **API do Olist Envios** (`envios-api.olist.com`, outra API — não é a Tiny v2 que usamos) tem:
+
+| endpoint | devolve |
+|---|---|
+| `POST /v1/labels/pdf` | o PDF da etiqueta |
+| `POST /v1/labels/zpl` | ZPL, para impressora térmica |
+| `GET /v1/trackings/{codigo}` | rastreamento |
+
+E o corpo aceita **`invoice_keys`** — a chave de acesso da NF-e. **Nós já a temos**, no painel
+(`nfe.xml.panel.key`) e na fatura (`account.move.nfe_key`). Ou seja, o caminho da etiqueta até
+a transferência é curto: mesma mecânica com que o XML passou a ficar pendurado no picking.
+
+### 19.3 O que custa, e o que precisa ser confirmado com a Olist
+
+- **Credenciais**: OAuth2 com PKCE, e `CLIENT_ID`/`CLIENT_SECRET` são **criados pelo time
+  técnico da Olist**. É preciso informar a eles uma `REDIRECT_URI` antes.
+- **Token de 4 horas** (`expires_in: 14400`), renovável por `refresh_token`. Exige **cron de
+  renovação** — requisito de desenho, não detalhe (a mesma pedra da v3, §5).
+- **Não queremos `POST /v1/shipments`**. Ele CRIA envios e a doc avisa sobre cobrança
+  duplicada: é escrita paga. Os envios já existem — quem os cria é o Olist ao expedir. Nós
+  queremos só a etiqueta do que já existe, o que nos mantém fora do caminho de cobrança.
+- **A confirmar**: se `labels/pdf` devolve etiqueta de envio criado pelo **próprio Olist**, e
+  não apenas pelos criados por nossa integração. É o ponto que decide tudo, e a doc não diz.
+
+## 20. A janela de estoque não enxerga venda (2026-08-21)
+
+O sintoma foi do dono: "Estranho não ter atualizado os estoques nessa madrugada."
+
+Duas causas, independentes.
+
+**A primeira, minha.** Ao rearmar os crons eu marquei quatro deles para o mesmo minuto.
+`Olist: pull NFe XMLs` morreu com `could not serialize access due to concurrent update` no
+`UPDATE olist_account SET last_sync…`: dois crons disputando a mesma linha da conta.
+Corrigido escalonando o `nextcall` em staging (04:10, 04:25, 04:40, 04:55 UTC) — e os quatro
+não voltam a coincidir porque os dois de período igual (2h) ficaram com deslocamento
+diferente dentro da hora.
+
+**A segunda, do Olist, e é a que importa.** `lista.atualizacoes.estoque.php` devolve
+**zero produtos** — nas duas contas, e em janelas de 2, 7 e 29 dias, num período em que
+houve venda. Não é erro de parâmetro, e isso foi conferido no ferro:
+
+```
+params=['dataAlteracao']  -> codigo_erro 20 "A consulta não retornou registros"
+params=['data_alteracao'] -> codigo_erro 10 "O parâmetro dataAlteracao deve ser informado"
+```
+
+A segunda linha é a prova de que o nome está certo: o próprio Olist o exige. E a primeira
+diz, sem rodeios, que não há registro nenhum.
+
+A leitura mais provável: **esse endpoint reporta só a alteração de estoque feita VIA API** —
+o eco das nossas próprias escritas — e não a movimentação que o ERP faz ao vender. Como a
+conta está em somente-leitura desde o primeiro dia, nunca escrevemos, e por isso não há o que
+ecoar. É hipótese, não certeza; a certeza é o zero.
+
+**O que se fez com isso.** A janela fica (é uma chamada, é barata, e volta a valer no dia em
+que o push for armado), mas deixou de ser o único caminho: o que sobra do ciclo, em cada
+rodada, relê os saldos **mais velhos**, um livro por chamada, até o executor do cron avisar
+que o tempo acabou (`_grava_ja` → `ir.cron._commit_progress`). O espelho converge por
+antiguidade em vez de por aviso. Com quatro rodadas por dia o catálogo se renova em poucos
+dias, e nenhuma rodada estoura — que era exatamente o defeito de 18/08.
+
+Fora do cron o mesmo método devolve infinito e a varredura **não** acontece: o botão da tela
+não pode virar vinte minutos de leitura sem ninguém ter pedido. Há teste para os três casos
+(cabe / não cabe / fora do cron), porque as três vezes em que isto quebrou na mão do dono
+foram exatamente as vezes em que eu testei a camada de baixo e não o que chega na tela.
+
+**A pergunta que fica para o suporte do Olist**, junto com a das etiquetas (§19.3): o
+`lista.atualizacoes.estoque` deveria reportar movimentação de venda, ou só alteração via API?
+Se for a primeira, há defeito do lado deles e a releitura por antiguidade é paliativo.
+
+## 21. O que de fato não subiu: o push estourava o tempo (2026-08-21)
+
+A pergunta era sobre o estoque da madrugada, e a primeira resposta (§20) estava certa mas
+respondia à pergunta errada: eu olhei o espelho de LEITURA, no staging. O que a operação usa
+é o **prod**, e lá as duas contas estão com `read_only=false`, margem 5, e o cron que **sobe**
+o estoque **armado**.
+
+O log do prod diz, sem interpretação:
+
+```
+2026-08-21 02:09:39 ERROR prod ir_cron: Job 'Olist: push stock (balanço)' (58) timed out
+```
+
+`failure_count=3`, e o último envio bem-sucedido foi 18/08 (só a N1-Site; a EdLab Press
+nunca). Três noites seguidas.
+
+A causa é a mesma que derrubou o `ler detalhe` em 18/08, no mesmo módulo, e eu não a corrigi
+aqui: `_push_all_stock` varria ~580 produtos numa transação só, a ~2,2 s por chamada — uns
+vinte minutos contra o teto de um ciclo de cron. O Odoo derruba a transação inteira: não é
+que subiu menos, é que **não subiu nada**. E na terceira falha o executor passa a pular o
+cron sem sequer rodá-lo.
+
+**Correção.** A varredura passou a ser orçada e retomável, como as outras: `_grava_ja` antes
+de cada livro, `stock_push_cursor` gravado a cada envio, e a rodada seguinte continua do id
+onde parou em vez de recomeçar do início e nunca alcançar o fim do catálogo. Ao varrer tudo,
+o cursor volta a zero. O botão da tela continua sem orçamento — quem clicou pediu a varredura.
+
+Quatro testes: para dentro do ciclo, retoma de onde parou, varre tudo e volta ao início, e o
+botão não é orçado.
+
+**A lição que se repete.** Corrigi o orçamento em três crons em 19/08 e deixei o quarto —
+justamente o único armado no prod. Quando a causa é de desenho, ela vale para todos os
+irmãos, não só para aquele em que ela apareceu.

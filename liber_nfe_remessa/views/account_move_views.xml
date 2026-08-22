@@ -19,9 +19,21 @@
             </xpath>
             <xpath expr="//widget[@name='web_ribbon'][@invisible=&quot;payment_state != 'paid' or move_type not in ('out_invoice', 'out_refund', 'in_invoice', 'in_refund', 'out_receipt', 'in_receipt') or is_remessa_note&quot;]" position="before">
                 <field name="is_remessa_note" invisible="1"/>
+                <field name="remessa_origin" invisible="1"/>
+                <!-- "Simples remessa é diferente." E é: uma remessa em
+                     consignação sai com CFOP 5917 e natureza "Remessa em
+                     consignação mercantil"; a simples remessa é a 5949, outra
+                     operação. A tarja dizia simples remessa para TODA nota
+                     deste diário, inclusive as que não são, e a tarja é a
+                     primeira coisa que se lê no documento.
+
+                     Aqui ela fica com o que sempre foi dela: a remessa
+                     genérica, sem origem declarada. Cada operação põe a sua
+                     tarja no seu módulo, do mesmo jeito que já põe o seu valor
+                     em `remessa_origin`. Nenhuma nota fica sem tarja. -->
                 <widget name="web_ribbon" title="Simples remessa"
                         bg_color="text-bg-info"
-                        invisible="not is_remessa_note or state != 'posted'"/>
+                        invisible="not is_remessa_note or state != 'posted' or remessa_origin != 'other'"/>
             </xpath>
             <div name="button_box" position="inside">
                 <button name="action_view_remessa_settlement" type="object"

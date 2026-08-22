@@ -176,11 +176,33 @@ class ResPartner(models.Model):
         endereco['municipio'] = municipio or ''
         return endereco
 
+    def _nfe_indicador_ie_efetivo(self):
+        """O indicador de IE que a nota vai declarar: o do campo, ou o deduzido.
+
+        A dedução é a que a ajuda do campo sempre prometeu -- com IE preenchida
+        é contribuinte; pessoa física é não contribuinte; o resto é isento --
+        e ela já existia, só que ESCONDIDA no montador do payload. O bloco do
+        destinatário deduzia; o `consumidor_final` da nota lia o campo cru. Com
+        o campo vazio (18.204 dos parceiros) as duas metades discordavam: a
+        nota saía dizendo "destinatário não contribuinte" e "não é operação
+        com consumidor final" ao mesmo tempo, e a SEFAZ rejeita exatamente
+        essa combinação.
+
+        Uma pergunta, uma resposta, um lugar.
+        """
+        self.ensure_one()
+        if self.nfe_indicador_ie:
+            return self.nfe_indicador_ie
+        if self._nfe_endereco().get('inscricao_estadual'):
+            return '1'
+        documento = re.sub(r'\D', '', self.vat or '')
+        return '9' if len(documento) == 11 else '2'
+
     def _focus_destinatario_data(self):
         """Dicionário do destinatário no formato do `nfe_payload`."""
         self.ensure_one()
         documento = re.sub(r'\D', '', self.vat or '')
-        indicador = int(self.nfe_indicador_ie) if self.nfe_indicador_ie else None
+        indicador = int(self._nfe_indicador_ie_efetivo())
         endereco = self._nfe_endereco()
         return {
             'nome': self.name,

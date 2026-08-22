@@ -17,7 +17,7 @@
             <xpath expr="//button[@id='create_invoice_percentage']" position="after">
                 <field name="remessa_note_move_id" invisible="1"/>
                 <button name="action_generate_remessa_note" type="object"
-                        string="Gerar nota" class="btn-primary"
+                        string="Criar nota"
                         invisible="not is_consignment or state != 'sale' or remessa_note_move_id"/>
             </xpath>
             <div name="button_box" position="inside">

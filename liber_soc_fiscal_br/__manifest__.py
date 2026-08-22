@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     'name': 'Consignment - Fiscal (BR)',
-    'version': '19.0.2.3.0',
+    'version': '19.0.2.6.1',
     'summary': 'Consignment stock valuation: consigned goods held in their own asset account',
     'description': """
 Consignment fiscal/accounting layer (SOC redesign).
@@ -37,6 +37,7 @@ Inventory Settings and run "Wire consignment shelves" to backfill existing ones.
     'data': [
         'views/res_config_settings_views.xml',
         'views/sale_order_views.xml',
+        'views/account_move_views.xml',
     ],
     'installable': True,
     'application': False,

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     'name': 'Liber Support - Consignment Bridge',
-    'version': '19.0.0.2.0',
+    'version': '19.0.0.3.0',
     'summary': 'Links support tickets to the CO (consignment settlement) '
                'and answers with the consignment map',
     'description': """

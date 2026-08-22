@@ -114,11 +114,36 @@ class SaleOrder(models.Model):
     remessa_note_label = fields.Char(
         compute='_compute_remessa_note_label', string="Note")
 
-    @api.depends('remessa_note_move_id.name')
+    @api.depends('remessa_note_move_id.name', 'remessa_note_move_id.state')
     def _compute_remessa_note_label(self):
+        # Nota cancelada não é nota: o botão volta a dizer "A emitir", que é a
+        # verdade do pedido -- ele está de novo sem documento fiscal.
         for order in self:
+            nota = order.remessa_note_move_id
             order.remessa_note_label = (
-                order.remessa_note_move_id.name or "A emitir")
+                nota.name if nota and nota.state != 'cancel' else "A emitir")
+
+    def _remessa_linhas_a_faturar(self):
+        """(linha, quantidade) do que REALMENTE saiu do armazém.
+
+        A nota de remessa não é uma promessa, é o documento que viaja com a
+        carga: o que ela declara tem que ser o que está na caixa. O C08547
+        mostrou o preço de não checar -- pedido de 100, estoque para 62, nada
+        expedido ainda, e a nota saiu dizendo 100.
+
+        O S000 nunca teve esse problema porque o core faz a conta por ele: com
+        política por entrega, `invoice_status` só vira "a faturar" quando há
+        quantidade entregue, e `_create_invoices` fatura `qty_to_invoice`.
+        Este botão não passa por nada disso, e a checagem foi embora junto com
+        a estrutura. Aqui ela volta, na única forma que serve para uma
+        remessa: a quantidade é a ENTREGUE, não a pedida.
+        """
+        self.ensure_one()
+        return [
+            (line, line.qty_delivered)
+            for line in self.order_line
+            if not line.display_type and line.qty_delivered > 0
+        ]
 
     def action_generate_remessa_note(self):
         """The consignment shipment's fiscal note -- also a remessa.
@@ -140,7 +165,11 @@ class SaleOrder(models.Model):
                 raise UserError(_(
                     "%s: confirm the Pedido first, then generate the note.",
                     order.name))
-            if order.remessa_note_move_id:
+            # Nota cancelada não segura o pedido. Cancelada a nota (na SEFAZ e
+            # no Odoo), o C000 volta a poder emitir: senão um cancelamento
+            # deixa o pedido preso para sempre, sem documento e sem botão.
+            # Nota VIVA continua segurando, e apertar de novo não duplica.
+            if order.remessa_note_move_id.state not in (False, 'cancel'):
                 continue
             company = order.company_id
             fpos = company.consignment_shipment_fiscal_position_id
@@ -151,9 +180,24 @@ class SaleOrder(models.Model):
                     "(it needs Auto Invoice Paid and its account). Set it in "
                     "Settings > Consignment Fiscal -- a remessa de consignação "
                     "(CFOP 5917/6917) must never bill the bookseller."))
+            linhas = order._remessa_linhas_a_faturar()
+            if not linhas:
+                pendentes = order.picking_ids.filtered(
+                    lambda p: p.state not in ('done', 'cancel'))
+                raise UserError(_(
+                    "%(pedido)s ainda não movimentou mercadoria: não há o que "
+                    "declarar na nota.\n\nValide a transferência "
+                    "%(mov)s primeiro — a nota de remessa acompanha a carga, "
+                    "e uma nota que declara livro que não saiu não bate com o "
+                    "volume na estrada.",
+                    pedido=order.name,
+                    mov=", ".join(pendentes.mapped('name')) or _("do pedido")))
+            journal = company._get_remessa_journal(
+                kind='consignment', fiscal_position=fpos,
+                name=_("Remessas de Consignação"), code='REM-C')
             note = self.env['account.move'].create({
                 'move_type': 'out_invoice',
-                'journal_id': company._get_remessa_journal().id,
+                'journal_id': journal.id,
                 'partner_id': order.partner_id.id,
                 'fiscal_position_id': fpos.id,
                 'invoice_date': fields.Date.context_today(order),
@@ -162,12 +206,11 @@ class SaleOrder(models.Model):
                 'invoice_line_ids': [
                     (0, 0, {
                         'product_id': line.product_id.id,
-                        'quantity': line.product_uom_qty,
+                        'quantity': qty,
                         'price_unit': line.price_unit,
                         'discount': line.discount,
                     })
-                    for line in order.order_line
-                    if not line.display_type
+                    for line, qty in linhas
                 ],
             })
             note.action_post()
@@ -179,7 +222,7 @@ class SaleOrder(models.Model):
         if not self.remessa_note_move_id:
             raise UserError(_(
                 "%s has no remessa note yet. Generate it with the "
-                "\"Gerar nota\" button after confirming.", self.name))
+                "\"Criar nota\" button after confirming.", self.name))
         return {
             'type': 'ir.actions.act_window',
             'res_model': 'account.move',

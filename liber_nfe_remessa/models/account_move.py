@@ -98,6 +98,25 @@ class AccountMove(models.Model):
         )).reconcile()
         self.remessa_settle_move_id = settle
 
+    def button_cancel(self):
+        """Cancelar a nota leva junto a baixa que a quitou.
+
+        As duas nasceram do mesmo fato e só fazem sentido juntas: a baixa
+        existe para dizer que aquela nota não cobra nada. Cancelada a nota, uma
+        baixa lançada sozinha é meia contabilidade em pé -- e foi o que obrigou
+        a desfazer um cancelamento na unha, no banco, em 21/08.
+
+        O `unlink` já era guardado pelo mesmo motivo (`_unlink_never_orphan_
+        settlement`); faltava o cancelamento, que é o caminho que se usa de
+        verdade quando a NF-e é cancelada na SEFAZ.
+        """
+        baixas = self.remessa_settle_move_id.filtered(
+            lambda m: m.state == 'posted')
+        if baixas:
+            baixas.button_draft()
+            baixas.button_cancel()
+        return super().button_cancel()
+
     @api.ondelete(at_uninstall=False)
     def _unlink_never_orphan_settlement(self):
         # Deleting a note whose settlement stays posted would leave a dangling

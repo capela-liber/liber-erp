@@ -553,7 +553,11 @@ class AccountMove(models.Model):
 
         consumidor_final = fiscal.get('consumidor_final')
         if consumidor_final is None:
-            consumidor_final = 1 if self.partner_id.nfe_indicador_ie == '9' else 0
+            # O MESMO indicador que vai no bloco do destinatário, deduzido
+            # quando o campo está vazio. Ler o campo cru aqui e deduzir lá era
+            # o que fazia a nota se contradizer e a SEFAZ rejeitar.
+            consumidor_final = (
+                1 if self.partner_id._nfe_indicador_ie_efetivo() == '9' else 0)
 
         # O primeiro dígito do CFOP diz o sentido: 1/2/3 entra, 5/6/7 sai. Uma
         # devolução de consignação (1918) é ENTRADA mesmo sendo nós a emitir a

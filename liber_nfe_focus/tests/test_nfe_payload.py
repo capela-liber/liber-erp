@@ -462,6 +462,73 @@ class TestNfePayload(TransactionCase):
         self.assertEqual(payload['valor_liquido_fatura'], '269.70')
         self.assertEqual(payload['formas_pagamento'][0]['valor_pagamento'], '269.70')
 
+    # -- a fatura que cobra menos que a nota (rejeição 851) ------------
+    #
+    # Rejeição 851: "Soma do valor das parcelas difere do Valor Líquido da
+    # Fatura". É o mesmo centavo da 866 no sentido contrário, e aconteceu na
+    # Edlab em 17 e 18/08/2026 com a INV/2026/01279: os 34 itens da nota somam
+    # 1.840,21 e a duplicata que o Odoo emitiu é de 1.840,10.
+    def test_duplicata_menor_que_a_nota_manda_o_liquido_dela(self):
+        """O líquido da fatura é o que as parcelas somam -- não o total da
+        nota. Cobrar menos que a nota é legítimo; declarar um líquido que as
+        parcelas não fecham é rejeição."""
+        payload = nfe_payload.build_payload(
+            self._nota(duplicatas=[
+                {'numero': '001', 'data_vencimento': '2026-10-31',
+                 'valor': 269.59}]),
+            self._emitente(), self._destinatario(), self._itens())
+
+        # A nota continua valendo o que os itens somam.
+        self.assertEqual(payload['valor_total'], '269.70')
+        # A fatura vale o que se cobra.
+        self.assertEqual(payload['duplicatas'][0]['valor'], '269.59')
+        self.assertEqual(payload['valor_liquido_fatura'], '269.59')
+        # E fecha por dentro: original - desconto = líquido.
+        self.assertEqual(payload['valor_original_fatura'], '269.70')
+        self.assertEqual(payload['valor_desconto_fatura'], '0.11')
+
+    def test_o_grupo_de_cobranca_sempre_fecha_por_dentro(self):
+        """original - desconto = líquido = soma das parcelas. A SEFAZ confere
+        as duas igualdades, e é isso que a 851 e a 866 dizem."""
+        from decimal import Decimal
+        for parcelas in ([{'numero': '001', 'data_vencimento': '2026-08-30',
+                           'valor': 269.70}],
+                         [{'numero': '001', 'data_vencimento': '2026-08-30',
+                           'valor': 134.85},
+                          {'numero': '002', 'data_vencimento': '2026-09-30',
+                           'valor': 134.86}],
+                         [{'numero': '001', 'data_vencimento': '2026-10-31',
+                           'valor': 100.00}]):
+            with self.subTest(parcelas=parcelas):
+                payload = nfe_payload.build_payload(
+                    self._nota(duplicatas=parcelas), self._emitente(),
+                    self._destinatario(), self._itens())
+
+                soma = sum(Decimal(d['valor']) for d in payload['duplicatas'])
+                liquido = Decimal(payload['valor_liquido_fatura'])
+                self.assertEqual(soma, liquido)
+                self.assertEqual(
+                    Decimal(payload['valor_original_fatura'])
+                    - Decimal(payload['valor_desconto_fatura']), liquido)
+                # E nunca se cobra mais do que a nota vale.
+                self.assertLessEqual(liquido, Decimal(payload['valor_total']))
+
+    def test_desconto_da_fatura_continua_sendo_o_dos_itens(self):
+        """Quando a duplicata bate com a nota, nada muda: o desconto declarado
+        na fatura é o desconto dos itens, como sempre foi."""
+        itens = self._itens()
+        itens[0]['valor_desconto'] = 26.97
+
+        payload = nfe_payload.build_payload(
+            self._nota(duplicatas=[
+                {'numero': '001', 'data_vencimento': '2026-08-30',
+                 'valor': 242.73}]),
+            self._emitente(), self._destinatario(), itens)
+
+        self.assertEqual(payload['valor_original_fatura'], '269.70')
+        self.assertEqual(payload['valor_desconto_fatura'], '26.97')
+        self.assertEqual(payload['valor_liquido_fatura'], '242.73')
+
     def test_a_nota_de_verdade_da_n1_fecha(self):
         """28 x 89,15 com 52% de desconto: 1.198,176 exatos. O item arredondado
         dá 1.198,18 e o Odoo cobra 1.198,19 -- é a divergência que a SEFAZ

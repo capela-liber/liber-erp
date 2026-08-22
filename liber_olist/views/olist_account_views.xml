@@ -83,7 +83,6 @@
                         <group>
                             <field name="token" password="True"/>
                             <field name="stock_reserve"/>
-                            <field name="order_stock_cutoff"/>
                             <field name="invoice_auto_post" widget="boolean_toggle"/>
                             <field name="payment_journal_id"/>
                             <field name="last_sync"/>

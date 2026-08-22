@@ -156,7 +156,12 @@ class OlistOrder(models.Model):
     state = fields.Selection([
         ('sem_detalhe', "Falta ler o detalhe"),
         ('cancelado', "Cancelado no Olist"),
-        ('anterior_corte', "Anterior ao corte"),
+        # 'anterior_corte' é VOCABULÁRIO MORTO desde 22/08/2026 (o corte e o
+        # Consolidar histórico saíram — eram andaime da migração e o dono
+        # mandou removê-los do produto). A chave fica na Selection até a
+        # limpeza final porque o banco ainda guarda linhas antigas com ela:
+        # tirá-la antes do recompute quebraria a leitura desses registros.
+        ('anterior_corte', "Histórico"),
         # O rótulo é ação, não descrição: "A importar" é o mesmo nome do
         # filtro padrão e do contador da conta — o operador lê o badge
         # amarelo e sabe o que fazer, sem traduzir "não importado" de cabeça.
@@ -164,6 +169,12 @@ class OlistOrder(models.Model):
         ('importado', "Importado"),
     ], string="Situação", compute='_compute_state', store=True, index=True)
 
+    despachavel = fields.Boolean(
+        "Pronto para a fila", compute='_compute_despachavel',
+        search='_search_despachavel',
+        help="O pedido pode entrar na fila de despacho? Quem responde é a "
+             "política das Definições: 'Só com nota' exige a nota emitida no "
+             "Olist; 'Com ou sem nota' aceita o pedido assim que ele chega.")
     a_despachar = fields.Boolean(
         "A despachar", compute='_compute_a_despachar', store=True, index=True,
         help="Nota emitida e o pedido ainda sem registro completo aqui: "
@@ -217,12 +228,10 @@ class OlistOrder(models.Model):
                 pedido.line_ids.filtered(lambda l: not l.product_id))
 
     @api.depends('sale_order_id', 'sale_order_id.amount_total', 'valor',
-                 'situacao', 'detalhe_lido_em', 'data_pedido',
-                 'account_id.order_stock_cutoff')
+                 'situacao', 'detalhe_lido_em')
     def _compute_state(self):
         for pedido in self:
             pedido.divergencia_valor = 0.0
-            corte = pedido.account_id.order_stock_cutoff
             if pedido.sale_order_id:
                 pedido.state = 'importado'
                 pedido.divergencia_valor = (
@@ -231,15 +240,6 @@ class OlistOrder(models.Model):
                 # Cancelado no Olist não é pendência: não se importa, e não
                 # deve ficar pesando na fila do que falta trazer.
                 pedido.state = 'cancelado'
-            elif corte and pedido.data_pedido and pedido.data_pedido < corte:
-                # Anterior ao corte é história, não trabalho: sai da fila
-                # "A importar" e da frente do operador — importar continua
-                # possível (consolidação é ato deliberado, por seleção), e é
-                # por isso que a situação tem nome próprio em vez de sumir num
-                # filtro. Vence até o "falta ler o detalhe": o detalhe desses
-                # é assunto do cron, não de gente. Sem corte na conta, nada é
-                # marcado — o vocabulário só existe onde a operação começou.
-                pedido.state = 'anterior_corte'
             elif not pedido.detalhe_lido_em:
                 pedido.state = 'sem_detalhe'
             else:
@@ -266,6 +266,44 @@ class OlistOrder(models.Model):
                 pendente = bool(saidas) and any(
                     p.state != 'done' for p in saidas)
             pedido.a_despachar = pendente
+
+    @api.model
+    def _despacho_exige_nota(self):
+        """Política das Definições: despachar exige a nota do Olist?
+
+        'com_nota' (padrão) mantém o desenho original — a caixa viaja com a
+        DANFE, então sem nota não há fila. 'sem_nota' deixa o pacote sair
+        antes dela; a fatura alcança o pedido quando o XML chegar
+        (_completar_faturas_pendentes, chamado pelo sync).
+        """
+        politica = self.env['ir.config_parameter'].sudo().get_param(
+            'liber_olist.despacho_politica', 'com_nota')
+        return politica != 'sem_nota'
+
+    def _compute_despachavel(self):
+        exige = self._despacho_exige_nota()
+        for pedido in self:
+            pedido.despachavel = (not exige) or bool(
+                pedido.id_nota_fiscal and pedido.id_nota_fiscal != '0')
+
+    def _search_despachavel(self, operator, value):
+        # Search em vez de domínio fixo na view: a política é configuração, e
+        # mudar a opção nas Definições tem de mudar a fila NA HORA — um
+        # domínio gravado no XML só mudaria com -u.
+        # O Odoo 19 normaliza ('=', True) para ('in', [True]) antes de chamar
+        # o search do campo — sem tratar o 'in', a fila sai INVERTIDA.
+        if operator in ('in', 'not in'):
+            if isinstance(value, (list, tuple)):
+                value = any(value)
+            operator = '=' if operator == 'in' else '!='
+        positivo = (operator == '=') == bool(value)
+        if not self._despacho_exige_nota():
+            return [] if positivo else [('id', '=', False)]
+        if positivo:
+            return ['&', ('id_nota_fiscal', '!=', False),
+                    ('id_nota_fiscal', '!=', '0')]
+        return ['|', ('id_nota_fiscal', '=', False),
+                ('id_nota_fiscal', '=', '0')]
 
     # ------------------------------------------------------------------
     # Ler o Olist (leitura)
@@ -404,19 +442,27 @@ class OlistOrder(models.Model):
     # estourou o tempo e o rollback desfez os 80.
     LOTE_INTERATIVO = 25
 
-    def _grava_ja(self):
-        """Commit por registro — menos dentro de teste, onde é proibido.
+    def _grava_ja(self, processados=0, restantes=None):
+        """Grava o progresso e devolve quantos SEGUNDOS ainda cabem no ciclo.
 
-        O framework de teste bloqueia commit (quebraria o rollback que isola
-        cada caso), e é o mesmo motivo pelo qual o §10.3 recusou commit no
-        push de estoque. Aqui ele é necessário: sem gravar a cada pedido, um
-        estouro de tempo desfaz tudo o que já foi lido, e foi assim que 80
-        leituras viraram zero em 17/08/2026.
+        `ir.cron._commit_progress` faz as duas coisas: commita e informa ao
+        executor quanto já foi feito. Um cron que reporta progresso é tratado
+        como "parcialmente feito" e **reagendado na hora** para continuar; um
+        que só demora é marcado como travado — foi o que aconteceu de
+        18 para 19/08/2026, com "Job 'Olist: ler detalhe' timed out" às 21:32,
+        22:46, 00:46 e 02:47, até alguém desativar os cinco crons.
+
+        Eu tinha inventado um orçamento de 60 minutos. O orçamento não é meu:
+        é o executor que o define, e é ele que este método devolve.
+
+        Fora de um cron (o botão da tela) devolve infinito e apenas commita.
+        Em teste não commita: o framework proíbe, e o rollback por caso é o
+        que isola os testes uns dos outros.
         """
         if tools.config['test_enable'] or modules.module.current_test:
-            return False
-        self.env.cr.commit()
-        return True
+            return float('inf')
+        return self.env['ir.cron']._commit_progress(
+            processados, remaining=restantes)
 
     def action_read_detail(self):
         """Lê o detalhe das linhas escolhidas — as que couberem agora.
@@ -461,29 +507,37 @@ class OlistOrder(models.Model):
             'success', recarregar=False)
 
     @api.model
-    def cron_read_details(self, minutos=60):
-        """De madrugada, esvazia a fila — com relógio na mão.
+    def cron_read_details(self, minutos=None):
+        """Esvazia a fila de leitura, no ritmo que o executor permite.
 
-        O orçamento de tempo não é zelo: o backup do Mac roda às 03:30, e uma
-        varredura de mil pedidos leva meia hora. Começando às 02:00 e parando
-        no teto, ela nunca alcança o backup.
+        Sem orçamento inventado: `_grava_ja` devolve quantos segundos restam
+        no ciclo, e cada pedido custa ~2,2 s (o espaçamento da cota, §17). O
+        laço para quando o próximo pedido não cabe — e o Odoo, vendo progresso
+        reportado, reagenda o cron na hora para continuar de onde parou.
 
-        Commit por pedido, porque cron longo que morre no meio sem gravar é
-        trabalho jogado fora — e a releitura de tudo custa a cota de novo.
+        É assim que mil pedidos entram sem nenhuma rodada estourar o tempo. O
+        parâmetro `minutos` ficou por compatibilidade com o cron antigo e é
+        ignorado.
         """
-        limite = time.monotonic() + minutos * 60
         pendentes = self.search([('detalhe_pendente', '=', True)])
         if not pendentes:
             # Fila vazia: aproveita a janela para os que nunca foram lidos.
             pendentes = self.search([('detalhe_lido_em', '=', False),
                                      ('situacao', '!=', 'Cancelado')],
                                     order='data_pedido desc')
+        if not pendentes:
+            return 0
+
+        # Margem sobre o custo de um pedido: começar o que não cabe é como
+        # não ter parado.
+        CUSTO = 6
+        restante = self._grava_ja(restantes=len(pendentes))
         lidos = 0
         for pedido in pendentes:
-            if time.monotonic() > limite:
-                _logger.info("Olist: janela de leitura esgotada com %s lidos; "
-                             "%s continuam na fila.", lidos,
-                             len(pendentes) - lidos)
+            if restante < CUSTO:
+                _logger.info("Olist: ciclo cheio com %s lidos; %s seguem na "
+                             "fila para a próxima rodada.",
+                             lidos, len(pendentes) - lidos)
                 break
             try:
                 if pedido._read_detail():
@@ -492,10 +546,9 @@ class OlistOrder(models.Model):
                 _logger.exception("Olist: falha lendo o pedido %s: %s",
                                   pedido.numero, exc)
             pedido.detalhe_pendente = False
-            pedido._grava_ja()
+            restante = pedido._grava_ja(1)
         _logger.info("Olist: cron de detalhe leu %s pedido(s).", lidos)
         return lidos
-
     def _read_detail(self):
         self.ensure_one()
         token = self.account_id.sudo().token
@@ -680,11 +733,7 @@ class OlistOrder(models.Model):
             # que a pessoa quer ao clicar de novo é COMPLETAR — não ouvir que
             # não há nada a fazer. É o resgate dos pedidos que entraram antes
             # do savepoint acima existir.
-            #
-            # Fora do corte, porém, S sem fatura NÃO é trabalho pela metade: é
-            # o estado correto. Completar aqui seria o reimport furando o corte
-            # pela porta dos fundos.
-            if not self.invoice_id and self._dentro_do_corte():
+            if not self.invoice_id:
                 return self._create_invoice()
             return False
         if not self.detalhe_lido_em:
@@ -694,12 +743,15 @@ class OlistOrder(models.Model):
         if not self.line_ids:
             raise UserError(_("sem itens"))
 
-        # Sem XML não se segue em frente. A nota é a verdade fiscal da venda, e
-        # é dela que a fatura nasce (§16): importar sem ela produziria um
-        # pedido que ninguém consegue faturar depois sem refazer o caminho.
+        # Sem XML, quem decide é a política das Definições. 'Só com nota'
+        # (padrão): a nota é a verdade fiscal da venda e é dela que a fatura
+        # nasce (§16) — importar sem ela produziria um pedido que ninguém
+        # consegue faturar depois sem refazer o caminho. 'Com ou sem nota': o
+        # pacote não espera o Olist faturar; o S entra sem fatura e o sync a
+        # completa quando o XML chegar.
         if self.xml_status == 'sem_xml':
             self._fetch_xml()          # tenta agora; pode ser que já esteja lá
-        if self.xml_status != 'arquivado':
+        if self.xml_status != 'arquivado' and self._despacho_exige_nota():
             raise UserError(_(
                 "sem XML arquivado (%s). A nota é a verdade fiscal da venda e "
                 "a fatura nasce dela — traga o XML antes de importar.",
@@ -719,49 +771,22 @@ class OlistOrder(models.Model):
         pedido_odoo = self.env['sale.order'].create(self._sale_order_vals())
         self.sale_order_id = pedido_odoo
         self._carimbar_posicao_fiscal(pedido_odoo)
-        # "Um pedido já com o XML na mão": se a nota existe lá e o documento
-        # ainda não está aqui, traz agora. Não é fatal se falhar -- o pedido e
-        # o documento fiscal são duas verdades distintas, e a nota pode chegar
-        # depois pelo botão ou pelo sync.
-        if self.xml_status == 'sem_xml':
-            status, detalhe = self._fetch_xml()
-            if status != 'OK':
-                _logger.info("Olist pedido %s: XML não veio agora (%s)",
-                             self.numero, detalhe)
         _logger.info("Olist pedido %s -> %s (canal %s)",
                      self.numero, pedido_odoo.name, self.canal or '-')
         self._baixa_estoque_se_for_o_caso()
-        # A fatura nasce junto: o pedido só entra com XML arquivado (acima),
-        # então a nota está aqui e não há por que adiar o lançamento. O eDoc é
-        # o próprio painel, que a fatura passa a apontar.
-        #
-        # Mas só a partir do CORTE. O corte governa a entrada do pedido na
-        # operação, e faturar é o efeito mais pesado dela: lança no razão e,
-        # com diário de recebimento configurado, registra o dinheiro. O
-        # histórico da conta tem ~1000 pedidos, e importá-los para consolidar
-        # não pode reescrever a contabilidade de um ano atrás (decisão do dono
-        # em 18/08/2026). Antes do corte o pedido entra como registro: espelho,
-        # rastreabilidade e o XML arquivado, sem estoque e sem lançamento.
-        if self._dentro_do_corte():
+        if self.xml_status == 'arquivado':
+            # A fatura nasce junto: a nota está aqui e não há por que adiar o
+            # lançamento. O eDoc é o próprio painel, que a fatura passa a
+            # apontar.
             self._create_invoice()
         else:
-            _logger.info(
-                "Olist pedido %s (%s): anterior ao corte %s — entrou sem "
-                "fatura e sem baixa de estoque.",
-                self.numero, self.data_pedido,
-                self.account_id.order_stock_cutoff)
+            # Política 'com ou sem nota': o registro fiscal fica devendo, de
+            # propósito. É o sync quem paga a dívida quando o XML chegar
+            # (_completar_faturas_pendentes) — alcançando inclusive a entrega
+            # que a logística já tiver validado.
+            _logger.info("Olist pedido %s: importado sem nota; a fatura fica "
+                         "para quando o XML chegar.", self.numero)
         return True
-
-    def _dentro_do_corte(self):
-        """O pedido é recente o bastante para produzir efeito na operação?
-
-        Um lugar só para a pergunta, porque ela governa DOIS efeitos (a baixa
-        de estoque e a fatura) e duas respostas diferentes para a mesma data
-        seriam um pedido que baixa prateleira sem faturar, ou o contrário.
-        """
-        self.ensure_one()
-        corte = self.account_id.order_stock_cutoff
-        return bool(corte and self.data_pedido and self.data_pedido >= corte)
 
     def _carimbar_posicao_fiscal(self, documento):
         """A posição fiscal do marketplace é a da VENDA, e vem das Definições.
@@ -812,27 +837,35 @@ class OlistOrder(models.Model):
     SITUACOES_FORA_DA_CASA = ('Entregue', 'Não entregue')
 
     def _baixa_estoque_se_for_o_caso(self):
-        """Confirma a venda e CONCLUI a entrega: importar é registrar tudo.
+        """Confirma a venda e deixa a entrega PRONTA: o pacote é da casa.
 
-        Sem corte (o padrão), nada se mexe: o pedido entra como rascunho, para
-        consolidação. A partir do corte, um clique registra o pedido inteiro —
-        venda confirmada, entrega concluída na caixa Marketplaces, e (na
-        sequência do import) fatura e recebimento.
+        O import registra o negócio (S confirmado, fatura, recebimento) e
+        entrega o TRABALHO à logística: a entrega fica Pronta na caixa
+        Marketplaces, reservando o exemplar, e é o clique do funcionário —
+        embalou, validou — que baixa a prateleira. O push de estoque já
+        desconta o reservado, então o livro sai da vitrine no import e do
+        estoque físico na validação, cada um na sua hora.
 
-        Houve um dia (18/08/2026) em que a entrega ficava PRONTA esperando o
-        funcionário validar na coleta — a "fila de embalagem". O dono
-        experimentou e mandou voltar (19/08, "seria melhor voltar"): o
-        trabalho físico é dirigido pelo painel/PDF do Olist, e validar no
-        Odoo era burocracia dupla. O Odoo REGISTRA a operação; quem a dirige
-        é o Olist. A entrega concluída aqui espelha o que o marketplace já
-        deu por encaminhado.
+        Só as situações que provam que o pacote SAIU ('Entregue',
+        'Não entregue' — ver SITUACOES_FORA_DA_CASA no write()) concluem a
+        entrega sozinhas: o mundo confirmando vale por um clique.
+
+        A história desta função dobrou duas vezes e vale registro: em
+        18/08/2026 nasceu assim (fila de embalagem); em 19/08 uma conversa
+        mal-entendida virou "importar conclui tudo"; em 22/08 o dono
+        desfez por escrito — "nada a ver. temos que fazer os pacotes" — e
+        este é o desenho que fica. A NOTA não muda em nenhum dos mundos: ela
+        já nasceu autorizada no Olist e entra pelo XML.
         """
         self.ensure_one()
-        if not self._dentro_do_corte():
-            return False
         self.sale_order_id.action_confirm()
         self._mover_para_a_caixa_marketplaces()
-        self._concluir_entregas()
+        for picking in self.sale_order_id.picking_ids:
+            if picking.state not in ('done', 'cancel'):
+                picking.action_assign()
+        # Pacote que o mundo já deu por saído não espera embalagem.
+        if (self.situacao or '').strip() in self.SITUACOES_FORA_DA_CASA:
+            self._concluir_entregas()
         self._carimba_rastreio()
         return True
 
@@ -856,135 +889,6 @@ class OlistOrder(models.Model):
                 continue
             picking.write({'picking_type_id': tipo.id,
                            'name': tipo.sequence_id.next_by_id()})
-        return True
-
-    # ------------------------------------------------------------------
-    # Consolidar o histórico (anterior ao corte) — decisão do dono, 19/08/2026
-    # ------------------------------------------------------------------
-    def action_consolidar_historico(self):
-        """O passado profundo entra POR INTEIRO, sem mexer na prateleira de hoje.
-
-        O corte protege o dia a dia: anterior a ele, a importação normal só
-        registra. Esta ação é a exceção deliberada, por seleção: cria o S, a
-        entrega concluída DATADA no dia do pedido, a fatura datada na emissão
-        e o recebimento — e fecha com a ÂNCORA: um ajuste de inventário que
-        devolve cada prateleira tocada exatamente ao número de antes. O livro
-        que saiu em fevereiro já não está na estante — a contagem de hoje já o
-        desconta; o movimento histórico existe para os relatórios, e o físico
-        termina onde estava.
-
-        Verificado antes de construir (19/08): zero chaves do histórico já
-        lançadas no razão — consolidar cria, não duplica.
-        """
-        feitos, erros = 0, []
-        devolver = {}          # (product, location) -> qty a devolver na âncora
-        for pedido in self:
-            try:
-                with self.env.cr.savepoint():
-                    pedido._consolidar_um(devolver)
-                    feitos += 1
-            except UserError as exc:
-                erros.append("%s: %s" % (pedido.numero or pedido.olist_id,
-                                         exc.args[0] if exc.args else exc))
-        self._ancorar_estoque(devolver)
-        if not erros:
-            return self._notificacao(
-                _("Histórico consolidado"),
-                _("%(n)s pedido(s) registrados com data histórica; estoque "
-                  "re-ancorado ao número de hoje.", n=feitos), 'success')
-        return self._notificacao(
-            _("Consolidação parcial"),
-            _("%(n)s consolidados, %(e)s com problema:\n%(lista)s",
-              n=feitos, e=len(erros), lista="\n".join(erros[:8])),
-            'warning', sticky=True)
-
-    def _consolidar_um(self, devolver):
-        self.ensure_one()
-        # A régua é a DATA, não o estado: um histórico já importado como
-        # registro tem state 'importado', e é exatamente o caso a completar.
-        if self._dentro_do_corte():
-            raise UserError(_(
-                "não é anterior ao corte — dentro do corte o caminho é o "
-                "Importar comum"))
-        if (self.situacao or '').strip().lower() == 'cancelado':
-            raise UserError(_("cancelado no Olist — não se consolida"))
-        if not self.detalhe_lido_em:
-            raise UserError(_("falta ler o detalhe"))
-        if not self.line_ids:
-            raise UserError(_("sem itens"))
-        if self.xml_status == 'sem_xml':
-            self._fetch_xml()
-        if self.xml_status != 'arquivado':
-            raise UserError(_("sem XML arquivado (a fatura sai dele)"))
-        sem_produto = self.line_ids.filtered(lambda l: not l.product_id)
-        if sem_produto:
-            raise UserError(_("ISBN sem produto no Odoo: %s",
-                              ", ".join(sem_produto.mapped('codigo'))))
-
-        # Pedido que JÁ tem S não é recusa — é trabalho pela metade a
-        # completar. O caso real (927, 19/08/2026): importado como registro,
-        # o S ficou em rascunho e o dono o confirmou à mão esperando a nota;
-        # a consolidação assume dali. Só o completo de verdade é recusado.
-        venda = self.sale_order_id
-        if venda and self.invoice_id and venda.picking_ids and all(
-                p.state in ('done', 'cancel') for p in venda.picking_ids):
-            raise UserError(_("já consolidado"))
-
-        data = self.data_pedido
-        if not venda:
-            venda = self.env['sale.order'].create(self._sale_order_vals())
-            self.sale_order_id = venda
-            self._carimbar_posicao_fiscal(venda)
-        if venda.state in ('draft', 'sent'):
-            venda.action_confirm()
-        self._mover_para_a_caixa_marketplaces()
-        # Só o que ESTE lote conclui entra na âncora e ganha data histórica:
-        # entrega que já estava concluída teve a sua própria história (e o
-        # estoque dela já se acertou na época).
-        abertas = venda.picking_ids.filtered(
-            lambda p: p.state not in ('done', 'cancel'))
-        self._concluir_entregas()
-        # A data conta a história certa: movimento de fevereiro é de
-        # fevereiro. O quant não olha a data (é estado presente) — é a âncora,
-        # no fim do lote, que devolve a prateleira ao número de hoje.
-        momento = fields.Datetime.to_datetime(data)
-        for picking in abertas:
-            picking.move_line_ids.write({'date': momento})
-            picking.move_ids.write({'date': momento})
-            picking.write({'date_done': momento})
-            for ml in picking.move_line_ids:
-                local = ml.location_id
-                if local.usage == 'internal':
-                    chave = (ml.product_id, local)
-                    devolver[chave] = devolver.get(chave, 0.0) + ml.quantity
-        if not self.invoice_id:
-            self._create_invoice()
-        self._carimba_rastreio()
-        return True
-
-    def _ancorar_estoque(self, devolver):
-        """Devolve cada prateleira tocada ao número de antes do lote.
-
-        Por ajuste de inventário (visível, auditável, datado de hoje) — nunca
-        pelo remendo silencioso do quant. O par movimento-histórico +
-        ajuste-âncora deixa o rastro completo: saiu no passado, re-contado
-        hoje, físico intacto.
-        """
-        Quant = self.env['stock.quant'].sudo()
-        for (produto, local), qty in devolver.items():
-            if not qty:
-                continue
-            quant = Quant.search([('product_id', '=', produto.id),
-                                  ('location_id', '=', local.id)], limit=1)
-            if quant:
-                quant.inventory_quantity = quant.quantity + qty
-                quant.action_apply_inventory()
-            else:
-                Quant.create({
-                    'product_id': produto.id,
-                    'location_id': local.id,
-                    'inventory_quantity': qty,
-                }).action_apply_inventory()
         return True
 
     def _concluir_entregas(self):
@@ -1062,6 +966,46 @@ class OlistOrder(models.Model):
             _("%(n)s criadas, %(e)s com problema:\n%(lista)s",
               n=feitas, e=len(erros), lista="\n".join(erros[:8])),
             'warning', sticky=True)
+
+    @api.model
+    def _completar_faturas_pendentes(self, account=None):
+        """A nota que chegou DEPOIS alcança o pedido que já foi despachado.
+
+        Par da política 'com ou sem nota': o pedido entrou, a logística talvez
+        até já tenha validado a entrega, e a fatura ficou devendo. Quando o
+        sync arquiva o XML é aqui que a dívida se paga — a fatura nasce do
+        painel, carimba a nota nas transferências (inclusive as concluídas: o
+        _carimba_nota_na_movimentacao não filtra estado) e registra o
+        recebimento. Idempotente: quem já tem fatura não entra no filtro.
+
+        O invalidate+modified não é firula: xml_status é compute ARMAZENADO e
+        o painel chega por escrita em OUTRO modelo — sem recomputar, o estado
+        gravado mente 'sem_xml' com o documento ali do lado (os 172 pedidos
+        de 21/08/2026).
+        """
+        dominio = [('sale_order_id', '!=', False),
+                   ('invoice_id', '=', False),
+                   ('id_nota_fiscal', '!=', False),
+                   ('id_nota_fiscal', '!=', '0')]
+        if account is not None:
+            dominio.append(('account_id', '=', account.id))
+        completadas = 0
+        for pedido in self.search(dominio):
+            pedido.invalidate_recordset(['nfe_panel_id', 'xml_status'])
+            pedido.modified(['id_nota_fiscal'])
+            if pedido.xml_status != 'arquivado':
+                continue
+            try:
+                with self.env.cr.savepoint():
+                    if pedido._create_invoice():
+                        completadas += 1
+            except Exception as exc:  # noqa: BLE001 — um pedido não trava o sync
+                _logger.info("Olist pedido %s: fatura ainda não pôde nascer "
+                             "(%s)", pedido.numero, exc)
+        if completadas:
+            _logger.info("Olist: %s fatura(s) completada(s) por nota que "
+                         "chegou depois do despacho.", completadas)
+        return completadas
 
     def _create_invoice(self):
         """A fatura nasce do XML, não do pedido — e a diferença é o ponto.

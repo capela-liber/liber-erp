@@ -12,7 +12,7 @@ O que se prova aqui é o que decide se a tela é confiável:
    inclusive arquivado, em vez de criar um segundo com o mesmo nome;
 2. o ISBN casa apesar do hífen, e ISBN que não casa IMPEDE a importação em vez
    de deixar o pedido entrar com menos livros;
-3. sem data de corte, nada de estoque se mexe.
+3. importar registra por inteiro; a entrega fica com a equipe.
 """
 from unittest.mock import patch
 
@@ -251,8 +251,11 @@ class TestOlistOrders(TransactionCase):
                          "a referência tem de ser o nº do marketplace")
         self.assertEqual(venda.order_line.product_id, self.livro)
         self.assertEqual(venda.order_line.price_unit, 49.0)
-        self.assertEqual(venda.state, 'draft',
-                         "sem data de corte, nada de estoque se mexe")
+        self.assertEqual(venda.state, 'sale',
+                         "importar registra por inteiro: a venda confirma")
+        self.assertTrue(venda.picking_ids, "importar tem de criar a entrega")
+        # (o fixture é um pedido 'Entregue': a entrega conclui sozinha — o
+        # caso do pacote ainda em casa é o test_import_confirms_but_does_not_deliver)
 
     def test_import_is_not_repeated(self):
         self._pull()
@@ -311,24 +314,36 @@ class TestOlistOrders(TransactionCase):
             cancelado._import_to_odoo()
 
     # -- 5. o laço com o estoque --------------------------------------------
-    def test_cutoff_date_is_what_moves_stock(self):
-        self.account.order_stock_cutoff = '2025-01-01'
+    def test_import_confirms_but_does_not_deliver(self):
+        # O corte saiu (22/08/2026): importar SEMPRE confirma a venda, e a
+        # entrega fica Pronta — o estoque físico só baixa no clique de quem
+        # embalou. O que sai da vitrine no import é o RESERVADO (o push
+        # desconta), não o exemplar da estante.
         self._pull()
         pedido = self._pedido('1')
         self._detalhe(pedido)
         self._arquiva_xml(pedido)
+        pedido.situacao = 'Enviado'      # etiqueta nascida; pacote em casa
         pedido._import_to_odoo()
-        self.assertNotEqual(pedido.sale_order_id.state, 'draft',
-                            "com corte anterior à data, o pedido tem de confirmar")
+        self.assertEqual(pedido.sale_order_id.state, 'sale')
+        for entrega in pedido.sale_order_id.picking_ids:
+            self.assertNotIn(entrega.state, ('done', 'cancel'),
+                             "o import concluiu a entrega sozinho — o pacote "
+                             "é da casa, quem valida é o funcionário")
 
-    def test_order_before_the_cutoff_stays_draft(self):
-        self.account.order_stock_cutoff = '2026-01-01'
+    def test_delivered_at_olist_concludes_at_import(self):
+        # 'Entregue' é o mundo confirmando que o pacote saiu: aí sim o
+        # import já conclui, porque não há pacote a fazer.
         self._pull()
         pedido = self._pedido('1')
         self._detalhe(pedido)
         self._arquiva_xml(pedido)
+        pedido.situacao = 'Entregue'
         pedido._import_to_odoo()
-        self.assertEqual(pedido.sale_order_id.state, 'draft')
+        for entrega in pedido.sale_order_id.picking_ids:
+            self.assertEqual(entrega.state, 'done',
+                             "pedido que o Olist já deu por entregue não "
+                             "espera embalagem")
 
     # -- 6. a nota ----------------------------------------------------------
     def test_order_links_to_the_nfe_panel_by_olist_note_id(self):
@@ -449,7 +464,6 @@ class TestOlistOrders(TransactionCase):
         e-mail de entrega já olham. Um rastreio guardado só no espelho seria um
         número que ninguém acha na hora em que é pedido.
         """
-        self.account.order_stock_cutoff = '2025-01-01'
         self._pull()
         pedido = self._pedido('1')
         self._detalhe(pedido)
@@ -457,7 +471,7 @@ class TestOlistOrders(TransactionCase):
         pedido._import_to_odoo()
         pedido.action_stamp_tracking()
         entregas = pedido.sale_order_id.picking_ids
-        self.assertTrue(entregas, "o corte devia ter gerado entrega")
+        self.assertTrue(entregas, "o import devia ter gerado entrega")
         self.assertTrue(all(p.carrier_tracking_ref == 'P0XMHTN3289Q7H'
                             for p in entregas))
 
@@ -805,19 +819,41 @@ class TestOlistOrders(TransactionCase):
         chamou.assert_not_called()
         self.assertEqual(lidos, 0)
 
-    def test_the_cron_stops_at_its_time_budget(self):
-        """O orçamento não é zelo: o backup do Mac começa às 03:30.
+    def test_the_cron_stops_when_the_cycle_is_full(self):
+        """O orçamento é do EXECUTOR, não meu.
 
-        Uma varredura de mil pedidos leva meia hora; começando às 2h e parando
-        no teto, ela nunca alcança o backup.
+        Eu tinha inventado 60 minutos e o cron estourava o tempo do Odoo,
+        noite após noite ("Job 'Olist: ler detalhe' timed out", 18-19/08/2026),
+        até alguém desativar os cinco crons. Agora o laço pergunta quanto
+        resta e para quando o próximo pedido não cabe.
         """
         pedidos = self._muitos(10)
         pedidos.action_queue_detail()
-        with patch.object(olist_client, 'get_pedido', return_value=DETALHE_ML):
-            lidos = self.env['olist.order'].cron_read_details(minutos=0)
-        self.assertEqual(lidos, 0, "ignorou o orçamento de tempo")
+        with patch.object(olist_client, 'get_pedido', return_value=DETALHE_ML), \
+             patch.object(type(pedidos), '_grava_ja', return_value=1.0):
+            lidos = self.env['olist.order'].cron_read_details()
+        self.assertEqual(lidos, 0, "começou pedido que não cabia no ciclo")
         self.assertEqual(len(pedidos.filtered('detalhe_pendente')), 10,
                          "quem não foi lido continua na fila")
+
+    def test_the_cron_reports_progress_to_the_runner(self):
+        """Reportar progresso é o que faz o Odoo reagendar em vez de matar.
+
+        Um cron que reporta é "parcialmente feito" e volta na hora para
+        continuar; um que só demora é marcado como travado.
+        """
+        pedidos = self._muitos(3)
+        pedidos.action_queue_detail()
+        chamadas = []
+        with patch.object(olist_client, 'get_pedido', return_value=DETALHE_ML), \
+             patch.object(type(pedidos), '_grava_ja',
+                          side_effect=lambda *a, **k: chamadas.append((a, k)) or 999.0):
+            self.env['olist.order'].cron_read_details()
+        self.assertTrue(chamadas, "não reportou progresso nenhum")
+        # a primeira chamada declara o tamanho da fila
+        self.assertEqual(chamadas[0][1].get('restantes'), 3)
+        # e cada pedido lido reporta um a mais
+        self.assertEqual(sum(1 for a, _k in chamadas if a and a[0] == 1), 3)
 
     def test_the_cron_skips_cancelled_orders(self):
         # Cancelado não vira pedido no Odoo: gastar cota lendo o detalhe dele
@@ -860,66 +896,6 @@ class TestOlistOrders(TransactionCase):
         self.assertEqual(acao['params']['type'], 'warning')
         self.assertIn('1 importados', acao['params']['message'])
         self.assertTrue(bom.sale_order_id)
-
-
-@tagged('post_install', '-at_install')
-class TestAnteriorAoCorte(TransactionCase):
-    """O corte tira o pedido antigo dos olhos do operador — com nome.
-
-    A fila "A importar" é lista de trabalho; pedido anterior ao corte é
-    história para consolidação. Ele ganha situação própria (e não um filtro
-    escondido) para o operador ver POR QUE aquele pedido não está na fila.
-    """
-
-    @classmethod
-    def setUpClass(cls):
-        super().setUpClass()
-        cls.env['olist.account'].search([]).write({'active': False})
-        cls.account = cls.env['olist.account'].create({
-            'name': "Olist Corte", 'company_id': cls.env.company.id,
-            'token': "TOKEN-C", 'read_only': True,
-            'order_stock_cutoff': '2026-08-10'})
-
-    def _pedido(self, olist_id, data, **vals):
-        return self.env['olist.order'].create(dict({
-            'account_id': self.account.id, 'olist_id': olist_id,
-            'numero': olist_id, 'data_pedido': data,
-            'situacao': 'Entregue', 'detalhe_lido_em': '2026-08-18 12:00:00',
-        }, **vals))
-
-    def test_antes_do_corte_sai_da_fila_e_diz_por_que(self):
-        antigo = self._pedido('C-1', '2026-08-01')
-        recente = self._pedido('C-2', '2026-08-12')
-        self.assertEqual(antigo.state, 'anterior_corte')
-        self.assertEqual(recente.state, 'nao_importado')
-        # e o contador da conta (a fila do operador) só vê o recente
-        self.assertEqual(self.account.order_pending_count, 1)
-
-    def test_o_corte_vence_ate_o_falta_ler_detalhe(self):
-        """O detalhe dos antigos é assunto do cron, não de gente: um pedido
-        pré-corte sem detalhe não pode aparecer como pendência de leitura."""
-        sem_detalhe = self._pedido('C-3', '2026-08-01', detalhe_lido_em=False)
-        self.assertEqual(sem_detalhe.state, 'anterior_corte')
-
-    def test_mudar_o_corte_recarimba_o_que_ja_existe(self):
-        pedido = self._pedido('C-4', '2026-08-05')
-        self.assertEqual(pedido.state, 'anterior_corte')
-        self.account.order_stock_cutoff = '2026-08-01'
-        self.assertEqual(pedido.state, 'nao_importado',
-                         "recuar o corte tem de devolver o pedido à fila")
-        self.account.order_stock_cutoff = False
-        self.assertEqual(pedido.state, 'nao_importado',
-                         "sem corte não existe 'anterior ao corte'")
-
-    def test_cancelado_e_importado_nao_viram_anterior(self):
-        """Caso de erro/precedência: cancelado é cancelado, importado é
-        importado — o corte só fala sobre o que ainda não tem destino."""
-        cancelado = self._pedido('C-5', '2026-08-01', situacao='Cancelado')
-        self.assertEqual(cancelado.state, 'cancelado')
-        venda = self.env['sale.order'].create({
-            'partner_id': self.env.company.partner_id.id})
-        importado = self._pedido('C-6', '2026-08-01', sale_order_id=venda.id)
-        self.assertEqual(importado.state, 'importado')
 
 
 @tagged('post_install', '-at_install')

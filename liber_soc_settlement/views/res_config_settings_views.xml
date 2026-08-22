@@ -26,11 +26,12 @@
                                  help="Days since a title's last settlement (acerto) that flip its map tag Ok -> Attention -> Critical -> No Return.">
                             <div class="content-group">
                                 <div class="row">
-                                    <!-- Labels written in pt_BR at source on purpose: Odoo
-                                         translates the <setting> string/help attributes from the
-                                         .po but NOT loose <span> text in this settings view, so
-                                         a pt_BR.po entry for these never lands. Names match the
-                                         map-tag states: Ok / Atenção / Crítico / Sem retorno. -->
+                                    <!-- Labels written in pt_BR at source. Loose <span> text
+                                         DOES translate here (the sibling "months"/"days" spans
+                                         come from the .po), so this is a leftover, not a rule:
+                                         these three already read right and are left alone. Names
+                                         match the map-tag states: Ok / Atenção / Crítico / Sem
+                                         retorno. -->
                                     <span class="col-lg-5 o_form_label">Ok até</span>
                                     <field name="shelf_ok_days" class="col-lg-2"/>
                                     <span class="col-lg-2 o_form_label">dias</span>

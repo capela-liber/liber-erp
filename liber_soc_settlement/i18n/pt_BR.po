@@ -100,6 +100,11 @@ msgstr ""
 
 #. module: liber_soc_settlement
 #: model_terms:ir.ui.view,arch_db:liber_soc_settlement.res_config_settings_view_form_soc
+msgid "<span class=\"col-lg-3 o_form_label\">days</span>"
+msgstr "<span class=\"col-lg-3 o_form_label\">dias</span>"
+
+#. module: liber_soc_settlement
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.res_config_settings_view_form_soc
 msgid "<span class=\"col-lg-3 o_form_label\">months</span>"
 msgstr "<span class=\"col-lg-3 o_form_label\">meses</span>"
 
@@ -143,6 +148,34 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:liber_soc_settlement.report_consignment_map
 msgid "<strong>Empresa:</strong>"
 msgstr ""
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,help:liber_soc_settlement.field_res_config_settings__shelf_ok_days
+msgid "A consigned title settled within this many days is Ok (green)."
+msgstr "Um título consignado com acerto dentro desse prazo fica Ok (verde)."
+
+#. module: liber_soc_settlement
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.res_config_settings_view_form_soc
+msgid ""
+"A running campaign's customer not settled (acerto) within this many days is "
+"flagged Overdue in the Ruptura report -- the target is being pursued by "
+"nobody. Checked nightly by a cron."
+msgstr ""
+"O cliente de uma campanha em andamento que ficar sem acerto por esse número "
+"de dias é marcado como Vencido no relatório de Ruptura — o alvo não está "
+"sendo perseguido por ninguém. Um cron confere toda noite."
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,help:liber_soc_settlement.field_res_config_settings__campaign_stale_days
+msgid ""
+"A running campaign's customer who has not been settled (acerto) within this "
+"many days is flagged Overdue in the Ruptura report: the target is not being "
+"pursued and nobody noticed. The nightly cron checks this. Default 30 days."
+msgstr ""
+"O cliente de uma campanha em andamento que ficar sem acerto por esse número "
+"de dias é marcado como Vencido no relatório de Ruptura: o alvo não está "
+"sendo perseguido e ninguém percebeu. O cron noturno confere isso. Padrão: 30"
+" dias."
 
 #. module: liber_soc_settlement
 #: model_terms:ir.ui.view,arch_db:liber_soc_settlement.report_consignment_map
@@ -205,6 +238,11 @@ msgstr "Aplicar Modelo"
 #: model:ir.model.fields,field_description:liber_soc_settlement.field_consignment_settlement__message_attachment_count
 msgid "Attachment Count"
 msgstr "Contagem de anexos"
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_res_config_settings__campaign_stale_days
+msgid "Campaign overdue after (days)"
+msgstr "Campanha vencida após (dias)"
 
 #. module: liber_soc_settlement
 #: model:ir.model.fields.selection,name:liber_soc_settlement.selection__consignment_settlement__state__cancel
@@ -298,6 +336,12 @@ msgstr "Movimento de Consignação"
 #: model:ir.model,name:liber_soc_settlement.model_consignment_settlement_line
 msgid "Consignment Settlement Line"
 msgstr "Linha de Acerto de Consignação"
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_res_company__consignment_settlement_operation_type_id
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_res_config_settings__consignment_settlement_operation_type_id
+msgid "Consignment Settlement Operation"
+msgstr "Operação de Acerto de Consignação"
 
 #. module: liber_soc_settlement
 #: model:ir.model,name:liber_soc_settlement.model_consignment_settlement_stage
@@ -666,6 +710,15 @@ msgid "Mapa de Consignação —"
 msgstr ""
 
 #. module: liber_soc_settlement
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.res_config_settings_view_form_soc
+msgid ""
+"Master switch for the return-chasing ladder. Turn off to silence all nudges,"
+" calls, alerts and escalations."
+msgstr ""
+"Chave geral da escada de cobrança das devoluções. Desligue para silenciar "
+"lembretes, ligações, avisos e escalonamentos."
+
+#. module: liber_soc_settlement
 #: model:ir.model.fields,field_description:liber_soc_settlement.field_consignment_settlement__message_has_error
 msgid "Message Delivery error"
 msgstr "Erro de entrega de mensagem"
@@ -764,6 +817,13 @@ msgstr ""
 " planejada."
 
 #. module: liber_soc_settlement
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.res_config_settings_view_form_soc
+msgid ""
+"Notified when a return blows past its window (the last rung of the ladder)."
+msgstr ""
+"Avisado quando uma devolução estoura o prazo (o último degrau da escada)."
+
+#. module: liber_soc_settlement
 #: model_terms:ir.ui.view,arch_db:liber_soc_settlement.report_consignment_map
 msgid "Novos itens que enviaremos para repor a sua prateleira."
 msgstr ""
@@ -832,6 +892,17 @@ msgid ""
 msgstr "Abre uma <strong>operação de consignação (CO)</strong> por consignação aberta no mês (contrato ativo com saldo em prateleira), <strong>pulando</strong> as que já têm uma operação em rascunho."
 
 #. module: liber_soc_settlement
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.res_config_settings_view_form_soc
+msgid ""
+"Operation type (and number prefix) for the acerto baixa that draws stock off"
+" the customer's shelf. Kept apart from the warehouse delivery orders "
+"(WH/OUT). Auto-created on first settlement."
+msgstr ""
+"Tipo de operação (e prefixo de numeração) da baixa do acerto, que tira o "
+"estoque da prateleira do cliente. Fica separado das entregas do armazém "
+"(WH/OUT). Criado automaticamente no primeiro acerto."
+
+#. module: liber_soc_settlement
 #: model:ir.ui.menu,name:liber_soc_settlement.menu_consignment_board
 msgid "Operations"
 msgstr "Operações"
@@ -857,6 +928,20 @@ msgid ""
 msgstr ""
 "Nosso estoque em armazém disponível para repor este título. Não sugerir "
 "repor o que não temos."
+
+#. module: liber_soc_settlement
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.res_config_settings_view_form_soc
+msgid "Overdue campaign target"
+msgstr "Alvo de campanha vencido"
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,help:liber_soc_settlement.field_res_config_settings__shelf_attention_days
+msgid ""
+"Past the healthy window and up to here -> Attention (yellow). Default 60 (~2"
+" months)."
+msgstr ""
+"Passado o prazo saudável e até aqui → Atenção (amarelo). Padrão: 60 (~2 "
+"meses)."
 
 #. module: liber_soc_settlement
 #: model_terms:ir.ui.view,arch_db:liber_soc_settlement.report_consignment_map
@@ -1032,6 +1117,11 @@ msgid "Run"
 msgstr "Executar"
 
 #. module: liber_soc_settlement
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.res_config_settings_view_form_soc
+msgid "Ruptura (Stock-out)"
+msgstr "Ruptura (Falta de Estoque)"
+
+#. module: liber_soc_settlement
 #: model:ir.model.fields,field_description:liber_soc_settlement.field_consignment_settlement__message_has_sms_error
 msgid "SMS Delivery error"
 msgstr "Erro de entrega de SMS"
@@ -1127,6 +1217,16 @@ msgstr "Análise do Acerto"
 #: model:ir.model.fields,field_description:liber_soc_settlement.field_consignment_settlement__date
 msgid "Settlement Date"
 msgstr "Data do Acerto"
+
+#. module: liber_soc_settlement
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.res_config_settings_view_form_soc
+msgid "Settlement Movement"
+msgstr "Movimento do Acerto"
+
+#. module: liber_soc_settlement
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.res_config_settings_view_form_soc
+msgid "Settlement baixa operation"
+msgstr "Operação de baixa do acerto"
 
 #. module: liber_soc_settlement
 #. odoo-python
@@ -1310,6 +1410,15 @@ msgstr ""
 "compõem."
 
 #. module: liber_soc_settlement
+#: model:ir.model.fields,help:liber_soc_settlement.field_res_config_settings__shelf_critical_days
+msgid ""
+"Up to here -> Critical (orange); beyond -> No Return (red). Default 120 (~4 "
+"months)."
+msgstr ""
+"Até aqui → Crítico (laranja); além disso → Sem retorno (vermelho). Padrão: "
+"120 (~4 meses)."
+
+#. module: liber_soc_settlement
 #: model:ir.model.fields,field_description:liber_soc_settlement.field_consignment_settlement__agreement_valid
 msgid "Valid Agreement"
 msgstr "Contrato Válido"
@@ -1318,6 +1427,20 @@ msgstr "Contrato Válido"
 #: model_terms:ir.ui.view,arch_db:liber_soc_settlement.view_consignment_settlement_form
 msgid "View sale orders"
 msgstr "Ver pedidos de venda"
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,help:liber_soc_settlement.field_res_company__consignment_settlement_operation_type_id
+#: model:ir.model.fields,help:liber_soc_settlement.field_res_config_settings__consignment_settlement_operation_type_id
+msgid ""
+"Warehouse operation type used for the settlement baixa (customer shelf -> "
+"customer): the acerto sale leaving the shelf. Kept apart from the generic "
+"delivery orders (WH/OUT), and archived so it does not show as a job on the "
+"Inventory Overview."
+msgstr ""
+"Tipo de operação do armazém usado na baixa do acerto (prateleira do cliente "
+"→ cliente): a venda do acerto saindo da prateleira. Fica separado das "
+"entregas genéricas (WH/OUT) e arquivado, para não aparecer como tarefa na "
+"Visão Geral do Estoque."
 
 #. module: liber_soc_settlement
 #: model:ir.model.fields,field_description:liber_soc_settlement.field_consignment_settlement__website_message_ids
@@ -2299,3 +2422,4 @@ msgstr "Estes títulos reportam mais vendas do que a prateleira tem. Dá para ro
 #: model_terms:ir.ui.view,arch_db:liber_soc_settlement.view_run_noshelf_wizard_form
 msgid "Run without them"
 msgstr "Rodar sem eles"
+

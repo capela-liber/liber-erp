@@ -58,13 +58,26 @@ class SupportTicket(models.Model):
                     parts.append(co_parser.items_to_text(items))
                 parts.append(co_parser.html_to_text(rest))
             source = '\n\n'.join(p for p in parts if p.strip())
-            attachment = self.env['ir.attachment'].search(
-                [('res_model', '=', self._name),
-                 ('res_id', '=', self.id),
-                 '|', '|', ('name', '=ilike', '%.xlsx'),
-                 ('name', '=ilike', '%.csv'),
-                 ('name', '=ilike', '%.pdf')],
-                order='id desc', limit=1)
+            # NFe XML primeiro: é a fonte exata (ISBN + quantidade da
+            # SEFAZ). Confere o CONTEÚDO, não só a extensão — nem todo
+            # .xml de anexo é uma NFe.
+            attachment = next(
+                (a for a in self.env['ir.attachment'].search(
+                    [('res_model', '=', self._name),
+                     ('res_id', '=', self.id),
+                     ('name', '=ilike', '%.xml')],
+                    order='id desc')
+                 if co_parser.is_nfe_xml(
+                     a.name, base64.b64decode(a.datas or b''))),
+                self.env['ir.attachment'])
+            if not attachment:
+                attachment = self.env['ir.attachment'].search(
+                    [('res_model', '=', self._name),
+                     ('res_id', '=', self.id),
+                     '|', '|', ('name', '=ilike', '%.xlsx'),
+                     ('name', '=ilike', '%.csv'),
+                     ('name', '=ilike', '%.pdf')],
+                    order='id desc', limit=1)
             wizard = self.env['liber.support.co.wizard'].create({
                 'ticket_id': self.id,
                 'source_text': source,

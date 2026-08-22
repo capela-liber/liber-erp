@@ -63,7 +63,7 @@
         <img src="img/doc-liber_olist-conta.png"
              alt="Ficha da conta Olist com os botões de leitura e a opção Somente leitura ligada">
         <figcaption>A conta reúne os botões de leitura, as datas de cada sincronia e as escolhas
-        da casa: margem de segurança, corte de operação e diário do recebimento.</figcaption>
+        da casa: margem de segurança e diário do recebimento.</figcaption>
       </figure>
       <div class="callout warn">A conta nasce em <strong>Somente leitura</strong>, e há um motivo
       sério: o Olist não tem ambiente de teste — a conta é a que vende. Com a trava ligada, o sistema
@@ -169,24 +169,30 @@
       detalhe</span> — porque custam uma consulta por pedido; o agendamento faz isso aos poucos, e a
       conta mostra a cobertura ("47 de 978 lidos").</p>
       <p>São <strong>duas telas, duas naturezas</strong>.
-      <span class="menupath">Olist<i>‣</i>Despachar</span> é a <strong>fila da equipe</strong>: só o
-      que tem nota emitida e está pronto para entrar, com um botão único — Despachar. Pedido ainda
-      sem nota não aparece (sem nota não há o que despachar: a caixa viaja com a DANFE) — ele entra
-      sozinho quando o Olist faturar. Um clique registra tudo: a venda confirmada, a entrega
-      <em>concluída</em> na caixa <span class="field">Marketplaces</span> (série
-      <span class="field">MP/OUT/</span>, um cartão próprio na visão geral do
-      <span class="menupath">Inventário</span>, com o XML da nota no clipe), a fatura lançada e o
-      recebimento no diário. A prateleira baixa nesse registro. Já
+      <span class="menupath">Olist<i>‣</i>Despachar</span> é a <strong>fila da equipe</strong>, com um
+      botão único — Despachar. Na política padrão, só o que tem nota emitida entra: a caixa viaja
+      com a <abbr class="sigla" title="Documento Auxiliar da NF-e: a folha impressa que acompanha a mercadoria.">DANFE</abbr>, e o pedido sem nota espera o Olist faturar. Em
+      <span class="menupath">Definições<i>‣</i>Olist<i>‣</i>Despachar pedidos do Olist</span> a casa
+      pode escolher <span class="field">Com ou sem nota</span>: o pedido entra na fila assim que
+      chega, e a fatura o alcança sozinha quando a nota vier — até se a entrega já tiver sido
+      validada. Um clique registra o negócio e entrega o trabalho: a venda confirmada, a fatura
+      do XML e o recebimento no diário, e a entrega <em>Pronta</em> na caixa
+      <span class="field">Marketplaces</span> (série <span class="field">MP/OUT/</span>, um cartão
+      próprio na visão geral do <span class="menupath">Inventário</span>, com o XML da nota no
+      clipe), reservando o exemplar. É o clique da equipe — embalou, validou — que baixa a
+      prateleira. Já
       <span class="menupath">Olist<i>‣</i>Pedidos</span> é a <strong>auditoria</strong>: o espelho
-      completo, com todos os estados, filtros e os botões de leitura e consolidação — abre sem
+      completo, com todos os estados, filtros e os botões de leitura — abre sem
       filtro nenhum, mostrando tudo. E o histórico que não interessa se põe de lado sem apagar:
       selecione e <span class="menupath">Ações<i>‣</i>Arquivar</span> — o arquivado some da fila,
       dos contadores e do Relatório, e o filtro <span class="field">Arquivados</span> o traz de
       volta quando quiser.</p>
-      <p>O trabalho físico do pacote — embalar e esperar a coleta — segue dirigido pelo
-      <strong>painel do Olist</strong>, com a etiqueta em PDF que ele entrega; o Odoo registra a
-      operação, não a dirige. Na lista geral de entregas, o filtro <span class="field">Do
-      Olist</span> separa essas saídas do resto da expedição. E o estoque oferecido ao marketplace
+      <p>O pacote é <strong>da casa</strong>: a entrega Pronta na caixa
+      <span class="field">Marketplaces</span> é a fila de embalagem, a etiqueta em PDF vem do
+      painel do Olist, e validar a entrega é o que baixa a prateleira. Se o Olist marcar o pedido
+      <span class="field">Entregue</span> antes de alguém validar, a entrega se conclui sozinha —
+      o mundo confirmando vale por um clique. Na lista geral de entregas, o filtro
+      <span class="field">Do Olist</span> separa essas saídas do resto da expedição. E o estoque oferecido ao marketplace
       desconta o que está <strong>reservado</strong> por outras saídas abertas (uma remessa de
       consignação em separação, por exemplo): exemplar com dono não se oferece de novo.</p>
       <p><span class="field">Importar para o Odoo</span> é o ato que traz o pedido para dentro, por
@@ -200,12 +206,6 @@
         <tr><td><span class="field">A importar</span></td>
             <td>Pronto para importar, se todos os livros estiverem casados — é a fila do
                 operador, e o filtro padrão da tela mostra só ela.</td></tr>
-        <tr><td><span class="field">Anterior ao corte</span></td>
-            <td>Mais antigo que a data de "Operar pedidos a partir de": é história para
-                consolidação, não fila de trabalho — sai do "A importar" e fica esmaecido.
-                Importar continua possível, selecionando e clicando (entra como registro) — e
-                o registro completo, com data histórica, é o
-                <span class="field">Consolidar histórico</span>.</td></tr>
         <tr><td><span class="field">Livros não localizados</span> &gt; 0</td>
             <td>Um item não tem produto casado. O pedido inteiro espera — entrar com menos livros do
                 que teve deixaria o número errado para sempre. Case o livro na
@@ -226,15 +226,15 @@
         geral do Inventário, com o contador do que espera embalagem — o pacote pequeno,
         separado do palete.</figcaption>
       </figure>
-      <p>Duas escolhas da conta governam o efeito do pedido importado:</p>
+      <p>Duas escolhas governam o efeito do pedido importado — uma da conta, uma das
+      Definições:</p>
       <div class="tablewrap"><table>
         <tr><th>Campo</th><th>O que decide</th></tr>
-        <tr><td><span class="field">Operar pedidos a partir de</span></td>
-            <td>A data em que o marketplace passa a produzir efeito: do corte em diante o pedido
-                é registrado por inteiro na importação — venda, entrega concluída e fatura, com a
-                prateleira baixando junto; antes dele, entra
-                só como registro. Vazio, nenhum pedido mexe em nada — importar o histórico não pode
-                reescrever o estoque de hoje.</td></tr>
+        <tr><td><span class="field">Despachar pedidos do Olist</span> (Definições)</td>
+            <td><span class="field">Só com nota</span>, o padrão: a fila exige a nota emitida e a
+                fatura nasce no próprio despacho. <span class="field">Com ou sem nota</span>: o
+                pacote sai na frente, e a fatura — que continua nascendo só do XML — corre atrás
+                quando a nota chega pela sincronia. Mudar a opção muda a fila na hora.</td></tr>
         <tr><td><span class="field">Diário do recebimento</span></td>
             <td>Onde lançar o valor que o comprador <em>já pagou</em> ao Olist. Use um diário
                 próprio do marketplace, nunca a conta bancária: o dinheiro só chega no repasse, e é
@@ -243,16 +243,6 @@
       <div class="callout">Cada equipe encontra a nota onde já trabalha: a logística na
       transferência (com o filtro "Com nota" e o XML anexado), o comercial no pedido, o financeiro
       no título. Ninguém precisa abrir a tela do Olist.</div>
-      <p>E o passado profundo tem porta própria: <span class="field">Consolidar histórico</span>
-      (só administradores), sobre pedidos selecionados no filtro
-      <span class="field">Anteriores ao corte</span>. Ela registra o pedido antigo por inteiro —
-      S, entrega concluída <em>datada no dia do pedido</em>, fatura datada na emissão da nota e
-      recebimento — e fecha com um <strong>ajuste de inventário</strong> que devolve cada
-      prateleira tocada ao número de hoje: o livro que saiu há meses já não estava na estante, o
-      movimento vira história para os relatórios, e o físico termina intacto. Pré-requisitos por
-      pedido: detalhe lido, XML arquivado e livros casados — as releituras adotam sozinhas os
-      XMLs que vieram pelo legado.</p>
-
       <h2 id="problemas">Quando algo não sai como esperado</h2>
       <div class="tablewrap"><table>
         <tr><th>O que aparece</th><th>Por quê</th><th>O que fazer</th></tr>
@@ -279,8 +269,8 @@
         </tr>
         <tr>
           <td>Um pedido que você espera não aparece na fila "Despachar"</td>
-          <td>Ou ainda não tem nota no Olist (sem nota não se despacha), ou o detalhe não foi
-              lido (o cron chega lá), ou é anterior ao corte (história — mora na auditoria), ou já
+          <td>Ou ainda não tem nota no Olist (na política padrão, sem nota não se despacha —
+              veja a opção nas Definições), ou o detalhe não foi lido (o cron chega lá), ou já
               foi despachado — e aí está tudo certo.</td>
           <td>Procure-o na tela Pedidos (a auditoria mostra tudo) e confira a coluna
               Situação.</td>

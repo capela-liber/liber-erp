@@ -10,9 +10,8 @@ class SaleOrder(models.Model):
     `sale_id` ainda não está preenchido (é related de `group_id`, resolvido no
     flush seguinte), então o gancho encontrava sempre transferência sem pedido.
 
-    E é o momento NORMAL: sem corte de estoque configurado, o pedido do Olist
-    entra em rascunho com a fatura já pronta, e a entrega só nasce quando a
-    logística confirma o S — horas depois.
+    O caso existe mesmo com o import confirmando na hora (22/08/2026):
+    devolução e entrega refeita criam picking com a fatura já antiga.
     """
     _inherit = 'sale.order'
 

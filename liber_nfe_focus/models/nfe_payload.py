@@ -552,11 +552,29 @@ def build_payload(nota, emitente, destinatario, itens, transportador=None):
     duplicatas = [d for d in abater_excesso(duplicatas, 'valor', valor_total)
                   if Decimal(d['valor']) > 0]
     if duplicatas:
+        # A SEFAZ confere o grupo de cobrança POR DENTRO: a soma das parcelas
+        # tem de dar o líquido da fatura -- rejeição 851, "Soma do valor das
+        # parcelas difere do Valor Líquido da Fatura". E o líquido tem de ser o
+        # original menos o desconto.
+        #
+        # Quem manda aqui é a duplicata, não o total da nota. São dois números
+        # que só coincidem por sorte: a nota soma os itens já arredondados, a
+        # duplicata nasce do contas a receber do Odoo, e com a empresa
+        # arredondando globalmente os dois divergem em centavos -- para cima
+        # (866, o troco) ou para baixo (851, a fatura). Cobrar menos que a nota
+        # também é legítimo e acontece todo dia: a fatura que se paga metade à
+        # vista manda só a parcela que vence depois.
+        #
+        # Então o líquido é o que as duplicatas somam, e a diferença até o
+        # bruto entra como desconto da fatura -- que é onde ela cabe, e que dá
+        # exatamente o desconto dos itens quando os dois números batem.
+        soma_duplicatas = sum(Decimal(d['valor']) for d in duplicatas)
+        bruto_fatura = valor_produtos + frete + seguro + outras
         payload['duplicatas'] = duplicatas
         payload['numero_fatura'] = texto(nota.get('numero_fatura'), 60)
-        payload['valor_original_fatura'] = money(valor_produtos + frete + seguro + outras)
-        payload['valor_desconto_fatura'] = money(desconto)
-        payload['valor_liquido_fatura'] = money(valor_total)
+        payload['valor_original_fatura'] = money(bruto_fatura)
+        payload['valor_desconto_fatura'] = money(bruto_fatura - soma_duplicatas)
+        payload['valor_liquido_fatura'] = money(soma_duplicatas)
 
     # Forma de pagamento. O padrão da Focus é 01 (dinheiro), que numa venda a
     # prazo é declaração falsa: quem vende a prazo emite duplicata (14).

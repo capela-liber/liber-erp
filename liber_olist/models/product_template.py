@@ -284,6 +284,26 @@ class ProductTemplate(models.Model):
              request_body, raw)
         _logger.info("Olist stock push [%s] %s -> idProduto %s (qty %s): %s",
                      company.name, product.display_name, id_produto, qty, status)
+        if status == 'OK':
+            # O mesmo envio ATUALIZA o espelho (pedido do dono, 22/08/2026):
+            # tipo=B é balanço absoluto, então o número que acabou de subir É
+            # o saldo do Olist agora — não precisa de outra chamada para
+            # sabê-lo. Sem isto só o botão da tela carimbava, e a tela de
+            # comparação passava semanas acusando divergência com leitura
+            # velha depois de um push perfeito (22/08, os 80 "divergentes").
+            linha = self.env['olist.product'].search([
+                ('account_id', '=', account.id),
+                ('olist_id', '=', str(id_produto)),
+            ], limit=1)
+            if linha:
+                agora = fields.Datetime.now()
+                linha.write({
+                    'saldo_olist': qty,
+                    'saldo_olist_date': agora,
+                    'last_push_date': agora,
+                    'last_push_qty': qty,
+                    'last_push_result': "%s: %s" % (status, detail),
+                })
         return status, detail
 
     @staticmethod

@@ -50,11 +50,7 @@ class TestOlistChannels(TransactionCase):
         cls.env['olist.account'].search([]).write({'active': False})
         cls.account = cls.env['olist.account'].create({
             'name': "Olist Canais", 'company_id': cls.env.company.id,
-            'token': "TOKEN-C", 'read_only': True,
-            # A conta OPERA: o corte governa a entrada do pedido na
-            # operação (estoque e fatura), e o cenário normal destes
-            # testes é o do pedido que produz efeito.
-            'order_stock_cutoff': '2020-01-01'})
+            'token': "TOKEN-C", 'read_only': True})
         cls.livro = cls.env['product.product'].create({
             'name': "A toca iluminada", 'barcode': "9788577158355",
             'list_price': 49.0, 'type': 'consu', 'is_storable': True})

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- A tarja da nota do Pedido C. A remessa em consignação NÃO é uma
+         simples remessa: CFOP 5917/6917, natureza "Remessa em consignação
+         mercantil", e a mercadoria continua nossa na prateleira da livraria.
+         A tarja genérica do nfe_remessa se recolhe quando a origem é
+         declarada; esta entra no lugar dela. -->
+    <record id="view_move_form_remessa_consignment" model="ir.ui.view">
+        <field name="name">account.move.form.remessa.consignment</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="liber_nfe_remessa.view_move_form_remessa"/>
+        <field name="arch" type="xml">
+            <!-- A âncora é o campo que o nfe_remessa põe na view para a
+                 própria tarja decidir, e não o `title` do widget: `title` é
+                 proibido como seletor de herança. -->
+            <xpath expr="//field[@name='remessa_origin']" position="after">
+                <widget name="web_ribbon" title="Consignação"
+                        bg_color="text-bg-info"
+                        invisible="not is_remessa_note or state != 'posted' or remessa_origin != 'consignment'"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

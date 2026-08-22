@@ -6,7 +6,7 @@ from datetime import timedelta
 
 import pytz
 
-from odoo import _, api, fields, models
+from odoo import _, api, fields, models, modules, tools
 from odoo.exceptions import UserError, ValidationError
 
 from . import olist_client
@@ -82,6 +82,13 @@ class OlistAccount(models.Model):
     last_sync = fields.Datetime("Notas lidas em", readonly=True, copy=False)
     last_stock_push = fields.Datetime("Estoque enviado em", readonly=True,
                                       copy=False)
+    stock_push_cursor = fields.Integer(
+        "Retomar o envio a partir de", readonly=True, copy=False, default=0,
+        help="O id do último produto cujo estoque subiu. Existe porque a "
+             "varredura não cabe num ciclo de cron: ela para onde o tempo "
+             "acabou e a próxima rodada continua daqui, em vez de recomeçar "
+             "do zero e nunca chegar ao fim. Zero = próxima rodada começa do "
+             "início do catálogo.")
     last_catalogue_pull = fields.Datetime("Catálogo lido em", readonly=True,
                                           copy=False)
     last_stock_pull = fields.Datetime("Saldos lidos em", readonly=True,
@@ -89,22 +96,11 @@ class OlistAccount(models.Model):
     last_orders_pull = fields.Datetime("Pedidos lidos em", readonly=True,
                                        copy=False)
     order_stock_cutoff = fields.Date(
-        string="Operar pedidos a partir de",
-        help="A data em que o marketplace passa a produzir EFEITO na operação. "
-             "Pedidos com data igual ou posterior a ela são registrados por "
-             "inteiro na importação: venda confirmada, entrega concluída na "
-             "caixa Marketplaces (baixando o estoque do armazém) e fatura "
-             "lançada.\n"
-             "Anteriores entram como REGISTRO: espelho, rastreabilidade e o "
-             "XML arquivado, sem mexer em estoque e sem lançar fatura.\n"
-             "Vazio (o padrão) = nenhum pedido produz efeito. É assim que se "
-             "começa: o histórico da conta tem cerca de mil pedidos, e importar "
-             "para consolidar não pode reescrever o estoque de hoje nem a "
-             "contabilidade de um ano atrás.\n"
-             "Quando ligar: é isto que fecha o laço com o push de estoque. "
-             "Enquanto a venda de marketplace não baixar aqui, o estoque do "
-             "Odoo fica alto demais e o push devolve esse número inflado ao "
-             "Olist — oferecendo livro já vendido.")
+        string="Operar pedidos a partir de (aposentado)",
+        help="APOSENTADO em 22/08/2026: o corte e o Consolidar histórico "
+             "eram andaime da migração e saíram do produto — importar sempre "
+             "registra por inteiro. O campo só existe até a limpeza final, "
+             "porque views antigas no banco o citam até o -u passar.")
     payment_journal_id = fields.Many2one(
         'account.journal', string="Diário do recebimento",
         domain="[('type', 'in', ('bank', 'cash')), ('company_id', '=', company_id)]",
@@ -185,6 +181,28 @@ class OlistAccount(models.Model):
                     "só.",
                     account.company_id.display_name))
 
+    def _banco_neutralizado(self):
+        return self.env['ir.config_parameter'].sudo().get_param(
+            'database.is_neutralized') in ('true', 'True', '1')
+
+    def write(self, vals):
+        """Num banco NEUTRALIZADO o somente-leitura não se desliga. Nunca.
+
+        Regra do dono (22/08/2026): staging sempre em leitura. A descida já
+        liga o read_only, mas trava de descida vale só no momento da descida
+        — um clique de teste no toggle, dias depois, rearma a escrita numa
+        conta fiscal VIVA, porque não existe token de homologação no Olist.
+        O carimbo `database.is_neutralized` (que toda descida grava) é o que
+        diz "isto é um clone": clone lê, compara, e não escreve.
+        """
+        if vals.get('read_only') is False and self._banco_neutralizado():
+            raise UserError(_(
+                "Este banco é um CLONE neutralizado (staging/ensaio): o "
+                "somente-leitura do Olist não se desliga aqui. O token é o "
+                "da conta fiscal viva — escrever a partir de um clone é "
+                "escrever na loja de verdade. Sincronizar é ato do prod."))
+        return super().write(vals)
+
     @api.model_create_multi
     def create(self, vals_list):
         """A caixa de despacho nasce JUNTO com a conta, não no primeiro uso.
@@ -194,6 +212,11 @@ class OlistAccount(models.Model):
         nenhum pedido tinha sido importado ainda. Cartão que só aparece depois
         do primeiro pacote é cartão que ninguém encontra na hora de procurar.
         """
+        if self._banco_neutralizado():
+            # Conta criada DENTRO de um clone nasce lendo, decida o que
+            # decidir quem a criou — mesma trava do write, no outro portão.
+            for vals in vals_list:
+                vals['read_only'] = True
         contas = super().create(vals_list)
         for conta in contas:
             conta._marketplace_picking_type()
@@ -352,12 +375,20 @@ class OlistAccount(models.Model):
             if panel:
                 imported += 1
 
+        # A nota que acabou de chegar pode ser a que um despacho sem nota
+        # esperava (política 'com ou sem nota' das Definições): a fatura se
+        # completa agora, não numa madrugada futura.
+        completadas = self.env['olist.order']._completar_faturas_pendentes(
+            account=self)
+
         self.last_sync = fields.Datetime.now()
         _logger.info("Olist %s: %s imported, %s cancelled, %s already known "
-                     "(%s adopted).",
-                     self.name, imported, cancelled, skipped, adopted)
+                     "(%s adopted), %s invoices completed.",
+                     self.name, imported, cancelled, skipped, adopted,
+                     completadas)
         return {'imported': imported, 'cancelled': cancelled,
-                'skipped': skipped, 'adopted': adopted}
+                'skipped': skipped, 'adopted': adopted,
+                'completadas': completadas}
 
     # ------------------------------------------------------------------
     # Products
@@ -920,7 +951,62 @@ class OlistAccount(models.Model):
         self.last_stock_pull = fields.Datetime.now()
         _logger.info("Olist %s: janela trouxe %s produto(s) alterados.",
                      self.name, tocadas)
-        return tocadas
+        return tocadas + self._reler_saldos_mais_velhos()
+
+    def _grava_ja(self, processados=0, restantes=None):
+        """Grava o progresso e devolve quantos SEGUNDOS ainda cabem no ciclo.
+
+        Mesma guarda e mesma razão do `olist.order._grava_ja`: quem define o
+        orçamento é o executor do cron, não nós; fora de um cron devolve
+        infinito; em teste não commita, porque é o rollback por caso que isola
+        os testes uns dos outros.
+        """
+        if tools.config['test_enable'] or modules.module.current_test:
+            return float('inf')
+        return self.env['ir.cron']._commit_progress(
+            processados, remaining=restantes)
+
+    def _reler_saldos_mais_velhos(self):
+        """Com o tempo que sobrar do ciclo, relê os saldos mais desatualizados.
+
+        A janela incremental não basta, e isso foi medido em 20/08/2026:
+        `lista.atualizacoes.estoque` devolveu **zero** produtos numa janela de
+        29 dias, numa conta que vendeu no período. Tudo indica que ela reporta
+        só as alterações feitas VIA API — e nós nunca escrevemos estoque. Se
+        for isso, a janela jamais enxergará uma venda.
+
+        Então o espelho converge pelo outro caminho: cada rodada gasta o que
+        sobra do ciclo relendo as linhas cujo saldo está mais velho (uma
+        chamada por livro, ~2,2 s). Não é elegante, é honesto — e com quatro
+        rodadas por dia o catálogo inteiro se renova em poucos dias, sem
+        nenhuma rodada estourar o tempo.
+        """
+        self.ensure_one()
+        CUSTO = 6
+        # Fora de um cron isto devolve infinito, e aí não varremos: o botão da
+        # tela não pode virar vinte minutos de leitura sem ninguém pedir.
+        restante = self._grava_ja()
+        if restante == float('inf'):
+            return 0
+        linhas = self.env['olist.product'].search(
+            [('account_id', '=', self.id)],
+            order='saldo_olist_date asc nulls first', limit=200)
+        # O que falta, declarado antes da primeira leitura — a mesma lição do
+        # push: numa re-execução dentro do job o progresso nasce zerado, e uma
+        # passada sem tempo que não declara nada vira "remaining 0", que o
+        # executor lê como serviço completo.
+        restante = self._grava_ja(0, restantes=len(linhas))
+        relidas = 0
+        for linha in linhas:
+            if restante < CUSTO:
+                break
+            if linha._read_saldo():
+                relidas += 1
+            restante = self._grava_ja(1)
+        if relidas:
+            _logger.info("Olist %s: %s saldo(s) relidos por antiguidade.",
+                         self.name, relidas)
+        return relidas
 
     def action_open_mirror(self):
         self.ensure_one()
@@ -950,13 +1036,40 @@ class OlistAccount(models.Model):
         self.ensure_one()
         self._check_writable()
         Template = self.env['product.template']
-        products = Template._in_olist_company(self.company_id).search([
-            ('olist_produto_id', '!=', False),
-            ('company_id', 'in', [False, self.company_id.id]),
-        ])
+        CUSTO = 6
+        # Num cron isto devolve os segundos que ainda cabem no ciclo; no botão
+        # da tela, infinito. A diferença não é de estilo: a varredura inteira
+        # são ~580 chamadas a ~2,2 s, uns vinte minutos, e nenhum ciclo de cron
+        # aguenta isso. Sem orçamento ela estourava o tempo, o Odoo derrubava a
+        # transação e NADA subia - foi o que aconteceu no prod nas noites de
+        # 19, 20 e 21/08/2026 ("Job 'Olist: push stock (balanço)' (58) timed
+        # out", falhas=3, e na terceira o executor passa a pular o cron).
+        restante = float('inf') if interactive else self._grava_ja()
+        orcado = restante != float('inf')
+        dominio = [('olist_produto_id', '!=', False),
+                   ('company_id', 'in', [False, self.company_id.id])]
+        if orcado:
+            dominio.append(('id', '>', self.stock_push_cursor))
+        products = Template._in_olist_company(self.company_id).search(
+            dominio, order='id')
+        if orcado:
+            # O tamanho da fila, dito ANTES de qualquer envio — inclusive numa
+            # passada que não envia nada. O executor dá ciclos de DEZ segundos
+            # (MIN_TIME_PER_JOB) e re-executa a ação DENTRO do mesmo job com um
+            # progresso NOVO, zerado: o `_grava_ja()` de abertura, sem
+            # `restantes`, gravava remaining=0 nesse registro virgem, e uma
+            # passada sem tempo terminava dizendo "done 0, remaining 0" — que
+            # para o executor é trabalho CONCLUÍDO. Foi assim que o push de
+            # 21/08 às 21:27 subiu 3 livros e foi dispensado até o dia
+            # seguinte. Com o que falta declarado, a passada vazia devolve
+            # "parcialmente feito" e o reagendamento é imediato.
+            restante = self._grava_ja(0, restantes=len(products))
 
-        ok, errors = 0, []
-        for product in products:
+        ok, errors, parou = 0, [], False
+        for feitos, product in enumerate(products):
+            if orcado and restante < CUSTO:
+                parou = True
+                break
             try:
                 status, detail = product._push_stock_to_olist(self)
             except Exception as exc:  # never let one product abort the sweep
@@ -966,12 +1079,24 @@ class OlistAccount(models.Model):
             else:
                 errors.append("%s: %s" % (
                     product.default_code or product.display_name, detail))
+            if orcado:
+                # Gravado A CADA livro: se o tempo estourar mesmo assim, o que
+                # já subiu está salvo e a próxima rodada continua daqui.
+                self.stock_push_cursor = product.id
+                restante = self._grava_ja(
+                    1, restantes=len(products) - feitos - 1)
+        if orcado and not parou:
+            # Catálogo varrido inteiro: a próxima noite recomeça do começo.
+            self.stock_push_cursor = 0
 
         self.last_stock_push = fields.Datetime.now()
-        _logger.info("Olist %s: stock pushed for %s products, %s error(s).",
-                     self.name, ok, len(errors))
+        _logger.info(
+            "Olist %s: stock pushed for %s products, %s error(s)%s.",
+            self.name, ok, len(errors),
+            " (parou no id %s, continua na próxima rodada)"
+            % self.stock_push_cursor if parou else "")
         if not interactive:
-            return {'ok': ok, 'errors': len(errors)}
+            return {'ok': ok, 'errors': len(errors), 'parou': parou}
 
         msg = _("%(ok)s produto(s) atualizados, %(err)s com erro.",
                 ok=ok, err=len(errors))

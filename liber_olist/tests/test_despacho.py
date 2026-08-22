@@ -24,8 +24,7 @@ class TestDespachoDaCasa(TransactionCase):
         cls.account = cls.env['olist.account'].create({
             'name': "Olist Despacho", 'company_id': cls.env.company.id,
             'token': "TOKEN-D", 'read_only': True,
-            'stock_reserve': 0,
-            'order_stock_cutoff': '2026-01-01'})
+            'stock_reserve': 0})
         cls.livro = cls.env['product.product'].create({
             'name': "Livro do Despacho", 'barcode': "9782222222229",
             'type': 'consu', 'is_storable': True, 'list_price': 50.0})
@@ -58,9 +57,11 @@ class TestDespachoDaCasa(TransactionCase):
                                  'valor_unitario': 50.0,
                                  'product_id': self.livro.id})]})
 
-    def test_importar_registra_tudo_de_uma_vez(self):
-        """Caminho central: importar conclui a entrega e baixa a prateleira —
-        o registro fiel do que o Olist já deu por encaminhado."""
+    def test_importar_confirma_e_a_equipe_embala(self):
+        """Caminho central desde 22/08/2026 ("temos que fazer os pacotes"):
+        importar registra o negócio e entrega o TRABALHO — a entrega fica
+        Pronta, o exemplar reservado, e é o validar de quem embalou que
+        baixa a prateleira."""
         antes = self.livro.product_tmpl_id._olist_wh_qty(self.account)
         pedido = self._pedido('D-1', 'Enviado')
         self.assertTrue(pedido.a_despachar,
@@ -68,13 +69,22 @@ class TestDespachoDaCasa(TransactionCase):
         pedido._import_to_odoo()
         entregas = pedido.sale_order_id.picking_ids
         self.assertTrue(entregas)
-        self.assertTrue(all(p.state == 'done' for p in entregas),
-                        "importar é registrar: a entrega conclui junto")
+        self.assertTrue(all(p.state == 'assigned' for p in entregas),
+                        "a entrega nasce PRONTA para a equipe")
+        self.assertEqual(
+            self.livro.product_tmpl_id._olist_wh_qty(self.account), antes,
+            "a prateleira NÃO baixa no import — baixa no validar")
+        self.assertEqual(
+            self.livro.product_tmpl_id._olist_reservado_qty(self.account), 2,
+            "o exemplar fica reservado: sai da vitrine sem sair da estante")
+        for entrega in entregas:                       # a equipe embala
+            for move in entrega.move_ids:
+                move.quantity = move.product_uom_qty
+                move.picked = True
+            entrega.button_validate()
         self.assertEqual(
             self.livro.product_tmpl_id._olist_wh_qty(self.account), antes - 2,
-            "a prateleira baixa no registro")
-        self.assertFalse(pedido.a_despachar,
-                         "registrado: o grito cala no mesmo clique")
+            "a prateleira baixa no clique de quem embalou")
 
     def test_entregue_registra_igual(self):
         pedido = self._pedido('D-3', 'Entregue', nota='702')
@@ -97,11 +107,6 @@ class TestDespachoDaCasa(TransactionCase):
             'account_id': self.account.id, 'olist_id': 'D-5',
             'numero': 'D-5', 'situacao': 'Em aberto',
             'data_pedido': '2026-08-15', 'id_nota_fiscal': '0'})
-        self.assertFalse(pedido.a_despachar)
-
-    def test_anterior_ao_corte_e_historia_nao_fila(self):
-        self.account.order_stock_cutoff = '2026-08-16'
-        pedido = self._pedido('D-6', 'Enviado', nota='704')
         self.assertFalse(pedido.a_despachar)
 
     def test_o_push_desconta_o_reservado(self):

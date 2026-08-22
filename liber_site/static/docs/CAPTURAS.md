@@ -62,8 +62,8 @@ Página: `/liber_site/static/docs/liber_soc_settlement.html`
 Página: `/liber_site/static/docs/liber_soc_fiscal_br.html`
 
 - [x] **`doc-liber_soc_fiscal_br-gerar-nota.png`**
-  - O que capturar: Pedido C confirmado com o botão Gerar nota no lugar do Criar fatura, e o botão inteligente Nota mostrando 'A emitir'
-  - Legenda no manual: O Pedido C confirmado: em vez de "Criar fatura", o botão Gerar nota — e o indicador Nota dizendo se a remessa já foi emitida.
+  - O que capturar: Pedido C confirmado com o botão Criar nota no lugar do Criar fatura, e o botão inteligente Nota mostrando 'A emitir'
+  - Legenda no manual: O Pedido C confirmado: em vez de "Criar fatura", o botão Criar nota — e o indicador Nota dizendo se a remessa já foi emitida.
 
 
 ## Auditoria pelo XML — `liber_soc_audit.html`

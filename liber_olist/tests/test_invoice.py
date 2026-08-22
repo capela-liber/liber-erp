@@ -35,11 +35,7 @@ class TestOlistInvoice(TransactionCase):
         cls.env['olist.account'].search([]).write({'active': False})
         cls.account = cls.env['olist.account'].create({
             'name': "Olist Fatura", 'company_id': cls.env.company.id,
-            'token': "TOKEN-F", 'read_only': True,
-            # A conta OPERA: o corte governa a entrada do pedido na
-            # operação (estoque e fatura), e o cenário normal destes
-            # testes é o do pedido que produz efeito.
-            'order_stock_cutoff': '2020-01-01'})
+            'token': "TOKEN-F", 'read_only': True})
         cls.livro = cls.env['product.product'].create({
             'name': "Livro", 'barcode': "9781111111119", 'list_price': 50.0,
             'type': 'consu'})
@@ -148,7 +144,7 @@ class TestOlistInvoice(TransactionCase):
     def test_importing_creates_the_invoice_right_away(self):
         """"Ao criar o pedido S já criar a Invoice e o Edoc."
 
-        Deixou de haver data de corte: como a importação passou a EXIGIR XML
+        Como a importação passou a EXIGIR XML
         arquivado, a nota está sempre aqui quando o pedido entra — e adiar o
         lançamento seria guardar trabalho para depois sem motivo.
         """
@@ -275,46 +271,26 @@ class TestOlistInvoice(TransactionCase):
         self.assertTrue(pedido.invoice_id)
         self.assertEqual(painel.invoice_id, pedido.invoice_id)
 
-    def test_antes_do_corte_entra_sem_fatura(self):
-        """O corte governa a ENTRADA na operação, não só o estoque.
+    def test_importar_registra_por_inteiro(self):
+        """O corte saiu (22/08/2026): todo import fatura e cria a entrega.
 
-        Faturar é o efeito mais pesado da importação: lança no razão e, com
-        diário de recebimento, registra o dinheiro. O histórico da conta tem
-        ~1000 pedidos, e importá-los para consolidar não pode reescrever a
-        contabilidade de um ano atrás (decisão do dono, 18/08/2026)."""
-        self.account.order_stock_cutoff = '2026-12-31'   # depois do pedido
+        A fatura registra um fato consumado (a nota já saiu autorizada do
+        Olist); a entrega nasce PRONTA para a equipe embalar — quem baixa a
+        prateleira é o clique do funcionário, não o import."""
         pedido, painel = self._pedido_com_nota()
-
+        pedido.situacao = 'Enviado'      # etiqueta nascida; pacote em casa
         pedido._import_to_odoo()
 
-        self.assertTrue(pedido.sale_order_id,
-                        "o pedido entra: espelho e rastreabilidade valem")
-        self.assertFalse(pedido.invoice_id,
-                         "mas anterior ao corte não fatura")
-        self.assertFalse(pedido.sale_order_id.picking_ids,
-                         "nem baixa estoque — os dois efeitos andam juntos")
-
-    def test_sem_corte_nenhum_pedido_fatura(self):
-        """Vazio é o padrão, e o padrão é não produzir efeito nenhum."""
-        self.account.order_stock_cutoff = False
-        pedido, painel = self._pedido_com_nota()
-
-        pedido._import_to_odoo()
-
-        self.assertTrue(pedido.sale_order_id)
-        self.assertFalse(pedido.invoice_id)
-
-    def test_a_partir_do_corte_fatura_e_baixa(self):
-        """E depois do corte, os dois efeitos acontecem."""
-        pedido, painel = self._com_pedido_e_corte()
-
-        self.assertTrue(pedido.invoice_id, "a partir do corte, fatura")
-        self.assertTrue(pedido.sale_order_id.picking_ids,
-                        "e baixa estoque")
+        self.assertTrue(pedido.invoice_id, "todo import fatura")
+        entregas = pedido.sale_order_id.picking_ids
+        self.assertTrue(entregas, "todo import cria a entrega")
+        for entrega in entregas:
+            self.assertNotIn(entrega.state, ('done', 'cancel'),
+                             "a entrega é trabalho da casa, não do import")
 
     def _com_pedido_e_corte(self):
-        """Pedido importado com baixa de estoque, para haver picking."""
-        self.account.order_stock_cutoff = '2026-01-01'
+        """Pedido importado por inteiro, para haver picking (o nome ficou
+        do tempo do corte; o corte já não existe)."""
         pedido, painel = self._pedido_com_nota()
         pedido._import_to_odoo()
         return pedido, painel
@@ -346,7 +322,7 @@ class TestOlistInvoice(TransactionCase):
             self.skipTest("liber_nfe_picking não está instalado")
         pedido, _painel = self._com_pedido_e_corte()
         entregas = pedido.sale_order_id.picking_ids
-        self.assertTrue(entregas, "o corte devia ter gerado entrega")
+        self.assertTrue(entregas, "o import devia ter gerado entrega")
         self.assertTrue(all(p.nfe_move_id == pedido.invoice_id
                             for p in entregas))
 
@@ -375,28 +351,22 @@ class TestOlistInvoice(TransactionCase):
     def test_a_picking_created_later_still_gets_the_note(self):
         """O carimbo tem de acontecer quando o picking NASCE.
 
-        O caso normal não é o pedido já entrar com entrega: sem corte de
-        estoque, o S entra em rascunho e alguém o confirma horas depois — e o
-        picking nasce com a fatura já existindo. Foi assim que a logística viu
-        "Sem nota fiscal: EL-VG/OUT/01888" com a NFe arquivada do outro lado.
-        """
+        Um picking pode nascer DEPOIS da fatura (devolução, entrega
+        parcial refeita): foi assim que a logística viu "Sem nota fiscal:
+        EL-VG/OUT/01888" com a NFe arquivada do outro lado. O gancho do
+        liber_nfe_picking carimba no create — provado aqui com um picking
+        novo numa venda que já tem a nota."""
         Picking = self.env['stock.picking']
         if 'nfe_move_id' not in Picking._fields:
             self.skipTest("liber_nfe_picking não está instalado")
-        self.account.order_stock_cutoff = False        # o pedido só registra
         pedido, _painel = self._pedido_com_nota()
         pedido._import_to_odoo()
         venda = pedido.sale_order_id
-        self.assertFalse(venda.picking_ids, "fora do corte não há entrega")
-        self.assertFalse(pedido.invoice_id, "nem fatura automática")
-        pedido.action_create_invoice()                 # o faturista, à mão
         self.assertTrue(pedido.invoice_id)
-
-        venda.action_confirm()                          # a logística, depois
-        self.assertTrue(venda.picking_ids)
-        self.assertTrue(all(p.nfe_move_id == pedido.invoice_id
-                            for p in venda.picking_ids),
-                        "o picking nasceu sem a nota que já existia")
+        original = venda.picking_ids[:1]
+        tardio = original.copy({'name': '/'})
+        self.assertEqual(tardio.nfe_move_id, pedido.invoice_id,
+                         "o picking nasceu sem a nota que já existia")
 
     def test_the_xml_hangs_on_the_invoice(self):
         """Ligação é caminho; arquivo é posse.
@@ -420,10 +390,8 @@ class TestOlistInvoice(TransactionCase):
             self.skipTest("liber_nfe_picking não está instalado")
         pedido, _painel = self._pedido_com_nota()
         pedido._import_to_odoo()
-        # Dentro do corte a importação já confirma a venda (o corte manda na
-        # operação inteira) — confirmar de novo aqui seria erro do Odoo.
         entrega = pedido.sale_order_id.picking_ids[:1]
-        self.assertTrue(entrega, "dentro do corte a entrega nasce na importação")
+        self.assertTrue(entrega, "a entrega nasce na importação")
         anexos = self.env['ir.attachment'].search([
             ('res_model', '=', 'stock.picking'), ('res_id', '=', entrega.id)])
         self.assertTrue(anexos.filtered(lambda a: a.name.endswith('.xml')))

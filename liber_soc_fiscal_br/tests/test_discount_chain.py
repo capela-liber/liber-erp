@@ -99,15 +99,25 @@ class TestDiscountChain(TransactionCase):
             linha.discount = desconto_na_linha
         return acerto
 
+    def _conta_fixture(self, code, name, account_type):
+        Account = self.env["account.account"]
+        return Account.search([("code", "=", code)], limit=1) or Account.create({
+            "code": code, "name": name, "account_type": account_type,
+            "company_ids": [(4, self.company.id)]})
+
     def _wire_fiscal(self):
-        """A posição fiscal da remessa de consignação (o par auto-quitado)."""
-        espelho = self.env["account.account"].search(
-            [("code", "=", "CONTSD")], limit=1) or \
-            self.env["account.account"].create({
-                "code": "CONTSD",
-                "name": "(-) Remessa de Consignação (fixture desconto)",
-                "account_type": "income_other",
-                "company_ids": [(4, self.company.id)]})
+        """A posição fiscal da remessa: o par auto-quitado E o mapa de contas.
+
+        O mapa não é decoração: é ele que diz para qual conta a remessa vai, e
+        é dele que o diário REM-C nasce. Fixture sem mapa fica mais verde que
+        a casa -- foi assim que uma nota sem conta nenhuma chegou ao staging.
+        """
+        espelho = self._conta_fixture(
+            "CONTSD", "(-) Remessa de Consignação (fixture desconto)",
+            "asset_current")
+        destino = self._conta_fixture(
+            "CONDSD", "(+) Investimento em Consignação (fixture desconto)",
+            "asset_current")
         fpos = self.env["account.fiscal.position"].search(
             [("name", "=", "Consignação — Desconto (fixture)"),
              ("company_id", "=", self.company.id)], limit=1) or \
@@ -116,6 +126,13 @@ class TestDiscountChain(TransactionCase):
                 "company_id": self.company.id,
                 "auto_invoice_paid": True,
                 "auto_invoice_paid_account_id": espelho.id})
+        fpos.account_ids.unlink()
+        self.env["account.fiscal.position.account"].create({
+            "position_id": fpos.id,
+            "account_src_id":
+                self.product.product_tmpl_id.get_product_accounts()["income"].id,
+            "account_dest_id": destino.id,
+        })
         self.company.consignment_shipment_fiscal_position_id = fpos
         return fpos
 
@@ -247,6 +264,13 @@ class TestDiscountChain(TransactionCase):
                 "discount": DESCONTO})],
         })
         pedido.action_confirm()
+        # A nota só declara o que saiu: expedir antes é pré-condição, não
+        # detalhe do fixture.
+        picking = pedido.picking_ids.filtered(lambda p: p.state != 'cancel')
+        for move in picking.move_ids:
+            move.quantity = move.product_uom_qty
+            move.picked = True
+        picking.button_validate()
         pedido.action_generate_remessa_note()
 
         linha = pedido.remessa_note_move_id.invoice_line_ids.filtered(

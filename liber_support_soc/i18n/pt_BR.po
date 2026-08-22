@@ -454,3 +454,70 @@ msgstr ""
 #: model:ir.model.fields,help:liber_support_soc.field_liber_support_co_wizard__partner_id
 msgid "The customer of this conversation. Setting it here also sets it on the ticket."
 msgstr "O cliente desta conversa. Preencher aqui grava também no chamado."
+
+#. module: liber_support_soc
+#: model:ir.model.fields,help:liber_support_soc.field_liber_support_co_wizard__attachment_id
+msgid ""
+"An NFe .xml, .xlsx, .csv or system-generated PDF that came with the "
+"conversation. Picking a file re-reads the lines. An NFe XML is the best "
+"source — exact ISBN and quantity — and, when present, the e-mail text is "
+"not read on top of it. Scanned PDFs (photos) have no text layer and come "
+"out empty."
+msgstr ""
+"Um .xml de NFe, .xlsx, .csv ou PDF gerado por sistema que veio com a "
+"conversa. Escolher um arquivo relê as linhas. O XML de NFe é a melhor "
+"fonte — ISBN e quantidade exatos — e, quando presente, o texto do e-mail "
+"não é lido por cima dele. PDF escaneado (foto) não tem camada de texto e "
+"sai vazio."
+
+#. module: liber_support_soc
+#: model:ir.model.fields,field_description:liber_support_soc.field_liber_support_co_wizard__cnpj_override
+msgid "Create anyway — I checked the CNPJ mismatch"
+msgstr "Criar mesmo assim — conferi a divergência de CNPJ"
+
+#. module: liber_support_soc
+#: model:ir.model.fields,help:liber_support_soc.field_liber_support_co_wizard__cnpj_override
+msgid ""
+"The NFe XML names two parties and the partner above is neither of them. "
+"Tick to confirm this is intentional (e.g. a branch issuing under the head "
+"office)."
+msgstr ""
+"O XML da NFe nomeia duas pontas e o parceiro acima não é nenhuma delas. "
+"Marque para confirmar que é intencional (ex.: filial emitindo pela "
+"matriz)."
+
+#. module: liber_support_soc
+#. odoo-python
+#: code:addons/liber_support_soc/wizard/co_from_conversation.py:0
+msgid ""
+"%(partner)s has no CNPJ on file, so the NFe XML (parties: %(docs)s) could "
+"not be checked against it."
+msgstr ""
+"%(partner)s não tem CNPJ na ficha, então o XML da NFe (pontas: %(docs)s) "
+"não pôde ser conferido contra ele."
+
+#. module: liber_support_soc
+#. odoo-python
+#: code:addons/liber_support_soc/wizard/co_from_conversation.py:0
+msgid ""
+"CNPJ mismatch: %(partner)s (%(vat)s) is neither the issuer nor the "
+"recipient of this NFe XML (parties: %(docs)s). Check the file and the "
+"partner before creating anything."
+msgstr ""
+"CNPJ divergente: %(partner)s (%(vat)s) não é nem o emitente nem o "
+"destinatário deste XML de NFe (pontas: %(docs)s). Confira o arquivo e o "
+"parceiro antes de criar qualquer coisa."
+
+#. module: liber_support_soc
+#. odoo-python
+#: code:addons/liber_support_soc/wizard/co_from_conversation.py:0
+msgid ""
+"The NFe XML raised a CNPJ warning:\n"
+"%(alert)s\n"
+"\n"
+"If this is intentional, tick \"Create anyway\" and create again."
+msgstr ""
+"O XML da NFe levantou um aviso de CNPJ:\n"
+"%(alert)s\n"
+"\n"
+"Se for intencional, marque \"Criar mesmo assim\" e crie de novo."

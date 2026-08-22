@@ -68,15 +68,28 @@ class CoFromConversation(models.Model):
         'ir.attachment', string='Attached file',
         domain="[('res_model', '=', 'liber.support.ticket'),"
                " ('res_id', '=', ticket_id)]",
-        help="A .xlsx, .csv or system-generated PDF that came with the "
-             "conversation. Scanned PDFs (photos) have no text layer and "
-             "come out empty.")
+        help="An NFe .xml, .xlsx, .csv or system-generated PDF that came "
+             "with the conversation. Picking a file re-reads the lines. "
+             "An NFe XML is the best source — exact ISBN and quantity — "
+             "and, when present, the e-mail text is not read on top of "
+             "it. Scanned PDFs (photos) have no text layer and come out "
+             "empty.")
     xlsx_file = fields.Binary(
         string='Or upload a file',
         help="First sheet; title and quantity in any two columns.")
     xlsx_filename = fields.Char()
     line_ids = fields.One2many(
         'liber.support.co.wizard.line', 'wizard_id', string='Proposed Lines')
+    # A conferência pedida em 22/08: o XML diz quem são as duas pontas
+    # (emitente e destinatário), e se o parceiro do chamado não é nenhuma
+    # delas, a tela grita. Aviso forte + confirmação explícita, não
+    # bloqueio — há caso legítimo (filial emitindo pela matriz).
+    cnpj_alert = fields.Char(readonly=True)
+    cnpj_override = fields.Boolean(
+        string='Create anyway — I checked the CNPJ mismatch',
+        help="The NFe XML names two parties and the partner above is "
+             "neither of them. Tick to confirm this is intentional "
+             "(e.g. a branch issuing under the head office).")
 
     _ticket_uniq = models.Constraint(
         'UNIQUE (ticket_id)', 'One draft per ticket — reopen it instead.')
@@ -181,21 +194,95 @@ class CoFromConversation(models.Model):
             }))
         self.line_ids = commands
 
-    def action_parse(self):
-        """(Re)read: attached spreadsheet, uploaded file, then the raw
-        text — whatever is filled contributes lines."""
-        self.ensure_one()
-        parts = []
+    def _source_files(self):
+        """(nome, bytes) de cada arquivo preenchido. O binário do upload
+        pode chegar impróprio no onchange (o cliente web manda o tamanho,
+        não o conteúdo) — quem não decodifica é pulado em silêncio."""
+        files = []
         if self.attachment_id:
-            parts.append(self._spreadsheet_to_text(
-                self.attachment_id.name,
-                base64.b64decode(self.attachment_id.datas)))
+            files.append((self.attachment_id.name,
+                          base64.b64decode(self.attachment_id.datas)))
         if self.xlsx_file:
-            parts.append(self._spreadsheet_to_text(
-                self.xlsx_filename or '.xlsx',
-                base64.b64decode(self.xlsx_file)))
-        parts.append(self.source_text or '')
-        self._build_lines('\n'.join(parts))
+            try:
+                files.append((self.xlsx_filename or '.xlsx',
+                              base64.b64decode(self.xlsx_file)))
+            except Exception:
+                pass
+        return files
+
+    def _parse_sources(self):
+        """(Re)read the sources and rebuild the proposed lines.
+
+        O XML de NFe VENCE: com itens vindos de um XML, o texto do
+        e-mail e as planilhas não somam linhas por cima — é a fonte
+        exata, e somar duplicaria item. Sem XML (ou com XML vazio ou
+        quebrado), vale a soma antiga: arquivo + texto bruto."""
+        self.ensure_one()
+        xml_parts, other_parts = [], []
+        for name, raw in self._source_files():
+            if co_parser.is_nfe_xml(name, raw):
+                items = co_parser.nfe_items(raw)
+                if items:
+                    xml_parts.append(co_parser.items_to_text(items))
+            else:
+                other_parts.append(self._spreadsheet_to_text(name, raw))
+        if xml_parts:
+            self._build_lines('\n'.join(xml_parts))
+        else:
+            other_parts.append(self.source_text or '')
+            self._build_lines('\n'.join(other_parts))
+        self._update_cnpj_alert(self._party_docs())
+
+    def _party_docs(self):
+        """As pontas (CNPJ/CPF) de todo XML de NFe entre os arquivos."""
+        docs = set()
+        for name, raw in self._source_files():
+            if co_parser.is_nfe_xml(name, raw):
+                docs |= co_parser.nfe_party_docs(raw)
+        return docs
+
+    def _update_cnpj_alert(self, party_docs):
+        """Compara o CNPJ do parceiro com as DUAS pontas do XML — numa
+        devolução a livraria é a emitente. Sem XML, sem alerta."""
+        self.cnpj_alert = False
+        self.cnpj_override = False
+        if not party_docs:
+            return
+        partner = self.partner_id.commercial_partner_id
+        if not partner:
+            return
+        vat = re.sub(r'\D', '', partner.vat or '')
+        if not vat:
+            self.cnpj_alert = _(
+                "%(partner)s has no CNPJ on file, so the NFe XML "
+                "(parties: %(docs)s) could not be checked against it.",
+                partner=partner.display_name,
+                docs=', '.join(sorted(party_docs)))
+        elif vat not in party_docs:
+            self.cnpj_alert = _(
+                "CNPJ mismatch: %(partner)s (%(vat)s) is neither the "
+                "issuer nor the recipient of this NFe XML "
+                "(parties: %(docs)s). Check the file and the partner "
+                "before creating anything.",
+                partner=partner.display_name, vat=partner.vat,
+                docs=', '.join(sorted(party_docs)))
+
+    @api.onchange('attachment_id', 'xlsx_file')
+    def _onchange_source_file(self):
+        # Escolher o arquivo já relê — era o tropeço: selecionar o XML e
+        # clicar Criar saía com as linhas velhas do e-mail.
+        self._parse_sources()
+
+    @api.onchange('partner_id')
+    def _onchange_partner_cnpj(self):
+        # Trocar o parceiro NÃO reconstrói a grade (edição manual é
+        # trabalho); só a conferência de CNPJ acompanha.
+        self._update_cnpj_alert(self._party_docs())
+
+    def action_parse(self):
+        """(Re)read the sources — the button for when the raw text was
+        edited (text edits don't re-read on their own)."""
+        self._parse_sources()
         return self._reopen()
 
     def _reopen(self):
@@ -281,6 +368,13 @@ class CoFromConversation(models.Model):
                 "create the %(documento)s.",
                 documento=(_("sale order") if self.default_dest == 'sale'
                            else _("consignment settlement (CO)"))))
+        if self.cnpj_alert and not self.cnpj_override:
+            # Grita, mas não bloqueia: a caixa de confirmação está na
+            # mesma tela, para o caso legítimo (filial pela matriz).
+            raise UserError(_(
+                "The NFe XML raised a CNPJ warning:\n%(alert)s\n\n"
+                "If this is intentional, tick \"Create anyway\" and "
+                "create again.", alert=self.cnpj_alert))
         lines = self.line_ids.filtered(lambda l: l.product_id and l.qty > 0)
         if not lines:
             raise UserError(_(

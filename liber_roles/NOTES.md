@@ -458,3 +458,68 @@ O que mudou aqui:
 - O molde de novos usuários do Odoo traz *Produtos: Criar* ligado. Enquanto
   isso não for desmarcado nos Ajustes, "o Comercial não cria produtos" fura a
   cada pessoa cadastrada à mão.
+
+---
+
+## A régua do contato, e a tela que não abria (20/08/2026)
+
+Três pedidos da direção, num só dia, e o terceiro é o que ensinou alguma coisa.
+
+**1. O Jurídico/Gerente terminou de fazer o que já começava.** Ganhou
+*Financeiro: Faturamento* e *Compras: Usuário*: a nota do autor é uma fatura
+de fornecedor e o pedido que a origina é um pedido de compra, e até aqui quem
+apurava o período tinha de pedir a outro departamento que digitasse o
+documento que ele mesmo apurou. Ganhou também **Dropbox e Drive no nível
+Gerente** — quem assina responde pela pasta onde o contrato assinado mora. O
+GitHub ficou de fora: lá mora código. Nada disso desceu para o Assistente,
+que segue redigindo minuta e mais nada.
+
+**2. Cadastrar contato virou marca de nível, não concessão de departamento.**
+Como já era a exportação: `base.group_partner_manager` nos seis Gerentes,
+leitura em todos os Assistentes. Entraram a Logística (o endereço de coleta e
+a transportadora nascem no depósito) e o Marketing (a lista de contatos é o
+mailing). As duas exceções de baixo continuam, e por motivo: o assistente
+financeiro cadastra porque a Cobrança abre o cliente para faturá-lo, e o
+assistente comercial cadastra porque o ACL que concede é do `crm` e não é
+nosso.
+
+**A leitura não custou uma linha de XML** — o ACL do core já dá `res.partner`
+em leitura a `base.group_user`, e toda função começa por ele. O que se
+escreveu foi o teste.
+
+### 3. E a leitura, que existia no ACL, não existia na tela
+
+O pedido veio com um print anexado:
+
+> Você não tem permissão para acessar registros de **'Contrato de
+> Consignação'** (consignment.agreement).
+
+Contato não tem nada com consignação. O que havia era um **cartão de
+Consignação pendurado no formulário do parceiro** (`liber_soc_agreements`),
+sem `groups`, cujo compute lê `consignment.agreement` **como o usuário**. O
+formulário do contato é de todo mundo; o ACL da consignação não é. Resultado:
+**dez das treze funções** — todas menos o Comercial, a Direção e o Visitante —
+esbarravam no erro **antes de a tela desenhar**. A régua nova teria nascido
+falsa por causa de um botão.
+
+O conserto é do lado de lá, no `liber_soc_agreements`: `groups=` no campo (o
+ORM tira do arch e nunca chama o compute) **e** no nó do botão (senão sobra um
+botão cujo `invisible` cita um campo que não veio, e o cliente web trata
+modificador com campo ausente como falso — botão visível e quebrado ao
+clicar). `compute_sudo=True` seria a saída errada: faria o número aparecer
+para quem não tem o app.
+
+**O freio ficou genérico**, em `tests/test_contatos.py`: monta o formulário
+como cada uma das treze funções, colhe todos os campos que o arch pede e lê um
+a um. Qualquer módulo que amanhã pendure na ficha de contato um campo que lê
+modelo cercado cai ali, e não no colo de quem for cadastrar uma livraria.
+
+### A armadilha que quase deixou o teste verde com o bug em pé
+
+Vale mais que o conserto, porque não é sobre este campo: **o cache do ORM é da
+transação, não do usuário.** A primeira versão da varredura ia da Direção para
+baixo e passava limpa. A Direção pode tudo, computava o campo, e todos os
+perfis seguintes o encontravam no cache — nenhum deles chegava a chamar o
+compute. Um `env.invalidate_all()` antes de cada leitura foi a diferença entre
+"ninguém reclamou" e "está certo". Teste de acesso escrito sem isso mede o
+primeiro usuário da lista, e mais nada.

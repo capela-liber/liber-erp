@@ -278,7 +278,7 @@ class TestAcessos(TransactionCase):
             {'name': 'Livraria nova (%s)' % chave, 'is_company': True})
 
     def test_contato_e_de_quem_gerencia(self):
-        """A régua de 09/08/2026: o cadastro subiu de nível.
+        """A régua de 09/08/2026, uniformizada em 20/08/2026.
 
         Comercial e Editorial cadastravam nos dois níveis; passaram a
         cadastrar só no Gerente. O Jurídico, que não cadastrava em nível
@@ -286,19 +286,55 @@ class TestAcessos(TransactionCase):
         primeiro documento da casa a citar um autor, e mandar quem redige
         pedir o cadastro a outro departamento é inventar uma fila onde não
         havia trabalho.
+
+        Em 20/08/2026 o cadastro deixou de ser concessão de departamento e
+        virou marca de nível, como já era a exportação: entraram a Logística
+        (o endereço de coleta e a transportadora nascem no depósito) e o
+        Marketing (a lista de contatos é o mailing). A varredura passa a ser
+        sobre a grade inteira -- departamento novo no módulo e esquecido aqui
+        fica vermelho.
         """
-        for chave in ('direcao', 'comercial_gerente', 'editorial_gerente',
-                      'juridico_gerente'):
+        alvos = ['direcao'] + ['%s_gerente' % dep for dep in self.DEPARTAMENTOS]
+        for chave in alvos:
             self.assertTrue(self._cadastra_contato(chave).id,
                             '%s não conseguiu cadastrar um contato' % chave)
+            self.assertTrue(
+                self.usuario[chave].has_group('base.group_partner_manager'),
+                '%s cadastrou contato sem o partner_manager -- veio de carona '
+                'de outro grupo, e a régua do nível não está escrita' % chave)
+
+    def test_assistente_le_contato(self):
+        """O outro degrau da régua: quem não cadastra, lê.
+
+        Não há linha de XML nossa por trás disto, e é o ponto do teste: o ACL
+        do core dá `res.partner` em leitura a `base.group_user` (`1,0,0,0`), e
+        toda função da casa começa por `base.group_user`. Se um dia alguém
+        estreitar esse ACL -- ou criar uma função sem o usuário interno, como
+        já aconteceu com o Marketing em 09/08 --, é aqui que aparece.
+
+        A leitura é cobrada com `read` de verdade, e não com `has_group`:
+        grupo é meio, o que se prometeu foi enxergar o contato.
+        """
+        contato = self.env['res.partner'].create({'name': 'Livraria de leitura'})
+        for dep in self.DEPARTAMENTOS:
+            chave = '%s_assistente' % dep
+            env = self.env(user=self.usuario[chave].id, su=False)
+            self.assertEqual(
+                env['res.partner'].browse(contato.id).name,
+                'Livraria de leitura',
+                '%s não lê contato -- o assistente ficou cego para o cadastro'
+                % chave)
 
     def test_assistente_nao_cadastra_contato(self):
         """O outro lado da régua, sem o qual ela não é uma régua.
 
-        O Comercial NÃO está nesta lista, e a ausência dele é o assunto do
-        teste seguinte -- não um esquecimento.
+        Duas ausências nesta lista, e nenhuma é esquecimento: o COMERCIAL é o
+        assunto do teste seguinte (o ACL que o concede é do `crm`, não nosso)
+        e o FINANCEIRO é exceção pedida -- ver
+        `test_cobranca_continua_cadastrando_o_cliente`.
         """
-        for chave in ('editorial_assistente', 'juridico_assistente'):
+        for chave in ('logistica_assistente', 'editorial_assistente',
+                      'juridico_assistente', 'marketing_assistente'):
             with self.assertRaises(AccessError, msg=(
                     '%s cadastrou contato: o cadastro não subiu para a '
                     'gerência' % chave)):

@@ -78,7 +78,7 @@ class TestTelasDoOlist(TransactionCase):
             self.assertNotIn(morto, lista.arch,
                              "o botão podado voltou à fileira: %s" % morto)
         for vivo in ('action_read_detail', 'action_import_selected',
-                     'action_consolidar_historico'):
+                     ):
             self.assertIn(vivo, lista.arch,
                           "a poda levou botão demais: %s" % vivo)
 
@@ -89,13 +89,14 @@ class TestTelasDoOlist(TransactionCase):
         acao = self.env.ref('liber_olist.action_olist_fila')
         self.assertIn("'nao_importado'", acao.domain,
                       "a fila mostra só o que está pronto para importar")
-        self.assertIn('id_nota_fiscal', acao.domain,
-                      "sem nota não há o que despachar: a caixa viaja com a "
-                      "DANFE — o Em aberto espera o Olist faturar")
+        self.assertIn('despachavel', acao.domain,
+                      "quem exige (ou dispensa) a nota é a política das "
+                      "Definições — o domínio pergunta ao campo, não "
+                      "hardcodeia a DANFE")
         fila = self.env.ref('liber_olist.view_olist_order_list_fila')
         self.assertIn('action_import_selected', fila.arch)
         for fora in ('action_pull_from_olist', 'action_read_detail',
-                     'action_consolidar_historico', 'action_create_invoice'):
+                     'action_create_invoice'):
             self.assertNotIn(fora, fila.arch,
                              "a fila tem UM botão; %s é da auditoria" % fora)
         self.assertLess(

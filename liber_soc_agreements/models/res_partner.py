@@ -9,11 +9,28 @@ class ResPartner(models.Model):
     consignment_location_id = fields.Many2one(
         'stock.location', string='Consignment Shelf',
         help="Internal location holding our stock placed at this customer.")
+    # OS DOIS CAMPOS SÃO DO GRUPO, E NÃO DA FICHA (20/08/2026). Eles LEEM
+    # `consignment.agreement`, cujo ACL é dos grupos da consignação -- e a
+    # ficha de contato é de todo mundo. Sem o `groups=` aqui, o cartão de
+    # Consignação entrava no formulário de qualquer um e o compute estourava
+    # `You are not allowed to access 'Consignment Agreement'` ANTES de a tela
+    # abrir: dez das treze funções da casa (todas menos o Comercial, a Direção
+    # e o Visitante) não conseguiam abrir contato nenhum.
+    #
+    # Com `groups=`, o ORM tira o campo do arch e nunca chama o compute para
+    # quem não é da consignação. O botão no XML repete a marca -- ver
+    # views/res_partner_views.xml, e o porquê de serem os dois.
+    #
+    # A saída alternativa seria `compute_sudo=True`, e ela está errada: faria
+    # o número aparecer para quem não tem o app. O cartão é informação de
+    # consignação, não do cadastro.
     consignment_agreement_ids = fields.One2many(
-        'consignment.agreement', 'partner_id', string='Consignment Agreements')
+        'consignment.agreement', 'partner_id', string='Consignment Agreements',
+        groups='liber_soc_agreements.group_soc_user')
     consignment_agreement_count = fields.Integer(
         string='# Consignment Agreements',
-        compute='_compute_consignment_agreement_count')
+        compute='_compute_consignment_agreement_count',
+        groups='liber_soc_agreements.group_soc_user')
 
     def _soc_sales_channel(self, company=None):
         """The customer's sales channel, read in the DOCUMENT's company.

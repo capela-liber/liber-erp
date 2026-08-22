@@ -275,7 +275,38 @@ class OlistProduct(models.Model):
         """
         if 'product_id' in vals and 'match_origin' not in vals:
             vals = dict(vals, match_origin='manual' if vals['product_id'] else False)
-        return super().write(vals)
+        resultado = super().write(vals)
+        if 'product_id' in vals or 'olist_id' in vals:
+            self._carimba_ficha()
+        return resultado
+
+    @api.model_create_multi
+    def create(self, vals_list):
+        linhas = super().create(vals_list)
+        linhas._carimba_ficha()
+        return linhas
+
+    def _carimba_ficha(self):
+        """Casou no espelho? A FICHA fica sabendo na hora.
+
+        A varredura do cron de estoque só envia produto com
+        `olist_produto_id` na ficha — e até 22/08/2026 o casamento parava no
+        espelho: a N1-Site ficou com 217 de 219 livros invisíveis ao push, e
+        a varredura "completava" sem eles. O carimbo retroativo foi o
+        scripts/olist_carimbar_produtos.py; isto aqui é o que impede o buraco
+        de reabrir a cada livro que casar daqui em diante.
+
+        Não sobrescreve carimbo existente: id divergente entre espelho e
+        ficha é notícia para gente, não para um write silencioso.
+        """
+        for linha in self:
+            if not (linha.product_id and linha.olist_id and linha.account_id):
+                continue
+            ficha = linha.product_id.product_tmpl_id.with_company(
+                linha.account_id.company_id)
+            if not ficha.olist_produto_id:
+                ficha.olist_produto_id = linha.olist_id
+        return True
 
     @staticmethod
     def _titulo_chave(texto):

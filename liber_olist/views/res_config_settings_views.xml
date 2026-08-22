@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="res_config_settings_view_form_olist" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.liber.olist</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="base.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form" position="inside">
+                <app data-string="Olist" string="Olist" name="liber_olist">
+                    <block title="Despacho" name="olist_despacho">
+                        <setting id="olist_despacho_politica_setting"
+                                 string="Despachar pedidos do Olist"
+                                 help="Só com nota (padrão): o pedido entra na fila quando o Olist já emitiu a nota — a caixa viaja com a DANFE. Com ou sem nota: o pedido entra assim que chega, e a fatura o alcança sozinha quando a nota vier pelo sync.">
+                            <field name="olist_despacho_politica"
+                                   widget="radio" class="o_light_label"/>
+                        </setting>
+                    </block>
+                </app>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

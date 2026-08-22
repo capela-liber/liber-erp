@@ -35,9 +35,9 @@ msgstr ""
 #. odoo-python
 #: code:addons/liber_soc_fiscal_br/models/sale_order.py:0
 msgid ""
-"%s has no remessa note yet. Generate it with the \"Gerar nota\" button after"
+"%s has no remessa note yet. Generate it with the \"Criar nota\" button after"
 " confirming."
-msgstr "%s ainda não tem nota de remessa. Gere com o botão \"Gerar nota\" depois de confirmar."
+msgstr "%s ainda não tem nota de remessa. Gere com o botão \"Criar nota\" depois de confirmar."
 
 #. module: liber_soc_fiscal_br
 #. odoo-python
@@ -62,6 +62,8 @@ msgid ""
 "<span class=\"text-muted ms-2\">Backfill the account on existing "
 "shelves.</span>"
 msgstr ""
+"<span class=\"text-muted ms-2\">Preenche a conta nas prateleiras que já "
+"existem.</span>"
 
 #. module: liber_soc_fiscal_br
 #: model:ir.model.fields,help:liber_soc_fiscal_br.field_sale_order__cfop_id
@@ -74,6 +76,9 @@ msgid ""
 "Asset account (e.g. 115000) that holds the value of goods consigned at "
 "customers. Shelves re-qualify their value into it instead of Inventory."
 msgstr ""
+"Conta do ativo (ex.: 115000) que guarda o valor da mercadoria consignada nos"
+" clientes. As prateleiras requalificam seu valor para ela, em vez de "
+"Estoque."
 
 #. module: liber_soc_fiscal_br
 #: model:ir.model.fields,help:liber_soc_fiscal_br.field_res_company__consignment_stock_account_id
@@ -83,6 +88,9 @@ msgid ""
 " (e.g. 115000). Consignment shelves re-qualify their value into this account"
 " instead of the warehouse Inventory account."
 msgstr ""
+"Conta do ativo que guarda o valor da mercadoria hoje consignada nos clientes"
+" (ex.: 115000). As prateleiras de consignação requalificam seu valor para "
+"essa conta, em vez da conta de Estoque do armazém."
 
 #. module: liber_soc_fiscal_br
 #: model:ir.model.fields,field_description:liber_soc_fiscal_br.field_sale_order__cfop_id
@@ -155,6 +163,20 @@ msgstr ""
 
 #. module: liber_soc_fiscal_br
 #: model_terms:ir.ui.view,arch_db:liber_soc_fiscal_br.res_config_settings_view_form_soc_fiscal
+msgid ""
+"Consignment has its own warehouse operation types, separate from sales (so "
+"the warehouse can prioritise sales). Auto-created on first use: COM/OUT "
+"(remessa ao cliente), COM/MOV (internal shelf flows) and COM/IN (return). "
+"Old bases keep their COM/ and RET/ history untouched."
+msgstr ""
+"A consignação tem seus próprios tipos de operação de armazém, separados dos "
+"de venda (para o armazém poder priorizar as vendas). Criados automaticamente"
+" no primeiro uso: COM/OUT (remessa ao cliente), COM/MOV (movimentos internos"
+" de prateleira) e COM/IN (devolução). Bases antigas mantêm intocado o "
+"histórico em COM/ e RET/."
+
+#. module: liber_soc_fiscal_br
+#: model_terms:ir.ui.view,arch_db:liber_soc_fiscal_br.res_config_settings_view_form_soc_fiscal
 msgid "Consignment return; CFOP 5918 internal / 6918 interstate."
 msgstr "Devolução de consignação; CFOP 5918 interno / 6918 interestadual."
 
@@ -198,7 +220,7 @@ msgstr "Posição fiscal para a venda gerada no acerto (Acerto S)."
 
 #. module: liber_soc_fiscal_br
 #: model_terms:ir.ui.view,arch_db:liber_soc_fiscal_br.view_order_form_consignment_note
-msgid "Gerar nota"
+msgid "Criar nota"
 msgstr ""
 
 #. module: liber_soc_fiscal_br
@@ -232,6 +254,8 @@ msgid ""
 "One fiscal position (same inside/outside the state); CFOP 5917 internal / "
 "6917 interstate."
 msgstr ""
+"Uma posição fiscal (a mesma dentro e fora do estado); CFOP 5917 interno / "
+"6917 interestadual."
 
 #. module: liber_soc_fiscal_br
 #: model:ir.model.fields,field_description:liber_soc_fiscal_br.field_sale_order__document_kind
@@ -357,6 +381,9 @@ msgid ""
 "Warehouse operation type used for consignment returns (customer shelf -> "
 "warehouse). It is a merchandise return, not a generic internal transfer."
 msgstr ""
+"Tipo de operação do armazém usado nas devoluções de consignação (prateleira "
+"do cliente → armazém). É devolução de mercadoria, não uma transferência "
+"interna genérica."
 
 #. module: liber_soc_fiscal_br
 #: model:ir.model.fields,help:liber_soc_fiscal_br.field_res_config_settings__consignment_shipment_operation_type_id
@@ -366,6 +393,20 @@ msgid ""
 msgstr ""
 
 #. module: liber_soc_fiscal_br
+#: model:ir.model.fields,help:liber_soc_fiscal_br.field_res_config_settings__consignment_shipment_operation_type_id
+msgid ""
+"Warehouse operation type used for the internal shelf flows (warehouse -> "
+"customer shelf), numbered COM/MOV. Archived so it does not draw a card on "
+"the Inventory Overview: the remessa the warehouse actually works is the "
+"Pedido C's, on COM/OUT."
+msgstr ""
+"Tipo de operação do armazém usado nos movimentos internos de prateleira "
+"(armazém → prateleira do cliente), numerado COM/MOV. Fica arquivado para não"
+" desenhar um cartão na Visão Geral do Estoque: a remessa que o armazém "
+"realmente trabalha é a do Pedido C, em COM/OUT."
+
+#. module: liber_soc_fiscal_br
 #: model_terms:ir.ui.view,arch_db:liber_soc_fiscal_br.res_config_settings_view_form_soc_fiscal
 msgid "Wire consignment shelves"
 msgstr "Conectar prateleiras de consignação"
+

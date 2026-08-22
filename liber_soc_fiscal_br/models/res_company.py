@@ -54,3 +54,11 @@ class ResCompany(models.Model):
             ])
             shelves.write({'valuation_account_id': account.id})
         return True
+
+    def _remessa_fiscal_position_by_kind(self):
+        # The consignment shipment's fiscal position rules the REM-C journal:
+        # it is the map that says a remessa leaves revenue and lands on the
+        # consignment investment account.
+        res = super()._remessa_fiscal_position_by_kind()
+        res['consignment'] = self.consignment_shipment_fiscal_position_id
+        return res

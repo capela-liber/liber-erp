@@ -14,3 +14,7 @@ access_stock_orderpoint_visitante,stock.warehouse.orderpoint leitura p/ visitant
 access_purchase_order_visitante,purchase.order leitura p/ visitante (a aba Compras do contato),purchase.model_purchase_order,group_visitante,1,0,0,0
 access_purchase_order_line_visitante,purchase.order.line leitura p/ visitante,purchase.model_purchase_order_line,group_visitante,1,0,0,0
 access_account_journal_visitante,account.journal leitura p/ visitante (Remessas agrupa por diário),account.model_account_journal,group_visitante,1,0,0,0
+access_purchase_order_editorial,purchase.order leitura p/ editorial (tiragem e gráfica),purchase.model_purchase_order,group_editorial_assistente,1,0,0,0
+access_purchase_order_line_editorial,purchase.order.line leitura p/ editorial,purchase.model_purchase_order_line,group_editorial_assistente,1,0,0,0
+access_stock_picking_editorial,stock.picking leitura p/ editorial (o PO abre a transferência no botão inteligente),stock.model_stock_picking,group_editorial_assistente,1,0,0,0
+access_stock_move_editorial,stock.move leitura p/ editorial (a linha da transferência que o PO puxa),stock.model_stock_move,group_editorial_assistente,1,0,0,0

@@ -179,6 +179,29 @@ class TestAccountMoveFocus(AccountTestInvoicingCommon):
         return move
 
     # -- caminho feliz -------------------------------------------------
+    def test_a_nota_para_pessoa_fisica_nao_se_contradiz(self):
+        """Rejeição da SEFAZ em 21/08, na REM-C/2026/00005 do staging:
+
+        "Operação com não contribuinte deve indicar operação com consumidor
+        final". O bloco do destinatário DEDUZIA o indicador (CPF sem IE = 9,
+        não contribuinte) e o `consumidor_final` lia o campo cru, vazio, e
+        respondia 0. A nota saía afirmando as duas coisas ao mesmo tempo, e é
+        exatamente essa combinação que a SEFAZ recusa.
+        """
+        pessoa = self.env['res.partner'].create({
+            'name': 'Consumidor', 'vat': '102.505.880-13',
+            'street': 'Praça John Kennedy, 123', 'zip': '91360-310',
+            'city': 'Porto Alegre', 'nfe_bairro': 'Centro',
+            'state_id': self.env.ref('base.state_br_rs').id,
+            'country_id': self.env.ref('base.br').id,
+        })
+        payload = self._fatura(partner=pessoa)._focus_build_payload()
+
+        self.assertEqual(payload['indicador_inscricao_estadual_destinatario'], 9,
+                         "CPF sem IE é não contribuinte")
+        self.assertEqual(payload['consumidor_final'], 1,
+                         "não contribuinte tem que sair como consumidor final")
+
     def test_payload_da_fatura_esta_completo(self):
         payload = self._fatura()._focus_build_payload()
 
@@ -691,6 +714,40 @@ class TestResPartnerFocus(AccountTestInvoicingCommon):
         with self.assertRaises(ValidationError):
             self.env['res.partner'].create({
                 'name': 'Teste', 'nfe_inscricao_estadual': 'ISENTO'})
+
+    # --- o indicador de IE: uma pergunta, uma resposta -------------------
+    def test_indicador_deduz_nao_contribuinte_da_pessoa_fisica(self):
+        """CPF sem IE é não contribuinte -- a ajuda do campo sempre disse isso."""
+        partner = self.env['res.partner'].create({
+            'name': 'Pessoa Física', 'vat': '102.505.880-13'})
+
+        self.assertEqual(partner._nfe_indicador_ie_efetivo(), '9')
+
+    def test_indicador_deduz_contribuinte_de_quem_tem_ie(self):
+        partner = self.env['res.partner'].create({
+            'name': 'Livraria', 'nfe_inscricao_estadual': '123456789'})
+
+        self.assertEqual(partner._nfe_indicador_ie_efetivo(), '1')
+
+    def test_indicador_deduz_isento_no_resto(self):
+        partner = self.env['res.partner'].create({
+            'name': 'Empresa sem IE', 'vat': '35.288.052/0001-90'})
+
+        self.assertEqual(partner._nfe_indicador_ie_efetivo(), '2')
+
+    def test_indicador_preenchido_a_mao_vence_a_deducao(self):
+        partner = self.env['res.partner'].create({
+            'name': 'Livraria', 'nfe_inscricao_estadual': '123456789',
+            'nfe_indicador_ie': '2'})
+
+        self.assertEqual(partner._nfe_indicador_ie_efetivo(), '2')
+
+    def test_o_destinatario_declara_o_indicador_deduzido(self):
+        """O bloco do destinatário não pode sair com o indicador vazio."""
+        partner = self.env['res.partner'].create({
+            'name': 'Pessoa Física', 'vat': '102.505.880-13'})
+
+        self.assertEqual(partner._focus_destinatario_data()['indicador_ie'], 9)
 
 
 @tagged('post_install', '-at_install', 'focus_nfe')

@@ -42,6 +42,19 @@
                     written in the e-mail is ignored, and the consignment
                     agreement is not read.
                 </div>
+                <!-- A conferência do XML: as duas pontas da NFe contra o
+                     CNPJ do parceiro. Vermelho porque errar acerto é caro;
+                     a caixa de confirmação mora DENTRO do alerta para o
+                     caso legítimo não ter que caçá-la. -->
+                <div class="alert alert-danger" role="alert"
+                     invisible="not cnpj_alert">
+                    <field name="cnpj_alert" readonly="1" nolabel="1"/>
+                    <div class="mt-2">
+                        <field name="cnpj_override" nolabel="1"
+                               class="me-1"/>
+                        <label for="cnpj_override"/>
+                    </div>
+                </div>
                 <!-- Ordem pedida (10/08): a grade primeiro — é nela que se
                      trabalha; o botão e o texto bruto embaixo, para quando
                      for preciso reler. -->

@@ -97,7 +97,9 @@ Testes
 - ``tests/test_nfe_payload.py`` — a regra fiscal, sem banco: totais que fecham
   com a soma dos itens, arredondamento meio-para-cima (o ``round()`` do Python
   faz 1,005 virar 1,00 e a nota é rejeitada por um centavo), CSOSN no Simples
-  contra CST no Normal, CPF contra CNPJ, interna contra interestadual, e o
+  contra CST no Normal, CPF contra CNPJ, interna contra interestadual, o
+  grupo de cobrança fechando por dentro (a soma das parcelas é o líquido da
+  fatura -- rejeições 851 e 866 são as duas pontas do mesmo centavo), e o
   que ``missing_fields`` acusa antes de gastar uma chamada.
 - ``tests/test_focus_client.py`` — o HTTP, com um ``requests`` falso: nada sai
   para a rede. Cobre a autenticação de senha vazia, o ``ref`` na query, e a
@@ -142,7 +144,7 @@ errado" de "o cadastro na Focus está errado".
     """,
     'author': "EdLab Press",
     'category': 'Accounting',
-    'version': '19.0.2.4.0',
+    'version': '19.0.2.6.0',
     'license': 'AGPL-3',
     'depends': ['account', 'liber_nfe_xml'],
     'external_dependencies': {'python': ['requests', 'pytz']},

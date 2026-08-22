@@ -193,3 +193,59 @@ class TestOlistMirror(TransactionCase):
              patch.object(olist_client, 'update_estoque') as escrita:
             self.env['olist.account'].cron_pull_stock_window()
         escrita.assert_not_called()
+
+
+@tagged('post_install', '-at_install')
+class TestOlistSaldoConverge(TransactionCase):
+    """A janela não basta: o espelho converge relendo o mais velho.
+
+    Medido em 20/08/2026: `lista.atualizacoes.estoque` devolveu ZERO produtos
+    numa janela de 29 dias, numa conta que vendeu no período — tudo indica que
+    ela só reporta alterações feitas via API, e nós nunca escrevemos estoque.
+    """
+
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.env['olist.account'].search([]).write({'active': False})
+        cls.account = cls.env['olist.account'].create({
+            'name': "Olist Saldo", 'company_id': cls.env.company.id,
+            'token': "TOKEN-S", 'read_only': True})
+        cls.linhas = cls.env['olist.product'].create([{
+            'account_id': cls.account.id, 'olist_id': 'S%s' % i,
+            'codigo': '978000000000%s' % i, 'name': 'Livro %s' % i,
+        } for i in range(4)])
+
+    def test_the_oldest_balances_are_reread_with_the_leftover_time(self):
+        with patch.object(olist_client, 'list_atualizacoes_estoque',
+                          return_value=[]), \
+             patch.object(olist_client, 'get_estoque',
+                          return_value={'saldo': 7}), \
+             patch.object(type(self.account), '_grava_ja',
+                          return_value=999.0):
+            self.account._pull_stock_window()
+        self.assertTrue(all(l.saldo_olist_date for l in self.linhas),
+                        "o espelho não convergiu")
+        self.assertTrue(all(l.saldo_olist == 7 for l in self.linhas))
+
+    def test_it_stops_when_the_cycle_is_full(self):
+        with patch.object(olist_client, 'list_atualizacoes_estoque',
+                          return_value=[]), \
+             patch.object(olist_client, 'get_estoque',
+                          return_value={'saldo': 7}), \
+             patch.object(type(self.account), '_grava_ja',
+                          return_value=1.0):
+            self.account._pull_stock_window()
+        self.assertFalse(any(l.saldo_olist_date for l in self.linhas),
+                         "começou leitura que não cabia no ciclo")
+
+    def test_outside_a_cron_it_does_not_sweep(self):
+        # Fora do cron `_grava_ja` devolve infinito: o botão da tela não pode
+        # virar uma varredura de vinte minutos sem ninguém pedir.
+        with patch.object(olist_client, 'list_atualizacoes_estoque',
+                          return_value=[]), \
+             patch.object(type(self.account), '_grava_ja',
+                          return_value=float('inf')), \
+             patch.object(olist_client, 'get_estoque') as leu:
+            self.account._pull_stock_window()
+        leu.assert_not_called()

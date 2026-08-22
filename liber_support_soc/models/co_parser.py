@@ -174,6 +174,91 @@ def parse_lines(text):
     return out
 
 
+# ---------------------------------------------------------------------
+# NFe XML: a melhor fonte de todas — ISBN (cEAN) e quantidade (qCom)
+# exatos, sem fuzzy. O desenho espelha o liber_nfe_xml, mas em funções
+# puras: bytes entram, itens saem, nada de ORM.
+# ---------------------------------------------------------------------
+
+NFE_NS = '{http://www.portalfiscal.inf.br/nfe}'
+
+
+def _nfe_root(raw):
+    """bytes -> ElementTree root, ou None se não for XML são."""
+    import xml.etree.ElementTree as ET
+    try:
+        return ET.fromstring(raw)
+    except ET.ParseError:
+        return None
+
+
+def is_nfe_xml(name, raw):
+    """É um XML de NFe? Pelo nome OU pelo conteúdo — o anexo do e-mail
+    às vezes chega como '35240812345....xml', às vezes 'nota (3).XML'."""
+    if not raw:
+        return False
+    head = raw[:512]
+    if b'infNFe' in raw[:4096] or b'portalfiscal.inf.br/nfe' in raw[:4096]:
+        return True
+    return (name or '').lower().endswith('.xml') and (
+        head.lstrip()[:5] in (b'<?xml', b'<nfeP', b'<NFe ', b'<NFe>'))
+
+
+def nfe_items(raw):
+    """NFe XML (bytes) -> itens {'qty', 'label', 'isbn'}.
+
+    Um item por <det>: rótulo do xProd, quantidade do qCom (float da
+    SEFAZ, '3.0000' é 3), ISBN do cEAN quando é ISBN-13 de verdade —
+    'SEM GTIN' e códigos internos não viram isbn. XML quebrado devolve
+    lista vazia, não exceção: quem chama decide o fallback."""
+    root = _nfe_root(raw)
+    if root is None:
+        return []
+    items = []
+    for det in root.findall('.//%sdet' % NFE_NS):
+        label_node = det.find('.//%sxProd' % NFE_NS)
+        qty_node = det.find('.//%sqCom' % NFE_NS)
+        isbn = None
+        for tag in ('cEAN', 'cProd'):
+            node = det.find('.//%s%s' % (NFE_NS, tag))
+            code = _digits(node.text if node is not None else '')
+            if re.fullmatch(r'97[89]\d{10}', code):
+                isbn = code
+                break
+        try:
+            qty = int(float(qty_node.text)) if qty_node is not None else 1
+        except (TypeError, ValueError):
+            qty = 1
+        label = (label_node.text or '').strip() if label_node is not None \
+            else ''
+        if not (label or isbn):
+            continue
+        items.append({'qty': qty or 1, 'label': label or isbn,
+                      'isbn': isbn})
+    return items
+
+
+def nfe_party_docs(raw):
+    """NFe XML (bytes) -> conjunto de CNPJs/CPFs (só dígitos) das DUAS
+    pontas, emitente e destinatário. Numa devolução a livraria é a
+    EMITENTE — ler só o primeiro <CNPJ> já nos custou uma volta no
+    liber_nfe_xml, daí o conjunto."""
+    root = _nfe_root(raw)
+    if root is None:
+        return set()
+    docs = set()
+    for tag in ('emit', 'dest'):
+        node = root.find('.//%s%s' % (NFE_NS, tag))
+        if node is None:
+            continue
+        doc = node.find('.//%sCNPJ' % NFE_NS)
+        if doc is None:
+            doc = node.find('.//%sCPF' % NFE_NS)
+        if doc is not None and doc.text:
+            docs.add(_digits(doc.text))
+    return docs - {''}
+
+
 def xlsx_rows_to_text(rows):
     """Linhas de células (listas) -> texto TAB-separado para o parse_lines.
     Pura: recebe listas já lidas, não abre arquivo. O openpyxl entrega

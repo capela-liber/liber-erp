@@ -34,11 +34,24 @@
             <field name="active" eval="False"/>
         </record>
 
-        <!-- LEITURA, 4x ao dia, durante o dia. Só a janela incremental: uma
-             chamada devolve os produtos cujo saldo mudou no Olist desde a
-             última passada (venda no marketplace, ajuste na mão de lá). Ler o
-             saldo do catálogo inteiro custaria ~580 chamadas e vinte minutos
-             de cota - não cabe quatro vezes por dia, e não precisa.
+        <!-- LEITURA, 4x ao dia, durante o dia. Duas coisas em cada rodada.
+
+             Primeiro a janela incremental: uma chamada que devolveria os
+             produtos cujo saldo mudou no Olist desde a última passada. Ela
+             não entrega. Medido em 20/08/2026, `lista.atualizacoes.estoque`
+             devolveu ZERO produtos numa janela de 29 dias, nas duas contas,
+             num período em que houve venda - tudo indica que ela só reporta
+             alteração feita VIA API, e nós nunca escrevemos estoque. Se for
+             isso, ela jamais enxergará uma venda. Fica, porque é barata e
+             porque passa a valer no dia em que o push for armado.
+
+             Depois, com o tempo que sobrar do ciclo, a releitura por
+             antiguidade: uma chamada por livro, começando pelos saldos mais
+             velhos, até o executor avisar que o ciclo acabou. É o que faz o
+             espelho convergir de fato. Varrer o catálogo de uma vez custaria
+             ~580 chamadas e vinte minutos de cota, e nenhuma rodada aguenta
+             isso; em quatro rodadas por dia, ele se renova em poucos dias sem
+             nenhuma delas estourar o tempo.
 
              Nasce ATIVA sem risco: ela varre as contas cadastradas, e
              recém-instalado não existe nenhuma. E ela nunca escreve, nem

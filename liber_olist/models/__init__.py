@@ -6,3 +6,4 @@ from . import nfe_xml_panel
 from . import product_template
 from . import stock_picking
 from . import sale_order
+from . import res_config_settings

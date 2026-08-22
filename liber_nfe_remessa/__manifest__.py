@@ -22,7 +22,7 @@ payment, bank and all.
     """,
     'author': "EdLab Press",
     'category': 'Accounting',
-    'version': '19.0.1.0.0',
+    'version': '19.0.1.3.0',
     'license': 'AGPL-3',
     'depends': ['account'],
     'data': [

@@ -6,9 +6,17 @@
         <field name="model">res.partner</field>
         <field name="inherit_id" ref="base.view_partner_form"/>
         <field name="arch" type="xml">
+            <!-- O `groups` no BOTÃO, e não só no campo (20/08/2026). O
+                 `groups=` do campo já impede o compute, mas deixa no arch um
+                 botão cujo `invisible` cita um campo que não veio, e o
+                 cliente web resolve modificador com campo ausente como
+                 falso, ou seja, botão visível e quebrado ao clicar. A marca
+                 nos dois lugares faz o cartão simplesmente não existir para
+                 quem não é da consignação. -->
             <div name="button_box" position="inside">
                 <button type="object" name="action_view_consignment_agreements"
                         class="oe_stat_button" icon="fa-handshake-o"
+                        groups="liber_soc_agreements.group_soc_user"
                         invisible="consignment_agreement_count == 0">
                     <field name="consignment_agreement_count" widget="statinfo"
                            string="Consignment"/>
