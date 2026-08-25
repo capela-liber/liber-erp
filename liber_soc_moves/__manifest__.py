@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     'name': 'Consignment - Movements',
-    'version': '19.0.2.7.0',
+    'version': '19.0.2.10.0',
     'summary': 'Consignment stock movements: shipment, replenishment, return, symbolic renewal',
     'description': """
 Consignment movements (SOC redesign).
@@ -29,7 +29,12 @@ settlement (soc_settlement).
     # because security/ir.model.access.csv now hands out rights ON stock's own
     # models: an ACL that names a model of a module we do not declare would
     # break the day that dependency moved.
-    'depends': ['liber_soc_agreements', 'sale', 'stock'],
+    # 'spreadsheet_dashboard' is declared because models/spreadsheet_dashboard.py
+    # extends it: the Sales dashboard reads sale.order directly in two of its
+    # tables (a spreadsheet list has no report in between), so the rule "a
+    # consignment is not a sale" has to be stated there too -- sale.report
+    # alone does not reach it.
+    'depends': ['liber_soc_agreements', 'sale', 'stock', 'spreadsheet_dashboard'],
     'data': [
         'security/soc_moves_security.xml',
         'security/ir.model.access.csv',
@@ -45,6 +50,7 @@ settlement (soc_settlement).
     'assets': {
         'web.assets_backend': [
             'liber_soc_moves/static/src/js/soc_consignment_tour.js',
+            'liber_soc_moves/static/src/js/pedido_c_tour.js',
         ],
     },
     'installable': True,

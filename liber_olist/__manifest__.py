@@ -15,7 +15,7 @@ company's CNPJ.
 """,
     'author': "EdLab",
     'category': 'Accounting',
-    'version': '19.0.14.2.0',
+    'version': '19.0.15.2.0',
     'license': 'LGPL-3',
     # `liber_metabooks_integration` porque a casa decidiu (17/08/2026) o que é o
     # CATÁLOGO: livro Metabooks do tipo pbook. Sem ele, "o que é nosso e ainda
@@ -23,8 +23,12 @@ company's CNPJ.
     # editoriais, retirada de lucros e o catálogo de distribuição inteiro.
     'depends': ['liber_nfe_xml', 'liber_metabooks_integration'],
     'data': [
-        'security/ir.model.access.csv',
+        # O XML dos GRUPOS vem antes do CSV: o ir.model.access referencia o
+        # group_olist_operador, e o Odoo carrega na ordem escrita aqui — na
+        # ordem inversa o módulo nem instala ("No matching record found for
+        # external id 'group_olist_operador'").
         'security/olist_security.xml',
+        'security/ir.model.access.csv',
         'views/olist_menus.xml',
         'views/olist_account_views.xml',
         'views/res_config_settings_views.xml',
@@ -39,6 +43,8 @@ company's CNPJ.
     'assets': {
         'web.assets_backend': [
             'liber_olist/static/src/js/despacho_tour.js',
+            'liber_olist/static/src/js/relatorio_tour.js',
+            'liber_olist/static/src/js/despacho_comercial_tour.js',
         ],
     },
     'application': False,

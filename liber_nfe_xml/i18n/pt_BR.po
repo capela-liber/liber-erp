@@ -1956,3 +1956,23 @@ msgid ""
 msgstr ""
 "O dígito verificador de %(doc)s não confere. O contato pode ser salvo assim, "
 "mas confira o documento."
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_res_partner__legal_name
+#: model:ir.model.fields,field_description:liber_nfe_xml.field_res_users__legal_name
+msgid "Legal Name"
+msgstr "Razão social"
+
+#. module: liber_nfe_xml
+#: model:ir.model.fields,help:liber_nfe_xml.field_res_partner__legal_name
+#: model:ir.model.fields,help:liber_nfe_xml.field_res_users__legal_name
+msgid ""
+"Razão social: the name this CNPJ is registered under, printed on fiscal "
+"documents. Leave the Name field free for the label everybody uses (the "
+"branch nickname, the trade name). Empty, fiscal documents fall back to the "
+"Name."
+msgstr ""
+"Razão social: o nome sob o qual este CNPJ está registrado, impresso nos "
+"documentos fiscais. Deixe o campo Nome livre para o rótulo que todos usam "
+"(o apelido da filial, o nome fantasia). Vazia, os documentos fiscais usam o "
+"Nome."

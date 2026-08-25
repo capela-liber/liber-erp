@@ -19,6 +19,24 @@
          grupos que já veem o menu. Substituir tiraria Compras de quem
          compra, que é o oposto do pedido.
 
+         E SÓ NO MENU RAIZ (consertado em 24/08/2026). A primeira versão
+         deste arquivo somava o editorial também em `Pedidos` e em `Pedidos
+         de compra`, e foi aí que a soma virou subtração: no core esses dois
+         menus NÃO têm grupo nenhum; `purchase.menu_purchase_root` tem
+         (`group_purchase_user,group_purchase_manager`), os filhos não. Menu
+         sem grupo é aberto a quem alcança o pai e lê o modelo da ação; menu
+         COM grupo é só de quem está nele. Pôr o editorial num menu vazio não
+         acrescentou ninguém: fechou o menu para todo o resto da casa.
+
+         O efeito ficou em pé de 22 a 24/08 nos três bancos, e ninguém viu
+         porque o único teste de tela que passa por aqui é o do editorial,
+         que é justamente quem continuou enxergando. O financeiro, dono do
+         processo, entrava em Compras e via só `Produtos`.
+
+         A regra que fica: para ABRIR um menu a mais gente, só se acrescenta
+         grupo onde JÁ existe grupo. Se o menu está vazio, ele já está aberto
+         e a porta a checar é o ACL, não o menu.
+
          O que este arquivo NÃO faz, e é preciso dizer: o editorial vai ver
          os botões de criar e confirmar pedido, e vai levar uma recusa do
          ACL se clicar. Esconder botão por grupo exigiria uma segunda view
@@ -29,14 +47,6 @@
          ================================================================== -->
 
     <record id="purchase.menu_purchase_root" model="ir.ui.menu">
-        <field name="group_ids" eval="[(4, ref('liber_roles.group_editorial_assistente'))]"/>
-    </record>
-
-    <record id="purchase.menu_procurement_management" model="ir.ui.menu">
-        <field name="group_ids" eval="[(4, ref('liber_roles.group_editorial_assistente'))]"/>
-    </record>
-
-    <record id="purchase.menu_purchase_form_action" model="ir.ui.menu">
         <field name="group_ids" eval="[(4, ref('liber_roles.group_editorial_assistente'))]"/>
     </record>
 

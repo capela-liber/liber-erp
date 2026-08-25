@@ -146,19 +146,26 @@
       <h2 id="painel">Quanto vendemos por dia — e de quê?</h2>
       <p>Em <span class="menupath">Olist<i>‣</i>Relatório</span> (logo antes das Configurações),
       as vendas viram gráfico: uma barra por dia, empilhada por canal, nos últimos 30 dias —
-      cancelados fora. Ele nasce das <strong>linhas</strong> dos pedidos, então mede as duas
-      coisas que importam — <span class="field">Quantidade</span> (exemplares) e
-      <span class="field">Valor</span> (mercadoria, sem o frete) — e agrupa por
-      <strong>livro</strong>: o botão Medidas troca a régua, e o pivô mostra as duas lado a
-      lado, cruzadas por dia, canal ou título. No agrupamento por livro, cada linha usa o rótulo
+      cancelados fora. Ele nasce das <strong>linhas</strong> dos pedidos e mede quatro coisas —
+      <span class="field">Quantidade</span> (exemplares), <span class="field">Valor bruto</span>,
+      <span class="field">Desconto</span> e <span class="field">Valor líquido</span>, sempre
+      mercadoria, sem o frete — e agrupa por <strong>livro</strong>: o botão Medidas troca a
+      régua, e o pivô mostra as colunas lado a lado, cruzadas por data, canal ou título. No agrupamento por livro, cada linha usa o rótulo
       curto — <span class="field">ISBN · título cortado…</span> — para a tabela caber na tela; o
       ISBN na frente garante que dois títulos parecidos nunca se somem numa linha só.</p>
       <figure class="shot">
         <img src="img/doc-liber_olist-painel.png"
              alt="Relatório de vendas em barras por dia, empilhado por canal, com o filtro de 30 dias">
-        <figcaption>O Relatório: o vendido por dia, cada canal na sua cor. Medidas Quantidade e
-        Valor, agrupamento por livro, e o pivô a um clique.</figcaption>
+        <figcaption>O Relatório: o vendido por dia, cada canal na sua cor. Medidas de quantidade
+        e de valor, agrupamento por livro, e o pivô a um clique.</figcaption>
       </figure>
+      <p>A diferença entre <span class="field">bruto</span> e <span class="field">líquido</span> é
+      o que a casa deu: cupom, brinde, promoção do marketplace. O Olist concede o desconto no
+      <em>pedido</em> e não diz de qual livro ele saiu — o Relatório o <strong>rateia</strong> pelo
+      peso de cada linha, então somado por data, canal ou mês o número é exato, e livro a livro é a
+      melhor aproximação que o dado permite. O líquido é o faturamento da mercadoria, não o dinheiro
+      em conta: o frete que o comprador pagou e a comissão retida no repasse ficam de fora dos dois
+      lados.</p>
       <div class="callout">Pedido cujo detalhe ainda não foi lido não tem linhas — e não aparece
       aqui. Enquanto a cobertura do detalhe (na ficha da conta) não fechar, o número é um piso,
       não o total.</div>
@@ -243,6 +250,12 @@
       <div class="callout">Cada equipe encontra a nota onde já trabalha: a logística na
       transferência (com o filtro "Com nota" e o XML anexado), o comercial no pedido, o financeiro
       no título. Ninguém precisa abrir a tela do Olist.</div>
+      <p><strong>Quem faz isto?</strong> O comercial — Assistente e Gerente — atualiza a lista de
+      pedidos, lê o detalhe, mapeia canais e despacha. A <em>ficha da conta</em> é outra coisa e
+      continua da administração: é lá que moram o token da API e a trava
+      <span class="field">Somente leitura</span>, que impede o sistema de escrever no Olist de
+      verdade — decisão de configuração, não de operação.</p>
+
       <h2 id="problemas">Quando algo não sai como esperado</h2>
       <div class="tablewrap"><table>
         <tr><th>O que aparece</th><th>Por quê</th><th>O que fazer</th></tr>

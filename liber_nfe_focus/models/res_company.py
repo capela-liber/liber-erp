@@ -191,7 +191,11 @@ class ResCompany(models.Model):
         endereco = partner._nfe_endereco()
         return {
             'cnpj': self.vat,
-            'nome': self.name,
+            # `company.name` é related de `partner.name`: antes do legal_name
+            # as duas linhas abaixo eram a MESMA string, e a nota declarava a
+            # fantasia no lugar da razão social. Com a razão social na ficha,
+            # cada campo diz o que o nome dele promete.
+            'nome': partner.legal_name or self.name,
             'nome_fantasia': partner.name,
             'logradouro': endereco['logradouro'],
             'numero': endereco['numero'],

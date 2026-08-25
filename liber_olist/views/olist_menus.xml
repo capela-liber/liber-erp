@@ -13,9 +13,25 @@
         tela de Aplicativos. São dois lugares diferentes, e por isso os dois
         apontam para o mesmo arquivo.
     -->
+    <!--
+        A PORTA É DO COMERCIAL (24/08/2026).
+
+        Até aqui o app aparecia para todo usuário interno, e o Financeiro o
+        via na home sem ter o que fazer lá: o marketplace é operação
+        comercial. O `groups` aqui fecha o RAMO inteiro — o Odoo não desenha
+        filho de menu invisível —, e é a mesma decisão que o direito de
+        escrever tomou: quem opera o Olist é o Operador (Comercial Assistente
+        e, pela escada, Gerente e Direção). A administração entra pelo
+        `base.group_system`, porque a ficha da conta é dela.
+
+        Isto fecha a PORTA, não os modelos: os campos do Olist que aparecem
+        noutras telas — a página do produto, o carimbo da nota do painel de
+        NFe — seguem lendo como antes, e cada um já tem a sua própria trava.
+    -->
     <menuitem id="menu_olist_root"
               name="Olist"
               web_icon="liber_olist,static/description/icon.png"
+              groups="liber_olist.group_olist_operador,base.group_system"
               sequence="90"/>
 
 </odoo>

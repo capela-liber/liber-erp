@@ -48,6 +48,58 @@ class SaleOrder(models.Model):
         return super().create(vals_list)
 
     # ------------------------------------------------------------------
+    # Sem contrato ativo não sai livro
+    # ------------------------------------------------------------------
+    # A CONSIGNAÇÃO COMEÇA NO CONTRATO, e o Pedido era a única porta sem
+    # porteiro (24/08/2026). A Movimentação (CR/CO) já recusava desde sempre:
+    # `consignment.move.action_confirm` exige contrato, e exige que ele esteja
+    # ativo. O Pedido C confirmava para qualquer um.
+    #
+    # O que isso produzia não era um aviso perdido: era livro sem lugar para
+    # ir. O destino da remessa é a prateleira do contrato (ver stock_rule.py);
+    # sem contrato não há prateleira, e a remessa caía de volta em "Clientes" --
+    # o livro saía do estoque e não entrava em prateleira nenhuma. Dois pedidos
+    # do prod tinham nascido assim quando a equipe percebeu.
+    #
+    # Suspenso barra pelo mesmo motivo, e é o motivo de suspender existir: quem
+    # suspende quer parar de mandar livro. Um Pedido C que passa por cima faz
+    # da suspensão um enfeite.
+    #
+    # A trava é no CONFIRMAR, não no criar: o comercial monta o pedido, vê o
+    # que está montando, e é na hora de mandar para o depósito que a casa
+    # cobra o contrato. O contrato fechado cai na mesma mensagem do suspenso --
+    # `_resolve_for` o encontra, e o estado dele explica por que não serve.
+    def _check_consignment_agreement(self):
+        self.ensure_one()
+        agreement = self.consignment_agreement_id
+        if not agreement:
+            raise UserError(_(
+                "%(customer)s has no consignment agreement: %(order)s cannot "
+                "be confirmed.\n\n"
+                "A consignment order ships to the customer's shelf, and the "
+                "shelf is born with the agreement. Open the agreement (AC) for "
+                "this customer and activate it first.",
+                customer=self.partner_id.display_name, order=self.name))
+        if agreement.state != 'active':
+            raise UserError(_(
+                "The consignment agreement %(ref)s of %(customer)s is "
+                "%(state)s: %(order)s cannot be confirmed.\n\n"
+                "Only an active agreement receives goods. Reactivate it, or "
+                "settle what is on the shelf before sending more.",
+                ref=agreement.name, customer=self.partner_id.display_name,
+                # _description_selection, e não `.selection` cru: é ele que
+                # traduz o rótulo. A mensagem diz "está Suspenso" para quem lê
+                # em português, e não o valor técnico 'suspended'.
+                state=dict(agreement._fields['state']._description_selection(
+                    self.env)).get(agreement.state, agreement.state),
+                order=self.name))
+
+    def action_confirm(self):
+        for order in self.filtered('is_consignment'):
+            order._check_consignment_agreement()
+        return super().action_confirm()
+
+    # ------------------------------------------------------------------
     # A Pedido C does not invoice
     # ------------------------------------------------------------------
     # Consignment is not a sale: the book on the customer's shelf is still ours, and

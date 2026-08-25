@@ -47,6 +47,30 @@ class ResCompany(models.Model):
     # exatamente o tipo de defeito que só um teste sem `su=True` acha.
     # Não há escalada de privilégio aqui: o valor gravado é um registro que o
     # próprio método acabou de criar, o usuário não o escolhe.
+    # A série nova nasce DEPOIS do maior nome já usado (21/08/2026). O
+    # histórico legado entra no prod com pickings nomeados direto, sem passar
+    # por ir.sequence nenhuma; uma sequence recém-criada começando em 1 gera
+    # um nome que já existe e morre na constraint name_uniq do stock.picking
+    # ("A referência deve ser exclusiva para cada empresa"). Pior: o rollback
+    # desfaz também o tipo e a sequence criados aqui, então o clique seguinte
+    # repete tudo do zero — o erro é permanente, não transitório. Foi o
+    # "Liberar para Logística" da CR/2026/00027 quem contou.
+    # Documento já emitido nunca muda de nome e número não se reusa: começar
+    # adiante do maior é o comportamento correto mesmo fora do acidente.
+    def _consignment_series_start(self, prefix):
+        """First number the new series can draw without colliding: one past
+        the highest numeric suffix among this company's pickings already on
+        the series ('COM/IN/%(year)s/' -> every 'COM/IN/...' name)."""
+        self.ensure_one()
+        static = prefix.split('%')[0]
+        self.env['stock.picking'].flush_model(['name', 'company_id'])
+        self.env.cr.execute(
+            r"""SELECT COALESCE(MAX(substring(name FROM '(\d+)$')::int), 0)
+                  FROM stock_picking
+                 WHERE company_id = %s AND name LIKE %s""",
+            (self.id, static + '%'))
+        return self.env.cr.fetchone()[0] + 1
+
     def _create_consignment_operation_type(self, name, prefix, seq_name,
                                             code='internal'):
         self.ensure_one()
@@ -56,6 +80,7 @@ class ResCompany(models.Model):
             'prefix': prefix,
             'padding': 5,
             'company_id': self.id,
+            'number_next': self._consignment_series_start(prefix),
         })
         return self.env['stock.picking.type'].sudo().create({
             'name': name,

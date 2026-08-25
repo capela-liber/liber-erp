@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- O aviso do PEDIDO C, disparado no Confirmar.
+
+         Vai para o COMPRADOR da livraria, com o PDF do pedido em anexo: é ele
+         que autoriza a entrada de mercadoria, e até aqui não recebia nada da
+         casa. Quem confere prateleira (Acertos) não é avisado por este caminho
+         — ele recebe o mapa, que é outro papel e outro assunto.
+
+         Só o Pedido C AVULSO passa por aqui. A reposição que nasce dentro de um
+         acerto já é anunciada pelo mapa da CO, que nesse caso vai também para o
+         Comprador (ver `_compute_map_recipient_ids`): dois e-mails para a mesma
+         pessoa sobre a mesma remessa é treinar o Comprador a não ler. -->
+    <record id="mail_template_consignment_order" model="mail.template">
+        <field name="name">Consignment Order (C)</field>
+        <field name="model_id" ref="sale.model_sale_order"/>
+        <field name="subject">Pedido de Consignação - {{ object.name }}</field>
+        <field name="email_from">{{ (object.company_id.email_formatted or user.email_formatted) }}</field>
+        <field name="partner_to">{{ ','.join(str(i) for i in object.consignment_recipient_ids.ids) }}</field>
+        <field name="use_default_to" eval="False"/>
+        <field name="report_template_ids" eval="[(4, ref('sale.action_report_saleorder'))]"/>
+        <field name="lang">{{ object.partner_id.lang }}</field>
+        <field name="auto_delete" eval="False"/>
+        <field name="body_html" type="html">
+            <div style="font-size: 13px;">
+                <p>Prezados,</p>
+                <p>Segue em anexo o <strong>Pedido de Consignação</strong>
+                   <t t-out="object.name or ''"/>, com os títulos que enviaremos
+                   para a sua loja. A mercadoria segue em consignação: ela continua
+                   sendo nossa até ser vendida, e é acertada no mapa mensal.</p>
+                <p>Alguma correção a fazer antes de despacharmos? Basta
+                   <strong>responder este e-mail</strong>.</p>
+                <p>Atenciosamente,<br/><t t-out="object.company_id.name or ''"/></p>
+            </div>
+        </field>
+    </record>
+
+</odoo>

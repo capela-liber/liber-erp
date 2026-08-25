@@ -29,7 +29,7 @@ Odoo 19 migration notes:
     'author': "edoo.me (lab fork by EdLab)",
     'website': "www.edoo.me",
     'category': 'Accounting',
-    'version': '19.0.2.13.0',
+    'version': '19.0.2.14.0',
     'license': 'AGPL-3',
     'depends': ['base', 'sale', 'stock', 'product', 'account', 'purchase'],
 

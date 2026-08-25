@@ -5,6 +5,26 @@ from odoo import api, fields, models, _
 class ResPartner(models.Model):
     _inherit = 'res.partner'
 
+    # DOIS PAPÉIS NOVOS NA FICHA DE ENDEREÇO, e eles existem para os DISPAROS.
+    #
+    # A consignação manda papel para duas pessoas diferentes na mesma livraria,
+    # e até aqui a casa não tinha onde dizer quem era quem: o mapa ia para o
+    # e-mail do cliente e para uma lista solta no contrato. Quem confere
+    # prateleira e responde acerto raramente é quem autoriza compra.
+    #
+    #   Acertos    recebe o mapa mensal. É o endereço do acerto: sem ele o
+    #              disparo não sai e abre tarefa para o comercial.
+    #   Comprador  recebe o que é pedido: reposição e Pedido C de abertura.
+    #
+    # `selection_add` com o `('other',)` no fim NÃO é decoração: é o que manda
+    # o Odoo inserir os dois ANTES de "Outro", e não empilhados depois dele. A
+    # ordem da lista é a ordem da tela.
+    type = fields.Selection(
+        selection_add=[('settlement', 'Settlement'),
+                       ('buyer', 'Buyer'),
+                       ('other',)],
+        ondelete={'settlement': 'set default', 'buyer': 'set default'})
+
     allow_consignment = fields.Boolean(string='Allows Consignment')
     consignment_location_id = fields.Many2one(
         'stock.location', string='Consignment Shelf',
@@ -31,6 +51,30 @@ class ResPartner(models.Model):
         string='# Consignment Agreements',
         compute='_compute_consignment_agreement_count',
         groups='liber_soc_agreements.group_soc_user')
+
+    def _soc_contacts(self, tipo):
+        """Os contatos-filhos de um papel: 'settlement' (Acertos) ou 'buyer'.
+
+        Um lugar só para a pergunta "quem, nesta livraria, cuida disto", porque
+        ela é feita de vários cantos -- o mapa, o Pedido C, e o que vier. Filho
+        arquivado não conta: quem saiu da livraria não recebe papel dela.
+        """
+        self.ensure_one()
+        return self.child_ids.filtered(lambda c: c.type == tipo and c.active)
+
+    @api.model
+    def _soc_first_person(self, *users):
+        """O primeiro da lista que seja GENTE: ativo, e não o robô.
+
+        Existe porque os contratos migrados têm OdooBot no campo do comercial,
+        e tarefa atribuída ao robô é tarefa que ninguém vê. A regra é a mesma
+        para o mapa e para o Pedido C, então mora num lugar só.
+        """
+        robo = self.env.ref('base.user_root', raise_if_not_found=False)
+        for user in users:
+            if user and user.active and user != robo:
+                return user
+        return self.env['res.users']
 
     def _soc_sales_channel(self, company=None):
         """The customer's sales channel, read in the DOCUMENT's company.

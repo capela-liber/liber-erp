@@ -205,7 +205,11 @@ class ResPartner(models.Model):
         indicador = int(self._nfe_indicador_ie_efetivo())
         endereco = self._nfe_endereco()
         return {
-            'nome': self.name,
+            # A razão social quando a ficha a tem; o nome de todo dia quando
+            # não. O xNome do destinatário é o nome sob o qual o CNPJ está
+            # registrado -- "Travessa Botafogo" na tela é legítimo, na nota
+            # não. Ficha sem legal_name emite exatamente como sempre emitiu.
+            'nome': self.legal_name or self.name,
             'cnpj': documento if len(documento) == 14 else None,
             'cpf': documento if len(documento) == 11 else None,
             'inscricao_estadual': endereco['inscricao_estadual'],
@@ -234,7 +238,7 @@ class ResPartner(models.Model):
         endereco = self._nfe_endereco()
         pedacos = [endereco['logradouro'], endereco['numero']]
         return {
-            'nome': self.name,
+            'nome': self.legal_name or self.name,
             'cnpj': documento if len(documento) == 14 else None,
             'cpf': documento if len(documento) == 11 else None,
             'inscricao_estadual': endereco['inscricao_estadual'],

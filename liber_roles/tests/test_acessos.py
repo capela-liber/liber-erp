@@ -968,6 +968,99 @@ class TestAcessos(TransactionCase):
                 'o assistente financeiro alcançou %s, e a régua era não ver '
                 'relatório, painel nem saldo' % grupo)
 
+    def test_o_gerente_de_logistica_manda_livro_para_a_grafica(self):
+        """"É ele o responsável por mandar livros para a gráfica, além do
+        gerente da logística." (24/08/2026)
+
+        A tiragem sai do depósito, e até aqui o pedido tinha de ser aberto por
+        outro departamento: Compras era só do Financeiro e da Direção.
+
+        A segunda metade do teste não é uma promessa, é uma CARONA fixada por
+        escrito: `purchase.group_purchase_user` não separa pedido de compra de
+        fatura de fornecedor, e traz escrita completa em `account.move`. Não
+        existe grupo mais estreito no Odoo. Está aceito conscientemente
+        (PERFIS.md), e fica aqui para que ninguém descubra por acidente — se um
+        dia alguém cercar isso, é este assert que muda, de propósito.
+        """
+        gerente = self.usuario['logistica_gerente']
+        self.assertTrue(gerente.has_group('purchase.group_purchase_user'))
+        for xmlid, rotulo in (
+                ('purchase.menu_purchase_root', 'Compras'),
+                ('purchase.menu_purchase_form_action',
+                 'Compras ‣ Pedidos de compra')):
+            self._assert_menu('logistica_gerente', xmlid, rotulo, visivel=True)
+
+        self.assertFalse(
+            self.usuario['logistica_assistente'].has_group(
+                'purchase.group_purchase_user'),
+            'quem opera o depósito não compra: o pedido é do gerente')
+        self._assert_menu('logistica_assistente', 'purchase.menu_purchase_root',
+                          'Compras', visivel=False)
+
+        env = self.env(user=gerente.id, su=False)
+        self.assertTrue(
+            env['account.move'].has_access('write'),
+            'a carona do purchase_user sumiu: se foi de propósito, troque este '
+            'assert; se não, alguém apertou o acesso sem perceber')
+        self._assert_menu('logistica_gerente', 'account.menu_finance',
+                          'Faturamento', visivel=False)
+
+    def test_o_assistente_financeiro_nao_tem_painel(self):
+        """"O nível assistente não deve ver relatórios, painéis, views de
+        saldos" — e não saía de graça, como o PERFIS.md supunha.
+
+        O dashboard `Invoicing` do core é liberado a `group_account_readonly`
+        E a `group_account_invoice`, e a segunda é a linha do assistente. Ele
+        abria o app Painéis e via receita, recebíveis e saldos.
+
+        A pergunta é feita por `search`, que é onde a `ir.rule` do
+        `spreadsheet_dashboard` filtra por `group_ids`.
+        """
+        painel = self.env.ref(
+            'spreadsheet_dashboard_account.dashboard_invoicing',
+            raise_if_not_found=False)
+        if not painel:
+            self.skipTest('o painel do faturamento não existe nesta base')
+
+        def enxerga(chave):
+            return bool(self.env(user=self.usuario[chave].id, su=False)[
+                'spreadsheet.dashboard'].search([('id', '=', painel.id)]))
+
+        self.assertFalse(enxerga('financeiro_assistente'),
+                         'o painel do faturamento voltou para o assistente')
+        self.assertTrue(enxerga('financeiro_gerente'),
+                        'o controller monta os próprios painéis: este é dele')
+        self.assertTrue(enxerga('direcao'))
+
+    def test_quem_compra_enxerga_o_menu_de_pedidos(self):
+        """O buraco de 22/08, achado no dia 24 por quem foi usar a tela.
+
+        `has_group` não pega este: o assistente financeiro TINHA
+        `purchase.group_purchase_user` o tempo todo, e ainda assim abria
+        Compras e via só `Produtos`. O direito estava de pé e o caminho até a
+        tela, não.
+
+        A causa é uma armadilha do core que vale escrever por extenso:
+        `purchase.menu_purchase_root` declara grupos, os filhos `Pedidos` e
+        `Pedidos de compra` NÃO. Menu sem grupo é aberto a quem alcança o pai
+        e lê o modelo da ação; ao ganhar o primeiro grupo — o do Editorial,
+        somado para abrir a leitura das POs — os dois viraram exclusividade
+        dele. Somar grupo em menu vazio não acrescenta ninguém: subtrai todo o
+        resto.
+
+        Por isso o teste pergunta pelo MENU, e pergunta por todos: o Editorial
+        (que motivou a linha), o Financeiro nos dois níveis (que é o dono do
+        processo) e a Direção.
+        """
+        for chave in ('financeiro_assistente', 'financeiro_gerente',
+                      'editorial_assistente', 'direcao'):
+            for xmlid, rotulo in (
+                    ('purchase.menu_purchase_root', 'Compras'),
+                    ('purchase.menu_procurement_management', 'Compras ‣ Pedidos'),
+                    ('purchase.menu_purchase_form_action',
+                     'Compras ‣ Pedidos de compra')):
+                self._assert_menu(chave, xmlid, rotulo, visivel=True)
+
     def test_o_editorial_edita_o_livro_no_metabooks(self):
         """"Acessa a metabooks e pode editar livros também."
 

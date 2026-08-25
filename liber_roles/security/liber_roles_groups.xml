@@ -175,6 +175,13 @@
          só stock.picking e stock.move, sem menu. Existe porque o código da
          consignação grava picking COMO O USUÁRIO, e sem ele o acerto quebra
          com AccessError no meio. O app Inventário é da Logística. -->
+    <!-- O Operador do Olist (24/08/2026) entra no ASSISTENTE, e o Gerente o
+         herda pela escada. O comercial não conseguia sequer atualizar a lista
+         de pedidos do marketplace — "não tem permissões para criar registros
+         de Espelho de pedido do Olist" — e o cron reescreve esse espelho toda
+         noite de qualquer forma. Decisão do dono: despachar é "tarefa de baixo
+         custo e pouca decisão para um gerente". A ficha da CONTA fica de fora
+         do grupo: token e a trava "Somente leitura" seguem da administração. -->
     <record id="group_comercial_assistente" model="res.groups">
         <field name="name">Assistente</field>
         <field name="privilege_id" ref="privilege_comercial"/>
@@ -184,8 +191,9 @@
             (4, ref('account.group_account_invoice')),
             (4, ref('liber_soc_agreements.group_soc_user')),
             (4, ref('liber_soc_moves.group_consignment_stock_docs')),
+            (4, ref('liber_olist.group_olist_operador')),
         ]"/>
-        <field name="comment">Opera o dia a dia comercial: pedidos, faturamento da venda, acertos de consignação, devoluções. Vê todos os documentos de venda. Mexe nas transferências da consignação, mas não tem o app Inventário — esse é da Logística. Não cria produto e não cadastra contato: os dois subiram para o Gerente.</field>
+        <field name="comment">Opera o dia a dia comercial: pedidos, faturamento da venda, acertos de consignação, devoluções, despacho do Olist. Vê todos os documentos de venda. Mexe nas transferências da consignação, mas não tem o app Inventário — esse é da Logística. Não cria produto e não cadastra contato: os dois subiram para o Gerente.</field>
     </record>
 
     <!-- O `stock.group_stock_user` (11/08/2026) é o que permite cancelar uma
@@ -231,18 +239,39 @@
          cadastra e edita contato, todo Assistente só lê. Aqui a linha é nova
          — a Logística não cadastrava; o endereço de coleta e a transportadora
          nascem no depósito, e mandar quem despacha pedir cadastro a outro
-         departamento é inventar fila onde não havia trabalho. -->
+         departamento é inventar fila onde não havia trabalho.
+
+         QUEM MANDA LIVRO PARA A GRÁFICA COMPRA (24/08/2026). "É ele o
+         responsável por mandar livros para a gráfica, além do gerente da
+         logística." A tiragem sai daqui, e até hoje o pedido tinha de ser
+         aberto por outro departamento: Compras era só do Financeiro e da
+         Direção. `purchase.group_purchase_user` fecha esse desvio.
+
+         A CARONA, dita por extenso porque ela é grande. Esse grupo do core
+         não separa "pedido de compra" de "fatura de fornecedor": junto com o
+         pedido ele traz escrita completa em `account.move` — criar, alterar
+         e apagar nota, de compra E de venda. Não existe grupo mais estreito
+         no Odoo, e cercar isso exigiria uma trava no ORM como a do Visitante.
+
+         O que segura a diferença hoje: o app Faturamento não abre para ele
+         (o menu do `account` pede `group_account_readonly` ou
+         `group_account_invoice`, e ele não tem nenhum dos dois), então o
+         caminho de tela até uma nota é o botão dentro do próprio pedido de
+         compra — que é o trabalho dele. A porta larga existe por RPC e por
+         URL colada, e está aceita conscientemente: ver PERFIS.md. Se um dia
+         incomodar, o conserto é uma regra de registro, não uma linha aqui. -->
     <record id="group_logistica_gerente" model="res.groups">
         <field name="name">Gerente</field>
         <field name="privilege_id" ref="privilege_logistica"/>
         <field name="implied_ids" eval="[
             (4, ref('group_logistica_assistente')),
             (4, ref('stock.group_stock_manager')),
+            (4, ref('purchase.group_purchase_user')),
             (4, ref('base.group_partner_manager')),
             (4, ref('base.group_allow_export')),
             (4, ref('hr_expense.group_hr_expense_team_approver')),
         ]"/>
-        <field name="comment">Tudo do assistente + configura o depósito: armazéns, localizações, tipos de operação, rotas e regras de reposição; valida ajustes de inventário e remaneja estoque entre localizações. Cadastra contatos (transportadora e endereço de coleta inclusive). Aprova despesa da equipe. Exporta.</field>
+        <field name="comment">Tudo do assistente + configura o depósito: armazéns, localizações, tipos de operação, rotas e regras de reposição; valida ajustes de inventário e remaneja estoque entre localizações. Abre e confirma pedido de compra — a tiragem que vai para a gráfica sai do depósito. Cadastra contatos (transportadora e endereço de coleta inclusive). Aprova despesa da equipe. Exporta.</field>
     </record>
 
     <!-- ============================ FINANCEIRO =========================== -->

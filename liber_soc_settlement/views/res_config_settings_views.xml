@@ -68,6 +68,18 @@
                                  help="Text printed at the top of the consignment map (CO) printed or e-mailed to the customer.">
                             <field name="consignment_map_text" widget="html"/>
                         </setting>
+                        <setting id="soc_map_schedule_setting"
+                                 string="Monthly map by e-mail"
+                                 help="On the chosen day of each month, open the month's operation (CO) for every customer with a valid agreement and stock on their shelf — reusing the one already being worked on — and e-mail them its map. Customers with an empty shelf are skipped. From the chosen day on, whoever has not been mailed yet this month is picked up by the next nightly run.">
+                            <field name="map_schedule_enabled"/>
+                            <div class="content-group mt-2"
+                                 invisible="not map_schedule_enabled">
+                                <div class="row">
+                                    <span class="col-lg-4 o_form_label">Day of month</span>
+                                    <field name="map_schedule_day" class="col-lg-2"/>
+                                </div>
+                            </div>
+                        </setting>
                     </block>
                     <block title="Settlement Movement" name="soc_settlement_movement">
                         <setting id="soc_settlement_operation_type_setting"

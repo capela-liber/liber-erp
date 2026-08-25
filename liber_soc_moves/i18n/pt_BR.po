@@ -1102,3 +1102,35 @@ msgstr "Canal de Vendas"
 #: code:addons/liber_soc_moves/models/res_company.py:0
 msgid "Consignment Delivery"
 msgstr "Consignação"
+
+#. module: liber_soc_moves
+#. odoo-python
+#: code:addons/liber_soc_moves/models/sale_order.py:0
+msgid ""
+"%(customer)s has no consignment agreement: %(order)s cannot be confirmed.\n"
+"\n"
+"A consignment order ships to the customer's shelf, and the shelf is born "
+"with the agreement. Open the agreement (AC) for this customer and activate "
+"it first."
+msgstr ""
+"%(customer)s não tem contrato de consignação: %(order)s não pode ser "
+"confirmado.\n"
+"\n"
+"O Pedido de consignação entrega na prateleira do cliente, e a prateleira "
+"nasce com o contrato. Abra o contrato (AC) deste cliente e ative-o antes."
+
+#. module: liber_soc_moves
+#. odoo-python
+#: code:addons/liber_soc_moves/models/sale_order.py:0
+msgid ""
+"The consignment agreement %(ref)s of %(customer)s is %(state)s: %(order)s "
+"cannot be confirmed.\n"
+"\n"
+"Only an active agreement receives goods. Reactivate it, or settle what is on "
+"the shelf before sending more."
+msgstr ""
+"O contrato de consignação %(ref)s de %(customer)s está %(state)s: %(order)s "
+"não pode ser confirmado.\n"
+"\n"
+"Só contrato ativo recebe mercadoria. Reative-o, ou acerte o que está na "
+"prateleira antes de mandar mais."

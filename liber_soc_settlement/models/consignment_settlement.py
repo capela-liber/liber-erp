@@ -855,6 +855,50 @@ class ConsignmentSettlement(models.Model):
             'res_id': self.return_move_id.id,
         }
 
+    map_recipient_ids = fields.Many2many(
+        'res.partner', string='Map Recipients',
+        compute='_compute_map_recipient_ids',
+        help="Who the consignment map goes to: the customer's Settlement "
+             "contacts plus whoever the agreement names as report recipient.")
+
+    @api.depends('agreement_id', 'sale_order_id', 'return_move_id',
+                 'replenishment_order_id')
+    def _compute_map_recipient_ids(self):
+        """QUEM RECEBE A CO, e a resposta vem do que a CO CARREGA.
+
+        São duas pessoas diferentes na mesma livraria, e o papel só interessa a
+        quem tem o que fazer com ele:
+
+            só prateleira (o disparo mensal)    -> Acertos
+            acerto e/ou devolução               -> Acertos
+            só reposição                        -> Comprador
+            mista (acerto/devolução + reposição)-> os dois
+
+        Quem confere prateleira não autoriza compra, e quem autoriza compra não
+        quer o extrato do que não girou. Mandar tudo para os dois seria treinar
+        os dois a não ler.
+
+        Num CAMPO, e não numa expressão no modelo de e-mail: o `partner_to`
+        listava `object.partner_id` na mão, e por isso o mapa continuou indo
+        para a caixa geral mesmo depois de a regra mudar -- guarda num lugar,
+        endereço em outro. E campo, e não chamada direta no template, porque o
+        renderizador bloqueia atributo que começa com `_`.
+        """
+        for co in self:
+            acordo = co.agreement_id
+            if not acordo:
+                co.map_recipient_ids = co.partner_id
+                continue
+            tem_acerto = bool(co.sale_order_id or co.return_move_id)
+            tem_pedido = bool(co.replenishment_order_id)
+            if tem_pedido and not tem_acerto:
+                gente = acordo._buyer_contacts()
+            elif tem_pedido:
+                gente = acordo._settlement_contacts() | acordo._buyer_contacts()
+            else:
+                gente = acordo._settlement_contacts()
+            co.map_recipient_ids = gente | acordo.report_contact_ids
+
     def action_send_map(self):
         """Open the email composer to send the consignment map PDF to the
         customer and the contract's report recipients (report_contact_ids)."""
@@ -1265,34 +1309,20 @@ class ConsignmentSettlementLine(models.Model):
         }
 
     def _price_and_discount(self, product=None, qty=1.0):
-        """O preço BRUTO e o desconto em percentual, para este contrato.
+        """O preço e o desconto desta linha -- perguntados AO CONTRATO.
 
-        A LISTA MANDA. Um contrato com lista de preços já tem, na lista, o
-        percentual que a casa concede a esse cliente -- e `_get_product_price`
-        devolve o preço com ele DENTRO. Aplicar por cima o `discount` do
-        contrato descontava duas vezes: lista de 30% sobre 100,00 dá 70,00, e
-        um contrato de 40% fechava em 42,00 onde o combinado eram 60,00. Os
-        dois números são plausíveis, e ninguém percebia.
-
-        Então: com lista, o preço é o de tabela CHEIO e o desconto é o dela; o
-        `discount` do contrato é o padrão de quem não tem lista. Regra fixa ou
-        fórmula não tem percentual a declarar -- o preço da lista É o preço, e
-        o contrato não desconta em cima dele.
+        A regra (a lista manda; o `discount` do contrato é o padrão de quem não
+        tem lista) mora em `consignment.agreement._price_and_discount`, porque
+        quem sabe o preço é o contrato, não a linha: a lista e o desconto são
+        dele. Duas cópias da regra divergiriam, e o mesmo título sairia com
+        dois preços em dois papéis.
         """
         self.ensure_one()
         product = product or self.product_id
         agreement = self.settlement_id.agreement_id
-        pricelist = agreement.pricelist_id
-        if not pricelist:
-            return product.list_price, agreement.discount
-        price, rule_id = pricelist._get_product_price_rule(product, qty)
-        rule = self.env['product.pricelist.item'].browse(rule_id)
-        if rule.compute_price != 'percentage':
-            return price, 0.0
-        bruto = rule._compute_price_before_discount(
-            product=product, quantity=qty, uom=product.uom_id,
-            date=fields.Date.context_today(self), currency=pricelist.currency_id)
-        return bruto, rule.percent_price
+        if not agreement:
+            return product.list_price, 0.0
+        return agreement._price_and_discount(product, qty)
 
     @api.depends('product_id', 'settlement_id.agreement_id')
     def _compute_price_unit(self):

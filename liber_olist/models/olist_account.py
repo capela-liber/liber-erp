@@ -707,7 +707,15 @@ class OlistAccount(models.Model):
                 'codigo_rastreamento': dados.get('codigo_rastreamento') or False,
                 'url_rastreamento': dados.get('url_rastreamento') or False,
             }
-            existente = Order.search(
+            # `active_test=False` não é detalhe: quem guarda a unicidade
+            # (account_id, olist_id) é o BANCO, que vê tudo — então a busca
+            # que a protege tem de ver tudo também. Sem isto, o pedido que a
+            # casa ARQUIVOU some da busca, o sync tenta criá-lo de novo e a
+            # trava derruba a leitura inteira: "Este pedido do Olist já está
+            # espelhado nesta conta" (staging, 24/08/2026, com 769 dos 1.132
+            # pedidos arquivados). Arquivar é a saída que o manual oferece
+            # para o histórico que não interessa; ela não pode custar o botão.
+            existente = Order.with_context(active_test=False).search(
                 [('account_id', '=', self.id), ('olist_id', '=', olist_id)],
                 limit=1)
             if existente:
@@ -719,7 +727,12 @@ class OlistAccount(models.Model):
                 Order.create(dict(vals, account_id=self.id, olist_id=olist_id))
                 novos += 1
 
-        self.last_orders_pull = fields.Datetime.now()
+        # `sudo` no CARIMBO, não na operação: quem lê pedidos é o Operador do
+        # Olist (comercial), e ele não tem — nem deve ter — escrita na ficha da
+        # conta, que é onde moram o token e a trava "Somente leitura". A data
+        # da última leitura é contabilidade do próprio ato, não decisão de
+        # configuração; negá-la faria o botão inteiro falhar por um relógio.
+        self.sudo().last_orders_pull = fields.Datetime.now()
         _logger.info("Olist %s: %s pedidos novos, %s atualizados.",
                      self.name, novos, atualizados)
         if not interactive:

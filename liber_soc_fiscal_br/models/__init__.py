@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 from . import stock_location
 from . import sale_order
+from . import sale_report
+from . import spreadsheet_dashboard
 from . import account_journal
 from . import res_company
 from . import res_config_settings

@@ -183,18 +183,23 @@ class SocXmlPanel(models.Model):
         def _party(tag):
             node = root.find('.//%s%s' % (ns, tag))
             if node is None:
-                return (False, False)
+                return (False, False, False)
             doc = node.find('.//%sCNPJ' % ns)
             if doc is None:
                 doc = node.find('.//%sCPF' % ns)
             name = node.find('.//%sxNome' % ns)
+            # xFant only exists on the emitter block (the NFe schema gives
+            # the recipient no trade name), and even there it is optional.
+            fant = node.find('.//%sxFant' % ns)
             return (doc.text if doc is not None else False,
-                    name.text if name is not None else False)
+                    name.text if name is not None else False,
+                    fant.text if fant is not None else False)
 
-        emit_doc, emit_name = _party('emit')
-        dest_doc, dest_name = _party('dest')
+        emit_doc, emit_name, emit_fant = _party('emit')
+        dest_doc, dest_name, _dest_fant = _party('dest')
         return {
             'emit_doc': self._format_doc(emit_doc), 'emit_name': emit_name or False,
+            'emit_fant': emit_fant or False,
             'dest_doc': self._format_doc(dest_doc), 'dest_name': dest_name or False,
         }
 
@@ -207,12 +212,16 @@ class SocXmlPanel(models.Model):
                 return comp
         return self.env['res.company']
 
-    def _find_or_create_partner(self, doc, name, sync_name=True):
+    def _find_or_create_partner(self, doc, name, sync_name=True, trade_name=False):
         """Find the counterparty by CNPJ/CPF, creating it if it does not exist.
 
         The NFe is the official source for the razao social keyed by CNPJ, so
-        when ``sync_name`` an existing partner's name is refreshed from the XML
-        (this heals partners that older logic created with a wrong name).
+        when ``sync_name`` an existing partner's ``legal_name`` is refreshed
+        from the XML's xNome. The everyday ``name`` is NOT touched on an
+        existing record: that is the label the house chooses ("Travessa
+        Botafogo"), and an import that kept rewriting it made every nickname
+        die on the next note. A new record is born with ``name`` set to the
+        xFant when the note carries one, the xNome otherwise.
         ``sync_name`` is turned off for our own companies.
         """
         digits = re.sub(r'\D', '', doc or '')
@@ -226,7 +235,8 @@ class SocXmlPanel(models.Model):
             # language, so leaving the default (en_US) means every document we
             # send a Brazilian bookshop comes out in English.
             partner = Partner.create({
-                'name': name or doc,
+                'name': trade_name or name or doc,
+                'legal_name': name or False,
                 'vat': doc,
                 'is_company': len(digits) == 14,
                 'company_type': 'company' if len(digits) == 14 else 'person',
@@ -234,8 +244,8 @@ class SocXmlPanel(models.Model):
                 'country_id': self.env.ref('base.br', raise_if_not_found=False).id
                               if self.env.ref('base.br', raise_if_not_found=False) else False,
             })
-        elif sync_name and name and partner.name != name:
-            partner.name = name
+        elif sync_name and name and partner.legal_name != name:
+            partner.legal_name = name
         return partner
 
     @api.model
@@ -270,7 +280,8 @@ class SocXmlPanel(models.Model):
             elif dest_ours and not emit_ours:
                 vals['nfe_direction'] = 'in'
                 vals['company_id'] = rec._match_own_company(dest_doc).id or False
-                client = rec._find_or_create_partner(emit_doc, emit_name)
+                client = rec._find_or_create_partner(
+                    emit_doc, emit_name, trade_name=parties.get('emit_fant'))
             elif emit_ours and dest_ours:
                 vals['nfe_direction'] = 'internal'
                 vals['company_id'] = rec._match_own_company(emit_doc).id or False

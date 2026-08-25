@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     'name': 'Consignment - Settlement',
-    'version': '19.0.2.9.1',
+    'version': '19.0.2.14.1',
     'summary': 'Consignment settlement: turn what the customer sold into a real sale',
     'description': """
 Consignment settlement (SOC redesign).
@@ -29,7 +29,9 @@ sold.
         'data/ir_cron_return_dunning.xml',
         'data/ir_cron_shelf_age.xml',
         'data/ir_cron_overdue.xml',
+        'data/ir_cron_shelf_map.xml',
         'report/consignment_map_report.xml',
+        'report/consignment_order_mail.xml',
         'report/consignment_return_report.xml',
         'views/res_config_settings_views.xml',
         'views/consignment_settlement_views.xml',
@@ -54,6 +56,7 @@ sold.
             'liber_soc_settlement/static/src/scss/consignment_settlement_list.scss',
             'liber_soc_settlement/static/src/js/many2one_multi_field.js',
             'liber_soc_settlement/static/src/js/soc_acerto_tour.js',
+            'liber_soc_settlement/static/src/js/mapa_avulso_tour.js',
         ],
     },
     'post_init_hook': 'post_init_backfill_campaign_codes',

@@ -15,6 +15,21 @@ from . import olist_client
 _logger = logging.getLogger(__name__)
 
 
+def so_numero(valor):
+    """Número como o Olist manda: '13.20' (string), 49 (int), '' (vazio).
+
+    O `valor_desconto` chega como número cru e o `valor_frete` como string —
+    no mesmo pedido. Um `float()` direto atravessa os dois casos de hoje e
+    estoura no dia em que vier com vírgula.
+    """
+    if isinstance(valor, (int, float)):
+        return float(valor)
+    try:
+        return float((valor or '').strip().replace(',', '.'))
+    except ValueError:
+        return 0.0
+
+
 def so_digitos(valor):
     """Só os dígitos — ISBN e CPF/CNPJ chegam formatados de jeitos diferentes.
 
@@ -110,6 +125,11 @@ class OlistOrder(models.Model):
     entrega_cidade = fields.Char("Cidade de entrega")
     entrega_uf = fields.Char("UF de entrega")
     valor_frete = fields.Float("Valor do frete")
+    valor_desconto = fields.Float(
+        "Desconto no Olist",
+        help="O desconto que o marketplace deu no pedido inteiro — cupom, "
+             "brinde, promoção. Ele vem do pedido, não do item: o Olist não "
+             "diz de qual livro o desconto saiu.")
 
     xml_status = fields.Selection([
         ('sem_nota', "Sem nota no Olist"),
@@ -595,7 +615,8 @@ class OlistOrder(models.Model):
                           or (dados.get('cliente') or {}).get('uf') or False,
             'forma_frete': dados.get('forma_frete') or dados.get('forma_envio') or False,
             'data_envio': self.account_id._data_br(dados.get('data_envio')),
-            'valor_frete': float(dados.get('valor_frete') or 0.0),
+            'valor_frete': so_numero(dados.get('valor_frete')),
+            'valor_desconto': so_numero(dados.get('valor_desconto')),
             'detalhe_lido_em': fields.Datetime.now(),
             'detalhe_pendente': False,
             'raw_json': json.dumps(dados, ensure_ascii=False, indent=1),
@@ -1288,15 +1309,40 @@ class OlistOrderLine(models.Model):
     canal = fields.Char(related='order_id.canal', store=True,
                         string="Canal no Olist")
     valor_total = fields.Float(
-        "Valor", compute='_compute_valor_total', store=True,
-        help="Quantidade × valor unitário da linha — mercadoria, sem o frete "
-             "do pedido. É a medida de valor do Relatório.")
+        "Valor bruto", compute='_compute_valores', store=True,
+        help="Quantidade × valor unitário da linha, antes do desconto — "
+             "mercadoria, sem o frete do pedido.")
+    valor_desconto = fields.Float(
+        "Desconto", compute='_compute_valores', store=True,
+        help="A parte desta linha no desconto do pedido. O Olist dá o "
+             "desconto no pedido inteiro e não diz de qual livro ele saiu, "
+             "então ele é RATEADO pelo peso de cada linha no bruto: somado "
+             "por dia, canal ou mês o número é exato; livro a livro é a "
+             "melhor aproximação que o dado permite.")
+    valor_liquido = fields.Float(
+        "Valor líquido", compute='_compute_valores', store=True,
+        help="Bruto menos o desconto: o faturamento de mercadoria que este "
+             "livro produziu. Não é o dinheiro que cai na conta — o frete "
+             "que o comprador pagou e a comissão que o Olist retém no "
+             "repasse ficam de fora dos dois lados.")
 
-    @api.depends('quantidade', 'valor_unitario')
-    def _compute_valor_total(self):
+    @api.depends('quantidade', 'valor_unitario', 'order_id.valor_desconto',
+                 'order_id.line_ids.quantidade',
+                 'order_id.line_ids.valor_unitario')
+    def _compute_valores(self):
         for linha in self:
-            linha.valor_total = (linha.quantidade or 0.0) * (
-                linha.valor_unitario or 0.0)
+            bruto = (linha.quantidade or 0.0) * (linha.valor_unitario or 0.0)
+            linha.valor_total = bruto
+            # O rateio precisa do bruto do PEDIDO inteiro. Sem ele (pedido de
+            # valor zero, brinde integral), não há proporção a calcular e o
+            # desconto fica onde está: fora da linha. Dividir por zero seria
+            # trocar um número aproximado por uma exceção no meio do import.
+            total = sum((l.quantidade or 0.0) * (l.valor_unitario or 0.0)
+                        for l in linha.order_id.line_ids)
+            desconto_pedido = linha.order_id.valor_desconto or 0.0
+            linha.valor_desconto = (
+                desconto_pedido * bruto / total if total else 0.0)
+            linha.valor_liquido = bruto - linha.valor_desconto
 
     # O mesmo 34 do relatório da Amazon: cabe numa coluna de pivô sem empurrar
     # a tabela para fora da tela, e ainda deixa reconhecer o livro.

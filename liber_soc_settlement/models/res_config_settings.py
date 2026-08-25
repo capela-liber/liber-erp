@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
-from odoo import fields, models
+from odoo import _, api, fields, models
+from odoo.exceptions import ValidationError
 
 
 class ResConfigSettings(models.TransientModel):
@@ -82,3 +83,36 @@ class ResConfigSettings(models.TransientModel):
              "within this many days is flagged Overdue in the Ruptura report: "
              "the target is not being pursued and nobody noticed. The nightly "
              "cron checks this. Default 30 days.")
+
+    # --- Disparo mensal do mapa -----------------------------------------
+    # O mapa de consignação só existia onde alguém tinha aberto uma CO à mão. O
+    # cliente que ninguém abriu no mês -- justamente aquele de quem a casa não
+    # tem notícia -- não recebia nada. O disparo mensal é o "Gerar operações"
+    # no relógio: no dia escolhido, todo contrato VÁLIDO com prateleira ganha a
+    # operação do mês (ou reaproveita a que já está sendo trabalhada) e recebe
+    # o mapa DELA. É ato do comercial, não extrato de cortesia: a resposta do
+    # cliente cai numa CO que tem dono e prazo.
+    map_schedule_enabled = fields.Boolean(
+        string='E-mail the map monthly', default=False,
+        config_parameter='soc_settlement.map_schedule_enabled',
+        help="Master switch: on the chosen day of each month, open the month's "
+             "operation (CO) for every customer with a valid agreement and "
+             "stock on their shelf -- reusing the one already being worked on "
+             "-- and e-mail them its map. The e-mail says it is automatic.")
+    map_schedule_day = fields.Integer(
+        string='Day of month', default=1,
+        config_parameter='soc_settlement.map_schedule_day',
+        help="Day of the month the maps go out. In months shorter than the "
+             "chosen day (31 in February), they go out on the last day, so the "
+             "month is never skipped. From that day on, any valid agreement "
+             "that has not been mailed yet in the current month is picked up by "
+             "the next nightly run -- so a batch cut short finishes the day "
+             "after, and turning the switch on mid-month sends right away.")
+
+    @api.constrains('map_schedule_day')
+    def _check_map_schedule_day(self):
+        for cfg in self:
+            if cfg.map_schedule_enabled and not 1 <= cfg.map_schedule_day <= 31:
+                raise ValidationError(_(
+                    "The day of the month for the consignment map must be "
+                    "between 1 and 31 (got %s).") % cfg.map_schedule_day)

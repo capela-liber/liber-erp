@@ -1,6 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
+    <!-- O MAPA TEM FORMATO PRÓPRIO, e o motivo cabe numa medição.
+
+         O bloco da empresa que o Odoo desenha no topo (logo, endereço em seis
+         linhas e o Tax ID) tem cerca de 51 mm. O A4 da casa começa o corpo aos
+         52 mm: sobra 1 mm, e o "Tax ID: ..." sai escrito por cima do título do
+         mapa. Foi o que apareceu no dev em 24/08/2026.
+
+         A régua do wkhtmltopdf, medida aqui e não deduzida (a primeira tentativa
+         errou o sinal e piorou a colisão):
+
+             topo do cabeçalho = margin_top menos header_spacing
+             altura útil dele  = header_spacing
+
+         Ou seja: com os dois IGUAIS o cabeçalho fica ancorado no alto da folha,
+         que é o certo, e o que resolve a colisão é subir o `margin_top`. Aos 62
+         o corpo começa 11 mm abaixo do fim do cabeçalho. Aos 58 também passa,
+         mas 62 dá folga para as seis empresas, cujos endereços têm tamanhos
+         diferentes.
+
+         Formato PRÓPRIO, e não conserto do A4 da casa, porque aquele é
+         compartilhado por 43 relatórios e mexer nele sem olhar cada um seria
+         trocar um defeito visível por um invisível. Vale medir os outros: se o
+         cabeçalho deles também colide, o conserto é lá. -->
+    <record id="paperformat_consignment_map" model="report.paperformat">
+        <field name="name">A4 — Mapa de Consignação</field>
+        <field name="format">A4</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">62</field>
+        <field name="margin_bottom">32</field>
+        <field name="margin_left">0</field>
+        <field name="margin_right">0</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">62</field>
+        <field name="dpi">90</field>
+    </record>
+
     <record id="action_report_consignment_map" model="ir.actions.report">
         <field name="name">Mapa de Consignação</field>
         <field name="model">consignment.settlement</field>
@@ -8,6 +44,7 @@
         <field name="report_name">liber_soc_settlement.report_consignment_map</field>
         <field name="report_file">liber_soc_settlement.report_consignment_map</field>
         <field name="print_report_name">'Mapa de Consignacao - %s' % (object.partner_id.name or '')</field>
+        <field name="paperformat_id" ref="paperformat_consignment_map"/>
         <!-- No cog/Print binding: the form has a "Print Map" header button. -->
         <field name="binding_model_id" eval="False"/>
     </record>
@@ -149,19 +186,36 @@
                                 </tr>
                             </tbody>
                             <tfoot>
+                                <!-- São SEIS colunas, e a última é "Dias sem acerto".
+                                     O rótulo cobre as quatro primeiras e o valor cai na
+                                     quinta, que é Subtotal: é a coluna que ele soma. Com
+                                     colspan 5 o total ia parar embaixo dos dias, somando
+                                     reais debaixo de um cabeçalho que conta dias. -->
                                 <tr style="border-top:2px solid #2c3e50; background-color:#f0f3f5; font-weight:bold;">
-                                    <td colspan="5" style="text-align:right; padding:8px 10px;">Total</td>
+                                    <td colspan="4" style="text-align:right; padding:8px 10px;">Total</td>
                                     <td style="text-align:right; padding:8px 10px;">
                                         <span t-out="grand_total"
                                               t-options="{'widget': 'monetary', 'display_currency': doc.currency_id}"/>
                                     </td>
+                                    <td/>
                                 </tr>
                             </tfoot>
                         </table>
 
-                        <p style="margin-top:24px; font-size:12px;">
+                        <!-- O fecho fala do que ESTÁ no papel. No disparo mensal a
+                             operação acabou de nascer: não há acerto sobre o qual ter
+                             dúvida, e prometer resumo de devolução/venda/reposição num
+                             papel que só tem a prateleira é dizer o que não se cumpre. -->
+                        <t t-set="tem_operacao"
+                           t-value="doc.return_move_id or doc.sale_order_id or doc.replenishment_order_id"/>
+                        <p t-if="tem_operacao" style="margin-top:24px; font-size:12px;">
                             Ficou com alguma dúvida sobre este acerto? Basta
                             <strong>responder este e-mail</strong> e retornamos com mais informações.
+                        </p>
+                        <p t-else="" style="margin-top:24px; font-size:12px;">
+                            Confira com a sua prateleira. Encontrando diferença, ou querendo
+                            <strong>devolver</strong> o que não girou ou <strong>repor</strong>
+                            o que vendeu, basta <strong>responder este e-mail</strong>.
                         </p>
                     </div>
                 </t>
@@ -174,22 +228,37 @@
         <field name="model_id" ref="model_consignment_settlement"/>
         <field name="subject">Mapa de Consignação - {{ object.name }}</field>
         <field name="email_from">{{ (object.company_id.email_formatted or user.email_formatted) }}</field>
-        <field name="partner_to">{{ ','.join(str(i) for i in ([object.partner_id.id] + object.agreement_id.report_contact_ids.ids)) }}</field>
-        <!-- Honour partner_to (customer + the contract's report contacts); without
-             this Odoo defaults to the customer only and drops the report contacts. -->
+        <field name="partner_to">{{ ','.join(str(i) for i in object.map_recipient_ids.ids) }}</field>
+        <!-- Honour partner_to; without this Odoo defaults to the customer only,
+             e manda o mapa para a caixa geral da livraria em vez do contato de
+             Acertos. Quem monta a lista é `map_recipient_ids`, o mesmo lugar
+             que o guarda do envio consulta. -->
         <field name="use_default_to" eval="False"/>
         <field name="report_template_ids" eval="[(4, ref('action_report_consignment_map'))]"/>
         <field name="lang">{{ object.partner_id.lang }}</field>
         <field name="auto_delete" eval="False"/>
         <field name="body_html" type="html">
             <div style="font-size: 13px;">
+                <t t-set="tem_operacao" t-value="object.return_move_id or object.sale_order_id or object.replenishment_order_id"/>
                 <p>Prezados,</p>
-                <p>Segue em anexo o <strong>Mapa de Consignação</strong>
+                <p t-if="tem_operacao">Segue em anexo o <strong>Mapa de Consignação</strong>
                    <t t-out="object.name or ''"/>, com o resumo desta operação —
                    devolução, acerto (venda) e pedido de reposição, quando houver.</p>
-                <p>Ficou com alguma dúvida? Basta <strong>responder este e-mail</strong>
-                   e retornamos com mais informações.</p>
+                <p t-else="">Segue em anexo o <strong>Mapa de Consignação</strong>
+                   <t t-out="object.name or ''"/>, com a posição atual da mercadoria
+                   que temos em consignação na sua loja.</p>
+                <p t-if="tem_operacao">Ficou com alguma dúvida? Basta
+                   <strong>responder este e-mail</strong> e retornamos com mais informações.</p>
+                <p t-else="">Confira com a sua prateleira. Encontrando diferença, ou
+                   querendo <strong>devolver</strong> o que não girou ou
+                   <strong>repor</strong> o que vendeu, basta
+                   <strong>responder este e-mail</strong>.</p>
                 <p>Atenciosamente,<br/><t t-out="object.company_id.name or ''"/></p>
+                <p t-if="ctx.get('mapa_automatico')"
+                   style="color:#888; font-size:11px; border-top:1px solid #eee; padding-top:8px;">
+                   Esta é uma mensagem automática do envio mensal do mapa de
+                   consignação. Respondendo a ela, sua mensagem chega a quem
+                   cuida da sua conta.</p>
             </div>
         </field>
     </record>

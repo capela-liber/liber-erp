@@ -7,6 +7,13 @@
             <field name="model">res.partner</field>
             <field name="inherit_id" ref="base.view_partner_form"/>
             <field name="arch" type="xml">
+                <!-- Razão social right under the document it belongs to. The
+                     big Name on top stays the everyday label; this is what
+                     the NFe prints. Companies only: a person has no razão
+                     social. -->
+                <xpath expr="//field[@name='vat']" position="after">
+                    <field name="legal_name" invisible="not is_company"/>
+                </xpath>
                 <xpath expr="//page[@name='sales_purchases']/group" position="inside">
                     <group name="vendor_xml" string="Vendor XML" groups="base.group_no_one">
                         <field name="identification_no"/>

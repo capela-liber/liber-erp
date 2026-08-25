@@ -26,6 +26,22 @@ class NFeResPartner(models.Model):
              "as bare digits while the register almost always holds it "
              "punctuated, so matching the two as plain strings never hits: "
              "this is the field the XML import looks the counterparty up by.")
+    # Same name, size and meaning as the OCA `l10n_br_base` field, on purpose:
+    # if the localization ever enters this database the two definitions merge
+    # instead of colliding. Until then this is the house's own column.
+    #
+    # `name` stays the everyday label ("Travessa Botafogo"); `legal_name` is
+    # what the CNPJ is registered as ("LIVRARIA DA TRAVESSA LTDA") and is what
+    # fiscal documents must print. Everything fiscal reads `legal_name or
+    # name`, so a record that never filled it keeps behaving exactly as
+    # before. The XML import maintains it: the NFe is the official source for
+    # the razao social keyed by CNPJ.
+    legal_name = fields.Char(
+        string="Legal Name", size=128, index='trigram',
+        help="Razão social: the name this CNPJ is registered under, printed "
+             "on fiscal documents. Leave the Name field free for the label "
+             "everybody uses (the branch nickname, the trade name). Empty, "
+             "fiscal documents fall back to the Name.")
 
     @api.depends('vat')
     def _compute_vat_digits(self):

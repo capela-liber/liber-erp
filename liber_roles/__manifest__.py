@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     'name': 'Liber Roles (as funções da casa)',
-    'version': '19.0.2.5.0',
+    'version': '19.0.2.8.0',
     'summary': 'Perfis por função: departamento + nível, embrulhando os grupos do Odoo',
     'description': """
 Os "perfis" nativos do Odoo são recortes por aplicativo (Vendas: Usuário,
@@ -59,6 +59,9 @@ menu, então vale também para RPC e URL colada. Ver models/ir_model_access.py.
         'liber_soc_agreements',
         # o grupo estreito de documentos de estoque do Comercial mora aqui
         'liber_soc_moves',
+        # o Operador do Olist (24/08/2026): o comercial atualiza o espelho e
+        # despacha o marketplace, e o grupo que permite isso mora lá
+        'liber_olist',
         'liber_copyright_contracts',
         'liber_budget',
         'liber_metabooks_integration',
@@ -69,6 +72,13 @@ menu, então vale também para RPC e URL colada. Ver models/ir_model_access.py.
         # o Painel do controller financeiro (11/08/2026): o grupo
         # spreadsheet_dashboard.group_dashboard_manager mora aqui
         'spreadsheet_dashboard',
+        # ORDEM DE CARGA, como o base_install_request lá embaixo: o dashboard
+        # `Invoicing` nasce neste módulo (auto_install), e nós lhe tiramos uma
+        # linha de grupo em security/painel_do_faturamento.xml. Sem a
+        # dependência os dois seriam irmãos, a ordem entre eles seria livre, e
+        # num dia qualquer o dele rodaria por último e devolveria o painel ao
+        # assistente -- sem erro e sem aviso.
+        'spreadsheet_dashboard_account',
         # RH (10/08/2026). O grosso do que se pediu para funcionários, folga e
         # despesa é o comportamento de quem NÃO tem grupo nenhum -- ver
         # ACESSOS.md. Daqui só saem duas concessões: o aprovador de despesa da
@@ -95,11 +105,14 @@ menu, então vale também para RPC e URL colada. Ver models/ir_model_access.py.
         'security/menu_projetos.xml',
         'security/menu_link_tracker.xml',
         'security/menu_compras_editorial.xml',
+        'security/painel_do_faturamento.xml',
         'security/ir.model.access.csv',
     ],
     'assets': {
         'web.assets_backend': [
             'liber_roles/static/src/js/editorial_compras_tour.js',
+            'liber_roles/static/src/js/contatos_tour.js',
+            'liber_roles/static/src/js/comercial_devolucao_tour.js',
         ],
     },
     'installable': True,

@@ -301,9 +301,10 @@
          vendeu, não reabrir a configuração. -->
 <!-- O Relatório: vendas por dia, canal e LIVRO, no padrão do Odoo — views
      graph e pivô sobre a LINHA do pedido, que é quem sabe produto e
-     quantidade (o pedido só sabe o total, com frete). Duas medidas:
-     Quantidade e Valor (mercadoria, sem frete); cancelado não é venda e o
-     domínio da ação o exclui. Pedido sem detalhe lido não tem linha e não
+     quantidade (o pedido só sabe o total, com frete). As medidas separam o
+     que o comercial precisa ver: Quantidade, Valor bruto, Desconto e Valor
+     líquido — mercadoria, sem frete; cancelado não é venda e o domínio da
+     ação o exclui. Pedido sem detalhe lido não tem linha e não
      aparece — o número é um piso enquanto a cobertura não fecha. -->
     <record id="view_olist_order_line_graph" model="ir.ui.view">
         <field name="name">olist.order.line.graph</field>
@@ -312,7 +313,7 @@
             <graph string="Vendas do Olist" type="bar" stacked="1" sample="1">
                 <field name="order_data" interval="day"/>
                 <field name="canal"/>
-                <field name="valor_total" type="measure"/>
+                <field name="valor_liquido" type="measure"/>
             </graph>
         </field>
     </record>
@@ -326,6 +327,8 @@
                 <field name="canal" type="col"/>
                 <field name="quantidade" type="measure"/>
                 <field name="valor_total" type="measure"/>
+                <field name="valor_desconto" type="measure"/>
+                <field name="valor_liquido" type="measure"/>
             </pivot>
         </field>
     </record>
@@ -350,8 +353,8 @@
                             context="{'group_by': 'descricao'}"/>
                     <filter name="g_canal" string="Canal no Olist"
                             context="{'group_by': 'canal'}"/>
-                    <filter name="g_dia" string="Dia"
-                            context="{'group_by': 'order_data:day'}"/>
+                    <filter name="g_data" string="Data do pedido"
+                            context="{'group_by': 'order_data'}"/>
                 </group>
             </search>
         </field>
@@ -367,9 +370,10 @@
         <field name="context">{'search_default_f_30_dias': 1}</field>
         <field name="help" type="html">
             <p class="o_view_nocontent_smiling_face">Ainda sem vendas para mostrar</p>
-            <p>O Relatório soma quantidade e valor das linhas dos pedidos do
-               Olist — por dia, por canal e por livro. Ele enche conforme as
-               leituras trazem o detalhe dos pedidos; cancelados ficam de fora.</p>
+            <p>O Relatório soma as linhas dos pedidos do Olist por data, canal
+               e livro: quantidade, valor bruto, desconto e valor líquido. Ele
+               enche conforme as leituras trazem o detalhe dos pedidos;
+               cancelados ficam de fora.</p>
         </field>
     </record>
 

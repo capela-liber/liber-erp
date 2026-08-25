@@ -567,3 +567,13 @@ msgstr "partner_id"
 #: model_terms:ir.ui.view,arch_db:liber_soc_agreements.view_consignment_agreement_search
 msgid "Sales Channel"
 msgstr "Canal de Vendas"
+
+#. module: liber_soc_agreements
+#: model:ir.model.fields.selection,name:liber_soc_agreements.selection__res_partner__type__settlement
+msgid "Settlement"
+msgstr "Acertos"
+
+#. module: liber_soc_agreements
+#: model:ir.model.fields.selection,name:liber_soc_agreements.selection__res_partner__type__buyer
+msgid "Buyer"
+msgstr "Comprador"

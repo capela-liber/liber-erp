@@ -17,3 +17,7 @@ from . import test_security
 from . import test_despacho
 from . import test_fila_politica
 from . import test_tour_despacho
+from . import test_relatorio_valores
+from . import test_tour_relatorio
+from . import test_acesso_comercial
+from . import test_tour_despacho_comercial

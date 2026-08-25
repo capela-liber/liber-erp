@@ -33,7 +33,11 @@ Inventory Settings and run "Wire consignment shelves" to backfill existing ones.
 """,
     'author': 'EdLab Press',
     'category': 'Inventory/Consignment',
-    'depends': ['liber_soc_agreements', 'liber_soc_moves', 'liber_soc_settlement', 'stock_account', 'account', 'liber_nfe_xml', 'liber_nfe_remessa'],
+    # 'spreadsheet_dashboard' is declared because models/spreadsheet_dashboard.py
+    # extends it (it arrives anyway through liber_soc_moves): a table of the
+    # Sales dashboard reads sale.order straight, and the CFOP kinds that are
+    # not revenue -- a bonus, a fair -- have to be kept out of it too.
+    'depends': ['liber_soc_agreements', 'liber_soc_moves', 'liber_soc_settlement', 'stock_account', 'account', 'liber_nfe_xml', 'liber_nfe_remessa', 'spreadsheet_dashboard'],
     'data': [
         'views/res_config_settings_views.xml',
         'views/sale_order_views.xml',

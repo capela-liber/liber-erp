@@ -13,6 +13,13 @@
                     <field name="settlement_count" widget="statinfo" string="Consignments"/>
                 </button>
             </div>
+            <!-- O mesmo caminho do disparo mensal, na mão: garante a
+                 operação do mês e manda o mapa dela. -->
+            <xpath expr="//header" position="inside">
+                <button name="action_send_consignment_map" type="object"
+                        string="Send Map"
+                        invisible="state != 'active' or not location_id"/>
+            </xpath>
         </field>
     </record>
 

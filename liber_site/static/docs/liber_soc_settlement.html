@@ -125,10 +125,30 @@
       <h2 id="mapa-pdf">O mapa em PDF: imprimir e enviar</h2>
       <ul>
         <li><span class="field">Imprimir Mapa</span> — no formulário da operação, gera o PDF do mapa (com o texto padrão das Definições no topo) para levar ou conferir com o cliente.</li>
-        <li><span class="field">Enviar Mapa</span> — abre o e-mail já endereçado ao cliente e aos <span class="field">Destinatários dos Relatórios</span> do contrato, com o PDF anexo.</li>
+        <li><span class="field">Enviar Mapa</span> — abre o e-mail já endereçado, com o PDF anexo. Quem recebe vem do que a operação carrega (veja a tabela abaixo) mais os <span class="field">Destinatários dos Relatórios</span> do contrato.</li>
+        <li><span class="field">Enviar Mapa</span>, <strong>na ficha do contrato</strong> — abre a operação do mês (ou reaproveita a que já está aberta), lê a prateleira dentro dela e manda o mapa. É o mesmo caminho do disparo mensal, na mão.</li>
         <li><strong>Em lote, pela seleção</strong> — na lista ou no kanban, selecione operações e use <span class="menupath">Ações<i>‣</i>Enviar Mapa</span>: envia direto (sem janela), cada uma aos próprios destinatários, e avisa quantos foram enfileirados e quem foi pulado por não ter e-mail.</li>
         <li><strong>Em lote, fechado</strong> — <span class="menupath">Consignação<i>‣</i>Consignações<i>‣</i>⚙️ Mapa de Consignação</span> é a rotina do mês: ela mesma calcula as operações elegíveis (rascunhos fora das etapas concluídas), mostra o total e pede confirmação antes de enviar. Não há como selecionar errado.</li>
       </ul>
+      <h2 id="quem-recebe">Quem recebe cada papel</h2>
+      <p>A consignação manda papel para duas pessoas diferentes na mesma livraria, e a ficha de contato tem dois tipos de endereço para dizer quem é quem: <span class="field">Acertos</span>, de quem confere a prateleira, e <span class="field">Comprador</span>, de quem autoriza a entrada de mercadoria. Cadastre-os no cliente como contatos-filhos, em <span class="menupath">Contatos<i>‣</i>o cliente<i>‣</i>Contatos e Endereços</span>.</p>
+      <table>
+        <thead><tr><th>O que a operação carrega</th><th>Vai para</th></tr></thead>
+        <tbody>
+          <tr><td>Só a prateleira (o disparo mensal)</td><td>Acertos</td></tr>
+          <tr><td>Acerto e/ou devolução</td><td>Acertos</td></tr>
+          <tr><td>Só reposição</td><td>Comprador</td></tr>
+          <tr><td>Mista (acerto ou devolução, mais reposição)</td><td>Acertos e Comprador</td></tr>
+        </tbody>
+      </table>
+      <p>Quem confere prateleira não autoriza compra, e quem autoriza compra não quer o extrato do que não girou. <strong>Sem contato de Acertos o mapa não é enviado</strong>: a operação do mês abre assim mesmo, e fica uma Atividade para quem cuida da conta pedindo que o cadastro seja completado.</p>
+      <p>O <strong>Pedido de consignação avulso</strong> — o C de abertura, que não nasce de um acerto — avisa o Comprador ao ser confirmado, com o PDF do pedido anexo. A reposição nascida dentro de um acerto não repete esse e-mail: ela já vai anunciada no mapa daquela operação.</p>
+
+      <h2 id="disparo-mensal">O disparo mensal do mapa</h2>
+      <p>Em <span class="menupath">Definições<i>‣</i>Consignação<i>‣</i>Mapa de Consignação</span>, ligue <span class="field">Mapa mensal por e-mail</span> e escolha o <span class="field">Dia do mês</span>. A partir daquele dia, todo contrato ativo e dentro da vigência que tenha mercadoria na prateleira ganha a operação do mês — ou reaproveita a que já estiver sendo trabalhada — e recebe o mapa dela.</p>
+      <p>Em mês mais curto que o dia escolhido (31 em fevereiro), o envio sai no último dia. Do dia escolhido em diante, quem ainda não recebeu naquele mês entra na rodada da madrugada seguinte, de modo que uma leva interrompida termina no dia seguinte em vez de o mês passar em branco. Cliente com prateleira vazia é pulado, e ninguém recebe o mapa duas vezes no mesmo mês.</p>
+      <p>Ao fim da leva, um resumo é publicado no canal <strong>Consignação / Operações</strong> com quantos mapas saíram e a lista de quem ficou sem — esse aviso não depende de haver responsável na conta, e é onde se enxerga o buraco inteiro.</p>
+
       <p>Quando um cliente <strong>responde</strong> ao e-mail, a resposta cai no histórico da operação, o responsável (que é seguidor automático) a recebe na caixa de entrada, e um aviso aparece no canal <strong>Consignação / Operações</strong>. O filtro <span class="field">Resposta</span> da lista mostra as operações com mensagem de cliente ainda não lida.</p>
 
       <h2 id="campanhas">Campanhas: o sortimento-alvo por canal</h2>

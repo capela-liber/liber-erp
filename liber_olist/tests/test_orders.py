@@ -899,6 +899,66 @@ class TestOlistOrders(TransactionCase):
 
 
 @tagged('post_install', '-at_install')
+class TestReleituraComArquivados(TransactionCase):
+    """O que foi posto de lado não pode derrubar a releitura (24/08/2026).
+
+    Arquivar é a saída oferecida pelo manual para o histórico que não
+    interessa — e no staging eram 769 de 1.132 pedidos. Só que a busca do
+    sync herda o `active_test` do ORM e não enxerga arquivado: para ele o
+    pedido não existe, ele tenta CRIAR, e a trava de unicidade derruba a
+    leitura inteira com "Este pedido do Olist já está espelhado nesta conta".
+
+    Quem guarda a unicidade é o banco, que vê tudo; então a busca que a
+    protege tem de ver tudo também. E o arquivado continua arquivado: pôr de
+    lado é decisão de gente, e a releitura não a desfaz.
+    """
+
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.env['olist.account'].search([]).write({'active': False})
+        cls.account = cls.env['olist.account'].create({
+            'name': "Olist Arquivo", 'company_id': cls.env.company.id,
+            'token': "TOKEN-ARQ", 'read_only': True})
+
+    def _pull(self):
+        with patch.object(olist_client, 'list_pedidos',
+                          return_value=iter(LISTAGEM)):
+            return self.account._pull_orders(interactive=False)
+
+    def test_an_archived_order_does_not_break_the_reread(self):
+        self._pull()
+        pedido = self.env['olist.order'].search(
+            [('account_id', '=', self.account.id), ('olist_id', '=', '743491633')])
+        self.assertTrue(pedido)
+        pedido.active = False
+
+        # A releitura traz o mesmo pedido de novo: é o caso normal, porque a
+        # janela do Olist não sabe o que a casa arquivou.
+        resultado = self._pull()
+
+        arquivado = self.env['olist.order'].with_context(
+            active_test=False).search(
+            [('account_id', '=', self.account.id),
+             ('olist_id', '=', '743491633')])
+        self.assertEqual(len(arquivado), 1, "não pode nascer um segundo")
+        self.assertFalse(arquivado.active, "arquivar é decisão de gente")
+        self.assertEqual(resultado['novos'], 0)
+        self.assertEqual(resultado['atualizados'], 2)
+
+    def test_the_archived_one_still_learns_the_new_situation(self):
+        """Atualizar o que está de lado é barato e mantém o espelho honesto."""
+        self._pull()
+        pedido = self.env['olist.order'].search(
+            [('olist_id', '=', '743491633')])
+        pedido.write({'situacao': "Enviado", 'active': False})
+        self._pull()
+        pedido.invalidate_recordset()
+        self.assertEqual(pedido.situacao, "Entregue")
+        self.assertFalse(pedido.active)
+
+
+@tagged('post_install', '-at_install')
 class TestRotuloDoLivro(TransactionCase):
     """O rótulo curto do Relatório: ISBN · título cortado (padrão da Amazon).
 

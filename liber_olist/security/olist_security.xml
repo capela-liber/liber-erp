@@ -1,6 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
+    <!-- ================== O OPERADOR DO OLIST (24/08/2026) ==================
+
+         Até aqui só a administração escrevia no espelho, e o comercial não
+         conseguia sequer atualizar a lista de pedidos: "Você não tem
+         permissões para criar registros de Espelho de pedido do Olist". O
+         cron reescreve esse espelho toda noite de qualquer forma — negar o
+         mesmo ato sob demanda era travar o trabalho sem proteger nada.
+
+         O que este grupo dá: escrita nos ESPELHOS (pedido, item, canal,
+         catálogo). O que ele NÃO dá, de propósito: a ficha da CONTA. É lá que
+         mora o "Somente leitura", a trava que impede o sistema de escrever no
+         Olist de verdade e que segura os clones neutralizados — decisão de
+         configuração, não de operação. O token já se protege sozinho, no
+         campo (groups="base.group_system").
+
+         Concedido por PAPEL, no liber_roles, nunca a dedo. -->
+    <record id="privilege_olist_operador" model="res.groups.privilege">
+        <field name="name">Olist</field>
+        <field name="sequence">30</field>
+    </record>
+
+    <record id="group_olist_operador" model="res.groups">
+        <field name="name">Operador</field>
+        <field name="privilege_id" ref="privilege_olist_operador"/>
+        <field name="comment">Grupo técnico: atualiza os espelhos do Olist (pedidos, itens, canais, catálogo) e despacha — sem a ficha da conta, que guarda o token e a trava Somente leitura. Concedido por papel (liber_roles), não a dedo.</field>
+    </record>
+
     <!-- Multiempresa: cada empresa só vê o SEU Olist.
 
          Descoberto em 18/08/2026, testando com gente de verdade: sem estas

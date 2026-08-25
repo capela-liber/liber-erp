@@ -10,3 +10,4 @@ from . import test_posicoes_semeadas
 from . import test_numeracao
 from . import test_email_documentos
 from . import test_painel_da_casa
+from . import test_nome_fiscal

@@ -1173,6 +1173,7 @@ msgstr "Enviar Mapas de Consignação (RUN)"
 #. odoo-python
 #: code:addons/liber_soc_settlement/models/consignment_settlement.py:0
 #: model:ir.actions.server,name:liber_soc_settlement.action_send_map_server
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.view_consignment_agreement_form_settlements
 #: model_terms:ir.ui.view,arch_db:liber_soc_settlement.view_consignment_settlement_form
 msgid "Send Map"
 msgstr "Enviar Mapa"
@@ -2423,3 +2424,190 @@ msgstr "Estes títulos reportam mais vendas do que a prateleira tem. Dá para ro
 msgid "Run without them"
 msgstr "Rodar sem eles"
 
+#. module: liber_soc_settlement
+#: model:ir.actions.server,name:liber_soc_settlement.cron_send_shelf_maps_ir_actions_server
+msgid "Consignment: e-mail the monthly shelf map"
+msgstr "Consignação: enviar o mapa mensal da prateleira"
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_res_config_settings__map_schedule_day
+msgid "Day of month"
+msgstr "Dia do mês"
+
+#. module: liber_soc_settlement
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.res_config_settings_view_form_soc
+msgid "<span class=\"col-lg-4 o_form_label\">Day of month</span>"
+msgstr "<span class=\"col-lg-4 o_form_label\">Dia do mês</span>"
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_res_config_settings__map_schedule_enabled
+msgid "E-mail the map monthly"
+msgstr "Enviar o mapa todo mês por e-mail"
+
+#. module: liber_soc_settlement
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.res_config_settings_view_form_soc
+msgid "Monthly map by e-mail"
+msgstr "Mapa mensal por e-mail"
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_consignment_agreement__map_last_sent_date
+msgid "Last Map Sent"
+msgstr "Último mapa enviado"
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,help:liber_soc_settlement.field_consignment_agreement__map_last_sent_date
+msgid ""
+"When the standalone consignment map (no settlement) was last e-mailed to "
+"this customer. Guards the monthly schedule against sending twice."
+msgstr ""
+"Quando o mapa avulso de consignação (sem acerto) foi enviado por e-mail a "
+"este cliente pela última vez. É o que impede o agendamento mensal de mandar "
+"duas vezes."
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,help:liber_soc_settlement.field_res_config_settings__map_schedule_enabled
+msgid ""
+"Master switch: on the chosen day of each month, open the month's operation "
+"(CO) for every customer with a valid agreement and stock on their shelf -- "
+"reusing the one already being worked on -- and e-mail them its map. The "
+"e-mail says it is automatic."
+msgstr ""
+"Interruptor geral: no dia escolhido de cada mês, abre a operação do mês (CO) "
+"para todo cliente com contrato válido e mercadoria na prateleira — "
+"reaproveitando a que já estiver sendo trabalhada — e manda o mapa dela por "
+"e-mail. O e-mail avisa que é uma mensagem automática."
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,help:liber_soc_settlement.field_res_config_settings__map_schedule_day
+msgid ""
+"Day of the month the maps go out. In months shorter than the chosen day (31 "
+"in February), they go out on the last day, so the month is never skipped. "
+"From that day on, any valid agreement that has not been mailed yet in the "
+"current month is picked up by the next nightly run -- so a batch cut short "
+"finishes the day after, and turning the switch on mid-month sends right "
+"away."
+msgstr ""
+"Dia do mês em que os mapas saem. Em mês mais curto que o dia escolhido (31 "
+"em fevereiro), saem no último dia, para o mês nunca passar em branco. Desse "
+"dia em diante, todo contrato válido que ainda não recebeu o mapa neste mês "
+"entra na rodada da madrugada seguinte — assim uma leva interrompida termina "
+"no dia seguinte, e ligar o interruptor no meio do mês manda na hora."
+
+#. module: liber_soc_settlement
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.res_config_settings_view_form_soc
+msgid ""
+"On the chosen day of each month, open the month's operation (CO) for every "
+"customer with a valid agreement and stock on their shelf — reusing the one "
+"already being worked on — and e-mail them its map. Customers with an empty "
+"shelf are skipped. From the chosen day on, whoever has not been mailed yet "
+"this month is picked up by the next nightly run."
+msgstr ""
+"No dia escolhido de cada mês, abre a operação do mês (CO) para todo cliente "
+"com contrato válido e mercadoria na prateleira — reaproveitando a que já "
+"estiver sendo trabalhada — e manda o mapa dela por e-mail. Cliente com "
+"prateleira vazia é pulado. Do dia escolhido em diante, quem ainda não "
+"recebeu neste mês entra na rodada da madrugada seguinte."
+
+#. module: liber_soc_settlement
+#. odoo-python
+#: code:addons/liber_soc_settlement/models/res_config_settings.py:0
+msgid ""
+"The day of the month for the consignment map must be between 1 and 31 (got "
+"%s)."
+msgstr ""
+"O dia do mês para o mapa de consignação deve estar entre 1 e 31 (recebido "
+"%s)."
+
+#. module: liber_soc_settlement
+#. odoo-python
+#: code:addons/liber_soc_settlement/models/consignment_agreement.py:0
+msgid "Consignment map: customer has no e-mail"
+msgstr "Mapa de consignação: cliente sem e-mail"
+
+#. module: liber_soc_settlement
+#. odoo-python
+#: code:addons/liber_soc_settlement/models/consignment_agreement.py:0
+msgid ""
+"The monthly consignment map of %(customer)s was not sent: neither the "
+"customer nor the contract's report contacts have an e-mail address. "
+"%(titles)s title(s) are sitting on their shelf with no statement going out. "
+"Please complete the contact details."
+msgstr ""
+"O mapa mensal de consignação de %(customer)s não foi enviado: nem o cliente "
+"nem os contatos de relatório do contrato têm e-mail cadastrado. São "
+"%(titles)s título(s) parados na prateleira dele sem extrato nenhum saindo. "
+"Complete o cadastro do contato."
+
+#. module: liber_soc_settlement
+#. odoo-python
+#: code:addons/liber_soc_settlement/models/consignment_agreement.py:0
+msgid "Map of %(co)s queued for %(customer)s."
+msgstr "Mapa da %(co)s na fila para %(customer)s."
+
+#. module: liber_soc_settlement
+#. odoo-python
+#: code:addons/liber_soc_settlement/models/consignment_agreement.py:0
+msgid "Consignment map: no Settlement contact with e-mail"
+msgstr "Mapa de consignação: sem contato de Acertos com e-mail"
+
+#. module: liber_soc_settlement
+#. odoo-python
+#: code:addons/liber_soc_settlement/models/consignment_agreement.py:0
+msgid ""
+"The monthly consignment map of %(customer)s was not sent: they have no "
+"Settlement contact with an e-mail address. %(titles)s title(s) are sitting "
+"on their shelf with no statement going out. Please add a contact of type "
+"Settlement on the customer, with the e-mail of whoever checks the shelf."
+msgstr ""
+"O mapa mensal de consignação de %(customer)s não foi enviado: o cliente não "
+"tem contato de Acertos com e-mail cadastrado. São %(titles)s título(s) "
+"parados na prateleira dele sem extrato nenhum saindo. Cadastre no cliente um "
+"contato do tipo Acertos, com o e-mail de quem confere a prateleira."
+
+#. module: liber_soc_settlement
+#. odoo-python
+#: code:addons/liber_soc_settlement/models/sale_order.py:0
+msgid "Consignment order: no Buyer contact with e-mail"
+msgstr "Pedido de consignação: sem contato de Comprador com e-mail"
+
+#. module: liber_soc_settlement
+#. odoo-python
+#: code:addons/liber_soc_settlement/models/sale_order.py:0
+msgid ""
+"The consignment order %(order)s of %(customer)s was confirmed but not "
+"e-mailed: they have no Buyer contact with an e-mail address. Please add a "
+"contact of type Buyer on the customer, with the e-mail of whoever authorises "
+"incoming goods."
+msgstr ""
+"O pedido de consignação %(order)s de %(customer)s foi confirmado mas não foi "
+"enviado por e-mail: o cliente não tem contato de Comprador com e-mail "
+"cadastrado. Cadastre no cliente um contato do tipo Comprador, com o e-mail de "
+"quem autoriza a entrada de mercadoria."
+
+#. module: liber_soc_settlement
+#. odoo-python
+#: code:addons/liber_soc_settlement/models/consignment_agreement.py:0
+msgid "Monthly consignment map"
+msgstr "Mapa mensal de consignação"
+
+#. module: liber_soc_settlement
+#. odoo-python
+#: code:addons/liber_soc_settlement/models/consignment_agreement.py:0
+msgid "%s map(s) sent."
+msgstr "%s mapa(s) enviado(s)."
+
+#. module: liber_soc_settlement
+#. odoo-python
+#: code:addons/liber_soc_settlement/models/consignment_agreement.py:0
+msgid ""
+"%(n)s customer(s) got NO map: no Settlement contact with an e-mail address. "
+"%(names)s"
+msgstr ""
+"%(n)s cliente(s) NÃO receberam o mapa: sem contato de Acertos com e-mail "
+"cadastrado. %(names)s"
+
+#. module: liber_soc_settlement
+#. odoo-python
+#: code:addons/liber_soc_settlement/models/consignment_agreement.py:0
+msgid " and %s more"
+msgstr " e mais %s"

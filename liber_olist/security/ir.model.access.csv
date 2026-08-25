@@ -11,3 +11,8 @@ access_olist_product_field_user,olist.product.field.user,model_olist_product_fie
 access_olist_product_field_manager,olist.product.field.manager,model_olist_product_field,base.group_system,1,1,1,1
 access_olist_channel_user,olist.channel.user,model_olist_channel,base.group_user,1,0,0,0
 access_olist_channel_manager,olist.channel.manager,model_olist_channel,base.group_system,1,1,1,1
+access_olist_order_operador,olist.order.operador,model_olist_order,group_olist_operador,1,1,1,0
+access_olist_order_line_operador,olist.order.line.operador,model_olist_order_line,group_olist_operador,1,1,1,0
+access_olist_channel_operador,olist.channel.operador,model_olist_channel,group_olist_operador,1,1,1,0
+access_olist_product_operador,olist.product.operador,model_olist_product,group_olist_operador,1,1,1,0
+access_olist_product_field_operador,olist.product.field.operador,model_olist_product_field,group_olist_operador,1,1,1,0

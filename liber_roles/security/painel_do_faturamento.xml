@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ==================================================================
+         O ASSISTENTE FINANCEIRO NÃO VÊ PAINEL (24/08/2026).
+
+         A régua do PERFIS.md é antiga: "o nível assistente não deve ver
+         relatórios, painéis, views de saldos". E lá está escrito que isso
+         "sai de graça", porque painel não seria grupo — apareceria conforme
+         os apps que a pessoa alcança.
+
+         Sai de graça para o painel de diários do Faturamento, que pede
+         `group_account_basic`. NÃO sai para o app Painéis: o dashboard
+         `Invoicing` do core é liberado a duas linhas, `group_account_readonly`
+         E `group_account_invoice` — e a segunda é justamente a do assistente.
+         Ele abria Painéis e via receita, recebíveis e saldos, que é o oposto
+         do combinado. Conferido na tela, não no XML.
+
+         Tira-se só a segunda. `(3, ...)` e não `(6, 0, [...])`: quem tem
+         `group_account_readonly` — Financeiro/Gerente, Direção, Visitante —
+         segue com o painel, e uma linha nova que o core acrescente amanhã
+         não é apagada por nós.
+
+         O QUE ISTO NÃO FAZ: o app Painéis continua na lista de aplicativos
+         dele, agora vazio. Fechá-lo pediria pôr grupo no menu raiz do
+         `spreadsheet_dashboard`, que hoje não tem nenhum — e menu sem grupo é
+         aberto: o primeiro grupo que se põe fecha para todo o resto, que foi
+         exatamente a mordida do menu de Compras em 22/08. Um app vazio é o
+         preço menor, e é escolha, não esquecimento.
+         ================================================================== -->
+
+    <record id="spreadsheet_dashboard_account.dashboard_invoicing" model="spreadsheet.dashboard">
+        <field name="group_ids" eval="[(3, ref('account.group_account_invoice'))]"/>
+    </record>
+
+</odoo>

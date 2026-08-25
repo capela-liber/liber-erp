@@ -4,7 +4,9 @@ from . import consignment_move
 from . import consignment_agreement
 from . import res_company
 from . import sale_order
+from . import sale_order_line
 from . import sale_report
+from . import spreadsheet_dashboard
 from . import product_template
 from . import stock_quant
 from . import stock_move

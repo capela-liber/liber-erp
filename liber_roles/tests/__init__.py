@@ -7,3 +7,5 @@ from . import test_logistica
 from . import test_visitante
 from . import test_editorial_compras
 from . import test_tour_editorial
+from . import test_tour_contatos
+from . import test_tour_comercial
