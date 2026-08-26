@@ -1,0 +1,60 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* liber_in_payment
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Language: pt_BR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#. module: liber_in_payment
+#: model:ir.model.fields,field_description:liber_in_payment.field_res_company__use_in_payment_state
+#: model:ir.model.fields,field_description:liber_in_payment.field_res_config_settings__use_in_payment_state
+msgid "Invoices wait for bank reconciliation"
+msgstr "Faturas aguardam a conciliação bancária"
+
+#. module: liber_in_payment
+#: model:ir.model.fields,help:liber_in_payment.field_res_company__use_in_payment_state
+#: model:ir.model.fields,help:liber_in_payment.field_res_config_settings__use_in_payment_state
+msgid ""
+"When a payment is registered, the invoice shows In Payment and only becomes "
+"Paid once the payment is reconciled with a bank statement. Disable to mark "
+"invoices Paid immediately, as Odoo Community does by default."
+msgstr ""
+"Ao registrar um pagamento, a fatura exibe Em pagamento e só passa a Pago "
+"quando o pagamento é conciliado com um extrato bancário. Desative para "
+"marcar as faturas como Pagas imediatamente, como o Odoo Community faz por "
+"padrão."
+
+#. module: liber_in_payment
+#: model_terms:ir.ui.view,arch_db:liber_in_payment.res_config_settings_view_form
+msgid "In Payment State"
+msgstr "Estado Em pagamento"
+
+#. module: liber_in_payment
+#: model_terms:ir.ui.view,arch_db:liber_in_payment.res_config_settings_view_form
+msgid ""
+"Invoices stay In Payment until the payment meets the bank statement; "
+"disable to mark them Paid immediately."
+msgstr ""
+"As faturas ficam Em pagamento até o pagamento encontrar o extrato "
+"bancário; desative para marcá-las como Pagas imediatamente."
+
+#. module: liber_in_payment
+#: model:ir.model,name:liber_in_payment.model_account_move
+msgid "Journal Entry"
+msgstr "Lançamento contábil"
+
+#. module: liber_in_payment
+#: model:ir.model,name:liber_in_payment.model_res_company
+msgid "Companies"
+msgstr "Empresas"
+
+#. module: liber_in_payment
+#: model:ir.model,name:liber_in_payment.model_res_config_settings
+msgid "Config Settings"
+msgstr "Definições de configuração"
