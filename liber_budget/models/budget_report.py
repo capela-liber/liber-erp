@@ -5,7 +5,12 @@ from odoo import fields, models, tools
 class BudgetReport(models.Model):
     """View SQL de análise (pivot/graph): uma linha por budget.line, com
     Planned/Theoretical da linha e Programmed/Practical somados do Razão
-    (modo GL) e dos analytic lines (modo analítico), na convenção P&L."""
+    (modo GL) e dos analytic lines (modo analítico), na convenção P&L.
+
+    A empresa NÃO se compara por igualdade: o realizado vem da própria empresa
+    do orçamento MAIS as declaradas em `company_ids`. Sem lista, é só a
+    própria -- o comportamento de sempre. Ver o porquê em
+    `budget.analytic.company_ids`."""
     _name = 'budget.report'
     _description = "Budget Analysis"
     _auto = False
@@ -96,7 +101,14 @@ class BudgetReport(models.Model):
                         ON rel.account_account_id = aml.account_id
                     WHERE bl.position_id IS NOT NULL
                       AND rel.budget_position_id = bl.position_id
-                      AND aml.company_id = bl.company_id
+                      AND (
+                          -- a própria empresa SEMPRE, mais as consolidadas
+                          aml.company_id = bl.company_id
+                          OR aml.company_id IN (
+                              SELECT cr.res_company_id
+                                FROM budget_analytic_res_company_rel cr
+                               WHERE cr.budget_analytic_id = ba.id)
+                      )
                       AND aml.date BETWEEN bl.date_from AND bl.date_to
                       AND aml.parent_state IN ('draft', 'posted')
                 ) gl ON TRUE
@@ -112,7 +124,14 @@ class BudgetReport(models.Model):
                     WHERE bl.position_id IS NULL
                       AND bl.account_id IS NOT NULL
                       AND (%(casa_plano)s)
-                      AND aal.company_id = bl.company_id
+                      AND (
+                          -- a própria empresa SEMPRE, mais as consolidadas
+                          aal.company_id = bl.company_id
+                          OR aal.company_id IN (
+                              SELECT cr.res_company_id
+                                FROM budget_analytic_res_company_rel cr
+                               WHERE cr.budget_analytic_id = ba.id)
+                      )
                       AND aal.date BETWEEN bl.date_from AND bl.date_to
                       AND (aal.move_line_id IS NULL OR ml.parent_state IN ('draft', 'posted'))
                 ) aa ON TRUE

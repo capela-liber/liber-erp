@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- A lista é padrão internacional fechado: consulta-se, não se cria.
+         Quem troca a versão é scripts/gerar_listas_classificacao.py. -->
+    <record id="view_metabooks_thema_list" model="ir.ui.view">
+        <field name="name">metabooks.thema.code.list</field>
+        <field name="model">metabooks.thema.code</field>
+        <field name="arch" type="xml">
+            <list create="false" delete="false" edit="false">
+                <field name="code"/>
+                <field name="name"/>
+                <field name="kind"/>
+                <field name="qualifier_kind" optional="show"/>
+                <field name="parent_id" optional="hide"/>
+                <field name="version" optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_metabooks_thema_form" model="ir.ui.view">
+        <field name="name">metabooks.thema.code.form</field>
+        <field name="model">metabooks.thema.code</field>
+        <field name="arch" type="xml">
+            <form create="false" edit="false">
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="code" readonly="1"/></h1>
+                        <h2><field name="name" readonly="1"/></h2>
+                    </div>
+                    <group>
+                        <field name="kind"/>
+                        <field name="qualifier_kind"
+                               invisible="kind != 'qualifier'"/>
+                        <field name="parent_id"/>
+                        <field name="version"/>
+                    </group>
+                    <group string="Nota de uso da EDItEUR"
+                           invisible="not note">
+                        <field name="note" nolabel="1"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_metabooks_thema_search" model="ir.ui.view">
+        <field name="name">metabooks.thema.code.search</field>
+        <field name="model">metabooks.thema.code</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="code"/>
+                <field name="name"/>
+                <field name="note"/>
+                <filter name="categorias" string="Categorias"
+                        domain="[('kind', '=', 'category')]"/>
+                <filter name="qualificadores" string="Qualificadores"
+                        domain="[('kind', '=', 'qualifier')]"/>
+                <separator/>
+                <filter name="grupo" string="Grupo do qualificador"
+                        context="{'group_by': 'qualifier_kind'}"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_metabooks_thema" model="ir.actions.act_window">
+        <field name="name">Thema</field>
+        <field name="res_model">metabooks.thema.code</field>
+        <field name="view_mode">list,form</field>
+        <field name="context">{'search_default_categorias': 1}</field>
+    </record>
+
+</odoo>

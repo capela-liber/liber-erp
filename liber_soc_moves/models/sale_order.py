@@ -48,6 +48,70 @@ class SaleOrder(models.Model):
         return super().create(vals_list)
 
     # ------------------------------------------------------------------
+    # Um S nao vira C depois de nascido
+    # ------------------------------------------------------------------
+    # Em agosto/2026 apareceram 21 pedidos com nome de VENDA (S63072,
+    # S63495...) e `is_consignment` ligado. Eles somem da lista de Pedidos,
+    # somem da Analise de vendas, nao faturam -- e continuam se chamando S.
+    # O comercial procura o pedido pelo numero, nao acha, e a nota ja saiu
+    # como remessa (5917).
+    #
+    # Nao foi possivel reconstituir o clique: `cfop_id` nao esta em view
+    # nenhuma de sale.order no prod, nenhum dos 21 veio do acerto
+    # (`consignment_operation_id` vazio) e os campos nao sao rastreados. Por
+    # isso a trava fica AQUI, no write, onde toda porta precisa passar --
+    # tela, importacao, RPC ou codigo nosso.
+    #
+    # A regra e simples: a bandeira se decide no nascimento. Depois de
+    # confirmado, ninguem mais a muda. Em rascunho pode mudar, mas ai o NOME
+    # muda junto: nome e bandeira nunca mais discordam.
+    def write(self, vals):
+        if 'is_consignment' in vals:
+            alvo = bool(vals['is_consignment'])
+            mudando = self.filtered(lambda o: o.is_consignment != alvo)
+            firmes = mudando.filtered(lambda o: o.state not in ('draft', 'sent'))
+            if firmes:
+                raise UserError(_(
+                    "%(orders)s: a consignment order and a sale are different "
+                    "documents, and this one is already confirmed. Cancel it and "
+                    "create the right document instead of converting it.",
+                    orders=', '.join(firmes.mapped('name'))))
+            if mudando and 'name' not in vals:
+                # O NOME TEM DE VIAJAR NO MESMO WRITE. A constrains abaixo
+                # roda no flush, dentro do super() -- renumerar depois chega
+                # tarde: o pedido ja passou pela rede com nome de venda e a
+                # propria trava recusa a troca legitima.
+                codigo = ('sale.order.consignment' if alvo else 'sale.order')
+                Sequencia = self.env['ir.sequence']
+                for order in mudando:
+                    proximo = Sequencia.next_by_code(codigo)
+                    super(SaleOrder, order).write(
+                        dict(vals, name=proximo) if proximo else vals)
+                intactos = self - mudando
+                if intactos:
+                    super(SaleOrder, intactos).write(vals)
+                return True
+        return super().write(vals)
+
+    @api.constrains('name', 'is_consignment')
+    def _check_nome_combina_com_bandeira(self):
+        """Rede de baixo: consignacao com nome de venda nao existe.
+
+        Le o prefixo da sequencia de venda em vez de cravar "S" no codigo --
+        a casa ja renumerou series antes e vai renumerar de novo."""
+        sequencia = self.env['ir.sequence'].search(
+            [('code', '=', 'sale.order')], limit=1)
+        prefixo = (sequencia.prefix or '').strip()
+        if not prefixo:
+            return
+        for order in self:
+            if order.is_consignment and (order.name or '').startswith(prefixo):
+                raise UserError(_(
+                    "%(order)s is flagged as a consignment order but carries a "
+                    "sale number. A consignment order is not a sale: it has to "
+                    "carry its own number.", order=order.name))
+
+    # ------------------------------------------------------------------
     # Sem contrato ativo não sai livro
     # ------------------------------------------------------------------
     # A CONSIGNAÇÃO COMEÇA NO CONTRATO, e o Pedido era a única porta sem

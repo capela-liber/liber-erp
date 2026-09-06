@@ -239,6 +239,26 @@ class TestOlistSaldoConverge(TransactionCase):
         self.assertFalse(any(l.saldo_olist_date for l in self.linhas),
                          "começou leitura que não cabia no ciclo")
 
+    def test_the_pass_ends_with_the_queue_declared_empty(self):
+        # O executor relê `remaining` no fim da ação: qualquer resto positivo
+        # vira "partially done" e reexecução imediata. Sem o zero final, a
+        # releitura por antiguidade — cuja fila nunca esvazia — rodou milhares
+        # de vezes por dia no prod (22 a 30/08/2026) e derrubou os demais
+        # crons do Olist por serialização.
+        for orcamento in (999.0, 1.0):  # com tempo de sobra e sem tempo algum
+            with patch.object(olist_client, 'list_atualizacoes_estoque',
+                              return_value=[]), \
+                 patch.object(olist_client, 'get_estoque',
+                              return_value={'saldo': 7}), \
+                 patch.object(type(self.account), '_grava_ja',
+                              return_value=orcamento) as grava:
+                self.account._pull_stock_window()
+            ultima = grava.call_args_list[-1]
+            self.assertEqual(
+                ultima.kwargs.get('restantes'), 0,
+                "a passada (orçamento %s) terminou sem declarar a fila "
+                "vazia — o executor reexecutaria o cron sem parar" % orcamento)
+
     def test_outside_a_cron_it_does_not_sweep(self):
         # Fora do cron `_grava_ja` devolve infinito: o botão da tela não pode
         # virar uma varredura de vinte minutos sem ninguém pedir.

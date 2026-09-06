@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<script>
+/* Servido por /liber_site/static/docs/, este arquivo vem com uma semana de
+   cache e o docs.js sem versão -- e o índice monta a lista a partir dele. Foi
+   assim que a emissão de NF-e e o manual da Amazon ficaram invisíveis: o
+   catálogo em cache era anterior aos dois. A rota /liber/docs/ serve o mesmo
+   arquivo sem cache e com ?v=<mtime> nos assets. Quem chegar pelo caminho
+   antigo (favorito, link velho, resultado de busca) vai para lá antes de a
+   página montar qualquer coisa. */
+(function () {
+  var antigo = "/liber_site/static/docs/";
+  if (location.pathname.indexOf(antigo) === 0) {
+    location.replace("/liber/docs/" + location.pathname.slice(antigo.length) +
+                     location.search + location.hash);
+  }
+})();
+</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Contas a receber por idade — Manuais do Liber</title>
+<link rel="icon" type="image/png" href="../logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;600;700&display=swap">
+<link rel="stylesheet" href="docs.css">
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="../index.html"><img src="../logo.png" alt="">liber<span>.</span></a>
+    <span class="doc-tag">Manuais</span>
+    <nav><a href="index.html">Índice</a><a href="../index.html">Site</a></nav>
+  </div>
+</header>
+<div class="wrap">
+  <div class="layout">
+    <aside class="sidebar" id="sidebar"></aside>
+    <article class="doc">
+      <div class="breadcrumb"><a href="index.html">Manuais</a><span class="sep">›</span>Gestão<span class="sep">›</span>Contas a receber por idade</div>
+      <h1>Contas a receber por idade</h1>
+      <p class="lead">O saldo em aberto de cada cliente por faixa de atraso, em tela navegável — e, na linha, o caminho até o documento e até a conciliação.</p>
+
+      <h2 id="visao-geral">Visão geral</h2>
+      <p>O relatório <em>Aged Receivable</em> — o saldo em aberto de cada cliente distribuído por
+      faixa de atraso — é do Odoo Enterprise. No Community 19 ele simplesmente não existe: o texto
+      está nos arquivos de tradução e a tela, em lugar nenhum. A alternativa da
+      <abbr class="sigla" title="Odoo Community Association: a associação que mantém módulos livres para o Odoo.">OCA</abbr>
+      é um assistente que <strong>imprime</strong>: escolhem-se as faixas, sai um PDF.</p>
+      <p>Isso responde <em>"quanto está vencido"</em>. Não responde <em>"qual cobrança eu vou
+      resolver agora"</em>. Esta tela responde a segunda pergunta.</p>
+      <p>É uma <strong>lista navegável</strong>, não um papel: cada linha é um documento em aberto,
+      com as faixas de atraso em colunas, e dois botões que levam ao trabalho — abrir o documento,
+      ou ir conciliar.</p>
+
+      <h2 id="configuracao">Configuração</h2>
+      <p>Nenhuma. A tela é uma leitura direta das linhas em aberto das contas a receber, calculada
+      no momento em que você abre — <strong>não há cron, não há tabela intermediária e não há como
+      ficar desatualizada</strong>. As faixas são medidas contra a data de hoje, a cada consulta.</p>
+      <p>Onde fica: <span class="menupath">Contabilidade<i>‣</i>Relatórios<i>‣</i>Aged
+      Receivable</span>. Quem enxerga o quê segue as regras de acesso da contabilidade e a
+      separação por empresa, como o resto do sistema.</p>
+
+      <h2 id="faixas">As faixas</h2>
+      <p>São as mesmas do Enterprise, para que o número seja comparável com o de quem usa a versão
+      paga: <span class="field">A vencer</span>, <span class="field">1–30</span>,
+      <span class="field">31–60</span>, <span class="field">61–90</span>,
+      <span class="field">91–120</span> e <span class="field">Mais antigo</span>.</p>
+      <p>A régua é a <strong>data de vencimento</strong>. Quando a linha não tem vencimento — e no
+      livro migrado há muitas —, vale a data do lançamento, para que ela não desapareça da conta.</p>
+
+      <h2 id="dia-a-dia">O dia a dia</h2>
+      <p>Como é um modelo comum do Odoo, tudo o que a interface oferece funciona sem que ninguém
+      tenha precisado programar: <strong>agrupe por cliente</strong> e as faixas somam por grupo,
+      exatamente como na tela do Enterprise; filtre, ordene, busque, exporte para planilha. Há
+      ainda o <span class="field">Grupo econômico</span> e o <span class="field">Canal de
+      vendas</span> como colunas de agrupamento — a rede acima da loja, e o time que responde por
+      ela.</p>
+      <p>Em cada linha, dois gestos:</p>
+      <ul>
+        <li><strong>Abrir</strong> leva à fatura ou ao pagamento em si.</li>
+        <li><strong>Conciliar</strong> leva à tela de conciliação já posicionada naquele cliente e
+        naquela conta — que é onde a baixa manual acontece.</li>
+      </ul>
+      <div class="callout"><span class="title">Nota</span><p>O botão
+      <span class="field">Conciliar</span> só aparece na linha em que há mesmo o que conciliar: é
+      preciso existir, do outro lado, saldo do mesmo cliente na mesma conta. Na carteira da casa
+      isso vale para menos de um quinto das linhas — mostrar o botão nas outras seria oferecer um
+      caminho que termina em tela vazia.</p></div>
+
+      <h2 id="sem-parceiro">As linhas sem cliente</h2>
+      <p>Linha em aberto sem parceiro <strong>não é escondida</strong>. Nenhum relatório de idade
+      as mostraria, e é justamente por isso que elas se acumulam: escondê-las faria o total da tela
+      discordar do razão. Elas aparecem agrupadas sob a ausência de cliente, e costumam ser o
+      primeiro trabalho que a tela revela.</p>
+
+      <h2 id="limitacoes">Limitações conhecidas</h2>
+      <ul>
+        <li><strong>É leitura.</strong> Nada se escreve aqui; a tela mostra o que o razão diz, e o
+        conserto se faz no documento ou na conciliação.</li>
+        <li><strong>Depende da conciliação da OCA</strong> (<span class="field">account_reconcile_oca</span>)
+        para o botão Conciliar — o Community 19 não traz a tela de conciliação de fábrica.</li>
+        <li><strong>Não substitui o balancete.</strong> Ela olha as contas a receber em aberto, não
+        a contabilidade inteira.</li>
+      </ul>
+
+      <div class="seealso">
+        <strong>Ver também</strong>
+        <ul>
+          <li><a href="liber_aged_payable.html">Contas a pagar por idade</a> — a mesma tela, do outro lado do razão.</li>
+          <li><a href="liber_in_payment.html">Estado Em pagamento</a> — por que uma fatura baixada pode não ser dinheiro em caixa.</li>
+        </ul>
+      </div>
+
+      <nav class="pager" id="pager"></nav>
+    </article>
+  </div>
+</div>
+<script src="docs.js"></script>
+</body>
+</html>

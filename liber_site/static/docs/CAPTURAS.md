@@ -12,7 +12,12 @@ URLs das páginas (site publicado ou instância local):
 - Local: `http://localhost:8069/liber_site/static/docs/<página>`
 - Índice: `http://localhost:8069/liber_site/static/docs/index.html`
 
-Total de capturas: 58 · Feitas: marque a caixa ao concluir.
+Total de capturas: 61 · Feitas: marque a caixa ao concluir.
+
+> As capturas saem sem humano na frente: `scripts/capturar_manual.py` autentica por
+> JSON-RPC, empresta o cookie da sessão a um Chrome headless e fotografa a URL no
+> tamanho certo. Ele precisa de `websocket-client` e `requests`, que não existem no
+> Python do sistema — o cabeçalho do script traz a receita do venv descartável.
 
 
 ## Acordos de consignação — `liber_soc_agreements.html`
@@ -227,12 +232,18 @@ Página: `/liber_site/static/docs/liber_gdrive.html`
 
 Página: `/liber_site/static/docs/liber_github.html`
 
-- [ ] **`doc-liber_github-folder.png`**
+- [x] **`doc-liber_github-home.png`**
+  - O que capturar: Tela inicial do Odoo com as tiles dos aplicativos, mostrando a do GitHub
+  - Legenda no manual: A tela inicial do Odoo: o GitHub é uma tile como as outras, com o gato preto do serviço no lugar do ícone colorido.
+  - Capturada em 20/08/2026 no `dev`. Existe porque a dúvida recorrente não é como preencher o formulário, e sim **onde fica o app** — o menu "Repositórios" só existe dentro da tile GitHub.
+- [x] **`doc-liber_github-folder.png`**
   - O que capturar: Formulário de um repositório mapeado, com dono/repositório no ID externo, a branch e os grupos de Leitura e Escrita
-  - Legenda no manual: O repositório como pasta: dono/repositório, branch, e a mesma decisão de sempre — quem lê, quem escreve.
-- [ ] **`doc-liber_github-files.png`**
-  - O que capturar: Lista de arquivos de um repositório espelhado, com a coluna de revisão (SHA) visível
-  - Legenda no manual: O espelho do repositório: cada arquivo com seu SHA — mudou o conteúdo, o sync denuncia.
+  - Legenda no manual: O repositório como pasta: dono/repositório no ID externo, a branch, e a mesma decisão de sempre — quem lê, quem escreve.
+  - Capturada em 20/08/2026 no `dev`, na pasta `capela-liber/liber-erp`.
+- [x] **`doc-liber_github-files.png`**
+  - O que capturar: Ficha de um arquivo espelhado, com o campo Revisão preenchido com o SHA do blob
+  - Legenda no manual: A ficha do arquivo: a Revisão é o SHA do blob — mudou o conteúdo, mudou o SHA, e o sync denuncia.
+  - Capturada em 20/08/2026 no `dev`. **Mudou de alvo**: o roteiro pedia a lista de arquivos "com a coluna de revisão", mas a lista de `liber.cloud.file` não traz o campo `rev` — nem como coluna opcional. O SHA só aparece na ficha, e é ela que está no manual.
 
 
 ## Papéis de acesso — `liber_roles.html`
@@ -323,3 +334,15 @@ Página: `/liber_site/static/docs/liber_transport.html`
 - [x] **`doc-liber_transport-lote-de-coleta.png`**
   - O que capturar: Solicitação COL/ com as entregas da Transpo e o e-mail enviado no histórico
   - Legenda no manual: O lote COL/ com as entregas de uma transportadora: o e-mail enviado mora no histórico, e a Data combinada e o Protocolo guardam a resposta.
+
+
+## Painel de Vendas — `liber_sales_dashboard.html`
+
+Página: `/liber_site/static/docs/liber_sales_dashboard.html`
+
+- [x] **`doc-liber_sales_dashboard-painel.png`**
+  - O que capturar: O painel de Vendas aberto no perfil de Gerente de Vendas: os cinco cartões com a comparação, a linha do Faturamento e o gráfico por canal
+  - Legenda no manual: Em cima, os cinco cartões e o Faturamento; embaixo, o vendido pelos pedidos e o vendido com nota, por canal.
+- [x] **`doc-liber_sales_dashboard-notas-sem-pedido.png`**
+  - O que capturar: A lista Vendas ‣ Notas fiscais ‣ Notas sem pedido, agrupada por mês, com a coluna Valor líquido somada no rodapé
+  - Legenda no manual: Notas sem pedido: cada linha é uma venda que saiu com nota sem passar por pedido — venda direta, ou uma fatura que perdeu o vínculo.

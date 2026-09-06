@@ -38,6 +38,7 @@ var DOCS = [
     { slug: "liber_transport", title: "Transportadora e coleta", desc: "A transportadora do cliente na entrega, caixas e peso para a nota, e o pedido de coleta por e-mail." },
   ]},
   { area: "Arquivos", desc: "O acervo da editora nas nuvens, com o Odoo de porteiro — mesma disciplina em três estantes.", items: [
+    { slug: "liber_cloud_files", title: "O chassi dos arquivos", desc: "A disciplina que as três estantes herdam: conta por empresa, pasta com dono, e o porteiro na frente." },
     { slug: "liber_dropbox", title: "Arquivos no Dropbox", desc: "Leitura e escrita por pasta, envio, links com prazo e vínculos a autores e títulos." },
     { slug: "liber_gdrive", title: "Arquivos no Google Drive", desc: "O mesmo portão na frente do Drive: pastas por ID, download conferido, miniaturas até de PDF." },
     { slug: "liber_github", title: "Arquivos no GitHub", desc: "Repositório vira pasta, envio vira commit, e o link compartilhado não fura o portão." },
@@ -49,9 +50,18 @@ var DOCS = [
     { slug: "liber_support", title: "Atendimento ao cliente", desc: "O e-mail da caixa comercial vira chamado, a triagem vira quadro e o prazo vira relógio em horas úteis." },
     { slug: "liber_support_soc", title: "Atendimento e consignação", desc: "O chamado vinculado à CO, o mapa anexado num clique e o assistente que transforma a conversa em documento." },
   ]},
-  { area: "Gestão", desc: "Orçamento e controle de acesso.", items: [
+  { area: "Gestão", desc: "Orçamento, leitura do faturamento e controle de acesso.", items: [
     { slug: "liber_budget", title: "Orçamento", desc: "Orçado × realizado sobre a contabilidade analítica." },
+    { slug: "liber_in_payment", title: "Estado Em pagamento", desc: "A fatura fica pendente até o extrato confirmar que o dinheiro entrou." },
+    { slug: "liber_sales_dashboard", title: "Painel de Vendas", desc: "Os dois relógios da venda — o pedido e a nota fiscal — um debaixo do outro, com o número que o gerente de vendas pergunta." },
+    { slug: "liber_geo_brasil", title: "O mapa do Brasil no dashboard", desc: "Vendas por UF no lugar do mapa-múndi, e exemplares no lugar de pedidos." },
+    { slug: "liber_aged_receivable", title: "Contas a receber por idade", desc: "O saldo aberto de cada cliente por faixa de atraso, com o caminho até a conciliação." },
+    { slug: "liber_aged_payable", title: "Contas a pagar por idade", desc: "A gêmea do outro lado do razão: o que a casa deve, por fornecedor e por faixa." },
     { slug: "liber_roles", title: "Papéis de acesso", desc: "Perfis prontos por área e a conta de visitante somente-leitura." },
+  ]},
+  { area: "Referência", desc: "O que vale para o sistema inteiro, e por isso não cabe em nenhum manual sozinho.", items: [
+    { slug: "instalacao", title: "Roteiro de instalação", desc: "Do computador vazio ao sistema no ar: máquina, Linux, Docker, git, a escada dev-staging-prod, acesso de fora e backup." },
+    { slug: "glossario", title: "Glossário", desc: "O prefixo de cada documento: de C a AT, o que você tem na mão quando lê um número." },
   ]},
 ];
 

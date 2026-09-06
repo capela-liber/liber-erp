@@ -1,0 +1,943 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<script>
+/* Servido por /liber_site/static/docs/, este arquivo vem com uma semana de
+   cache e o docs.js sem versão -- e o índice monta a lista a partir dele. Foi
+   assim que a emissão de NF-e e o manual da Amazon ficaram invisíveis: o
+   catálogo em cache era anterior aos dois. A rota /liber/docs/ serve o mesmo
+   arquivo sem cache e com ?v=<mtime> nos assets. Quem chegar pelo caminho
+   antigo (favorito, link velho, resultado de busca) vai para lá antes de a
+   página montar qualquer coisa. */
+(function () {
+  var antigo = "/liber_site/static/docs/";
+  if (location.pathname.indexOf(antigo) === 0) {
+    location.replace("/liber/docs/" + location.pathname.slice(antigo.length) +
+                     location.search + location.hash);
+  }
+})();
+</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Roteiro de instalação — Manuais do Liber</title>
+<meta name="description" content="Do computador vazio ao Liber no ar: a máquina, o Linux, o Docker, o git, a escada dev-staging-prod, o Tailscale, o backup e a primeira carga de XMLs — com um assistente de IA desde o primeiro passo.">
+<link rel="icon" type="image/png" href="../logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;600;700&display=swap">
+<link rel="stylesheet" href="docs.css">
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="../index.html"><img src="../logo.png" alt="">liber<span>.</span></a>
+    <span class="doc-tag">Manuais</span>
+    <nav><a href="index.html">Índice</a><a href="../index.html">Site</a></nav>
+  </div>
+</header>
+<div class="wrap">
+  <div class="layout">
+    <aside class="sidebar" id="sidebar"></aside>
+    <article class="doc">
+      <div class="breadcrumb"><a href="index.html">Manuais</a><span class="sep">›</span>Referência<span class="sep">›</span>Roteiro de instalação</div>
+      <h1>Roteiro de instalação</h1>
+      <p class="lead">Do computador vazio ao sistema no ar: a máquina, o Linux, o Docker, o git, a escada de três bases, o acesso de fora sem abrir porta no roteador, o backup — e a primeira carga de dados de verdade. Com um assistente de inteligência artificial junto desde o primeiro passo.</p>
+
+      <h2 id="visao-geral">Visão geral</h2>
+      <p>Este roteiro descreve a instalação que a casa faz, na ordem em que ela é feita. Não é a
+      única possível e não substitui uma implantação — configurar plano de contas, impostos e
+      processos de uma editora é outro trabalho, e o site diz a quem pedir. O que está aqui é o
+      <strong>chão</strong>: a máquina, o sistema, o versionamento, o acesso, a cópia e a primeira
+      carga de dados.</p>
+
+      <p>São seis peças, e cada passo adiante monta uma delas:</p>
+      <div class="tablewrap"><table>
+        <thead><tr><th>Peça</th><th>O que é</th></tr></thead>
+        <tbody>
+          <tr><td><strong>A máquina que hospeda</strong></td><td>Um computador ligado o tempo todo, com Linux ou macOS, rodando o Odoo em contêiner.</td></tr>
+          <tr><td><strong>A máquina de trabalho</strong></td><td>O seu computador do dia a dia: dele você edita, versiona, conversa com o assistente e alcança o servidor.</td></tr>
+          <tr><td><strong>A escada</strong></td><td>Três bases — dev, staging e prod — e o git que segura as três. É a metodologia, não um detalhe de configuração.</td></tr>
+          <tr><td><strong>O túnel</strong></td><td>Uma rede privada entre as máquinas, para trabalhar de fora sem abrir porta nenhuma para a internet.</td></tr>
+          <tr><td><strong>A cópia</strong></td><td>O backup, em mais de um lugar e provado de vez em quando. A peça que ninguém monta no primeiro dia e todo mundo queria ter montado.</td></tr>
+          <tr><td><strong>A carga inicial</strong></td><td>Uma pasta de XMLs de notas fiscais, importada logo no começo. É o que transforma uma base vazia num sistema com clientes, catálogo e histórico.</td></tr>
+        </tbody>
+      </table></div>
+
+      <h3 id="maquina-ideal">A máquina ideal</h3>
+      <p>Não é preciso servidor de rack, e é bom dizer isso antes de qualquer outra coisa: o que
+      hospeda o Liber de uma editora de porte médio é um <strong>computador comum, bom, que fica
+      ligado</strong>. O que importa vem nesta ordem:</p>
+      <div class="tablewrap"><table>
+        <thead><tr><th>O quê</th><th>Recomendado</th><th>Por quê</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Memória</strong></td><td>16 GB</td><td>É o que decide se o sistema responde. Postgres e Odoo disputam memória; com 8 GB roda, com 4 GB os dois brigam e a tela fica lenta em horário de pico. É o item onde não vale economizar.</td></tr>
+          <tr><td><strong>Disco</strong></td><td>SSD de 512 GB</td><td>SSD não é luxo: o Postgres é sensível a disco. E o tamanho é pelo <em>filestore</em> — os anexos, XMLs e PDFs — que cresce sem avisar: numa medição da casa ele dobrou em dez dias.</td></tr>
+          <tr><td><strong>Processador</strong></td><td>4 núcleos</td><td>Qualquer coisa dos últimos oito anos serve. Não é o gargalo.</td></tr>
+          <tr><td><strong>Rede</strong></td><td>Cabo</td><td>Wi-Fi cai, e ele cai de madrugada, na hora do backup, sem ninguém ver.</td></tr>
+          <tr><td><strong>Energia</strong></td><td>Nobreak</td><td>Vale mais que processador. Queda de energia com o banco escrevendo é o jeito mais rápido de precisar do backup.</td></tr>
+          <tr><td><strong>Vídeo</strong></td><td>Nenhum</td><td>Depois do primeiro dia esta máquina não tem teclado nem monitor. Placa dedicada é dinheiro em algo que ficará desligado.</td></tr>
+        </tbody>
+      </table></div>
+      <p>Na prática: um <strong>Mac mini</strong> na prateleira (é o que a casa usa), ou um desktop
+      de escritório aposentado com o disco trocado por SSD e a memória completada. Alugar um servidor
+      na nuvem também funciona — 4 GB e 2 vCPUs atendem uma editora pequena —, mas repare que aí a
+      cópia para fora do provedor passa a ser ainda mais importante, e não menos.</p>
+
+      <h3 id="a-escada">A metodologia: a escada</h3>
+      <p>Antes dos comandos, a regra que organiza tudo o que vem depois. O sistema não vive numa
+      instalação só: vive em <strong>três degraus</strong>, com o mesmo código e dados diferentes.</p>
+      <div class="tablewrap"><table>
+        <thead><tr><th>Degrau</th><th>Onde</th><th>Para quê</th></tr></thead>
+        <tbody>
+          <tr><td><strong>dev</strong></td><td>Na sua máquina de trabalho</td><td>Onde se quebra coisa de propósito. Base descartável, refeita sem cerimônia.</td></tr>
+          <tr><td><strong>staging</strong></td><td>No servidor, ao lado da produção</td><td>O ensaio. Cópia recente da produção, com o correio e os robôs desligados. É aqui que a atualização é provada antes de valer.</td></tr>
+          <tr><td><strong>prod</strong></td><td>No servidor</td><td>A base da editora. Nunca se experimenta nela.</td></tr>
+        </tbody>
+      </table></div>
+      <p>A escada tem uma doutrina de uma frase: <strong>quem se copia é a produção</strong>. O
+      staging nasce do prod, nunca o contrário — senão o ensaio vira a referência e, no dia em que os
+      dois divergirem, ninguém sabe qual dos dois está certo. O <a href="#passo-6">passo 6</a> mostra
+      como se sobe e se desce essa escada, e o git que a sustenta.</p>
+
+      <h3 id="caminho">O caminho, em onze passos</h3>
+      <ol>
+        <li><a href="#passo-0">Começar pela inteligência artificial</a> — o assistente antes de tocar em qualquer máquina.</li>
+        <li><a href="#passo-1">Instalar o Manjaro</a> — do pendrive ao primeiro boot. (E a ponderação sobre o Windows.)</li>
+        <li><a href="#passo-2">Preparar o sistema</a> — Docker, git, SSH, e a máquina que não dorme.</li>
+        <li><a href="#passo-3">Se a máquina for um Mac</a>.</li>
+        <li><a href="#passo-4">Subir o Odoo e o Liber</a> — o repositório, o compose e o primeiro acesso; e o primeiro trabalho que vale entregar ao assistente.</li>
+        <li><a href="#passo-5">Criar a base e instalar os módulos</a>.</li>
+        <li><a href="#passo-6">Montar a escada</a> — dev, staging, prod, e o git.</li>
+        <li><a href="#passo-7">Tailscale</a> — o servidor alcançável de fora.</li>
+        <li><a href="#passo-8">A rede interna vista de fora</a> — a dica, e o que não fazer.</li>
+        <li><a href="#passo-9">Backup</a> — antes de o sistema valer alguma coisa.</li>
+        <li><a href="#passo-10">Kickoff com uma pasta de XMLs</a>.</li>
+      </ol>
+
+      <p>Cada passo termina com um <strong>pedido pronto ao assistente</strong>: o que vale
+      entregar a ele naquele ponto, e o que continua sendo seu. O
+      <a href="#passo-4-ia">passo 4</a> traz a forma longa, com os pontos de conferência; nos
+      demais fica só o pedido.</p>
+
+      <div class="callout note"><span class="title">Quanto tempo isso leva</span>
+        <p>Uma tarde para os passos 1 a 5, se o pendrive já estiver gravado. A escada e o Tailscale
+        são meia hora cada. O backup é meio dia de trabalho e é o único que continua pedindo atenção
+        depois — os outros terminam.</p>
+      </div>
+
+      <h2 id="passo-0">Passo 0 — Começar pela inteligência artificial</h2>
+      <p>O assistente é a primeira coisa a instalar, e não a última. Uma instalação como esta tem
+      dezenas de detalhes que não cabem em manual nenhum — o log de um contêiner que não sobe, o
+      pacote que mudou de nome, o comando que ninguém decora — e ter alguém que lê rápido e não se
+      cansa ao lado desde o primeiro passo muda o dia inteiro. Não porque saiba mais que você: porque
+      lê tudo, sempre, sem pular.</p>
+
+      <ol class="steps">
+        <li><strong>Instale o assistente na máquina de trabalho</strong>, não no servidor. O
+        <strong>Claude Code</strong> roda no terminal do Linux, do macOS e do Windows, e alcança o
+        servidor por SSH, como você.</li>
+        <li><strong>Crie a pasta do projeto e entre nela:</strong>
+        <pre>mkdir -p ~/liber &amp;&amp; cd ~/liber</pre></li>
+        <li><strong>Versione desde o primeiro arquivo:</strong>
+        <pre>git init
+git config user.name "Seu Nome"
+git config user.email "voce@editora.com.br"</pre>
+        Não espere "ter algo pronto" para começar a versionar. O <code>docker-compose.yml</code> e o
+        <code>odoo.conf</code> que você vai escrever no passo 4 já são o começo da instalação, e é
+        justamente deles que você vai querer saber, daqui a um ano, quando foram mudados e por
+        quê.</li>
+        <li><strong>Abra o assistente dentro dessa pasta.</strong> Ele lê o que está ali — e nada do
+        que não está.</li>
+        <li><strong>Escreva um <code>CLAUDE.md</code> na raiz</strong> com as regras da casa: onde
+        fica o quê, como se rodam os testes, o que nunca deve ser mexido, qual base é a de produção.
+        É o arquivo que ele lê antes de tudo, e é a diferença entre um assistente que adivinha e um
+        que sabe. Ele pode escrever o primeiro rascunho; corrigir é seu.</li>
+        <li><strong>Peça a ele para te acompanhar neste roteiro.</strong> Literalmente: aponte-o para
+        esta página e peça que vá conferindo cada passo contra a máquina que você tem na frente. É o
+        uso em que ele rende mais — comparar o que devia estar lá com o que está.</li>
+        <li><strong>Deixe-o rodar os comandos com você olhando</strong>, um por vez. O modo em que
+        ele executa tudo sozinho serve para tarefas mecânicas conhecidas, não para uma instalação
+        nova em máquina nova.</li>
+      </ol>
+
+      <p>Onde ele acerta mais, e por isso é onde vale começar:</p>
+      <ul>
+        <li>"o contêiner do Odoo não sobe; leia <code>docker compose logs odoo</code> e diga o motivo";</li>
+        <li>"leia o <code>__manifest__.py</code> destes módulos e monte a ordem de instalação";</li>
+        <li>"escreva o <code>docker-compose.yml</code> deste roteiro com a porta 8070 no lugar da 8069";</li>
+        <li>"conte quantos arquivos há nesta pasta de XMLs, por mês, e diga que mês está mais vazio que os vizinhos";</li>
+        <li>"explique o que este comando faz, linha por linha, antes de eu rodá-lo".</li>
+      </ul>
+
+      <div class="callout warn"><span class="title">Confira antes de aceitar, e não entregue tudo</span>
+        <p><code>git diff</code> para o que ele escreveu, <code>docker compose config</code> para o
+        compose, os testes do módulo para o que ele mexeu. Ele erra com a mesma confiança com que
+        acerta — e é o git, do passo 3 acima, que torna barato descobrir isso depois.</p>
+        <p>Fora do alcance dele: a senha do certificado A1, o arquivo <code>.pfx</code>, um dump de
+        produção e o conteúdo das notas fiscais, que trazem CPF, endereço e telefone de cliente. A
+        regra prática é simples — <strong>peça a ele o script que lê os dados, e rode o script
+        você</strong>. O resultado é melhor (um programa conta 4.000 arquivos sem errar e sem cansar)
+        e o conteúdo não sai da máquina.</p>
+      </div>
+
+      <h2 id="passo-1">Passo 1 — Instalar o Manjaro</h2>
+      <p>A recomendação da casa é o <strong>Manjaro</strong>, na edição <strong>Xfce</strong>. As
+      razões são três, e nenhuma é ideológica: a instalação gráfica (o Calamares) pergunta em
+      português e não exige linha de comando; o Docker e o Tailscale estão nos repositórios oficiais,
+      sem precisar acrescentar fonte de terceiro; e o Xfce é leve o bastante para não disputar
+      memória com o banco de dados — um servidor não precisa de efeito de janela.</p>
+
+      <ol class="steps">
+        <li><strong>Baixe a imagem.</strong> Em <code>manjaro.org/download</code>, a edição Xfce. São
+        cerca de 4 GB.</li>
+        <li><strong>Confira o que você baixou.</strong> Baixe também o arquivo <code>.sha256</code> ao
+        lado e rode, na mesma pasta:
+        <pre>sha256sum -c manjaro-xfce-*.iso.sha256</pre>
+        Tem de responder <code>OK</code>. Imagem que ninguém conferiu é software que ninguém sabe de
+        onde veio — e este é o computador onde vai morar o banco de dados da editora.</li>
+        <li><strong>Grave o pendrive.</strong> Descubra o dispositivo com <code>lsblk</code> —
+        <em>confira duas vezes</em>, porque o comando abaixo não pergunta nada e apaga o que
+        encontrar:
+        <pre>sudo dd if=manjaro-xfce-x86_64.iso of=/dev/sdX bs=4M status=progress oflag=sync</pre>
+        No Windows ou no macOS, o balenaEtcher faz o mesmo com uma janela.</li>
+        <li><strong>Dê boot pelo pendrive.</strong> A tecla do menu de boot varia com a placa (F12,
+        F11, F8, Esc). Na tela azul do Manjaro, ajuste idioma e teclado <em>antes</em> de entrar:
+        <span class="field">lang=pt_BR</span> e <span class="field">keytable=br</span>.</li>
+        <li><strong>Teste antes de instalar.</strong> O sistema entra "vivo", sem tocar no disco.
+        Confira três coisas: a rede funciona, o vídeo está na resolução certa e o disco aparece em
+        <code>lsblk</code>. Disco que não aparece aqui não vai aparecer no instalador.</li>
+        <li><strong>Abra o instalador</strong> (<span class="field">Instalar Manjaro Linux</span>, no
+        ícone da área de trabalho) e siga as telas: idioma, fuso, teclado.</li>
+        <li><strong>Particionamento: apagar o disco.</strong> Se a máquina é dedicada ao Liber, essa é
+        a opção certa e a mais simples. Sistema de arquivos <code>ext4</code>, swap do tamanho da
+        memória, sem hibernação.</li>
+        <li><strong>Não cifre o disco desta máquina.</strong> A cifra de disco inteiro pede a senha
+        <em>a cada boot</em>, e uma máquina que precisa voltar sozinha depois de uma queda de energia
+        não pode ficar esperando alguém digitar. A proteção desta máquina é física — sala trancada —
+        e a proteção dos dados que saem dela é o backup cifrado do
+        <a href="#passo-9">passo 9</a>.</li>
+        <li><strong>Crie o usuário</strong> com uma senha de verdade e <strong>não marque</strong> o
+        login automático. Anote o nome do usuário: ele vai aparecer em todo comando de acesso remoto
+        daqui para a frente.</li>
+        <li><strong>Reinicie, tire o pendrive e atualize tudo:</strong>
+        <pre>sudo pacman -Syu</pre></li>
+      </ol>
+
+      <div class="callout warn"><span class="title">Manjaro é rolling release, e isso tem preço</span>
+        <p>O sistema recebe versões novas o tempo todo, e um servidor prefere previsibilidade. Duas
+        consequências práticas: <strong>atualize num dia em que você possa olhar</strong> (nunca na
+        sexta à noite), e leia o anúncio de atualização estável do fórum antes de rodar o
+        <code>pacman -Syu</code>. O Docker está aqui exatamente por isso — a versão do Odoo mora no
+        contêiner, e atualizar o sistema não a alcança.</p>
+      </div>
+
+      <h3 id="windows">E se a máquina for Windows? Uma ponderação</h3>
+      <p>A pergunta é legítima, porque quase toda editora tem Windows em cima da mesa. A resposta
+      tem três partes.</p>
+      <ol class="steps">
+        <li><strong>Windows como máquina de trabalho: sem problema nenhum.</strong> O assistente, o
+        git, o cliente SSH e o Tailscale rodam nativamente. Você edita, versiona e alcança o servidor
+        de lá o dia inteiro.</li>
+        <li><strong>Odoo em Windows nativo: não.</strong> Não é o ambiente para o qual o Odoo é
+        empacotado, várias das bibliotecas do lado fiscal brasileiro pressupõem Unix, e todos os
+        scripts de rotina deste roteiro são shell. É possível fazer funcionar e é caro de manter — o
+        preço aparece no dia da atualização.</li>
+        <li><strong>Windows hospedando, por virtualização: sim, com ressalvas.</strong> É o caminho
+        honesto quando o único hardware disponível é um PC com Windows. Duas formas:
+          <ul>
+            <li><strong>WSL2</strong> (<code>wsl --install -d Ubuntu</code>, com o Docker Desktop
+            usando o backend WSL2). Ótimo para o degrau <strong>dev</strong> da escada: rápido de
+            montar, descartável, integrado ao Windows. <strong>Não</strong> para produção — o
+            subsistema não sobe antes de alguém entrar na máquina, e a máquina é de alguém: ela
+            dorme, reinicia por atualização e é desligada no fim do expediente.</li>
+            <li><strong>Uma máquina virtual de verdade</strong> — VirtualBox, Hyper-V ou, melhor, um
+            Proxmox no lugar do Windows — com o Manjaro dentro. Aí <em>o roteiro inteiro vale sem
+            mudar uma linha</em>, porque lá dentro é Linux. Reserve 8 GB de memória para a VM, ponha
+            a rede em modo <em>bridge</em> (para a VM ter IP próprio na rede da editora) e configure
+            a VM para iniciar junto com o hospedeiro.</li>
+          </ul>
+        </li>
+      </ol>
+      <div class="callout tip"><span class="title">A virtude escondida da máquina virtual</span>
+        <p>Uma VM é <strong>um arquivo</strong>. Isso torna o snapshot antes de uma atualização
+        arriscada trivial e reversível em minutos — e torna o ensaio de restauração do
+        <a href="#passo-9">passo 9</a> muito mais barato de fazer. Se você já vai virtualizar por
+        obrigação, aproveite a vantagem.</p>
+        <p>O custo, para ser justo: uma camada a mais para diagnosticar quando algo dá errado, e um
+        pedaço da memória que fica com o hospedeiro. Numa máquina de 16 GB, contando 8 GB para a VM,
+        a conta fecha; numa de 8 GB, não.</p>
+      </div>
+
+      <div class="callout tip"><span class="title">Com o assistente — e onde ele menos serve</span>
+        <pre>Vou gravar o pendrive do Manjaro. Esta é a saída do meu lsblk:
+&lt;cole a saída aqui&gt;
+Qual desses dispositivos é o pendrive e qual é o disco do sistema?
+Escreva a linha do dd já com o dispositivo certo — e nada além disso.</pre>
+        <p>É o passo em que ele menos ajuda, e vale dizer: quem põe o pendrive, escolhe a partição e digita a senha do usuário é você, na frente da máquina. Serve para uma coisa só — não errar o <code>/dev/sdX</code> — e essa é justamente a que estraga o dia inteiro.</p>
+      </div>
+
+      <h2 id="passo-2">Passo 2 — Preparar o sistema</h2>
+      <ol class="steps">
+        <li><strong>Instale o essencial:</strong>
+        <pre>sudo pacman -S --needed git docker docker-compose openssh</pre></li>
+        <li><strong>Ligue o Docker e o SSH:</strong>
+        <pre>sudo systemctl enable --now docker
+sudo systemctl enable --now sshd</pre>
+        O <code>--now</code> liga agora; o <code>enable</code> faz voltar sozinho depois de
+        reiniciar. A partir daqui esta máquina não precisa mais de teclado nem de monitor.</li>
+        <li><strong>Ponha o seu usuário no grupo do Docker</strong>, para não digitar
+        <code>sudo</code> a cada comando:
+        <pre>sudo usermod -aG docker $USER</pre>
+        <strong>Feche a sessão e entre de novo.</strong> Mudança de grupo só vale em sessão nova — é
+        o motivo número um de o comando seguinte dizer "permission denied" numa máquina em que tudo
+        foi feito certo.</li>
+        <li><strong>Prove que funciona:</strong>
+        <pre>docker run --rm hello-world</pre></li>
+        <li><strong>Configure o git também aqui</strong>, porque é deste lado que o deploy acontece:
+        <pre>git config --global user.name "Servidor Liber"
+git config --global user.email "ti@editora.com.br"
+git config --global pull.ff only</pre>
+        O <code>pull.ff only</code> é uma trava barata: no servidor, um <code>git pull</code> só pode
+        avançar. Se ele quiser criar um merge, alguém editou arquivo direto na produção — e você quer
+        saber disso na hora, não depois.</li>
+        <li><strong>Impeça a máquina de dormir.</strong> Um servidor que suspende deixa de responder
+        e, pior, deixa de rodar as rotinas da madrugada — sem erro nenhum, porque nada tentou rodar:
+        <pre>sudo systemctl mask sleep.target suspend.target hibernate.target hybrid-sleep.target</pre>
+        E, no Xfce, desligue também o suspender por inatividade em
+        <span class="menupath">Configurações<i>‣</i>Gerenciador de energia</span>.</li>
+        <li><strong>Copie a sua chave SSH</strong> da máquina de trabalho, para não digitar senha:
+        <pre>ssh-copy-id usuario@ip-do-servidor</pre></li>
+      </ol>
+
+      <div class="callout note"><span class="title">Se o Linux for Debian ou Ubuntu</span>
+        <p>Só o primeiro passo muda de gerenciador de pacotes:
+        <code>sudo apt install git docker.io docker-compose-plugin openssh-server</code>. Daí em
+        diante o roteiro é idêntico — o <code>systemctl</code> é o mesmo.</p>
+      </div>
+
+      <div class="callout tip"><span class="title">Com o assistente</span>
+        <pre>Você tem acesso SSH a usuario@servidor-liber. Confira, um por um, e
+SÓ RELATE — não conserte nada:
+  docker ativo e habilitado no boot; meu usuário no grupo docker;
+  sshd ativo; sleep e suspend mascarados; git com user.name,
+  user.email e pull.ff=only.
+Devolva uma tabela "esperado / encontrado" e o que está faltando.</pre>
+        <p>O <em>só relate</em> é a parte que importa. A lista de conferência vale mais que o conserto — e conserto sem diagnóstico é o jeito conhecido de quebrar duas coisas no lugar de uma.</p>
+      </div>
+
+      <h2 id="passo-3">Passo 3 — Se a máquina for um Mac</h2>
+      <p>Um Mac mini na prateleira é um servidor excelente para uma editora: silencioso, econômico e
+      muitas vezes já pago. O roteiro é o mesmo, com outras ferramentas.</p>
+      <ol class="steps">
+        <li><strong>Ferramentas de linha de comando</strong> (trazem o git junto):
+        <pre>xcode-select --install</pre></li>
+        <li><strong>Homebrew</strong>, o gerenciador de pacotes do macOS — a linha de instalação está
+        em <code>brew.sh</code>. Depois:
+        <pre>brew install git
+brew install --cask docker</pre></li>
+        <li><strong>Abra o Docker Desktop uma vez</strong> e marque, nas preferências, para iniciar
+        junto com o sistema. Contêiner que não sobe no boot é o mesmo que servidor desligado.</li>
+        <li><strong>Ligue o acesso remoto:</strong>
+        <span class="menupath">Ajustes do Sistema<i>‣</i>Geral<i>‣</i>Compartilhamento<i>‣</i>Login Remoto</span>.</li>
+        <li><strong>Impeça o Mac de dormir, e mande-o acordar.</strong> O macOS suspende mesmo ligado
+        na tomada, e as rotinas da madrugada simplesmente não acontecem:
+        <pre>sudo pmset -a sleep 0 disksleep 0
+sudo pmset repeat wakeorpoweron MTWRFSU 03:25:00</pre>
+        A segunda linha é a que faz o backup das 3h30 existir. Sem ela o agendamento fica correto no
+        papel e com zero execuções — foi exatamente o que aconteceu na casa, e só apareceu quando
+        alguém foi conferir a contagem de disparos.</li>
+      </ol>
+
+      <div class="callout tip"><span class="title">Com o assistente</span>
+        <pre>Rode no Mac `pmset -g` e `pmset -g sched` e me responda uma coisa só:
+esta máquina vai estar acordada às 3h25 todos os dias?
+Se não, diga qual configuração falta.</pre>
+        <p>É a pergunta certa porque é a única que o agendamento não responde sozinho: o <code>launchctl</code> mostra a tarefa registrada e correta mesmo quando ela nunca disparou uma vez.</p>
+      </div>
+
+      <h2 id="passo-4">Passo 4 — Subir o Odoo e o Liber</h2>
+      <ol class="steps">
+        <li><strong>Baixe os módulos para dentro da pasta do projeto</strong> (a que você criou e
+        versionou no passo 0):
+        <pre>cd ~/liber
+git clone https://github.com/capela-liber/liber-erp.git addons</pre></li>
+        <li><strong>Escreva o <code>docker-compose.yml</code></strong> em <code>~/liber</code>:
+        <pre>services:
+  db:
+    image: postgres:16
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=odoo
+      - POSTGRES_PASSWORD=odoo
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    restart: unless-stopped
+
+  odoo:
+    image: odoo:19
+    depends_on:
+      - db
+    ports:
+      - "8069:8069"
+    volumes:
+      - web-data:/var/lib/odoo
+      - ./config:/etc/odoo
+      - ./addons:/mnt/extra-addons
+    environment:
+      - HOST=db
+      - USER=odoo
+      - PASSWORD=odoo
+    restart: unless-stopped
+
+volumes:
+  db-data:
+  web-data:</pre>
+        O <code>restart: unless-stopped</code> não é detalhe: é ele que faz o sistema voltar sozinho
+        depois de uma queda de energia.</li>
+        <li><strong>Escreva o <code>config/odoo.conf</code>:</strong>
+        <pre>[options]
+addons_path = /mnt/extra-addons
+db_host = db
+db_port = 5432
+db_user = odoo
+db_password = odoo
+admin_passwd = troque-esta-senha</pre>
+        A <span class="field">admin_passwd</span> é a senha que autoriza criar, apagar e baixar
+        bancos inteiros pela tela do navegador. Trocá-la é obrigatório.</li>
+        <li><strong>Diga ao git o que não deve ser versionado.</strong> Um
+        <code>.gitignore</code> na raiz:
+        <pre>addons/
+config/*.conf
+*.dump
+*.pfx</pre>
+        Os módulos têm repositório próprio e não devem virar cópia dentro do seu; o arquivo de
+        configuração tem senha; e dump e certificado nunca entram em repositório nenhum. O que
+        <em>deve</em> ser versionado é o <code>docker-compose.yml</code>, o
+        <code>CLAUDE.md</code>, os seus scripts, e um <code>config/odoo.conf.exemplo</code> sem
+        senha — para que a instalação seja refazível.</li>
+        <li><strong>Grave o primeiro commit:</strong>
+        <pre>git add -A
+git commit -m "Instalação inicial: compose, configuração de exemplo e regras da casa"</pre></li>
+        <li><strong>Suba:</strong>
+        <pre>docker compose up -d
+docker compose logs -f odoo</pre>
+        O <code>logs -f</code> mostra o Odoo subindo. Quando aparecer a linha do servidor HTTP
+        escutando, saia com <kbd>Ctrl-C</kbd> — sair do log não derruba nada.</li>
+        <li><strong>Abra <code>http://localhost:8069</code></strong> — ou, de outra máquina da sala,
+        <code>http://ip-do-servidor:8069</code>.</li>
+      </ol>
+
+      <div class="callout tip"><span class="title">Quando não sobe</span>
+        <p>Quase sempre é uma destas três: a porta 8069 já está ocupada
+        (<code>docker compose logs odoo</code> diz), a pasta <code>addons</code> ficou vazia porque o
+        <code>git clone</code> falhou, ou o <code>odoo.conf</code> tem um erro de digitação no
+        <code>addons_path</code>. As três aparecem no log, com o nome — vale ler antes de mexer. É
+        também o primeiro bom uso do assistente do passo 0.</p>
+      </div>
+
+      <h3 id="passo-4-ia">Este passo, com o assistente — e guiado</h3>
+      <p>De todo o roteiro, é aqui que vale entregar o trabalho ao assistente do
+      <a href="#passo-0">passo 0</a>, e por três razões que não valem para os outros passos: o que
+      ele produz são <strong>dois arquivos de texto</strong>, nada mais; o resultado é
+      <strong>binário</strong> — o Odoo sobe ou não sobe, e não há meio-termo para discutir; e o git
+      já está no lugar desde o passo 0, então desfazer custa um comando.</p>
+
+      <p>Um pedido que funciona, com o escopo fechado de propósito:</p>
+      <pre>Estou em ~/liber, numa máquina Manjaro com Docker instalado e funcionando.
+Quero subir o Odoo 19 com os módulos do Liber, que já estão em ./addons.
+
+Escreva, e só isso:
+  1. docker-compose.yml   — serviços db (postgres:16) e odoo (odoo:19),
+                            volumes nomeados para o banco e o filestore,
+                            ./config em /etc/odoo, ./addons em
+                            /mnt/extra-addons, porta 8069, e
+                            restart: unless-stopped nos dois
+  2. config/odoo.conf     — addons_path apontando para /mnt/extra-addons,
+                            e admin_passwd deixado como PREENCHER
+  3. .gitignore           — de fora: addons/, config/*.conf, dumps e .pfx
+
+Não rode nada ainda. Me mostre os três arquivos e espere.</pre>
+
+      <p>O "não rode nada ainda" é a parte guiada. Os <strong>três pontos onde quem confere é
+      você</strong>, antes de deixá-lo seguir:</p>
+      <ol class="steps">
+        <li><strong>Leia o <code>.gitignore</code> primeiro</strong>, e não por último. É ele que
+        decide o que um dia vai parar num repositório — e o arquivo que escapa dele leva senha
+        junto.</li>
+        <li><strong>A senha é sua.</strong> Ele deixa <code>PREENCHER</code> no lugar da
+        <span class="field">admin_passwd</span> e <em>você</em> digita. Senha que um assistente
+        inventou fica no histórico da conversa, e histórico de conversa não é cofre.</li>
+        <li><strong><code>git diff</code> antes de subir.</strong> Dois arquivos pequenos: é leitura
+        de um minuto, e é o minuto que separa "não subiu" de "não subiu e ninguém sabe o que
+        mudou".</li>
+      </ol>
+
+      <p>Só então o resto, que você pode deixar com ele: <code>docker compose up -d</code>, ler o log
+      e dizer o que houve. E se não subir, o segundo pedido é onde ele rende mais que qualquer
+      manual — <em>"leia <code>docker compose logs odoo</code> e diga o motivo, sem propor
+      correção ainda"</em>. Primeiro o diagnóstico; a correção vem depois, e separada.</p>
+
+      <div class="callout warn"><span class="title">O que não delegar aqui</span>
+        <p>O escopo acaba no navegador abrindo. Pedir "instale e configure o Odoo da editora" num
+        pedido só devolve dezenas de decisões tomadas por alguém que não conhece a casa — nome de
+        base, empresa, plano de contas, módulos — e cada uma delas é cara de descobrir depois.
+        Delegação funciona com escopo fechado e resultado verificável; é por isso que este passo
+        serve e o <a href="#passo-5">passo 5</a> não serve.</p>
+      </div>
+
+      <h2 id="passo-5">Passo 5 — Criar a base e instalar os módulos</h2>
+      <ol class="steps">
+        <li><strong>Na tela de criação de banco</strong>, informe o nome, o idioma
+        <span class="field">Português (BR)</span>, o país <span class="field">Brasil</span> e uma
+        senha de administrador.</li>
+        <li><strong>Chame a base de <code>prod</code></strong> desde já, mesmo que ela ainda esteja
+        vazia. O nome vai aparecer em todo comando de backup e de deploy daqui para a frente, e
+        renomear depois é trabalho inútil.</li>
+        <li><strong>Não marque "carregar dados de demonstração"</strong> na base que vai virar
+        produção. É a única decisão desta tela que não se desfaz: dado de demonstração se mistura ao
+        real e depois não há como separar os dois. Para experimentar, crie a base
+        <code>dev</code> <em>com</em> demonstração e brinque nela.</li>
+        <li><strong>Ative o modo desenvolvedor</strong> em
+        <span class="menupath">Definições<i>‣</i>Ferramentas para programadores</span> e clique em
+        <span class="field">Atualizar lista de aplicativos</span> — é o que faz o Odoo enxergar os
+        módulos que você acabou de clonar.</li>
+        <li><strong>Instale o que a editora vai usar</strong>, em
+        <span class="menupath">Aplicativos</span>. As dependências vêm juntas sozinhas; não é preciso
+        instalar módulo de base à mão.</li>
+        <li><strong>Comece por dois</strong>, e só depois pelo resto:
+        <a href="liber_nfe_xml.html">liber_nfe_xml</a>, porque é ele que recebe a carga inicial do
+        <a href="#passo-10">passo 10</a>, e <a href="liber_roles.html">liber_roles</a>, que traz os
+        perfis de acesso prontos por área e evita que todo mundo comece como administrador.</li>
+        <li><strong>Confira que o módulo instalou de verdade:</strong> o menu novo aparece na barra
+        superior. Módulo que consta como instalado e não tem menu costuma ser dependência que entrou
+        junto — o que é normal.</li>
+      </ol>
+
+      <div class="callout tip"><span class="title">Com o assistente</span>
+        <pre>Leia os __manifest__.py de ./addons e me devolva:
+  - a árvore de dependências entre os módulos liber_*;
+  - quais instalam outros junto;
+  - quais dependem de aplicativo do Odoo que ainda não está instalado.
+Não instale nada.</pre>
+        <p>O que continua sendo seu: decidir <strong>quais</strong> módulos a editora vai usar. Isso é assunto de negócio, e ele não tem como saber.</p>
+      </div>
+
+      <h2 id="passo-6">Passo 6 — Montar a escada: dev, staging, prod</h2>
+      <p>Até aqui existe uma instalação. Agora ela vira um método. O Odoo hospeda quantas bases você
+      quiser no mesmo servidor, e é isso que torna a escada barata: <strong>o mesmo código, três
+      conjuntos de dados</strong>.</p>
+
+      <h3 id="escada-bases">As três bases</h3>
+      <ol class="steps">
+        <li><strong><code>dev</code>, na sua máquina.</strong> Suba o mesmo compose no seu computador
+        e crie uma base com dados de demonstração. É onde se instala módulo novo pela primeira vez,
+        se erra a configuração e se aprende. Refazer do zero tem de ser trivial — se você tiver medo
+        de quebrar a base de dev, ela não está cumprindo o papel dela.</li>
+        <li><strong><code>staging</code>, no servidor.</strong> Nasce de uma restauração do
+        <code>prod</code>, e é refeita sempre que se vai ensaiar algo sério. É a única base em que se
+        pode responder à pergunta que importa: <em>o que essa mudança faz com os meus dados de
+        verdade?</em></li>
+        <li><strong><code>prod</code>, no servidor.</strong> A base da editora. Não se instala módulo
+        novo nela para "ver o que acontece", não se roda script de correção nela sem ter rodado antes
+        no staging, e não se testa importação nela.</li>
+      </ol>
+
+      <div class="callout warn"><span class="title">As travas do staging — a parte que morde</span>
+        <p>Uma cópia da produção é <strong>fiel</strong>, e é justamente por isso que ela é perigosa
+        assim que sobe. Os robôs de integração acordam achando que são o original e refazem chamadas
+        que o original já fez; a fila de e-mail dispara <em>de verdade</em>, para clientes
+        <em>de verdade</em>; e o endereço público gravado na base manda quem clicar de volta para a
+        produção. Antes de liberar um staging recém-restaurado, sempre: <strong>desligue as ações
+        agendadas, esvazie a fila de e-mail de saída, troque o endereço base do sistema</strong> e
+        gere um identificador de instalação novo — para o Odoo, duas bases com o mesmo identificador
+        são a mesma instalação.</p>
+        <p>Esse é o passo que se esquece uma vez só.</p>
+      </div>
+
+      <h3 id="escada-git">O git que sustenta a escada</h3>
+      <p>A escada só funciona se os três degraus rodarem <strong>o mesmo código, identificado</strong>
+      — e é isso que o git faz. Sem ele, "o staging está diferente do prod" é uma frase que ninguém
+      consegue provar nem desmentir.</p>
+      <ol class="steps">
+        <li><strong>Um ramo é a verdade.</strong> Eleja o ramo que roda em produção (o
+        <code>main</code>, ou um nomeado pela versão do Odoo, como <code>19</code>). O que está nele
+        é o que está no ar — não a pasta do servidor.</li>
+        <li><strong>Um ramo por assunto.</strong> Toda mudança nasce em ramo próprio, na máquina de
+        dev:
+        <pre>git switch -c consignacao-acerto-parcial</pre>
+        Assunto separado é o que permite subir uma coisa e segurar a outra quando a segunda dá
+        problema.</li>
+        <li><strong>Dois assuntos ao mesmo tempo, sem trocar de pasta:</strong>
+        <pre>git worktree add ../liber-outro-assunto</pre>
+        Você fica com duas pastas de trabalho do mesmo repositório, cada uma no seu ramo. É melhor
+        que ficar salvando trabalho pela metade para trocar de contexto.</li>
+        <li><strong>O deploy é um <code>pull</code> e um <code>-u</code>.</strong> No servidor, para
+        cada degrau:
+        <pre>cd ~/liber/addons
+git pull
+docker compose exec odoo odoo -d staging -u nome_do_modulo --stop-after-init
+docker compose restart odoo</pre>
+        Primeiro no <code>staging</code>. Só depois, com o mesmo comando e
+        <code>-d prod</code>.</li>
+        <li><strong>Anote o que está em produção.</strong> Uma etiqueta a cada subida
+        (<code>git tag deploy-2026-09-01</code>) responde em um segundo à pergunta mais frequente de
+        um dia ruim: <em>o que mudou desde a última vez que funcionava?</em> E dá o caminho de volta,
+        que é o outro motivo de o git estar aqui.</li>
+        <li><strong>O que nunca entra no repositório:</strong> senha, certificado, dump, e o arquivo
+        de configuração real. O padrão da casa é versionar um <code>.exemplo</code> ao lado, com
+        comentários explicando cada campo, e deixar o arquivo verdadeiro fora — assim a instalação é
+        refazível sem que o segredo esteja publicado.</li>
+      </ol>
+
+      <div class="callout note"><span class="title">A doutrina, de novo</span>
+        <p><strong>Quem se copia é a produção.</strong> O <code>staging</code> nasce do
+        <code>prod</code>; nunca o contrário. Quando uma mudança é aprovada no ensaio, o
+        <code>prod</code> recebe <em>o mesmo código</em> que o staging recebeu — e não uma cópia do
+        banco do staging. Se o ensaio virar a referência, no dia em que os dois divergirem ninguém
+        sabe qual está certo.</p>
+      </div>
+
+      <div class="callout tip"><span class="title">Com o assistente</span>
+        <pre>Escreva um script subir.sh que:
+  1. faça git pull em ~/liber/addons;
+  2. rode `-u &lt;módulos&gt;` no banco staging e suba o serviço;
+  3. PARE, mostre o que mudou, e pergunte antes de repetir no prod.
+A pergunta do item 3 não pode ter "sim" como resposta padrão.</pre>
+        <p>A trava do item 3 é o ponto do script inteiro. Deploy que segue sozinho do staging para o prod não é escada — é um degrau só, com duas cópias.</p>
+      </div>
+
+      <h2 id="passo-7">Passo 7 — Tailscale, o servidor alcançável de fora</h2>
+      <p>Chega o dia em que é preciso mexer no sistema de casa, de outra cidade, ou pelo notebook da
+      feira do livro. O <strong>Tailscale</strong> resolve isso montando uma rede privada entre as
+      suas máquinas: cada uma ganha um endereço fixo que só existe dentro dela, e nada precisa ser
+      aberto no roteador.</p>
+
+      <ol class="steps">
+        <li><strong>Crie a conta</strong> em <code>tailscale.com</code>, com uma identidade da casa
+        (o e-mail corporativo, a conta do Google da editora). Ela vira a dona da rede.</li>
+        <li><strong>No servidor Manjaro:</strong>
+        <pre>sudo pacman -S --needed tailscale
+sudo systemctl enable --now tailscaled
+sudo tailscale up --hostname=servidor-liber</pre></li>
+        <li><strong>Se o servidor for o Mac:</strong>
+        <pre>brew install tailscale
+sudo brew services start tailscale
+sudo tailscale up --hostname=macmini-liber</pre>
+        O <code>sudo</code> no <code>brew services</code> não é excesso: o daemon precisa de root
+        para criar a interface de rede, e sem ele o serviço sobe e não funciona.</li>
+        <li><strong>Na sua máquina de trabalho</strong>, o mesmo comando da distribuição dela — e há
+        aplicativo pronto para Windows e para o celular.</li>
+        <li><strong>Autentique todas com a mesma identidade.</strong> Cada <code>tailscale up</code>
+        abre uma URL no navegador; entre sempre com a mesma conta.</li>
+        <li><strong>Confira:</strong>
+        <pre>tailscale status
+ssh usuario@servidor-liber</pre>
+        O nome curto funciona por conta do MagicDNS, dentro e fora do escritório.</li>
+        <li><strong>Desligue a expiração da chave</strong> dos nós que rodam sem gente na frente, no
+        painel de administração (<span class="menupath">Machines<i>‣</i>Disable key expiry</span>).
+        Por padrão a autorização do nó vence em alguns meses — e um servidor que sai da rede sozinho,
+        num dia qualquer, sem nada ter mudado, é um problema difícil de diagnosticar justamente
+        porque ninguém mexeu em nada.</li>
+      </ol>
+
+      <div class="callout warn"><span class="title">A pedra que arruína a instalação</span>
+        <p>Autenticar duas máquinas com <strong>identidades diferentes</strong> cria duas redes
+        separadas, e elas não se enxergam. O sintoma é cruel: o <code>tailscale status</code> mostra
+        só a si mesmo, sem erro nenhum, e parece que a instalação deu certo.</p>
+      </div>
+
+      <div class="callout note"><span class="title">Se o DNS ficar estranho depois</span>
+        <p>O Tailscale assume o resolvedor de nomes para fazer o MagicDNS funcionar, e em algumas
+        máquinas isso atrapalha o resto. O desarme é
+        <code>sudo tailscale set --accept-dns=false</code> — e aí use o nome completo
+        (<code>servidor-liber.sua-rede.ts.net</code>) ou o endereço <code>100.x</code> que o
+        <code>status</code> mostra.</p>
+        <p>Na primeira conexão pelo nome novo, o SSH vai perguntar sobre a chave do servidor: é a
+        mesma máquina de sempre, com outro nome, e o <code>known_hosts</code> indexa por nome.
+        Compare a impressão digital com a que você já tem para o IP antigo antes de aceitar.</p>
+      </div>
+
+      <div class="callout tip"><span class="title">Com o assistente</span>
+        <pre>Rode `tailscale status` aqui e, por SSH, no servidor. Compare as duas
+saídas e responda: as máquinas estão na MESMA rede? Que nós ainda
+estão com a expiração de chave ligada?</pre>
+        <p>É a pergunta que pega a pedra deste passo. Identidades diferentes não dão erro: dão um <code>status</code> que mostra só a si mesmo, com toda a aparência de sucesso.</p>
+      </div>
+
+      <h2 id="passo-8">Passo 8 — A rede interna vista de fora</h2>
+      <p>Esta é a dica que economiza o maior número de problemas, e ela começa por uma recusa.</p>
+
+      <div class="callout warn"><span class="title">O que não fazer</span>
+        <p><strong>Não redirecione a porta 8069 no roteador.</strong> É o caminho que todo tutorial
+        ensina e é o que põe a tela de login do seu ERP na internet aberta, sem cifra, para ser
+        varrida por robôs em questão de horas. Um DDNS por cima não muda nada — só dá um nome bonito
+        para a mesma porta aberta.</p>
+      </div>
+
+      <p>O desenho correto é o inverso: <strong>nada é publicado; o que é privado passa a ser
+      alcançável por quem já é de dentro</strong>. Em quatro escolhas, da mais simples para a mais
+      arriscada:</p>
+
+      <ol class="steps">
+        <li><strong>Um dispositivo, um nó.</strong> Instale o Tailscale em cada máquina que precisa
+        ser alcançada. É o desenho preferido: cada nó tem sua identidade, sua autorização e seu
+        registro de acesso. Se dá para fazer assim, faça assim.</li>
+        <li><strong>Para o que não aceita instalar nada</strong> — a impressora, o NAS, o roteador, o
+        equipamento antigo da contabilidade — eleja <em>uma</em> máquina da rede como porta de
+        entrada da sub-rede inteira:
+        <pre>sudo sysctl -w net.ipv4.ip_forward=1
+sudo tailscale up --hostname=servidor-liber \
+     --advertise-routes=192.168.15.0/24</pre>
+        Troque <code>192.168.15.0/24</code> pela faixa da sua rede (o <code>ip -4 addr</code>
+        mostra). Depois, <strong>aprove a rota no painel</strong>, em
+        <span class="menupath">Machines<i>‣</i>Edit route settings</span> — enquanto ninguém aprovar,
+        o comando acima terá funcionado e nada será alcançável, que é o segundo erro mais comum
+        depois das identidades trocadas. Nas máquinas que vão usar a rota, suba com
+        <code>--accept-routes</code>.</li>
+        <li><strong>Para mostrar uma página a quem já está na rede</strong> — o relatório de backup,
+        o próprio Odoo com cifra e certificado válido — use o <code>serve</code>:
+        <pre>sudo tailscale serve --bg 8069</pre>
+        Ele põe HTTPS na frente do serviço e continua valendo <em>só dentro</em> da sua rede
+        privada.</li>
+        <li><strong>Para mostrar a alguém de fora</strong> — o contador, um parceiro sem conta —
+        existe o <code>funnel</code>, que publica na internet aberta. Trate-o como publicação, e não
+        como atalho: ligue para um endereço específico, pelo tempo do que precisa ser feito, e
+        desligue depois. É o único item desta lista que expõe alguma coisa de verdade.</li>
+      </ol>
+
+      <p>Duas providências que valem para qualquer desses caminhos:</p>
+      <ul>
+        <li><strong>Escreva a lista de acesso antes de a rede ter três pessoas.</strong> Por padrão,
+        todo mundo na rede alcança todo mundo, em qualquer porta. Enquanto são duas máquinas suas,
+        tudo bem; no dia em que entrar o notebook de um estagiário, essa regra já devia ser outra. No
+        painel, em <span class="menupath">Access controls</span>, marque o servidor com uma etiqueta
+        e diga quem alcança o quê.</li>
+        <li><strong>O acesso remoto não dispensa a senha forte do Odoo.</strong> A rede privada
+        protege o caminho, não a porta. A <span class="field">admin_passwd</span> do
+        <code>odoo.conf</code> e as senhas dos usuários continuam sendo a última linha.</li>
+      </ul>
+
+      <div class="callout tip"><span class="title">Com o assistente</span>
+        <pre>Leia a saída de `ip -4 addr` e me dê a faixa desta rede no formato
+CIDR que o --advertise-routes espera.
+Depois leia a minha lista de acesso do Tailscale e diga, em português,
+o que um nó novo alcança por padrão.</pre>
+        <p>A segunda pergunta é a que ninguém faz. Numa rede sem lista de acesso escrita, a resposta esperada é <em>tudo</em> — e é melhor ouvir isso agora do que descobrir depois.</p>
+      </div>
+
+      <h2 id="passo-9">Passo 9 — Backup, antes de o sistema valer alguma coisa</h2>
+      <p>A hora de montar o backup é <strong>antes</strong> de a editora começar a digitar. Depois
+      dela, cada dia de adiamento é um dia de trabalho que só existe num lugar.</p>
+
+      <p>O desenho que a casa usa tem quatro cópias, e cada uma existe para um desastre diferente —
+      é por isso que são quatro e não uma:</p>
+      <div class="tablewrap"><table>
+        <thead><tr><th>Cópia</th><th>Onde</th><th>Contra o quê</th></tr></thead>
+        <tbody>
+          <tr><td><strong>O dump diário</strong></td><td>No próprio servidor</td><td>Engano humano: alguém apagou o que não devia e quer o de ontem.</td></tr>
+          <tr><td><strong>O espelho</strong></td><td>Em outra máquina da casa</td><td>O disco do servidor morreu.</td></tr>
+          <tr><td><strong>A nuvem</strong></td><td>Fora do prédio</td><td>Incêndio, roubo, inundação — o prédio inteiro.</td></tr>
+          <tr><td><strong>O pendrive na gaveta</strong></td><td>Desconectado</td><td>Quem tem acesso legítimo apagando tudo o que alcança — e a sincronização replicando o estrago para a nuvem no mesmo minuto, com toda a fidelidade.</td></tr>
+        </tbody>
+      </table></div>
+
+      <p>A quarta parece exagero e é a única que cobre o caso mais moderno de todos. Sua virtude é
+      ser <strong>desconectada e velha de propósito</strong>.</p>
+
+      <ol class="steps">
+        <li><strong>O dump, todo dia, de madrugada.</strong> Do banco e do <em>filestore</em> — os
+        anexos, que não estão no banco:
+        <pre>docker compose exec -T db pg_dump -Fc -U odoo prod &gt; prod.dump
+docker compose exec -T odoo tar czf - /var/lib/odoo/filestore &gt; filestore.tgz</pre>
+        Dump sem filestore restaura um sistema sem PDF, sem XML e sem imagem de capa.</li>
+        <li><strong>Verifique no mesmo dia.</strong> Um <code>pg_restore --list</code> em cada dump
+        prova que o arquivo está legível. Só carimbe o dia como completo depois disso — dia
+        incompleto não pode virar semanal, nem empurrar um dia bom para fora da janela de
+        retenção.</li>
+        <li><strong>Guarde em avô-pai-filho:</strong> 7 diárias, 4 semanais, 12 mensais. As semanais
+        e mensais podem ser <em>hardlinks</em> das diárias, e então guardar fundo não custa disco
+        novo. Guardar fundo é o que salva quando o defeito é antigo e silencioso.</li>
+        <li><strong>Leve para fora do prédio</strong> com <code>rclone sync</code> para um remoto
+        cifrado. E a senha da cifra vai para o cofre de senhas, <strong>não para um arquivo desta
+        sala</strong>: é o único segredo desta corrente que não se recupera, e o dia de precisar dela
+        é justamente o dia em que as máquinas se perderam.</li>
+        <li><strong>Ensaie a restauração uma vez por mês</strong>, num banco descartável. O
+        <code>pg_restore --list</code> prova que o arquivo está legível; só a restauração prova que
+        dali sai um banco. <em>Um backup que ninguém restaurou é um boato.</em></li>
+        <li><strong>Faça a rotina avisar.</strong> E não só quando quebra: um e-mail semanal de "está
+        tudo em ordem" é o que impede que "não chegou e-mail" queira dizer, ao mesmo tempo,
+        <em>está tudo bem</em> e <em>a rotina inteira parou de rodar</em>.</li>
+      </ol>
+
+      <div class="callout tip"><span class="title">A escada ajuda aqui</span>
+        <p>O ensaio de restauração do item 5 não precisa de infraestrutura nova: é o mesmo
+        movimento que refaz o <code>staging</code> a partir do <code>prod</code>. Quem mantém a
+        escada do <a href="#passo-6">passo 6</a> viva já está provando o backup toda vez que a
+        sobe — e quem provou o backup já sabe recriar o staging. As duas rotinas se pagam.</p>
+      </div>
+
+      <div class="callout warn"><span class="title">O dump sozinho não reergue nada</span>
+        <p>Uma base de produção declara mais de uma centena de módulos instalados, boa parte deles
+        escritos pela casa. Sem esse código no <code>addons_path</code>, o Odoo sobe e morre na
+        primeira tela. Então junto de cada cópia vai a <em>carga fria</em>: o repositório dos módulos
+        com histórico (é o git de novo), o Odoo na versão exata que o sistema roda, o
+        <code>requirements.txt</code> e os arquivos de configuração sem senha. "É só clonar do
+        GitHub" pressupõe que exista GitHub, que exista a conta, e que a versão de daqui a dois anos
+        seja o mesmo software.</p>
+      </div>
+
+      <div class="callout note"><span class="title">A rotina de backup do EdLab, e o que falta para ela ser do Liber</span>
+        <p>Tudo o que está descrito acima existe escrito e rodando: é a rotina de backup do
+        <strong>EdLab</strong>, um conjunto de scripts em shell e Python que produz o dump, espelha
+        numa segunda máquina, sobe para a nuvem, grava o pendrive, poda pela retenção, refaz uma
+        página de avaliação a cada rodada e manda o e-mail. Hoje ela vive <em>fora</em> do Odoo e se
+        instala à mão.</p>
+        <p>A intenção é trazê-la para o Liber como módulo. O que se ganha é evidente: o relatório
+        vira uma tela dentro do sistema, o agendamento passa a ser uma ação planejada como as outras,
+        e o aviso sai pelo mesmo servidor de e-mail que já está configurado — em vez de uma segunda
+        credencial em outro lugar.</p>
+        <p>O que <strong>tem</strong> de continuar fora, e é a parte que decide o desenho do módulo:
+        <strong>a produção do dump não pode depender de o Odoo estar de pé</strong>. Quem faz a cópia
+        do banco não pode morar dentro do banco, senão a falha que derruba o sistema derruba junto o
+        que existia para socorrê-lo. O caminho, então, é um módulo que <em>configura, acompanha e
+        cobra</em> — e um script pequeno, fora, que <em>executa</em>.</p>
+      </div>
+
+      <div class="callout tip"><span class="title">Com o assistente</span>
+        <pre>Escreva o script do backup diário deste roteiro: dump com pg_dump -Fc
+mais tar do filestore; verificação com `pg_restore --list`; carimbo do
+dia só DEPOIS da verificação; retenção avô-pai-filho 7/4/12 com
+hardlink; e saída com erro se o dia não fechou.
+Não escreva ainda a parte da nuvem.</pre>
+        <p>E o que não chega perto dele em hipótese alguma: a senha da cifra do remoto. Ela vai do cofre para o terminal, e não passa por conversa nenhuma.</p>
+      </div>
+
+      <h2 id="passo-10">Passo 10 — Kickoff com uma pasta de XMLs</h2>
+      <p>Base em branco não ensina nada, e é péssima para decidir qualquer coisa. A carga inicial que
+      a casa recomenda não é uma planilha de cadastro: é uma <strong>pasta com os XMLs das notas
+      fiscais dos últimos doze meses</strong>. Um arquivo que a editora já tem, por obrigação legal, e
+      que traz de uma vez só o que se levaria semanas para digitar.</p>
+
+      <p>O que entra no sistema junto com eles:</p>
+      <ul>
+        <li>os <strong>clientes</strong>, com razão social e <abbr class="sigla" title="Cadastro Nacional da Pessoa Jurídica: o número que identifica a empresa.">CNPJ</abbr> conferidos — a nota fiscal é a
+        fonte oficial do nome;</li>
+        <li>o <strong>catálogo</strong>, título a título, pelo <abbr class="sigla" title="International Standard Book Number: o número internacional que identifica cada edição de livro.">ISBN</abbr> que está no item da nota, com o
+        preço efetivamente praticado;</li>
+        <li>a <strong>tabela de <abbr class="sigla" title="Código Fiscal de Operações e Prestações: diz a natureza fiscal de cada item da nota.">CFOP</abbr></strong> da casa, com os códigos que a editora de fato usa;</li>
+        <li>o <strong>histórico</strong>: doze meses de faturamento para olhar no painel analítico no
+        primeiro dia, em vez de esperar o primeiro trimestre de uso.</li>
+      </ul>
+
+      <h3 id="kickoff-juntar">Juntar os arquivos</h3>
+      <ol class="steps">
+        <li><strong>Peça os XMLs.</strong> Eles vêm de três lugares, e vale pedir aos três: o emissor
+        antigo exporta em lote; o escritório de contabilidade guarda o arquivo do ano; e a <abbr class="sigla" title="Secretaria da Fazenda: o fisco estadual, que autoriza ou rejeita as notas.">SEFAZ</abbr>
+        mantém cerca de 90 dias para baixar com o certificado A1. O pedido, por escrito, é "os XMLs
+        das <abbr class="sigla" title="Nota Fiscal eletrônica: o documento fiscal da venda ou da remessa, autorizado pela SEFAZ.">NF-e</abbr> emitidas e recebidas nos últimos 12 meses".</li>
+        <li><strong>Monte a pasta por mês</strong>, uma pasta por competência:
+        <pre>xmls-kickoff/
+  2025-09/
+  2025-10/
+  ...
+  2026-08/</pre>
+        Não é preciosismo: é assim que se descobre o mês que faltou, olhando a contagem de arquivos
+        lado a lado.</li>
+        <li><strong>Triagem antes de importar.</strong> Peça ao assistente do
+        <a href="#passo-0">passo 0</a> um <em>script</em> que conte, por mês, quantos arquivos são
+        <abbr class="sigla" title="Nota Fiscal eletrônica: o documento fiscal da venda ou da remessa, autorizado pela SEFAZ.">NF-e</abbr>, quantos são evento de cancelamento e quantos não são nota nenhuma; e que liste os <abbr class="sigla" title="Cadastro Nacional da Pessoa Jurídica: o número que identifica a empresa.">CNPJs</abbr>
+        de emitente e destinatário com a contagem de cada um. Rode o script você. É melhor em
+        precisão — um programa não erra a soma — e mantém o conteúdo das notas na sua máquina.</li>
+        <li><strong>Compacte por mês:</strong>
+        <pre>cd xmls-kickoff
+for m in */; do zip -r "../${m%/}.zip" "$m"; done</pre></li>
+      </ol>
+
+      <h3 id="kickoff-antes">Antes de importar: cadastre as empresas</h3>
+      <div class="callout warn"><span class="title">Esta é a ordem que não se inverte</span>
+        <p>O módulo decide se uma nota é de <strong>entrada</strong>, <strong>saída</strong>,
+        <strong>interna</strong> ou <strong>externa</strong> comparando o <abbr class="sigla" title="Cadastro Nacional da Pessoa Jurídica: o número que identifica a empresa.">CNPJ</abbr> do emitente e o do
+        destinatário com os das empresas cadastradas. Se as empresas ainda não existirem, ou
+        estiverem com o CNPJ errado, todo o lote entra classificado como <em>externa</em> — e a
+        classificação não se refaz sozinha depois. Cadastre as empresas, com o CNPJ correto, em
+        <span class="menupath">Definições<i>‣</i>Usuários e empresas<i>‣</i>Empresas</span>,
+        <em>antes</em> do primeiro ZIP.</p>
+      </div>
+
+      <h3 id="kickoff-importar">Importar</h3>
+      <ol class="steps">
+        <li><strong>Ensaie no staging, se ele já existir.</strong> Uma carga de doze meses é
+        exatamente o tipo de coisa que a escada do <a href="#passo-6">passo 6</a> existe para
+        proteger. Se o staging ainda não estiver de pé, então o item seguinte vira obrigatório.</li>
+        <li>Abra <span class="menupath">Faturamento<i>‣</i>NFe XML<i>‣</i>Importar arquivo XML</span>.</li>
+        <li>Em <span class="field">Arquivos ZIP</span>, anexe <strong>um mês só</strong> na primeira
+        vez.</li>
+        <li>Confira a <span class="field">Empresa</span> e clique em <b>Importar</b>.</li>
+        <li>Deixe processar. Um agendamento lê os arquivos a cada dez minutos; quem não quer esperar
+        usa o botão <b>Processar arquivo XML</b> na lista.</li>
+        <li><strong>Olhe o resultado antes de mandar o resto:</strong> o painel analítico, os
+        contatos criados, os produtos que nasceram do catálogo das notas, e a tabela de <abbr class="sigla" title="Código Fiscal de Operações e Prestações: diz a natureza fiscal de cada item da nota.">CFOP</abbr> — os
+        códigos que ela não conhecia entram sem classificação, esperando alguém dizer o que
+        significam.</li>
+        <li><strong>Corrija o que aparecer</strong> — o título que virou dois produtos por causa de
+        um <abbr class="sigla" title="International Standard Book Number: o número internacional que identifica cada edição de livro.">ISBN</abbr> digitado diferente, o contato com razão social antiga — e só então importe os onze
+        meses restantes.</li>
+      </ol>
+
+      <div class="callout tip"><span class="title">Por que um mês antes dos doze</span>
+        <p>Um erro de cadastro que passa despercebido em setembro se repete em outubro, novembro e em
+        todos os outros — e desfazer custa doze vezes mais do que teria custado descobrir. A
+        reimportação, essa, é segura em qualquer ordem: a chave de acesso de 44 dígitos identifica
+        cada nota, e o que já entrou é ignorado em silêncio. Reimportar o mesmo ZIP não duplica
+        nada.</p>
+      </div>
+
+      <div class="callout warn"><span class="title">A pasta de kickoff é dado pessoal</span>
+        <p>Cada nota traz CPF ou <abbr class="sigla" title="Cadastro Nacional da Pessoa Jurídica: o número que identifica a empresa.">CNPJ</abbr>, endereço e telefone de cliente. A pasta não vai para a nuvem
+        compartilhada da editora nem é colada em conversa com assistente nenhum: ela fica na máquina
+        e sobe para o Odoo por ali. Depois de importada, o lugar dela é o backup — que é cifrado — e
+        não a pasta de downloads.</p>
+      </div>
+
+      <div class="callout tip"><span class="title">Com o assistente</span>
+        <pre>Importei o primeiro mês. Aqui está o CSV dos produtos criados:
+&lt;caminho do arquivo&gt;
+Aponte os que parecem ser o MESMO título entrando duas vezes — ISBN
+escrito diferente, nome com variação de acento ou de espaço.
+Só aponte. Não altere nada.</pre>
+        <p>Duplicata de catálogo é o erro que uma carga de doze meses multiplica por doze, e é o mais chato de desfazer depois. Esta é a última hora barata de encontrá-la.</p>
+      </div>
+
+      <h2 id="nao-faz">O que este roteiro não faz</h2>
+      <ul>
+        <li><strong>Não é uma implantação.</strong> Plano de contas, impostos, tabelas de preço,
+        processos e treinamento são outro trabalho — o site do Liber indica quem faz.</li>
+        <li><strong>Não configura a emissão de nota fiscal.</strong> Isso pede certificado A1,
+        credenciamento e uma conta no serviço de emissão; está no
+        <a href="liber_nfe_focus.html">manual da emissão</a>.</li>
+        <li><strong>Não põe o Odoo na internet aberta</strong>, com domínio e certificado público. É
+        de propósito: o passo 8 explica por quê, e o que fazer no lugar.</li>
+        <li><strong>Não cobre a atualização de versão do Odoo</strong>, que muda de um ano para o
+        outro e merece um roteiro próprio — ainda que a escada do passo 6 seja exatamente o lugar
+        onde ela seria ensaiada.</li>
+        <li><strong>Não substitui olhar.</strong> Backup que ninguém confere, rede privada que
+        ninguém revisa e sistema que ninguém atualiza envelhecem calados — e os três só dão sinal no
+        dia em que são necessários.</li>
+      </ul>
+
+      <div class="seealso">
+        <strong>Ver também</strong>
+        <ul>
+          <li><a href="liber_nfe_xml.html">Importação de XML de NF-e</a> — o detalhe do que acontece com cada arquivo do ZIP, e como as notas viram faturas.</li>
+          <li><a href="liber_roles.html">Papéis de acesso</a> — os perfis prontos por área, para não deixar todo mundo como administrador.</li>
+          <li><a href="glossario.html">Glossário</a> — o prefixo de cada documento que você vai ver na tela a partir daqui.</li>
+        </ul>
+      </div>
+
+      <nav class="pager" id="pager"></nav>
+    </article>
+  </div>
+</div>
+<script src="docs.js"></script>
+</body>
+</html>

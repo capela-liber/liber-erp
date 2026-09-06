@@ -60,6 +60,7 @@ class ImportXMLWizard(models.TransientModel):
         return {
             'panels': self.env['nfe.xml.panel'].browse(),
             'cancellations': 0,
+            'corrections': 0,
             'duplicate': 0,
             'not_nfe': 0,
             'malformed': 0,
@@ -110,7 +111,7 @@ class ImportXMLWizard(models.TransientModel):
                     continue
                 self._import_one(file_name, xml_file, Panel, tally, cancellations)
             for file_name, xml_file in cancellations:
-                self._apply_cancellation(file_name, xml_file, Panel, tally)
+                self._apply_event(file_name, xml_file, Panel, tally)
 
     def _import_one(self, file_name, xml_file, Panel, tally, cancellations):
         """Import one XML, counting the outcome. Never raises.
@@ -124,15 +125,15 @@ class ImportXMLWizard(models.TransientModel):
             with self.env.cr.savepoint():
                 event_info = Panel.parse_nfe_event(xml_file)
                 if event_info:
-                    if event_info.get('tp_evento') in Panel.NFE_CANCEL_EVENTS:
-                        if cancellations is None:
-                            self._apply_cancellation(
-                                file_name, xml_file, Panel, tally)
-                        else:
-                            cancellations.append((file_name, xml_file))
+                    # Every event is kept, cancellation or not: a correction
+                    # letter is part of the fiscal record the accountant files,
+                    # and it used to be counted as 'not an NFe' and dropped.
+                    # They all wait for the second pass, so the note they refer
+                    # to is already in when they are applied.
+                    if cancellations is None:
+                        self._apply_event(file_name, xml_file, Panel, tally)
                     else:
-                        # Correction letters carry no note to import.
-                        tally['not_nfe'] += 1
+                        cancellations.append((file_name, xml_file))
                     return
                 key, reason = Panel.classify_nfe_xml(xml_file)
                 if not key:
@@ -157,20 +158,23 @@ class ImportXMLWizard(models.TransientModel):
         else:
             tally['failures'].append((file_name, _("could not be imported")))
 
-    def _apply_cancellation(self, file_name, xml_file, Panel, tally):
+    def _apply_event(self, file_name, xml_file, Panel, tally):
+        """Store one NFe event, counting cancellations apart from letters."""
         try:
             with self.env.cr.savepoint():
-                event = Panel.register_cancellation_event(
+                event = Panel.register_nfe_event(
                     xml_file, file_name=file_name,
                     company_id=self.company_id.id)
         except Exception as e:
-            _logger.exception("NFe import: cancellation failed on %s", file_name)
+            _logger.exception("NFe import: event failed on %s", file_name)
             tally['failures'].append((file_name, str(e)))
             return
-        if event:
+        if not event:
+            tally['not_nfe'] += 1
+        elif event.event_kind == 'cancel':
             tally['cancellations'] += 1
         else:
-            tally['not_nfe'] += 1
+            tally['corrections'] += 1
 
     def _import_summary(self, tally):
         """One line per outcome, in the order that matters to the user."""
@@ -180,6 +184,7 @@ class ImportXMLWizard(models.TransientModel):
         # a translator to puzzle over.
         imported = len(tally['panels'])
         cancelled = tally['cancellations']
+        corrections = tally['corrections']
         duplicated = tally['duplicate']
         not_nfe = tally['not_nfe']
         no_protocol = tally['no_protocol']
@@ -189,6 +194,7 @@ class ImportXMLWizard(models.TransientModel):
         counts = [
             (imported, _("%s note(s) imported")),
             (cancelled, _("%s cancellation(s) applied")),
+            (corrections, _("%s correction letter(s) stored")),
             (duplicated, _("%s already in the panel")),
             (not_nfe, _("%s not an NFe")),
             (no_protocol, _("%s with no SEFAZ protocol")),

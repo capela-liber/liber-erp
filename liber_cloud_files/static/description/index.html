@@ -1,0 +1,96 @@
+<!-- GERADO por scripts/gen_module_descriptions.py a partir de
+     liber_site/static/docs/liber_cloud_files.html -- não edite aqui.
+     O Odoo mostra este arquivo em Apps > Module Info. -->
+<div class="oe_container liber_manual" style="max-width:900px;margin:0 auto;padding:8px 4px 24px;color:#251d2b;background:transparent;font:15px/1.7 Inter,'Segoe UI',system-ui,sans-serif;"><h1 style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:32px;line-height:1.2;letter-spacing:-.015em;margin:0 0 10px;color:#251d2b;">O chassi dos arquivos na nuvem</h1>
+      <p class="lead" style="font-size:17.5px;color:#5d5266;margin:0 0 26px;max-width:62ch;">Uma credencial por empresa, e o Odoo de porteiro: pastas mapeadas, leitura e escrita decididas grupo a grupo, e a mesma disciplina nas três estantes.</p>
+
+      <h2 id="visao-geral" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">Visão geral</h2>
+      <p style="margin:0 0 12px;">Os arquivos da editora vivem em nuvens — <a href="/liber_site/static/docs/liber_dropbox.html" target="_blank" rel="noopener" style="color:#6e2f91;">Dropbox</a>,
+      <a href="/liber_site/static/docs/liber_gdrive.html" target="_blank" rel="noopener" style="color:#6e2f91;">Google Drive</a>, <a href="/liber_site/static/docs/liber_github.html" target="_blank" rel="noopener" style="color:#6e2f91;">GitHub</a> — e todas
+      elas têm o mesmo defeito para uma empresa: <strong style="color:#251d2b;">a credencial é uma só</strong>. Quem tem a
+      conta tem tudo; quem não tem, não tem nada. Não existe, do lado de lá, quem responda "este
+      autor pode ler a pasta dos originais, mas não a do contrato".</p>
+      <p style="margin:0 0 12px;">Este módulo é o <strong style="color:#251d2b;">porteiro</strong> que responde isso do lado de cá. Ele não é um
+      aplicativo: não tem menu, não tem tela própria e não fala com nuvem nenhuma. É o chassi sobre
+      o qual as três estantes são montadas — e é aqui que mora tudo o que elas têm em comum.</p>
+      <p style="margin:0 0 12px;">Você não instala este módulo diretamente: instale a estante que quiser
+      (<span class="field" style="font-weight:600;color:#251d2b;">liber_dropbox</span>, <span class="field" style="font-weight:600;color:#251d2b;">liber_gdrive</span>,
+      <span class="field" style="font-weight:600;color:#251d2b;">liber_github</span>) e ele vem junto. Esta página existe para explicar,
+      uma vez só, a disciplina que as três herdam — e para que os manuais delas possam se ocupar
+      apenas do que muda.</p>
+
+      <h2 id="pecas" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">As cinco peças</h2>
+      <div class="tablewrap" style="overflow-x:auto;margin:0 0 16px;"><table style="border-collapse:collapse;width:100%;margin:0 0 16px;font-size:14px;">
+        <tr><th style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;background:#f1eaf6;font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:13.5px;">Peça</th><th style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;background:#f1eaf6;font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:13.5px;">O que é</th></tr>
+        <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;"><strong style="color:#251d2b;">Conta</strong></td><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">A credencial da nuvem, <strong style="color:#251d2b;">uma por empresa e por provedor</strong>. É o único lugar onde o segredo mora, e ele nunca sai do servidor.</td></tr>
+        <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;"><strong style="color:#251d2b;">Pasta</strong></td><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Um pedaço da nuvem mapeado no Odoo, com nome, caminho (ou ID) e — o que importa — os grupos que podem ler e os que podem escrever nela.</td></tr>
+        <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;"><strong style="color:#251d2b;">Arquivo</strong></td><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">O <em>espelho</em> do que existe lá: nome, tamanho, data, revisão. Só metadados; o conteúdo continua na nuvem.</td></tr>
+        <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;"><strong style="color:#251d2b;">Etiqueta</strong></td><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">O vocabulário da casa para classificar arquivos, compartilhado pelas três estantes.</td></tr>
+        <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;"><strong style="color:#251d2b;">Vínculo</strong></td><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">A ligação do arquivo com um contato ou um título do catálogo — é o que faz a ficha do autor mostrar os arquivos dele.</td></tr>
+      </table></div>
+
+      <h2 id="regra-de-ouro" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">A regra de ouro</h2>
+      <div class="callout warn" style="border:1px solid #e5dbee;border-left:4px solid #6e2f91;border-radius:10px;padding:14px 18px;margin:0 0 16px;border-left-color:#b3831a;background:#faf3e3;border-color:#eddfba;"><span class="title" style="font-weight:700;font-size:12px;letter-spacing:.08em;text-transform:uppercase;display:block;margin:0 0 4px;color:#7a5a12;">Duas frases, e o resto é consequência</span>
+      <p style="margin:0 0 12px;"><strong style="color:#251d2b;">Mapear pastas é de administrador.</strong> Só quem administra decide que pedaço da
+      nuvem existe dentro do Odoo, e quem o alcança.<br>
+      <strong style="color:#251d2b;">Escrever exige grupo de escrita, seja quem for.</strong> Não há atalho de perfil,
+      nem exceção de gerência: o direito é da pasta, não da pessoa.</p></div>
+      <p style="margin:0 0 12px;">Disso decorrem as decisões que às vezes surpreendem:</p>
+      <ul style="margin:0 0 14px 22px;padding:0;">
+        <li style="margin:0 0 7px;"><strong style="color:#251d2b;">O espelho é só de metadados.</strong> O Odoo não guarda cópia do arquivo. Isso
+        mantém o banco pequeno e, mais importante, impede que uma cópia velha circule como se fosse
+        a atual.</li>
+        <li style="margin:0 0 7px;"><strong style="color:#251d2b;">O download passa pela porta.</strong> Ninguém recebe a credencial: o arquivo
+        desce pelo servidor, com o portão conferido <em>antes do primeiro byte</em>.</li>
+        <li style="margin:0 0 7px;"><strong style="color:#251d2b;">O envio nunca sobrescreve.</strong> Nome repetido vira
+        <span class="field" style="font-weight:600;color:#251d2b;">arquivo (1).ext</span>. Perder versão por engano não é uma
+        possibilidade que este módulo ofereça.</li>
+        <li style="margin:0 0 7px;"><strong style="color:#251d2b;">Cada empresa vê a sua nuvem.</strong> Contas, pastas, arquivos e etiquetas são
+        separados por empresa, como o resto do sistema.</li>
+      </ul>
+
+      <h2 id="perfis" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">Os dois perfis</h2>
+      <p style="margin:0 0 12px;">O chassi traz dois grupos, e as três estantes os compartilham:</p>
+      <ul style="margin:0 0 14px 22px;padding:0;">
+        <li style="margin:0 0 7px;"><strong style="color:#251d2b;">Usuário</strong> — enxerga as pastas em que foi posto como leitor, e os arquivos
+        delas; envia apenas onde tem escrita.</li>
+        <li style="margin:0 0 7px;"><strong style="color:#251d2b;">Administrador</strong> — mapeia pastas, cadastra contas e define quem lê e quem
+        escreve. É o perfil de quem responde pela nuvem, não pelo conteúdo.</li>
+      </ul>
+      <p style="margin:0 0 12px;">Note que os dois são <em>perpendiculares</em> aos grupos de leitura e escrita das pastas:
+      ser Usuário é a condição de entrar no app; o que se alcança lá dentro é a pasta que diz.</p>
+
+      <h2 id="dia-a-dia" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">O dia a dia</h2>
+      <ol class="steps" style="margin:0 0 16px 22px;padding:0;">
+        <li style="margin:0 0 7px;"><strong style="color:#251d2b;">Sincronizar.</strong> Há o botão, para quando não se quer esperar, e um robô
+        diário de madrugada que revarre as pastas mapeadas. O espelho é o que o robô viu por
+        último; enviar pelo Odoo atualiza na hora.</li>
+        <li style="margin:0 0 7px;"><strong style="color:#251d2b;">Enviar.</strong> Pelo assistente de envio, um arquivo ou muitos de uma vez,
+        escolhidos no seletor ou arrastados. O Odoo não guarda cópia depois do envio.</li>
+        <li style="margin:0 0 7px;"><strong style="color:#251d2b;">Baixar.</strong> Pela porta do Odoo, com o direito conferido no momento do
+        clique — e não no momento em que o link foi criado.</li>
+        <li style="margin:0 0 7px;"><strong style="color:#251d2b;">Classificar e vincular.</strong> Etiquetas do vocabulário da casa; vínculo com
+        contato e com título. As fichas de contato e de produto ganham um botão que soma os
+        arquivos <strong style="color:#251d2b;">de todas as estantes</strong>, não só da que você estava usando.</li>
+      </ol>
+
+      <h2 id="limitacoes" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">Limitações conhecidas</h2>
+      <ul style="margin:0 0 14px 22px;padding:0;">
+        <li style="margin:0 0 7px;"><strong style="color:#251d2b;">Não é um gerenciador de arquivos.</strong> Não se cria pasta, não se renomeia,
+        não se move nada pelo Odoo — a nuvem continua sendo a dona da estrutura.</li>
+        <li style="margin:0 0 7px;"><strong style="color:#251d2b;">O espelho tem a idade da última varredura.</strong> Arquivo posto na nuvem por
+        fora aparece na próxima sincronização, não no mesmo instante.</li>
+        <li style="margin:0 0 7px;"><strong style="color:#251d2b;">Compartilhamento com prazo depende do provedor</strong>, e cada estante diz no
+        seu manual o que consegue fazer.</li>
+        <li style="margin:0 0 7px;"><strong style="color:#251d2b;">Sem estante instalada, este módulo não faz nada</strong> — e é assim de
+        propósito.</li>
+      </ul>
+
+      <div class="seealso" style="border:1px solid #e5dbee;border-radius:12px;background:#f1eaf6;padding:16px 20px;margin:32px 0 0;">
+        <strong style="font-weight:700;font-size:12px;letter-spacing:.08em;text-transform:uppercase;display:block;margin:0 0 8px;color:#5d5266;">Ver também</strong>
+        <ul style="margin:0 0 14px 22px;padding:0;">
+          <li style="margin:0 0 7px;"><a href="/liber_site/static/docs/liber_dropbox.html" target="_blank" rel="noopener" style="color:#6e2f91;">Arquivos no Dropbox</a> — a estante com a explicação mais completa da mecânica no dia a dia.</li>
+          <li style="margin:0 0 7px;"><a href="/liber_site/static/docs/liber_gdrive.html" target="_blank" rel="noopener" style="color:#6e2f91;">Arquivos no Google Drive</a> — pasta por ID, download pela porta, miniatura até de PDF.</li>
+          <li style="margin:0 0 7px;"><a href="/liber_site/static/docs/liber_github.html" target="_blank" rel="noopener" style="color:#6e2f91;">Arquivos no GitHub</a> — repositório vira pasta, e enviar vira commit.</li>
+        </ul>
+      </div><p style="margin:28px 0 0;padding-top:14px;border-top:1px solid #e5dbee;font-size:13px;color:#5d5266;">Manual completo, com busca e as demais páginas: <a href="/liber_site/static/docs/liber_cloud_files.html" target="_blank" rel="noopener" style="color:#6e2f91;">O chassi dos arquivos na nuvem</a>.</p></div>

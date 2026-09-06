@@ -57,9 +57,24 @@ Excel) into settlement lines, check them, and draft the CO."/>
         <field name="inherit_id"
                ref="liber_soc_settlement.view_consignment_settlement_form"/>
         <field name="arch" type="xml">
+            <!-- O atendimento ATIVO: parte-se da CO, escreve-se para a
+                 livraria, e a resposta volta para dentro desta CO pelo mesmo
+                 assistente do chamado. Ao lado de "Mapa" porque é o par do
+                 gesto: manda-se o mapa, recebe-se o que a livraria vendeu. -->
+            <button name="action_populate_from_shelf" position="after">
+                <button name="action_open_co_wizard" type="object"
+                        string="Import" class="btn-secondary"
+                        invisible="state != 'draft'"
+                        help="Parse an e-mail, a pasted Excel range, a
+spreadsheet, a PDF or an NFe XML into lines, check them, and add them to this
+consignment."/>
+            </button>
             <div name="button_box" position="inside">
+                <!-- Atrás do grupo: a ação que ele abre é do Atendimento,
+                     e quem opera só consignação não tem como abri-la. -->
                 <button name="action_view_support_tickets" type="object"
                         class="oe_stat_button" icon="fa-life-ring"
+                        groups="liber_support.group_support_user"
                         invisible="support_ticket_count == 0">
                     <field name="support_ticket_count" widget="statinfo"
                            string="Support"/>

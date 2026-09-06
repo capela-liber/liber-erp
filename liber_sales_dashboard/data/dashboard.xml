@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <!--
+      The Sales dashboard, rewritten: same entry, same place in the sidebar.
+
+      The core record (spreadsheet_dashboard_sale.spreadsheet_dashboard_sales)
+      keeps its name, group and sequence; only its content changes. Two
+      clocks, one under the other: the order by order date, the fiscal note
+      by note date — and the core's own tables (top quotations, top orders,
+      top customers, top teams) below them, rebuilt in the same sheet so one
+      period filter moves everything.
+
+      Why rewrite rather than add a second dashboard: the owner did not want
+      a second "Sales" in the sidebar (05/09/2026), and a dashboard named
+      differently was the first attempt — "Sales vs. notes" — retired on
+      06/09/2026 once its content moved here.
+
+      If spreadsheet_dashboard_sale is ever updated on its own, its data file
+      puts the core content back; a `-u` of this module restores ours.
+    -->
+    <record id="spreadsheet_dashboard_sale.spreadsheet_dashboard_sales" model="spreadsheet.dashboard">
+        <field name="spreadsheet_binary_data" type="base64"
+               file="liber_sales_dashboard/data/files/sales_dashboard.json"/>
+        <field name="main_data_model_ids"
+               eval="[Command.link(ref('sale.model_sale_order')),
+                      Command.link(ref('liber_nfe_xml.model_nfe_xml_panel'))]"/>
+    </record>
+</odoo>

@@ -52,12 +52,23 @@
         <field name="res_model">sale.order</field>
         <field name="view_mode">list,form</field>
         <field name="domain">[('is_consignment', '=', True)]</field>
-        <field name="context">{'default_is_consignment': True, 'default_consignment_type': 'opening'}</field>
+        <!-- SEM "Novo" (06/09/2026). O Pedido C nasce da Operação de
+             Consignação, e só dela: da CO saem o Pedido C (C000), o Acerto
+             (S000) e a Devolução. Um Pedido C digitado aqui é um documento
+             sem operação por trás, e foi assim que 51 "reposições" entraram
+             à mão em agosto, sem acerto nenhum.
+
+             `create: False` esconde o botão para TODO MUNDO, e é o que o dono
+             pediu: "só remover o Novo da tela de Pedidos, só isso". Não é
+             questão de perfil: ninguém cria este documento à mão, porque
+             ele não é o primeiro de nada. -->
+        <field name="context">{'default_is_consignment': True, 'default_consignment_type': 'opening', 'create': False}</field>
         <field name="help" type="html">
-            <p class="o_view_nocontent_smiling_face">Create your first consignment order</p>
+            <p class="o_view_nocontent_smiling_face">No consignment orders yet</p>
             <p>The Order (C) is a commercial order — same flow as a sale, but
                it is not a sale: it stays out of Sales reports and only becomes
-               revenue at Settlement.</p>
+               revenue at Settlement. It is not created here: it comes out of
+               the Consignment Settlement.</p>
         </field>
     </record>
 

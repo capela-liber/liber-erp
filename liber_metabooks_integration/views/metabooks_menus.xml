@@ -5,7 +5,7 @@
     <menuitem id="menu_metabooks_root"
               name="Metabooks"
               web_icon="liber_metabooks_integration,static/description/icon.png"
-              sequence="90"/>
+              sequence="76"/>
 
     <!-- Landing page: the imported books. Must be a normal (target=current) action
          so clicking the Metabooks app does not open a modal wizard by default. -->
@@ -36,6 +36,14 @@
         <field name="priority">99</field>
         <field name="arch" type="xml">
             <xpath expr="//span[field[@name='default_code']]" position="replace"/>
+            <!-- Livro não se vende em fração: a quantidade do cartão sai
+                 sem casa decimal. Só isto: o elemento continua sendo o do
+                 módulo `stock`, com o `groups` dele, e quem não é do
+                 Inventário continua não vendo, que é decisão do
+                 liber_roles e não deste módulo. -->
+            <xpath expr="//field[@name='qty_available']" position="attributes">
+                <attribute name="digits">[16, 0]</attribute>
+            </xpath>
         </field>
     </record>
 
@@ -82,4 +90,13 @@
               parent="menu_metabooks_root"
               groups="liber_metabooks_integration.metabooks_manager_group"
               sequence="20"/>
+
+    <!-- As duas tabelas de classificação ficam sob Catálogo, ao lado do que
+         elas classificam. São consulta: a lista não se edita na tela. -->
+    <menuitem id="menu_metabooks_thema"
+              name="Thema"
+              parent="menu_metabooks_catalogue"
+              action="action_metabooks_thema"
+              groups="liber_metabooks_integration.metabooks_manager_group"
+              sequence="30"/>
 </odoo>

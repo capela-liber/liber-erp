@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="export_xml_wizard_view" model="ir.ui.view">
+            <field name="name">export.xml.file.wizard</field>
+            <field name="model">nfe.xml.export</field>
+            <field name="arch" type="xml">
+                <form string="Export XML File">
+                    <field name="state" invisible="1"/>
+
+                    <group invisible="state == 'done'">
+                        <field name="company_id"
+                               options="{'no_create': True, 'no_open': True}"/>
+                    </group>
+                    <group invisible="state == 'done'" string="Kinds of note">
+                        <group>
+                            <field name="include_out"/>
+                            <field name="include_in"/>
+                        </group>
+                        <group>
+                            <field name="include_internal"/>
+                        </group>
+                    </group>
+                    <div invisible="state == 'done'">
+                        <separator string="Months"/>
+                        <div class="text-muted mb-2">
+                            Tick the months to send. They need not be in a row.
+                        </div>
+                        <field name="month_ids" nolabel="1">
+                            <list editable="bottom" create="false" delete="false"
+                                  string="Months">
+                                <field name="selected" string="Export"
+                                       widget="boolean_toggle"/>
+                                <!-- `force_save` em tudo o que o usuário não
+                                     edita, e não é zelo: quem monta estas
+                                     linhas é o servidor, e o cliente web NÃO
+                                     devolve campo readonly nem campo ausente
+                                     da view. Sem isto a linha voltava só com
+                                     o `selected`, o mês chegava sem nome e sem
+                                     datas, e a exportação não achava nota
+                                     nenhuma. -->
+                                <field name="name" string="Month" readonly="1"
+                                       force_save="1"/>
+                                <field name="n_notes" string="Notes" readonly="1"
+                                       force_save="1"/>
+                                <field name="sort_key" column_invisible="1"
+                                       force_save="1"/>
+                                <field name="no_date" column_invisible="1"
+                                       force_save="1"/>
+                                <field name="date_from" column_invisible="1"
+                                       force_save="1"/>
+                                <field name="date_to" column_invisible="1"
+                                       force_save="1"/>
+                            </list>
+                        </field>
+                    </div>
+
+                    <div invisible="state != 'done'">
+                        <field name="summary" nolabel="1" readonly="1" widget="text"/>
+                        <group string="Package">
+                            <field name="file" filename="file_name" readonly="1"
+                                   string="Download"/>
+                            <field name="file_name" invisible="1"/>
+                        </group>
+                        <div class="text-muted">
+                            Click the file above to download it, then send it to
+                            the accountant.
+                        </div>
+                    </div>
+
+                    <footer>
+                        <button name="action_export" string="Export"
+                                type="object" class="btn-primary"
+                                invisible="state == 'done'"/>
+                        <button string="Close" class="btn-secondary" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="xml_export_wizard" model="ir.actions.act_window">
+            <field name="name">Export XML File</field>
+            <field name="res_model">nfe.xml.export</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+        <menuitem action="xml_export_wizard" id="xml_wizard_export"
+            parent="liber_nfe_xml.menu_nfe_xml_panel" sequence="4"/>
+    </data>
+</odoo>

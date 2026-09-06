@@ -11,3 +11,5 @@ from . import test_numeracao
 from . import test_email_documentos
 from . import test_painel_da_casa
 from . import test_nome_fiscal
+from . import test_neutralize
+from . import test_colunas_nota

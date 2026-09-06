@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<script>
+/* Servido por /liber_site/static/docs/, este arquivo vem com uma semana de
+   cache e o docs.js sem versão -- e o índice monta a lista a partir dele. Foi
+   assim que a emissão de NF-e e o manual da Amazon ficaram invisíveis: o
+   catálogo em cache era anterior aos dois. A rota /liber/docs/ serve o mesmo
+   arquivo sem cache e com ?v=<mtime> nos assets. Quem chegar pelo caminho
+   antigo (favorito, link velho, resultado de busca) vai para lá antes de a
+   página montar qualquer coisa. */
+(function () {
+  var antigo = "/liber_site/static/docs/";
+  if (location.pathname.indexOf(antigo) === 0) {
+    location.replace("/liber/docs/" + location.pathname.slice(antigo.length) +
+                     location.search + location.hash);
+  }
+})();
+</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Estado Em pagamento — Manuais do Liber</title>
+<link rel="icon" type="image/png" href="../logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;600;700&display=swap">
+<link rel="stylesheet" href="docs.css">
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="../index.html"><img src="../logo.png" alt="">liber<span>.</span></a>
+    <span class="doc-tag">Manuais</span>
+    <nav><a href="index.html">Índice</a><a href="../index.html">Site</a></nav>
+  </div>
+</header>
+<div class="wrap">
+  <div class="layout">
+    <aside class="sidebar" id="sidebar"></aside>
+    <article class="doc">
+      <div class="breadcrumb"><a href="index.html">Manuais</a><span class="sep">›</span>Gestão<span class="sep">›</span>Estado Em pagamento</div>
+      <h1>Estado Em pagamento</h1>
+      <p class="lead">O estado que o Odoo Community esconde e só o Enterprise mostra: pagamento registrado deixa a fatura pendente até o extrato bancário confirmar que o dinheiro entrou.</p>
+
+      <h2 id="visao-geral">Visão geral</h2>
+      <p>No Odoo Community, registrar o pagamento de uma fatura a fecha na hora: ela passa a
+      <span class="field">Pago</span> assim que a baixa é feita, mesmo que o dinheiro ainda esteja
+      parado numa <strong>conta transitória</strong> à espera do extrato bancário. Quem tem
+      Enterprise vê um estado intermediário — <span class="field">Em pagamento</span> — e quem não
+      tem, não vê.</p>
+      <p>Este módulo devolve esse estado a quem não paga licença. Registrado o pagamento, a fatura
+      fica <span class="field">Em pagamento</span>; ela só vira <span class="field">Pago</span>
+      quando a linha transitória encontra o <strong>extrato bancário</strong> na conciliação.</p>
+      <p>A diferença não é cosmética. Ela separa duas perguntas que o Community responde com a
+      mesma palavra:</p>
+      <ul>
+        <li><strong>"Já demos baixa?"</strong> — sim, desde o registro do pagamento.</li>
+        <li><strong>"O dinheiro entrou?"</strong> — só o extrato responde.</li>
+      </ul>
+      <p>Uma casa que concilia banco precisa das duas. Enquanto as duas tinham a mesma resposta,
+      o relatório de recebíveis dizia "pago" para cheque não compensado, boleto em trânsito e
+      transferência agendada.</p>
+
+      <div class="callout warn"><span class="title">Condição para funcionar</span><p>O estado
+      depende de haver <strong>contas transitórias</strong> configuradas nas linhas de método de
+      pagamento dos diários (<span class="menupath">Contabilidade<i>‣</i>Configuração<i>‣</i>Diários</span>,
+      aba <span class="field">Pagamentos recebidos</span> / <span class="field">Pagamentos
+      efetuados</span>). Sem elas, o pagamento é considerado conciliado no mesmo instante em que
+      nasce, e a fatura vai direto a <span class="field">Pago</span> — o módulo instalado, e nada
+      mudando na tela. Se for esse o seu caso, o problema é o cadastro do diário, não o
+      módulo.</p></div>
+
+      <h2 id="configuracao">Configuração</h2>
+      <p>Não há o que instalar além do módulo. Há um único interruptor, e ele é
+      <strong>por empresa</strong>:</p>
+      <ol class="steps">
+        <li>Vá a <span class="menupath">Contabilidade<i>‣</i>Configuração<i>‣</i>Definições</span>,
+        com a empresa desejada selecionada no seletor do topo.</li>
+        <li>Na seção de faturamento, o ajuste <span class="field">Estado Em pagamento</span> —
+        "as faturas ficam Em pagamento até o pagamento encontrar o extrato bancário".</li>
+        <li>Ligado (o padrão), a fatura espera o extrato. Desligado, ela vai direto a
+        <span class="field">Pago</span>, como o Community faz de fábrica.</li>
+      </ol>
+      <p>O interruptor existe porque um banco de dados pode abrigar empresas com práticas
+      diferentes: a que concilia extrato quer o estado; a que não concilia ficaria com todas as
+      faturas presas em <span class="field">Em pagamento</span> para sempre. A decisão é de cada
+      uma.</p>
+
+      <h2 id="dia-a-dia">O dia a dia</h2>
+      <p>O ciclo passa a ter três tempos em vez de dois:</p>
+      <ol class="steps">
+        <li><strong>Fatura confirmada</strong> — estado <span class="field">Publicado</span>, em
+        aberto no relatório de recebíveis.</li>
+        <li><strong>Pagamento registrado</strong> — estado <span class="field">Em pagamento</span>.
+        A baixa está feita, o lançamento existe, e o valor está na conta transitória. A fatura
+        <em>não</em> aparece mais como cobrança pendente do cliente, mas também não conta como
+        dinheiro em caixa.</li>
+        <li><strong>Extrato conciliado</strong> — estado <span class="field">Pago</span>. A linha
+        transitória encontrou a linha do banco, e o dinheiro está onde diz estar.</li>
+      </ol>
+      <p>Nada muda no gesto de quem opera: registra-se o pagamento do mesmo jeito, pelo mesmo
+      botão. O que muda é o que a tela responde depois — e o que os relatórios contam.</p>
+
+      <div class="callout"><span class="title">Nota</span><p>O estado é de <em>leitura</em>: ele é
+      calculado a partir da conciliação, não gravado por ninguém. Não há botão para pôr ou tirar
+      uma fatura de <span class="field">Em pagamento</span> — concilie o extrato, e ela anda
+      sozinha.</p></div>
+
+      <h2 id="limitacoes">Limitações conhecidas</h2>
+      <ul>
+        <li><strong>Sem conta transitória, sem estado.</strong> É a condição descrita acima, e é o
+        motivo número um de o módulo "não funcionar".</li>
+        <li><strong>É o comportamento do Enterprise, não uma invenção.</strong> Quem migrar para o
+        Enterprise pode desinstalar este módulo sem perder nada: o estado continua, vindo de lá.</li>
+        <li><strong>Faturas antigas.</strong> O estado é calculado, então faturas já pagas antes da
+        instalação passam a ser reavaliadas pela mesma régua — as que foram baixadas sem extrato
+        conciliado aparecerão como <span class="field">Em pagamento</span>. Isso é um retrato
+        correto do que existe no banco, e costuma ser a primeira surpresa útil que o módulo dá.</li>
+      </ul>
+
+      <div class="seealso">
+        <strong>Ver também</strong>
+        <ul>
+          <li><a href="https://www.odoo.com/documentation" rel="noopener">Documentação do Odoo</a> — conciliação bancária e contas transitórias nos diários.</li>
+        </ul>
+      </div>
+
+      <nav class="pager" id="pager"></nav>
+    </article>
+  </div>
+</div>
+<script src="docs.js"></script>
+</body>
+</html>

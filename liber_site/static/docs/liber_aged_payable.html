@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<script>
+/* Servido por /liber_site/static/docs/, este arquivo vem com uma semana de
+   cache e o docs.js sem versão -- e o índice monta a lista a partir dele. Foi
+   assim que a emissão de NF-e e o manual da Amazon ficaram invisíveis: o
+   catálogo em cache era anterior aos dois. A rota /liber/docs/ serve o mesmo
+   arquivo sem cache e com ?v=<mtime> nos assets. Quem chegar pelo caminho
+   antigo (favorito, link velho, resultado de busca) vai para lá antes de a
+   página montar qualquer coisa. */
+(function () {
+  var antigo = "/liber_site/static/docs/";
+  if (location.pathname.indexOf(antigo) === 0) {
+    location.replace("/liber/docs/" + location.pathname.slice(antigo.length) +
+                     location.search + location.hash);
+  }
+})();
+</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Contas a pagar por idade — Manuais do Liber</title>
+<link rel="icon" type="image/png" href="../logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;600;700&display=swap">
+<link rel="stylesheet" href="docs.css">
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="../index.html"><img src="../logo.png" alt="">liber<span>.</span></a>
+    <span class="doc-tag">Manuais</span>
+    <nav><a href="index.html">Índice</a><a href="../index.html">Site</a></nav>
+  </div>
+</header>
+<div class="wrap">
+  <div class="layout">
+    <aside class="sidebar" id="sidebar"></aside>
+    <article class="doc">
+      <div class="breadcrumb"><a href="index.html">Manuais</a><span class="sep">›</span>Gestão<span class="sep">›</span>Contas a pagar por idade</div>
+      <h1>Contas a pagar por idade</h1>
+      <p class="lead">A gêmea do relatório de receber, do outro lado do razão: o que a casa deve, por fornecedor e por faixa de atraso.</p>
+
+      <h2 id="visao-geral">Visão geral</h2>
+      <p>A gêmea do <a href="liber_aged_receivable.html">Contas a receber por idade</a>, olhando o
+      outro lado do razão: o que a casa <strong>deve</strong>, por fornecedor e por faixa de
+      atraso.</p>
+      <p>Toda a mecânica é herdada e idêntica — a mesma leitura direta das linhas em aberto,
+      calculada na hora e sem cron; as mesmas faixas do Enterprise medidas pela data de vencimento;
+      o mesmo par de botões em cada linha. O que muda é o lado: contas a pagar em vez de a receber,
+      e o sinal do saldo invertido para que a tela mostre dívida como número positivo.</p>
+
+      <h2 id="configuracao">Configuração</h2>
+      <p>Nenhuma. Instalar já basta — e instalar esta puxa a de receber, que é onde a mecânica
+      mora.</p>
+      <p>Onde fica: <span class="menupath">Contabilidade<i>‣</i>Relatórios<i>‣</i>Aged
+      Payable</span>.</p>
+
+      <h2 id="dia-a-dia">O dia a dia</h2>
+      <p>Agrupe por fornecedor e as faixas somam por grupo; filtre por empresa, por conta, por
+      grupo econômico. <strong>Abrir</strong> leva à fatura de fornecedor ou ao pagamento;
+      <strong>Conciliar</strong> leva à tela de conciliação posicionada naquele fornecedor e
+      naquela conta.</p>
+      <p>O uso mais comum não é ler o total: é <strong>ordenar pela faixa mais antiga</strong> e ver
+      o que está parado há mais de 120 dias sem ninguém ter notado — que é o que uma migração
+      costuma deixar para trás.</p>
+
+      <h2 id="limitacoes">Limitações conhecidas</h2>
+      <ul>
+        <li>As mesmas do relatório de receber, ponto por ponto — inclusive a dependência da tela de
+        conciliação da <abbr class="sigla" title="Odoo Community Association: a associação que mantém módulos livres para o Odoo.">OCA</abbr> para o botão Conciliar.</li>
+        <li><strong>Não é uma agenda de pagamentos.</strong> Ela diz o que está em aberto e há
+        quanto tempo; decidir o que pagar continua sendo do financeiro.</li>
+      </ul>
+
+      <div class="seealso">
+        <strong>Ver também</strong>
+        <ul>
+          <li><a href="liber_aged_receivable.html">Contas a receber por idade</a> — a tela irmã, com a explicação completa da mecânica.</li>
+        </ul>
+      </div>
+
+      <nav class="pager" id="pager"></nav>
+    </article>
+  </div>
+</div>
+<script src="docs.js"></script>
+</body>
+</html>

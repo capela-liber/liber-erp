@@ -44,7 +44,7 @@ msgstr "Conta de armazenamento na nuvem"
 #. module: liber_gdrive
 #: model:ir.model,name:liber_gdrive.model_liber_cloud_provider
 msgid "Cloud Storage Provider Registry"
-msgstr ""
+msgstr "Registro de provedores de armazenamento"
 
 #. module: liber_gdrive
 #: model:ir.ui.menu,name:liber_gdrive.menu_liber_gdrive_config
@@ -63,12 +63,12 @@ msgstr "Não foi possível alcançar o Google Drive: %s"
 #: model:ir.model.fields,field_description:liber_gdrive.field_liber_cloud_provider__display_name
 #: model:ir.model.fields,field_description:liber_gdrive.field_liber_cloud_upload__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Nome exibido"
 
 #. module: liber_gdrive
 #: model:ir.ui.menu,name:liber_gdrive.menu_liber_gdrive_root
 msgid "Drive"
-msgstr ""
+msgstr "Drive"
 
 #. module: liber_gdrive
 #. odoo-python
@@ -77,6 +77,8 @@ msgid ""
 "Drive folders are addressed by ID: open the folder in the browser and copy "
 "the ID from its URL into the folder's External ID field."
 msgstr ""
+"As pastas do Drive são endereçadas por ID: abra a pasta no navegador e "
+"copie o ID da URL dela para o campo ID externo da pasta."
 
 #. module: liber_gdrive
 #: model:ir.actions.act_window,name:liber_gdrive.action_liber_gdrive_file
@@ -100,13 +102,13 @@ msgstr "Pastas"
 #: model:ir.model.fields.selection,name:liber_gdrive.selection__liber_cloud_folder__provider__gdrive
 #: model:ir.model.fields.selection,name:liber_gdrive.selection__liber_cloud_upload__provider__gdrive
 msgid "Google Drive"
-msgstr ""
+msgstr "Google Drive"
 
 #. module: liber_gdrive
 #: model:ir.module.category,name:liber_gdrive.module_category_liber_gdrive
 #: model:res.groups.privilege,name:liber_gdrive.privilege_liber_gdrive
 msgid "Google Drive Files"
-msgstr ""
+msgstr "Arquivos do Google Drive"
 
 #. module: liber_gdrive
 #. odoo-python
@@ -126,7 +128,7 @@ msgstr "O Google recusou as credenciais (HTTP %(code)s): %(body)s"
 #: model:ir.model.fields,field_description:liber_gdrive.field_liber_cloud_provider__id
 #: model:ir.model.fields,field_description:liber_gdrive.field_liber_cloud_upload__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: liber_gdrive
 #: model:ir.model.fields,help:liber_gdrive.field_liber_cloud_account__gdrive_refresh_token
@@ -134,6 +136,8 @@ msgid ""
 "Long-lived token from the one-time OAuth authorization of the company's "
 "Google account; see the module's NOTES.md."
 msgstr ""
+"Token de longa vida vindo da autorização OAuth feita uma única vez na "
+"conta Google da empresa; veja o NOTES.md do módulo."
 
 #. module: liber_gdrive
 #: model:res.groups,name:liber_gdrive.group_liber_gdrive_manager
@@ -156,6 +160,8 @@ msgid ""
 "Paste the folder's Drive ID, name who reads and who writes,\n"
 "                and press Sync."
 msgstr ""
+"Cole o ID da pasta no Drive, diga quem lê e quem escreve,\n"
+"                e aperte Sincronizar."
 
 #. module: liber_gdrive
 #: model:ir.model.fields,field_description:liber_gdrive.field_liber_cloud_account__provider
@@ -182,6 +188,9 @@ msgid ""
 "client secret and refresh token (see the module's NOTES.md for the one-time "
 "setup)."
 msgstr ""
+"A conta Google Drive de %s não está configurada. Preencha o ID do cliente, "
+"o segredo do cliente e o token de atualização (veja no NOTES.md do módulo "
+"a configuração que se faz uma vez só)."
 
 #. module: liber_gdrive
 #. odoo-python
@@ -191,6 +200,9 @@ msgid ""
 "Upgrade the plan, or set the period to 0 on the account to create links that"
 " never expire."
 msgstr ""
+"Esta edição do Google Workspace não permite links com data de validade. "
+"Suba o plano, ou ponha o período em 0 na conta para criar links que nunca "
+"expiram."
 
 #. module: liber_gdrive
 #: model:ir.ui.menu,name:liber_gdrive.menu_liber_gdrive_upload
@@ -217,9 +229,13 @@ msgstr "Usuário"
 msgid ""
 "Which storage holds this folder. Provider modules add their entry here."
 msgstr ""
+"Qual armazenamento guarda esta pasta. Os módulos de provedor acrescentam "
+"sua entrada aqui."
 
 #. module: liber_gdrive
 #: model:ir.model.fields,help:liber_gdrive.field_liber_cloud_account__provider
 msgid ""
 "Which storage this credential opens. Provider modules add their entry here."
 msgstr ""
+"Qual armazenamento esta credencial abre. Os módulos de provedor "
+"acrescentam sua entrada aqui."

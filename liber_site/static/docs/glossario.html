@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<script>
+/* Servido por /liber_site/static/docs/, este arquivo vem com uma semana de
+   cache e o docs.js sem versão -- e o índice monta a lista a partir dele. Foi
+   assim que a emissão de NF-e e o manual da Amazon ficaram invisíveis: o
+   catálogo em cache era anterior aos dois. A rota /liber/docs/ serve o mesmo
+   arquivo sem cache e com ?v=<mtime> nos assets. Quem chegar pelo caminho
+   antigo (favorito, link velho, resultado de busca) vai para lá antes de a
+   página montar qualquer coisa. */
+(function () {
+  var antigo = "/liber_site/static/docs/";
+  if (location.pathname.indexOf(antigo) === 0) {
+    location.replace("/liber/docs/" + location.pathname.slice(antigo.length) +
+                     location.search + location.hash);
+  }
+})();
+</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Glossário — Manuais do Liber</title>
+<link rel="icon" type="image/png" href="../logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;600;700&display=swap">
+<link rel="stylesheet" href="docs.css">
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="../index.html"><img src="../logo.png" alt="">liber<span>.</span></a>
+    <span class="doc-tag">Manuais</span>
+    <nav><a href="index.html">Índice</a><a href="../index.html">Site</a></nav>
+  </div>
+</header>
+<div class="wrap">
+  <div class="layout">
+    <aside class="sidebar" id="sidebar"></aside>
+    <article class="doc">
+      <div class="breadcrumb"><a href="index.html">Manuais</a><span class="sep">›</span>Referência<span class="sep">›</span>Glossário</div>
+      <h1>Glossário</h1>
+      <p class="lead">O que significa cada prefixo de numeração do sistema — de C a <abbr class="sigla" title="Atendimento: o chamado nascido do e-mail comercial.">AT</abbr>, o mapa que diz que documento você tem na mão.</p>
+
+      <h2 id="como-ler">Como ler um número de documento</h2>
+      <p>Todo documento do sistema carrega um <strong>prefixo</strong> na numeração, e é ele que diz
+      que documento você tem na mão. <span class="field"><abbr class="sigla" title="Consignação: o documento do acerto — registra o que o cliente vendeu e vira venda.">CO</abbr>/2026/00001</span> é um acerto de
+      consignação; <span class="field">AT/2026/00042</span> é um chamado do atendimento;
+      <span class="field">S00001</span> é um pedido de venda comum. O ano e o sequencial vêm
+      depois, e são só a contagem.</p>
+      <p>Esta página é a lista completa, e vale para o sistema inteiro — a numeração não muda de
+      significado de um módulo para o outro. Os manuais falam de cada operação; aqui ficam os
+      nomes.</p>
+
+      <p>As <strong>siglas</strong> seguem outra regra, e de propósito. Termos como <abbr class="sigla" title="Nota Fiscal eletrônica: o documento fiscal da venda ou da remessa, autorizado pela SEFAZ.">NF-e</abbr>, <abbr class="sigla" title="International Standard Book Number: o número internacional que identifica cada edição de livro.">ISBN</abbr> ou
+      <abbr class="sigla" title="Código Fiscal de Operações e Prestações: diz a natureza fiscal de cada item da nota.">CFOP</abbr> aparecem sublinhados e com um pequeno ponto de interrogação ao lado, no próprio parágrafo
+      em que são usados: passe o cursor e a explicação aparece, sem tirar você da leitura. A sigla
+      explica um <em>termo</em>, e por isso mora onde o termo está; o prefixo identifica um
+      <em>documento</em>, e por isso mora aqui, num conjunto só para o sistema inteiro.</p>
+
+      <!-- prefixos:begin -->
+      <h2 id="prefixos">Os prefixos, um a um</h2>
+      <p>À esquerda o prefixo como ele aparece na numeração; à direita o documento que o usa.</p>
+      <div class="tablewrap"><table>
+        <tr><th>Prefixo</th><th>O que é</th></tr>
+        <tr><td><code>C</code></td><td>Pedido de consignação: o pedido que põe livros na prateleira do cliente — C00001, no lugar do S da venda comum.</td></tr>
+        <tr><td><code>CO/</code></td><td>Consignação, o documento do acerto: registra o que o cliente vendeu e vira venda — CO/2026/00001.</td></tr>
+        <tr><td><code>CR/</code></td><td>Retorno de consignação: o documento que pede a devolução dos exemplares da prateleira — CR/2026/00001.</td></tr>
+        <tr><td><code>CA</code></td><td>Auditoria de consignação: reconstrói o saldo da prateleira do cliente pelas notas fiscais e registra o ajuste — CA00001.</td></tr>
+        <tr><td><code>CP/</code></td><td>Campanha de consignação: o sortimento-alvo por canal — quantos exemplares de cada título as prateleiras devem ter — CP/2026/0001.</td></tr>
+        <tr><td><code>AC/</code></td><td>Acordo de Consignação: o contrato com a livraria, dono da prateleira — AC/2026/00001.</td></tr>
+        <tr><td><code>COM/OUT/</code></td><td>A série da remessa de consignação ao cliente, do armazém à livraria — COM/OUT/2026/00001, no espelho do WH/OUT.</td></tr>
+        <tr><td><code>MP/OUT/</code></td><td>A série das entregas de marketplace (Olist): o pacote de pessoa física, na caixa de despacho própria do depósito — MP/OUT/2026/00001.</td></tr>
+        <tr><td><code>COM/MOV/</code></td><td>A série dos fluxos internos de prateleira da consignação — COM/MOV/2026/00001.</td></tr>
+        <tr><td><code>COM/IN/</code></td><td>A série do retorno de consignação, da prateleira ao armazém — COM/IN/2026/00001, no espelho do WH/IN.</td></tr>
+        <tr><td><code>REM/</code></td><td>Remessa: a nota de simples remessa, sem cobrança — a numeração vem do diário fiscal REM.</td></tr>
+        <tr><td><code>COL/</code></td><td>Coleta: o lote do pedido de coleta às transportadoras — COL/2026/00001.</td></tr>
+        <tr><td><code>AT/</code></td><td>Atendimento: o chamado nascido do e-mail comercial — AT/2026/00001.</td></tr>
+        <tr><td><code>MBX/</code></td><td>O lote de envio de metadados à Metabooks — MBX/2026/00001.</td></tr>
+        <tr><td><code>Impostos de Direitos Autorais/</code></td><td>O lote da fatura acumuladora do IRRF retido dos autores no mês.</td></tr>
+        <tr><td><code>Royalties entre Empresas/</code></td><td>O lote da fatura acumuladora de royalties entre as empresas da casa.</td></tr>
+        <tr><th colspan="2">Do próprio Odoo</th></tr>
+        <tr><td><code>S</code></td><td>Pedido de venda comum — S00001; o pedido de consignação usa o C no lugar.</td></tr>
+        <tr><td><code>WH/OUT</code></td><td>Entrega comum do armazém: a transferência de saída padrão do Odoo.</td></tr>
+        <tr><td><code>WH/IN</code></td><td>Recebimento do armazém: a transferência de entrada padrão do Odoo.</td></tr>
+      </table></div>
+      <p>Bases antigas guardam transferências nas séries <code>COM/</code> e <code>RET/</code>, de antes da separação por direção — o histórico não é renumerado.</p>
+      <!-- prefixos:end -->
+
+      <nav class="pager" id="pager"></nav>
+    </article>
+  </div>
+</div>
+<script src="docs.js"></script>
+</body>
+</html>

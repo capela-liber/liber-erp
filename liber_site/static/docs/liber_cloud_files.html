@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<script>
+/* Servido por /liber_site/static/docs/, este arquivo vem com uma semana de
+   cache e o docs.js sem versão -- e o índice monta a lista a partir dele. Foi
+   assim que a emissão de NF-e e o manual da Amazon ficaram invisíveis: o
+   catálogo em cache era anterior aos dois. A rota /liber/docs/ serve o mesmo
+   arquivo sem cache e com ?v=<mtime> nos assets. Quem chegar pelo caminho
+   antigo (favorito, link velho, resultado de busca) vai para lá antes de a
+   página montar qualquer coisa. */
+(function () {
+  var antigo = "/liber_site/static/docs/";
+  if (location.pathname.indexOf(antigo) === 0) {
+    location.replace("/liber/docs/" + location.pathname.slice(antigo.length) +
+                     location.search + location.hash);
+  }
+})();
+</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>O chassi dos arquivos na nuvem — Manuais do Liber</title>
+<link rel="icon" type="image/png" href="../logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;600;700&display=swap">
+<link rel="stylesheet" href="docs.css">
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="../index.html"><img src="../logo.png" alt="">liber<span>.</span></a>
+    <span class="doc-tag">Manuais</span>
+    <nav><a href="index.html">Índice</a><a href="../index.html">Site</a></nav>
+  </div>
+</header>
+<div class="wrap">
+  <div class="layout">
+    <aside class="sidebar" id="sidebar"></aside>
+    <article class="doc">
+      <div class="breadcrumb"><a href="index.html">Manuais</a><span class="sep">›</span>Arquivos<span class="sep">›</span>O chassi dos arquivos na nuvem</div>
+      <h1>O chassi dos arquivos na nuvem</h1>
+      <p class="lead">Uma credencial por empresa, e o Odoo de porteiro: pastas mapeadas, leitura e escrita decididas grupo a grupo, e a mesma disciplina nas três estantes.</p>
+
+      <h2 id="visao-geral">Visão geral</h2>
+      <p>Os arquivos da editora vivem em nuvens — <a href="liber_dropbox.html">Dropbox</a>,
+      <a href="liber_gdrive.html">Google Drive</a>, <a href="liber_github.html">GitHub</a> — e todas
+      elas têm o mesmo defeito para uma empresa: <strong>a credencial é uma só</strong>. Quem tem a
+      conta tem tudo; quem não tem, não tem nada. Não existe, do lado de lá, quem responda "este
+      autor pode ler a pasta dos originais, mas não a do contrato".</p>
+      <p>Este módulo é o <strong>porteiro</strong> que responde isso do lado de cá. Ele não é um
+      aplicativo: não tem menu, não tem tela própria e não fala com nuvem nenhuma. É o chassi sobre
+      o qual as três estantes são montadas — e é aqui que mora tudo o que elas têm em comum.</p>
+      <p>Você não instala este módulo diretamente: instale a estante que quiser
+      (<span class="field">liber_dropbox</span>, <span class="field">liber_gdrive</span>,
+      <span class="field">liber_github</span>) e ele vem junto. Esta página existe para explicar,
+      uma vez só, a disciplina que as três herdam — e para que os manuais delas possam se ocupar
+      apenas do que muda.</p>
+
+      <h2 id="pecas">As cinco peças</h2>
+      <div class="tablewrap"><table>
+        <tr><th>Peça</th><th>O que é</th></tr>
+        <tr><td><strong>Conta</strong></td><td>A credencial da nuvem, <strong>uma por empresa e por provedor</strong>. É o único lugar onde o segredo mora, e ele nunca sai do servidor.</td></tr>
+        <tr><td><strong>Pasta</strong></td><td>Um pedaço da nuvem mapeado no Odoo, com nome, caminho (ou ID) e — o que importa — os grupos que podem ler e os que podem escrever nela.</td></tr>
+        <tr><td><strong>Arquivo</strong></td><td>O <em>espelho</em> do que existe lá: nome, tamanho, data, revisão. Só metadados; o conteúdo continua na nuvem.</td></tr>
+        <tr><td><strong>Etiqueta</strong></td><td>O vocabulário da casa para classificar arquivos, compartilhado pelas três estantes.</td></tr>
+        <tr><td><strong>Vínculo</strong></td><td>A ligação do arquivo com um contato ou um título do catálogo — é o que faz a ficha do autor mostrar os arquivos dele.</td></tr>
+      </table></div>
+
+      <h2 id="regra-de-ouro">A regra de ouro</h2>
+      <div class="callout warn"><span class="title">Duas frases, e o resto é consequência</span>
+      <p><strong>Mapear pastas é de administrador.</strong> Só quem administra decide que pedaço da
+      nuvem existe dentro do Odoo, e quem o alcança.<br>
+      <strong>Escrever exige grupo de escrita, seja quem for.</strong> Não há atalho de perfil,
+      nem exceção de gerência: o direito é da pasta, não da pessoa.</p></div>
+      <p>Disso decorrem as decisões que às vezes surpreendem:</p>
+      <ul>
+        <li><strong>O espelho é só de metadados.</strong> O Odoo não guarda cópia do arquivo. Isso
+        mantém o banco pequeno e, mais importante, impede que uma cópia velha circule como se fosse
+        a atual.</li>
+        <li><strong>O download passa pela porta.</strong> Ninguém recebe a credencial: o arquivo
+        desce pelo servidor, com o portão conferido <em>antes do primeiro byte</em>.</li>
+        <li><strong>O envio nunca sobrescreve.</strong> Nome repetido vira
+        <span class="field">arquivo (1).ext</span>. Perder versão por engano não é uma
+        possibilidade que este módulo ofereça.</li>
+        <li><strong>Cada empresa vê a sua nuvem.</strong> Contas, pastas, arquivos e etiquetas são
+        separados por empresa, como o resto do sistema.</li>
+      </ul>
+
+      <h2 id="perfis">Os dois perfis</h2>
+      <p>O chassi traz dois grupos, e as três estantes os compartilham:</p>
+      <ul>
+        <li><strong>Usuário</strong> — enxerga as pastas em que foi posto como leitor, e os arquivos
+        delas; envia apenas onde tem escrita.</li>
+        <li><strong>Administrador</strong> — mapeia pastas, cadastra contas e define quem lê e quem
+        escreve. É o perfil de quem responde pela nuvem, não pelo conteúdo.</li>
+      </ul>
+      <p>Note que os dois são <em>perpendiculares</em> aos grupos de leitura e escrita das pastas:
+      ser Usuário é a condição de entrar no app; o que se alcança lá dentro é a pasta que diz.</p>
+
+      <h2 id="dia-a-dia">O dia a dia</h2>
+      <ol class="steps">
+        <li><strong>Sincronizar.</strong> Há o botão, para quando não se quer esperar, e um robô
+        diário de madrugada que revarre as pastas mapeadas. O espelho é o que o robô viu por
+        último; enviar pelo Odoo atualiza na hora.</li>
+        <li><strong>Enviar.</strong> Pelo assistente de envio, um arquivo ou muitos de uma vez,
+        escolhidos no seletor ou arrastados. O Odoo não guarda cópia depois do envio.</li>
+        <li><strong>Baixar.</strong> Pela porta do Odoo, com o direito conferido no momento do
+        clique — e não no momento em que o link foi criado.</li>
+        <li><strong>Classificar e vincular.</strong> Etiquetas do vocabulário da casa; vínculo com
+        contato e com título. As fichas de contato e de produto ganham um botão que soma os
+        arquivos <strong>de todas as estantes</strong>, não só da que você estava usando.</li>
+      </ol>
+
+      <h2 id="limitacoes">Limitações conhecidas</h2>
+      <ul>
+        <li><strong>Não é um gerenciador de arquivos.</strong> Não se cria pasta, não se renomeia,
+        não se move nada pelo Odoo — a nuvem continua sendo a dona da estrutura.</li>
+        <li><strong>O espelho tem a idade da última varredura.</strong> Arquivo posto na nuvem por
+        fora aparece na próxima sincronização, não no mesmo instante.</li>
+        <li><strong>Compartilhamento com prazo depende do provedor</strong>, e cada estante diz no
+        seu manual o que consegue fazer.</li>
+        <li><strong>Sem estante instalada, este módulo não faz nada</strong> — e é assim de
+        propósito.</li>
+      </ul>
+
+      <div class="seealso">
+        <strong>Ver também</strong>
+        <ul>
+          <li><a href="liber_dropbox.html">Arquivos no Dropbox</a> — a estante com a explicação mais completa da mecânica no dia a dia.</li>
+          <li><a href="liber_gdrive.html">Arquivos no Google Drive</a> — pasta por ID, download pela porta, miniatura até de PDF.</li>
+          <li><a href="liber_github.html">Arquivos no GitHub</a> — repositório vira pasta, e enviar vira commit.</li>
+        </ul>
+      </div>
+
+      <nav class="pager" id="pager"></nav>
+    </article>
+  </div>
+</div>
+<script src="docs.js"></script>
+</body>
+</html>

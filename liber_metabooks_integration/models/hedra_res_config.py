@@ -1,5 +1,7 @@
 from odoo import _, fields, models
-from odoo.exceptions import ValidationError
+from odoo.exceptions import UserError, ValidationError
+
+from .metabooks_export import FTP_HOST
 
 
 class ResConfigInherit(models.TransientModel):
@@ -41,16 +43,32 @@ class ResConfigInherit(models.TransientModel):
         self.env['ir.config_parameter'].sudo().set_param('metabooks_integration.product_fields', self.product_fields.ids)
 
     def action_test_metabooks_connection(self):
-        """Save creds and verify we can authenticate against Metabooks."""
+        """Save creds and verify BOTH doors: the API and the FTP.
+
+        São duas portas com a mesma chave, e o suporte da Metabooks habilita o
+        FTP por usuário. Testar só a API dava "conexão bem-sucedida" a quem não
+        conseguiria entregar planilha nenhuma -- e a recusa só aparecia depois,
+        com o lote pronto e a pessoa esperando. Testam-se as duas no mesmo
+        clique, e a mensagem diz qual das duas falhou.
+        """
         self.set_values()
         self.env['metabooks.connector'].test_connection()
+        erro_ftp = self.env['metabooks.export.batch'].test_ftp()
+        if erro_ftp:
+            raise UserError(_(
+                "The API answered: username and password are right.\n\n"
+                "The FTP did not (%(host)s): %(error)s\n\n"
+                "The spreadsheet is delivered over FTP, so sending is blocked "
+                "until this is sorted. Ask Metabooks support to enable FTP for "
+                "this user, and check that the passive ports are not firewalled.",
+                host=FTP_HOST, error=erro_ftp))
         return {
             'type': 'ir.actions.client',
             'tag': 'display_notification',
             'params': {
                 'type': 'success',
                 'title': _('Metabooks'),
-                'message': _('Connection successful.'),
+                'message': _('API and FTP both answered.'),
                 'sticky': False,
             },
         }

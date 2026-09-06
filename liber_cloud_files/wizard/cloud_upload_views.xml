@@ -6,15 +6,25 @@
         <field name="model">liber.cloud.upload</field>
         <field name="arch" type="xml">
             <form>
-                <group>
-                    <field name="provider" invisible="1"/>
+                <field name="provider" invisible="1"/>
+                <field name="allowed_folder_ids" invisible="1"/>
+                <!-- Saying why there is nothing to choose beats a silent
+                     empty list, and beats an error on the click. -->
+                <div class="alert alert-warning" role="alert"
+                     invisible="allowed_folder_ids">
+                    You have no folder you may send files to. Uploading is
+                    granted folder by folder: ask an administrator to add
+                    you to the write group of the folder you need.
+                </div>
+                <group invisible="not allowed_folder_ids">
                     <field name="folder_id"/>
                     <field name="attachment_ids" widget="many2many_binary"
                            string="Files"/>
                 </group>
                 <footer>
                     <button name="action_upload" type="object" string="Upload"
-                            class="btn-primary"/>
+                            class="btn-primary"
+                            invisible="not allowed_folder_ids"/>
                     <button string="Cancel" class="btn-secondary"
                             special="cancel"/>
                 </footer>

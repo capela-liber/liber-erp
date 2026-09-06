@@ -7,11 +7,13 @@ exactly that change queued, get it out as a spreadsheet with the changed cell in
 red, and have the book leave the queue only once the file was really delivered.
 """
 
+import base64
 import io
 import zipfile
 from datetime import date, timedelta
 
 import openpyxl
+from unittest.mock import patch
 
 from odoo import fields
 from odoo.exceptions import UserError
@@ -550,3 +552,867 @@ class TestMetabooksSheet(TransactionCase):
             [{'values': {'GTIN': '1'}, 'changed': set()}], all_columns=True)
         page = openpyxl.load_workbook(io.BytesIO(data)).active
         self.assertEqual([c.value for c in page[1]], list(sheet.COLUMNS))
+
+
+@tagged('post_install', '-at_install')
+class TestMetabooksUniversoDosLivros(TestMetabooksExport):
+    """Quem entra na fila, e o que conta como campo apagado.
+
+    Duas coisas que a tela do prod mostrou no mesmo dia (01/09/2026): o lote
+    trazia pseudo-produtos do plano de contas, e travava inteiro por um preço
+    que ninguém havia apagado.
+    """
+
+    def _conta_administrativa(self):
+        """ADM0006 "(-) Impostos": produto de verdade, livro nenhum."""
+        return self.env['product.template'].create({
+            'name': '(-) Impostos :: Ordinários',
+            'default_code': 'ADM0006',
+            'list_price': 0.0,
+        })
+
+    # ------------------------------------------------------------------ #
+    #  O universo é o dos livros
+    # ------------------------------------------------------------------ #
+
+    def test_produto_sem_isbn_nao_entra_na_fila(self):
+        conta = self._conta_administrativa()
+        conta.action_metabooks_clear_pending()
+        conta.list_price = 1234.0
+        self.assertFalse(
+            conta.metabooks_export_pending,
+            "mexer no preço de uma conta contábil não é assunto da Metabooks")
+
+    def test_livro_continua_entrando_na_fila(self):
+        """O caminho feliz não pode ter sido fechado junto."""
+        self.book.action_metabooks_clear_pending()
+        self.book.list_price = 79.90
+        self.assertTrue(self.book.metabooks_export_pending)
+
+    def test_isbn_na_referencia_interna_ainda_e_livro(self):
+        """Título vindo do legado traz o ISBN em `default_code`, sem barcode."""
+        legado = self.env['product.template'].create({
+            'name': 'Título do legado',
+            'default_code': '9788599296271',
+            'list_price': 40.0,
+        })
+        legado.action_metabooks_clear_pending()
+        legado.list_price = 45.0
+        self.assertTrue(legado.metabooks_export_pending)
+
+    def test_pendencia_antiga_de_nao_livro_nao_entra_no_lote(self):
+        """A marca pode ser anterior ao portão; o lote filtra de novo."""
+        conta = self._conta_administrativa()
+        conta.with_context(metabooks_from_sync=True).write({
+            'metabooks_export_pending': True,
+            'metabooks_export_pending_since': fields.Datetime.now(),
+        })
+        self._edit(metabooks_book_title='O Cortiço (2ª edição)')
+        batch = self._batch()
+        batch.action_prepare()
+        self.assertNotIn(
+            conta, batch.line_ids.product_id,
+            "conta contábil marcada de véspera não pode viajar no lote")
+        self.assertIn(self.book, batch.line_ids.product_id)
+
+    # ------------------------------------------------------------------ #
+    #  Nunca preenchido não é apagado
+    # ------------------------------------------------------------------ #
+
+    def _livro_sem_preco(self):
+        """Nasce com o 1,00 de fábrica do Odoo e é zerado depois."""
+        livro = self.env['product.template'].create({
+            'name': 'Ocupar a psicanálise',
+            'barcode': '9786561190305',
+            'metabooks_vendor_id': 'BR0089701',
+        })
+        livro.action_metabooks_clear_pending()
+        self._settle(self.env)
+        self._edit(records=livro, list_price=0.0)
+        return livro
+
+    def test_preco_nunca_preenchido_nasce_desmarcado(self):
+        livro = self._livro_sem_preco()
+        batch = self._batch()
+        batch.action_prepare()
+        preco = batch.line_ids.change_ids.filtered(
+            lambda c: c.product_id == livro and c.column == 'R$')
+        self.assertTrue(preco, "a alteração deve aparecer, para ser vista")
+        self.assertTrue(preco.never_filled)
+        self.assertFalse(
+            preco.selected,
+            "o 1,00 de fábrica não é valor da casa: fora do envelope")
+
+    def test_preco_nunca_preenchido_nao_trava_o_lote(self):
+        """Era exatamente isto que barrava o MBX/2026/0001 no prod.
+
+        Lá os dois livros tinham outras alterações de verdade; só o preço
+        fantasma derrubava a remessa inteira.
+        """
+        livro = self._livro_sem_preco()
+        self._edit(records=livro, metabooks_book_title='Ocupar a psicanálise')
+        batch = self._batch()
+        batch.action_prepare()
+        batch.action_check()
+        self.assertEqual(batch.state, 'checked')
+        self.assertNotIn(
+            'R$', batch.line_ids.change_ids.filtered('selected').mapped('column'),
+            "o preço fantasma fica de fora do que é enviado")
+
+    def test_livro_so_com_o_fantasma_e_avisado_como_linha_vazia(self):
+        """Nada a dizer à Metabooks é outra recusa, e é a honesta.
+
+        Sem nenhuma alteração de verdade, o livro não tem por que viajar --
+        e a mensagem tem de ser essa, não a do marcador de exclusão.
+        """
+        self._livro_sem_preco()
+        batch = self._batch()
+        batch.action_prepare()
+        with self.assertRaises(UserError) as erro:
+            batch.action_check()
+        self.assertIn('the row would be empty', str(erro.exception))
+        self.assertNotIn('deletion marker', str(erro.exception))
+
+    def test_preco_realmente_apagado_ainda_trava(self):
+        """Caso de erro: valor da casa apagado continua sendo recusado."""
+        self._edit(list_price=0.0)     # o Cortiço valia 59,90
+        batch = self._batch()
+        batch.action_prepare()
+        preco = batch.line_ids.change_ids.filtered(
+            lambda c: c.product_id == self.book and c.column == 'R$')
+        self.assertFalse(preco.never_filled)
+        self.assertTrue(preco.selected)
+        with self.assertRaises(UserError) as erro:
+            batch.action_check()
+        self.assertIn('deletion marker', str(erro.exception))
+
+    def test_a_recusa_de_nunca_preenchido_diz_o_remedio_certo(self):
+        """Se o operador marcar mesmo assim, a mensagem não mente."""
+        livro = self._livro_sem_preco()
+        batch = self._batch()
+        batch.action_prepare()
+        batch.line_ids.change_ids.filtered(
+            lambda c: c.product_id == livro and c.column == 'R$'
+        ).selected = True
+        with self.assertRaises(UserError) as erro:
+            batch.action_check()
+        self.assertIn('never filled in', str(erro.exception))
+        self.assertNotIn('deletion marker', str(erro.exception))
+
+
+@tagged('post_install', '-at_install')
+class TestMetabooksClassificacao(TestMetabooksExport):
+    """Thema e BISAC: a lista existe, é lida deles, e viaja como código."""
+
+    def test_as_duas_listas_estao_carregadas(self):
+        Thema = self.env['metabooks.thema.code']
+        self.assertGreater(Thema.search_count([('kind', '=', 'category')]), 3000)
+        self.assertGreater(Thema.search_count([('kind', '=', 'qualifier')]), 5000)
+        self.assertGreater(
+            self.env['biblio.bisac.codes'].search_count([]), 5000,
+            "a tabela BISAC vazia é o que deixava o campo sem opção na tela")
+
+    def test_o_codigo_do_livro_1964_existe_nas_duas(self):
+        """Os códigos que a Metabooks mostra para 9788577154036."""
+        thema = self.env['metabooks.thema.code'].search([('code', '=', 'NHK')])
+        self.assertEqual(thema.kind, 'category')
+        bisac = self.env['biblio.bisac.codes'].search(
+            [('bisac_code', '=', 'HIS033000')])
+        self.assertTrue(bisac)
+        self.assertIn(thema, bisac.thema_code_ids,
+                      "a equivalência oficial da EDItEUR liga HIS033000 a NHK")
+
+    def test_qualificador_conhece_o_seu_grupo(self):
+        lugar = self.env['metabooks.thema.code'].search([('code', '=', '1KBB')])
+        self.assertEqual(lugar.kind, 'qualifier')
+        self.assertEqual(lugar.qualifier_kind, 'place')
+
+    def test_o_pai_se_resolve_pelo_codigo(self):
+        """Borda: 9.187 linhas entram numa ordem em que o pai nem sempre existe."""
+        filho = self.env['metabooks.thema.code'].search([('code', '=', '1DDF-FR-XE')])
+        self.assertTrue(filho, "código com hífen tem de entrar")
+        self.assertEqual(filho.parent_id.code, filho.parent_code)
+
+    def test_a_planilha_leva_o_codigo_e_nao_a_ementa(self):
+        thema = self.env['metabooks.thema.code'].search([('code', '=', 'NHK')])
+        quals = self.env['metabooks.thema.code'].search(
+            [('code', 'in', ['1KBB', '3MPB'])])
+        self._edit(metabooks_thema_id=thema.id,
+                   metabooks_thema_ids=[(6, 0, thema.ids)],
+                   metabooks_thema_qualifier_ids=[(6, 0, quals.ids)])
+        self.assertEqual(self.book._metabooks_cell('Categoria Thema'), 'NHK')
+        self.assertEqual(
+            self.book._metabooks_cell('Qualificador Thema'), '1KBB;3MPB')
+
+    def test_o_principal_sai_na_frente_e_uma_vez_so(self):
+        """Uma coluna, ponto e vírgula, principal primeiro -- é o manual deles.
+
+        A ordem é o que faz o painel deles saber qual é a Classificação
+        principal, e o principal também está na lista: não pode sair duas vezes.
+        """
+        principal = self.env['metabooks.thema.code'].search([('code', '=', 'NHK')])
+        outra = self.env['metabooks.thema.code'].search([('code', '=', 'JBSF')])
+        self._edit(metabooks_thema_id=principal.id,
+                   metabooks_thema_ids=[(6, 0, (outra | principal).ids)])
+        self.assertEqual(
+            self.book._metabooks_cell('Categoria Thema'), 'NHK;JBSF')
+
+    def test_bisac_tem_a_mesma_forma(self):
+        Bisac = self.env['biblio.bisac.codes']
+        principal = Bisac.search([('bisac_code', '=', 'HIS033000')])
+        outro = Bisac.search([('bisac_code', '=', 'HIS000000')])
+        self._edit(bisac_code=principal.id,
+                   bisac_code_ids=[(6, 0, (outro | principal).ids)])
+        self.assertEqual(
+            self.book._metabooks_cell('BISAC'), 'HIS033000;HIS000000')
+
+    def test_editar_so_o_principal_marca_o_livro(self):
+        """Borda: `bisac_code` não tem linha no mapa, e mesmo assim é vigiado."""
+        self.book.action_metabooks_clear_pending()
+        principal = self.env['biblio.bisac.codes'].search(
+            [('bisac_code', '=', 'HIS033000')])
+        self.book.bisac_code = principal.id
+        self.assertTrue(self.book.metabooks_export_pending)
+
+    def test_o_sync_le_os_esquemas_10_e_93(self):
+        """Era o buraco: só o esquema 20 era lido, e os outros dois caíam fora."""
+        vals = self.env['metabooks.connector']._classificacao([
+            {'subjectSchemeIdentifier': '20', 'subjectHeadingText': 'Política'},
+            {'subjectSchemeIdentifier': '10', 'subjectCode': 'HIS033000'},
+            {'subjectSchemeIdentifier': '93', 'subjectCode': 'NHK',
+             'mainSubject': True},
+            {'subjectSchemeIdentifier': '93', 'subjectCode': '1KBB'},
+        ])
+        thema = self.env['metabooks.thema.code'].search([('code', '=', 'NHK')])
+        lugar = self.env['metabooks.thema.code'].search([('code', '=', '1KBB')])
+        bisac = self.env['biblio.bisac.codes'].search(
+            [('bisac_code', '=', 'HIS033000')])
+        self.assertEqual(vals['metabooks_thema_id'], thema.id,
+                         "mainSubject=True manda no principal")
+        self.assertEqual(vals['metabooks_thema_ids'], [(6, 0, [thema.id])])
+        self.assertEqual(vals['metabooks_thema_qualifier_ids'], [(6, 0, [lugar.id])])
+        self.assertEqual(vals['bisac_code_ids'], [(6, 0, [bisac.id])])
+        self.assertEqual(vals['bisac_code'], bisac.id)
+
+    def test_codigo_fora_da_lista_e_ignorado(self):
+        """Erro: código que não existe no padrão não vira linha nova."""
+        vals = self.env['metabooks.connector']._classificacao([
+            {'subjectSchemeIdentifier': '93', 'subjectCode': 'ZZZINVENTADO'},
+        ])
+        self.assertEqual(vals, {})
+        self.assertFalse(self.env['metabooks.thema.code'].search(
+            [('code', '=', 'ZZZINVENTADO')]))
+
+
+@tagged('post_install', '-at_install')
+class TestMetabooksCorteDoHistorico(TestMetabooksExport):
+    """O que veio deles não volta para eles.
+
+    `metabooks_export_last_track` só era carimbado quando um lote saía, e livro
+    importado nunca saiu daqui — então o corte ficava em zero e a planilha
+    propunha devolver a biografia inteira do registro. No 1964, 16 das 19
+    alterações eram exatamente isso.
+    """
+
+    def _livro_importado(self):
+        livro = self.env['product.template'].create({
+            'name': '1964',
+            'barcode': '9788577154036',
+            'metabooks_vendor_id': 'BR0089701',
+        })
+        livro.action_metabooks_clear_pending()
+        self._settle(self.env)
+        return livro
+
+    def test_o_sync_carimba_o_corte(self):
+        livro = self._livro_importado()
+        self.assertEqual(livro.metabooks_export_last_track, 0)
+        livro.with_context(metabooks_from_sync=True).write({
+            'metabooks_page_count': 420,
+            'metabooks_weight': 515.0,
+            'synopsys': 'Reúne textos e depoimentos inéditos.',
+        })
+        self._settle(self.env)
+        self.assertGreater(
+            livro.metabooks_export_last_track, 0,
+            "o que a Metabooks escreveu aqui tem de cair atrás do corte")
+
+    def test_o_que_veio_deles_nao_entra_no_lote(self):
+        livro = self._livro_importado()
+        livro.with_context(metabooks_from_sync=True).write({
+            'metabooks_page_count': 420,
+            'metabooks_weight': 515.0,
+            'synopsys': 'Reúne textos e depoimentos inéditos.',
+        })
+        self._settle(self.env)
+        # Marcada à mão porque o sync, de propósito, não enfileira.
+        livro.with_context(metabooks_from_sync=True).write({
+            'metabooks_export_pending': True,
+            'metabooks_export_pending_since': fields.Datetime.now(),
+        })
+        batch = self._batch()
+        batch.action_prepare()
+        linha = batch.line_ids.filtered(lambda l: l.product_id == livro)
+        colunas = set(linha.change_ids.mapped('column'))
+        self.assertFalse(
+            colunas & {'Número de páginas', 'Peso', 'Sinopse'},
+            "a ficha técnica que eles nos deram não volta para eles")
+
+    def test_edicao_da_casa_depois_do_sync_continua_valendo(self):
+        """O corte não pode calar a casa: é o caminho feliz do conserto."""
+        livro = self._livro_importado()
+        livro.with_context(metabooks_from_sync=True).write(
+            {'metabooks_page_count': 420})
+        self._settle(self.env)
+        self._edit(records=livro, metabooks_collections='Hedra Edições')
+        batch = self._batch()
+        batch.action_prepare()
+        linha = batch.line_ids.filtered(lambda l: l.product_id == livro)
+        self.assertEqual(
+            set(linha.change_ids.mapped('column')), {'Série'},
+            "só a edição feita depois do sync tem notícia para eles")
+
+
+@tagged('post_install', '-at_install')
+class TestClassificarPorISBN(TestMetabooksExport):
+    """`classify_isbns` escreve a classificação e nada mais."""
+
+    RESPOSTA = {
+        'subjects': [
+            {'subjectSchemeIdentifier': '20', 'subjectHeadingText': 'Política'},
+            {'subjectSchemeIdentifier': '10', 'subjectCode': 'HIS033000'},
+            {'subjectSchemeIdentifier': '93', 'subjectCode': 'NHK',
+             'mainSubject': True},
+            {'subjectSchemeIdentifier': '93', 'subjectCode': '1KBB'},
+        ],
+        # o que NÃO pode ser escrito por este caminho
+        'titles': [{'title': 'Título deles'}],
+        'prices': [{'priceType': '02', 'priceAmount': 1.0}],
+    }
+
+    def _rodar(self, resposta=None):
+        conector = self.env['metabooks.connector']
+        with patch.object(type(conector), '_get_client') as get_client:
+            get_client.return_value.get_product_by_isbn.return_value = (
+                self.RESPOSTA if resposta is None else resposta)
+            return conector.classify_isbns([self.book.barcode])
+
+    def test_escreve_bisac_e_thema(self):
+        res = self._rodar()
+        self.assertEqual(res['classified'], 1)
+        self.assertEqual(self.book.metabooks_thema_id.code, 'NHK')
+        self.assertEqual(self.book.metabooks_thema_ids.mapped('code'), ['NHK'])
+        self.assertEqual(
+            self.book.metabooks_thema_qualifier_ids.mapped('code'), ['1KBB'])
+        self.assertEqual(self.book.bisac_code.bisac_code, 'HIS033000')
+        self.assertEqual(
+            self.book.bisac_code_ids.mapped('bisac_code'), ['HIS033000'])
+
+    def test_traz_as_palavras_chave(self):
+        self._rodar()
+        self.assertEqual(self.book.metabooks_keywords, 'Política')
+
+    def test_sem_palavra_chave_nao_apaga_as_da_casa(self):
+        """Borda: ausência não é ordem de apagar, aqui também."""
+        self._edit(metabooks_keywords='1964, Ditadura militar')
+        self._rodar({'subjects': [
+            {'subjectSchemeIdentifier': '93', 'subjectCode': 'NHK',
+             'mainSubject': True}]})
+        self.assertEqual(self.book.metabooks_keywords, '1964, Ditadura militar')
+
+    def test_nao_toca_na_colecao(self):
+        """Pedido explícito de 03/09: coleção fica de fora desta varredura."""
+        self._edit(metabooks_collections='Hedra Edições')
+        self._rodar({'subjects': [
+            {'subjectSchemeIdentifier': '93', 'subjectCode': 'NHK'}],
+            'collection': 'Outra coisa'})
+        self.assertEqual(self.book.metabooks_collections, 'Hedra Edições')
+
+    def test_nao_toca_no_editorial(self):
+        """O motivo de existir: reimportar traria título e preço por cima."""
+        titulo, preco = self.book.metabooks_book_title, self.book.list_price
+        self._rodar()
+        self.assertEqual(self.book.metabooks_book_title, titulo)
+        self.assertEqual(self.book.list_price, preco)
+
+    def test_nao_enfileira_o_livro_de_volta(self):
+        """O que veio deles não volta para eles."""
+        self.book.action_metabooks_clear_pending()
+        self._rodar()
+        self.assertFalse(self.book.metabooks_export_pending)
+        self.assertGreater(self.book.metabooks_export_last_track, 0)
+
+    def test_sem_subjects_o_livro_e_pulado(self):
+        """Erro/borda: ausência não é ordem de apagar."""
+        thema = self.env['metabooks.thema.code'].search([('code', '=', 'NHK')])
+        self._edit(metabooks_thema_id=thema.id)
+        res = self._rodar({'titles': [{'title': 'sem assunto'}]})
+        self.assertEqual(res['classified'], 0)
+        self.assertEqual(res['no_subjects'], [self.book.barcode])
+        self.assertEqual(self.book.metabooks_thema_id, thema,
+                         'a classificação da casa foi apagada por silêncio')
+
+
+@tagged('post_install', '-at_install')
+class TestVazioNaoEDois(TestMetabooksExport):
+    """Texto vazio é `False`, nunca `''`.
+
+    Agrupar o kanban pela Coleção derrubava a tela com
+    `OwlError: Got duplicate key in t-foreach`. O Odoo devolve um grupo para o
+    NULL e outro para a string vazia, e os dois chegam ao `t-foreach` com a
+    mesma chave. Owl recusa chave repetida, e tem razão: são o mesmo "vazio".
+    """
+
+    CAMPOS = ('metabooks_collections', 'metabooks_book_subtitle',
+              'synopsys', 'metabooks_keywords')
+
+    def test_o_feed_sem_serie_nao_grava_string_vazia(self):
+        parsed = self.env['metabooks.connector']._parse_feed({
+            'isbn': '9788599296288', 'title': 'Livro sem série',
+        })
+        for campo in self.CAMPOS:
+            self.assertNotEqual(
+                parsed['vals'].get(campo), '',
+                '%s saiu como string vazia; vazio no Odoo é False' % campo)
+
+    def test_o_onix_sem_subtitulo_nao_grava_string_vazia(self):
+        parsed = self.env['metabooks.connector']._parse_onix({
+            'identifiers': [{'productIdentifierType': '03',
+                             'idValue': '9788599296295'}],
+            'titles': [{'title': 'Só título'}],
+        })
+        for campo in self.CAMPOS:
+            self.assertNotEqual(
+                parsed['vals'].get(campo), '',
+                '%s saiu como string vazia; vazio no Odoo é False' % campo)
+
+    def test_agrupar_por_colecao_da_um_grupo_vazio_so(self):
+        """O que a tela faz: dois livros sem série, um grupo só.
+
+        Este é o teste que fecha o buraco de verdade -- os outros dois olham
+        quem escreve, este olha o que o kanban recebe.
+        """
+        comum = {'metabooks_vendor_id': 'BR0089701'}
+        self.env['product.template'].create([
+            dict(comum, name='Sem série A', barcode='9788599296301',
+                 metabooks_collections=False),
+            dict(comum, name='Sem série B', barcode='9788599296318',
+                 metabooks_collections=''),
+        ])
+        grupos = self.env['product.template'].read_group(
+            [('barcode', 'in', ['9788599296301', '9788599296318'])],
+            ['id'], ['metabooks_collections'])
+        vazios = [g for g in grupos if not g['metabooks_collections']]
+        self.assertEqual(
+            len(vazios), 1,
+            'dois grupos "vazio" no agrupamento: é a chave repetida que mata '
+            'o kanban com "Got duplicate key in t-foreach"')
+
+
+@tagged('post_install', '-at_install')
+class TestPalavrasChaveNaPlanilha(TestMetabooksExport):
+    """"Separar com ponto e vírgula (;)", diz o manual deles."""
+
+    def _celula(self, texto):
+        self._edit(metabooks_keywords=texto)
+        return self.book._metabooks_cell('Palavra-chave')
+
+    def test_virgula_no_campo_vira_ponto_e_virgula_na_planilha(self):
+        self.assertEqual(
+            self._celula('1964, Democracia, Política'),
+            '1964;Democracia;Política')
+
+    def test_quem_ja_digita_com_ponto_e_virgula_e_respeitado(self):
+        self.assertEqual(
+            self._celula('1964; Democracia; Política'),
+            '1964;Democracia;Política')
+
+    def test_uma_lista_longa_nao_vira_uma_palavra_so(self):
+        """O caso do 1964: vinte termos, vinte palavras-chave."""
+        termos = ['golpe de 1964', 'ditadura militar', 'redemocratização',
+                  'Cebrap', 'Angela Alonso', 'história do Brasil',
+                  'anos de chumbo', 'Comissão da Verdade',
+                  'transição democrática', 'ciência política']
+        celula = self._celula(', '.join(termos))
+        self.assertEqual(celula.count(';'), len(termos) - 1)
+        self.assertEqual(celula.split(';'), termos)
+
+    def test_campo_vazio_nao_vira_ponto_e_virgula_solto(self):
+        """Borda: nada a dizer é célula em branco, não lixo."""
+        self.assertFalse(self._celula(''))
+        self.assertFalse(self._celula(' , ; , '))
+
+
+@tagged('post_install', '-at_install')
+class TestEnvioPorFTP(TestMetabooksExport):
+    """O botão que sobe a planilha. A rede é a única coisa fingida aqui."""
+
+    FTP = ('odoo.addons.liber_metabooks_integration.models.'
+           'metabooks_export.ftplib.FTP')
+
+    def setUp(self):
+        super().setUp()
+        icp = self.env['ir.config_parameter'].sudo()
+        icp.set_param('metabooks_username', 'editora@hedra.com.br')
+        icp.set_param('metabooks_password', 'segredo')
+        self._edit(metabooks_page_count=320)
+        self.batch = self._batch()
+        self.batch.action_prepare()
+        self.batch.action_generate()
+
+    def _ftp_que(self, **efeitos):
+        """Um ftplib.FTP de mentira, usável com `with`, que registra as chamadas."""
+        from unittest.mock import MagicMock
+        ftp = MagicMock()
+        ftp.__enter__.return_value = ftp
+        for metodo, erro in efeitos.items():
+            getattr(ftp, metodo).side_effect = erro
+        return ftp
+
+    def test_sobe_o_arquivo_certo_na_pasta_certa_e_baixa_a_fila(self):
+        from ..models import metabooks_export as mod
+        ftp = self._ftp_que()
+        with patch(self.FTP, return_value=ftp) as classe:
+            self.batch.action_send_ftp()
+
+        classe.assert_called_once_with(mod.FTP_HOST, timeout=mod.FTP_TIMEOUT)
+        self.assertEqual(mod.FTP_HOST, 'ftp.metabooks.com')
+        ftp.login.assert_called_once_with('editora@hedra.com.br', 'segredo')
+        ftp.set_pasv.assert_called_once_with(True)
+        ftp.cwd.assert_called_once_with('upload')
+        comando, corpo = ftp.storbinary.call_args.args
+        self.assertEqual(comando, 'STOR %s' % self.batch.filename)
+        self.assertEqual(corpo.read(),
+                         base64.b64decode(self.batch.attachment_id.datas),
+                         'o que sobe é a planilha gerada, byte a byte')
+
+        self.assertEqual(self.batch.state, 'sent')
+        self.assertEqual(self.batch.sent_by, self.env.user)
+        self.assertFalse(self.book.metabooks_export_pending)
+        ultima = self.batch.message_ids[0]
+        self.assertIn('FTP', ultima.body)
+        self.assertIn(self.batch.filename, ultima.body)
+
+    def test_recusa_do_servidor_nao_marca_nada(self):
+        """Senha errada, usuário sem FTP liberado: a fila fica como estava."""
+        import ftplib
+        ftp = self._ftp_que(login=ftplib.error_perm('530 Login incorrect.'))
+        with patch(self.FTP, return_value=ftp), \
+                self.assertRaises(UserError) as capturado:
+            self.batch.action_send_ftp()
+        self.assertIn('530 Login incorrect', str(capturado.exception))
+        self.assertEqual(self.batch.state, 'generated')
+        self.assertTrue(self.book.metabooks_export_pending)
+        ftp.storbinary.assert_not_called()
+
+    def test_rede_fora_e_erro_legivel_e_nao_traceback(self):
+        with patch(self.FTP, side_effect=OSError('Network is unreachable')), \
+                self.assertRaises(UserError):
+            self.batch.action_send_ftp()
+        self.assertEqual(self.batch.state, 'generated')
+        self.assertTrue(self.book.metabooks_export_pending)
+
+    def test_sem_credencial_nem_tenta_conectar(self):
+        self.env['ir.config_parameter'].sudo().set_param(
+            'metabooks_password', False)
+        with patch(self.FTP) as classe, self.assertRaises(UserError):
+            self.batch.action_send_ftp()
+        classe.assert_not_called()
+        self.assertEqual(self.batch.state, 'generated')
+
+    def test_lote_vazio_nao_tem_o_que_enviar(self):
+        novo = self._batch()
+        with patch(self.FTP) as classe, self.assertRaises(UserError):
+            novo.action_send_ftp()
+        classe.assert_not_called()
+
+    def test_enviar_direto_do_rascunho_gera_e_sobe(self):
+        """Um clique: quem quer enviar não quer gerar antes, nem baixar."""
+        self._edit(metabooks_page_count=340)
+        lote = self._batch()
+        lote.action_prepare()
+        self.assertEqual(lote.state, 'draft')
+
+        ftp = self._ftp_que()
+        with patch(self.FTP, return_value=ftp):
+            lote.action_send_ftp()
+
+        self.assertEqual(lote.state, 'sent')
+        self.assertTrue(lote.attachment_id, 'a planilha fica arquivada')
+        self.assertTrue(lote.filename)
+        ftp.storbinary.assert_called_once()
+        self.assertFalse(self.book.metabooks_export_pending)
+
+    def test_gerar_nao_baixa_nada(self):
+        """O download era o incômodo: a planilha se arquiva, e só."""
+        self._edit(metabooks_page_count=341)
+        lote = self._batch()
+        lote.action_prepare()
+        self.assertTrue(lote.action_generate() is True)
+        self.assertTrue(lote.attachment_id)
+        baixar = lote.action_download()
+        self.assertEqual(baixar['type'], 'ir.actions.act_url',
+                         'quem quiser o arquivo ainda tem o botão Baixar')
+
+    def test_lote_enviado_nao_se_reenvia(self):
+        ftp = self._ftp_que()
+        with patch(self.FTP, return_value=ftp):
+            self.batch.action_send_ftp()
+            with self.assertRaises(UserError):
+                self.batch.action_send_ftp()
+        self.assertEqual(ftp.storbinary.call_count, 1)
+
+    def test_o_caminho_manual_continua_de_pe(self):
+        """Baixar + Marcar como enviada segue existindo, sem tocar na rede."""
+        with patch(self.FTP) as classe:
+            self.batch.action_mark_sent()
+        classe.assert_not_called()
+        self.assertEqual(self.batch.state, 'sent')
+        self.assertFalse(self.book.metabooks_export_pending)
+
+
+@tagged('post_install', '-at_install')
+class TestTestarAsDuasPortas(TestMetabooksExport):
+    """O botão de Configuração prova a API E o FTP.
+
+    São duas portas com a mesma chave, e o suporte da Metabooks habilita o FTP
+    por usuário. Testar só a API dizia "conexão bem-sucedida" a quem não
+    conseguiria entregar planilha nenhuma, e a recusa aparecia depois -- com o
+    lote pronto e a pessoa esperando.
+    """
+
+    def setUp(self):
+        super().setUp()
+        icp = self.env['ir.config_parameter'].sudo()
+        icp.set_param('metabooks_username', 'usuario')
+        icp.set_param('metabooks_password', 'senha')
+        self.Batch = self.env['metabooks.export.batch']
+
+    def _settings(self):
+        return self.env['res.config.settings'].create({})
+
+    def test_ftp_de_pe_nao_devolve_erro(self):
+        with patch.object(type(self.Batch), '_ftp_probe', return_value=None):
+            self.assertFalse(self.Batch.test_ftp())
+
+    def test_ftp_recusado_devolve_a_fala_do_servidor(self):
+        import ftplib
+        with patch.object(type(self.Batch), '_ftp_probe',
+                          side_effect=ftplib.error_perm('530 Login incorrect')):
+            self.assertIn('530 Login incorrect', self.Batch.test_ftp())
+
+    def test_sem_credenciais_diz_o_que_falta(self):
+        """Borda: nem chega a bater na porta."""
+        icp = self.env['ir.config_parameter'].sudo()
+        icp.set_param('metabooks_username', '')
+        icp.set_param('metabooks_password', '')
+        self.assertIn('Settings', self.Batch.test_ftp())
+
+    def test_api_boa_e_ftp_ruim_e_recusa_que_explica(self):
+        """O caso que motivou tudo: a chave abre uma porta e não a outra."""
+        import ftplib
+        Conector = type(self.env['metabooks.connector'])
+        with patch.object(Conector, 'test_connection', return_value=True), \
+             patch.object(type(self.Batch), '_ftp_probe',
+                          side_effect=ftplib.error_perm('530 Not enabled')):
+            with self.assertRaises(UserError) as erro:
+                self._settings().action_test_metabooks_connection()
+        mensagem = str(erro.exception)
+        self.assertIn('530 Not enabled', mensagem)
+        self.assertIn('API answered', mensagem,
+                      'a mensagem tem de dizer que metade funcionou')
+
+    def test_as_duas_de_pe_avisa_as_duas(self):
+        Conector = type(self.env['metabooks.connector'])
+        with patch.object(Conector, 'test_connection', return_value=True), \
+             patch.object(type(self.Batch), '_ftp_probe', return_value=None):
+            res = self._settings().action_test_metabooks_connection()
+        self.assertIn('FTP', res['params']['message'])
+
+
+@tagged('post_install', '-at_install')
+class TestUmArquivoUmSelo(TestMetabooksExport):
+    """A casa tem vários selos, e o arquivo é assinado por um só."""
+
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.outro_selo = cls.book.copy({
+            'name': 'Livro do outro selo',
+            'barcode': '9788599296301',
+            'metabooks_vendor_id': 'BR0090213',
+        })
+        cls.sem_selo = cls.book.copy({
+            'name': 'Livro sem selo',
+            'barcode': '9788599296318',
+            'metabooks_vendor_id': False,
+        })
+        for livro in (cls.outro_selo, cls.sem_selo):
+            livro.with_context(metabooks_from_sync=True).write({
+                'metabooks_export_pending': False,
+                'metabooks_export_pending_since': False,
+                'metabooks_export_last': fields.Datetime.now() - timedelta(days=30),
+                'metabooks_export_last_track': _max_track(cls.env),
+            })
+        cls._settle(cls.env)
+
+    def _lotes_da_rodada(self, acao):
+        dominio = dict(acao['domain'])if isinstance(acao['domain'], dict) else acao['domain']
+        ids = dominio[0][2]
+        return self.env['metabooks.export.batch'].browse(ids)
+
+    def _rodada(self):
+        return self.env['metabooks.export.batch'].action_prepare_round()
+
+    def test_tres_selos_viram_tres_lotes(self):
+        self._edit(self.book | self.outro_selo | self.sem_selo,
+                   metabooks_page_count=320)
+        acao = self._rodada()
+
+        lotes = self._lotes_da_rodada(acao)
+        self.assertEqual(len(lotes), 3, 'um lote por selo, e nenhum livro perdido')
+        por_selo = {l.mb_id or '': l for l in lotes}
+        self.assertEqual(set(por_selo), {'BR0089701', 'BR0090213', ''})
+        self.assertEqual(por_selo['BR0090213'].line_ids.product_id,
+                         self.outro_selo)
+        self.assertEqual(por_selo[''].line_ids.product_id, self.sem_selo)
+
+    def test_o_lote_do_selo_maior_vem_primeiro(self):
+        """Quem abre a rodada vê o que importa, não os dois livros avulsos."""
+        self._edit(self.book | self.outro_selo, metabooks_page_count=321)
+        lotes = self._lotes_da_rodada(self._rodada())
+        maior = lotes.filtered(lambda l: l.mb_id == 'BR0089701')
+        self.assertEqual(maior.line_ids.product_id, self.book)
+
+    def test_um_selo_so_e_um_lote_so(self):
+        self._edit(metabooks_page_count=322)
+        lotes = self._lotes_da_rodada(self._rodada())
+        self.assertEqual(len(lotes), 1)
+        self.assertEqual(lotes.mb_id, 'BR0089701')
+
+    def test_buscar_duas_vezes_nao_duplica_o_lote(self):
+        """O que produziu 0003 e 0005 iguais no prod, com os mesmos 273 livros."""
+        self._edit(self.book | self.outro_selo, metabooks_page_count=327)
+        primeira = self._lotes_da_rodada(self._rodada())
+        segunda = self._lotes_da_rodada(self._rodada())
+        self.assertEqual(primeira, segunda,
+                         'a segunda busca reenche os mesmos lotes')
+        self.assertEqual(
+            self.env['metabooks.export.batch'].search_count(
+                [('state', 'in', ('draft', 'checked'))]), len(primeira))
+
+    def test_a_segunda_busca_traz_o_que_mudou_depois(self):
+        self._edit(metabooks_page_count=328)
+        lotes = self._lotes_da_rodada(self._rodada())
+        self.assertEqual(lotes.line_ids.product_id, self.book)
+
+        self._edit(self.outro_selo, metabooks_page_count=329)
+        lotes = self._lotes_da_rodada(self._rodada())
+        self.assertEqual(lotes.line_ids.product_id,
+                         self.book | self.outro_selo)
+
+    def test_lote_ja_verificado_volta_a_rascunho_ao_reencher(self):
+        """Senão a pessoa gera uma planilha com a conferência de antes."""
+        self._edit(metabooks_page_count=330)
+        lote = self._lotes_da_rodada(self._rodada())
+        lote.action_check()
+        self.assertEqual(lote.state, 'checked')
+        self._edit(metabooks_page_count=331)
+        self._rodada()
+        self.assertEqual(lote.state, 'draft')
+
+    def test_nenhum_livro_se_perde_na_divisao(self):
+        self._edit(self.book | self.outro_selo | self.sem_selo,
+                   metabooks_page_count=323)
+        lotes = self._lotes_da_rodada(self._rodada())
+        self.assertEqual(
+            lotes.line_ids.product_id,
+            self.book | self.outro_selo | self.sem_selo)
+
+    def test_livro_de_outro_selo_somado_a_mao_e_recusado(self):
+        """A rede de segurança: dividir na preparação não impede editar depois."""
+        self._edit(self.book | self.outro_selo, metabooks_page_count=324)
+        lote = self._lotes_da_rodada(self._rodada()).filtered(
+            lambda l: l.mb_id == 'BR0089701')
+        lote._build_line(self.outro_selo)
+
+        with self.assertRaises(UserError) as capturado:
+            lote.action_check()
+        recado = str(capturado.exception)
+        self.assertIn('BR0090213', recado)
+        self.assertIn('BR0089701', recado)
+
+    def test_selo_do_cabecalho_trocado_a_mao_e_recusado(self):
+        self._edit(metabooks_page_count=325)
+        lote = self._lotes_da_rodada(self._rodada())
+        lote.mb_id = 'BR0000000'
+        with self.assertRaises(UserError) as capturado:
+            lote.action_check()
+        self.assertIn('BR0089701', str(capturado.exception))
+
+    def test_lote_sem_selo_reclama_do_cadastro_e_nao_gera(self):
+        """Borda: o livro sem MB ID não some, vira um lote que se queixa."""
+        self._edit(self.sem_selo, metabooks_page_count=326)
+        lote = self._lotes_da_rodada(self._rodada())
+        self.assertFalse(lote.mb_id)
+        self.assertEqual(lote.line_ids.product_id, self.sem_selo)
+        with self.assertRaises(UserError):
+            lote.action_generate()
+
+
+@tagged('post_install', '-at_install')
+class TestCopiaNaoEnviaParaAMetabooks(TestMetabooksExport):
+    """Dev e staging carregam o dado e a senha do prod. Não podem entregar."""
+
+    FTP = TestEnvioPorFTP.FTP
+
+    def setUp(self):
+        super().setUp()
+        icp = self.env['ir.config_parameter'].sudo()
+        icp.set_param('metabooks_username', 'editora@hedra.com.br')
+        icp.set_param('metabooks_password', 'segredo')
+        icp.set_param('database.is_neutralized', 'True')
+        self._edit(metabooks_page_count=350)
+        self.lote = self._batch()
+        self.lote.action_prepare()
+
+    def test_base_neutralizada_nao_toca_no_ftp(self):
+        from unittest.mock import MagicMock
+        with patch(self.FTP, MagicMock()) as classe:
+            with self.assertRaises(UserError) as capturado:
+                self.lote.action_send_ftp()
+        classe.assert_not_called()
+        self.assertIn('copy for testing', str(capturado.exception).lower())
+
+    def test_a_planilha_ainda_se_gera_para_conferencia(self):
+        """Bloquear a entrega não pode impedir de testar o resto."""
+        self.lote.action_generate()
+        self.assertTrue(self.lote.attachment_id)
+        self.assertEqual(self.lote.state, 'generated')
+
+        with patch(self.FTP) as classe, self.assertRaises(UserError):
+            self.lote.action_send_ftp()
+        classe.assert_not_called()
+        self.assertTrue(self.book.metabooks_export_pending,
+                        'nada foi entregue, então nada sai da fila')
+
+    def test_o_bloqueio_vale_tambem_por_dentro(self):
+        """Quem chamar _deliver() direto também não passa."""
+        self.lote.action_generate()
+        with patch(self.FTP) as classe, self.assertRaises(UserError):
+            self.lote._deliver()
+        classe.assert_not_called()
+
+    def test_a_tela_avisa_antes_do_clique(self):
+        self.assertTrue(self.lote.is_neutralized)
+
+    def test_na_producao_o_envio_segue_normal(self):
+        """Sem a marca, entrega. É o prod que não a tem."""
+        self.env['ir.config_parameter'].sudo().set_param(
+            'database.is_neutralized', False)
+        self.lote.invalidate_recordset(['is_neutralized'])
+        ftp = TestEnvioPorFTP._ftp_que(self)
+        with patch(self.FTP, return_value=ftp):
+            self.lote.action_send_ftp()
+        ftp.storbinary.assert_called_once()
+        self.assertEqual(self.lote.state, 'sent')

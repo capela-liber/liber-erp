@@ -233,8 +233,41 @@ class NFeResPartner(models.Model):
                     doc=self.vat),
             }}
 
+    # O LITERAL DA SEFAZ NÃO É NOME (06/09/2026). Nota emitida em ambiente de
+    # homologação sai com o destinatário trocado por "NF-E EMITIDA EM AMBIENTE
+    # DE HOMOLOGACAO - SEM VALOR FISCAL". Trinta e dois XMLs assim, de 2019 a
+    # 2023, estão no painel; um reprocessamento em agosto gravou a frase como
+    # nome de nove parceiros reais -- três filiais da Amazon, a Eunice Livros
+    # e o próprio dono da casa. O CNPJ ficou certo; o rótulo virou a frase.
+    #
+    # A trava mora AQUI, no modelo, e não em quem importa: o nome pode chegar
+    # pelo XML, pela migração, pelo Olist ou pela Focus, e todos passam por
+    # este write. Um nome que é o literal é descartado -- o parceiro fica com
+    # o que tinha; nascendo sem outro nome, nasce com o documento, que é
+    # verdade.
+    _LITERAL_HOMOLOGACAO = re.compile(
+        r'NF-?E?\s*EMITIDA\s+EM\s+AMBIENTE\s+DE\s+HOMOLOGA', re.I)
+
+    @api.model
+    def _e_literal_de_homologacao(self, texto):
+        return bool(texto) and bool(self._LITERAL_HOMOLOGACAO.search(texto))
+
+    def _sem_literal_de_homologacao(self, vals, criando=False):
+        """Tira de `vals` o nome/razão social que for o literal da SEFAZ."""
+        vals = dict(vals)
+        for campo in ('name', 'legal_name'):
+            if self._e_literal_de_homologacao(vals.get(campo)):
+                vals.pop(campo)
+        if criando and not vals.get('name'):
+            # Nascer sem nome o Odoo recusa: o documento é o nome que sobra,
+            # e é o único que se sabe verdadeiro.
+            vals['name'] = self._vat_formatted(vals.get('vat') or '') or _('Unnamed')
+        return vals
+
     @api.model_create_multi
     def create(self, vals_list):
+        vals_list = [self._sem_literal_de_homologacao(v, criando=True) for v in vals_list]
+
         for vals in vals_list:
             if vals.get('vat'):
                 vals['vat'] = self._vat_formatted(vals['vat'])
@@ -251,6 +284,7 @@ class NFeResPartner(models.Model):
         return partners
 
     def write(self, vals):
+        vals = self._sem_literal_de_homologacao(vals)
         if vals.get('vat'):
             vals = dict(vals, vat=self._vat_formatted(vals['vat']))
         res = super().write(vals)

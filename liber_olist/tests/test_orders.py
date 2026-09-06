@@ -14,8 +14,10 @@ O que se prova aqui é o que decide se a tela é confiável:
    de deixar o pedido entrar com menos livros;
 3. importar registra por inteiro; a entrega fica com a equipe.
 """
+from datetime import timedelta
 from unittest.mock import patch
 
+from odoo import fields
 from odoo.exceptions import UserError
 from odoo.service.model import call_kw
 from odoo.tests import TransactionCase, tagged
@@ -256,6 +258,22 @@ class TestOlistOrders(TransactionCase):
         self.assertTrue(venda.picking_ids, "importar tem de criar a entrega")
         # (o fixture é um pedido 'Entregue': a entrega conclui sozinha — o
         # caso do pacote ainda em casa é o test_import_confirms_but_does_not_deliver)
+
+    def test_import_keeps_the_olist_order_date(self):
+        """A data do pedido é a do Olist, não a do clique de importar.
+
+        O núcleo carimba "agora" ao confirmar (`_prepare_confirmation_values`):
+        o pedido de 24/09 importado hoje virava pedido de hoje na Análise de
+        Vendas -- 154 assim no prod de 06/09/2026."""
+        self._pull()
+        pedido = self._pedido('1')
+        self._detalhe(pedido)
+        self._arquiva_xml(pedido)
+        pedido._import_to_odoo()
+        venda = pedido.sale_order_id
+        self.assertEqual(venda.state, 'sale')
+        self.assertEqual(str(venda.date_order.date()), '2025-09-24',
+                         "a confirmação não pode reescrever a data do pedido")
 
     def test_import_is_not_repeated(self):
         self._pull()
@@ -1005,3 +1023,239 @@ class TestRotuloDoLivro(TransactionCase):
         b = self._linha('9780000000027', "Coleção Repente: volume um da série "
                                          "de cordel especial (Org. Outrem)")
         self.assertNotEqual(a.livro, b.livro)
+
+
+@tagged('post_install', '-at_install')
+class TestOlistCasamentoAMao(TestOlistOrders):
+    """O comercial conserta o item na tela, e o conserto não evapora.
+
+    Vinha de uso real (31/08/2026): o cadastro se corrige, mas o pedido já
+    lido continuava travado, porque a coluna Produto no Odoo não abria.
+    """
+
+    def setUp(self):
+        super().setUp()
+        self._pull()
+        self.pedido = self._pedido('1')
+        self._detalhe_sem_produto(self.pedido)
+        self.fantasma = self.env['product.product'].create({
+            'name': "Livro fantasma", 'type': 'consu'})
+        self.orfa = self.pedido.line_ids.filtered(lambda l: not l.product_id)
+
+    def test_escolher_o_produto_na_tela_destrava_o_pedido(self):
+        self.assertEqual(len(self.orfa), 1)
+        self.orfa.product_id = self.fantasma
+        self.assertTrue(self.orfa.product_manual,
+                        "escolha na tela tem de ficar marcada como à mão")
+        self.assertEqual(self.pedido.itens_sem_produto, 0)
+
+    def test_a_releitura_do_detalhe_nao_desfaz_a_escolha(self):
+        self.orfa.product_id = self.fantasma
+        self._detalhe_sem_produto(self.pedido)
+        refeita = self.pedido.line_ids.filtered(
+            lambda l: l.codigo == '978-99-0000-000-0')
+        self.assertEqual(refeita.product_id, self.fantasma,
+                         "a releitura apagou o casamento à mão")
+        self.assertTrue(refeita.product_manual)
+        self.assertEqual(self.pedido.itens_sem_produto, 0)
+
+    def test_o_automatico_volta_a_mandar_quando_o_cadastro_conserta(self):
+        """Conserto no cadastro vence a escolha antiga: é a resposta boa."""
+        self.orfa.product_id = self.fantasma
+        certo = self.env['product.product'].create({
+            'name': "O livro certo", 'barcode': "9789900000000",
+            'type': 'consu'})
+        self._detalhe_sem_produto(self.pedido)
+        refeita = self.pedido.line_ids.filtered(
+            lambda l: l.codigo == '978-99-0000-000-0')
+        self.assertEqual(refeita.product_id, certo)
+        self.assertFalse(refeita.product_manual,
+                         "o automático não se promove a manual")
+
+    def test_o_que_o_olist_mandou_nao_e_reescrito_pela_releitura(self):
+        """A marca protege o produto, não o dado do Olist."""
+        self.orfa.product_id = self.fantasma
+        self.orfa.quantidade = 99
+        self._detalhe_sem_produto(self.pedido)
+        refeita = self.pedido.line_ids.filtered(
+            lambda l: l.codigo == '978-99-0000-000-0')
+        self.assertEqual(refeita.quantidade, 2,
+                         "o espelho tem de refletir o Olist, não a digitação")
+
+    def test_limpar_o_produto_apaga_a_marca(self):
+        self.orfa.product_id = self.fantasma
+        self.orfa.product_id = False
+        self.assertFalse(self.orfa.product_manual)
+        self.assertEqual(self.pedido.itens_sem_produto, 1)
+
+
+@tagged('post_install', '-at_install')
+class TestOlistVarreduraDeXml(TestOlistOrders):
+    """A nota que a LISTAGEM do Olist não entrega, buscada uma a uma.
+
+    Medido no prod em 03/09/2026: `notas.fiscais.pesquisa.php` devolvia 1.023
+    notas com o painel já em 1.122, e 763 pedidos com nota emitida ficaram sem
+    XML de fevereiro a setembro. O sync repetia "0 imported, 1023 already
+    known" a cada duas horas sem nunca alcançá-los.
+    """
+
+    def _pendente(self, olist_id, nota, data='2026-08-20'):
+        return self.env['olist.order'].create({
+            'account_id': self.account.id, 'olist_id': olist_id,
+            'numero': olist_id, 'valor': 100.0, 'situacao': "Entregue",
+            'data_pedido': data, 'id_nota_fiscal': nota,
+            'detalhe_lido_em': '2026-08-21 12:00:00',
+            'line_ids': [(0, 0, {'codigo': self.livro.barcode,
+                                 'quantidade': 1, 'valor_unitario': 100.0,
+                                 'product_id': self.livro.id})]})
+
+    def _varre(self, empresa=None, efeito=None):
+        """Roda a varredura e devolve os ids de nota pedidos ao Olist.
+
+        O cron é global de propósito -- ele varre a fila da casa inteira -- e
+        o banco de teste tem pedidos de outros casos. Por isso a asserção é
+        sobre QUAIS notas foram pedidas, nunca sobre quantas: contar aqui
+        mediria o vizinho.
+        """
+        pedidos = []
+
+        def espiao(token, nota_id):
+            pedidos.append(str(nota_id))
+            if efeito:
+                return efeito(nota_id)
+            return b"<nfe/>"
+
+        with patch.object(olist_client, 'get_nota_xml', side_effect=espiao), \
+             patch.object(type(self.env['nfe.xml.panel']), '_company_from_xml',
+                          return_value=empresa or self.account.company_id), \
+             patch.object(type(self.env['nfe.xml.panel']), '_ingest_xml'):
+            self.env['olist.order'].cron_pull_missing_xmls()
+        return pedidos
+
+    def test_a_varredura_traz_a_nota_que_a_listagem_nao_deu(self):
+        pedido = self._pendente('7001', '555')
+        self.assertEqual(pedido.xml_status, 'sem_xml')
+        # Perguntou pelo ID DA NOTA, que é o caminho que a listagem não cobre.
+        self.assertIn('555', self._varre())
+
+    def test_pedido_sem_nota_emitida_nao_gasta_chamada(self):
+        """Sem id de nota não há o que buscar — e cota não se gasta à toa."""
+        self._pendente('7002', False)
+        self.assertNotIn('False', self._varre())
+
+    def test_o_zero_do_olist_tambem_nao_gasta_chamada(self):
+        self._pendente('7003', '0')
+        self.assertNotIn('0', self._varre())
+
+    def test_uma_nota_ruim_nao_para_a_fila(self):
+        """O caso de erro: a segunda tem de ser tentada mesmo assim."""
+        self._pendente('7004', '111', data='2026-08-25')
+        self._pendente('7005', '222', data='2026-08-24')
+
+        def as_vezes(nota_id):
+            if str(nota_id) == '111':
+                raise ValueError("o Olist tossiu")
+            return b"<nfe/>"
+
+        pedidas = self._varre(efeito=as_vezes)
+        self.assertIn('222', pedidas, "a falha da primeira levou a segunda")
+
+    def test_o_mais_recente_vem_primeiro(self):
+        """É a nota de agosto que alguém espera para faturar, não a de fevereiro."""
+        self._pendente('7006', '888', data='2026-02-10')
+        self._pendente('7007', '999', data='2026-08-30')
+        pedidas = self._varre()
+        self.assertLess(pedidas.index('999'), pedidas.index('888'),
+                        "começou pela nota velha em vez da recente")
+
+    def test_o_ja_arquivado_fica_de_fora(self):
+        pedido = self._pendente('7008', '444')
+        self.env['nfe.xml.panel'].create({
+            'file': b"PHhtbC8+", 'file_name': "j.xml",
+            'olist_nota_id': '444', 'olist_account_id': self.account.id})
+        pedido.invalidate_recordset()
+        pedido.modified(['id_nota_fiscal'])
+        self.assertEqual(pedido.xml_status, 'arquivado')
+        self.assertNotIn('444', self._varre())
+
+
+@tagged('post_install', '-at_install')
+class TestOlistNotaNaoAutorizada(TestOlistVarreduraDeXml):
+    """Erro definitivo não se repete.
+
+    Em 03/09/2026 a varredura parou na primeira nota da fila e não passou
+    dali: o Olist respondia `codigo_erro 34, "Nota Fiscal não autorizada"` — a
+    SEFAZ nunca autorizou aquela nota — e o cliente, que tratava toda ausência
+    de XML como cota estrangulada, esperava 10, 20, 30, 40 e 50 segundos antes
+    de tentar de novo. Dois minutos e meio por nota morta, e o ciclo inteiro
+    se esgotava nas primeiras.
+    """
+
+    RECUSA = (b'<?xml version="1.0" encoding="UTF-8"?><retorno>'
+              b'<status_processamento>2</status_processamento>'
+              b'<status>Erro</status><codigo_erro>34</codigo_erro>'
+              b'<erros><erro>Nota Fiscal n\xc3\xa3o autorizada</erro></erros>'
+              b'</retorno>')
+
+    def test_o_envelope_de_erro_vira_excecao_e_nao_espera(self):
+        """Uma chamada, não seis — e o motivo sobe junto."""
+        with patch.object(olist_client, 'call',
+                          return_value=self.RECUSA.decode()) as chamou, \
+             patch.object(olist_client.time, 'sleep') as dormiu:
+            with self.assertRaises(olist_client.NotaSemXml) as erro:
+                olist_client.get_nota_xml('tok', '999')
+        self.assertEqual(chamou.call_count, 1, "insistiu numa recusa definitiva")
+        dormiu.assert_not_called()
+        self.assertIn("não autorizada", erro.exception.motivo)
+        self.assertEqual(erro.exception.codigo, '34')
+
+    def test_a_cota_estourada_continua_sendo_esperada(self):
+        """A escada de espera não se perdeu: ela é do caso passageiro."""
+        bloqueio = ('<retorno><status>Erro</status>'
+                    '<erros><erro>API Bloqueada</erro></erros></retorno>')
+        with patch.object(olist_client, 'call', return_value=bloqueio) as chamou, \
+             patch.object(olist_client.time, 'sleep'):
+            self.assertIsNone(olist_client.get_nota_xml('tok', '999', attempts=2))
+        self.assertEqual(chamou.call_count, 2, "desistiu de uma cota estourada")
+
+    def test_a_recusa_carimba_o_pedido(self):
+        pedido = self._pendente('7101', '555')
+        with patch.object(olist_client, 'get_nota_xml',
+                          side_effect=olist_client.NotaSemXml(
+                              "Nota Fiscal não autorizada", '34')):
+            status, motivo = pedido._fetch_xml()
+        self.assertEqual(status, 'ERR')
+        self.assertEqual(pedido.xml_indisponivel_motivo,
+                         "Nota Fiscal não autorizada")
+        self.assertTrue(pedido.xml_indisponivel_em)
+
+    def test_a_recusada_sai_da_fila_e_a_seguinte_anda(self):
+        """O ponto todo: a nota morta não pode segurar a fila atrás dela."""
+        morta = self._pendente('7102', '111', data='2026-08-25')
+        viva = self._pendente('7103', '222', data='2026-08-24')
+        morta.write({'xml_indisponivel_motivo': "Nota Fiscal não autorizada",
+                     'xml_indisponivel_em': fields.Datetime.now()})
+        pedidas = self._varre()
+        self.assertNotIn('111', pedidas, "insistiu na nota já recusada")
+        self.assertIn('222', pedidas, "a fila não andou")
+
+    def test_depois_de_uma_semana_tenta_de_novo(self):
+        """A nota pode ser autorizada depois — só não de duas em duas horas."""
+        antiga = self._pendente('7104', '333')
+        antiga.write({
+            'xml_indisponivel_motivo': "Nota Fiscal não autorizada",
+            'xml_indisponivel_em': fields.Datetime.now() - timedelta(days=8)})
+        self.assertIn('333', self._varre())
+
+    def test_a_nota_que_enfim_veio_perde_o_carimbo(self):
+        pedido = self._pendente('7105', '444')
+        pedido.write({'xml_indisponivel_motivo': "Nota Fiscal não autorizada",
+                      'xml_indisponivel_em': fields.Datetime.now()})
+        with patch.object(olist_client, 'get_nota_xml', return_value=b"<nfe/>"), \
+             patch.object(type(self.env['nfe.xml.panel']), '_company_from_xml',
+                          return_value=self.account.company_id), \
+             patch.object(type(self.env['nfe.xml.panel']), '_ingest_xml'):
+            status, _d = pedido._fetch_xml()
+        self.assertEqual(status, 'OK')
+        self.assertFalse(pedido.xml_indisponivel_motivo,
+                         "o carimbo mentiria na tela para sempre")

@@ -276,8 +276,8 @@ msgstr "Crie um modelo de pedido de consignação"
 
 #. module: liber_soc_moves
 #: model_terms:ir.actions.act_window,help:liber_soc_moves.action_consignment_sale_order
-msgid "Create your first consignment order"
-msgstr "Crie o primeiro pedido de consignação"
+msgid "No consignment orders yet"
+msgstr "Ainda não há pedidos de consignação"
 
 #. module: liber_soc_moves
 #: model:ir.model.fields,field_description:liber_soc_moves.field_consignment_move__create_uid
@@ -908,8 +908,13 @@ msgstr "Modelos"
 msgid ""
 "The Order (C) is a commercial order — same flow as a sale, but\n"
 "               it is not a sale: it stays out of Sales reports and only becomes\n"
-"               revenue at Settlement."
+"               revenue at Settlement. It is not created here: it comes out of\n"
+"               the Consignment Settlement."
 msgstr ""
+"O Pedido (C) é um pedido comercial — mesmo fluxo de uma venda, mas\n"
+"               não é venda: fica fora dos relatórios de Vendas e só vira\n"
+"               receita no Acerto. Ele não se cria aqui: nasce da Operação\n"
+"               de Consignação."
 
 #. module: liber_soc_moves
 #. odoo-python

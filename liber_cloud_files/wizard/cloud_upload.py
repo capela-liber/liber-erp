@@ -13,12 +13,40 @@ class LiberCloudUpload(models.TransientModel):
 
     folder_id = fields.Many2one(
         'liber.cloud.folder', required=True,
-        domain="provider and [('provider', '=', provider)] or []")
+        domain="[('id', 'in', allowed_folder_ids)]")
+    allowed_folder_ids = fields.Many2many(
+        'liber.cloud.folder', compute='_compute_allowed_folder_ids',
+        string='Folders You May Fill')
     provider = fields.Selection(selection=[])
     attachment_ids = fields.Many2many(
         'ir.attachment', string='Files',
         help="One file or many: each travels to the folder on its own, and "
              "Odoo keeps no copy once they are sent.")
+
+    @api.depends('provider')
+    @api.depends_context('uid')
+    def _compute_allowed_folder_ids(self):
+        """Offer only the folders this person may actually fill.
+
+        Until now the list narrowed by provider alone, so it showed every
+        folder the reader could SEE -- and reading is not writing. Someone
+        with read-only access to a repository was offered it, picked it,
+        attached the files and only then met "You do not have write
+        access". The gate held, but the screen had promised otherwise,
+        and a promise the gate breaks is a bug even when nothing leaks.
+
+        Same rule as _ensure_access('write'), on purpose: managers and
+        administrators do not bypass it either. Configuring the shelf is
+        one power, filling it is another.
+        """
+        Folder = self.env['liber.cloud.folder']
+        groups = self.env.user.sudo().all_group_ids
+        for wizard in self:
+            domain = ([('provider', '=', wizard.provider)]
+                      if wizard.provider else [])
+            folders = Folder.search(domain)
+            wizard.allowed_folder_ids = folders if self.env.su else \
+                folders.filtered(lambda f: f.sudo().write_group_ids & groups)
 
     @api.model
     def default_get(self, fields_list):

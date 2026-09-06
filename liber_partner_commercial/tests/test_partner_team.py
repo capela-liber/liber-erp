@@ -140,16 +140,29 @@ class TestPartnerSalesTeam(TransactionCase):
         arch = self._busca_de_contatos()
         self.assertIn('team_id', arch.xpath('//search/field/@name'))
 
-    def test_agrupar_por_equipe_e_o_quarto(self):
-        """A posição é o pedido: depois de Vendedor, Empresa e País.
+    def test_agrupar_por_equipe_vem_logo_depois_do_pais(self):
+        """A posição é o pedido, e o pedido é RELATIVO: logo depois de País.
 
-        No fim da lista o filtro existe e ninguém acha. Se o `base` reordenar
-        os dele um dia, é aqui que se descobre.
+        Era `assertEqual(index, 3)` -- quarta posição, contada do zero -- e
+        ficou vermelho quando o `liber_partner_group` entrou na casa: ele
+        ancora o dele depois de Empresa, no meio do caminho, e empurrou este
+        para a quinta. A tela não tinha mudado de intenção nenhuma; o número
+        é que era a afirmação errada. Posição absoluta numa view que qualquer
+        módulo herda quebra no próximo módulo, e não por defeito.
+
+        O que se afirma é o que o XML de fato pede (`group_country` position
+        after) e o que a casa quis: logo depois de País, e longe do fim -- no
+        fim o filtro existe e ninguém acha.
         """
         nomes = self._busca_de_contatos().xpath('//group[@name="group_by"]/filter/@name')
         self.assertIn('group_by_team', nomes)
-        self.assertEqual(nomes.index('group_by_team'), 3,
-                         f"esperado em quarta posição, veio em {nomes.index('group_by_team') + 1}ª: {nomes}")
+        self.assertIn('group_country', nomes)
+        self.assertEqual(
+            nomes.index('group_by_team'), nomes.index('group_country') + 1,
+            f"Canal de Vendas saiu de junto de País: {nomes}")
+        self.assertLess(
+            nomes.index('group_by_team'), len(nomes) - 1,
+            f"Canal de Vendas foi para o fim da lista, onde ninguém acha: {nomes}")
 
     def test_agrupar_por_equipe_funciona(self):
         """O caminho feliz, e a razão de o teste não parar no XML."""

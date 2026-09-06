@@ -94,6 +94,15 @@ article.doc ol.steps > li::before { content: counter(step); position: absolute; 
   font-family: Inter, system-ui, sans-serif; white-space: nowrap; }
 .menupath i { font-style: normal; color: var(--accent); margin: 0 4px; font-weight: 700; }
 
+/* Etiqueta de lugar: diz, antes do passo, se ele é no site do provedor ou
+   aqui dentro. Nos manuais de integração o nome do serviço e o nome do app
+   do Odoo são o mesmo, e sem isso o leitor não sabe em qual tela está. */
+.lugar { display: inline-block; margin-right: 6px; padding: 1px 8px;
+  border-radius: 999px; font-size: 12px; font-weight: 600; letter-spacing: .02em;
+  text-transform: uppercase; vertical-align: 1px;
+  background: var(--paper-2); border: 1px solid var(--line); color: var(--muted); }
+.lugar:first-letter { text-transform: uppercase; }
+
 /* código e campos */
 code { background: var(--paper-2); border: 1px solid var(--line); border-radius: 5px;
   padding: 1px 6px; font-size: 13.5px; font-family: "SF Mono", ui-monospace, Menlo, Consolas, monospace; }

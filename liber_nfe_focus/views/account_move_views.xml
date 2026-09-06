@@ -109,6 +109,28 @@
             <field name="status_in_payment" position="after">
                 <field name="focus_status" optional="show"/>
             </field>
+            <!-- O número da nota ao lado do número da fatura. São dois números
+                 diferentes e é o da NFe que o cliente, a transportadora e o
+                 contador citam — é o que está impresso no alto do DANFE. Sem
+                 ele na lista, achar a fatura de uma nota é abrir uma por uma. -->
+            <field name="name" position="after">
+                <field name="focus_numero" optional="show"/>
+            </field>
+        </field>
+    </record>
+
+    <!-- A mesma coluna na lista de Remessas. A remessa é nota como qualquer
+         outra: sai numerada da SEFAZ, e é por esse número que ela é procurada.
+         A view é do liber_nfe_remessa; o campo é daqui, então a herança mora
+         aqui — quem tem o campo é quem estende. -->
+    <record id="view_nfe_remessa_list_focus" model="ir.ui.view">
+        <field name="name">account.move.list.remessa.focus.nfe</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="liber_nfe_remessa.view_nfe_remessa_list"/>
+        <field name="arch" type="xml">
+            <field name="name" position="after">
+                <field name="focus_numero" optional="show"/>
+            </field>
         </field>
     </record>
 

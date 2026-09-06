@@ -36,6 +36,15 @@
                ref="liber_cloud_files.model_liber_cloud_folder"/>
         <field name="domain_force">[('provider', '=', 'dropbox')]</field>
         <field name="groups" eval="[(4, ref('group_liber_dropbox_manager'))]"/>
+        <!-- Read only, and deliberately: seeing every shelf of one's own
+             provider is the manager's job; filling or emptying one is
+             decided folder by folder, on its write ACL. Left unset, these
+             perms default to TRUE and the manager silently edits and
+             deletes records of folders they were never granted. -->
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="False"/>
+        <field name="perm_create" eval="False"/>
+        <field name="perm_unlink" eval="False"/>
     </record>
 
     <record id="rule_liber_dropbox_file_manager" model="ir.rule">
@@ -44,6 +53,15 @@
                ref="liber_cloud_files.model_liber_cloud_file"/>
         <field name="domain_force">[('provider', '=', 'dropbox')]</field>
         <field name="groups" eval="[(4, ref('group_liber_dropbox_manager'))]"/>
+        <!-- Read only, and deliberately: seeing every shelf of one's own
+             provider is the manager's job; filling or emptying one is
+             decided folder by folder, on its write ACL. Left unset, these
+             perms default to TRUE and the manager silently edits and
+             deletes records of folders they were never granted. -->
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="False"/>
+        <field name="perm_create" eval="False"/>
+        <field name="perm_unlink" eval="False"/>
     </record>
 
 </odoo>

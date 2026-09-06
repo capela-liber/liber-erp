@@ -1026,25 +1026,19 @@ class AccountMove(models.Model):
                 xml_cancel, file_name='%s-cancelamento.xml' % (chave or self.focus_ref),
                 company_id=self.company_id.id)
 
-        # Carta de correção: NÃO vai no `nfe.xml.cancel.event`. Aquele modelo é
-        # de cancelamento -- aceita só 110111 e 110112, e gravar a carta lá
-        # marcaria a nota como cancelada, que é o oposto do que a carta faz.
-        # Enquanto o `liber_nfe_xml` não tiver modelo de evento genérico, a
-        # carta fica anexada ao painel da própria NFe: agrupada com ela,
-        # achável pela mesma chave, e sem mentir sobre o que é.
+        # Carta de correção: agora vai para a tabela de eventos, como o
+        # cancelamento. Ela ficava anexada ao painel porque o `liber_nfe_xml`
+        # só tinha modelo de CANCELAMENTO, e gravar a carta lá marcaria a nota
+        # como cancelada -- o oposto do que a carta faz. O modelo passou a
+        # aceitar qualquer evento e a distinguir um do outro pelo `tpEvento`,
+        # então a carta vai para o mesmo lugar do cancelamento, com a sua
+        # sequência, o seu texto, e sem tocar no estado da nota. É de lá que a
+        # exportação para o contador tira os eventos do mês.
         xml_carta = baixar('caminho_xml_carta_correcao')
         if xml_carta and chave:
-            painel = Painel.search([('key', '=', chave)], limit=1)
-            if painel:
-                nome = '%s-carta-correcao.xml' % chave
-                if not self.env['ir.attachment'].sudo().search_count([
-                        ('res_model', '=', 'nfe.xml.panel'),
-                        ('res_id', '=', painel.id), ('name', '=', nome)]):
-                    self.env['ir.attachment'].sudo().create({
-                        'name': nome, 'datas': base64.b64encode(xml_carta),
-                        'mimetype': 'application/xml',
-                        'res_model': 'nfe.xml.panel', 'res_id': painel.id,
-                    })
+            Painel.register_nfe_event(
+                xml_carta, file_name='%s-carta-correcao.xml' % chave,
+                company_id=self.company_id.id)
 
     # ------------------------------------------------------------------
     # os documentos da nota, para quem os pede de fora

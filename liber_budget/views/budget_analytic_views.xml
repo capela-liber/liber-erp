@@ -59,6 +59,16 @@
                                    options="{'color_field': 'color'}"/>
                             <field name="user_id"/>
                             <field name="company_id" groups="base.group_multi_company"/>
+                            <!-- Consolidado: de quais empresas vem o realizado.
+                                 Vazio = só a própria, que é o padrão. -->
+                            <field name="company_ids" widget="many2many_tags"
+                                   groups="base.group_multi_company"
+                                   options="{'no_create': True}"/>
+                            <!-- O nome das consolidadas, para quem não tem a
+                                 outra empresa no seletor e veria a lista
+                                 acima vazia. -->
+                            <field name="company_names" invisible="not company_ids"
+                                   groups="base.group_multi_company"/>
                         </group>
                         <group>
                             <field name="date_from"/>

@@ -47,7 +47,7 @@ class TestDespachoTour(HttpCase):
             'ks_product_name': "Livro", 'ks_product_qty': 1,
             'ks_price': 30.0, 'ks_product_barcode': livro.barcode})
         self.env['olist.order'].create({
-            'account_id': account.id, 'olist_id': 'TOUR-900',
+            'account_id': account.id, 'olist_id': 'TOUR-900', 'valor': 100.0,
             'numero': "TOUR-900", 'situacao': "Aprovado",
             'cliente_nome': "Comprador do Tour",
             'data_pedido': '2026-08-22', 'id_nota_fiscal': '900',

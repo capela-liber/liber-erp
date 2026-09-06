@@ -8,6 +8,20 @@ from odoo.exceptions import UserError, ValidationError
 import logging
 
 _logger = logging.getLogger(__name__)
+
+
+# Codigos que a NFe traz no lugar do codigo do produto e que NAO identificam
+# livro nenhum: o literal da nota sem GTIN, e a CFOP que o Olist manda quando o
+# livro nao tem codigo interno la. Tomar qualquer um dos dois por codigo cria um
+# produto fantasma que se cola em todas as notas seguintes.
+_CODIGO_FALSO = re.compile(r'^(SEM\s*GTIN|CFOP\s*\d{4})$', re.I)
+
+
+def _e_codigo_falso(codigo):
+    # Vazio entra aqui embora o chamador ja filtre: uma funcao que responde
+    # "isto identifica um produto?" nao pode dizer que sim para nada.
+    limpo = (codigo or '').strip()
+    return not limpo or bool(_CODIGO_FALSO.match(limpo))
 import xml.etree.ElementTree as ET
 
 
@@ -62,6 +76,24 @@ class SocXmlPanel(models.Model):
     danfe_value = fields.Float('Danfe Value')
 
     panel_items = fields.One2many('nfe.xml.items', 'soc_xml_id')
+    # O que a nota VENDEU, na régua do gerente de vendas: soma dos itens pelo
+    # preço líquido (capa menos desconto), sem frete -- o `danfe_value` é o
+    # total da NF-e e carrega o frete. É o mesmo número do Painel de Notas
+    # Fiscais (a tela externa) e é o que o painel Vendas × Notas põe na
+    # manchete "Vendemos R$ X". Gravado para o pivô somar sem abrir os itens.
+    net_value = fields.Float(
+        string='Net Value', compute='_compute_net_value', store=True,
+        help="Sum of the items at net price (cover price minus discount), "
+             "without shipping. What the note actually sold.")
+    book_qty = fields.Float(
+        string='Books', compute='_compute_net_value', store=True,
+        help="Sum of the item quantities.")
+
+    @api.depends('panel_items.net_price', 'panel_items.ks_product_qty')
+    def _compute_net_value(self):
+        for nfe in self:
+            nfe.net_value = sum(i.net_price * i.ks_product_qty for i in nfe.panel_items)
+            nfe.book_qty = sum(nfe.panel_items.mapped('ks_product_qty'))
     due_date = fields.Date(string='XML Due Date')
     shipping_price = fields.Float(string='Shipping Price')
 
@@ -718,9 +750,19 @@ class SocXmlPanel(models.Model):
                         # collapsed every no-barcode item into one bogus
                         # product. Match only by real codes (cProd = internal
                         # reference, usually the ISBN).
+                        #
+                        # A CFOP IS NOT A PRODUCT CODE (2026-09-05). Olist
+                        # issues notes with cProd = the CFOP itself when the
+                        # book has no internal code on their side. Read as a
+                        # product code it created a product called "CFOP5102",
+                        # and every later note with the same cProd matched it:
+                        # in prod, two such records ("CFOP5102" and "CFOP6102",
+                        # both named after whichever book came first) sat in 50
+                        # invoice lines and zero order lines. The invoice went
+                        # out with the wrong book on it.
                         codes = [
                             code for code in (barcode, cEAN_barcode)
-                            if code and code.strip().upper() != 'SEM GTIN'
+                            if code and not _e_codigo_falso(code)
                         ]
                         product_id = self.env['product.product'].search(
                             ['|', ('default_code', 'in', codes),
@@ -1052,7 +1094,9 @@ class SocXmlPanel(models.Model):
 
     # tpEvento values that cancel an existing NFe.
     # 110111 = Cancelamento, 110112 = Cancelamento por Substituicao.
-    # (110110 = Carta de Correcao does NOT cancel and is ignored.)
+    # 110110 = Carta de Correcao does NOT cancel, but IS kept: it is part of
+    # the fiscal record the accountant has to file, and dropping it used to
+    # lose the letter for good (there was no second copy anywhere).
     NFE_CANCEL_EVENTS = ('110111', '110112')
 
     @api.model
@@ -1060,8 +1104,8 @@ class SocXmlPanel(models.Model):
         """Return the event data of a ``procEventoNFe`` XML, else ``False``.
 
         Event XMLs (cancellations, correction letters) have no emit/dest/items,
-        so ``is_valid_xml_and_nfe_key`` rejects them and they used to be dropped
-        silently. This lets the import route them by their ``tpEvento``.
+        so ``is_valid_xml_and_nfe_key`` rejects them. This lets the import
+        route them by their ``tpEvento``.
         """
         ns = '{http://www.portalfiscal.inf.br/nfe}'
         try:
@@ -1085,37 +1129,51 @@ class SocXmlPanel(models.Model):
             'n_prot': _text('nProt'),
             'x_just': _text('xJust'),
             'desc_evento': _text('descEvento'),
+            # A note can carry up to 20 correction letters; without the
+            # sequence they all collapse onto one another.
+            'n_seq_evento': _text('nSeqEvento'),
+            'x_correcao': _text('xCorrecao'),
         }
 
     @api.model
-    def register_cancellation_event(self, xml_file, file_name=False, company_id=False):
-        """Store a cancellation event and flag the NFe it cancels.
+    def register_nfe_event(self, xml_file, file_name=False, company_id=False):
+        """Store any NFe event, and flag the note when the event cancels it.
 
-        Parses ``xml_file`` as a ``procEventoNFe``; if it is a cancellation
-        (see :attr:`NFE_CANCEL_EVENTS`) the event is upserted into
-        ``nfe.xml.cancel.event`` (keyed by ``chNFe``) and the matching
-        ``nfe.xml.panel`` record, if any, is flagged ``is_cancelled``.
-        Returns the ``nfe.xml.cancel.event`` record, or ``False`` when the XML
-        is not a cancellation.
+        Parses ``xml_file`` as a ``procEventoNFe`` and upserts it into
+        ``nfe.xml.cancel.event``, keyed by (chNFe, tpEvento, nSeqEvento) so
+        successive correction letters coexist. Only :attr:`NFE_CANCEL_EVENTS`
+        set ``is_cancelled`` on the note. Returns the event record, or False
+        when the XML is not an event at all.
         """
         info = self.parse_nfe_event(xml_file)
-        if not info or info.get('tp_evento') not in self.NFE_CANCEL_EVENTS:
+        if not info:
             return False
         ch_nfe = info.get('ch_nfe')
-        if not ch_nfe:
+        tp_evento = info.get('tp_evento')
+        if not ch_nfe or not tp_evento:
             return False
+
+        try:
+            n_seq = int(info.get('n_seq_evento') or 1)
+        except (TypeError, ValueError):
+            n_seq = 1
+        is_cancel = tp_evento in self.NFE_CANCEL_EVENTS
 
         Event = self.env['nfe.xml.cancel.event'].sudo()
         nfe = self.sudo().search([('key', '=', ch_nfe)], limit=1)
+        suffix = 'can' if is_cancel else 'evt'
         vals = {
             'key': ch_nfe,
             'nfe_id': nfe.id or False,
-            'tp_evento': info.get('tp_evento') or False,
+            'tp_evento': tp_evento,
+            'n_seq_evento': n_seq,
             'protocol': info.get('n_prot') or False,
             'reason': info.get('x_just') or False,
+            'correction_text': info.get('x_correcao') or False,
             'desc_evento': info.get('desc_evento') or False,
             'file': base64.b64encode(xml_file),
-            'file_name': file_name or (ch_nfe + '-can.xml'),
+            'file_name': file_name or ('%s-%s%s.xml' % (
+                ch_nfe, suffix, '' if is_cancel else n_seq)),
             'company_id': company_id or (nfe.company_id.id if nfe else False),
         }
         dh_evento = info.get('dh_evento')
@@ -1123,17 +1181,35 @@ class SocXmlPanel(models.Model):
             # dhEvento is ISO-8601 with timezone, e.g. 2023-02-17T16:02:44-03:00
             vals['event_date'] = dh_evento[:19].replace('T', ' ')
 
-        event = Event.search([('key', '=', ch_nfe)], limit=1)
+        event = Event.search([('key', '=', ch_nfe),
+                              ('tp_evento', '=', tp_evento),
+                              ('n_seq_evento', '=', n_seq)], limit=1)
         if event:
             event.write(vals)
         else:
             event = Event.create(vals)
 
-        if nfe and nfe.status != 'cancelled':
+        if is_cancel and nfe and nfe.status != 'cancelled':
             nfe.write({'is_cancelled': True, 'status': 'cancelled'})
             nfe.message_post(body=_('NFe cancelled (protocol %s). Reason: %s') % (
                 info.get('n_prot') or '-', info.get('x_just') or '-'))
+        elif not is_cancel and nfe and info.get('x_correcao'):
+            nfe.message_post(body=_('Correction letter %s: %s') % (
+                n_seq, info.get('x_correcao')))
         return event
+
+    @api.model
+    def register_cancellation_event(self, xml_file, file_name=False, company_id=False):
+        """Cancellations only. Kept for callers that mean just that.
+
+        Returns False for a non-cancelling event, as it always did, so a
+        caller counting cancellations does not start counting CC-e too.
+        """
+        info = self.parse_nfe_event(xml_file)
+        if not info or info.get('tp_evento') not in self.NFE_CANCEL_EVENTS:
+            return False
+        return self.register_nfe_event(xml_file, file_name=file_name,
+                                       company_id=company_id)
 
     # LAB FORK / Odoo 19: compare_vendor_bill() removed - it depended on the
     # 'nfe.xml.wizard' model that never existed in this fork, so its cron

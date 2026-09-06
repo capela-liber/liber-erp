@@ -7,7 +7,7 @@
          caras. Mudança em web_icon só aparece com -u do módulo. -->
     <menuitem id="menu_liber_amazon_root" name="Amazon Vendor"
               web_icon="liber_amazon_vendor,static/description/icon.png"
-              sequence="88"
+              sequence="77"
               groups="group_liber_amazon_user"/>
 
     <menuitem id="menu_liber_amazon_orders" name="Orders"

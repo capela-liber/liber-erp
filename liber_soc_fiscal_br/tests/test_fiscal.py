@@ -140,9 +140,8 @@ DEAD_CONFIG_WAIVERS = {
     # consignment_shipment_fiscal_position_id saiu daqui em 19/07/2026: a nota
     # de remessa do Pedido C (nfe_remessa) passou a consumi-lo -- exatamente o
     # caso "waiver obsoleto" que este teste existe para flagrar.
-    'consignment_return_fiscal_position_id':
-        "a devolução é movimento de estoque, não fatura -- não cria documento "
-        "contábil que uma posição fiscal pudesse reger.",
+    # consignment_return_fiscal_position_id saiu em 06/09/2026: a trava da
+    # "malandragem" (venda comum vestida de consignação) passou a lê-lo.
     'consignment_shipment_cfop_in_id': "nada neste repo emite XML.",
     'consignment_shipment_cfop_out_id': "nada neste repo emite XML.",
     'consignment_sale_cfop_in_id': "nada neste repo emite XML.",

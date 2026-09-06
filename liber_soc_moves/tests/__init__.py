@@ -8,3 +8,5 @@ from . import test_consignacao_fora_do_dashboard
 from . import test_tour
 from . import test_pedido_c_prateleira
 from . import test_tour_pedido_c
+from . import test_s_nao_vira_c
+from . import test_pedido_c_nao_nasce_da_tela

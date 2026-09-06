@@ -48,7 +48,7 @@ class TestDespachoDaCasa(TransactionCase):
             'ks_product_name': "Livro", 'ks_product_qty': 2,
             'ks_price': 50.0, 'ks_product_barcode': self.livro.barcode})
         return self.env['olist.order'].create({
-            'account_id': self.account.id, 'olist_id': olist_id,
+            'account_id': self.account.id, 'valor': 100.0, 'olist_id': olist_id,
             'numero': olist_id, 'situacao': situacao,
             'data_pedido': '2026-08-15', 'id_nota_fiscal': nota,
             'detalhe_lido_em': '2026-08-18 12:00:00',
@@ -104,7 +104,7 @@ class TestDespachoDaCasa(TransactionCase):
 
     def test_sem_nota_nao_ha_o_que_despachar(self):
         pedido = self.env['olist.order'].create({
-            'account_id': self.account.id, 'olist_id': 'D-5',
+            'account_id': self.account.id, 'valor': 100.0, 'olist_id': 'D-5',
             'numero': 'D-5', 'situacao': 'Em aberto',
             'data_pedido': '2026-08-15', 'id_nota_fiscal': '0'})
         self.assertFalse(pedido.a_despachar)

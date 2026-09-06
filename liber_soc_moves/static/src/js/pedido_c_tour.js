@@ -27,59 +27,37 @@ import { registry } from "@web/core/registry";
  * é o test_pedido_c_prateleira.py, com o motor: contar quant na tela exigiria
  * o "Locais de armazenamento" ligado, que é configuração de cada base.
  *
- * Os clientes ("Livraria ...") são semeados pelo teste. Rodar à mão exige
- * semear antes.
+ * Os clientes ("Livraria ...") e os Pedidos C em rascunho são semeados pelo
+ * teste. Rodar à mão exige semear antes.
  */
 
 const LISTA_PEDIDOS_C =
     "/odoo/action-liber_soc_moves.action_consignment_sale_order";
 
-/** Os passos comuns: abrir um Pedido C novo para `livraria`, com uma linha. */
-function montarPedido(livraria, livro, qtd) {
+/**
+ * Os passos comuns: abrir o Pedido C de `livraria`, que o teste semeou em
+ * rascunho -- como a Operação de Consignação o cria.
+ *
+ * Até 06/09/2026 este bloco clicava em "Novo" e digitava o pedido. Não há
+ * mais "Novo" nesta lista (`create: False` na ação): o Pedido C nasce da CO,
+ * e só dela. Um Pedido C digitado aqui era um documento sem operação por
+ * trás, e foi assim que 51 "reposições" entraram à mão em agosto. O primeiro
+ * passo prova exatamente isso -- que o botão não está na tela.
+ */
+function abrirPedido(livraria) {
     return [
         {
-            trigger: ".o_list_button_add",
-            content: "Novo Pedido de consignação",
+            trigger: ".o_list_view:not(:has(.o_list_button_add))",
+            content: "A lista de Pedidos C não oferece 'Novo': o Pedido C nasce da CO",
+        },
+        {
+            trigger: `.o_data_row:contains('${livraria}') td.o_data_cell:not(.o_list_record_selector)`,
+            content: "Abre o Pedido C que a operação criou",
             run: "click",
         },
         {
-            trigger: ".o_field_widget[name='partner_id'] input",
-            content: "A livraria",
-            run: `edit ${livraria}`,
-        },
-        {
-            // :not(.o_m2o_dropdown_option) -- a livraria QUE JÁ EXISTE, nunca o
-            // 'Criar "..."', cujo rótulo também contém o nome. Sem isso, uma
-            // rodada em base não semeada cria a livraria na hora e o tour passa
-            // sem provar nada. (Mesmo cuidado do soc_consignment_tour.)
-            trigger: `.o-autocomplete--dropdown-item:not(.o_m2o_dropdown_option):contains('${livraria}')`,
-            run: "click",
-        },
-        {
-            trigger: ".o_field_x2many_list_row_add a",
-            content: "Uma linha de livro",
-            run: "click",
-        },
-        {
-            // `product_template_id`, e não `product_id`: na lista de linhas do
-            // pedido a coluna "Produto" que se vê é a do modelo; o
-            // `product_id` existe no arch mas nasce com optional="hide", e o
-            // seletor dele não acha nada na tela.
-            trigger: ".o_selected_row .o_field_widget[name='product_template_id'] input",
-            run: `edit ${livro}`,
-        },
-        {
-            trigger: `.o-autocomplete--dropdown-item:not(.o_m2o_dropdown_option):contains('${livro}')`,
-            run: "click",
-        },
-        {
-            trigger: ".o_selected_row .o_field_widget[name='product_uom_qty'] input",
-            run: `edit ${qtd}`,
-        },
-        {
-            trigger: ".o_form_button_save",
-            content: "Gravar o pedido (ainda em rascunho)",
-            run: "click",
+            trigger: ".o_form_view_container",
+            content: "O Pedido C abre no formulário",
         },
     ];
 }
@@ -88,7 +66,7 @@ function montarPedido(livraria, livro, qtd) {
 registry.category("web_tour.tours").add("pedido_c_prateleira_tour", {
     url: LISTA_PEDIDOS_C,
     steps: () => [
-        ...montarPedido("Livraria do Pedido C", "Livro do Pedido C", 3),
+        ...abrirPedido("Livraria do Pedido C"),
         {
             // O contrato do cliente aparece SOZINHO no formulário: é ele que
             // decide para qual prateleira a remessa vai. Casar por "AC/" e não
@@ -126,7 +104,7 @@ registry.category("web_tour.tours").add("pedido_c_prateleira_tour", {
 registry.category("web_tour.tours").add("pedido_c_sem_contrato_tour", {
     url: LISTA_PEDIDOS_C,
     steps: () => [
-        ...montarPedido("Livraria sem Contrato", "Livro do Pedido C", 2),
+        ...abrirPedido("Livraria sem Contrato"),
         {
             // Que o campo do contrato ficou VAZIO quem confere é o teste, em
             // `assertFalse(pedido.consignment_agreement_id)`. Aqui houve uma
@@ -160,7 +138,7 @@ registry.category("web_tour.tours").add("pedido_c_sem_contrato_tour", {
 registry.category("web_tour.tours").add("pedido_c_suspenso_tour", {
     url: LISTA_PEDIDOS_C,
     steps: () => [
-        ...montarPedido("Livraria Suspensa", "Livro do Pedido C", 2),
+        ...abrirPedido("Livraria Suspensa"),
         {
             trigger: "button[name='action_confirm']",
             run: "click",

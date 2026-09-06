@@ -114,6 +114,118 @@ class TestLabBudget(TransactionCase):
         self.assertAlmostEqual(rep.planned, -1000, places=2)
 
 
+    # ------------------------------------------------- orçamento consolidado
+
+    def _outra_empresa(self):
+        """Uma segunda empresa do banco, com diário geral e conta própria.
+
+        Não se cria `res.company` aqui de propósito: com o `account`
+        instalado, o create estoura em NOT NULL de `fiscalyear_last_day`.
+        Reaproveita-se o que o banco tem — regra da casa.
+        """
+        outra = self.env['res.company'].search(
+            [('id', '!=', self.company.id)], limit=1)
+        if not outra:
+            return None, None, None
+        diario = self.env['account.journal'].search(
+            [('type', '=', 'general'), ('company_id', '=', outra.id)], limit=1)
+        if not diario:
+            return None, None, None
+        desp = self.env['account.account'].create({
+            'name': 'LabBudget Outra Expense', 'code': 'LBTE2',
+            'account_type': 'expense',
+            'company_ids': [Command.link(outra.id)],
+        })
+        caixa = self.env['account.account'].create({
+            'name': 'LabBudget Outra Cash', 'code': 'LBTC2',
+            'account_type': 'asset_cash',
+            'company_ids': [Command.link(outra.id)],
+        })
+        move = self.env['account.move'].with_company(outra).create({
+            'move_type': 'entry', 'journal_id': diario.id, 'date': '2020-06-01',
+            'line_ids': [
+                Command.create({'account_id': desp.id, 'debit': 700, 'credit': 0}),
+                Command.create({'account_id': caixa.id, 'debit': 0, 'credit': 700}),
+            ],
+        })
+        move.action_post()
+        return outra, desp, move
+
+    def test_consolidado_soma_a_outra_empresa(self):
+        """Com `company_ids`, o practical passa a somar as filhas.
+
+        É o conserto de 31/08: a casa monta orçamentos "EL+HE" e "SA+LO" na
+        holding, e o practical dava ZERO em 114 linhas porque o realizado era
+        procurado só nos livros de quem assina o orçamento. A via natural —
+        pôr a holding como empresa-pai — está FECHADA pelo Odoo
+        (`res_company.write` recusa mudar a hierarquia, e no 19 `parent_id`
+        significa filial, não controlada).
+        """
+        outra, desp_outra, _mv = self._outra_empresa()
+        if not outra:
+            self.skipTest('este banco tem uma empresa só')
+
+        posicao = self.env['budget.position'].create({
+            'name': 'LabBudget Pos Consolidada',
+            'account_ids': [Command.set((self.exp_account | desp_outra).ids)],
+        })
+        self._move(300, '2020-06-01', post=True)     # 300 na própria empresa
+
+        b = self._budget()
+        linha = self.env['budget.line'].create({
+            'budget_analytic_id': b.id, 'position_id': posicao.id,
+            'budget_amount': -1000,
+            'date_from': b.date_from, 'date_to': b.date_to,
+        })
+
+        # sem a lista: só a própria empresa (convenção P&L: despesa negativa)
+        self.assertAlmostEqual(linha.practical_amount, -300, 2,
+                               'sem consolidação, soma só a própria empresa')
+
+        # com a lista: a própria entra sozinha, basta somar a OUTRA
+        b.company_ids = [Command.set(outra.ids)]
+        linha.invalidate_recordset(['practical_amount'])
+        self.assertAlmostEqual(linha.practical_amount, -1000, 2,
+                               'consolidado tem de somar as duas empresas')
+
+    def test_a_propria_empresa_entra_sem_ser_listada(self):
+        """A lista é "ALÉM da própria" -- o dono nunca precisa ser repetido.
+
+        Preferência da casa em 31/08: quem monta um "EL+HE" na holding quer
+        dizer "além de mim, some EL e HE", não "some EP, EL e HE".
+        """
+        outra = self.env['res.company'].search(
+            [('id', '!=', self.company.id)], limit=1)
+        if not outra:
+            self.skipTest('este banco tem uma empresa só')
+        b = self._budget()
+        b.company_ids = [Command.set(outra.ids)]
+        empresas = b._companies_for_actuals()
+        self.assertIn(self.company, empresas,
+                      'a própria empresa entra sem ser listada')
+        self.assertIn(outra, empresas)
+
+    def test_relatorio_acompanha_a_consolidacao(self):
+        """A view SQL tem de dar o mesmo número que o compute da linha."""
+        outra, desp_outra, _mv = self._outra_empresa()
+        if not outra:
+            self.skipTest('este banco tem uma empresa só')
+        posicao = self.env['budget.position'].create({
+            'name': 'LabBudget Pos Rel', 'account_ids': [Command.set(desp_outra.ids)]})
+        b = self._budget()
+        b.company_ids = [Command.set(outra.ids)]
+        linha = self.env['budget.line'].create({
+            'budget_analytic_id': b.id, 'position_id': posicao.id,
+            'budget_amount': -1000,
+            'date_from': b.date_from, 'date_to': b.date_to,
+        })
+        self.env.flush_all()
+        rel = self.env['budget.report'].search([('budget_line_id', '=', linha.id)])
+        self.assertTrue(rel, 'a linha tem de aparecer no relatório')
+        self.assertAlmostEqual(rel.practical, linha.practical_amount, 2,
+                               'relatório e linha têm de dar o mesmo número')
+
+
 @tagged('post_install', '-at_install')
 class TestColunasDePlano(TransactionCase):
     """A view não pode presumir que o plano da casa é o de projetos.

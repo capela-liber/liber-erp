@@ -23,6 +23,21 @@ CHAVE = '35260712345678000195550010000001231000001236'
 XML = b'<nfeProc><NFe/></nfeProc>'
 
 
+def carta_xml(chave=CHAVE, seq=1, texto='Transportadora correta: LLS'):
+    """Uma CC-e como a SEFAZ devolve (tpEvento 110110)."""
+    return ('<?xml version="1.0" encoding="UTF-8"?>'
+            '<procEventoNFe xmlns="http://www.portalfiscal.inf.br/nfe" versao="1.00">'
+            '<evento><infEvento>'
+            f'<chNFe>{chave}</chNFe><tpEvento>110110</tpEvento>'
+            f'<nSeqEvento>{seq}</nSeqEvento>'
+            '<dhEvento>2026-08-31T10:00:00-03:00</dhEvento>'
+            f'<detEvento><descEvento>Carta de Correcao</descEvento>'
+            f'<xCorrecao>{texto}</xCorrecao></detEvento>'
+            '</infEvento></evento>'
+            '<retEvento><infEvento><nProt>135260000123456</nProt>'
+            '</infEvento></retEvento></procEventoNFe>').encode()
+
+
 def baixador(**arquivos):
     """Um `baixar` falso: devolve o que o teste mandou, e None no resto.
 
@@ -125,6 +140,44 @@ class TestPainelDaCasa(AccountTestInvoicingCommon):
             nota.action_focus_emitir()
 
         self.assertIn('segunda nota', str(erro.exception))
+
+    # -- carta de correção ---------------------------------------------
+    def test_carta_de_correcao_vira_evento_e_nao_cancela_a_nota(self):
+        """A carta ia como anexo solto do painel, porque a tabela de eventos
+        só aceitava cancelamento. Agora ela é um evento com o seu texto — e
+        continua sem tocar no estado da nota, que é o ponto todo."""
+        nota = self._nota()
+        nota._focus_registrar_no_painel(
+            {'chave_nfe': CHAVE},
+            baixador(caminho_xml_nota_fiscal=XML,
+                     caminho_xml_carta_correcao=carta_xml()))
+
+        evento = self.env['nfe.xml.cancel.event'].search([('key', '=', CHAVE)])
+        self.assertEqual(len(evento), 1, "a carta tem de virar um evento")
+        self.assertEqual(evento.event_kind, 'correction')
+        self.assertEqual(evento.n_seq_evento, 1)
+        self.assertIn('LLS', evento.correction_text)
+
+        painel = self._painel_da()
+        self.assertFalse(painel.is_cancelled, "carta NÃO cancela a nota")
+        self.assertNotEqual(painel.status, 'cancelled')
+
+    def test_segunda_carta_nao_atropela_a_primeira(self):
+        """São vinte cartas possíveis por nota. Com a trava antiga (uma linha
+        por chave) a segunda derrubava a primeira."""
+        nota = self._nota()
+        for seq, texto in ((1, 'Transportadora correta: LLS'),
+                           (2, 'Volume correto: 3 caixas')):
+            nota._focus_registrar_no_painel(
+                {'chave_nfe': CHAVE},
+                baixador(caminho_xml_nota_fiscal=XML,
+                         caminho_xml_carta_correcao=carta_xml(seq=seq, texto=texto)))
+
+        eventos = self.env['nfe.xml.cancel.event'].search(
+            [('key', '=', CHAVE)], order='n_seq_evento')
+        self.assertEqual(len(eventos), 2)
+        self.assertEqual(eventos.mapped('n_seq_evento'), [1, 2])
+        self.assertIn('caixas', eventos[1].correction_text)
 
     # -- casos de borda ------------------------------------------------
     def test_xml_que_nao_baixou_nao_inventa_linha(self):

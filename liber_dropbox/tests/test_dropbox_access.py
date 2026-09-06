@@ -128,6 +128,52 @@ class TestDropboxAccess(TransactionCase):
             partner.with_user(outsider).cloud_file_count, 0)
 
     # ------------------------------------------------------------------
+    # the screen only offers what the gate will allow
+    # ------------------------------------------------------------------
+    def test_upload_wizard_offers_only_writable_folders(self):
+        """Reading a folder is not being offered it to fill.
+
+        `new()` and not `create()`: what is being measured is the wizard as it
+        opens, before anyone picks anything -- and that is exactly the moment
+        `folder_id` is still empty. Creating it would hit the NOT NULL the
+        field carries and prove nothing, because the screen does not create the
+        record on open either; it creates on save.
+        """
+        Upload = self.env['liber.cloud.upload']
+        self.env.invalidate_all()
+        wizard = Upload.with_user(self.reader).with_context(
+            default_provider='dropbox').new({'provider': 'dropbox'})
+        self.assertFalse(
+            wizard.allowed_folder_ids,
+            "The reader may see the folder, and must not be offered it.")
+        self.env.invalidate_all()
+        wizard = Upload.with_user(self.writer).with_context(
+            default_provider='dropbox').new({'provider': 'dropbox'})
+        # `_origin` porque num registro de memória o compute devolve os
+        # vizinhos embrulhados em NewId; o que interessa é qual pasta é.
+        self.assertEqual(wizard.allowed_folder_ids._origin, self.folder_open)
+
+    def test_upload_button_follows_the_write_acl(self):
+        self.env.invalidate_all()
+        self.assertFalse(self.folder_open.with_user(self.reader).can_upload)
+        self.env.invalidate_all()
+        self.assertTrue(self.folder_open.with_user(self.writer).can_upload)
+        self.env.invalidate_all()
+        self.assertFalse(self.folder_closed.with_user(self.writer).can_upload)
+
+    def test_manager_is_offered_no_folder_either(self):
+        """Configuring the shelf is one power, filling it is another."""
+        manager = new_test_user(
+            self.env, 'dropbox_manager_upload',
+            groups='base.group_user,liber_dropbox.group_liber_dropbox_manager')
+        self.env.invalidate_all()
+        wizard = self.env['liber.cloud.upload'].with_user(manager).new(
+            {'provider': 'dropbox'})
+        self.assertFalse(wizard.allowed_folder_ids)
+        self.env.invalidate_all()
+        self.assertFalse(self.folder_open.with_user(manager).can_upload)
+
+    # ------------------------------------------------------------------
     # sharing and downloading
     # ------------------------------------------------------------------
     def test_share_needs_write_access(self):

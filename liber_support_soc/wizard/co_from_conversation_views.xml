@@ -7,8 +7,22 @@
             <form>
                 <group>
                     <group>
-                        <field name="ticket_id" readonly="1"/>
+                        <!-- A âncora: um dos dois, nunca os dois. Mostrar o
+                             campo vazio do outro só faria a tela perguntar
+                             algo que ela mesma já respondeu. -->
+                        <field name="ticket_id" readonly="1"
+                               invisible="not ticket_id"/>
+                        <field name="settlement_id" readonly="1"
+                               invisible="not settlement_id"/>
+                        <!-- Invisíveis, mas precisam existir na view: é
+                             sobre eles que o domínio do anexo é avaliado
+                             no cliente. -->
+                        <field name="source_model" invisible="1"/>
+                        <field name="source_res_id" invisible="1"/>
+                        <!-- Na CO o cliente é a âncora: corrigi-lo aqui
+                             seria trocar o documento, não o rascunho. -->
                         <field name="partner_id"
+                               readonly="settlement_id"
                                options="{'no_create': True}"/>
                         <field name="default_dest" widget="radio"
                                options="{'horizontal': true}"/>
@@ -34,6 +48,12 @@
                     This conversation has no <b>customer</b> yet. Fill in the
                     partner above — it is saved on the ticket too — before
                     creating the document.
+                </div>
+                <div class="alert alert-info" role="status"
+                     invisible="not settlement_id or default_dest == 'sale'">
+                    The checked lines are <b>added to this consignment</b>,
+                    summing into the title's line when it is already on the
+                    map — no second CO is created.
                 </div>
                 <div class="alert alert-info" role="status"
                      invisible="default_dest != 'sale'">

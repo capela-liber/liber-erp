@@ -76,8 +76,13 @@ class ImportMetadataWizard(models.TransientModel):
                         metabooks_product_availability = self.env['metabooks.avalaibility.definition'].search([]).filtered(lambda x: x.product_definition == line[43])
                     if line[37]:
                         flag = 1
+                        # Ponto e vírgula: é o que o manual deles manda
+                        # ("BISAC1; BISAC2"). Com vírgula, uma planilha
+                        # de dois códigos entrava como um só, inventado.
                         bisac_codes = line[37].replace(' ', '')
-                        for bisac in bisac_codes.split(','):
+                        for bisac in bisac_codes.replace(',', ';').split(';'):
+                            if not bisac:
+                                continue
                             code = self.env['biblio.bisac.codes'].search([('bisac_code', '=', bisac)], limit=1)
                             if not code:
                                 code = self.env['biblio.bisac.codes'].create({'bisac_code': bisac})

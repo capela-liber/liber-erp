@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from odoo import api, fields, models, _
+from odoo.exceptions import UserError
 
 # Relation table shared by both sides of the NFe <-> settlement link.
 _NFE_SETTLEMENT_REL = 'consignment_settlement_nfe_xml_rel'

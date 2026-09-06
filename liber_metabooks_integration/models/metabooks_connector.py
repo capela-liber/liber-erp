@@ -363,6 +363,75 @@ class MetabooksConnector(models.AbstractModel):
             rec.product_definition = label
         return rec.id
 
+    @staticmethod
+    def _palavras_chave(subjects):
+        """As palavras-chave deles: esquema 20 do bloco `subjects`.
+
+        Uma função só, usada pela importação e pela varredura -- eram duas
+        listas iguais escritas em lugares diferentes, e a segunda esqueceria de
+        acompanhar a primeira.
+        """
+        return [s["subjectHeadingText"] for s in subjects or []
+                if s.get("subjectSchemeIdentifier") == "20"
+                and s.get("subjectHeadingText")]
+
+    def _classificacao(self, subjects):
+        """BISAC (esquema 10) e Thema (93) do bloco `subjects` deles.
+
+        Cada família volta em duas peças, porque é assim que a Metabooks pensa
+        e é assim que a planilha pede: o **principal** -- o que eles marcam com
+        `mainSubject` e mostram como "Classificação principal" no painel -- e a
+        lista com todos. Na planilha os dois viram uma coluna só, ponto e
+        vírgula entre os códigos, com o principal na frente.
+
+        Só entra código que já exista nas tabelas embarcadas: são padrões
+        internacionais fechados, e criar uma linha solta para um código que não
+        está na lista oficial esconderia um erro de leitura atrás de um dado
+        novo. Código desconhecido é ignorado em silêncio -- a lista se atualiza
+        pelo scripts/gerar_listas_classificacao.py, não por aqui.
+
+        Devolve só as chaves que soube ler: campo ausente aqui é "eles não
+        mandaram", e escrever False apagaria a escolha da casa.
+        """
+        Thema = self.env["metabooks.thema.code"]
+        Bisac = self.env["biblio.bisac.codes"]
+        bisac, bisac_principal = [], None
+        categorias, categoria_principal, qualificadores = [], None, []
+
+        for s in subjects or []:
+            esquema = s.get("subjectSchemeIdentifier")
+            codigo = (s.get("subjectCode") or "").strip()
+            if not codigo:
+                continue
+            if esquema == "10":
+                achado = Bisac.search([("bisac_code", "=", codigo)], limit=1)
+                if not achado:
+                    continue
+                bisac.append(achado.id)
+                if s.get("mainSubject") or bisac_principal is None:
+                    bisac_principal = achado.id
+            elif esquema == "93":
+                achado = Thema.search([("code", "=", codigo)], limit=1)
+                if not achado:
+                    continue
+                if achado.kind == "qualifier":
+                    qualificadores.append(achado.id)
+                    continue
+                categorias.append(achado.id)
+                if s.get("mainSubject") or categoria_principal is None:
+                    categoria_principal = achado.id
+
+        vals = {}
+        if bisac:
+            vals["bisac_code_ids"] = [(6, 0, bisac)]
+            vals["bisac_code"] = bisac_principal
+        if categorias:
+            vals["metabooks_thema_ids"] = [(6, 0, categorias)]
+            vals["metabooks_thema_id"] = categoria_principal
+        if qualificadores:
+            vals["metabooks_thema_qualifier_ids"] = [(6, 0, qualificadores)]
+        return vals
+
     def _ensure_tags(self, names):
         """Find/create product.tag records for a list of subject/keyword names."""
         Tag = self.env["product.tag"]
@@ -620,6 +689,53 @@ class MetabooksConnector(models.AbstractModel):
             updated += 1
         return {"updated": updated, "not_found": not_found}
 
+    def classify_isbns(self, isbns):
+        """Escreve só assunto: BISAC, Thema e palavras-chave. Mais nada.
+
+        Irmão do `enrich_isbns`. Existe porque a reimportação inteira
+        (`import_isbns`) traria de volta título, preço, sinopse e categoria por
+        cima do que a casa escreveu -- e o que se quer aqui é preencher dois
+        campos que nunca chegaram, não desfazer trabalho editorial.
+
+        Sem `subjects` na resposta, o livro é pulado: ausência não é ordem de
+        apagar. Código fora das listas embarcadas também é ignorado, pelo mesmo
+        motivo de `_classificacao`.
+        """
+        client = self._get_client()
+        # A marca é o que impede a próxima planilha de devolver à Metabooks o
+        # que ela acabou de mandar, e é ela que carimba o corte do histórico.
+        Product = self.env["product.template"].with_context(
+            metabooks_from_sync=True)
+        classificados, sem_classificacao, nao_encontrados = 0, [], []
+        for raw in isbns:
+            isbn = clean_isbn(raw)
+            if not isbn:
+                continue
+            product = Product.search(
+                ["|", ("default_code", "=", isbn), ("barcode", "=", isbn)], limit=1)
+            if not product:
+                nao_encontrados.append(isbn)
+                continue
+            data = client.get_product_by_isbn(isbn)
+            if not data:
+                nao_encontrados.append(isbn)
+                continue
+            vals = self._classificacao(data.get("subjects"))
+            # Palavras-chave viajam junto porque são o mesmo bloco `subjects` e
+            # a mesma pergunta: do que este livro trata. Coleção, título, preço
+            # e sinopse continuam de fora -- não é disto que se trata aqui.
+            palavras = self._palavras_chave(data.get("subjects"))
+            if palavras:
+                vals["metabooks_keywords"] = ", ".join(palavras)
+            if not vals:
+                sem_classificacao.append(isbn)
+                continue
+            product.write(vals)
+            classificados += 1
+        return {"classified": classificados,
+                "no_subjects": sem_classificacao,
+                "not_found": nao_encontrados}
+
     def recompose_names(self, isbns):
         """Rewrite name, title, subtitle and contributor list from the ONIX record.
 
@@ -700,10 +816,11 @@ class MetabooksConnector(models.AbstractModel):
         authors, author_names = self._ensure_contributors(data.get("contributors"))
 
         # keywords: subjects with scheme 20 (Keywords) carry the free-text terms
-        keywords = [
-            s.get("subjectHeadingText") for s in data.get("subjects", [])
-            if s.get("subjectSchemeIdentifier") == "20" and s.get("subjectHeadingText")
-        ]
+        keywords = self._palavras_chave(data.get("subjects"))
+        # `subjects` carries three schemes and we were reading only one, so the
+        # two classifications the catalogue is actually organised by -- BISAC
+        # (10) and Thema (93) -- arrived and were dropped on the floor.
+        classificacao = self._classificacao(data.get("subjects"))
 
         subtitle = titles[0].get("subtitle") or ""
         selo = pub.get("shortName") or pub.get("name")
@@ -713,14 +830,19 @@ class MetabooksConnector(models.AbstractModel):
             "barcode": isbn or False,
             "list_price": price,
             "metabooks_book_title": title,
-            "metabooks_book_subtitle": subtitle,
-            "synopsys": synopsis,
+            # `or False` e não `""`: campo de texto vazio como string abre um
+            # SEGUNDO grupo "vazio" no agrupamento, ao lado do grupo do NULL, e
+            # os dois viram a mesma chave no `t-foreach` do kanban -- que morre
+            # com "Got duplicate key". Vazio no Odoo se escreve False.
+            "metabooks_book_subtitle": subtitle or False,
+            "synopsys": synopsis or False,
             "metabooks_publisher": pub.get("name"),
             "metabooks_label": selo,
             "metabooks_vendor_id": pub.get("mvbId"),
-            "metabooks_keywords": ", ".join(keywords),
+            "metabooks_keywords": ", ".join(keywords) or False,
             "metabooks_product_availability": self._ensure_availability(
                 data.get("productAvailability")),
+            **classificacao,
             "metabooks_creation_date": self._parse_date(data.get("creationDate")),
             "metabooks_last_updatedate": self._parse_date(data.get("lastModificationDate")),
             "edition": edition.get("editionStatement") or (
@@ -773,13 +895,14 @@ class MetabooksConnector(models.AbstractModel):
             "barcode": isbn or False,
             "list_price": item.get("priceBrl") or 0.0,
             "metabooks_book_title": title,
-            "metabooks_book_subtitle": subtitle,
-            "synopsys": item.get("mainDescription") or item.get("shortDescription") or "",
+            "metabooks_book_subtitle": subtitle or False,
+            "synopsys": (item.get("mainDescription")
+                         or item.get("shortDescription") or False),
             "metabooks_publisher": selo,
             "metabooks_label": selo,
             "metabooks_vendor_id": item.get("publisherMbId"),
-            "metabooks_collections": collection or "",
-            "metabooks_keywords": ", ".join(keywords),
+            "metabooks_collections": collection or False,
+            "metabooks_keywords": ", ".join(keywords) or False,
             "metabooks_product_availability": self._ensure_availability(
                 item.get("availabilityStatePublisher") or item.get("availabilityStateFeed")),
             "metabooks_publish_date": self._parse_date(item.get("publicationDate")),

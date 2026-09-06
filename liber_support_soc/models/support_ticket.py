@@ -4,8 +4,6 @@ import base64
 from odoo import _, fields, models, Command
 from odoo.exceptions import UserError
 
-from . import co_parser
-
 
 
 class SupportTicket(models.Model):
@@ -41,50 +39,13 @@ class SupportTicket(models.Model):
     def action_open_co_wizard(self):
         """Open the conference draft. One per ticket: if it already
         exists, come back to it exactly as it was left — checking
-        something else mid-conference must not cost the work."""
+        something else mid-conference must not cost the work.
+
+        A colheita da conversa e a regra do "um rascunho por âncora" moram
+        no assistente desde 01/09/2026, porque a CO abre o mesmo assistente
+        pelo mesmo gesto (ver `_open_for`)."""
         self.ensure_one()
-        wizard = self.env['liber.support.co.wizard'].search(
-            [('ticket_id', '=', self.id)], limit=1)
-        if not wizard:
-            inbound = self.message_ids.filtered(
-                lambda m: m.message_type == 'email').sorted('date')
-            parts = []
-            for message in inbound:
-                # tabelas-relatório (ex.: estoque mínimo da Olist) viram
-                # linhas resolvidas (mínimo − estoque); o resto vira texto
-                rest, items = co_parser.extract_report_tables(
-                    str(message.body or ''))
-                if items:
-                    parts.append(co_parser.items_to_text(items))
-                parts.append(co_parser.html_to_text(rest))
-            source = '\n\n'.join(p for p in parts if p.strip())
-            # NFe XML primeiro: é a fonte exata (ISBN + quantidade da
-            # SEFAZ). Confere o CONTEÚDO, não só a extensão — nem todo
-            # .xml de anexo é uma NFe.
-            attachment = next(
-                (a for a in self.env['ir.attachment'].search(
-                    [('res_model', '=', self._name),
-                     ('res_id', '=', self.id),
-                     ('name', '=ilike', '%.xml')],
-                    order='id desc')
-                 if co_parser.is_nfe_xml(
-                     a.name, base64.b64decode(a.datas or b''))),
-                self.env['ir.attachment'])
-            if not attachment:
-                attachment = self.env['ir.attachment'].search(
-                    [('res_model', '=', self._name),
-                     ('res_id', '=', self.id),
-                     '|', '|', ('name', '=ilike', '%.xlsx'),
-                     ('name', '=ilike', '%.csv'),
-                     ('name', '=ilike', '%.pdf')],
-                    order='id desc', limit=1)
-            wizard = self.env['liber.support.co.wizard'].create({
-                'ticket_id': self.id,
-                'source_text': source,
-                'attachment_id': attachment.id or False,
-            })
-            wizard.action_parse()
-        return wizard._reopen()
+        return self.env['liber.support.co.wizard']._open_for(self)
 
     def action_open_settlement(self):
         self.ensure_one()

@@ -1,0 +1,1428 @@
+{
+ "version": "18.5.10",
+ "sheets": [
+  {
+   "id": "vendas-folha-principal",
+   "name": "Vendas",
+   "colNumber": 10,
+   "rowNumber": 125,
+   "rows": {
+    "51": {
+     "size": 40
+    },
+    "84": {
+     "size": 40
+    },
+    "97": {
+     "size": 40
+    }
+   },
+   "cols": {
+    "0": {
+     "size": 160
+    },
+    "1": {
+     "size": 200
+    },
+    "2": {
+     "size": 140
+    },
+    "3": {
+     "size": 120
+    },
+    "4": {
+     "size": 40
+    },
+    "5": {
+     "size": 160
+    },
+    "6": {
+     "size": 200
+    },
+    "7": {
+     "size": 140
+    },
+    "8": {
+     "size": 120
+    }
+   },
+   "merges": [],
+   "cells": {
+    "A52": "Pedidos, mês a mês: vendido, faturado, a faturar",
+    "A53": "=PIVOT(1, 100, FALSE, FALSE)",
+    "F52": "Notas, mês a mês: vendido, livros, notas",
+    "F53": "=PIVOT(2, 100, FALSE, FALSE)",
+    "A85": "Principais cotações",
+    "F85": "Principais pedidos de venda",
+    "A98": "Principais clientes (pedidos)",
+    "A99": "=PIVOT(7, 10, FALSE, FALSE)",
+    "F98": "Principais canais (pedidos)",
+    "F99": "=PIVOT(8, 10, FALSE, FALSE)",
+    "A86": "=ODOO.LIST.HEADER(1, \"name\")",
+    "A87": "=ODOO.LIST(1,1,\"name\")",
+    "A88": "=ODOO.LIST(1,2,\"name\")",
+    "A89": "=ODOO.LIST(1,3,\"name\")",
+    "A90": "=ODOO.LIST(1,4,\"name\")",
+    "A91": "=ODOO.LIST(1,5,\"name\")",
+    "A92": "=ODOO.LIST(1,6,\"name\")",
+    "A93": "=ODOO.LIST(1,7,\"name\")",
+    "A94": "=ODOO.LIST(1,8,\"name\")",
+    "A95": "=ODOO.LIST(1,9,\"name\")",
+    "A96": "=ODOO.LIST(1,10,\"name\")",
+    "B86": "=ODOO.LIST.HEADER(1, \"partner_id\")",
+    "B87": "=ODOO.LIST(1,1,\"partner_id\")",
+    "B88": "=ODOO.LIST(1,2,\"partner_id\")",
+    "B89": "=ODOO.LIST(1,3,\"partner_id\")",
+    "B90": "=ODOO.LIST(1,4,\"partner_id\")",
+    "B91": "=ODOO.LIST(1,5,\"partner_id\")",
+    "B92": "=ODOO.LIST(1,6,\"partner_id\")",
+    "B93": "=ODOO.LIST(1,7,\"partner_id\")",
+    "B94": "=ODOO.LIST(1,8,\"partner_id\")",
+    "B95": "=ODOO.LIST(1,9,\"partner_id\")",
+    "B96": "=ODOO.LIST(1,10,\"partner_id\")",
+    "C86": "=ODOO.LIST.HEADER(1, \"user_id\")",
+    "C87": "=ODOO.LIST(1,1,\"user_id\")",
+    "C88": "=ODOO.LIST(1,2,\"user_id\")",
+    "C89": "=ODOO.LIST(1,3,\"user_id\")",
+    "C90": "=ODOO.LIST(1,4,\"user_id\")",
+    "C91": "=ODOO.LIST(1,5,\"user_id\")",
+    "C92": "=ODOO.LIST(1,6,\"user_id\")",
+    "C93": "=ODOO.LIST(1,7,\"user_id\")",
+    "C94": "=ODOO.LIST(1,8,\"user_id\")",
+    "C95": "=ODOO.LIST(1,9,\"user_id\")",
+    "C96": "=ODOO.LIST(1,10,\"user_id\")",
+    "D86": "=ODOO.LIST.HEADER(1, \"amount_untaxed\")",
+    "D87": "=ODOO.LIST(1,1,\"amount_untaxed\")",
+    "D88": "=ODOO.LIST(1,2,\"amount_untaxed\")",
+    "D89": "=ODOO.LIST(1,3,\"amount_untaxed\")",
+    "D90": "=ODOO.LIST(1,4,\"amount_untaxed\")",
+    "D91": "=ODOO.LIST(1,5,\"amount_untaxed\")",
+    "D92": "=ODOO.LIST(1,6,\"amount_untaxed\")",
+    "D93": "=ODOO.LIST(1,7,\"amount_untaxed\")",
+    "D94": "=ODOO.LIST(1,8,\"amount_untaxed\")",
+    "D95": "=ODOO.LIST(1,9,\"amount_untaxed\")",
+    "D96": "=ODOO.LIST(1,10,\"amount_untaxed\")",
+    "F86": "=ODOO.LIST.HEADER(2, \"name\")",
+    "F87": "=ODOO.LIST(2,1,\"name\")",
+    "F88": "=ODOO.LIST(2,2,\"name\")",
+    "F89": "=ODOO.LIST(2,3,\"name\")",
+    "F90": "=ODOO.LIST(2,4,\"name\")",
+    "F91": "=ODOO.LIST(2,5,\"name\")",
+    "F92": "=ODOO.LIST(2,6,\"name\")",
+    "F93": "=ODOO.LIST(2,7,\"name\")",
+    "F94": "=ODOO.LIST(2,8,\"name\")",
+    "F95": "=ODOO.LIST(2,9,\"name\")",
+    "F96": "=ODOO.LIST(2,10,\"name\")",
+    "G86": "=ODOO.LIST.HEADER(2, \"partner_id\")",
+    "G87": "=ODOO.LIST(2,1,\"partner_id\")",
+    "G88": "=ODOO.LIST(2,2,\"partner_id\")",
+    "G89": "=ODOO.LIST(2,3,\"partner_id\")",
+    "G90": "=ODOO.LIST(2,4,\"partner_id\")",
+    "G91": "=ODOO.LIST(2,5,\"partner_id\")",
+    "G92": "=ODOO.LIST(2,6,\"partner_id\")",
+    "G93": "=ODOO.LIST(2,7,\"partner_id\")",
+    "G94": "=ODOO.LIST(2,8,\"partner_id\")",
+    "G95": "=ODOO.LIST(2,9,\"partner_id\")",
+    "G96": "=ODOO.LIST(2,10,\"partner_id\")",
+    "H86": "=ODOO.LIST.HEADER(2, \"user_id\")",
+    "H87": "=ODOO.LIST(2,1,\"user_id\")",
+    "H88": "=ODOO.LIST(2,2,\"user_id\")",
+    "H89": "=ODOO.LIST(2,3,\"user_id\")",
+    "H90": "=ODOO.LIST(2,4,\"user_id\")",
+    "H91": "=ODOO.LIST(2,5,\"user_id\")",
+    "H92": "=ODOO.LIST(2,6,\"user_id\")",
+    "H93": "=ODOO.LIST(2,7,\"user_id\")",
+    "H94": "=ODOO.LIST(2,8,\"user_id\")",
+    "H95": "=ODOO.LIST(2,9,\"user_id\")",
+    "H96": "=ODOO.LIST(2,10,\"user_id\")",
+    "I86": "=ODOO.LIST.HEADER(2, \"amount_untaxed\")",
+    "I87": "=ODOO.LIST(2,1,\"amount_untaxed\")",
+    "I88": "=ODOO.LIST(2,2,\"amount_untaxed\")",
+    "I89": "=ODOO.LIST(2,3,\"amount_untaxed\")",
+    "I90": "=ODOO.LIST(2,4,\"amount_untaxed\")",
+    "I91": "=ODOO.LIST(2,5,\"amount_untaxed\")",
+    "I92": "=ODOO.LIST(2,6,\"amount_untaxed\")",
+    "I93": "=ODOO.LIST(2,7,\"amount_untaxed\")",
+    "I94": "=ODOO.LIST(2,8,\"amount_untaxed\")",
+    "I95": "=ODOO.LIST(2,9,\"amount_untaxed\")",
+    "I96": "=ODOO.LIST(2,10,\"amount_untaxed\")"
+   },
+   "styles": {
+    "A52": 1,
+    "F52": 1,
+    "A85": 1,
+    "F85": 1,
+    "A98": 1,
+    "F98": 1
+   },
+   "formats": {},
+   "borders": {},
+   "conditionalFormats": [],
+   "dataValidationRules": [],
+   "figures": [
+    {
+     "id": "c2a70000-0000-4000-8000-000000000023",
+     "tag": "chart",
+     "col": 0,
+     "row": 0,
+     "offset": {
+      "x": 0,
+      "y": 11
+     },
+     "width": 196,
+     "height": 118,
+     "data": {
+      "type": "scorecard",
+      "title": {
+       "text": "Faturas",
+       "color": "#434343",
+       "bold": true
+      },
+      "background": "#ccccff",
+      "keyValue": "Dados!C1",
+      "baseline": "Dados!D1",
+      "baselineMode": "percentage",
+      "baselineDescr": {
+       "text": "vs. anterior"
+      },
+      "baselineColorUp": "#00A04A",
+      "baselineColorDown": "#DC6965",
+      "humanize": false,
+      "chartId": "c2a70000-0000-4000-8000-000000000023"
+     }
+    },
+    {
+     "id": "c2a70000-0000-4000-8000-000000000020",
+     "tag": "chart",
+     "col": 0,
+     "row": 0,
+     "offset": {
+      "x": 201,
+      "y": 11
+     },
+     "width": 196,
+     "height": 118,
+     "data": {
+      "type": "scorecard",
+      "title": {
+       "text": "Pedidos",
+       "color": "#434343",
+       "bold": true
+      },
+      "background": "#e6e6ff",
+      "keyValue": "Dados!C2",
+      "baseline": "Dados!D2",
+      "baselineMode": "percentage",
+      "baselineDescr": {
+       "text": "vs. anterior"
+      },
+      "baselineColorUp": "#00A04A",
+      "baselineColorDown": "#DC6965",
+      "humanize": false,
+      "chartId": "c2a70000-0000-4000-8000-000000000020"
+     }
+    },
+    {
+     "id": "c2a70000-0000-4000-8000-000000000021",
+     "tag": "chart",
+     "col": 0,
+     "row": 0,
+     "offset": {
+      "x": 402,
+      "y": 11
+     },
+     "width": 196,
+     "height": 118,
+     "data": {
+      "type": "scorecard",
+      "title": {
+       "text": "Pedidos fechados",
+       "color": "#434343",
+       "bold": true
+      },
+      "background": "#e6e6ff",
+      "keyValue": "Dados!C3",
+      "baseline": "Dados!D3",
+      "baselineMode": "percentage",
+      "baselineDescr": {
+       "text": "vs. anterior"
+      },
+      "baselineColorUp": "#00A04A",
+      "baselineColorDown": "#DC6965",
+      "humanize": false,
+      "chartId": "c2a70000-0000-4000-8000-000000000021"
+     }
+    },
+    {
+     "id": "c2a70000-0000-4000-8000-000000000022",
+     "tag": "chart",
+     "col": 0,
+     "row": 0,
+     "offset": {
+      "x": 603,
+      "y": 11
+     },
+     "width": 196,
+     "height": 118,
+     "data": {
+      "type": "scorecard",
+      "title": {
+       "text": "Pedidos abertos",
+       "color": "#434343",
+       "bold": true
+      },
+      "background": "#e6e6ff",
+      "keyValue": "Dados!C4",
+      "baseline": "Dados!D4",
+      "baselineMode": "percentage",
+      "baselineDescr": {
+       "text": "vs. anterior"
+      },
+      "baselineColorUp": "#00A04A",
+      "baselineColorDown": "#DC6965",
+      "humanize": false,
+      "chartId": "c2a70000-0000-4000-8000-000000000022"
+     }
+    },
+    {
+     "id": "c2a70000-0000-4000-8000-000000000024",
+     "tag": "chart",
+     "col": 0,
+     "row": 0,
+     "offset": {
+      "x": 804,
+      "y": 11
+     },
+     "width": 196,
+     "height": 118,
+     "data": {
+      "type": "scorecard",
+      "title": {
+       "text": "Faturas sem pedido",
+       "color": "#434343",
+       "bold": true
+      },
+      "background": "#ccccff",
+      "keyValue": "Dados!C5",
+      "baseline": "Dados!D5",
+      "baselineMode": "percentage",
+      "baselineDescr": {
+       "text": "vs. anterior"
+      },
+      "baselineColorUp": "#00A04A",
+      "baselineColorDown": "#DC6965",
+      "humanize": false,
+      "chartId": "c2a70000-0000-4000-8000-000000000024"
+     }
+    },
+    {
+     "id": "c2a70000-0000-4000-8000-000000000013",
+     "tag": "chart",
+     "col": 0,
+     "row": 0,
+     "offset": {
+      "x": 0,
+      "y": 135
+     },
+     "width": 1000,
+     "height": 300,
+     "data": {
+      "type": "odoo_line",
+      "title": {
+       "text": "Faturamento",
+       "color": "#434343",
+       "bold": true
+      },
+      "background": "#FFFFFF",
+      "legendPosition": "none",
+      "metaData": {
+       "groupBy": [
+        "file_create_date:month"
+       ],
+       "measure": "net_value",
+       "order": null,
+       "resModel": "nfe.xml.panel",
+       "mode": "line",
+       "cumulatedStart": false
+      },
+      "searchParams": {
+       "comparison": null,
+       "context": {
+        "group_by": []
+       },
+       "domain": [
+        "&",
+        "&",
+        [
+         "nfe_direction",
+         "in",
+         [
+          "out",
+          "internal"
+         ]
+        ],
+        [
+         "cfop_id.document_kind",
+         "in",
+         [
+          "sale",
+          "settlement"
+         ]
+        ],
+        [
+         "is_cancelled",
+         "=",
+         false
+        ]
+       ],
+       "groupBy": [
+        "file_create_date:month"
+       ],
+       "orderBy": []
+      },
+      "dataSets": [
+       {}
+      ],
+      "verticalAxisPosition": "left",
+      "stacked": false,
+      "cumulative": false,
+      "cumulatedStart": false,
+      "axesDesign": {
+       "y": {
+        "title": {
+         "text": "Faturas (líquido)"
+        }
+       }
+      },
+      "fillArea": true,
+      "chartId": "c2a70000-0000-4000-8000-000000000013",
+      "fieldMatching": {
+       "f2a70000-0000-4000-8000-000000000001": {
+        "chain": "file_create_date",
+        "type": "date",
+        "offset": 0
+       },
+       "f2a70000-0000-4000-8000-000000000002": {
+        "chain": "partner_id",
+        "type": "many2one"
+       },
+       "f2a70000-0000-4000-8000-000000000003": {
+        "chain": "team_id",
+        "type": "many2one"
+       }
+      }
+     }
+    },
+    {
+     "id": "c2a70000-0000-4000-8000-000000000011",
+     "tag": "chart",
+     "col": 0,
+     "row": 0,
+     "offset": {
+      "x": 0,
+      "y": 450
+     },
+     "width": 1000,
+     "height": 345,
+     "data": {
+      "type": "odoo_bar",
+      "title": {
+       "text": "Vendido pelos pedidos, por canal",
+       "color": "#434343",
+       "bold": true
+      },
+      "background": "#FFFFFF",
+      "legendPosition": "top",
+      "metaData": {
+       "groupBy": [
+        "order_date:month",
+        "team_id"
+       ],
+       "measure": "price_subtotal",
+       "order": null,
+       "resModel": "sale.report",
+       "mode": "bar",
+       "stacked": true
+      },
+      "searchParams": {
+       "comparison": null,
+       "context": {},
+       "domain": [
+        [
+         "state",
+         "in",
+         [
+          "sale",
+          "done"
+         ]
+        ]
+       ],
+       "groupBy": [
+        "order_date:month",
+        "team_id"
+       ],
+       "orderBy": []
+      },
+      "dataSets": [
+       {}
+      ],
+      "verticalAxisPosition": "left",
+      "stacked": true,
+      "cumulative": false,
+      "cumulatedStart": false,
+      "fillArea": false,
+      "chartId": "c2a70000-0000-4000-8000-000000000011",
+      "fieldMatching": {
+       "f2a70000-0000-4000-8000-000000000001": {
+        "chain": "order_date",
+        "type": "date",
+        "offset": 0
+       },
+       "f2a70000-0000-4000-8000-000000000002": {
+        "chain": "partner_id",
+        "type": "many2one"
+       },
+       "f2a70000-0000-4000-8000-000000000003": {
+        "chain": "team_id",
+        "type": "many2one"
+       }
+      }
+     }
+    },
+    {
+     "id": "c2a70000-0000-4000-8000-000000000012",
+     "tag": "chart",
+     "col": 0,
+     "row": 0,
+     "offset": {
+      "x": 0,
+      "y": 810
+     },
+     "width": 1000,
+     "height": 345,
+     "data": {
+      "type": "odoo_bar",
+      "title": {
+       "text": "Vendido com nota, por canal",
+       "color": "#434343",
+       "bold": true
+      },
+      "background": "#FFFFFF",
+      "legendPosition": "top",
+      "metaData": {
+       "groupBy": [
+        "file_create_date:month",
+        "team_id"
+       ],
+       "measure": "net_value",
+       "order": null,
+       "resModel": "nfe.xml.panel",
+       "mode": "bar",
+       "stacked": true
+      },
+      "searchParams": {
+       "comparison": null,
+       "context": {},
+       "domain": [
+        "&",
+        "&",
+        [
+         "nfe_direction",
+         "in",
+         [
+          "out",
+          "internal"
+         ]
+        ],
+        [
+         "cfop_id.document_kind",
+         "in",
+         [
+          "sale",
+          "settlement"
+         ]
+        ],
+        [
+         "is_cancelled",
+         "=",
+         false
+        ]
+       ],
+       "groupBy": [
+        "file_create_date:month",
+        "team_id"
+       ],
+       "orderBy": []
+      },
+      "dataSets": [
+       {}
+      ],
+      "verticalAxisPosition": "left",
+      "stacked": true,
+      "cumulative": false,
+      "cumulatedStart": false,
+      "fillArea": false,
+      "chartId": "c2a70000-0000-4000-8000-000000000012",
+      "fieldMatching": {
+       "f2a70000-0000-4000-8000-000000000001": {
+        "chain": "file_create_date",
+        "type": "date",
+        "offset": 0
+       },
+       "f2a70000-0000-4000-8000-000000000002": {
+        "chain": "partner_id",
+        "type": "many2one"
+       },
+       "f2a70000-0000-4000-8000-000000000003": {
+        "chain": "team_id",
+        "type": "many2one"
+       }
+      }
+     }
+    },
+    {
+     "id": "c2a70000-0000-4000-8000-000000000014",
+     "tag": "chart",
+     "col": 0,
+     "row": 0,
+     "offset": {
+      "x": 0,
+      "y": 1564
+     },
+     "width": 1000,
+     "height": 300,
+     "data": {
+      "type": "odoo_line",
+      "title": {
+       "text": "Vendas mensais (pedidos)",
+       "color": "#434343",
+       "bold": true
+      },
+      "background": "#FFFFFF",
+      "legendPosition": "none",
+      "metaData": {
+       "groupBy": [
+        "order_date:month"
+       ],
+       "measure": "price_subtotal",
+       "order": null,
+       "resModel": "sale.report",
+       "mode": "line",
+       "cumulatedStart": false
+      },
+      "searchParams": {
+       "comparison": null,
+       "context": {
+        "group_by": []
+       },
+       "domain": [
+        [
+         "state",
+         "in",
+         [
+          "sale",
+          "done"
+         ]
+        ]
+       ],
+       "groupBy": [
+        "order_date:month"
+       ],
+       "orderBy": []
+      },
+      "dataSets": [
+       {}
+      ],
+      "verticalAxisPosition": "left",
+      "stacked": false,
+      "cumulative": false,
+      "cumulatedStart": false,
+      "axesDesign": {
+       "y": {
+        "title": {
+         "text": "Receita"
+        }
+       }
+      },
+      "fillArea": true,
+      "chartId": "c2a70000-0000-4000-8000-000000000014",
+      "fieldMatching": {
+       "f2a70000-0000-4000-8000-000000000001": {
+        "chain": "order_date",
+        "type": "date",
+        "offset": 0
+       },
+       "f2a70000-0000-4000-8000-000000000002": {
+        "chain": "partner_id",
+        "type": "many2one"
+       },
+       "f2a70000-0000-4000-8000-000000000003": {
+        "chain": "team_id",
+        "type": "many2one"
+       }
+      }
+     }
+    }
+   ],
+   "tables": [],
+   "areGridLinesVisible": true,
+   "isVisible": true,
+   "headerGroups": {
+    "ROW": [],
+    "COL": []
+   },
+   "comments": {}
+  },
+  {
+   "id": "vendas-folha-dados",
+   "name": "Dados",
+   "colNumber": 6,
+   "rowNumber": 20,
+   "rows": {},
+   "cols": {
+    "0": {
+     "size": 300
+    },
+    "1": {
+     "size": 140
+    },
+    "2": {
+     "size": 100
+    },
+    "3": {
+     "size": 140
+    }
+   },
+   "merges": [],
+   "cells": {
+    "A1": "Faturas (venda com nota fiscal, líquido dos itens)",
+    "B1": "=PIVOT.VALUE(2,\"net_value\")",
+    "C1": "=FORMAT.LARGE.NUMBER(B1)",
+    "D1": "=PIVOT.VALUE(5,\"net_value\")",
+    "A2": "Pedidos (vendido pelos pedidos)",
+    "B2": "=PIVOT.VALUE(1,\"price_subtotal\")",
+    "C2": "=FORMAT.LARGE.NUMBER(B2)",
+    "D2": "=PIVOT.VALUE(4,\"price_subtotal\")",
+    "A3": "Pedidos fechados (faturado pelos pedidos)",
+    "B3": "=PIVOT.VALUE(1,\"untaxed_amount_invoiced\")",
+    "C3": "=FORMAT.LARGE.NUMBER(B3)",
+    "D3": "=PIVOT.VALUE(4,\"untaxed_amount_invoiced\")",
+    "A4": "Pedidos abertos (Pedidos − Pedidos fechados)",
+    "B4": "=B2-B3",
+    "C4": "=FORMAT.LARGE.NUMBER(B4)",
+    "D4": "=D2-D3",
+    "A5": "Faturas sem pedido (nota sem fatura ligada a pedido)",
+    "B5": "=PIVOT.VALUE(3,\"net_value\")",
+    "C5": "=FORMAT.LARGE.NUMBER(B5)",
+    "D5": "=PIVOT.VALUE(6,\"net_value\")",
+    "E1": "B = agora · C = mostrado · D = período anterior"
+   },
+   "styles": {},
+   "formats": {
+    "B1:B5": 1,
+    "D1:D5": 1
+   },
+   "borders": {},
+   "conditionalFormats": [],
+   "dataValidationRules": [],
+   "figures": [],
+   "tables": [],
+   "areGridLinesVisible": true,
+   "isVisible": false,
+   "headerGroups": {
+    "ROW": [],
+    "COL": []
+   },
+   "comments": {}
+  }
+ ],
+ "styles": {
+  "1": {
+   "textColor": "#01666b",
+   "bold": true,
+   "fontSize": 16
+  }
+ },
+ "formats": {
+  "1": "#,##0.00"
+ },
+ "borders": {},
+ "revisionId": "START_REVISION",
+ "uniqueFigureIds": true,
+ "settings": {
+  "locale": {
+   "name": "English (US)",
+   "code": "en_US",
+   "thousandsSeparator": ",",
+   "decimalSeparator": ".",
+   "dateFormat": "mm/dd/yyyy",
+   "timeFormat": "hh:mm:ss",
+   "formulaArgSeparator": ",",
+   "weekStart": 7
+  }
+ },
+ "pivots": {
+  "1": {
+   "type": "ODOO",
+   "id": "1",
+   "formulaId": "1",
+   "model": "sale.report",
+   "name": "Pedidos por mês",
+   "domain": [
+    [
+     "state",
+     "in",
+     [
+      "sale",
+      "done"
+     ]
+    ]
+   ],
+   "context": {},
+   "measures": [
+    {
+     "id": "price_subtotal",
+     "fieldName": "price_subtotal",
+     "userDefinedName": "Vendido"
+    },
+    {
+     "id": "untaxed_amount_invoiced",
+     "fieldName": "untaxed_amount_invoiced",
+     "userDefinedName": "Faturado"
+    },
+    {
+     "id": "untaxed_amount_to_invoice",
+     "fieldName": "untaxed_amount_to_invoice",
+     "userDefinedName": "A faturar"
+    }
+   ],
+   "columns": [],
+   "rows": [
+    {
+     "fieldName": "order_date",
+     "granularity": "month",
+     "order": "asc"
+    }
+   ],
+   "fieldMatching": {
+    "f2a70000-0000-4000-8000-000000000001": {
+     "chain": "order_date",
+     "type": "date",
+     "offset": 0
+    },
+    "f2a70000-0000-4000-8000-000000000002": {
+     "chain": "partner_id",
+     "type": "many2one"
+    },
+    "f2a70000-0000-4000-8000-000000000003": {
+     "chain": "team_id",
+     "type": "many2one"
+    }
+   }
+  },
+  "2": {
+   "type": "ODOO",
+   "id": "2",
+   "formulaId": "2",
+   "model": "nfe.xml.panel",
+   "name": "Notas por mês",
+   "domain": [
+    "&",
+    "&",
+    [
+     "nfe_direction",
+     "in",
+     [
+      "out",
+      "internal"
+     ]
+    ],
+    [
+     "cfop_id.document_kind",
+     "in",
+     [
+      "sale",
+      "settlement"
+     ]
+    ],
+    [
+     "is_cancelled",
+     "=",
+     false
+    ]
+   ],
+   "context": {},
+   "measures": [
+    {
+     "id": "net_value",
+     "fieldName": "net_value",
+     "userDefinedName": "Vendido"
+    },
+    {
+     "id": "book_qty",
+     "fieldName": "book_qty",
+     "userDefinedName": "Livros"
+    },
+    {
+     "id": "__count",
+     "fieldName": "__count",
+     "userDefinedName": "Notas"
+    }
+   ],
+   "columns": [],
+   "rows": [
+    {
+     "fieldName": "file_create_date",
+     "granularity": "month",
+     "order": "asc"
+    }
+   ],
+   "fieldMatching": {
+    "f2a70000-0000-4000-8000-000000000001": {
+     "chain": "file_create_date",
+     "type": "date",
+     "offset": 0
+    },
+    "f2a70000-0000-4000-8000-000000000002": {
+     "chain": "partner_id",
+     "type": "many2one"
+    },
+    "f2a70000-0000-4000-8000-000000000003": {
+     "chain": "team_id",
+     "type": "many2one"
+    }
+   }
+  },
+  "3": {
+   "type": "ODOO",
+   "id": "3",
+   "formulaId": "3",
+   "model": "nfe.xml.panel",
+   "name": "Notas sem pedido",
+   "domain": [
+    "&",
+    "&",
+    "&",
+    [
+     "nfe_direction",
+     "in",
+     [
+      "out",
+      "internal"
+     ]
+    ],
+    [
+     "cfop_id.document_kind",
+     "in",
+     [
+      "sale",
+      "settlement"
+     ]
+    ],
+    [
+     "is_cancelled",
+     "=",
+     false
+    ],
+    "|",
+    [
+     "invoice_id",
+     "=",
+     false
+    ],
+    [
+     "invoice_id.invoice_line_ids.sale_line_ids",
+     "=",
+     false
+    ]
+   ],
+   "context": {},
+   "measures": [
+    {
+     "id": "net_value",
+     "fieldName": "net_value",
+     "userDefinedName": "Vendido"
+    },
+    {
+     "id": "book_qty",
+     "fieldName": "book_qty",
+     "userDefinedName": "Livros"
+    },
+    {
+     "id": "__count",
+     "fieldName": "__count",
+     "userDefinedName": "Notas"
+    }
+   ],
+   "columns": [],
+   "rows": [],
+   "fieldMatching": {
+    "f2a70000-0000-4000-8000-000000000001": {
+     "chain": "file_create_date",
+     "type": "date",
+     "offset": 0
+    },
+    "f2a70000-0000-4000-8000-000000000002": {
+     "chain": "partner_id",
+     "type": "many2one"
+    },
+    "f2a70000-0000-4000-8000-000000000003": {
+     "chain": "team_id",
+     "type": "many2one"
+    }
+   }
+  },
+  "4": {
+   "type": "ODOO",
+   "id": "4",
+   "formulaId": "4",
+   "model": "sale.report",
+   "name": "Pedidos, período anterior",
+   "domain": [
+    [
+     "state",
+     "in",
+     [
+      "sale",
+      "done"
+     ]
+    ]
+   ],
+   "context": {},
+   "measures": [
+    {
+     "id": "price_subtotal",
+     "fieldName": "price_subtotal",
+     "userDefinedName": "Vendido"
+    },
+    {
+     "id": "untaxed_amount_invoiced",
+     "fieldName": "untaxed_amount_invoiced",
+     "userDefinedName": "Faturado"
+    },
+    {
+     "id": "untaxed_amount_to_invoice",
+     "fieldName": "untaxed_amount_to_invoice",
+     "userDefinedName": "A faturar"
+    }
+   ],
+   "columns": [],
+   "rows": [],
+   "fieldMatching": {
+    "f2a70000-0000-4000-8000-000000000001": {
+     "chain": "order_date",
+     "type": "date",
+     "offset": -1
+    },
+    "f2a70000-0000-4000-8000-000000000002": {
+     "chain": "partner_id",
+     "type": "many2one"
+    },
+    "f2a70000-0000-4000-8000-000000000003": {
+     "chain": "team_id",
+     "type": "many2one"
+    }
+   }
+  },
+  "5": {
+   "type": "ODOO",
+   "id": "5",
+   "formulaId": "5",
+   "model": "nfe.xml.panel",
+   "name": "Notas, período anterior",
+   "domain": [
+    "&",
+    "&",
+    [
+     "nfe_direction",
+     "in",
+     [
+      "out",
+      "internal"
+     ]
+    ],
+    [
+     "cfop_id.document_kind",
+     "in",
+     [
+      "sale",
+      "settlement"
+     ]
+    ],
+    [
+     "is_cancelled",
+     "=",
+     false
+    ]
+   ],
+   "context": {},
+   "measures": [
+    {
+     "id": "net_value",
+     "fieldName": "net_value",
+     "userDefinedName": "Vendido"
+    },
+    {
+     "id": "book_qty",
+     "fieldName": "book_qty",
+     "userDefinedName": "Livros"
+    },
+    {
+     "id": "__count",
+     "fieldName": "__count",
+     "userDefinedName": "Notas"
+    }
+   ],
+   "columns": [],
+   "rows": [],
+   "fieldMatching": {
+    "f2a70000-0000-4000-8000-000000000001": {
+     "chain": "file_create_date",
+     "type": "date",
+     "offset": -1
+    },
+    "f2a70000-0000-4000-8000-000000000002": {
+     "chain": "partner_id",
+     "type": "many2one"
+    },
+    "f2a70000-0000-4000-8000-000000000003": {
+     "chain": "team_id",
+     "type": "many2one"
+    }
+   }
+  },
+  "6": {
+   "type": "ODOO",
+   "id": "6",
+   "formulaId": "6",
+   "model": "nfe.xml.panel",
+   "name": "Notas sem pedido, período anterior",
+   "domain": [
+    "&",
+    "&",
+    "&",
+    [
+     "nfe_direction",
+     "in",
+     [
+      "out",
+      "internal"
+     ]
+    ],
+    [
+     "cfop_id.document_kind",
+     "in",
+     [
+      "sale",
+      "settlement"
+     ]
+    ],
+    [
+     "is_cancelled",
+     "=",
+     false
+    ],
+    "|",
+    [
+     "invoice_id",
+     "=",
+     false
+    ],
+    [
+     "invoice_id.invoice_line_ids.sale_line_ids",
+     "=",
+     false
+    ]
+   ],
+   "context": {},
+   "measures": [
+    {
+     "id": "net_value",
+     "fieldName": "net_value",
+     "userDefinedName": "Vendido"
+    },
+    {
+     "id": "book_qty",
+     "fieldName": "book_qty",
+     "userDefinedName": "Livros"
+    },
+    {
+     "id": "__count",
+     "fieldName": "__count",
+     "userDefinedName": "Notas"
+    }
+   ],
+   "columns": [],
+   "rows": [],
+   "fieldMatching": {
+    "f2a70000-0000-4000-8000-000000000001": {
+     "chain": "file_create_date",
+     "type": "date",
+     "offset": -1
+    },
+    "f2a70000-0000-4000-8000-000000000002": {
+     "chain": "partner_id",
+     "type": "many2one"
+    },
+    "f2a70000-0000-4000-8000-000000000003": {
+     "chain": "team_id",
+     "type": "many2one"
+    }
+   }
+  },
+  "7": {
+   "type": "ODOO",
+   "id": "7",
+   "formulaId": "7",
+   "model": "sale.report",
+   "name": "Principais clientes",
+   "domain": [
+    "&",
+    [
+     "partner_id",
+     "!=",
+     false
+    ],
+    [
+     "state",
+     "in",
+     [
+      "sale",
+      "done"
+     ]
+    ]
+   ],
+   "context": {},
+   "measures": [
+    {
+     "id": "price_subtotal",
+     "fieldName": "price_subtotal",
+     "userDefinedName": "Vendido"
+    },
+    {
+     "id": "__count",
+     "fieldName": "__count",
+     "userDefinedName": "Pedidos"
+    }
+   ],
+   "columns": [],
+   "rows": [
+    {
+     "fieldName": "partner_id",
+     "order": "asc"
+    }
+   ],
+   "sortedColumn": {
+    "domain": [],
+    "order": "desc",
+    "measure": "price_subtotal"
+   },
+   "fieldMatching": {
+    "f2a70000-0000-4000-8000-000000000001": {
+     "chain": "order_date",
+     "type": "date",
+     "offset": 0
+    },
+    "f2a70000-0000-4000-8000-000000000002": {
+     "chain": "partner_id",
+     "type": "many2one"
+    },
+    "f2a70000-0000-4000-8000-000000000003": {
+     "chain": "team_id",
+     "type": "many2one"
+    }
+   }
+  },
+  "8": {
+   "type": "ODOO",
+   "id": "8",
+   "formulaId": "8",
+   "model": "sale.report",
+   "name": "Principais canais",
+   "domain": [
+    "&",
+    [
+     "team_id",
+     "!=",
+     false
+    ],
+    [
+     "state",
+     "in",
+     [
+      "sale",
+      "done"
+     ]
+    ]
+   ],
+   "context": {},
+   "measures": [
+    {
+     "id": "price_subtotal",
+     "fieldName": "price_subtotal",
+     "userDefinedName": "Vendido"
+    },
+    {
+     "id": "__count",
+     "fieldName": "__count",
+     "userDefinedName": "Pedidos"
+    }
+   ],
+   "columns": [],
+   "rows": [
+    {
+     "fieldName": "team_id",
+     "order": "asc"
+    }
+   ],
+   "sortedColumn": {
+    "domain": [],
+    "order": "desc",
+    "measure": "price_subtotal"
+   },
+   "fieldMatching": {
+    "f2a70000-0000-4000-8000-000000000001": {
+     "chain": "order_date",
+     "type": "date",
+     "offset": 0
+    },
+    "f2a70000-0000-4000-8000-000000000002": {
+     "chain": "partner_id",
+     "type": "many2one"
+    },
+    "f2a70000-0000-4000-8000-000000000003": {
+     "chain": "team_id",
+     "type": "many2one"
+    }
+   }
+  }
+ },
+ "pivotNextId": 9,
+ "customTableStyles": {},
+ "globalFilters": [
+  {
+   "id": "f2a70000-0000-4000-8000-000000000001",
+   "type": "date",
+   "label": "Período",
+   "defaultValue": "last_12_months"
+  },
+  {
+   "id": "f2a70000-0000-4000-8000-000000000002",
+   "type": "relation",
+   "label": "Cliente",
+   "modelName": "res.partner",
+   "defaultValueDisplayNames": []
+  },
+  {
+   "id": "f2a70000-0000-4000-8000-000000000003",
+   "type": "relation",
+   "label": "Canal de vendas",
+   "modelName": "crm.team",
+   "defaultValueDisplayNames": []
+  }
+ ],
+ "lists": {
+  "1": {
+   "id": "1",
+   "name": "Cotações",
+   "model": "sale.order",
+   "columns": [
+    "name",
+    "partner_id",
+    "user_id",
+    "amount_untaxed"
+   ],
+   "domain": [
+    "|",
+    [
+     "state",
+     "=",
+     "draft"
+    ],
+    [
+     "state",
+     "=",
+     "sent"
+    ]
+   ],
+   "context": {},
+   "orderBy": [
+    {
+     "name": "amount_untaxed",
+     "asc": false
+    }
+   ],
+   "fieldMatching": {
+    "f2a70000-0000-4000-8000-000000000001": {
+     "chain": "date_order",
+     "type": "datetime",
+     "offset": 0
+    },
+    "f2a70000-0000-4000-8000-000000000002": {
+     "chain": "partner_id",
+     "type": "many2one"
+    },
+    "f2a70000-0000-4000-8000-000000000003": {
+     "chain": "team_id",
+     "type": "many2one"
+    }
+   }
+  },
+  "2": {
+   "id": "2",
+   "name": "Pedidos de venda",
+   "model": "sale.order",
+   "columns": [
+    "name",
+    "partner_id",
+    "user_id",
+    "amount_untaxed"
+   ],
+   "domain": [
+    [
+     "state",
+     "not in",
+     [
+      "draft",
+      "sent",
+      "cancel"
+     ]
+    ]
+   ],
+   "context": {},
+   "orderBy": [
+    {
+     "name": "amount_untaxed",
+     "asc": false
+    }
+   ],
+   "fieldMatching": {
+    "f2a70000-0000-4000-8000-000000000001": {
+     "chain": "date_order",
+     "type": "datetime",
+     "offset": 0
+    },
+    "f2a70000-0000-4000-8000-000000000002": {
+     "chain": "partner_id",
+     "type": "many2one"
+    },
+    "f2a70000-0000-4000-8000-000000000003": {
+     "chain": "team_id",
+     "type": "many2one"
+    }
+   }
+  }
+ },
+ "listNextId": 3,
+ "chartOdooMenusReferences": {
+  "c2a70000-0000-4000-8000-000000000020": "sale.menu_reporting_sales",
+  "c2a70000-0000-4000-8000-000000000021": "sale.menu_reporting_sales",
+  "c2a70000-0000-4000-8000-000000000022": "sale.menu_sale_order_invoice",
+  "c2a70000-0000-4000-8000-000000000023": "liber_sales_dashboard.menu_notas_de_venda",
+  "c2a70000-0000-4000-8000-000000000024": "liber_sales_dashboard.menu_notas_sem_pedido",
+  "c2a70000-0000-4000-8000-000000000013": "liber_sales_dashboard.menu_notas_de_venda",
+  "c2a70000-0000-4000-8000-000000000011": "sale.menu_reporting_sales",
+  "c2a70000-0000-4000-8000-000000000012": "liber_sales_dashboard.menu_notas_de_venda",
+  "c2a70000-0000-4000-8000-000000000014": "sale.menu_reporting_sales"
+ }
+}

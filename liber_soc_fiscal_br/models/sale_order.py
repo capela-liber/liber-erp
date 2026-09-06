@@ -17,9 +17,27 @@ class SaleOrder(models.Model):
     """
     _inherit = 'sale.order'
 
+    # O DOMÍNIO É A TRAVA MAIS BARATA que existe: em vez de deixar escolher
+    # errado e depois recusar com uma mensagem, a lista já não oferece o que
+    # não cabe. Um pedido de venda não escolhe 5917 (remessa em consignação) e
+    # um Pedido C não escolhe 5102 (venda) -- porque o CFOP aqui não descreve
+    # a nota, ele DECIDE que documento isto é, e trocá-lo troca a identidade
+    # do pedido. Foi por essa porta que 21 pedidos de venda viraram
+    # consignação em agosto/2026, sem que ninguém conseguisse reconstituir o
+    # clique.
+    _CFOP_DE_CONSIGNACAO = ('consignment', 'consignment_return')
+    _CFOP_DE_VENDA = ('sale', 'settlement', 'bonus', 'event_out',
+                      'event_return', 'transfer', 'other')
+
     cfop_id = fields.Many2one(
         'nfe.cfop', string='CFOP', copy=False, index=True,
-        help="A operação fiscal desta saída. É ela que decide que documento isto é.")
+        domain="[('document_kind', 'in', "
+               "('consignment', 'consignment_return') if is_consignment else "
+               "('sale', 'settlement', 'bonus', 'event_out', 'event_return', "
+               "'transfer', 'other'))]",
+        help="A operação fiscal desta saída. É ela que decide que documento isto é. "
+             "A lista já vem recortada pelo que este pedido é: uma venda não "
+             "oferece remessa em consignação, e um Pedido C não oferece venda.")
     document_kind = fields.Selection(
         related='cfop_id.document_kind', store=True, string='Operation',
         help="Derivado do CFOP. Vazio = indefinido: ninguém adivinha.")
@@ -80,6 +98,47 @@ class SaleOrder(models.Model):
                 order.is_consignment = False
                 order.consignment_type = False
 
+    # ------------------------------------------------------------------
+    # A malandragem: venda comum vestida de consignação
+    # ------------------------------------------------------------------
+    # A trava acima protege o Pedido C -- ele não sai da posição fiscal da
+    # consignação sem alguém com responsabilidade fiscal. A porta INVERSA
+    # ficou aberta, e é a que o dono nomeou em 06/09/2026: "a única trava útil
+    # é não poder entrar em pedido de venda e meter uma posição fiscal de
+    # consignação. Uma malandragem."
+    #
+    # Ela é malandragem porque funciona: o pedido continua sendo um S, aparece
+    # na lista de Pedidos, conta na Análise de vendas -- e a NOTA sai como
+    # remessa, sem receita e sem imposto de venda. O documento diz uma coisa e
+    # o fiscal diz outra, e quem lê qualquer um dos dois lados sozinho não vê
+    # nada de errado.
+    #
+    # Quem é consignação de verdade passa: o Pedido C (`is_consignment`) e o
+    # S do acerto (`consignment_operation_id`), que são os dois documentos da
+    # operação.
+    @api.constrains('fiscal_position_id', 'is_consignment',
+                    'consignment_operation_id')
+    def _check_posicao_fiscal_de_consignacao(self):
+        for order in self:
+            if not order.fiscal_position_id or not order.company_id:
+                continue
+            if order.is_consignment or order.consignment_operation_id:
+                continue
+            empresa = order.company_id
+            posicoes = (empresa.consignment_shipment_fiscal_position_id
+                        | empresa.consignment_sale_fiscal_position_id
+                        | empresa.consignment_return_fiscal_position_id)
+            if order.fiscal_position_id in posicoes:
+                raise UserError(_(
+                    "%(order)s is a sales order and cannot carry the "
+                    "consignment fiscal position %(fp)s.\n\n"
+                    "The books would leave on a remessa note, with no revenue "
+                    "and no sales tax, while the order still counts as a sale "
+                    "in Sales Analysis. Consignment is the Consignment "
+                    "Settlement's document, not a fiscal position you put on "
+                    "a sale.",
+                    order=order.name, fp=order.fiscal_position_id.display_name))
+
     @api.constrains('cfop_id', 'is_consignment')
     def _check_cfop_matches_document(self):
         for order in self:
@@ -92,6 +151,16 @@ class SaleOrder(models.Model):
                 raise UserError(_(
                     "%(order)s carries CFOP %(cfop)s, a consignment shipment: the books "
                     "stay ours, on the customer's shelf. It has to be a Pedido C.",
+                    order=order.name, cfop=order.cfop_id.code))
+            # A metade que faltava: um Pedido C com CFOP de VENDA. O erro de
+            # agosto/2026 saiu por aqui -- o pedido ficava consignado, a nota
+            # saía como remessa e o dinheiro nunca aparecia no faturamento.
+            if kind == 'sale' and order.is_consignment:
+                raise UserError(_(
+                    "%(order)s is a Pedido C but carries CFOP %(cfop)s, a sale. "
+                    "On a consignment shipment the books stay ours: the sale only "
+                    "happens at the Settlement. Pick a consignment CFOP, or make "
+                    "this a sales order.",
                     order=order.name, cfop=order.cfop_id.code))
             if kind in ('bonus', 'event_out', 'event_return') and order.is_consignment:
                 rotulo = dict(

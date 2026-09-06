@@ -28,10 +28,14 @@
         noutras telas — a página do produto, o carimbo da nota do painel de
         NFe — seguem lendo como antes, e cada um já tem a sua própria trava.
     -->
+    <!-- A casa pediu esta ordem na tela inicial, e ela é a dos canais de
+         fora para dentro: Dropbox(73), Drive(74), GitHub(75), Metabooks(76),
+         Amazon(77), Olist(78). Mexer numa destas sequências desarruma a fila
+         inteira — as seis andam juntas. -->
     <menuitem id="menu_olist_root"
               name="Olist"
               web_icon="liber_olist,static/description/icon.png"
               groups="liber_olist.group_olist_operador,base.group_system"
-              sequence="90"/>
+              sequence="78"/>
 
 </odoo>

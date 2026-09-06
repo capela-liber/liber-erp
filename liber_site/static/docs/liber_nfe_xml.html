@@ -90,19 +90,7 @@
       <div class="callout note"><span class="title">Por que não a validação do Odoo</span><p>O Odoo tem o módulo <code>base_vat</code>, que também valida CPF e <abbr class="sigla" title="Cadastro Nacional da Pessoa Jurídica: o número que identifica a empresa.">CNPJ</abbr>. Ele não é usado aqui por duas razões: ele <em>desfaz</em> a pontuação a cada gravação, e valida como <strong>impedimento</strong> — um cadastro migrado com documentos irregulares deixaria de poder ser salvo. Aqui a conferência avisa e deixa passar.</p></div>
 
       <h2 id="configuracao">Configuração</h2>
-      <p>Para importar por ZIP não é preciso configurar nada: instale o módulo e importe. Duas configurações são opcionais:</p>
-
-      <h3 id="config-sefaz">Sincronização com a <abbr class="sigla" title="Secretaria da Fazenda: o fisco estadual, que autoriza ou rejeita as notas.">SEFAZ</abbr> (opcional)</h3>
-      <p>O sistema pode baixar sozinho, todos os dias, as notas emitidas contra as suas empresas (o serviço de distribuição de documentos fiscais da <abbr class="sigla" title="Secretaria da Fazenda: o fisco estadual, que autoriza ou rejeita as notas.">SEFAZ</abbr>). Para cada empresa que deve participar:</p>
-      <ol class="steps">
-        <li>Abra <span class="menupath">Definições<i>‣</i>Usuários e empresas<i>‣</i>Empresas</span> e escolha a empresa.</li>
-        <li>Na aba <b><abbr class="sigla" title="Secretaria da Fazenda: o fisco estadual, que autoriza ou rejeita as notas.">SEFAZ</abbr> (DFe)</b>, marque <span class="field">SEFAZ DFe Sync</span>.</li>
-        <li>Carregue o <span class="field">Certificado A1 (.pfx)</span> da empresa e informe a <span class="field">Senha do certificado</span>.</li>
-        <li>Deixe o <span class="field">Último <abbr class="sigla" title="Número Sequencial Único: a posição na fila de documentos que a SEFAZ distribui.">NSU</abbr></span> como está. Ele é o marcador de "até onde já baixamos"; zerá-lo faz o sistema baixar de novo toda a janela que a <abbr class="sigla" title="Secretaria da Fazenda: o fisco estadual, que autoriza ou rejeita as notas.">SEFAZ</abbr> guarda (cerca de 90 dias).</li>
-      </ol>
-      <div class="callout note"><span class="title">Nota</span>
-        <p>A senha do certificado fica gravada no banco de dados. Restrinja o acesso às configurações de empresa a quem realmente precisa.</p>
-      </div>
+      <p>Para importar por ZIP não é preciso configurar nada: instale o módulo e importe. Uma configuração é opcional:</p>
 
       <h3 id="config-cfop">Tabela de <abbr class="sigla" title="Código Fiscal de Operações e Prestações: diz a natureza fiscal de cada item da nota.">CFOP</abbr></h3>
       <p>O módulo instala uma tabela de <abbr class="sigla" title="Código Fiscal de Operações e Prestações: diz a natureza fiscal de cada item da nota.">CFOPs</abbr> e classifica os códigos mais comuns do dia a dia da editora (consignação, acerto, devolução, bonificação, feira, venda). Quando um XML chega com um CFOP que a tabela não conhece, o código é <b>criado automaticamente, sem classificação</b>, e fica aguardando que alguém diga o que ele significa — assim a nota nunca desaparece das análises por causa de um código novo.</p>
@@ -139,23 +127,6 @@
       <figure class="shot">
         <img src="img/doc-liber_nfe_xml-form.png" alt="Formulário de uma nota no painel NFe XML, com dados fiscais do emitente e destinatário, chave de acesso e a lista de itens extraída do XML">
         <figcaption>A nota processada: identificação, dados fiscais de emitente e destinatário e os itens lidos do XML.</figcaption>
-      </figure>
-
-      <h2 id="sefaz">Baixar notas direto da SEFAZ</h2>
-      <p>Com a sincronização configurada (<a href="#config-sefaz">acima</a>), um agendamento diário consulta a <abbr class="sigla" title="Secretaria da Fazenda: o fisco estadual, que autoriza ou rejeita as notas.">SEFAZ</abbr> para cada empresa habilitada e importa o que houver de novo. Para acompanhar ou disparar na hora:</p>
-      <ol class="steps">
-        <li>Abra <span class="menupath">Faturamento<i>‣</i>NFe XML<i>‣</i>SEFAZ</span>.</li>
-        <li>Cada linha é uma varredura: quando rodou, para qual empresa, quantos documentos vieram, quantas <abbr class="sigla" title="Nota Fiscal eletrônica: o documento fiscal da venda ou da remessa, autorizado pela SEFAZ.">NF-e</abbr> novas entraram, quantos cancelamentos foram registrados e quantas eram repetidas.</li>
-        <li>Para não esperar o horário do agendamento, clique em <b>Sincronizar agora</b> no topo da lista.</li>
-      </ol>
-      <p>As notas baixadas entram no mesmo painel <abbr class="sigla" title="Nota Fiscal eletrônica: o documento fiscal da venda ou da remessa, autorizado pela SEFAZ.">NFe</abbr> XML das demais, com a mesma trava de duplicidade; a lista <abbr class="sigla" title="Secretaria da Fazenda: o fisco estadual, que autoriza ou rejeita as notas.">SEFAZ</abbr> é só o diário de bordo da sincronização. A empresa dona de cada nota é deduzida do próprio XML, pelo <abbr class="sigla" title="Cadastro Nacional da Pessoa Jurídica: o número que identifica a empresa.">CNPJ</abbr>.</p>
-      <div class="callout note"><span class="title">Nota</span>
-        <p>A <abbr class="sigla" title="Secretaria da Fazenda: o fisco estadual, que autoriza ou rejeita as notas.">SEFAZ</abbr> limita a frequência de consultas. Se uma varredura terminar com a situação <b>Rate Limited</b>, é normal: o serviço pediu uma pausa, e a próxima varredura continua de onde parou — o marcador <span class="field">Último <abbr class="sigla" title="Número Sequencial Único: a posição na fila de documentos que a SEFAZ distribui.">NSU</abbr></span> da empresa guarda o ponto.</p>
-      </div>
-
-      <figure class="shot">
-        <img src="img/doc-liber_nfe_xml-sefaz.png" alt="Lista de varreduras SEFAZ com data, empresa, situação e contadores de documentos, NF-e importadas e cancelamentos">
-        <figcaption>O diário das varreduras <abbr class="sigla" title="Secretaria da Fazenda: o fisco estadual, que autoriza ou rejeita as notas.">SEFAZ</abbr>: cada linha diz o que a sincronização daquele dia trouxe.</figcaption>
       </figure>
 
       <h2 id="faturas">Criar faturas a partir do XML</h2>
@@ -216,35 +187,6 @@
           <li><a href="liber_nfe_remessa.html">Notas de remessa</a> — o outro lado fiscal: os documentos que a casa gera e que nunca cobram ninguém.</li>
         </ul>
       </div>
-
-      <!-- prefixos:begin -->
-      <h2 id="prefixos">Glossário</h2>
-      <p>Todo documento do sistema carrega um prefixo na numeração — CO/2026/00001 é um acerto, AT/2026/00042 é um chamado. A lista é a mesma em todos os manuais:</p>
-      <div class="tablewrap"><table>
-        <tr><th>Prefixo</th><th>O que é</th></tr>
-        <tr><td><code>C</code></td><td>Pedido de consignação: o pedido que põe livros na prateleira do cliente — C00001, no lugar do S da venda comum.</td></tr>
-        <tr><td><code>CO/</code></td><td>Consignação, o documento do acerto: registra o que o cliente vendeu e vira venda — CO/2026/00001.</td></tr>
-        <tr><td><code>CR/</code></td><td>Retorno de consignação: o documento que pede a devolução dos exemplares da prateleira — CR/2026/00001.</td></tr>
-        <tr><td><code>CA</code></td><td>Auditoria de consignação: reconstrói o saldo da prateleira do cliente pelas notas fiscais e registra o ajuste — CA00001.</td></tr>
-        <tr><td><code>CP/</code></td><td>Campanha de consignação: o sortimento-alvo por canal — quantos exemplares de cada título as prateleiras devem ter — CP/2026/0001.</td></tr>
-        <tr><td><code>AC/</code></td><td>Acordo de Consignação: o contrato com a livraria, dono da prateleira — AC/2026/00001.</td></tr>
-        <tr><td><code>COM/OUT/</code></td><td>A série da remessa de consignação ao cliente, do armazém à livraria — COM/OUT/2026/00001, no espelho do WH/OUT.</td></tr>
-        <tr><td><code>MP/OUT/</code></td><td>A série das entregas de marketplace (Olist): o pacote de pessoa física, na caixa de despacho própria do depósito — MP/OUT/2026/00001.</td></tr>
-        <tr><td><code>COM/MOV/</code></td><td>A série dos fluxos internos de prateleira da consignação — COM/MOV/2026/00001.</td></tr>
-        <tr><td><code>COM/IN/</code></td><td>A série do retorno de consignação, da prateleira ao armazém — COM/IN/2026/00001, no espelho do WH/IN.</td></tr>
-        <tr><td><code>REM/</code></td><td>Remessa: a nota de simples remessa, sem cobrança — a numeração vem do diário fiscal REM.</td></tr>
-        <tr><td><code>COL/</code></td><td>Coleta: o lote do pedido de coleta às transportadoras — COL/2026/00001.</td></tr>
-        <tr><td><code>AT/</code></td><td>Atendimento: o chamado nascido do e-mail comercial — AT/2026/00001.</td></tr>
-        <tr><td><code>MBX/</code></td><td>O lote de envio de metadados à Metabooks — MBX/2026/00001.</td></tr>
-        <tr><td><code>Impostos de Direitos Autorais/</code></td><td>O lote da fatura acumuladora do IRRF retido dos autores no mês.</td></tr>
-        <tr><td><code>Royalties entre Empresas/</code></td><td>O lote da fatura acumuladora de royalties entre as empresas da casa.</td></tr>
-        <tr><th colspan="2">Do próprio Odoo</th></tr>
-        <tr><td><code>S</code></td><td>Pedido de venda comum — S00001; o pedido de consignação usa o C no lugar.</td></tr>
-        <tr><td><code>WH/OUT</code></td><td>Entrega comum do armazém: a transferência de saída padrão do Odoo.</td></tr>
-        <tr><td><code>WH/IN</code></td><td>Recebimento do armazém: a transferência de entrada padrão do Odoo.</td></tr>
-      </table></div>
-      <p>Bases antigas guardam transferências nas séries <code>COM/</code> e <code>RET/</code>, de antes da separação por direção — o histórico não é renumerado.</p>
-      <!-- prefixos:end -->
 
       <nav class="pager" id="pager"></nav>
     </article>

@@ -34,6 +34,7 @@ M2O_NAME = 'm2o_name'
 COUNTRY = 'country'    # res.country -> ISO code
 AUTHORS = 'authors'    # book_auther_ids filtered by ONIX contributor role
 BISAC = 'bisac'
+THEMA = 'thema'        # metabooks.thema.code -> o código, não a ementa
 AVAILABILITY = 'availability'
 
 # (odoo field, Metabooks column, kind, extra)
@@ -67,13 +68,31 @@ FIELD_MAP = (
     ('metabooks_country_of_manufacture', 'País de origem', COUNTRY, None),
     ('metabooks_keywords', 'Palavra-chave', TEXT, None),
     ('bisac_code_ids', 'BISAC', BISAC, None),
+    ('metabooks_thema_ids', 'Categoria Thema', THEMA, None),
+    ('metabooks_thema_qualifier_ids', 'Qualificador Thema', THEMA, None),
     ('synopsys', 'Sinopse', TEXT, None),
     ('list_price', 'R$', PRICE, None),
     ('metabooks_image_url', 'Capa', URL, None),
 )
 
-# Fields whose edit marks a book as pending export. Exactly the mapped ones.
-WATCHED_FIELDS = frozenset(field for field, _c, _k, _e in FIELD_MAP)
+# O principal de cada classificação viaja NA MESMA coluna da sua lista -- é o
+# primeiro código dela --, então não ganha linha no FIELD_MAP (BY_COLUMN é
+# indexado por coluna e a segunda linha apagaria a primeira). Entra aqui, para
+# que editá-lo também marque o livro como pendente e a coluna seja recalculada.
+COMPANION_FIELDS = {
+    'bisac_code': 'BISAC',
+    'metabooks_thema_id': 'Categoria Thema',
+}
+
+# Campos de texto livre. Vazio neles se escreve `False`, nunca `''` -- ver
+# `ProductTemplate._metabooks_vazio_e_nulo`.
+TEXT_FIELDS = frozenset(
+    [field for field, _c, kind, _e in FIELD_MAP if kind in (TEXT, CODE)]
+    + ['synopsys'])
+
+# Fields whose edit marks a book as pending export: os mapeados e os companheiros.
+WATCHED_FIELDS = frozenset(
+    [field for field, _c, _k, _e in FIELD_MAP] + list(COMPANION_FIELDS))
 
 # One column can be fed by more than one field (four contributor roles all read
 # book_auther_ids), so index by column rather than the other way round.
@@ -83,4 +102,7 @@ BY_COLUMN = {column: (field, kind, extra)
 
 def columns_for(field):
     """Columns a given Odoo field feeds."""
-    return [column for f, column, _k, _e in FIELD_MAP if f == field]
+    colunas = [column for f, column, _k, _e in FIELD_MAP if f == field]
+    if field in COMPANION_FIELDS:
+        colunas.append(COMPANION_FIELDS[field])
+    return colunas

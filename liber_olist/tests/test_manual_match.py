@@ -212,7 +212,7 @@ class TestOlistManualMatch(TransactionCase):
         self._pull()
         linha = self._linha('5001')
         pedido = self.env['olist.order'].create({
-            'account_id': self.account.id, 'olist_id': '777',
+            'account_id': self.account.id, 'valor': 100.0, 'olist_id': '777',
             'numero': '777', 'situacao': 'Entregue',
             'data_pedido': '2026-02-02',
             'detalhe_lido_em': '2026-02-02 00:00:00'})

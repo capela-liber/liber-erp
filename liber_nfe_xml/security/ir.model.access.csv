@@ -5,4 +5,5 @@ access_nfe_xml_items,access_nfe_xml_items,model_nfe_xml_items,base.group_user,1,
 access_import_xml_file,access_import_xml_file,model_import_xml_file,base.group_user,1,1,1,1
 access_nfe_xml_tags,access_nfe_xml_tags,model_nfe_xml_tags,base.group_user,1,1,1,1
 access_nfe_cfop,access_nfe_cfop,model_nfe_cfop,base.group_user,1,1,1,1
-access_nfe_sefaz_sweep,access_nfe_sefaz_sweep,model_nfe_sefaz_sweep,base.group_user,1,1,1,1
+access_nfe_xml_export,access_nfe_xml_export,model_nfe_xml_export,base.group_user,1,1,1,1
+access_nfe_xml_export_month,access_nfe_xml_export_month,model_nfe_xml_export_month,base.group_user,1,1,1,1

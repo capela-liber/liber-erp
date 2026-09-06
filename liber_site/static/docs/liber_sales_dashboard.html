@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<script>
+/* Servido por /liber_site/static/docs/, este arquivo vem com uma semana de
+   cache e o docs.js sem versão -- e o índice monta a lista a partir dele.
+   A rota /liber/docs/ serve o mesmo arquivo sem cache e com ?v=<mtime> nos
+   assets. Quem chegar pelo caminho antigo vai para lá antes de a página
+   montar qualquer coisa. */
+(function () {
+  var antigo = "/liber_site/static/docs/";
+  if (location.pathname.indexOf(antigo) === 0) {
+    location.replace("/liber/docs/" + location.pathname.slice(antigo.length) +
+                     location.search + location.hash);
+  }
+})();
+</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Painel de Vendas — Manuais do Liber</title>
+<link rel="icon" type="image/png" href="../logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;600;700&display=swap">
+<link rel="stylesheet" href="docs.css">
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="../index.html"><img src="../logo.png" alt="">liber<span>.</span></a>
+    <span class="doc-tag">Manuais</span>
+    <nav><a href="index.html">Índice</a><a href="../index.html">Site</a></nav>
+  </div>
+</header>
+<div class="wrap">
+  <div class="layout">
+    <aside class="sidebar" id="sidebar"></aside>
+    <article class="doc">
+      <div class="breadcrumb"><a href="index.html">Manuais</a><span class="sep">›</span>Vendas<span class="sep">›</span>Painel de Vendas</div>
+      <h1>Painel de Vendas</h1>
+      <p class="lead">Uma editora vende duas vezes: quando o pedido é feito e quando a nota fiscal sai.
+      Os dois números nunca batem ao centavo, e não devem — o pedido tem a data comercial e o canal;
+      a nota tem a data da NF-e e o que de fato saiu com documento. O painel de Vendas mostra os dois,
+      um debaixo do outro, e diz quanto um está longe do outro.</p>
+
+      <h2 id="abrir">Onde está o painel?</h2>
+      <p>Em <span class="menupath">Painéis<i>‣</i>Vendas<i>‣</i>Vendas</span>. É o painel de Vendas do próprio Odoo,
+      com o conteúdo reescrito — não há uma segunda entrada. Quem vê é quem tem o perfil de
+      <span class="field">Gerente de Vendas</span>.</p>
+      <figure class="shot">
+        <img src="img/doc-liber_sales_dashboard-painel.png"
+             alt="O painel de Vendas: cinco cartões com a comparação, a linha do Faturamento e as vendas por canal">
+        <figcaption>Em cima, os cinco cartões e o Faturamento; embaixo, o vendido pelos pedidos e o vendido com nota, por canal.</figcaption>
+      </figure>
+
+      <h2 id="cartoes">O que cada cartão soma?</h2>
+      <p>Os cartões em lilás mais forte vêm da <strong>nota fiscal</strong>; os mais claros, do <strong>pedido</strong>.
+      Cada um compara com o período anterior ("↑ 12% vs. anterior") e abre, ao clique, a lista de onde o número saiu —
+      já com o período do painel.</p>
+      <div class="tablewrap"><table>
+        <thead><tr><th>Cartão</th><th>O que soma</th><th>O clique abre</th></tr></thead>
+        <tbody>
+          <tr><td><span class="field">Faturas</span></td><td>Notas fiscais de venda e de acerto emitidas por nós, pelo líquido dos itens (capa menos desconto, sem frete), não canceladas.</td><td>Vendas ‣ Notas fiscais ‣ Notas de venda</td></tr>
+          <tr><td><span class="field">Pedidos</span></td><td>Pedidos de venda confirmados, pela data do pedido.</td><td>Análise de vendas</td></tr>
+          <tr><td><span class="field">Pedidos fechados</span></td><td>A parte dos pedidos que já virou fatura.</td><td>Análise de vendas</td></tr>
+          <tr><td><span class="field">Pedidos abertos</span></td><td>Pedidos menos Pedidos fechados: o que foi vendido e ainda não foi faturado.</td><td>Pedidos a faturar</td></tr>
+          <tr><td><span class="field">Faturas sem pedido</span></td><td>Notas de venda cuja fatura não está ligada a pedido nenhum, ou que não têm fatura.</td><td>Vendas ‣ Notas fiscais ‣ Notas sem pedido</td></tr>
+        </tbody>
+      </table></div>
+      <p>"Faturas" é o número do gerente de vendas — quanto vendemos no mês. É a mesma régua do
+      Painel de Notas Fiscais: se um dia os dois discordarem, a diferença é frete.</p>
+
+      <h2 id="graficos">Os dois relógios</h2>
+      <p>Logo abaixo dos cartões, a linha <span class="field">Faturamento</span> é a evolução das Faturas mês a mês.
+      Depois vêm os dois gráficos de barras, por canal de vendas: <span class="field">Vendido pelos pedidos</span>
+      (data do pedido) e <span class="field">Vendido com nota</span> (data da nota). Uma barra que existe num e não
+      no outro é normal — o pedido de 30 de agosto sai com nota em setembro. Um clique numa barra abre a lista daquele
+      mês e daquele canal.</p>
+      <p>Mais abaixo ficam as tabelas mês a mês (vendido, faturado e a faturar pelos pedidos; vendido, livros e notas
+      pelas notas), o gráfico de vendas mensais por pedido e as listas de principais cotações, pedidos, clientes e canais.</p>
+
+      <h2 id="filtros">Os filtros</h2>
+      <div class="tablewrap"><table>
+        <thead><tr><th>Filtro</th><th>O que faz</th></tr></thead>
+        <tbody>
+          <tr><td><span class="field">Período</span></td><td>Move os dois relógios, cada um pela sua data. "Últimos 12 meses" são os doze meses fechados antes do atual — o mês corrente fica de fora.</td></tr>
+          <tr><td><span class="field">Cliente</span></td><td>Recorta pedidos e notas de um cliente.</td></tr>
+          <tr><td><span class="field">Canal de vendas</span></td><td>Recorta por canal (Online, Livrarias, Feiras…).</td></tr>
+        </tbody>
+      </table></div>
+      <p>A empresa é a do seletor no topo da tela: com duas empresas marcadas, os cartões somam as duas.</p>
+
+      <h2 id="notas">As listas de notas fiscais</h2>
+      <p>Em <span class="menupath">Vendas<i>‣</i>Notas fiscais</span> há duas listas com o mesmo recorte dos cartões:
+      <span class="field">Notas de venda</span> (o universo do cartão Faturas) e <span class="field">Notas sem pedido</span>.
+      As duas abrem agrupadas por mês, com a coluna <span class="field">Valor líquido</span> somada no rodapé — é esse
+      rodapé que tem de bater com o cartão.</p>
+      <figure class="shot">
+        <img src="img/doc-liber_sales_dashboard-notas-sem-pedido.png"
+             alt="A lista Notas sem pedido, agrupada por mês, com o Valor líquido somado no rodapé">
+        <figcaption>Notas sem pedido: cada linha é uma venda que saiu com nota sem passar por pedido — venda direta, ou uma fatura que perdeu o vínculo.</figcaption>
+      </figure>
+      <p>Uma nota nesta lista pede uma de duas coisas: ou é venda direta (e está certo), ou a fatura dela existe e
+      não foi amarrada ao pedido — nesse caso o pedido continua "a faturar" do outro lado. Amarrar é abrir a fatura
+      e preencher, em cada linha, o pedido de venda que ela paga.</p>
+    </article>
+  </div>
+</div>
+<script src="docs.js"></script>
+</body>
+</html>

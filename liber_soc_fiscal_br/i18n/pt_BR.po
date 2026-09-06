@@ -410,3 +410,21 @@ msgstr ""
 msgid "Wire consignment shelves"
 msgstr "Conectar prateleiras de consignação"
 
+#. module: liber_soc_fiscal_br
+#. odoo-python
+#: code:addons/liber_soc_fiscal_br/models/sale_order.py:0
+msgid ""
+"%(order)s is a sales order and cannot carry the consignment fiscal position "
+"%(fp)s.\n"
+"\n"
+"The books would leave on a remessa note, with no revenue and no sales tax, "
+"while the order still counts as a sale in Sales Analysis. Consignment is the "
+"Consignment Settlement's document, not a fiscal position you put on a sale."
+msgstr ""
+"%(order)s é um pedido de venda e não pode levar a posição fiscal de "
+"consignação %(fp)s.\n"
+"\n"
+"Os livros sairiam numa nota de remessa, sem receita e sem imposto de venda, "
+"enquanto o pedido continuaria contando como venda na Análise de Vendas. "
+"Consignação é o documento da Operação de Consignação, não uma posição "
+"fiscal que se põe numa venda."

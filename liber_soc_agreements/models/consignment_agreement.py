@@ -111,6 +111,43 @@ class ConsignmentAgreement(models.Model):
             agr.on_shelf_qty = int(round(qty))
             agr.on_shelf_product_count = len(products)
 
+    # ------------------------------------------------------------------
+    # A casa nao consigna para si mesma
+    # ------------------------------------------------------------------
+    # Em agosto/2026 abriram-se dois contratos em que o CLIENTE era a propria
+    # empresa: o 275 (Edlab Press, 24/08) e o 285 (n-1, 27/08). Cada um ganhou
+    # sua prateleira, e um ajuste de auditoria empurrou o estoque da casa para
+    # dentro dela: 6.711 e 20.691 exemplares, R$ 2,08 milhoes a preco de capa.
+    #
+    # O estrago nao e contabil, e operacional: livro em prateleira de
+    # consignacao nao esta disponivel para vender. O armazem da n-1 foi a zero
+    # nos titulos afetados e cinco pedidos da Amazon ficaram sem atendimento
+    # com o livro no predio.
+    #
+    # Consignacao e um acordo entre DUAS partes: o livro continua nosso, mas
+    # esta em poder de outro. Cliente igual a fornecedor nao e acordo nenhum:
+    # e o estoque parado no proprio armazem, com outro nome.
+    #
+    # O recorte e ESTREITO de proposito. Uma empresa do grupo consignar para
+    # OUTRA e legitimo e acontece: a Edlab Press pode deixar livro na
+    # prateleira da n-1, e ali ha duas partes de verdade, com estoque que
+    # muda de maos. O que nao existe e a empresa consignar para ela mesma.
+    @api.constrains('partner_id', 'company_id')
+    def _check_partner_nao_e_a_propria_empresa(self):
+        for agr in self:
+            parceiro = agr.partner_id.commercial_partner_id or agr.partner_id
+            if agr.company_id and parceiro == agr.company_id.partner_id:
+                raise ValidationError(_(
+                    "%(partner)s is the company that owns this agreement: "
+                    "there is no consignment to open with itself.\n\n"
+                    "A consignment agreement puts our books in SOMEONE ELSE'S "
+                    "hands. Books consigned to ourselves leave the warehouse "
+                    "on paper and stop being available to sell, while sitting "
+                    "on the same shelf they always were. Consigning to "
+                    "ANOTHER company of the group is fine: there the books "
+                    "really do change hands.",
+                    partner=agr.partner_id.display_name))
+
     @api.constrains('partner_id', 'company_id', 'state')
     def _check_single_agreement(self):
         # At most one OPEN contract per customer (per company). A closed contract
@@ -158,8 +195,15 @@ class ConsignmentAgreement(models.Model):
         for agr in self:
             if not agr.location_id:
                 agr.location_id = agr._create_shelf_location()
-            agr.partner_id.consignment_location_id = agr.location_id
-            agr.partner_id.allow_consignment = True
+            # sudo pelo mesmo motivo da prateleira: os dois campos são a
+            # contabilidade do contrato na ficha do cliente, não cadastro de
+            # contato. Quem opera consignação pode não ter direito de GRAVAR
+            # em res.partner (o Assistente Comercial não cadastra contato), e
+            # sem isto a ativação morreria no passo seguinte ao do local.
+            agr.partner_id.sudo().write({
+                'consignment_location_id': agr.location_id.id,
+                'allow_consignment': True,
+            })
             agr.state = 'active'
 
     def action_suspend(self):
@@ -186,14 +230,20 @@ class ConsignmentAgreement(models.Model):
     def _create_shelf_location(self):
         self.ensure_one()
         parent = self._get_consignment_root_location()
-        return self.env['stock.location'].create({
+        # sudo DELIBERADO, pelo mesmo motivo da raiz CO (ver
+        # stock_location._soc_consignment_root): a prateleira é consequência de
+        # ativar o contrato, não uma localização que o Comercial abriu à mão.
+        # O que ele pode criar aqui é exatamente uma prateleira, deste parceiro,
+        # sob a raiz da empresa dele -- os valores são todos daqui, nenhum vem
+        # da tela. Ativar o contrato é o direito; o local é o efeito.
+        return self.env['stock.location'].sudo().create({
             'name': self.partner_id.name,
             'usage': 'internal',
             'location_id': parent.id,
             'company_id': self.company_id.id,
             'is_consignment_shelf': True,
             'consignment_partner_id': self.partner_id.id,
-        })
+        }).sudo(False)
 
     def _get_consignment_root_location(self):
         self.ensure_one()

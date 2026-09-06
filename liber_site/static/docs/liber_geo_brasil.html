@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<script>
+/* Servido por /liber_site/static/docs/, este arquivo vem com uma semana de
+   cache e o docs.js sem versão -- e o índice monta a lista a partir dele. Foi
+   assim que a emissão de NF-e e o manual da Amazon ficaram invisíveis: o
+   catálogo em cache era anterior aos dois. A rota /liber/docs/ serve o mesmo
+   arquivo sem cache e com ?v=<mtime> nos assets. Quem chegar pelo caminho
+   antigo (favorito, link velho, resultado de busca) vai para lá antes de a
+   página montar qualquer coisa. */
+(function () {
+  var antigo = "/liber_site/static/docs/";
+  if (location.pathname.indexOf(antigo) === 0) {
+    location.replace("/liber/docs/" + location.pathname.slice(antigo.length) +
+                     location.search + location.hash);
+  }
+})();
+</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>O mapa do Brasil no dashboard — Manuais do Liber</title>
+<link rel="icon" type="image/png" href="../logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;600;700&display=swap">
+<link rel="stylesheet" href="docs.css">
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="../index.html"><img src="../logo.png" alt="">liber<span>.</span></a>
+    <span class="doc-tag">Manuais</span>
+    <nav><a href="index.html">Índice</a><a href="../index.html">Site</a></nav>
+  </div>
+</header>
+<div class="wrap">
+  <div class="layout">
+    <aside class="sidebar" id="sidebar"></aside>
+    <article class="doc">
+      <div class="breadcrumb"><a href="index.html">Manuais</a><span class="sep">›</span>Gestão<span class="sep">›</span>O mapa do Brasil no dashboard</div>
+      <h1>O mapa do Brasil no dashboard</h1>
+      <p class="lead">O card de vendas por país vira card por <abbr class="sigla" title="Unidade Federativa: o estado, na sigla de duas letras.">UF</abbr>, com o desenho das 27 unidades embarcado no módulo — e as tabelas Top passam a contar exemplares, não pedidos.</p>
+
+      <h2 id="visao-geral">Visão geral</h2>
+      <p>O mapa-múndi não diz nada para quem vende no Brasil. O card <span class="field">Top
+      Countries</span> do dashboard de Vendas pintava o país inteiro de azul e deixava a pergunta de
+      pé: <em>onde</em>, no Brasil, está o cliente. Este módulo troca o mundo pelas 27 unidades da
+      federação — e, de carona, troca a contagem de pedidos pela de exemplares, que é o que uma
+      editora conta.</p>
+      <p>São duas peças, independentes de propósito: uma <strong>região de mapa</strong> nova,
+      disponível a qualquer gráfico geo do sistema, e um <strong>ajuste de leitura</strong> do
+      dashboard de Vendas que passa a usá-la.</p>
+
+      <h2 id="configuracao">Configuração</h2>
+      <p>Nenhuma. Instalado o módulo, o dashboard de Vendas já abre por <abbr class="sigla" title="Unidade Federativa: o estado, na sigla de duas letras.">UF</abbr>, e a região
+      <span class="field">Brasil (UF)</span> passa a existir na lista de regiões de qualquer
+      gráfico geo montado à mão. Não há tela de definições, nem interruptor, nem dado a
+      carregar.</p>
+      <p>O desenho das <abbr class="sigla" title="Unidade Federativa: o estado, na sigla de duas letras.">UFs</abbr> é versionado dentro do módulo, gerado do <abbr class="sigla" title="Instituto Brasileiro de Geografia e Estatística.">IBGE</abbr>
+      uma vez e guardado — <strong>a tela nunca fala com o IBGE</strong>. O casamento entre o dado e
+      o desenho é feito pela sigla do estado: a etiqueta que vem do Odoo ("São Paulo (BR)") é
+      reduzida a "SP" antes de pintar.</p>
+
+      <h2 id="dia-a-dia">O dia a dia</h2>
+      <p>Abra <span class="menupath">Vendas<i>‣</i>Relatórios<i>‣</i>Dashboard</span>. O card que
+      antes dizia "países" agora tem duas abas, e as duas falam de <abbr class="sigla" title="Unidade Federativa: o estado, na sigla de duas letras.">UF</abbr>:</p>
+      <ul>
+        <li><strong>O mapa</strong> pinta as 27 unidades pela intensidade da venda. Cliente de fora
+        do Brasil não some do banco — some do mapa, que é exatamente o que se pediu ao trocar o
+        mundo pelo país.</li>
+        <li><strong>A aba Top 10</strong>, ao lado, é a mesma informação em tabela. Ela não é um
+        gráfico: é a planilha que está por baixo do card, e por isso <em>também</em> precisou virar
+        <abbr class="sigla" title="Unidade Federativa: o estado, na sigla de duas letras.">UF</abbr> — deixá-la em país faria as duas abas do mesmo card discordarem uma da outra.</li>
+      </ul>
+      <p>Nos demais cards de tabela — <span class="field">Top Products</span>,
+      <span class="field">Top Customers</span>, <span class="field">Top Sales Teams</span> e
+      <span class="field">Top Salespeople</span> — a coluna que dizia <span class="field">Orders</span>
+      passa a dizer <span class="field">Quant</span>, e conta <strong>exemplares</strong> em vez de
+      pedidos. Para uma editora, "3 pedidos" diz menos que "412 exemplares"; a coluna de receita
+      fica como está.</p>
+
+      <div class="callout"><span class="title">Nota</span><p>A troca acontece na
+      <strong>leitura</strong> do dashboard, não no dado gravado. É de propósito: o registro do
+      dashboard de Vendas do Odoo não é imutável, e todo upgrade do módulo padrão reescreveria o
+      conteúdo — levando junto qualquer edição nossa. Trocando na leitura, o dado continua sendo o
+      do Odoo, e a casa continua vendo o Brasil na próxima versão também.</p></div>
+
+      <h2 id="regra">Onde a troca se aplica, e onde não</h2>
+      <p>A regra é estreita de propósito, para não surpreender ninguém. O mapa só vira <abbr class="sigla" title="Unidade Federativa: o estado, na sigla de duas letras.">UF</abbr> quando o
+      gráfico é do tipo geográfico, está agrupado <strong>exatamente</strong> por país, e o modelo
+      por trás dele tem o campo de estado para agrupar. A tabela só vira UF quando tem uma única
+      linha de agrupamento, e essa linha é o país. A coluna só vira <span class="field">Quant</span>
+      quando o cabeçalho é <span class="field">Orders</span>, há uma só medida de contagem no pivô,
+      e o modelo tem quantidade a somar.</p>
+      <p>Fora disso, nada muda. Em particular:</p>
+      <ul>
+        <li><strong>Dashboard em edição</strong> não é tocado — a edição abre o dado gravado, que
+        segue sendo o do Odoo.</li>
+        <li><strong>Gráficos fora de dashboard</strong> não são convertidos; eles apenas
+        <em>podem</em> escolher a região <span class="field">Brasil (<abbr class="sigla" title="Unidade Federativa: o estado, na sigla de duas letras.">UF</abbr>)</span>, se quem os montar
+        quiser.</li>
+        <li><strong>Filtrar por um país e agrupar por <abbr class="sigla" title="Unidade Federativa: o estado, na sigla de duas letras.">UF</abbr></strong> continua funcionando, e é
+        justamente o uso previsto.</li>
+      </ul>
+
+      <h2 id="limitacoes">Limitações conhecidas</h2>
+      <ul>
+        <li><strong>Só Brasil.</strong> A região nova são as 27 <abbr class="sigla" title="Unidade Federativa: o estado, na sigla de duas letras.">UFs</abbr>; não há divisão municipal, nem
+        outros países subdivididos.</li>
+        <li><strong>Linha sem <abbr class="sigla" title="Unidade Federativa: o estado, na sigla de duas letras.">UF</abbr> sai da tabela.</strong> A tabela esconde o registro cujo estado
+        está em branco — é a linha que o mapa ao lado não teria como desenhar. Cadastro sem UF
+        aparece como ausência nos dois lugares, o que costuma ser o aviso de que falta preencher a
+        ficha do cliente.</li>
+        <li><strong>Depende do dashboard padrão.</strong> O módulo exige o app de dashboards do
+        Odoo instalado; sem ele, sobra só a região de mapa.</li>
+      </ul>
+
+      <div class="seealso">
+        <strong>Ver também</strong>
+        <ul>
+          <li><a href="liber_partner_commercial.html">Canal de vendas do cliente</a> — a outra dimensão pela qual a casa lê as mesmas vendas.</li>
+        </ul>
+      </div>
+
+      <nav class="pager" id="pager"></nav>
+    </article>
+  </div>
+</div>
+<script src="docs.js"></script>
+</body>
+</html>

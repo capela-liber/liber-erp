@@ -1,0 +1,86 @@
+<!-- GERADO por scripts/gen_module_descriptions.py a partir de
+     liber_site/static/docs/liber_geo_brasil.html -- não edite aqui.
+     O Odoo mostra este arquivo em Apps > Module Info. -->
+<div class="oe_container liber_manual" style="max-width:900px;margin:0 auto;padding:8px 4px 24px;color:#251d2b;background:transparent;font:15px/1.7 Inter,'Segoe UI',system-ui,sans-serif;"><h1 style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:32px;line-height:1.2;letter-spacing:-.015em;margin:0 0 10px;color:#251d2b;">O mapa do Brasil no dashboard</h1>
+      <p class="lead" style="font-size:17.5px;color:#5d5266;margin:0 0 26px;max-width:62ch;">O card de vendas por país vira card por <abbr class="sigla" title="Unidade Federativa: o estado, na sigla de duas letras." style="text-decoration:none;border-bottom:1px dotted #8a4bad;cursor:help;">UF</abbr>, com o desenho das 27 unidades embarcado no módulo — e as tabelas Top passam a contar exemplares, não pedidos.</p>
+
+      <h2 id="visao-geral" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">Visão geral</h2>
+      <p style="margin:0 0 12px;">O mapa-múndi não diz nada para quem vende no Brasil. O card <span class="field" style="font-weight:600;color:#251d2b;">Top
+      Countries</span> do dashboard de Vendas pintava o país inteiro de azul e deixava a pergunta de
+      pé: <em>onde</em>, no Brasil, está o cliente. Este módulo troca o mundo pelas 27 unidades da
+      federação — e, de carona, troca a contagem de pedidos pela de exemplares, que é o que uma
+      editora conta.</p>
+      <p style="margin:0 0 12px;">São duas peças, independentes de propósito: uma <strong style="color:#251d2b;">região de mapa</strong> nova,
+      disponível a qualquer gráfico geo do sistema, e um <strong style="color:#251d2b;">ajuste de leitura</strong> do
+      dashboard de Vendas que passa a usá-la.</p>
+
+      <h2 id="configuracao" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">Configuração</h2>
+      <p style="margin:0 0 12px;">Nenhuma. Instalado o módulo, o dashboard de Vendas já abre por <abbr class="sigla" title="Unidade Federativa: o estado, na sigla de duas letras." style="text-decoration:none;border-bottom:1px dotted #8a4bad;cursor:help;">UF</abbr>, e a região
+      <span class="field" style="font-weight:600;color:#251d2b;">Brasil (UF)</span> passa a existir na lista de regiões de qualquer
+      gráfico geo montado à mão. Não há tela de definições, nem interruptor, nem dado a
+      carregar.</p>
+      <p style="margin:0 0 12px;">O desenho das <abbr class="sigla" title="Unidade Federativa: o estado, na sigla de duas letras." style="text-decoration:none;border-bottom:1px dotted #8a4bad;cursor:help;">UFs</abbr> é versionado dentro do módulo, gerado do <abbr class="sigla" title="Instituto Brasileiro de Geografia e Estatística." style="text-decoration:none;border-bottom:1px dotted #8a4bad;cursor:help;">IBGE</abbr>
+      uma vez e guardado — <strong style="color:#251d2b;">a tela nunca fala com o IBGE</strong>. O casamento entre o dado e
+      o desenho é feito pela sigla do estado: a etiqueta que vem do Odoo ("São Paulo (BR)") é
+      reduzida a "SP" antes de pintar.</p>
+
+      <h2 id="dia-a-dia" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">O dia a dia</h2>
+      <p style="margin:0 0 12px;">Abra <span class="menupath" style="display:inline-block;background:#f1eaf6;border:1px solid #e5dbee;border-radius:6px;padding:1px 8px;font-size:13.5px;color:#251d2b;white-space:nowrap;">Vendas<i style="font-style:normal;color:#6e2f91;margin:0 4px;font-weight:700;">‣</i>Relatórios<i style="font-style:normal;color:#6e2f91;margin:0 4px;font-weight:700;">‣</i>Dashboard</span>. O card que
+      antes dizia "países" agora tem duas abas, e as duas falam de <abbr class="sigla" title="Unidade Federativa: o estado, na sigla de duas letras." style="text-decoration:none;border-bottom:1px dotted #8a4bad;cursor:help;">UF</abbr>:</p>
+      <ul style="margin:0 0 14px 22px;padding:0;">
+        <li style="margin:0 0 7px;"><strong style="color:#251d2b;">O mapa</strong> pinta as 27 unidades pela intensidade da venda. Cliente de fora
+        do Brasil não some do banco — some do mapa, que é exatamente o que se pediu ao trocar o
+        mundo pelo país.</li>
+        <li style="margin:0 0 7px;"><strong style="color:#251d2b;">A aba Top 10</strong>, ao lado, é a mesma informação em tabela. Ela não é um
+        gráfico: é a planilha que está por baixo do card, e por isso <em>também</em> precisou virar
+        <abbr class="sigla" title="Unidade Federativa: o estado, na sigla de duas letras." style="text-decoration:none;border-bottom:1px dotted #8a4bad;cursor:help;">UF</abbr> — deixá-la em país faria as duas abas do mesmo card discordarem uma da outra.</li>
+      </ul>
+      <p style="margin:0 0 12px;">Nos demais cards de tabela — <span class="field" style="font-weight:600;color:#251d2b;">Top Products</span>,
+      <span class="field" style="font-weight:600;color:#251d2b;">Top Customers</span>, <span class="field" style="font-weight:600;color:#251d2b;">Top Sales Teams</span> e
+      <span class="field" style="font-weight:600;color:#251d2b;">Top Salespeople</span> — a coluna que dizia <span class="field" style="font-weight:600;color:#251d2b;">Orders</span>
+      passa a dizer <span class="field" style="font-weight:600;color:#251d2b;">Quant</span>, e conta <strong style="color:#251d2b;">exemplares</strong> em vez de
+      pedidos. Para uma editora, "3 pedidos" diz menos que "412 exemplares"; a coluna de receita
+      fica como está.</p>
+
+      <div class="callout" style="border:1px solid #e5dbee;border-left:4px solid #6e2f91;border-radius:10px;background:#f1eaf6;padding:14px 18px;margin:0 0 16px;"><span class="title" style="font-weight:700;font-size:12px;letter-spacing:.08em;text-transform:uppercase;display:block;margin:0 0 4px;color:#6e2f91;">Nota</span><p style="margin:0 0 12px;">A troca acontece na
+      <strong style="color:#251d2b;">leitura</strong> do dashboard, não no dado gravado. É de propósito: o registro do
+      dashboard de Vendas do Odoo não é imutável, e todo upgrade do módulo padrão reescreveria o
+      conteúdo — levando junto qualquer edição nossa. Trocando na leitura, o dado continua sendo o
+      do Odoo, e a casa continua vendo o Brasil na próxima versão também.</p></div>
+
+      <h2 id="regra" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">Onde a troca se aplica, e onde não</h2>
+      <p style="margin:0 0 12px;">A regra é estreita de propósito, para não surpreender ninguém. O mapa só vira <abbr class="sigla" title="Unidade Federativa: o estado, na sigla de duas letras." style="text-decoration:none;border-bottom:1px dotted #8a4bad;cursor:help;">UF</abbr> quando o
+      gráfico é do tipo geográfico, está agrupado <strong style="color:#251d2b;">exatamente</strong> por país, e o modelo
+      por trás dele tem o campo de estado para agrupar. A tabela só vira UF quando tem uma única
+      linha de agrupamento, e essa linha é o país. A coluna só vira <span class="field" style="font-weight:600;color:#251d2b;">Quant</span>
+      quando o cabeçalho é <span class="field" style="font-weight:600;color:#251d2b;">Orders</span>, há uma só medida de contagem no pivô,
+      e o modelo tem quantidade a somar.</p>
+      <p style="margin:0 0 12px;">Fora disso, nada muda. Em particular:</p>
+      <ul style="margin:0 0 14px 22px;padding:0;">
+        <li style="margin:0 0 7px;"><strong style="color:#251d2b;">Dashboard em edição</strong> não é tocado — a edição abre o dado gravado, que
+        segue sendo o do Odoo.</li>
+        <li style="margin:0 0 7px;"><strong style="color:#251d2b;">Gráficos fora de dashboard</strong> não são convertidos; eles apenas
+        <em>podem</em> escolher a região <span class="field" style="font-weight:600;color:#251d2b;">Brasil (<abbr class="sigla" title="Unidade Federativa: o estado, na sigla de duas letras." style="text-decoration:none;border-bottom:1px dotted #8a4bad;cursor:help;">UF</abbr>)</span>, se quem os montar
+        quiser.</li>
+        <li style="margin:0 0 7px;"><strong style="color:#251d2b;">Filtrar por um país e agrupar por <abbr class="sigla" title="Unidade Federativa: o estado, na sigla de duas letras." style="text-decoration:none;border-bottom:1px dotted #8a4bad;cursor:help;">UF</abbr></strong> continua funcionando, e é
+        justamente o uso previsto.</li>
+      </ul>
+
+      <h2 id="limitacoes" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">Limitações conhecidas</h2>
+      <ul style="margin:0 0 14px 22px;padding:0;">
+        <li style="margin:0 0 7px;"><strong style="color:#251d2b;">Só Brasil.</strong> A região nova são as 27 <abbr class="sigla" title="Unidade Federativa: o estado, na sigla de duas letras." style="text-decoration:none;border-bottom:1px dotted #8a4bad;cursor:help;">UFs</abbr>; não há divisão municipal, nem
+        outros países subdivididos.</li>
+        <li style="margin:0 0 7px;"><strong style="color:#251d2b;">Linha sem <abbr class="sigla" title="Unidade Federativa: o estado, na sigla de duas letras." style="text-decoration:none;border-bottom:1px dotted #8a4bad;cursor:help;">UF</abbr> sai da tabela.</strong> A tabela esconde o registro cujo estado
+        está em branco — é a linha que o mapa ao lado não teria como desenhar. Cadastro sem UF
+        aparece como ausência nos dois lugares, o que costuma ser o aviso de que falta preencher a
+        ficha do cliente.</li>
+        <li style="margin:0 0 7px;"><strong style="color:#251d2b;">Depende do dashboard padrão.</strong> O módulo exige o app de dashboards do
+        Odoo instalado; sem ele, sobra só a região de mapa.</li>
+      </ul>
+
+      <div class="seealso" style="border:1px solid #e5dbee;border-radius:12px;background:#f1eaf6;padding:16px 20px;margin:32px 0 0;">
+        <strong style="font-weight:700;font-size:12px;letter-spacing:.08em;text-transform:uppercase;display:block;margin:0 0 8px;color:#5d5266;">Ver também</strong>
+        <ul style="margin:0 0 14px 22px;padding:0;">
+          <li style="margin:0 0 7px;"><a href="/liber_site/static/docs/liber_partner_commercial.html" target="_blank" rel="noopener" style="color:#6e2f91;">Canal de vendas do cliente</a> — a outra dimensão pela qual a casa lê as mesmas vendas.</li>
+        </ul>
+      </div><p style="margin:28px 0 0;padding-top:14px;border-top:1px solid #e5dbee;font-size:13px;color:#5d5266;">Manual completo, com busca e as demais páginas: <a href="/liber_site/static/docs/liber_geo_brasil.html" target="_blank" rel="noopener" style="color:#6e2f91;">O mapa do Brasil no dashboard</a>.</p></div>

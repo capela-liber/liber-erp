@@ -63,6 +63,13 @@ class BudgetLine(models.Model):
             line.theoritical_percentage = (
                 line.theoritical_amount / line.budget_amount) if line.budget_amount else 0.0
 
+    def _companies_for_actuals(self):
+        """De quais empresas esta linha soma o realizado. Ver o porquê em
+        `budget.analytic.company_ids`: orçamento consolidado soma as filhas."""
+        self.ensure_one()
+        b = self.budget_analytic_id
+        return b._companies_for_actuals() if b else self.company_id
+
     def _actuals_account_terms(self):
         """Domain terms matching the analytic account(s) chosen on this line,
         across every analytic plan column that is set (single- or multi-plan)."""
@@ -111,7 +118,7 @@ class BudgetLine(models.Model):
         base = [
             ('date', '>=', self.date_from),
             ('date', '<=', self.date_to),
-            ('company_id', '=', self.company_id.id),
+            ('company_id', 'in', self._companies_for_actuals().ids),
         ] + account_terms + [
             '|', ('move_line_id', '=', False),
             ('move_line_id.parent_state', 'in', states),
@@ -138,7 +145,7 @@ class BudgetLine(models.Model):
             ('account_id', 'in', accounts.ids),
             ('date', '>=', self.date_from),
             ('date', '<=', self.date_to),
-            ('company_id', '=', self.company_id.id),
+            ('company_id', 'in', self._companies_for_actuals().ids),
             ('parent_state', 'in', states),
         ]
         # balance = debito - credito (despesa +, receita -) -> negamos p/ convencao P&L
@@ -164,7 +171,7 @@ class BudgetLine(models.Model):
         domain = [
             ('date', '>=', self.date_from),
             ('date', '<=', self.date_to),
-            ('company_id', '=', self.company_id.id),
+            ('company_id', 'in', self._companies_for_actuals().ids),
         ]
         if self.position_id:
             return {

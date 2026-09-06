@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     'name': 'Consignment - Agreements',
-    'version': '19.0.2.5.0',
+    'version': '19.0.2.7.0',
     'summary': 'Core consignment: agreements and the customer shelf (our stock at the customer)',
     'description': """
 Consignment core (SOC redesign).

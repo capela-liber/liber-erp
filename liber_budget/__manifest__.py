@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     'name': 'Budget (Open)',
-    'version': '19.0.1.1.0',
+    'version': '19.0.1.2.0',
     'summary': 'Orcamentos abertos sobre a Contabilidade Analitica (sem Enterprise)',
     'category': 'Accounting/Accounting',
     'author': 'EdLab Press',
@@ -22,6 +22,7 @@
     ],
     'assets': {
         'web.assets_backend': [
+            'liber_budget/static/src/js/budget_consolidado_tour.js',
             'liber_budget/static/src/scss/budget.scss',
         ],
     },

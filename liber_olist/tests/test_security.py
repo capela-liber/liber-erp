@@ -29,7 +29,7 @@ class TestOlistMultiempresa(TransactionCase):
             'token': "TOKEN-B", 'read_only': True})
 
         cls.pedido_b = cls.env['olist.order'].create({
-            'account_id': cls.conta_b.id, 'olist_id': 'SEC-B-1',
+            'account_id': cls.conta_b.id, 'olist_id': 'SEC-B-1', 'valor': 100.0,
             'numero': 'B-1', 'situacao': 'Entregue',
             'line_ids': [(0, 0, {'codigo': '9780000000001',
                                  'descricao': "Livro da B",

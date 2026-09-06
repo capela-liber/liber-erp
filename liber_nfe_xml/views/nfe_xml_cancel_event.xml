@@ -5,13 +5,18 @@
             <field name="name">nfe.xml.cancel.event.list</field>
             <field name="model">nfe.xml.cancel.event</field>
             <field name="arch" type="xml">
-                <list string="NFe Cancellation Events">
+                <list string="NFe Events">
                     <field name="event_date"/>
+                    <field name="event_kind" widget="badge"
+                           decoration-danger="event_kind == 'cancel'"
+                           decoration-warning="event_kind == 'correction'"/>
                     <field name="key"/>
                     <field name="nfe_id"/>
+                    <field name="n_seq_evento" string="Seq" optional="hide"/>
                     <field name="protocol"/>
                     <field name="reason"/>
-                    <field name="tp_evento"/>
+                    <field name="correction_text" optional="show"/>
+                    <field name="tp_evento" optional="hide"/>
                     <field name="company_id"/>
                 </list>
             </field>
@@ -21,13 +26,16 @@
             <field name="name">nfe.xml.cancel.event.form</field>
             <field name="model">nfe.xml.cancel.event</field>
             <field name="arch" type="xml">
-                <form string="NFe Cancellation Event">
+                <form string="NFe Event">
                     <sheet>
                         <group>
                             <group>
                                 <field name="key"/>
                                 <field name="nfe_id"/>
+                                <field name="event_kind"/>
                                 <field name="tp_evento"/>
+                                <field name="n_seq_evento"
+                                       invisible="event_kind != 'correction'"/>
                                 <field name="desc_evento"/>
                             </group>
                             <group>
@@ -36,10 +44,14 @@
                                 <field name="company_id"/>
                             </group>
                         </group>
-                        <group string="Justification">
+                        <group string="Justification" invisible="not reason">
                             <field name="reason" nolabel="1"/>
                         </group>
-                        <group string="Cancellation XML">
+                        <group string="What the letter states"
+                               invisible="not correction_text">
+                            <field name="correction_text" nolabel="1" readonly="1"/>
+                        </group>
+                        <group string="Event XML">
                             <field name="file" filename="file_name"/>
                             <field name="file_name" invisible="1"/>
                         </group>
@@ -59,8 +71,19 @@
                     <field name="company_id"/>
                     <filter string="Linked to NFe" domain="[('nfe_id','!=', False)]" name="linked_set"/>
                     <filter string="Orphan (no NFe)" domain="[('nfe_id','=', False)]" name="orphan_set"/>
+                    <separator/>
+                    <filter string="Cancellations" name="kind_cancel"
+                            domain="[('event_kind','=','cancel')]"/>
+                    <filter string="Correction Letters" name="kind_correction"
+                            domain="[('event_kind','=','correction')]"/>
+                    <separator/>
+                    <!-- A letter that touches the CFOP changes how the note is
+                         classified, so it is worth being able to list them. -->
+                    <filter string="Letter mentions CFOP" name="mentions_cfop"
+                            domain="[('correction_text','ilike','CFOP')]"/>
                     <group>
                         <filter name="group_by_event_date" string="Event Date" context="{'group_by':'event_date'}"/>
+                        <filter name="group_by_kind" string="Kind" context="{'group_by':'event_kind'}"/>
                         <filter name="group_by_company" string="Company" context="{'group_by':'company_id'}"/>
                     </group>
                 </search>
@@ -68,14 +91,14 @@
         </record>
 
         <record model="ir.actions.act_window" id="action_nfe_xml_cancel_event">
-            <field name="name">NFe Cancellations</field>
+            <field name="name">NFe Events</field>
             <field name="res_model">nfe.xml.cancel.event</field>
             <field name="view_mode">list,form</field>
             <field name="search_view_id" ref="view_nfe_xml_cancel_event_search"/>
         </record>
 
         <menuitem id="nfe_xml_cancel_event_menu"
-                  name="NFe Cancellations"
+                  name="NFe Events"
                   parent="liber_nfe_xml.menu_nfe_xml_panel"
                   action="action_nfe_xml_cancel_event"
                   sequence="2"/>

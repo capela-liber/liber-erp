@@ -57,7 +57,7 @@ msgstr "Conta de armazenamento na nuvem"
 #. module: liber_github
 #: model:ir.model,name:liber_github.model_liber_cloud_provider
 msgid "Cloud Storage Provider Registry"
-msgstr ""
+msgstr "Registro de provedores de armazenamento"
 
 #. module: liber_github
 #: model:ir.ui.menu,name:liber_github.menu_liber_github_config
@@ -76,7 +76,7 @@ msgstr "Não foi possível alcançar o GitHub: %s"
 #: model:ir.model.fields,field_description:liber_github.field_liber_cloud_provider__display_name
 #: model:ir.model.fields,field_description:liber_github.field_liber_cloud_upload__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Nome exibido"
 
 #. module: liber_github
 #: model:ir.actions.act_window,name:liber_github.action_liber_github_file
@@ -95,6 +95,8 @@ msgid ""
 "Fill the External ID as owner/repository, pick the branch,\n"
 "                name who reads and who writes, and press Sync."
 msgstr ""
+"Preencha o ID externo como owner/repositório, escolha o branch,\n"
+"                diga quem lê e quem escreve, e aperte Sincronizar."
 
 #. module: liber_github
 #: model:ir.model.fields.selection,name:liber_github.selection__liber_cloud_account__provider__github
@@ -102,13 +104,13 @@ msgstr ""
 #: model:ir.model.fields.selection,name:liber_github.selection__liber_cloud_upload__provider__github
 #: model:ir.ui.menu,name:liber_github.menu_liber_github_root
 msgid "GitHub"
-msgstr ""
+msgstr "GitHub"
 
 #. module: liber_github
 #: model:ir.module.category,name:liber_github.module_category_liber_github
 #: model:res.groups.privilege,name:liber_github.privilege_liber_github
 msgid "GitHub Files"
-msgstr ""
+msgstr "Arquivos do GitHub"
 
 #. module: liber_github
 #. odoo-python
@@ -123,6 +125,8 @@ msgid ""
 "GitHub folders are repositories: fill in the External ID as "
 "owner/repository, e.g. capela-liber/liber-erp."
 msgstr ""
+"As pastas do GitHub são repositórios: preencha o ID externo como "
+"owner/repositório, por exemplo capela-liber/liber-erp."
 
 #. module: liber_github
 #: model:ir.model.fields,field_description:liber_github.field_liber_cloud_account__id
@@ -130,7 +134,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:liber_github.field_liber_cloud_provider__id
 #: model:ir.model.fields,field_description:liber_github.field_liber_cloud_upload__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: liber_github
 #: model:res.groups,name:liber_github.group_liber_github_manager
@@ -172,6 +176,8 @@ msgid ""
 "The GitHub account of %s is not configured. Fill in the access token (see "
 "the module's NOTES.md)."
 msgstr ""
+"A conta GitHub de %s não está configurada. Preencha o token de acesso "
+"(veja o NOTES.md do módulo)."
 
 #. module: liber_github
 #: model:ir.model.fields,help:liber_github.field_liber_cloud_folder__github_branch
@@ -179,6 +185,8 @@ msgid ""
 "The branch this folder mirrors and commits to. Empty means the repository's "
 "default branch."
 msgstr ""
+"O branch que esta pasta espelha e onde ela commita. Vazio significa o "
+"branch padrão do repositório."
 
 #. module: liber_github
 #: model:ir.ui.menu,name:liber_github.menu_liber_github_upload
@@ -205,9 +213,13 @@ msgstr "Usuário"
 msgid ""
 "Which storage holds this folder. Provider modules add their entry here."
 msgstr ""
+"Qual armazenamento guarda esta pasta. Os módulos de provedor acrescentam "
+"sua entrada aqui."
 
 #. module: liber_github
 #: model:ir.model.fields,help:liber_github.field_liber_cloud_account__provider
 msgid ""
 "Which storage this credential opens. Provider modules add their entry here."
 msgstr ""
+"Qual armazenamento esta credencial abre. Os módulos de provedor "
+"acrescentam sua entrada aqui."

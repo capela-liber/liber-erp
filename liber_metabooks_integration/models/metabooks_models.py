@@ -11,6 +11,13 @@ class MetaBooksBISACCodes(models.Model):
     bisac_category = fields.Char('Bisac Categories', translate=True)
     bisac_product_category = fields.Many2one('product.category', string="Product Category")
     sequence = fields.Integer(help="Gives the sequence order when displaying a list of bisac categories.")
+    thema_code_ids = fields.Many2many(
+        'metabooks.thema.code', 'bisac_thema_rel', 'bisac_id', 'thema_id',
+        string='Thema Equivalents',
+        help="A equivalência oficial que a EDItEUR publica entre o BISAC 2024 "
+             "e o Thema 1.6. Serve para sugerir um a partir do outro -- é "
+             "sugestão, não regra: quem classifica decide.")
+    active = fields.Boolean(default=True)
 
     # Remove old functionality: Through bisac update product category
     # def update_bisac_categories(self):

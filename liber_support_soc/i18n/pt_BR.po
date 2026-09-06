@@ -69,8 +69,8 @@ msgstr "Vinculado automaticamente só quando o e-mail do remetente é único na 
 #. module: liber_support_soc
 #. odoo-python
 #: code:addons/liber_support_soc/wizard/co_from_conversation.py:0
-msgid "CO %(name)s drafted from this conversation: %(count)s line(s)."
-msgstr "CO %(name)s criada em rascunho desta conversa: %(count)s linha(s)."
+msgid "CO %(link)s drafted from this conversation: %(count)s line(s)."
+msgstr "CO %(link)s criada em rascunho desta conversa: %(count)s linha(s)."
 
 #. module: liber_support_soc
 #: model:ir.model.fields.selection,name:liber_support_soc.selection__liber_support_co_wizard_line__confidence__weak
@@ -94,6 +94,7 @@ msgstr "Consignação"
 
 #. module: liber_support_soc
 #: model:ir.model.fields,field_description:liber_support_soc.field_liber_support_ticket__settlement_id
+#: model:ir.model.fields,field_description:liber_support_soc.field_liber_support_co_wizard__settlement_id
 msgid "Consignment (CO)"
 msgstr "Consignação (CO)"
 
@@ -165,6 +166,7 @@ msgstr ""
 
 #. module: liber_support_soc
 #: model_terms:ir.ui.view,arch_db:liber_support_soc.view_support_ticket_form_soc
+#: model_terms:ir.ui.view,arch_db:liber_support_soc.view_consignment_settlement_form_support
 msgid "Import"
 msgstr "Importar"
 
@@ -521,3 +523,98 @@ msgstr ""
 "%(alert)s\n"
 "\n"
 "Se for intencional, marque \"Criar mesmo assim\" e crie de novo."
+
+#. module: liber_support_soc
+#: model:ir.model.fields,help:liber_support_soc.field_liber_support_co_wizard__settlement_id
+msgid ""
+"When the draft was opened from a consignment, the imported lines land in "
+"THIS operation."
+msgstr ""
+"Quando o rascunho foi aberto de uma consignação, as linhas importadas caem "
+"NESTA operação."
+
+#. module: liber_support_soc
+#. odoo-python
+#: code:addons/liber_support_soc/wizard/co_from_conversation.py:0
+msgid "Import lines into this consignment"
+msgstr "Importar linhas para esta consignação"
+
+#. module: liber_support_soc
+#. odoo-python
+#: code:addons/liber_support_soc/wizard/co_from_conversation.py:0
+msgid "%(count)s line(s) imported into this consignment."
+msgstr "%(count)s linha(s) importada(s) para esta consignação."
+
+#. module: liber_support_soc
+#. odoo-python
+#: code:addons/liber_support_soc/wizard/co_from_conversation.py:0
+msgid ""
+"A draft belongs either to a support ticket or to a consignment — never to "
+"both, never to neither."
+msgstr ""
+"Um rascunho pertence a um chamado ou a uma consignação — nunca aos dois, "
+"nunca a nenhum."
+
+#. module: liber_support_soc
+#. odoo-python
+#: code:addons/liber_support_soc/wizard/co_from_conversation.py:0
+msgid ""
+"%(name)s is not a draft any more: it was already run, and adding lines to it "
+"would change an operation the customer has already been given. Open a new "
+"consignment."
+msgstr ""
+"%(name)s não está mais em rascunho: já foi executada, e somar linhas nela "
+"mudaria uma operação que o cliente já recebeu. Abra uma nova consignação."
+
+#. module: liber_support_soc
+#. odoo-python
+#: code:addons/liber_support_soc/models/consignment_settlement.py:0
+msgid ""
+"%(name)s is not a draft any more: it was already run. Open a new "
+"consignment to import into."
+msgstr ""
+"%(name)s não está mais em rascunho: já foi executada. Abra uma nova "
+"consignação para importar."
+
+#. module: liber_support_soc
+#: model:ir.model.constraint,message:liber_support_soc.constraint_liber_support_co_wizard_settlement_uniq
+msgid "One draft per consignment — reopen it instead."
+msgstr "Um rascunho por consignação — reabra o que existe."
+
+#. module: liber_support_soc
+#: model_terms:ir.ui.view,arch_db:liber_support_soc.view_consignment_settlement_form_support
+msgid ""
+"Parse an e-mail, a pasted Excel range, a\n"
+"spreadsheet, a PDF or an NFe XML into lines, check them, and add them to this\n"
+"consignment."
+msgstr ""
+"Lê um e-mail, uma colagem do Excel, uma\n"
+"planilha, um PDF ou um XML de NFe como linhas, confere e as soma nesta\n"
+"consignação."
+
+#. module: liber_support_soc
+#: model_terms:ir.ui.view,arch_db:liber_support_soc.view_co_from_conversation_form
+msgid ""
+"The checked lines are <b>added to this consignment</b>,\n"
+"                    summing into the title's line when it is already on the\n"
+"                    map — no second CO is created."
+msgstr ""
+"As linhas conferidas <b>entram nesta consignação</b>,\n"
+"                    somando na linha do título quando ele já está no\n"
+"                    mapa — nenhuma segunda CO é criada."
+
+#. module: liber_support_soc
+#. odoo-python
+#: code:addons/liber_support_soc/wizard/co_from_conversation.py:0
+msgid ""
+"Sale order %(link)s drafted from this conversation: %(count)s line(s), cover "
+"price with the customer's pricelist (%(pricelist)s)."
+msgstr ""
+"Pedido de venda %(link)s criado em rascunho desta conversa: %(count)s "
+"linha(s), a preço de capa com a lista do cliente (%(pricelist)s)."
+
+#. module: liber_support_soc
+#. odoo-python
+#: code:addons/liber_support_soc/wizard/co_from_conversation.py:0
+msgid "Drafted from %(link)s."
+msgstr "Criado em rascunho a partir de %(link)s."

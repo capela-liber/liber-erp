@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     'name': 'Liber Roles (as funções da casa)',
-    'version': '19.0.2.8.0',
+    'version': '19.0.2.11.0',
     'summary': 'Perfis por função: departamento + nível, embrulhando os grupos do Odoo',
     'description': """
 Os "perfis" nativos do Odoo são recortes por aplicativo (Vendas: Usuário,
@@ -113,6 +113,8 @@ menu, então vale também para RPC e URL colada. Ver models/ir_model_access.py.
             'liber_roles/static/src/js/editorial_compras_tour.js',
             'liber_roles/static/src/js/contatos_tour.js',
             'liber_roles/static/src/js/comercial_devolucao_tour.js',
+            'liber_roles/static/src/js/comercial_contrato_tour.js',
+            'liber_roles/static/src/js/comercial_nota_remessa_tour.js',
         ],
     },
     'installable': True,

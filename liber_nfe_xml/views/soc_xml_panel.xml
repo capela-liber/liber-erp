@@ -161,7 +161,9 @@
                     <field name="danfe_no" readonly="1"/>
                     <field name="due_date" readonly="1"/>
                     <field name="shipping_price" readonly="1"/>
-                    <field name="danfe_value" readonly="1"/>
+                    <field name="danfe_value" readonly="1" sum="Total"/>
+                    <field name="net_value" readonly="1" sum="Total"/>
+                    <field name="book_qty" readonly="1" sum="Total" optional="show"/>
                     <field name="purchase_id"/>
                     <field name="invoice_id" readonly="1" optional="show"/>
                     <field name="vendor_order"/>
@@ -201,6 +203,7 @@
             <field name="arch" type="xml">
                 <graph string="Nfe XMl Panel">
                     <field name="vendor_id" />
+                    <field name="net_value" type="measure" />
                     <field name="danfe_value" type="measure" />
                     <field name="shipping_price" type="measure" />
                 </graph>
@@ -213,6 +216,7 @@
             <field name="arch" type="xml">
                 <pivot string="Nfe XML panel">
                     <field name="create_date" type="row"/>
+                    <field name="net_value" type="measure"/>
                     <field name="danfe_value" type="measure"/>
                     <field name="shipping_price" type="measure" />
                 </pivot>

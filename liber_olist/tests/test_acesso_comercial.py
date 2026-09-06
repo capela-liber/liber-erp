@@ -45,7 +45,7 @@ class TestAcessoComercial(TransactionCase):
     def test_the_assistant_can_refresh_the_mirror(self):
         """Criar e escrever no espelho: é o que o botão de ler pedidos faz."""
         pedido = self._como_assistente('olist.order').create({
-            'account_id': self.account.id, 'olist_id': 'ACL-1',
+            'account_id': self.account.id, 'valor': 100.0, 'olist_id': 'ACL-1',
             'numero': "ACL-1", 'situacao': "Aprovado",
             'data_pedido': '2026-08-24'})
         self.assertTrue(pedido.id)
@@ -55,7 +55,7 @@ class TestAcessoComercial(TransactionCase):
     def test_the_assistant_can_write_the_lines_and_the_channel(self):
         """Ler o detalhe grava itens e DESCOBRE canal — os dois precisam passar."""
         pedido = self._como_assistente('olist.order').create({
-            'account_id': self.account.id, 'olist_id': 'ACL-2',
+            'account_id': self.account.id, 'valor': 100.0, 'olist_id': 'ACL-2',
             'numero': "ACL-2", 'data_pedido': '2026-08-24'})
         pedido.write({'line_ids': [(0, 0, {
             'codigo': "9786666666663", 'descricao': "Livro",
@@ -106,7 +106,7 @@ class TestAcessoComercial(TransactionCase):
             'ks_product_name': "Livro", 'ks_product_qty': 2,
             'ks_price': 25.0, 'ks_product_barcode': livro.barcode})
         pedido = self.env['olist.order'].create({
-            'account_id': self.account.id, 'olist_id': 'ACL-9',
+            'account_id': self.account.id, 'valor': 100.0, 'olist_id': 'ACL-9',
             'numero': "ACL-9", 'situacao': "Aprovado",
             'cliente_nome': "Comprador do comercial",
             'data_pedido': '2026-08-24', 'id_nota_fiscal': '990',
@@ -177,7 +177,7 @@ class TestAcessoComercial(TransactionCase):
     def test_the_assistant_cannot_erase_history(self):
         """Arquivar é escrita; apagar não se concede — o espelho é registro."""
         pedido = self.env['olist.order'].create({
-            'account_id': self.account.id, 'olist_id': 'ACL-3',
+            'account_id': self.account.id, 'valor': 100.0, 'olist_id': 'ACL-3',
             'numero': "ACL-3", 'data_pedido': '2026-08-24'})
         como_ele = self._como_assistente('olist.order').browse(pedido.id)
         como_ele.write({'active': False})     # arquivar, sim

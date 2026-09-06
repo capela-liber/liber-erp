@@ -58,4 +58,11 @@ até um *owner* aprovar outra vez em *Pending requests*. O cabeçalho
 - **Sem data de modificação por arquivo** no espelho (seria uma chamada de
   API por arquivo; o SHA já denuncia mudança).
 - Download passa pelo Odoo (o raw do GitHub exige o token).
-- Arquivos via LFS aparecem com o tamanho do ponteiro, não do conteúdo.
+- **Git LFS**: o conteúdo vem certo — a rota `contents` devolve o
+  ponteiro, e o cliente o reconhece e busca os bytes na *batch API*
+  (`https://github.com/<owner>/<repo>.git/info/lfs/objects/batch`,
+  autenticada em Basic `x-access-token:<token>`, não no Bearer da
+  REST). O que continua do ponteiro é o **tamanho na lista**: um PDF
+  de 1,7 MB aparece com ~132 bytes, porque corrigir isso custaria uma
+  chamada de API por arquivo na sincronia. Atenção à cota de banda do
+  LFS: esgotada, o download falha com a mensagem da cota.

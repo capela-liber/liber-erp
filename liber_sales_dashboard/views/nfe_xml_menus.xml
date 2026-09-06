@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <!--
+      As notas fiscais de venda, na porta do comercial.
+
+      O painel de Vendas lê o painel de XML, mas o menu do painel de XML
+      mora em Faturamento, atrás dos grupos da contabilidade: o gerente de
+      vendas clicava no cartão e não chegava à lista — ou chegava numa lista
+      com outro recorte, e o número de fora não era o de dentro (79.923 no
+      cartão, 34.787 na lista, 06/09/2026).
+
+      Duas listas, com o MESMO recorte dos cartões:
+
+        Notas de venda      nota emitida por nós, CFOP de venda ou acerto,
+                            não cancelada — é o universo do cartão "Faturas".
+        Notas sem pedido    dessas, as que não têm fatura ligada a pedido
+                            nenhum (ou não têm fatura) — o cartão "Faturas
+                            sem pedido" passa a ser a SOMA desta lista, e
+                            não uma conta entre dois relógios.
+
+      O período do painel viaja no clique do cartão (static/src/js/
+      cartao_leva_o_periodo.js): a lista abre com o domínio do pivô que
+      alimenta o cartão, filtro incluso. Aberta pelo menu, a lista vem
+      inteira, e o período fica com quem abre.
+    -->
+    <record id="action_notas_de_venda" model="ir.actions.act_window">
+        <field name="name">Sales notes</field>
+        <field name="res_model">nfe.xml.panel</field>
+        <field name="view_mode">list,pivot,graph,form</field>
+        <field name="domain">['&amp;', '&amp;', ('nfe_direction', 'in', ['out', 'internal']), ('cfop_id.document_kind', 'in', ['sale', 'settlement']), ('is_cancelled', '=', False)]</field>
+        <field name="context">{'search_default_group_by_file_create_date': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">No sales notes in this period</p>
+        </field>
+    </record>
+
+    <record id="action_notas_sem_pedido" model="ir.actions.act_window">
+        <field name="name">Sales notes without order</field>
+        <field name="res_model">nfe.xml.panel</field>
+        <field name="view_mode">list,pivot,graph,form</field>
+        <field name="domain">['&amp;', '&amp;', '&amp;', ('nfe_direction', 'in', ['out', 'internal']), ('cfop_id.document_kind', 'in', ['sale', 'settlement']), ('is_cancelled', '=', False), '|', ('invoice_id', '=', False), ('invoice_id.invoice_line_ids.sale_line_ids', '=', False)]</field>
+        <field name="context">{'search_default_group_by_file_create_date': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Every sales note in this period is tied to an order</p>
+        </field>
+    </record>
+
+    <menuitem id="menu_notas_fiscais" name="Fiscal notes" parent="sale.sale_menu_root"
+              sequence="45" groups="sales_team.group_sale_manager"/>
+    <menuitem id="menu_notas_de_venda" name="Sales notes" parent="menu_notas_fiscais"
+              action="action_notas_de_venda" sequence="10"/>
+    <menuitem id="menu_notas_sem_pedido" name="Sales notes without order" parent="menu_notas_fiscais"
+              action="action_notas_sem_pedido" sequence="20"/>
+</odoo>

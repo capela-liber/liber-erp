@@ -25,11 +25,15 @@ Odoo 19 migration notes:
 - The SSOC/RSO/SO/PO order flows and the vendor-bill comparison cron were
   dropped: they depended on models (soc.type, nfe.xml.wizard) that never
   existed in this fork and were dead code since v15.
+- The SEFAZ DFe sweep (nfe.sefaz.sweep, the A1 certificate on the company
+  and its daily cron) was removed in 19.0.2.17.0: it never ran in
+  production. XMLs come in through the ZIP import, the attachment cron and
+  the integrations (Olist, Focus).
 """,
     'author': "edoo.me (lab fork by EdLab)",
     'website': "www.edoo.me",
     'category': 'Accounting',
-    'version': '19.0.2.14.0',
+    'version': '19.0.2.20.0',
     'license': 'AGPL-3',
     'depends': ['base', 'sale', 'stock', 'product', 'account', 'purchase'],
 
@@ -37,7 +41,6 @@ Odoo 19 migration notes:
         'security/ir.model.access.csv',
         'security/security.xml',
         'data/nfe_xml_process_cron.xml',
-        'data/nfe_sefaz_cron.xml',
         'data/nfe_cfop_data.xml',
         'views/soc_xml_panel.xml',
         'views/nfe_xml_cancel_event.xml',
@@ -51,9 +54,14 @@ Odoo 19 migration notes:
         'data/xml_channel.xml',
         'views/nfe_xml_attachments.xml',
         'views/nfe_xml_painel.xml',
-        'views/nfe_sefaz_views.xml',
         'wizard/import_xml_file.xml',
+        'wizard/export_xml_file.xml',
     ],
+    'assets': {
+        'web.assets_backend': [
+            'liber_nfe_xml/static/src/js/export_xml_tour.js',
+        ],
+    },
     'application': True,
     'post_init_hook': 'post_init_hook',
     'installable': True,

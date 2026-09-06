@@ -29,6 +29,7 @@
                             class="btn-primary"/>
                     <button name="%(action_liber_cloud_upload)d" type="action"
                             string="Upload"
+                            invisible="not can_upload"
                             context="{'default_folder_id': id, 'default_provider': provider}"/>
                 </header>
                 <sheet>
@@ -52,6 +53,7 @@
                             <field name="recursive"/>
                             <field name="last_sync"/>
                             <field name="active"/>
+                            <field name="can_upload" invisible="1"/>
                         </group>
                         <group>
                             <field name="read_group_ids" widget="many2many_tags"/>

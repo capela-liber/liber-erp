@@ -56,8 +56,17 @@
                                 <field name="metabooks_product_status"/>
                                 <field name="metabooks_keywords"/>
                                 <field name="bisac_code"/>
-                                <field name="bisac_code_ids" widget="many2many_tags"/>
+                                <field name="bisac_code_ids" widget="many2many_tags"
+                                       options="{'no_create': True}"/>
                                 <field name="bisac_prefix" invisible="1"/>
+                                <field name="metabooks_thema_id"
+                                       options="{'no_create': True}"/>
+                                <field name="metabooks_thema_ids"
+                                       widget="many2many_tags"
+                                       options="{'no_create': True}"/>
+                                <field name="metabooks_thema_qualifier_ids"
+                                       widget="many2many_tags"
+                                       options="{'no_create': True}"/>
                                 <field name="product_identifier">
                                     <list>
                                         <field name="id_value"/>

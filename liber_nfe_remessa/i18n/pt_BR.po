@@ -207,3 +207,21 @@ msgstr "Documento"
 #: model_terms:ir.ui.view,arch_db:liber_nfe_remessa.view_nfe_remessa_list
 msgid "Total"
 msgstr ""
+
+#. module: liber_nfe_remessa
+#. odoo-python
+#: code:addons/liber_nfe_remessa/models/account_move.py:0
+msgid ""
+"%(move)s carries the remessa fiscal position %(fpos)s but sits in "
+"%(journal)s, a sales journal.\n"
+"\n"
+"A remessa is a note nobody pays: it books in a remessa journal, off Invoices "
+"and off revenue. Use the remessa journal -- or, if this is a sale, a sales "
+"fiscal position."
+msgstr ""
+"%(move)s leva a posição fiscal de remessa %(fpos)s mas está em %(journal)s, "
+"um diário de vendas.\n"
+"\n"
+"Remessa é nota que ninguém paga: ela se lança num diário de remessa, fora "
+"das Faturas e fora da receita. Use o diário de remessa -- ou, se isto é uma "
+"venda, uma posição fiscal de venda."

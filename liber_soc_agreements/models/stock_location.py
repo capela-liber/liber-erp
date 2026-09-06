@@ -28,22 +28,32 @@ class StockLocation(models.Model):
         override of the core quantity computation is needed, and a shipment to a
         shelf reads as leaving the warehouse, which is exactly what it is.
         """
+        # A busca fica com os direitos de quem chamou: ler stock.location é de
+        # todo empregado, e passar sudo aqui atravessaria a regra de empresa.
         root = self.search([
             ('is_consignment_root', '=', True),
             ('company_id', '=', company.id),
         ], limit=1)
         if not root:
-            return self.create({
+            # sudo DELIBERADO: criar stock.location é direito de
+            # Inventário/Administrador, e quem fecha um contrato de
+            # consignação é do Comercial. A raiz CO não é uma gaveta que
+            # alguém abriu no Inventário -- é infraestrutura deste módulo,
+            # nascida como consequência do contrato, com nome e forma fixos
+            # aqui. Sem isto a ativação morre em Access Error na tela, que foi
+            # o que aconteceu com a gerente comercial em 26/08/2026.
+            root = self.sudo().create({
                 'name': 'CO',
                 'usage': 'view',
                 'location_id': False,
                 'company_id': company.id,
                 'is_consignment_root': True,
             })
+            return root.sudo(False)
         if root.location_id:
-            root.location_id = False
+            root.sudo().location_id = False
             # ``warehouse_id`` is stored and depends on the parent chain, but Odoo
             # does not cascade its recompute to the shelves below; left stale, they
             # would keep claiming to belong to the warehouse they just left.
-            self.search([('id', 'child_of', root.id)])._compute_warehouse_id()
+            self.search([('id', 'child_of', root.id)]).sudo()._compute_warehouse_id()
         return root

@@ -15,7 +15,7 @@ company's CNPJ.
 """,
     'author': "EdLab",
     'category': 'Accounting',
-    'version': '19.0.15.2.0',
+    'version': '19.0.16.2.0',
     'license': 'LGPL-3',
     # `liber_metabooks_integration` porque a casa decidiu (17/08/2026) o que é o
     # CATÁLOGO: livro Metabooks do tipo pbook. Sem ele, "o que é nosso e ainda
@@ -45,6 +45,7 @@ company's CNPJ.
             'liber_olist/static/src/js/despacho_tour.js',
             'liber_olist/static/src/js/relatorio_tour.js',
             'liber_olist/static/src/js/despacho_comercial_tour.js',
+            'liber_olist/static/src/js/nota_do_olist_tour.js',
         ],
     },
     'application': False,

@@ -1,0 +1,88 @@
+<!-- GERADO por scripts/gen_module_descriptions.py a partir de
+     liber_site/static/docs/liber_in_payment.html -- não edite aqui.
+     O Odoo mostra este arquivo em Apps > Module Info. -->
+<div class="oe_container liber_manual" style="max-width:900px;margin:0 auto;padding:8px 4px 24px;color:#251d2b;background:transparent;font:15px/1.7 Inter,'Segoe UI',system-ui,sans-serif;"><h1 style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:32px;line-height:1.2;letter-spacing:-.015em;margin:0 0 10px;color:#251d2b;">Estado Em pagamento</h1>
+      <p class="lead" style="font-size:17.5px;color:#5d5266;margin:0 0 26px;max-width:62ch;">O estado que o Odoo Community esconde e só o Enterprise mostra: pagamento registrado deixa a fatura pendente até o extrato bancário confirmar que o dinheiro entrou.</p>
+
+      <h2 id="visao-geral" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">Visão geral</h2>
+      <p style="margin:0 0 12px;">No Odoo Community, registrar o pagamento de uma fatura a fecha na hora: ela passa a
+      <span class="field" style="font-weight:600;color:#251d2b;">Pago</span> assim que a baixa é feita, mesmo que o dinheiro ainda esteja
+      parado numa <strong style="color:#251d2b;">conta transitória</strong> à espera do extrato bancário. Quem tem
+      Enterprise vê um estado intermediário — <span class="field" style="font-weight:600;color:#251d2b;">Em pagamento</span> — e quem não
+      tem, não vê.</p>
+      <p style="margin:0 0 12px;">Este módulo devolve esse estado a quem não paga licença. Registrado o pagamento, a fatura
+      fica <span class="field" style="font-weight:600;color:#251d2b;">Em pagamento</span>; ela só vira <span class="field" style="font-weight:600;color:#251d2b;">Pago</span>
+      quando a linha transitória encontra o <strong style="color:#251d2b;">extrato bancário</strong> na conciliação.</p>
+      <p style="margin:0 0 12px;">A diferença não é cosmética. Ela separa duas perguntas que o Community responde com a
+      mesma palavra:</p>
+      <ul style="margin:0 0 14px 22px;padding:0;">
+        <li style="margin:0 0 7px;"><strong style="color:#251d2b;">"Já demos baixa?"</strong> — sim, desde o registro do pagamento.</li>
+        <li style="margin:0 0 7px;"><strong style="color:#251d2b;">"O dinheiro entrou?"</strong> — só o extrato responde.</li>
+      </ul>
+      <p style="margin:0 0 12px;">Uma casa que concilia banco precisa das duas. Enquanto as duas tinham a mesma resposta,
+      o relatório de recebíveis dizia "pago" para cheque não compensado, boleto em trânsito e
+      transferência agendada.</p>
+
+      <div class="callout warn" style="border:1px solid #e5dbee;border-left:4px solid #6e2f91;border-radius:10px;padding:14px 18px;margin:0 0 16px;border-left-color:#b3831a;background:#faf3e3;border-color:#eddfba;"><span class="title" style="font-weight:700;font-size:12px;letter-spacing:.08em;text-transform:uppercase;display:block;margin:0 0 4px;color:#7a5a12;">Condição para funcionar</span><p style="margin:0 0 12px;">O estado
+      depende de haver <strong style="color:#251d2b;">contas transitórias</strong> configuradas nas linhas de método de
+      pagamento dos diários (<span class="menupath" style="display:inline-block;background:#f1eaf6;border:1px solid #e5dbee;border-radius:6px;padding:1px 8px;font-size:13.5px;color:#251d2b;white-space:nowrap;">Contabilidade<i style="font-style:normal;color:#6e2f91;margin:0 4px;font-weight:700;">‣</i>Configuração<i style="font-style:normal;color:#6e2f91;margin:0 4px;font-weight:700;">‣</i>Diários</span>,
+      aba <span class="field" style="font-weight:600;color:#251d2b;">Pagamentos recebidos</span> / <span class="field" style="font-weight:600;color:#251d2b;">Pagamentos
+      efetuados</span>). Sem elas, o pagamento é considerado conciliado no mesmo instante em que
+      nasce, e a fatura vai direto a <span class="field" style="font-weight:600;color:#251d2b;">Pago</span> — o módulo instalado, e nada
+      mudando na tela. Se for esse o seu caso, o problema é o cadastro do diário, não o
+      módulo.</p></div>
+
+      <h2 id="configuracao" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">Configuração</h2>
+      <p style="margin:0 0 12px;">Não há o que instalar além do módulo. Há um único interruptor, e ele é
+      <strong style="color:#251d2b;">por empresa</strong>:</p>
+      <ol class="steps" style="margin:0 0 16px 22px;padding:0;">
+        <li style="margin:0 0 7px;">Vá a <span class="menupath" style="display:inline-block;background:#f1eaf6;border:1px solid #e5dbee;border-radius:6px;padding:1px 8px;font-size:13.5px;color:#251d2b;white-space:nowrap;">Contabilidade<i style="font-style:normal;color:#6e2f91;margin:0 4px;font-weight:700;">‣</i>Configuração<i style="font-style:normal;color:#6e2f91;margin:0 4px;font-weight:700;">‣</i>Definições</span>,
+        com a empresa desejada selecionada no seletor do topo.</li>
+        <li style="margin:0 0 7px;">Na seção de faturamento, o ajuste <span class="field" style="font-weight:600;color:#251d2b;">Estado Em pagamento</span> —
+        "as faturas ficam Em pagamento até o pagamento encontrar o extrato bancário".</li>
+        <li style="margin:0 0 7px;">Ligado (o padrão), a fatura espera o extrato. Desligado, ela vai direto a
+        <span class="field" style="font-weight:600;color:#251d2b;">Pago</span>, como o Community faz de fábrica.</li>
+      </ol>
+      <p style="margin:0 0 12px;">O interruptor existe porque um banco de dados pode abrigar empresas com práticas
+      diferentes: a que concilia extrato quer o estado; a que não concilia ficaria com todas as
+      faturas presas em <span class="field" style="font-weight:600;color:#251d2b;">Em pagamento</span> para sempre. A decisão é de cada
+      uma.</p>
+
+      <h2 id="dia-a-dia" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">O dia a dia</h2>
+      <p style="margin:0 0 12px;">O ciclo passa a ter três tempos em vez de dois:</p>
+      <ol class="steps" style="margin:0 0 16px 22px;padding:0;">
+        <li style="margin:0 0 7px;"><strong style="color:#251d2b;">Fatura confirmada</strong> — estado <span class="field" style="font-weight:600;color:#251d2b;">Publicado</span>, em
+        aberto no relatório de recebíveis.</li>
+        <li style="margin:0 0 7px;"><strong style="color:#251d2b;">Pagamento registrado</strong> — estado <span class="field" style="font-weight:600;color:#251d2b;">Em pagamento</span>.
+        A baixa está feita, o lançamento existe, e o valor está na conta transitória. A fatura
+        <em>não</em> aparece mais como cobrança pendente do cliente, mas também não conta como
+        dinheiro em caixa.</li>
+        <li style="margin:0 0 7px;"><strong style="color:#251d2b;">Extrato conciliado</strong> — estado <span class="field" style="font-weight:600;color:#251d2b;">Pago</span>. A linha
+        transitória encontrou a linha do banco, e o dinheiro está onde diz estar.</li>
+      </ol>
+      <p style="margin:0 0 12px;">Nada muda no gesto de quem opera: registra-se o pagamento do mesmo jeito, pelo mesmo
+      botão. O que muda é o que a tela responde depois — e o que os relatórios contam.</p>
+
+      <div class="callout" style="border:1px solid #e5dbee;border-left:4px solid #6e2f91;border-radius:10px;background:#f1eaf6;padding:14px 18px;margin:0 0 16px;"><span class="title" style="font-weight:700;font-size:12px;letter-spacing:.08em;text-transform:uppercase;display:block;margin:0 0 4px;color:#6e2f91;">Nota</span><p style="margin:0 0 12px;">O estado é de <em>leitura</em>: ele é
+      calculado a partir da conciliação, não gravado por ninguém. Não há botão para pôr ou tirar
+      uma fatura de <span class="field" style="font-weight:600;color:#251d2b;">Em pagamento</span> — concilie o extrato, e ela anda
+      sozinha.</p></div>
+
+      <h2 id="limitacoes" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">Limitações conhecidas</h2>
+      <ul style="margin:0 0 14px 22px;padding:0;">
+        <li style="margin:0 0 7px;"><strong style="color:#251d2b;">Sem conta transitória, sem estado.</strong> É a condição descrita acima, e é o
+        motivo número um de o módulo "não funcionar".</li>
+        <li style="margin:0 0 7px;"><strong style="color:#251d2b;">É o comportamento do Enterprise, não uma invenção.</strong> Quem migrar para o
+        Enterprise pode desinstalar este módulo sem perder nada: o estado continua, vindo de lá.</li>
+        <li style="margin:0 0 7px;"><strong style="color:#251d2b;">Faturas antigas.</strong> O estado é calculado, então faturas já pagas antes da
+        instalação passam a ser reavaliadas pela mesma régua — as que foram baixadas sem extrato
+        conciliado aparecerão como <span class="field" style="font-weight:600;color:#251d2b;">Em pagamento</span>. Isso é um retrato
+        correto do que existe no banco, e costuma ser a primeira surpresa útil que o módulo dá.</li>
+      </ul>
+
+      <div class="seealso" style="border:1px solid #e5dbee;border-radius:12px;background:#f1eaf6;padding:16px 20px;margin:32px 0 0;">
+        <strong style="font-weight:700;font-size:12px;letter-spacing:.08em;text-transform:uppercase;display:block;margin:0 0 8px;color:#5d5266;">Ver também</strong>
+        <ul style="margin:0 0 14px 22px;padding:0;">
+          <li style="margin:0 0 7px;"><a href="https://www.odoo.com/documentation" rel="noopener" target="_blank" style="color:#6e2f91;">Documentação do Odoo</a> — conciliação bancária e contas transitórias nos diários.</li>
+        </ul>
+      </div><p style="margin:28px 0 0;padding-top:14px;border-top:1px solid #e5dbee;font-size:13px;color:#5d5266;">Manual completo, com busca e as demais páginas: <a href="/liber_site/static/docs/liber_in_payment.html" target="_blank" rel="noopener" style="color:#6e2f91;">Estado Em pagamento</a>.</p></div>

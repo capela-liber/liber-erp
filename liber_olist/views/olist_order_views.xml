@@ -39,6 +39,12 @@
                        optional="show" widget="badge"
                        decoration-muted="situacao == 'Cancelado'"/>
                 <field name="valor" sum="Total"/>
+                <!-- Sem `widget="badge"`: badge em campo booleano imprime a
+                     tag crua na célula ("<div cla..."), visto na tela do dev
+                     em 02/09/2026. O booleano da lista já se lê. -->
+                <field name="e_bonificacao" optional="show"
+                       string="Bonificação"/>
+                <field name="bonus_ref" optional="show" string="Ficha B000"/>
                 <field name="sale_order_id" optional="show"/>
                 <field name="codigo_rastreamento" optional="show"/>
                 <field name="transportadora" optional="hide"/>
@@ -49,6 +55,8 @@
                        decoration-success="xml_status == 'arquivado'"
                        decoration-warning="xml_status == 'sem_xml'"
                        decoration-muted="xml_status == 'sem_nota'"/>
+                <field name="xml_indisponivel_motivo" optional="show"
+                       string="Nota indisponível"/>
                 <field name="nfe_panel_id" optional="hide"/>
                 <field name="detalhe_pendente" optional="hide"
                        string="Na fila"/>
@@ -82,7 +90,10 @@
                                 class="oe_stat_button" icon="fa-shopping-cart"
                                 invisible="not sale_order_id">
                             <div class="o_stat_info">
-                                <span class="o_stat_text">Pedido no Odoo</span>
+                                <span class="o_stat_text"
+                                      invisible="sale_order_state == 'cancel'">Pedido no Odoo</span>
+                                <span class="o_stat_text text-danger"
+                                      invisible="sale_order_state != 'cancel'">Pedido cancelado</span>
                                 <field name="sale_order_id" nolabel="1"
                                        class="o_stat_value" readonly="1"/>
                             </div>
@@ -91,7 +102,10 @@
                                 class="oe_stat_button" icon="fa-file-text"
                                 invisible="not invoice_id">
                             <div class="o_stat_info">
-                                <span class="o_stat_text">Fatura</span>
+                                <span class="o_stat_text"
+                                      invisible="invoice_state == 'cancel'">Fatura</span>
+                                <span class="o_stat_text text-danger"
+                                      invisible="invoice_state != 'cancel'">Fatura cancelada</span>
                                 <field name="invoice_id" nolabel="1"
                                        class="o_stat_value" readonly="1"/>
                             </div>
@@ -109,6 +123,27 @@
                              Importar para o Odoo já busca o XML e recusa, com
                              aviso, se ele não vier. A situação do XML segue
                              visível no campo da seção "No Odoo". -->
+                    </div>
+                    <!-- O pedido zerado precisa DIZER o que é. Sem este
+                         aviso a tela mostra "Pedido no Odoo S63438" e
+                         "Fatura INV/..." em cima, sem sinal nenhum de que os
+                         dois estão cancelados — e quem lê conclui que houve
+                         venda. Os botões ficam de propósito: são o rastro de
+                         como o registro estava antes. -->
+                    <div class="alert alert-info" role="alert"
+                         invisible="not e_bonificacao">
+                        <b>Este pedido veio do Olist sem valor: é bonificação,
+                        não venda.</b> Livro dado entra pela ficha B000, com
+                        nota de remessa e CFOP 5910/6910.
+                        <span invisible="not bonus_ref">
+                            O pedido de venda e a fatura que aparecem acima
+                            <b>estão cancelados</b> — ficam à vista só como
+                            rastro do que havia antes do conserto.
+                        </span>
+                        <span invisible="bonus_ref">
+                            Ele ainda não foi tratado: use
+                            <b>Importar para o Odoo</b>.
+                        </span>
                     </div>
                     <div class="oe_title">
                         <h1><field name="numero" readonly="1"/></h1>
@@ -169,13 +204,17 @@
                     </group>
                     <notebook>
                         <page string="Itens" name="itens">
-                            <field name="line_ids" readonly="1">
-                                <list>
-                                    <field name="codigo"/>
-                                    <field name="descricao"/>
-                                    <field name="quantidade"/>
-                                    <field name="valor_unitario"/>
-                                    <field name="product_id"/>
+                            <field name="line_ids"
+                                   readonly="state == 'importado'">
+                                <list editable="bottom" create="false"
+                                      delete="false">
+                                    <field name="codigo" readonly="1"/>
+                                    <field name="descricao" readonly="1"/>
+                                    <field name="quantidade" readonly="1"/>
+                                    <field name="valor_unitario" readonly="1"/>
+                                    <field name="product_id"
+                                           options="{'no_create': True}"/>
+                                    <field name="product_manual" optional="hide"/>
                                 </list>
                             </field>
                             <div class="text-muted">
@@ -183,7 +222,12 @@
                                 importação: o ISBN do pedido vem com hífen e o
                                 casamento é pelo código normalizado. Faltar
                                 aqui é notícia — o pedido não entra com menos
-                                livros do que teve.
+                                livros do que teve. Se o cadastro já foi
+                                consertado e o código ainda não bate, escolha
+                                o livro aqui: a escolha é sua e a releitura do
+                                detalhe não a desfaz. O que o Olist mandou
+                                (código, descrição, quantidade e valor) não se
+                                edita — é o registro do que o cliente comprou.
                             </div>
                         </page>
                         <page string="Payload cru" name="raw"
@@ -238,10 +282,22 @@
                         domain="[('itens_sem_produto', '&gt;', 0)]"
                         help="Os pedidos travados: têm item cujo ISBN não casa com produto nenhum do Odoo. O histórico de cada um lista quais."/>
                 <separator/>
+                <filter name="f_bonificacao" string="Bonificações"
+                        domain="[('e_bonificacao', '=', True)]"
+                        help="Vieram do Olist sem valor: livro dado, não vendido. Entram pela ficha B000, com nota de remessa, nunca como pedido de venda."/>
+                <filter name="f_so_vendas" string="Só vendas"
+                        domain="[('e_bonificacao', '=', False)]"
+                        help="Tira da fila o que veio de graça: sobra o que de fato foi vendido e vira pedido, fatura e recebimento."/>
+                <filter name="f_bonif_pendente" string="Bonificações a tratar"
+                        domain="[('e_bonificacao', '=', True), ('bonus_ref', '=', False), ('state', '!=', 'cancelado')]"/>
+                <separator/>
                 <filter name="f_marketplace" string="De marketplace"
                         domain="[('canal', '!=', False)]"/>
                 <filter name="f_com_rastreio" string="Com rastreio"
                         domain="[('codigo_rastreamento', '!=', False)]"/>
+                <filter name="f_xml_recusado" string="Nota indisponível no Olist"
+                        domain="[('xml_indisponivel_motivo', '!=', False)]"
+                        help="O Olist respondeu que não entrega o XML — quase sempre 'Nota Fiscal não autorizada', ou seja, a SEFAZ nunca autorizou. Não há o que trazer."/>
                 <filter name="f_xml_falta" string="Nota emitida, XML não arquivado"
                         domain="[('xml_status', '=', 'sem_xml')]"
                         help="Fiscalmente resolvido no Olist e sem lastro aqui."/>
@@ -274,6 +330,8 @@
                             context="{'group_by': 'situacao'}"/>
                     <filter name="g_state" string="Situação"
                             context="{'group_by': 'state'}"/>
+                    <filter name="g_bonificacao" string="Venda ou bonificação"
+                            context="{'group_by': 'e_bonificacao'}"/>
                     <filter name="g_data" string="Data do pedido"
                             context="{'group_by': 'data_pedido'}"/>
                 </group>
@@ -403,6 +461,11 @@
                 <field name="canal"/>
                 <field name="cliente_nome"/>
                 <field name="valor" sum="Total"/>
+                <!-- A fila mistura os dois, e o que se faz com cada um é
+                     diferente: a venda vira S e fatura, a bonificação vira
+                     ficha B000 e nota de remessa. Quem despacha precisa ver
+                     qual é qual ANTES de clicar, e poder separar. -->
+                <field name="e_bonificacao" string="Bonificação"/>
                 <field name="xml_status" widget="badge"
                        decoration-success="xml_status == 'arquivado'"
                        decoration-warning="xml_status == 'sem_xml'"/>
@@ -417,6 +480,11 @@
         <field name="res_model">olist.order</field>
         <field name="view_mode">list,form</field>
         <field name="view_id" ref="view_olist_order_list_fila"/>
+        <!-- O search do modelo traz junto os filtros "Bonificações" e
+             "Só vendas", e o agrupar por "Venda ou bonificação". Declarado
+             aqui de propósito: sem o ref, o Odoo escolhe sozinho entre os
+             search views do modelo, e a fila pode amanhecer sem eles. -->
+        <field name="search_view_id" ref="view_olist_order_search"/>
         <!-- Quem entra na fila é decisão da política das Definições
              (Despachar pedidos do Olist). "Só com nota", o padrão: a caixa
              viaja com a DANFE, e o pedido "Em aberto" espera o Olist faturar.

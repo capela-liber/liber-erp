@@ -49,7 +49,7 @@ class TestRelatorioTour(HttpCase):
         # Dentro dos 30 dias: é o filtro padrão da ação, e um pedido velho
         # deixaria o pivô vazio — sem célula não há o que provar.
         self.env['olist.order'].create({
-            'account_id': account.id, 'olist_id': 'TOUR-R1',
+            'account_id': account.id, 'olist_id': 'TOUR-R1', 'valor': 100.0,
             'numero': "TOUR-R1", 'situacao': "Aprovado",
             'canal': "Mercado Livre",
             'data_pedido': fields.Date.today(),

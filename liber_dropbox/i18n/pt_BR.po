@@ -44,7 +44,7 @@ msgstr "Conta de armazenamento na nuvem"
 #. module: liber_dropbox
 #: model:ir.model,name:liber_dropbox.model_liber_cloud_provider
 msgid "Cloud Storage Provider Registry"
-msgstr ""
+msgstr "Registro de provedores de armazenamento"
 
 #. module: liber_dropbox
 #: model:ir.ui.menu,name:liber_dropbox.menu_liber_dropbox_config
@@ -63,7 +63,7 @@ msgstr "Não foi possível alcançar o Dropbox: %s"
 #: model:ir.model.fields,field_description:liber_dropbox.field_liber_cloud_provider__display_name
 #: model:ir.model.fields,field_description:liber_dropbox.field_liber_cloud_upload__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Nome exibido"
 
 #. module: liber_dropbox
 #: model:ir.model.fields.selection,name:liber_dropbox.selection__liber_cloud_account__provider__dropbox
@@ -71,7 +71,7 @@ msgstr ""
 #: model:ir.model.fields.selection,name:liber_dropbox.selection__liber_cloud_upload__provider__dropbox
 #: model:ir.ui.menu,name:liber_dropbox.menu_liber_dropbox_root
 msgid "Dropbox"
-msgstr ""
+msgstr "Dropbox"
 
 #. module: liber_dropbox
 #: model:res.groups.privilege,name:liber_dropbox.privilege_liber_dropbox
@@ -120,7 +120,7 @@ msgstr "Pastas"
 #: model:ir.model.fields,field_description:liber_dropbox.field_liber_cloud_provider__id
 #: model:ir.model.fields,field_description:liber_dropbox.field_liber_cloud_upload__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: liber_dropbox
 #: model:ir.model.fields,help:liber_dropbox.field_liber_cloud_account__dropbox_refresh_token
@@ -128,6 +128,8 @@ msgid ""
 "Long-lived token from the one-time authorization flow; see the module's "
 "NOTES.md for the two curl calls that mint it."
 msgstr ""
+"Token de longa vida vindo da autorização feita uma única vez; veja no "
+"NOTES.md do módulo as duas chamadas curl que o emitem."
 
 #. module: liber_dropbox
 #: model:res.groups,name:liber_dropbox.group_liber_dropbox_manager
@@ -150,6 +152,8 @@ msgid ""
 "Pick a folder of the company Dropbox, name who reads and who\n"
 "                writes, and press Sync."
 msgstr ""
+"Escolha uma pasta do Dropbox da empresa, diga quem lê e quem\n"
+"                escreve, e aperte Sincronizar."
 
 #. module: liber_dropbox
 #: model:ir.model.fields,field_description:liber_dropbox.field_liber_cloud_account__provider
@@ -175,6 +179,9 @@ msgid ""
 "The Dropbox account of %s is not configured. Fill in the app key, app secret"
 " and refresh token (see the module's NOTES.md for the one-time setup)."
 msgstr ""
+"A conta Dropbox de %s não está configurada. Preencha a chave do app, o "
+"segredo do app e o token de atualização (veja no NOTES.md do módulo a "
+"configuração que se faz uma vez só)."
 
 #. module: liber_dropbox
 #. odoo-python
@@ -184,6 +191,9 @@ msgid ""
 "expiration date. Upgrade the plan, or set the period to 0 on the account to "
 "create links that never expire."
 msgstr ""
+"O plano Dropbox da conta da empresa não permite links com data de "
+"validade. Suba o plano, ou ponha o período em 0 na conta para criar links "
+"que nunca expiram."
 
 #. module: liber_dropbox
 #: model:ir.ui.menu,name:liber_dropbox.menu_liber_dropbox_upload
@@ -210,9 +220,13 @@ msgstr "Usuário"
 msgid ""
 "Which storage holds this folder. Provider modules add their entry here."
 msgstr ""
+"Qual armazenamento guarda esta pasta. Os módulos de provedor acrescentam "
+"sua entrada aqui."
 
 #. module: liber_dropbox
 #: model:ir.model.fields,help:liber_dropbox.field_liber_cloud_account__provider
 msgid ""
 "Which storage this credential opens. Provider modules add their entry here."
 msgstr ""
+"Qual armazenamento esta credencial abre. Os módulos de provedor "
+"acrescentam sua entrada aqui."

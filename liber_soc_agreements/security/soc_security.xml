@@ -12,6 +12,16 @@
         <field name="category_id" ref="module_category_consignment"/>
     </record>
 
+    <!-- QUEM ABRE CONTRATO É O ADMINISTRADOR, e não o usuário (26/08/2026).
+         O contrato de consignação é o documento que compromete estoque da casa
+         na loja de terceiro por tempo indeterminado; abrir um é decisão de
+         gerente. O perfil do liber_roles já dizia isso na descrição ("fecha
+         contratos AC"), mas o ACL nunca cobrou: o assistente criava.
+
+         O usuário continua OPERANDO o que existe: lê, grava, suspende e
+         reativa. O que ele perdeu foi só o `create` de consignment.agreement,
+         em security/ir.model.access.csv, que é um CSV e não comporta este
+         comentário. A prova está em tests/test_acl_prateleira.py. -->
     <record id="group_soc_user" model="res.groups">
         <field name="name">User</field>
         <field name="privilege_id" ref="privilege_consignment"/>

@@ -23,7 +23,7 @@ class TestValoresDoRelatorio(TransactionCase):
 
     def _pedido(self, olist_id, desconto, itens):
         return self.env['olist.order'].create({
-            'account_id': self.account.id, 'olist_id': olist_id,
+            'account_id': self.account.id, 'valor': 100.0, 'olist_id': olist_id,
             'numero': olist_id, 'situacao': "Aprovado",
             'data_pedido': '2026-08-19', 'valor_desconto': desconto,
             'line_ids': [(0, 0, {'codigo': c, 'descricao': c,

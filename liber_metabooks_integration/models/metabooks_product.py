@@ -35,6 +35,28 @@ class MetabooksProduct(models.Model):
     bisac_code = fields.Many2one('biblio.bisac.codes', string='BISAC', tracking=True)
     bisac_prefix = fields.Char('Bisac prefix', tracking=True)
     bisac_code_ids = fields.Many2many('biblio.bisac.codes', string='BISAC List', tracking=True)
+    # BISAC e Thema têm a MESMA forma de propósito: um principal e a lista.
+    # A planilha da Metabooks tem uma coluna só para cada, com os códigos
+    # separados por ponto e vírgula, e o principal é o que vai na frente --
+    # é assim que o painel deles sabe qual é a "Classificação principal".
+    metabooks_thema_id = fields.Many2one(
+        'metabooks.thema.code', string='Thema principal', tracking=True,
+        domain="[('kind', '=', 'category')]",
+        help="A categoria Thema principal -- do que o livro trata antes de "
+             "tudo. Sai em primeiro na coluna. Qualificador não entra aqui: "
+             "ele qualifica, não classifica.")
+    metabooks_thema_ids = fields.Many2many(
+        'metabooks.thema.code', 'product_thema_category_rel',
+        'product_id', 'thema_id', string='Lista Thema', tracking=True,
+        domain="[('kind', '=', 'category')]",
+        help="As demais categorias Thema. A planilha aceita várias "
+             "(exemplo do manual deles: FBA; JH).")
+    metabooks_thema_qualifier_ids = fields.Many2many(
+        'metabooks.thema.code', 'product_thema_qualifier_rel',
+        'product_id', 'thema_id', string='Thema Qualifiers', tracking=True,
+        domain="[('kind', '=', 'qualifier')]",
+        help="Lugar, idioma, período, finalidade, público e estilo. "
+             "Qualificam a categoria principal e nunca vão sozinhos.")
     metabooks_keywords = fields.Text('Metabooks Keywords', tracking=True)
 
     metabooks_thickness = fields.Float('Metabooks Thickness', tracking=True)

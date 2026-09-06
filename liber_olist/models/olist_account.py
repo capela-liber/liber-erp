@@ -1016,6 +1016,14 @@ class OlistAccount(models.Model):
             if linha._read_saldo():
                 relidas += 1
             restante = self._grava_ja(1)
+        # A fila declarada acima é enchimento do tempo que sobra, não trabalho
+        # pendente: o mais velho que não coube espera a rodada seguinte, seis
+        # horas adiante. Encerrar a passada sem zerá-la deixava um resto
+        # positivo, que o executor lê como "partially done" e reexecuta em
+        # seguida — no prod isso virou milhares de rodadas por dia (22 a
+        # 30/08/2026), e a escrita por minuto na conta derrubava o push, o
+        # pull de NFe e o espelho de pedidos por erro de serialização.
+        self._grava_ja(0, restantes=0)
         if relidas:
             _logger.info("Olist %s: %s saldo(s) relidos por antiguidade.",
                          self.name, relidas)

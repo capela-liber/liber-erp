@@ -6,18 +6,33 @@ Mesmo racional do import de XML: sugerir é barato, errar acerto é caro.
 
 Não é mais TransientModel de propósito (pedido do usuário, 10/08): a
 conferência é trabalho — a pessoa sai para checar algo e volta. Um rascunho
-por chamado; reabrir o botão devolve o rascunho como estava. Criar a CO
-descarta o rascunho."""
+por âncora; reabrir o botão devolve o rascunho como estava. Criar a CO
+descarta o rascunho.
+
+DUAS ÂNCORAS desde 01/09/2026. O assistente nasceu preso ao chamado, onde o
+trabalho é REATIVO: chegou um e-mail, abre-se o documento a partir dele. O
+atendimento ATIVO da consignação anda no sentido contrário — a pessoa parte
+da CO da livraria, escreve para ela, e a resposta (e-mail, planilha, PDF,
+XML de NFe) volta para DENTRO daquela CO. É o mesmo mecanismo; muda só de
+onde ele é chamado.
+
+Por isso `ticket_id` e `settlement_id` são exclusivos e um deles é
+obrigatório (ver `_check_anchor`). Ancorado no chamado, criar abre/reusa a CO
+do chamado; ancorado na CO, as linhas caem NAQUELA CO e nenhuma outra
+nasce."""
 import base64
-import csv
 import difflib
-import io
+import logging
 import re
 
+from markupsafe import Markup
+
 from odoo import api, fields, models, _
-from odoo.exceptions import UserError
+from odoo.exceptions import UserError, ValidationError
 
 from ..models import co_parser
+
+_logger = logging.getLogger(__name__)
 
 
 class CoFromConversation(models.Model):
@@ -25,9 +40,15 @@ class CoFromConversation(models.Model):
     _description = 'Open a CO from this conversation (draft)'
     _rec_name = 'ticket_id'
 
+    # As duas âncoras. Uma e só uma por rascunho (`_check_anchor`): o
+    # assistente é o mesmo, o ponto de partida é que muda.
     ticket_id = fields.Many2one(
-        'liber.support.ticket', required=True, ondelete='cascade',
-        index=True)
+        'liber.support.ticket', ondelete='cascade', index=True)
+    settlement_id = fields.Many2one(
+        'consignment.settlement', string='Consignment (CO)',
+        ondelete='cascade', index=True,
+        help="When the draft was opened from a consignment, the imported "
+             "lines land in THIS operation.")
     # `readonly=False`: o parceiro se resolve AQUI, e grava de volta no
     # chamado. Antes era só leitura, e um chamado sem cliente (o e-mail que
     # chega de um remetente que ninguém casou ainda) obrigava a fechar o
@@ -35,11 +56,16 @@ class CoFromConversation(models.Model):
     # -- é um por chamado --, mas 43 linhas de planilha na tela e um "feche
     # tudo e comece de novo" é o tipo de atrito que faz a pessoa desistir da
     # ferramenta.
+    # Era `related='ticket_id.partner_id'`, e com duas âncoras o related não
+    # serve mais: numa CO o cliente vem da CO. Computado-armazenado-editável
+    # dá o mesmo comportamento de tela (preenche sozinho, aceita correção) e
+    # a escrita de volta no chamado mora no `write` abaixo.
     partner_id = fields.Many2one(
         # Sem `string=`: o rótulo é herdado do chamado, que a casa já vê como
         # "Parceiro". Dar um nome novo aqui criaria um texto a traduzir e duas
         # palavras para a mesma coisa na mesma tela.
-        related='ticket_id.partner_id', readonly=False,
+        'res.partner', compute='_compute_partner_id', store=True,
+        readonly=False, precompute=True,
         help="The customer of this conversation. Setting it here also sets "
              "it on the ticket.")
     # A opção pedida em 10/08: acerto, reposição ou devolução para o lote
@@ -64,10 +90,15 @@ class CoFromConversation(models.Model):
         string='Raw text',
         help="Pre-filled with the customer's emails. Paste here freely "
              "— including straight from Excel (tab-separated works).")
+    # O domínio segue a âncora: os anexos do chamado, ou os da CO. Escrito
+    # sobre dois campos calculados em vez de um literal, senão o assistente
+    # aberto de uma CO ofereceria os anexos de um chamado que não existe.
+    source_model = fields.Char(compute='_compute_source_ref')
+    source_res_id = fields.Integer(compute='_compute_source_ref')
     attachment_id = fields.Many2one(
         'ir.attachment', string='Attached file',
-        domain="[('res_model', '=', 'liber.support.ticket'),"
-               " ('res_id', '=', ticket_id)]",
+        domain="[('res_model', '=', source_model),"
+               " ('res_id', '=', source_res_id)]",
         help="An NFe .xml, .xlsx, .csv or system-generated PDF that came "
              "with the conversation. Picking a file re-reads the lines. "
              "An NFe XML is the best source — exact ISBN and quantity — "
@@ -91,8 +122,65 @@ class CoFromConversation(models.Model):
              "neither of them. Tick to confirm this is intentional "
              "(e.g. a branch issuing under the head office).")
 
+    # NULL não conflita com NULL no Postgres: as duas travas convivem, cada
+    # uma valendo só para os rascunhos da sua âncora.
     _ticket_uniq = models.Constraint(
         'UNIQUE (ticket_id)', 'One draft per ticket — reopen it instead.')
+    _settlement_uniq = models.Constraint(
+        'UNIQUE (settlement_id)',
+        'One draft per consignment — reopen it instead.')
+
+    # ------------------------------------------------------------------
+    # âncora
+    # ------------------------------------------------------------------
+
+    @api.constrains('ticket_id', 'settlement_id')
+    def _check_anchor(self):
+        for wizard in self:
+            if bool(wizard.ticket_id) == bool(wizard.settlement_id):
+                raise ValidationError(_(
+                    "A draft belongs either to a support ticket or to a "
+                    "consignment — never to both, never to neither."))
+
+    def _anchor(self):
+        """O registro de onde o assistente foi aberto. É ele que leva a
+        empresa, o nome da origem e o chatter da anotação."""
+        self.ensure_one()
+        return self.ticket_id or self.settlement_id
+
+    @api.depends('ticket_id.partner_id', 'settlement_id.partner_id')
+    def _compute_partner_id(self):
+        for wizard in self:
+            wizard.partner_id = (wizard.settlement_id.partner_id
+                                 or wizard.ticket_id.partner_id)
+
+    @api.depends('ticket_id', 'settlement_id')
+    def _compute_source_ref(self):
+        for wizard in self:
+            anchor = wizard.ticket_id or wizard.settlement_id
+            wizard.source_model = anchor._name if anchor else False
+            wizard.source_res_id = anchor.id if anchor else 0
+
+    @api.model_create_multi
+    def create(self, vals_list):
+        # O `@api.constrains` só é chamado para os campos que aparecem nos
+        # vals: um `create({})` passaria batido e nasceria um rascunho sem
+        # âncora, invisível nas duas telas e impossível de reabrir.
+        records = super().create(vals_list)
+        records._check_anchor()
+        return records
+
+    def write(self, vals):
+        res = super().write(vals)
+        # O que o related fazia sozinho: corrigir o cliente aqui corrige o
+        # do chamado. Na CO não se escreve de volta — lá o cliente é a
+        # âncora, e trocá-lo por um assistente seria trocar o documento.
+        if vals.get('partner_id'):
+            for wizard in self:
+                ticket = wizard.ticket_id
+                if ticket and ticket.partner_id.id != vals['partner_id']:
+                    ticket.partner_id = vals['partner_id']
+        return res
 
     # ------------------------------------------------------------------
     # parsing
@@ -146,26 +234,23 @@ class CoFromConversation(models.Model):
 
     @staticmethod
     def _spreadsheet_to_text(name, raw):
-        """.xlsx (openpyxl), .csv ou PDF com texto -> texto para o parser."""
+        """Planilha (.xlsx, .xls, SpreadsheetML, HTML, CSV) ou PDF com
+        camada de texto -> texto para o parser.
+
+        Quem decide o formato é a assinatura do arquivo, no co_parser —
+        metade dos anexos reais chega com a extensão errada. Arquivo que
+        o leitor não consegue abrir devolve texto vazio em vez de
+        estourar: o assistente ainda tem o texto do e-mail, e um
+        traceback no onchange não deixa nem isso."""
         name = (name or '').lower()
         if name.endswith('.pdf') or raw[:5] == b'%PDF-':
             return CoFromConversation._pdf_to_text(raw)
-        if name.endswith('.csv') or raw[:4] not in (b'PK\x03\x04',):
-            try:
-                text = raw.decode('utf-8')
-            except UnicodeDecodeError:
-                text = raw.decode('latin-1')
-            if name.endswith('.csv') or ';' in text or ',' in text:
-                rows = list(csv.reader(
-                    io.StringIO(text),
-                    delimiter=';' if ';' in text else ','))
-                return co_parser.xlsx_rows_to_text(rows)
-            return text
-        import openpyxl
-        book = openpyxl.load_workbook(
-            io.BytesIO(raw), read_only=True, data_only=True)
-        return co_parser.xlsx_rows_to_text(
-            book.worksheets[0].iter_rows(values_only=True))
+        try:
+            return co_parser.sheet_to_text(name, raw)
+        except Exception:
+            _logger.warning("Não consegui ler a planilha %s", name,
+                            exc_info=True)
+            return ''
 
     @api.onchange('default_dest')
     def _onchange_default_dest(self):
@@ -190,7 +275,14 @@ class CoFromConversation(models.Model):
                 'product_id': product.id if product else False,
                 'qty': cand['qty'],
                 'confidence': confidence,
-                'dest': self.default_dest or 'sold',
+                # `sale` não existe na Selection da linha: é outro
+                # documento, não um destino. O onchange já o segurava na
+                # tela, mas pelo ORM ele chegava até aqui e estourava no
+                # INSERT — o caminho do ORM ficou exercitado quando a CO
+                # passou a abrir o mesmo assistente.
+                'dest': (self.default_dest
+                         if self.default_dest in
+                         ('sold', 'replenish', 'return') else 'sold'),
             }))
         self.line_ids = commands
 
@@ -286,9 +378,12 @@ class CoFromConversation(models.Model):
         return self._reopen()
 
     def _reopen(self):
+        self.ensure_one()
         return {
             'type': 'ir.actions.act_window',
-            'name': _('Open a CO from this conversation'),
+            'name': (_('Import lines into this consignment')
+                     if self.settlement_id
+                     else _('Open a CO from this conversation')),
             'res_model': self._name,
             'res_id': self.id,
             'view_mode': 'form',
@@ -296,10 +391,75 @@ class CoFromConversation(models.Model):
         }
 
     # ------------------------------------------------------------------
+    # abertura (o mesmo gesto nas duas âncoras)
+    # ------------------------------------------------------------------
+
+    @api.model
+    def _harvest(self, record):
+        """Colhe de um registro com chatter o material do assistente:
+        (texto das mensagens de e-mail, melhor anexo).
+
+        Estava dentro do chamado e subiu para cá quando a CO passou a abrir
+        o mesmo assistente — o atendimento ativo colhe da conversa da CO
+        exatamente como o reativo colhe da do chamado."""
+        inbound = record.message_ids.filtered(
+            lambda m: m.message_type == 'email').sorted('date')
+        parts = []
+        for message in inbound:
+            # tabelas-relatório (ex.: estoque mínimo da Olist) viram
+            # linhas resolvidas (mínimo − estoque); o resto vira texto
+            rest, items = co_parser.extract_report_tables(
+                str(message.body or ''))
+            if items:
+                parts.append(co_parser.items_to_text(items))
+            parts.append(co_parser.html_to_text(rest))
+        source = '\n\n'.join(p for p in parts if p.strip())
+        # NFe XML primeiro: é a fonte exata (ISBN + quantidade da SEFAZ).
+        # Confere o CONTEÚDO, não só a extensão — nem todo .xml de anexo é
+        # uma NFe.
+        attachment = next(
+            (a for a in self.env['ir.attachment'].search(
+                [('res_model', '=', record._name),
+                 ('res_id', '=', record.id),
+                 ('name', '=ilike', '%.xml')],
+                order='id desc')
+             if co_parser.is_nfe_xml(
+                 a.name, base64.b64decode(a.datas or b''))),
+            self.env['ir.attachment'])
+        if not attachment:
+            attachment = self.env['ir.attachment'].search(
+                [('res_model', '=', record._name),
+                 ('res_id', '=', record.id),
+                 '|', '|', ('name', '=ilike', '%.xlsx'),
+                 ('name', '=ilike', '%.csv'),
+                 ('name', '=ilike', '%.pdf')],
+                order='id desc', limit=1)
+        return source, attachment
+
+    @api.model
+    def _open_for(self, record):
+        """Abre (ou devolve) o rascunho de conferência de um registro.
+
+        Um por âncora: se já existe, volta exatamente como foi deixado —
+        conferir outra coisa no meio não pode custar o trabalho feito."""
+        field = ('ticket_id' if record._name == 'liber.support.ticket'
+                 else 'settlement_id')
+        wizard = self.search([(field, '=', record.id)], limit=1)
+        if not wizard:
+            source, attachment = self._harvest(record)
+            wizard = self.create({
+                field: record.id,
+                'source_text': source,
+                'attachment_id': attachment.id or False,
+            })
+            wizard.action_parse()
+        return wizard._reopen()
+
+    # ------------------------------------------------------------------
     # criação da CO
     # ------------------------------------------------------------------
 
-    def _sale_order_values(self, ticket, lines):
+    def _sale_order_values(self, anchor, lines):
         """Pedido de venda a partir das linhas reconhecidas na conversa.
 
         Três decisões, todas da direção em 12/08/2026:
@@ -326,26 +486,53 @@ class CoFromConversation(models.Model):
         aparece na coluna de desconto -- exatamente o que a tela promete.
         """
         return {
-            'partner_id': ticket.partner_id.id,
-            'company_id': ticket.company_id.id,
-            'origin': ticket.name,
+            'partner_id': self.partner_id.id,
+            'company_id': anchor.company_id.id,
+            'origin': anchor.name,
             'order_line': [(0, 0, {
                 'product_id': line.product_id.id,
                 'product_uom_qty': line.qty,
             }) for line in lines],
         }
 
-    def _action_create_sale(self, ticket, lines):
-        """A opção Venda: um pedido, nenhuma CO."""
+    def _action_create_sale(self, anchor, lines):
+        """A opção Venda: um pedido, nenhuma CO.
+
+        Vale nas duas âncoras. Aberta de uma CO, o pedido nasce com a CO na
+        origem e a anotação cai no chatter dela — mas NENHUM campo da CO é
+        escrito: `sale_order_id` da CO é o pedido do acerto, gerado pelo
+        `action_run`, e escrevê-lo aqui faria a CO apontar para uma venda
+        firme como se fosse a sua apuração."""
         order = self.env['sale.order'].create(
-            self._sale_order_values(ticket, lines))
-        ticket.sale_order_id = order
-        ticket.message_post(
-            body=_('Sale order %(name)s drafted from this conversation: '
-                   '%(count)s line(s), cover price with the customer\'s '
-                   'pricelist (%(pricelist)s).',
-                   name=order.name, count=len(lines),
-                   pricelist=order.pricelist_id.display_name or _('none')),
+            self._sale_order_values(anchor, lines))
+        if anchor._name == 'liber.support.ticket':
+            anchor.sale_order_id = order
+        # LINK, e não o nome em texto (pedido do usuário, 01/09/2026). Saindo
+        # de uma CO, este pedido é raro e não tem campo que o guarde: a CO já
+        # usa `sale_order_id` para o pedido do ACERTO, e escrevê-lo aqui faria
+        # a apuração apontar para uma venda firme. Sem campo, a única trilha
+        # que sobra é o chatter -- e um número escrito em texto obriga a copiar
+        # e caçar na lista de pedidos. `_get_html_link` dá o mesmo <a> que o
+        # Odoo usa nas suas próprias anotações, e o `Markup` é o que impede o
+        # `message_post` de escapá-lo (o nome do cliente e a lista continuam
+        # escapados, por virem pelo `%`).
+        anchor.message_post(
+            body=Markup(_(
+                'Sale order %(link)s drafted from this conversation: '
+                '%(count)s line(s), cover price with the customer\'s '
+                'pricelist (%(pricelist)s).')) % {
+                    'link': order._get_html_link(),
+                    'count': len(lines),
+                    'pricelist': (order.pricelist_id.display_name
+                                  or _('none')),
+                },
+            message_type='comment', subtype_xmlid='mail.mt_note')
+        # E a volta: o pedido guarda a CO só no `origin`, que é texto solto.
+        # Quem cai nele por uma busca não tem como voltar à operação que o
+        # gerou sem procurar o número à mão.
+        order.message_post(
+            body=Markup(_('Drafted from %(link)s.')) % {
+                'link': anchor._get_html_link()},
             message_type='comment', subtype_xmlid='mail.mt_note')
         self.unlink()   # rascunho cumprido
         return {
@@ -355,10 +542,41 @@ class CoFromConversation(models.Model):
             'view_mode': 'form',
         }
 
+    def _apply_lines(self, settlement, lines):
+        """Despeja as linhas conferidas numa CO, SOMANDO no produto que já
+        estiver lá.
+
+        Somar em vez de acrescentar é o que o atendimento ativo exige: a CO
+        já vem com o mapa da prateleira (`action_populate_from_shelf`), e
+        criar uma segunda linha do mesmo título faria o acerto contar duas
+        vezes o que a livraria vendeu uma. No caminho antigo, o do chamado, a
+        CO em geral nasce vazia e o efeito é o mesmo de antes."""
+        Line = self.env['consignment.settlement.line']
+        column = {'return': 'qty_return', 'replenish': 'qty_replenish'}
+        for line in lines:
+            field = column.get(line.dest, 'qty_reported')
+            existing = settlement.line_ids.filtered(
+                lambda l, p=line.product_id: l.product_id == p)[:1]
+            if existing:
+                existing[field] += line.qty
+            else:
+                Line.create({
+                    'settlement_id': settlement.id,
+                    'product_id': line.product_id.id,
+                    field: line.qty,
+                })
+
     def action_create_co(self):
         self.ensure_one()
+        anchor = self._anchor()
         ticket = self.ticket_id
-        if not ticket.partner_id:
+        if self.settlement_id and self.settlement_id.state != 'draft':
+            raise UserError(_(
+                "%(name)s is not a draft any more: it was already run, and "
+                "adding lines to it would change an operation the customer "
+                "has already been given. Open a new consignment.",
+                name=self.settlement_id.name))
+        if not self.partner_id:
             # A mensagem não pode dizer "CO" quando se escolheu Venda: quem
             # lê procura o erro no lugar errado. E ela agora diz onde
             # resolver, porque o campo está nesta mesma tela.
@@ -384,31 +602,31 @@ class CoFromConversation(models.Model):
         # Venda desvia antes de qualquer coisa de consignação: nada de acordo,
         # nada de prateleira, nada de CO.
         if self.default_dest == 'sale':
-            return self._action_create_sale(ticket, lines)
-        settlement = ticket.settlement_id
-        if not settlement or settlement.state != 'draft':
-            settlement = self.env['consignment.settlement'].create({
-                'partner_id': ticket.partner_id.id,
-                'company_id': ticket.company_id.id,
-            })
-            ticket.settlement_id = settlement
-        Line = self.env['consignment.settlement.line']
-        for line in lines:
-            values = {
-                'settlement_id': settlement.id,
-                'product_id': line.product_id.id,
-            }
-            if line.dest == 'return':
-                values['qty_return'] = line.qty
-            elif line.dest == 'replenish':
-                values['qty_replenish'] = line.qty
-            else:
-                values['qty_reported'] = line.qty
-            Line.create(values)
-        ticket.message_post(
-            body=_('CO %(name)s drafted from this conversation: '
-                   '%(count)s line(s).',
-                   name=settlement.name, count=len(lines)),
+            return self._action_create_sale(anchor, lines)
+        # Ancorado na CO, o destino é ela mesma. Ancorado no chamado,
+        # reusa-se a CO em rascunho do chamado ou abre-se uma.
+        settlement = self.settlement_id
+        if not settlement:
+            settlement = ticket.settlement_id
+            if not settlement or settlement.state != 'draft':
+                settlement = self.env['consignment.settlement'].create({
+                    'partner_id': self.partner_id.id,
+                    'company_id': ticket.company_id.id,
+                })
+                ticket.settlement_id = settlement
+        self._apply_lines(settlement, lines)
+        anchor.message_post(
+            # Anotações diferentes de propósito: na CO o documento já
+            # existia, e dizer "aberta a partir desta conversa" seria falso.
+            body=(_('%(count)s line(s) imported into this consignment.',
+                    count=len(lines))
+                  if self.settlement_id
+                  # Mesmo motivo do link da venda: quem lê a anotação no
+                  # chamado quer chegar à CO, não copiar o número dela.
+                  else Markup(_('CO %(link)s drafted from this conversation: '
+                                '%(count)s line(s).')) % {
+                      'link': settlement._get_html_link(),
+                      'count': len(lines)}),
             message_type='comment', subtype_xmlid='mail.mt_note')
         self.unlink()  # rascunho cumprido
         return {

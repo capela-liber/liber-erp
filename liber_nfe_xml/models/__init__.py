@@ -11,4 +11,3 @@ from . import account_move
 from . import nfe_xml
 from . import res_partner
 from . import nfe_cfop
-from . import nfe_sefaz

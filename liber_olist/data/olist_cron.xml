@@ -116,5 +116,41 @@
             <field name="active" eval="True"/>
         </record>
 
+        <!-- A varredura das notas que a LISTAGEM não entrega.
+
+             O `cron_olist_sync` acima varre `notas.fiscais.pesquisa.php` e
+             importa o que a listagem oferece. Medido no prod em 03/09/2026,
+             ela devolve 1.023 notas enquanto o painel já tem 1.122: é
+             incompleta, e de forma intercalada. Sobraram 763 pedidos com nota
+             emitida e sem XML, de fevereiro a setembro, e o sync reportava
+             "0 imported, 1023 already known" a cada duas horas sem nunca
+             alcançá-los.
+
+             Este aqui não usa a listagem: pergunta pelo id da nota de cada
+             pedido pendente, uma chamada por nota, no ritmo do executor. Roda
+             DEPOIS do sync (05:20 contra 05:00 do detalhe) para não disputar
+             cota com ele, e é só leitura no Olist.
+
+             DESARMADO por decisão do dono em 03/09/2026, no mesmo dia em que
+             nasceu. A primeira rodada mostrou que a fila real é de 44 pedidos
+             (os outros 720 do SQL estão ARQUIVADOS e a busca nem os vê), e
+             que 32 dos 44 são notas da conta N1-Site que a SEFAZ nunca
+             autorizou. Com o conserto do erro definitivo ele não trava mais,
+             mas antes de o cron voltar a rodar sozinho é preciso entender por
+             que a n-1 emite nota que não autoriza: ligar a varredura sem
+             isso é automatizar a pergunta errada. Ligar é uma caixa na tela
+             de Ações Agendadas. -->
+        <record id="cron_olist_pull_missing_xmls" model="ir.cron">
+            <field name="name">Olist: buscar XML que faltou (nota a nota)</field>
+            <field name="model_id" ref="model_olist_order"/>
+            <field name="state">code</field>
+            <field name="code">model.cron_pull_missing_xmls()</field>
+            <field name="interval_number">2</field>
+            <field name="interval_type">hours</field>
+            <field name="nextcall"
+                   eval="(DateTime.now() + timedelta(days=1)).strftime('%Y-%m-%d 05:20:00')"/>
+            <field name="active" eval="False"/>
+        </record>
+
     </data>
 </odoo>

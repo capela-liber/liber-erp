@@ -26,7 +26,84 @@ class AccountMove(models.Model):
     is_remessa_note = fields.Boolean(
         related='journal_id.is_remessa', string="Is remessa note")
 
+    # A NOTA DE REMESSA NÃO LEVA CONTA BANCÁRIA, e por um motivo só: ninguém
+    # vai pagar nada nela. Consignação não movimenta dinheiro (é valor de
+    # estoque que continua nosso, na prateleira do outro) e bonificação é
+    # doação. Declarar no documento a conta em que se recebe é declarar uma
+    # cobrança que não existe.
+    #
+    # O Odoo não sabe disso. `_compute_partner_bank_id` carimba a primeira
+    # conta ativa da empresa em TODA fatura de cliente, e depois `_post()`
+    # recusa a nota se essa conta não estiver marcada como confiável. Foi o que
+    # travou o C08577 e a bonificação INV/2026/0083 em 26/08/2026, com uma
+    # mensagem sobre banco num documento que não tem banco -- e a saída que a
+    # equipe encontrou foi apagar o campo à mão, nota por nota.
+    #
+    # Marcar a conta como confiável conserta a FATURA DE VENDA, onde há mesmo o
+    # que receber. Aqui não é disso que se trata: a remessa não deve ter conta
+    # nenhuma, confiável ou não.
+    #
+    # As dependências do core vêm repetidas de propósito: o Odoo resolve o
+    # compute pelo nome, e um `@api.depends` novo substitui o de lá em vez de
+    # somar-se a ele. Omitir uma faria a fatura comum parar de recalcular.
+    @api.depends('bank_partner_id', 'currency_id',
+                 'preferred_payment_method_line_id', 'journal_id.is_remessa')
+    def _compute_partner_bank_id(self):
+        remessas = self.filtered(lambda m: m.journal_id.is_remessa)
+        remessas.partner_bank_id = False
+        super(AccountMove, self - remessas)._compute_partner_bank_id()
+
+    # ------------------------------------------------------------------
+    # A posição fiscal de remessa exige o diário de remessa
+    # ------------------------------------------------------------------
+    # O espelho, na nota, da trava do pedido (liber_soc_fiscal_br): uma venda
+    # não pode vestir a posição fiscal da consignação. Aqui a malandragem é a
+    # mesma com outra roupa -- uma fatura no diário de VENDAS (INV/) com a
+    # posição da remessa. A NF-e sai como remessa, sem imposto; a nota conta
+    # como receita no diário de vendas; e ninguém a baixa, porque a baixa
+    # automática só existe no diário de remessa. Cada lado, lido sozinho,
+    # parece certo.
+    #
+    # No prod de 06/09/2026 havia 3 notas de 2026 assim na Edlab Press
+    # (R$ 502 mil, entre elas a saída simbólica do FNDE lançada como venda) e
+    # 2 na n-1; o legado inteiro (2019-2023) foi lançado deste jeito, porque
+    # o Odoo 15 não tinha diário de remessa. O legado não se mexe; a porta
+    # fecha para quem lança de hoje em diante -- e também para quem posta um
+    # rascunho antigo, por isso a conferência mora no `action_post` além do
+    # constrains.
+    #
+    # Quais posições são "de remessa" cada módulo declara em
+    # `_remessa_fiscal_position_by_kind` (consignação, bonificação); o
+    # `auto_invoice_paid` sozinho não serve de régua, porque a casa o marcou
+    # também na devolução de venda, que é nota de venda legítima.
+    @api.constrains('fiscal_position_id', 'journal_id', 'move_type')
+    def _check_posicao_de_remessa_exige_diario_de_remessa(self):
+        self._exigir_diario_de_remessa()
+
+    def _exigir_diario_de_remessa(self):
+        for move in self:
+            if (not move.is_sale_document(include_receipts=True)
+                    or move.state == 'cancel'
+                    or not move.fiscal_position_id
+                    or move.journal_id.is_remessa):
+                continue
+            de_remessa = self.env['account.fiscal.position']
+            for fpos in move.company_id._remessa_fiscal_position_by_kind().values():
+                de_remessa |= fpos
+            if move.fiscal_position_id in de_remessa:
+                raise UserError(_(
+                    "%(move)s carries the remessa fiscal position %(fpos)s "
+                    "but sits in %(journal)s, a sales journal.\n\n"
+                    "A remessa is a note nobody pays: it books in a remessa "
+                    "journal, off Invoices and off revenue. Use the remessa "
+                    "journal -- or, if this is a sale, a sales fiscal "
+                    "position.",
+                    move=move.display_name,
+                    fpos=move.fiscal_position_id.display_name,
+                    journal=move.journal_id.display_name))
+
     def action_post(self):
+        self._exigir_diario_de_remessa()
         res = super().action_post()
         for move in self:
             if (move.journal_id.is_remessa

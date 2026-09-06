@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     'name': 'Consignment - Movements',
-    'version': '19.0.2.10.0',
+    'version': '19.0.2.13.0',
     'summary': 'Consignment stock movements: shipment, replenishment, return, symbolic renewal',
     'description': """
 Consignment movements (SOC redesign).

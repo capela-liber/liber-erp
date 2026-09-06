@@ -8,7 +8,16 @@ from odoo import _
 from odoo.exceptions import UserError
 
 API_URL = 'https://api.github.com'
+GIT_URL = 'https://github.com'
 TIMEOUT = 60
+
+# A file kept in Git LFS is a pointer in the repository, and the
+# contents API hands us that pointer -- a hundred-odd bytes of text
+# where a PDF was expected. The real bytes live on the LFS server,
+# reached by the batch API with the oid and size read off the pointer.
+LFS_MAGIC = b'version https://git-lfs.github.com/spec/v1'
+LFS_JSON = 'application/vnd.git-lfs+json'
+LFS_MAX_POINTER = 1024  # the spec caps a pointer well under this
 
 
 class GitHubClient:
@@ -124,10 +133,70 @@ class GitHubClient:
     def download(self, file):
         repo = self._repo(file.folder_id)
         branch = self._branch(file.folder_id)
-        return self._request(
+        blob = self._request(
             'GET', f'/repos/{repo}/contents/{quote(self._file_repo_path(file))}',
             params={'ref': branch},
             headers={'Accept': 'application/vnd.github.raw'}, raw=True)
+        pointer = self._lfs_pointer(blob)
+        return self._lfs_fetch(repo, *pointer) if pointer else blob
+
+    @staticmethod
+    def _lfs_pointer(blob):
+        """Read (oid, size) off an LFS pointer, or None for a real file.
+
+        Anything that is not a well-formed pointer is content: a PDF that
+        happens to be tiny must come back as it is, not as a failed LFS
+        lookup.
+        """
+        if not blob.startswith(LFS_MAGIC) or len(blob) > LFS_MAX_POINTER:
+            return None
+        try:
+            fields = dict(
+                line.split(' ', 1)
+                for line in blob.decode('utf-8').strip().splitlines()
+                if ' ' in line)
+            oid = fields['oid'].split(':', 1)[1]
+            size = int(fields['size'])
+        except (UnicodeDecodeError, KeyError, IndexError, ValueError):
+            return None
+        return (oid, size) if oid and size >= 0 else None
+
+    def _lfs_fetch(self, repo, oid, size):
+        """The two steps the LFS spec asks for: negotiate, then collect."""
+        try:
+            resp = requests.post(
+                f'{GIT_URL}/{repo}.git/info/lfs/objects/batch',
+                # LFS speaks Basic, not the Bearer the REST API takes.
+                auth=('x-access-token', self._token),
+                headers={'Accept': LFS_JSON, 'Content-Type': LFS_JSON},
+                json={'operation': 'download', 'transfers': ['basic'],
+                      'objects': [{'oid': oid, 'size': size}]},
+                timeout=TIMEOUT)
+        except requests.RequestException as exc:
+            raise UserError(_("Could not reach GitHub: %s", exc)) from exc
+        if resp.status_code != 200:
+            raise UserError(_(
+                "GitHub LFS refused %(oid)s (HTTP %(code)s): %(body)s",
+                oid=oid, code=resp.status_code, body=resp.text[:500]))
+        obj = (resp.json().get('objects') or [{}])[0]
+        action = (obj.get('actions') or {}).get('download')
+        if not action or not action.get('href'):
+            # Out of bandwidth quota is the usual reason, and it says so.
+            raise UserError(_(
+                "GitHub LFS has no copy of this file to hand over: %s",
+                (obj.get('error') or {}).get('message')
+                or _("no download link was offered")))
+        try:
+            got = requests.get(
+                action['href'], headers=action.get('header') or {},
+                timeout=TIMEOUT)
+        except requests.RequestException as exc:
+            raise UserError(_("Could not reach GitHub: %s", exc)) from exc
+        if got.status_code != 200:
+            raise UserError(_(
+                "GitHub LFS download failed (HTTP %(code)s): %(body)s",
+                code=got.status_code, body=got.text[:500]))
+        return got.content
 
     def upload(self, folder, filename, data):
         """Every upload is a commit, and it never overwrites: a name

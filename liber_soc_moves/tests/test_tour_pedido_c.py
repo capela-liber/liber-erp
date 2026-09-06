@@ -53,6 +53,20 @@ class TestPedidoCTour(HttpCase):
         }).action_apply_inventory()
         return product
 
+    def _pedido_c_em_rascunho(self, partner, product, qty):
+        """O Pedido C como a Operação de Consignação o deixa: em rascunho.
+
+        Desde 06/09/2026 a lista de Pedidos C não tem "Novo" (`create: False`
+        na ação) -- o tour deixou de digitar o pedido e passou a abri-lo. É o
+        motor que o cria aqui, como a CO faria."""
+        return self.env["sale.order"].create({
+            "partner_id": partner.id,
+            "is_consignment": True,
+            "consignment_type": "opening",
+            "order_line": [(0, 0, {"product_id": product.id,
+                                   "product_uom_qty": qty})],
+        })
+
     def _livraria(self, nome, estado="active"):
         """A livraria como o tour vai encontrá-la. `estado=None` é a que nunca
         teve contrato -- e o Pedido dela é o que tem de ser recusado."""
@@ -69,15 +83,13 @@ class TestPedidoCTour(HttpCase):
 
     def test_pedido_c_prateleira_tour(self):
         """O caminho que a equipe reclamou: o livro tem de chegar à prateleira."""
-        self._livro("Livro do Pedido C", 30)
+        livro = self._livro("Livro do Pedido C", 30)
         partner, agreement = self._livraria("Livraria do Pedido C")
+        pedido = self._pedido_c_em_rascunho(partner, livro, 3)
 
         self.start_tour("/odoo", "pedido_c_prateleira_tour", login="admin")
 
-        pedido = self.env["sale.order"].search(
-            [("partner_id", "=", partner.id), ("is_consignment", "=", True)],
-            limit=1)
-        self.assertTrue(pedido, "o tour deve ter criado o Pedido C")
+        pedido.invalidate_recordset()
         self.assertEqual(pedido.state, "sale")
         self.assertEqual(pedido.consignment_agreement_id, agreement)
 
@@ -103,15 +115,13 @@ class TestPedidoCTour(HttpCase):
                          "a prateleira continuou vazia depois da remessa")
 
     def test_pedido_c_sem_contrato_tour(self):
-        self._livro("Livro do Pedido C", 30)
+        livro = self._livro("Livro do Pedido C", 30)
         partner, _agr = self._livraria("Livraria sem Contrato", estado=None)
+        pedido = self._pedido_c_em_rascunho(partner, livro, 2)
 
         self.start_tour("/odoo", "pedido_c_sem_contrato_tour", login="admin")
 
-        pedido = self.env["sale.order"].search(
-            [("partner_id", "=", partner.id), ("is_consignment", "=", True)],
-            limit=1)
-        self.assertTrue(pedido, "o tour deve ter criado o Pedido C")
+        pedido.invalidate_recordset()
         self.assertFalse(pedido.consignment_agreement_id,
                          "o cliente do caso não podia ter contrato nenhum")
         self.assertEqual(pedido.state, "draft",
@@ -120,16 +130,14 @@ class TestPedidoCTour(HttpCase):
                          "nasceu remessa para uma prateleira que não existe")
 
     def test_pedido_c_suspenso_tour(self):
-        self._livro("Livro do Pedido C", 30)
+        livro = self._livro("Livro do Pedido C", 30)
         partner, agreement = self._livraria("Livraria Suspensa",
                                             estado="suspended")
+        pedido = self._pedido_c_em_rascunho(partner, livro, 2)
 
         self.start_tour("/odoo", "pedido_c_suspenso_tour", login="admin")
 
-        pedido = self.env["sale.order"].search(
-            [("partner_id", "=", partner.id), ("is_consignment", "=", True)],
-            limit=1)
-        self.assertTrue(pedido)
+        pedido.invalidate_recordset()
         self.assertEqual(pedido.state, "draft",
                          "a suspensão não segurou a remessa")
         self.assertEqual(agreement.state, "suspended")

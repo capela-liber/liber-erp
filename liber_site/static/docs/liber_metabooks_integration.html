@@ -46,7 +46,7 @@
       <p>A <b>Metabooks</b> é a plataforma brasileira de metadados do mercado editorial (da <abbr class="sigla" title="A empresa do mercado editorial alemão que opera a Metabooks.">MVB</abbr>): é nela que editoras cadastram seus títulos no padrão <abbr class="sigla" title="O formato padrão internacional de metadados de livros do mercado editorial.">ONIX</abbr>, e é dela que livrarias e distribuidores leem esses dados. Este módulo conecta o sistema à Metabooks em duas direções:</p>
       <ul>
         <li><b>Importação</b> (madura, o dia a dia): busca os dados de um livro pelo <abbr class="sigla" title="International Standard Book Number: o número internacional que identifica cada edição de livro.">ISBN</abbr>, ou o catálogo completo de uma editora, e cria/atualiza os produtos correspondentes — ficha editorial, ficha técnica, capa e tudo.</li>
-        <li><b>Envio</b> (em desenvolvimento): o caminho de volta — editar um livro aqui e mandar a alteração para a Metabooks por planilha, com conferência humana no meio.</li>
+        <li><b>Envio</b>: o caminho de volta — editar um livro aqui e mandar a alteração para a Metabooks por planilha, com conferência humana no meio e o envio por <abbr class="sigla" title="File Transfer Protocol: o protocolo clássico de envio de arquivos entre servidores.">FTP</abbr> a um clique.</li>
       </ul>
       <p>Cada livro importado vira um <b>produto</b> comum do sistema, com o <abbr class="sigla" title="International Standard Book Number: o número internacional que identifica cada edição de livro.">ISBN</abbr> como código interno e código de barras. É esse mesmo ISBN que casa o livro com os itens das notas fiscais importadas e com o resto da casa: a Metabooks alimenta o catálogo, e o catálogo alimenta a consignação, a bonificação e as vendas.</p>
       <p>Tudo mora no aplicativo <b>Metabooks</b> do menu principal: <b>Livros</b> (os produtos importados), <b>Importações</b>, <b>Envios</b>, <b>Catálogo</b> (autores, códigos <abbr class="sigla" title="A classificação temática de livros do mercado norte-americano, usada nos metadados.">BISAC</abbr>, disponibilidades, editoras) e <b>Configuração</b>.</p>
@@ -126,19 +126,19 @@
       <h2 id="envio">Envio para a Metabooks (o caminho de volta)</h2>
 
       <div class="callout warn"><span class="title">Em desenvolvimento</span>
-        <p>Esta frente está funcional até a geração da planilha, mas <b>a entrega à Metabooks ainda é manual</b>: o sistema não sobe o arquivo sozinho (nem por <abbr class="sigla" title="File Transfer Protocol: o protocolo clássico de envio de arquivos entre servidores.">FTP</abbr>, nem por <abbr class="sigla" title="Interface de programação: o canal por onde um sistema conversa com outro.">API</abbr> — o transporte automático depende de liberação da própria Metabooks). Baixe a planilha gerada, envie pelo canal combinado com eles e só então marque o envio como concluído. As tarefas de arquivamento (X) e reativação (R) existem na tela, mas ainda não foram exercitadas em produção.</p>
+        <p>A planilha sobe para a Metabooks por <abbr class="sigla" title="File Transfer Protocol: o protocolo clássico de envio de arquivos entre servidores.">FTP</abbr> (<code>ftp.metabooks.com</code>, pasta <code>upload</code>) com o mesmo usuário e senha da <abbr class="sigla" title="Interface de programação: o canal por onde um sistema conversa com outro.">API</abbr> — não há nada a configurar além deles. O usuário precisa estar liberado para FTP pelo atendimento da Metabooks; se não estiver, o sistema mostra a recusa do servidor e nada é marcado. As tarefas de arquivamento (X) e reativação (R) existem na tela, mas ainda não foram exercitadas em produção.</p>
       </div>
 
       <p>A lógica: quando alguém edita, em um livro, um campo que a Metabooks conhece (título, sinopse, preço, medidas, autores…), o livro entra numa <b>fila de pendências</b>. De tempos em tempos, alguém junta as pendências num <b>envio</b>, confere o antes/depois de cada alteração e gera a planilha no formato que a Metabooks aceita.</p>
       <ol class="steps">
         <li>Veja o que está esperando em <span class="menupath">Metabooks<i>‣</i>Envios<i>‣</i>Alterações pendentes</span> — são os livros editados desde a última conversa com a Metabooks.</li>
         <li>Abra <span class="menupath">Metabooks<i>‣</i>Envios<i>‣</i>Envios para a Metabooks</span> e crie um envio. Escolha a <span class="field">Tarefa</span>: <b>Alteração (V)</b> para atualizar títulos que a Metabooks já tem, <b>Cadastro novo (Z)</b> para títulos inéditos lá.</li>
-        <li>Clique em <b>Buscar alterações</b>. Cada livro pendente entra como uma linha, e a aba <b>Alterações</b> mostra o de/para de cada campo, lido do histórico do produto.</li>
+        <li>Na lista de <span class="menupath">Envios</span>, clique em <b>Buscar alterações</b>. O sistema traz a fila de pendências e a <b>separa por selo</b>: cada selo tem o seu envio, já com o <b>MB ID Editor</b> preenchido, porque o arquivo é assinado por uma editora só. O botão fica na lista, e não dentro do envio, porque ele olha a fila inteira; clicar de novo reenche os mesmos envios com o que mudou desde então, sem criar cópias.</li>
         <li>Desmarque o que não deve ir — um livro inteiro, ou um campo isolado de um livro. Campo desmarcado simplesmente não é escrito, e coluna que a Metabooks não recebe é coluna que ela não mexe.</li>
         <li>Clique em <b>Verificar</b>. O sistema barra tudo o que a Metabooks recusaria: livro sem <abbr class="sigla" title="International Standard Book Number: o número internacional que identifica cada edição de livro.">ISBN</abbr>, ISBN que não tem 13 dígitos, dois livros com o mesmo ISBN, cadastro novo sem os campos obrigatórios, e campo que foi <b>apagado</b> aqui (apagar um dado lá exige uma marca especial que este envio ainda não escreve — a verificação explica o que fazer).</li>
         <li>Clique em <b>Gerar planilha</b>. O arquivo <code>.xlsx</code> sai com o nome que a Metabooks espera (por exemplo <code>V_BR5108985_20260720_Alteracoes.xlsx</code>) e com <b>as células alteradas em vermelho</b> — a própria planilha é o documento de conferência: o que está vermelho é o que estamos pedindo para mudar.</li>
-        <li><b>Baixe</b> a planilha e envie à Metabooks pelo canal combinado com o atendimento deles.</li>
-        <li>Só depois do upload dar certo, clique em <b>Marcar como enviada</b>. É esse passo — e não a geração do arquivo — que tira os livros da fila: se o upload falhar, nada se perde. A confirmação da Metabooks chega por e-mail consolidado, depois da meia-noite.</li>
+        <li>Clique em <b>Enviar por FTP</b>. Ele gera a planilha, sobe para a Metabooks e, se o servidor a aceitou, marca o envio e tira os livros da fila. Se falhar, a tela mostra o motivo e nada muda. A planilha fica arquivada no histórico do envio de qualquer jeito &mdash; nada é baixado para o seu computador sem você pedir. Nas bases de teste (dev e staging) o envio é recusado de propósito: elas carregam o dado e a senha da produção, e um clique ali chegaria à Metabooks de verdade.</li>
+        <li>Se preferir conferir antes, clique em <b>Gerar planilha</b> e depois em <b>Baixar</b>. Entregando à mão, use <b>Marcar como enviada</b> só depois que o upload der certo: é esse passo, e não a geração do arquivo, que tira os livros da fila.</li>
       </ol>
       <p>O histórico fica: <span class="menupath">Metabooks<i>‣</i>Envios<i>‣</i>Histórico</span> lista, campo a campo, tudo o que já foi pedido à Metabooks, em qual envio e com qual antes/depois.</p>
 
@@ -178,35 +178,6 @@
           <li><a href="liber_soc_agreements.html">Acordos de consignação</a> — o catálogo importado é o que abastece as prateleiras consignadas.</li>
         </ul>
       </div>
-
-      <!-- prefixos:begin -->
-      <h2 id="prefixos">Glossário</h2>
-      <p>Todo documento do sistema carrega um prefixo na numeração — CO/2026/00001 é um acerto, AT/2026/00042 é um chamado. A lista é a mesma em todos os manuais:</p>
-      <div class="tablewrap"><table>
-        <tr><th>Prefixo</th><th>O que é</th></tr>
-        <tr><td><code>C</code></td><td>Pedido de consignação: o pedido que põe livros na prateleira do cliente — C00001, no lugar do S da venda comum.</td></tr>
-        <tr><td><code>CO/</code></td><td>Consignação, o documento do acerto: registra o que o cliente vendeu e vira venda — CO/2026/00001.</td></tr>
-        <tr><td><code>CR/</code></td><td>Retorno de consignação: o documento que pede a devolução dos exemplares da prateleira — CR/2026/00001.</td></tr>
-        <tr><td><code>CA</code></td><td>Auditoria de consignação: reconstrói o saldo da prateleira do cliente pelas notas fiscais e registra o ajuste — CA00001.</td></tr>
-        <tr><td><code>CP/</code></td><td>Campanha de consignação: o sortimento-alvo por canal — quantos exemplares de cada título as prateleiras devem ter — CP/2026/0001.</td></tr>
-        <tr><td><code>AC/</code></td><td>Acordo de Consignação: o contrato com a livraria, dono da prateleira — AC/2026/00001.</td></tr>
-        <tr><td><code>COM/OUT/</code></td><td>A série da remessa de consignação ao cliente, do armazém à livraria — COM/OUT/2026/00001, no espelho do WH/OUT.</td></tr>
-        <tr><td><code>MP/OUT/</code></td><td>A série das entregas de marketplace (Olist): o pacote de pessoa física, na caixa de despacho própria do depósito — MP/OUT/2026/00001.</td></tr>
-        <tr><td><code>COM/MOV/</code></td><td>A série dos fluxos internos de prateleira da consignação — COM/MOV/2026/00001.</td></tr>
-        <tr><td><code>COM/IN/</code></td><td>A série do retorno de consignação, da prateleira ao armazém — COM/IN/2026/00001, no espelho do WH/IN.</td></tr>
-        <tr><td><code>REM/</code></td><td>Remessa: a nota de simples remessa, sem cobrança — a numeração vem do diário fiscal REM.</td></tr>
-        <tr><td><code>COL/</code></td><td>Coleta: o lote do pedido de coleta às transportadoras — COL/2026/00001.</td></tr>
-        <tr><td><code>AT/</code></td><td>Atendimento: o chamado nascido do e-mail comercial — AT/2026/00001.</td></tr>
-        <tr><td><code>MBX/</code></td><td>O lote de envio de metadados à Metabooks — MBX/2026/00001.</td></tr>
-        <tr><td><code>Impostos de Direitos Autorais/</code></td><td>O lote da fatura acumuladora do IRRF retido dos autores no mês.</td></tr>
-        <tr><td><code>Royalties entre Empresas/</code></td><td>O lote da fatura acumuladora de royalties entre as empresas da casa.</td></tr>
-        <tr><th colspan="2">Do próprio Odoo</th></tr>
-        <tr><td><code>S</code></td><td>Pedido de venda comum — S00001; o pedido de consignação usa o C no lugar.</td></tr>
-        <tr><td><code>WH/OUT</code></td><td>Entrega comum do armazém: a transferência de saída padrão do Odoo.</td></tr>
-        <tr><td><code>WH/IN</code></td><td>Recebimento do armazém: a transferência de entrada padrão do Odoo.</td></tr>
-      </table></div>
-      <p>Bases antigas guardam transferências nas séries <code>COM/</code> e <code>RET/</code>, de antes da separação por direção — o histórico não é renumerado.</p>
-      <!-- prefixos:end -->
 
       <nav class="pager" id="pager"></nav>
     </article>

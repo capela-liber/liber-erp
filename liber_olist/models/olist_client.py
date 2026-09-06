@@ -327,17 +327,60 @@ def update_estoque(token, id_produto, quantidade, tipo='B',
     return request_body, raw
 
 
+class NotaSemXml(Exception):
+    """A resposta é definitiva: esta nota não tem XML, e nunca terá.
+
+    Carrega o motivo que o Olist deu, porque é ele que a tela precisa
+    mostrar -- "Nota Fiscal não autorizada" resolve a dúvida de quem olha; um
+    "não veio" não resolve nada.
+    """
+
+    def __init__(self, motivo, codigo=None):
+        super().__init__(motivo)
+        self.motivo = motivo
+        self.codigo = codigo
+
+
+def _erro_do_envelope(raw):
+    """(codigo, motivo) do envelope de erro do Olist, ou (None, None).
+
+    O envelope é `<retorno><status>Erro</status><codigo_erro>34</codigo_erro>
+    <erros><erro>Nota Fiscal não autorizada</erro></erros></retorno>`. Lido
+    por fatia, e não por parser, pelo mesmo motivo do XML abaixo: o corpo é
+    documento assinado quando dá certo, e não se reserializa nada aqui.
+    """
+    def entre(tag):
+        ini = raw.find(b"<%s>" % tag)
+        fim = raw.find(b"</%s>" % tag)
+        if ini == -1 or fim == -1:
+            return None
+        return raw[ini + len(tag) + 2:fim].decode("utf-8", "replace").strip()
+
+    if b"<status>Erro</status>" not in raw:
+        return None, None
+    return entre(b"codigo_erro"), entre(b"erro")
+
+
 def get_nota_xml(token, nota_id, attempts=6):
     """The NFe XML of one nota, unwrapped. Returns bytes, or None.
 
-    Two traps live in this one call:
+    Three traps live in this one call:
 
     1. Under throttling the API answers HTTP 200 with an error payload INSTEAD
        of the XML - indistinguishable from "this note has no XML" if you only
        look at the body. So a missing <xml_nfe> is treated as a TEMPORARY
        failure and retried; treating it as "no XML" silently dropped 155 of 705
        notes on the first run.
-    2. The XML arrives nested inside <retorno><xml_nfe>...</xml_nfe></retorno>.
+    2. Mas nem todo erro é passageiro, e insistir sempre foi o remédio que
+       virou doença. Em 03/09/2026 a varredura parou na primeira nota da fila
+       e não andou mais: o Olist respondia `codigo_erro 34, "Nota Fiscal não
+       autorizada"` -- a SEFAZ nunca autorizou aquela nota, não há XML e nunca
+       haverá -- e esperávamos 10, 20, 30, 40 e 50 segundos antes de tentar de
+       novo, seis vezes, 2,5 minutos por nota morta. O ciclo inteiro se
+       esgotava nas primeiras. Erro COM envelope de erro é definitivo e sobe
+       como `NotaSemXml`; ausência SEM envelope é que continua sendo tratada
+       como estrangulamento.
+    3. The XML arrives nested inside <retorno><xml_nfe>...</xml_nfe></retorno>.
        It is cut out by bytes, never re-parsed and re-serialised: round-tripping
        through ElementTree rewrites the namespaces and INVALIDATES THE DIGITAL
        SIGNATURE of the NFe.
@@ -348,6 +391,9 @@ def get_nota_xml(token, nota_id, attempts=6):
         end = raw.rfind(b"</xml_nfe>")
         if start != -1 and end != -1:
             return raw[start + len(b"<xml_nfe>"):end].strip()
+        codigo, motivo = _erro_do_envelope(raw)
+        if motivo and THROTTLE_MARK not in motivo.lower():
+            raise NotaSemXml(motivo, codigo)
         wait = 10 * (attempt + 1)
         _logger.warning("Olist nota %s: no <xml_nfe> (throttled?); waiting %ss",
                         nota_id, wait)

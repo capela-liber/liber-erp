@@ -68,9 +68,31 @@ class LiberCloudFolder(models.Model):
     last_sync = fields.Datetime(readonly=True, copy=False)
     active = fields.Boolean(default=True)
 
+    can_upload = fields.Boolean(
+        compute='_compute_can_upload',
+        help="Whether the person looking holds this folder's write ACL. "
+             "It decides whether the Upload button is offered here at "
+             "all: a button that always answers 'you may not' is worse "
+             "than no button.")
+
     _path_uniq = models.Constraint(
         'unique(provider, company_id, path)',
         'This folder is already mapped for this company.')
+
+    @api.depends_context('uid')
+    def _compute_can_upload(self):
+        """The same question _ensure_access('write') asks, asked early.
+
+        Read is not write, and the folder form used to offer Upload to
+        everyone who could see the folder -- the button then died on the
+        gate with an access error. Here the screen learns the answer
+        before promising anything. Managers and administrators are not
+        exempt: filling the shelf is its own power.
+        """
+        groups = self.env.user.sudo().all_group_ids
+        for record in self:
+            record.can_upload = bool(
+                self.env.su or (record.sudo().write_group_ids & groups))
 
     @api.depends('file_ids')
     def _compute_file_count(self):

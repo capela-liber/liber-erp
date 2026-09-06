@@ -12,6 +12,11 @@
       disciplina é herdada e idêntica: acesso por grupos pasta a pasta, multiempresa, espelho de
       metadados, tags e vínculos, <strong style="color:#251d2b;">mapear é de administrador, escrever exige grupo de
       escrita</strong>. O que muda é o vocabulário, traduzido do Git:</p>
+      <p style="margin:0 0 12px;"><strong style="color:#251d2b;">O GitHub é um app à parte, com tile própria na tela inicial</strong> — não uma seção
+      dentro do Dropbox. E o que lá se chama <span class="field" style="font-weight:600;color:#251d2b;">Pastas</span>, aqui se chama
+      <span class="field" style="font-weight:600;color:#251d2b;">Repositórios</span>: é a mesma tela, com o nome que o provedor usa. Quem
+      procura "Repositórios" dentro do Dropbox não encontra.</p>
+      <figure class="shot" style="margin:20px 0 24px;"><img src="img/doc-liber_github-home.png" alt="Tela inicial do Odoo com as tiles dos aplicativos, entre elas a do GitHub, com o ícone do gato preto do serviço." style="max-width:100%;display:block;margin:0 auto;border-radius:12px;border:1px solid #e5dbee;"><figcaption style="font-size:13px;color:#5d5266;margin-top:10px;text-align:center;">A tela inicial do Odoo: o GitHub é uma tile como as outras, com o gato preto do serviço no lugar do ícone colorido. Dropbox e Drive ficam ao lado, e têm telas de mesmo nome — por isso vale conferir o nome na barra roxa depois de entrar.</figcaption></figure>
       <div class="tablewrap" style="overflow-x:auto;margin:0 0 16px;"><table style="border-collapse:collapse;width:100%;margin:0 0 16px;font-size:14px;">
         <thead><tr><th style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;background:#f1eaf6;font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:13.5px;">No Liber</th><th style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;background:#f1eaf6;font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:13.5px;">No GitHub</th></tr></thead>
         <tbody>
@@ -21,32 +26,58 @@
           <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Link compartilhado</td><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">A página do arquivo no GitHub — <strong style="color:#251d2b;">só abre para quem enxerga o repositório</strong>. Por isso não expira: a ficha registra honestamente "sem validade".</td></tr>
         </tbody>
       </table></div>
-      <figure class="shot" style="margin:20px 0 24px;"><div style="border:2px dashed #e5dbee;border-radius:12px;background:#faf8fc;color:#5d5266;font-size:13px;text-align:center;padding:28px 20px;"><div style="font-size:24px;margin-bottom:6px;">📷</div><div>Tela a inserir: <code style="background:#f1eaf6;border:1px solid #e5dbee;border-radius:5px;padding:1px 6px;font-family:ui-monospace,Menlo,Consolas,monospace;">img/doc-liber_github-folder.png</code></div><div style="margin-top:6px;">Formulário de um repositório mapeado, com dono/repositório no ID externo, a branch e os grupos de leitura e escrita.</div></div><figcaption style="font-size:13px;color:#5d5266;margin-top:10px;text-align:center;">O repositório como pasta: dono/repositório, branch, e a mesma decisão de sempre — quem lê, quem escreve.</figcaption></figure>
+      <figure class="shot" style="margin:20px 0 24px;"><img src="img/doc-liber_github-folder.png" alt="Formulário de um repositório mapeado, com dono/repositório no ID externo, a branch e os grupos de leitura e escrita." style="max-width:100%;display:block;margin:0 auto;border-radius:12px;border:1px solid #e5dbee;"><figcaption style="font-size:13px;color:#5d5266;margin-top:10px;text-align:center;">O repositório como pasta: dono/repositório no ID externo, a branch, e a mesma decisão de sempre — quem lê, quem escreve.</figcaption></figure>
 
       <h2 id="configuracao" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">Configuração</h2>
+      <p style="margin:0 0 12px;">A configuração acontece em <strong style="color:#251d2b;">dois lugares diferentes</strong>, e é fácil se perder
+      entre eles porque os dois se chamam GitHub. Cada passo abaixo começa dizendo onde ele é:
+      <span class="lugar">no site do GitHub</span>, que é <span class="field" style="font-weight:600;color:#251d2b;">github.com</span> no
+      navegador, ou <span class="lugar">no Odoo</span>, que é este sistema — onde
+      <strong style="color:#251d2b;">GitHub é o nome de um app</strong>, com tile própria na tela inicial, ao lado do
+      Dropbox e do Drive. Os dois primeiros passos são lá fora; os dois últimos, aqui dentro.</p>
       <ol class="steps" style="margin:0 0 16px 22px;padding:0;">
-        <li style="margin:0 0 7px;">Gere um <em>fine-grained personal access token</em>. Ele não nasce na organização — o
-        <span class="field" style="font-weight:600;color:#251d2b;">Developer settings</span> dela só tem OAuth Apps, GitHub Apps e
-        Publisher Verification. Nasce na conta <strong style="color:#251d2b;">pessoal</strong> de um membro da
+        <li style="margin:0 0 7px;"><span class="lugar">no site do GitHub</span> Gere um <em>fine-grained personal access
+        token</em> em <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener" style="color:#6e2f91;">github.com/settings/personal-access-tokens/new</a>. Ele não nasce na
+        organização — o <span class="field" style="font-weight:600;color:#251d2b;">Developer settings</span> dela só tem OAuth Apps, GitHub
+        Apps e Publisher Verification. Nasce na conta <strong style="color:#251d2b;">pessoal</strong> de um membro da
         organização: foto do perfil<i>‣</i><span class="field" style="font-weight:600;color:#251d2b;">Settings</span><i>‣</i>fim da barra
         lateral<i>‣</i><span class="field" style="font-weight:600;color:#251d2b;">Developer settings</span><i>‣</i><span class="field" style="font-weight:600;color:#251d2b;">Personal
-        access tokens</span><i>‣</i><span class="field" style="font-weight:600;color:#251d2b;">Fine-grained tokens</span> (atalho:
-        <span class="field" style="font-weight:600;color:#251d2b;">github.com/settings/personal-access-tokens/new</span>).</li>
-        <li style="margin:0 0 7px;">No formulário do token, aponte a empresa: <span class="field" style="font-weight:600;color:#251d2b;">Resource owner</span> = a
-        <strong style="color:#251d2b;">organização</strong> (não a conta pessoal), <span class="field" style="font-weight:600;color:#251d2b;">Repository
-        access</span> nos repositórios que serão mapeados e
+        access tokens</span><i>‣</i><span class="field" style="font-weight:600;color:#251d2b;">Fine-grained tokens</span>.</li>
+        <li style="margin:0 0 7px;"><span class="lugar">no site do GitHub</span> No formulário do token, aponte a empresa:
+        <span class="field" style="font-weight:600;color:#251d2b;">Resource owner</span> = a <strong style="color:#251d2b;">organização</strong> (não a conta
+        pessoal), <span class="field" style="font-weight:600;color:#251d2b;">Repository access</span> nos repositórios que serão mapeados e
         <span class="field" style="font-weight:600;color:#251d2b;">Contents: Read and write</span> nas permissões. Anote a validade — token
         vencido para sync e envio até que se cole um novo na Conta. Se a organização aparecer
         bloqueada ou o token ficar pendente, um <em>owner</em> libera em
-        <span class="menupath" style="display:inline-block;background:#f1eaf6;border:1px solid #e5dbee;border-radius:6px;padding:1px 8px;font-size:13.5px;color:#251d2b;white-space:nowrap;">Organização<i style="font-style:normal;color:#6e2f91;margin:0 4px;font-weight:700;">‣</i>Settings<i style="font-style:normal;color:#6e2f91;margin:0 4px;font-weight:700;">‣</i>Third-party Access<i style="font-style:normal;color:#6e2f91;margin:0 4px;font-weight:700;">‣</i>Personal
-        access tokens</span> (roteiro completo no <span class="field" style="font-weight:600;color:#251d2b;">NOTES.md</span> do
-        módulo).</li>
-        <li style="margin:0 0 7px;">Preencha <span class="menupath" style="display:inline-block;background:#f1eaf6;border:1px solid #e5dbee;border-radius:6px;padding:1px 8px;font-size:13.5px;color:#251d2b;white-space:nowrap;">GitHub<i style="font-style:normal;color:#6e2f91;margin:0 4px;font-weight:700;">‣</i>Configuração<i style="font-style:normal;color:#6e2f91;margin:0 4px;font-weight:700;">‣</i>Conta</span> e use
-        <span class="field" style="font-weight:600;color:#251d2b;">Testar conexão</span>. Uma conta por empresa.</li>
-        <li style="margin:0 0 7px;">Como administrador, mapeie em
-        <span class="menupath" style="display:inline-block;background:#f1eaf6;border:1px solid #e5dbee;border-radius:6px;padding:1px 8px;font-size:13.5px;color:#251d2b;white-space:nowrap;">GitHub<i style="font-style:normal;color:#6e2f91;margin:0 4px;font-weight:700;">‣</i>Configuração<i style="font-style:normal;color:#6e2f91;margin:0 4px;font-weight:700;">‣</i>Repositórios</span>: o
-        <span class="field" style="font-weight:600;color:#251d2b;">ID externo</span> como <span class="field" style="font-weight:600;color:#251d2b;">dono/repositório</span>, a
-        subpasta (Caminho, <span class="field" style="font-weight:600;color:#251d2b;">/</span> para a raiz), a branch e os grupos.</li>
+        <span class="field" style="font-weight:600;color:#251d2b;">github.com/organizations/<em>sua-organização</em>/settings/personal-access-tokens</span>
+        (roteiro completo no <span class="field" style="font-weight:600;color:#251d2b;">NOTES.md</span> do módulo).</li>
+        <li style="margin:0 0 7px;"><span class="lugar">no Odoo</span> Volte para este sistema. Na tela inicial, abra a tile
+        <strong style="color:#251d2b;">GitHub</strong> — não a do Dropbox, que é outro app com telas de mesmo nome. Nela,
+        preencha <span class="menupath" style="display:inline-block;background:#f1eaf6;border:1px solid #e5dbee;border-radius:6px;padding:1px 8px;font-size:13.5px;color:#251d2b;white-space:nowrap;">GitHub<i style="font-style:normal;color:#6e2f91;margin:0 4px;font-weight:700;">‣</i>Configuração<i style="font-style:normal;color:#6e2f91;margin:0 4px;font-weight:700;">‣</i>Conta</span> com o token e
+        use <span class="field" style="font-weight:600;color:#251d2b;">Testar conexão</span>. <strong style="color:#251d2b;">É uma conta por empresa, e só
+        uma</strong> — o Odoo recusa a segunda. Ela guarda o token e serve a <em>todos</em> os
+        repositórios daquela empresa: repositório novo não pede conta nova, pede uma linha nova no
+        passo seguinte. O que muda lá fora, aí sim, é a seleção de repositórios <em>do token</em>,
+        que precisa passar a incluir o repositório novo.</li>
+        <li style="margin:0 0 7px;"><span class="lugar">no Odoo</span> Ainda no app GitHub, como administrador, mapeie um
+        repositório por vez em
+        <span class="menupath" style="display:inline-block;background:#f1eaf6;border:1px solid #e5dbee;border-radius:6px;padding:1px 8px;font-size:13.5px;color:#251d2b;white-space:nowrap;">GitHub<i style="font-style:normal;color:#6e2f91;margin:0 4px;font-weight:700;">‣</i>Configuração<i style="font-style:normal;color:#6e2f91;margin:0 4px;font-weight:700;">‣</i>Repositórios</span>, no botão <span class="field" style="font-weight:600;color:#251d2b;">Novo</span>.
+        Repare que este menu <strong style="color:#251d2b;">só existe no app GitHub</strong>: no Dropbox e no Drive a mesma
+        tela se chama <span class="field" style="font-weight:600;color:#251d2b;">Pastas</span>, e mapear um repositório por lá cria uma
+        pasta daquele outro provedor, que nunca vai falar com o GitHub. Os campos:
+        <span class="field" style="font-weight:600;color:#251d2b;">Nome</span> é o rótulo que a equipe lê no painel de pastas;
+        <span class="field" style="font-weight:600;color:#251d2b;">ID externo</span> é a identidade de máquina, <span class="field" style="font-weight:600;color:#251d2b;">dono/repositório</span>
+        (ex.: <span class="field" style="font-weight:600;color:#251d2b;">capela-liber/liber-erp</span>) — só isso, sem
+        <span class="field" style="font-weight:600;color:#251d2b;">https://github.com/</span> na frente e sem <span class="field" style="font-weight:600;color:#251d2b;">.git</span>
+        no fim; <span class="field" style="font-weight:600;color:#251d2b;">Caminho</span> é a subpasta dentro do repositório que se quer
+        espelhar, com <span class="field" style="font-weight:600;color:#251d2b;">/</span> sozinho para a raiz;
+        <span class="field" style="font-weight:600;color:#251d2b;">Branch</span> vazio segue a branch padrão; e os grupos dizem quem lê e
+        quem escreve. Depois, <span class="field" style="font-weight:600;color:#251d2b;">Sincronizar</span>.</li>
+        <li style="margin:0 0 7px;"><span class="lugar">no Odoo</span> <strong style="color:#251d2b;">Dois repositórios da mesma empresa não podem
+        dividir o mesmo Caminho.</strong> A trava de unicidade olha o Caminho, não o ID externo: se
+        um repositório já está mapeado na raiz, o segundo na raiz é recusado com <em>"Esta pasta já
+        está mapeada para esta empresa"</em> — mensagem que não diz o que de fato houve. Enquanto
+        isso não muda, dê a cada repositório um Caminho próprio, ou mapeie subpastas distintas.</li>
       </ol>
 
       <h2 id="dia-a-dia" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">O dia a dia</h2>
@@ -59,7 +90,31 @@
       muitos de uma vez — escolhidos no seletor do sistema ou arrastados para dentro dele —, e cada
       arquivo vira o seu próprio commit na branch da pasta. O Odoo não guarda cópia depois do envio
       e o espelho sincroniza na hora, já com os SHAs novos.</p>
-      <figure class="shot" style="margin:20px 0 24px;"><div style="border:2px dashed #e5dbee;border-radius:12px;background:#faf8fc;color:#5d5266;font-size:13px;text-align:center;padding:28px 20px;"><div style="font-size:24px;margin-bottom:6px;">📷</div><div>Tela a inserir: <code style="background:#f1eaf6;border:1px solid #e5dbee;border-radius:5px;padding:1px 6px;font-family:ui-monospace,Menlo,Consolas,monospace;">img/doc-liber_github-files.png</code></div><div style="margin-top:6px;">Lista de arquivos de um repositório espelhado, com o SHA na coluna de revisão.</div></div><figcaption style="font-size:13px;color:#5d5266;margin-top:10px;text-align:center;">O espelho do repositório: cada arquivo com seu SHA — mudou o conteúdo, o sync denuncia.</figcaption></figure>
+      <figure class="shot" style="margin:20px 0 24px;"><img src="img/doc-liber_github-files.png" alt="Ficha de um arquivo espelhado, com o campo Revisão preenchido com o SHA do blob." style="max-width:100%;display:block;margin:0 auto;border-radius:12px;border:1px solid #e5dbee;"><figcaption style="font-size:13px;color:#5d5266;margin-top:10px;text-align:center;">A ficha do arquivo: a Revisão é o SHA do blob — mudou o conteúdo, mudou o SHA, e o sync denuncia. Na lista de Arquivos a Revisão não aparece como coluna; ela está aqui, na ficha.</figcaption></figure>
+
+      <h2 id="quando-nao-sincroniza" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">Quando o Sincronizar não acha o repositório</h2>
+      <p style="margin:0 0 12px;">O erro é <span class="field" style="font-weight:600;color:#251d2b;">HTTP 404 — Not Found</span> no
+      <span class="field" style="font-weight:600;color:#251d2b;">/repos/dono/repositório</span>, e ele mente por segurança: o GitHub
+      responde 404, e não 403, para repositório <strong style="color:#251d2b;">privado que o token não alcança</strong> —
+      porque um 403 confirmaria que ele existe. Então 404 tem duas leituras, e a mais comum na casa
+      é a segunda:</p>
+      <div class="tablewrap" style="overflow-x:auto;margin:0 0 16px;"><table style="border-collapse:collapse;width:100%;margin:0 0 16px;font-size:14px;">
+        <thead><tr><th style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;background:#f1eaf6;font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:13.5px;">Leitura</th><th style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;background:#f1eaf6;font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:13.5px;">Como confirmar</th></tr></thead>
+        <tbody>
+          <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">O <span class="field" style="font-weight:600;color:#251d2b;">ID externo</span> está errado</td><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Abrir
+          <span class="field" style="font-weight:600;color:#251d2b;">github.com/dono/repositório</span> no navegador, logado. Se a página
+          abre, o nome está certo e o problema é o outro.</td></tr>
+          <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">O token não alcança o repositório</td><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">É o caso quando o
+          <span class="field" style="font-weight:600;color:#251d2b;">Resource owner</span> do token ficou na <strong style="color:#251d2b;">conta pessoal</strong>
+          em vez da organização. Um token assim lê os repositórios em que a pessoa é colaboradora e
+          <em>não enxerga os privados da organização</em> — nem para dizer que existem. Refazer o
+          token com o Resource owner na organização e o repositório em
+          <span class="field" style="font-weight:600;color:#251d2b;">Only select repositories</span>.</td></tr>
+        </tbody>
+      </table></div>
+      <p style="margin:0 0 12px;">Um 403 no lugar do 404 é outra conversa: o token alcança o repositório, mas falta
+      <span class="field" style="font-weight:600;color:#251d2b;">Contents: Read and write</span>. O cabeçalho
+      <span class="field" style="font-weight:600;color:#251d2b;">x-accepted-github-permissions</span> da resposta diz o que faltou.</p>
 
       <h2 id="limitacoes" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">Limitações conhecidas</h2>
       <ul style="margin:0 0 14px 22px;padding:0;">
@@ -76,32 +131,4 @@
           <li style="margin:0 0 7px;"><a href="/liber_site/static/docs/liber_dropbox.html" target="_blank" rel="noopener" style="color:#6e2f91;">Arquivos no Dropbox</a> — a explicação completa da mecânica compartilhada.</li>
           <li style="margin:0 0 7px;"><a href="/liber_site/static/docs/liber_gdrive.html" target="_blank" rel="noopener" style="color:#6e2f91;">Arquivos no Google Drive</a> — o corpo do Drive, para a equipe das planilhas.</li>
         </ul>
-      </div>
-
-      
-      <h2 id="prefixos" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">Glossário</h2>
-      <p style="margin:0 0 12px;">Todo documento do sistema carrega um prefixo na numeração — CO/2026/00001 é um acerto, AT/2026/00042 é um chamado. A lista é a mesma em todos os manuais:</p>
-      <div class="tablewrap" style="overflow-x:auto;margin:0 0 16px;"><table style="border-collapse:collapse;width:100%;margin:0 0 16px;font-size:14px;">
-        <tr><th style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;background:#f1eaf6;font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:13.5px;">Prefixo</th><th style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;background:#f1eaf6;font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:13.5px;">O que é</th></tr>
-        <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;"><code style="background:#f1eaf6;border:1px solid #e5dbee;border-radius:5px;padding:1px 6px;font-size:13px;font-family:ui-monospace,Menlo,Consolas,monospace;">C</code></td><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Pedido de consignação: o pedido que põe livros na prateleira do cliente — C00001, no lugar do S da venda comum.</td></tr>
-        <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;"><code style="background:#f1eaf6;border:1px solid #e5dbee;border-radius:5px;padding:1px 6px;font-size:13px;font-family:ui-monospace,Menlo,Consolas,monospace;">CO/</code></td><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Consignação, o documento do acerto: registra o que o cliente vendeu e vira venda — CO/2026/00001.</td></tr>
-        <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;"><code style="background:#f1eaf6;border:1px solid #e5dbee;border-radius:5px;padding:1px 6px;font-size:13px;font-family:ui-monospace,Menlo,Consolas,monospace;">CR/</code></td><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Retorno de consignação: o documento que pede a devolução dos exemplares da prateleira — CR/2026/00001.</td></tr>
-        <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;"><code style="background:#f1eaf6;border:1px solid #e5dbee;border-radius:5px;padding:1px 6px;font-size:13px;font-family:ui-monospace,Menlo,Consolas,monospace;">CA</code></td><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Auditoria de consignação: reconstrói o saldo da prateleira do cliente pelas notas fiscais e registra o ajuste — CA00001.</td></tr>
-        <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;"><code style="background:#f1eaf6;border:1px solid #e5dbee;border-radius:5px;padding:1px 6px;font-size:13px;font-family:ui-monospace,Menlo,Consolas,monospace;">CP/</code></td><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Campanha de consignação: o sortimento-alvo por canal — quantos exemplares de cada título as prateleiras devem ter — CP/2026/0001.</td></tr>
-        <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;"><code style="background:#f1eaf6;border:1px solid #e5dbee;border-radius:5px;padding:1px 6px;font-size:13px;font-family:ui-monospace,Menlo,Consolas,monospace;">AC/</code></td><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Acordo de Consignação: o contrato com a livraria, dono da prateleira — AC/2026/00001.</td></tr>
-        <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;"><code style="background:#f1eaf6;border:1px solid #e5dbee;border-radius:5px;padding:1px 6px;font-size:13px;font-family:ui-monospace,Menlo,Consolas,monospace;">COM/OUT/</code></td><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">A série da remessa de consignação ao cliente, do armazém à livraria — COM/OUT/2026/00001, no espelho do WH/OUT.</td></tr>
-        <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;"><code style="background:#f1eaf6;border:1px solid #e5dbee;border-radius:5px;padding:1px 6px;font-size:13px;font-family:ui-monospace,Menlo,Consolas,monospace;">MP/OUT/</code></td><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">A série das entregas de marketplace (Olist): o pacote de pessoa física, na caixa de despacho própria do depósito — MP/OUT/2026/00001.</td></tr>
-        <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;"><code style="background:#f1eaf6;border:1px solid #e5dbee;border-radius:5px;padding:1px 6px;font-size:13px;font-family:ui-monospace,Menlo,Consolas,monospace;">COM/MOV/</code></td><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">A série dos fluxos internos de prateleira da consignação — COM/MOV/2026/00001.</td></tr>
-        <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;"><code style="background:#f1eaf6;border:1px solid #e5dbee;border-radius:5px;padding:1px 6px;font-size:13px;font-family:ui-monospace,Menlo,Consolas,monospace;">COM/IN/</code></td><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">A série do retorno de consignação, da prateleira ao armazém — COM/IN/2026/00001, no espelho do WH/IN.</td></tr>
-        <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;"><code style="background:#f1eaf6;border:1px solid #e5dbee;border-radius:5px;padding:1px 6px;font-size:13px;font-family:ui-monospace,Menlo,Consolas,monospace;">REM/</code></td><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Remessa: a nota de simples remessa, sem cobrança — a numeração vem do diário fiscal REM.</td></tr>
-        <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;"><code style="background:#f1eaf6;border:1px solid #e5dbee;border-radius:5px;padding:1px 6px;font-size:13px;font-family:ui-monospace,Menlo,Consolas,monospace;">COL/</code></td><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Coleta: o lote do pedido de coleta às transportadoras — COL/2026/00001.</td></tr>
-        <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;"><code style="background:#f1eaf6;border:1px solid #e5dbee;border-radius:5px;padding:1px 6px;font-size:13px;font-family:ui-monospace,Menlo,Consolas,monospace;">AT/</code></td><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Atendimento: o chamado nascido do e-mail comercial — AT/2026/00001.</td></tr>
-        <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;"><code style="background:#f1eaf6;border:1px solid #e5dbee;border-radius:5px;padding:1px 6px;font-size:13px;font-family:ui-monospace,Menlo,Consolas,monospace;">MBX/</code></td><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">O lote de envio de metadados à Metabooks — MBX/2026/00001.</td></tr>
-        <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;"><code style="background:#f1eaf6;border:1px solid #e5dbee;border-radius:5px;padding:1px 6px;font-size:13px;font-family:ui-monospace,Menlo,Consolas,monospace;">Impostos de Direitos Autorais/</code></td><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">O lote da fatura acumuladora do IRRF retido dos autores no mês.</td></tr>
-        <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;"><code style="background:#f1eaf6;border:1px solid #e5dbee;border-radius:5px;padding:1px 6px;font-size:13px;font-family:ui-monospace,Menlo,Consolas,monospace;">Royalties entre Empresas/</code></td><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">O lote da fatura acumuladora de royalties entre as empresas da casa.</td></tr>
-        <tr><th colspan="2" style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;background:#f1eaf6;font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:13.5px;">Do próprio Odoo</th></tr>
-        <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;"><code style="background:#f1eaf6;border:1px solid #e5dbee;border-radius:5px;padding:1px 6px;font-size:13px;font-family:ui-monospace,Menlo,Consolas,monospace;">S</code></td><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Pedido de venda comum — S00001; o pedido de consignação usa o C no lugar.</td></tr>
-        <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;"><code style="background:#f1eaf6;border:1px solid #e5dbee;border-radius:5px;padding:1px 6px;font-size:13px;font-family:ui-monospace,Menlo,Consolas,monospace;">WH/OUT</code></td><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Entrega comum do armazém: a transferência de saída padrão do Odoo.</td></tr>
-        <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;"><code style="background:#f1eaf6;border:1px solid #e5dbee;border-radius:5px;padding:1px 6px;font-size:13px;font-family:ui-monospace,Menlo,Consolas,monospace;">WH/IN</code></td><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Recebimento do armazém: a transferência de entrada padrão do Odoo.</td></tr>
-      </table></div>
-      <p style="margin:0 0 12px;">Bases antigas guardam transferências nas séries <code style="background:#f1eaf6;border:1px solid #e5dbee;border-radius:5px;padding:1px 6px;font-size:13px;font-family:ui-monospace,Menlo,Consolas,monospace;">COM/</code> e <code style="background:#f1eaf6;border:1px solid #e5dbee;border-radius:5px;padding:1px 6px;font-size:13px;font-family:ui-monospace,Menlo,Consolas,monospace;">RET/</code>, de antes da separação por direção — o histórico não é renumerado.</p><p style="margin:28px 0 0;padding-top:14px;border-top:1px solid #e5dbee;font-size:13px;color:#5d5266;">Manual completo, com busca e as demais páginas: <a href="/liber_site/static/docs/liber_github.html" target="_blank" rel="noopener" style="color:#6e2f91;">Arquivos no GitHub</a>.</p></div>
+      </div><p style="margin:28px 0 0;padding-top:14px;border-top:1px solid #e5dbee;font-size:13px;color:#5d5266;">Manual completo, com busca e as demais páginas: <a href="/liber_site/static/docs/liber_github.html" target="_blank" rel="noopener" style="color:#6e2f91;">Arquivos no GitHub</a>.</p></div>

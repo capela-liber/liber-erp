@@ -9,22 +9,23 @@
         <field name="arch" type="xml">
             <form>
                 <header>
-                    <button name="action_prepare" type="object"
-                            string="Buscar alterações" class="btn-primary"
-                            invisible="state not in ('draft', 'checked')"/>
                     <button name="action_check" type="object"
                             string="Verificar"
                             invisible="state != 'draft' or not line_ids"/>
+                    <button name="action_send_ftp" type="object"
+                            string="Enviar por FTP" class="btn-primary"
+                            invisible="state in ('sent', 'cancel') or not line_ids"
+                            confirm="Enviar a planilha a ftp.metabooks.com agora? Ela é gerada, sobe para a Metabooks e os livros saem da fila de pendências."/>
                     <button name="action_generate" type="object"
-                            string="Gerar planilha" class="btn-primary"
+                            string="Gerar planilha"
                             invisible="state not in ('draft', 'checked') or not line_ids"/>
                     <button name="action_download" type="object"
-                            string="Baixar" class="btn-primary"
+                            string="Baixar"
                             invisible="state != 'generated'"/>
                     <button name="action_mark_sent" type="object"
                             string="Marcar como enviada"
                             invisible="state != 'generated'"
-                            confirm="Confirma que a planilha foi entregue à Metabooks? Os livros saem da fila de pendências."/>
+                            confirm="Confirma que a planilha foi entregue à Metabooks por fora (baixada e enviada à mão)? Os livros saem da fila de pendências."/>
                     <button name="action_select_all" type="object"
                             string="Marcar todos"
                             invisible="state in ('sent', 'cancel') or not line_ids"/>
@@ -62,11 +63,22 @@
                             <field name="sent_by" invisible="not sent_by"/>
                         </group>
                     </group>
+                    <field name="is_neutralized" invisible="1"/>
+                    <div class="alert alert-warning" role="alert"
+                         invisible="not is_neutralized">
+                        Esta base é uma cópia para testes: o envio por FTP está
+                        bloqueado aqui. A planilha é gerada e fica arquivada, mas
+                        não sobe para a Metabooks. A entrega de verdade é na
+                        produção.
+                    </div>
                     <div class="alert alert-info" role="status"
-                         invisible="state != 'generated'">
-                        Baixe a planilha e envie à Metabooks. Só depois marque como
-                        enviada — é isso que tira os livros da fila. A confirmação
-                        deles chega por e-mail depois da meia-noite.
+                         invisible="state in ('sent', 'cancel') or not line_ids">
+                        Clique em Enviar por FTP: a planilha é gerada, sobe para a
+                        Metabooks com o usuário e a senha da API, e os livros saem da
+                        fila. Ela fica arquivada aqui no histórico de qualquer jeito.
+                        Se preferir entregar à mão, gere, baixe, envie e marque como
+                        enviada. A confirmação deles chega por e-mail depois da
+                        meia-noite.
                     </div>
                     <notebook>
                         <page string="Livros" name="books">
@@ -92,6 +104,7 @@
                                    readonly="state in ('sent', 'cancel')">
                                 <list editable="bottom" create="false"
                                       delete="false"
+                                      decoration-muted="never_filled"
                                       default_order="product_id, column">
                                     <field name="selected"
                                            widget="boolean_toggle"/>
@@ -103,6 +116,9 @@
                                            readonly="1"/>
                                     <field name="new_value" string="Depois"
                                            readonly="1"/>
+                                    <field name="never_filled"
+                                           string="Nunca preenchido"
+                                           readonly="1" optional="show"/>
                                     <field name="field_name" string="Campo"
                                            readonly="1" optional="hide"/>
                                 </list>
@@ -124,6 +140,13 @@
         <field name="arch" type="xml">
             <list decoration-muted="state == 'cancel'"
                   decoration-success="state == 'sent'">
+                <!-- Buscar alterações mora aqui, e não no formulário: ele olha
+                     a fila inteira e monta a rodada, um envio por selo. -->
+                <header>
+                    <button name="action_prepare_round" type="object"
+                            string="Buscar alterações" class="btn-primary"
+                            display="always"/>
+                </header>
                 <field name="name"/>
                 <field name="task"/>
                 <field name="mb_id"/>

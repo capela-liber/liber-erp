@@ -4,6 +4,7 @@ import json
 import logging
 import re
 import time
+from datetime import timedelta
 
 from markupsafe import Markup
 
@@ -160,6 +161,57 @@ class OlistOrder(models.Model):
                                     index='btree_not_null')
     line_ids = fields.One2many('olist.order.line', 'order_id', string="Itens")
 
+    # A nota que o Olist não entrega, e o motivo que ele deu. Sem isto o
+    # pedido volta à fila a cada duas horas para sempre, e ninguém na tela
+    # entende por que ele não anda.
+    xml_indisponivel_motivo = fields.Char(
+        "Nota indisponível", readonly=True, copy=False,
+        help="O que o Olist respondeu ao ser perguntado pelo XML desta nota. "
+             "'Nota Fiscal não autorizada' quer dizer que a SEFAZ nunca a "
+             "autorizou: não há XML, e não vai haver.")
+    xml_indisponivel_em = fields.Datetime(
+        "Recusado em", readonly=True, copy=False, index='btree_not_null',
+        help="Quando o Olist recusou. A varredura só tenta de novo depois de "
+             "uma semana — a nota pode ser autorizada mais tarde, mas não "
+             "adianta perguntar de duas em duas horas.")
+
+    # ------------------------------------------------------------------
+    # A bonificação: o pedido que veio de graça
+    # ------------------------------------------------------------------
+    # Regra do dono (01/09/2026): "se veio com zero, foi bonificado". Livro
+    # mandado a influenciador entra no marketplace com a forma de pedido, mas
+    # não é venda -- e importá-lo como venda produziu, no prod, doze faturas
+    # de mercadoria que ninguém comprou.
+    #
+    # O zero é do PEDIDO, nunca da linha. Dezenove pedidos PAGOS do prod têm
+    # uma linha de valor zero (o brinde que acompanha a compra); olhar a linha
+    # transformaria venda em bonificação.
+    e_bonificacao = fields.Boolean(
+        "Bonificação", compute='_compute_e_bonificacao', store=True, index=True,
+        help="O pedido veio do Olist sem valor nenhum: livro dado, não "
+             "vendido. Ele não entra como venda -- entra pela raia da "
+             "bonificação, com a ficha B000 e a nota de remessa.")
+    # Char, e não Many2one: a ficha mora no capela_influencers, que este
+    # módulo não exige. O nome basta para o estado saber que o pedido já foi
+    # tratado, e a ponte (liber_olist_bonus) guarda a referência de verdade.
+    # Só para a TELA saber dizer que o documento está cancelado. Sem eles o
+    # botão anuncia "Pedido no Odoo S63438" com o mesmo ar de sempre, e quem
+    # lê conclui que a venda existe.
+    sale_order_state = fields.Selection(
+        related='sale_order_id.state', string="Situação do pedido de venda")
+    invoice_state = fields.Selection(
+        related='invoice_id.state', string="Situação da fatura")
+    bonus_ref = fields.Char(
+        "Ficha de bonificação", readonly=True, copy=False, index='btree_not_null',
+        help="O B000 que recebeu este pedido. Preenchido pela ponte da "
+             "bonificação; aqui serve para o pedido contar como tratado.")
+
+    @api.depends('valor')
+    def _compute_e_bonificacao(self):
+        moeda = self.env.company.currency_id
+        for pedido in self:
+            pedido.e_bonificacao = moeda.is_zero(pedido.valor or 0.0)
+
     detalhe_lido_em = fields.Datetime("Detalhe lido em", readonly=True)
     detalhe_pendente = fields.Boolean(
         "Na fila de leitura", index='btree_not_null', copy=False,
@@ -248,11 +300,16 @@ class OlistOrder(models.Model):
                 pedido.line_ids.filtered(lambda l: not l.product_id))
 
     @api.depends('sale_order_id', 'sale_order_id.amount_total', 'valor',
-                 'situacao', 'detalhe_lido_em')
+                 'situacao', 'detalhe_lido_em', 'bonus_ref')
     def _compute_state(self):
         for pedido in self:
             pedido.divergencia_valor = 0.0
-            if pedido.sale_order_id:
+            if pedido.bonus_ref:
+                # Bonificação tratada é pedido resolvido. Sem isto ele voltaria
+                # eternamente à fila do "A importar" -- e a cada rodada alguém
+                # tentaria transformá-lo em venda outra vez.
+                pedido.state = 'importado'
+            elif pedido.sale_order_id:
                 pedido.state = 'importado'
                 pedido.divergencia_valor = (
                     pedido.valor - pedido.sale_order_id.amount_total)
@@ -303,8 +360,16 @@ class OlistOrder(models.Model):
     def _compute_despachavel(self):
         exige = self._despacho_exige_nota()
         for pedido in self:
-            pedido.despachavel = (not exige) or bool(
-                pedido.id_nota_fiscal and pedido.id_nota_fiscal != '0')
+            # A bonificação não espera nota, e a fila tem de concordar com o
+            # import. "Só com nota" é política de VENDA -- a caixa viajar com
+            # a DANFE. O livro dado sai de qualquer jeito, e trinta e dois dos
+            # zerados o Olist despachou sem emitir nota nenhuma. Deixar a fila
+            # barrá-los enquanto o Importar os aceita seria a mesma
+            # incoerência vista na tela do dev em 02/09/2026: uma fila de
+            # despacho que nunca mostra o que há para despachar.
+            pedido.despachavel = (
+                (not exige) or pedido.e_bonificacao or bool(
+                    pedido.id_nota_fiscal and pedido.id_nota_fiscal != '0'))
 
     def _search_despachavel(self, operator, value):
         # Search em vez de domínio fixo na view: a política é configuração, e
@@ -320,9 +385,11 @@ class OlistOrder(models.Model):
         if not self._despacho_exige_nota():
             return [] if positivo else [('id', '=', False)]
         if positivo:
-            return ['&', ('id_nota_fiscal', '!=', False),
+            return ['|', ('e_bonificacao', '=', True),
+                    '&', ('id_nota_fiscal', '!=', False),
                     ('id_nota_fiscal', '!=', '0')]
-        return ['|', ('id_nota_fiscal', '=', False),
+        return ['&', ('e_bonificacao', '=', False),
+                '|', ('id_nota_fiscal', '=', False),
                 ('id_nota_fiscal', '=', '0')]
 
     # ------------------------------------------------------------------
@@ -395,8 +462,16 @@ class OlistOrder(models.Model):
             return 'JA', _("já arquivado")
 
         Panel = self.env['nfe.xml.panel'].sudo()
-        xml = olist_client.get_nota_xml(self.account_id.sudo().token,
-                                        self.id_nota_fiscal)
+        try:
+            xml = olist_client.get_nota_xml(self.account_id.sudo().token,
+                                            self.id_nota_fiscal)
+        except olist_client.NotaSemXml as recusa:
+            # Resposta DEFINITIVA: não há XML e não vai haver. Carimbar é o
+            # que tira o pedido da fila e diz na tela por quê — insistir a
+            # cada duas horas só queima cota e trava a varredura atrás dele.
+            self.write({'xml_indisponivel_motivo': recusa.motivo,
+                        'xml_indisponivel_em': fields.Datetime.now()})
+            return 'ERR', recusa.motivo
         if not xml:
             # Ausência aqui é ambígua: nota pendente (sem chave, logo sem XML)
             # ou cota estourada. O cliente já insiste antes de desistir, então
@@ -413,6 +488,11 @@ class OlistOrder(models.Model):
                 "a nota é da empresa %s, não de %s",
                 company.name or _("nenhuma conhecida"), self.company_id.name)
 
+        if self.xml_indisponivel_em:
+            # Veio depois de ter sido recusada: a nota foi autorizada nesse
+            # meio-tempo. O carimbo sai, senão ele mentiria na tela para sempre.
+            self.write({'xml_indisponivel_motivo': False,
+                        'xml_indisponivel_em': False})
         painel = Panel._ingest_xml(
             xml, "olist-%s.xml" % self.id_nota_fiscal, company=company,
             source='olist',
@@ -569,6 +649,74 @@ class OlistOrder(models.Model):
             restante = pedido._grava_ja(1)
         _logger.info("Olist: cron de detalhe leu %s pedido(s).", lidos)
         return lidos
+    def cron_pull_missing_xmls(self):
+        """Busca, nota a nota, o XML que a listagem do Olist não entrega.
+
+        O `cron_sync` da conta varre `notas.fiscais.pesquisa.php` e importa o
+        que a LISTAGEM oferece. Medido no prod em 03/09/2026, essa listagem
+        devolve 1.023 notas -- e o painel já tem 1.122. Ela é incompleta, e de
+        forma intercalada: 763 pedidos com nota emitida ficaram sem XML, com
+        ids de nota DENTRO da mesma faixa dos que vieram, espalhados de
+        fevereiro a setembro. Não é recorte de data nem janela: a listagem
+        simplesmente não os traz, e por isso o cron reportava "0 imported,
+        1023 already known" a cada duas horas, indefinidamente.
+
+        O caminho por nota sempre existiu -- `_fetch_xml` busca pelo
+        `id_nota_fiscal` do próprio pedido -- mas ninguém o percorria em lote:
+        só o botão da tela e o Importar o chamavam, um de cada vez.
+
+        Uma chamada de rede por nota, no ritmo que o executor permite, como a
+        leitura de detalhe. Os mais RECENTES primeiro: é a nota de agosto que
+        alguém está esperando para faturar, não a de fevereiro.
+        """
+        # Uma semana antes de insistir numa nota que o Olist já recusou. A
+        # nota pode ser autorizada depois -- não é impossível, é só improvável
+        # de duas em duas horas. Sem esta janela, as recusadas ocupam a frente
+        # da fila para sempre e nada atrás delas anda: foi o que aconteceu em
+        # 03/09/2026, quando a varredura parou na primeira e não passou dali.
+        limite = fields.Datetime.now() - timedelta(days=7)
+        pendentes = self.search([
+            ('xml_status', '=', 'sem_xml'),
+            ('id_nota_fiscal', '!=', False),
+            ('id_nota_fiscal', '!=', '0'),
+            '|', ('xml_indisponivel_em', '=', False),
+                 ('xml_indisponivel_em', '<', limite),
+        ], order='data_pedido desc')
+        if not pendentes:
+            return 0
+
+        # Mesma margem da leitura de detalhe, e pelo mesmo motivo: começar o
+        # que não cabe no ciclo é como não ter parado.
+        CUSTO = 6
+        restante = self._grava_ja(restantes=len(pendentes))
+        trazidos = falhas = 0
+        for pedido in pendentes:
+            if restante < CUSTO:
+                _logger.info(
+                    "Olist XML: ciclo cheio com %s trazido(s); %s seguem para "
+                    "a próxima rodada.", trazidos, len(pendentes) - trazidos)
+                break
+            try:
+                status, detalhe = pedido._fetch_xml()
+                if status == 'OK':
+                    trazidos += 1
+                elif status == 'ERR':
+                    falhas += 1
+                    _logger.info("Olist XML: pedido %s sem nota (%s).",
+                                 pedido.numero, detalhe)
+            except Exception as exc:  # uma nota ruim não para a fila
+                falhas += 1
+                _logger.exception("Olist XML: falha no pedido %s: %s",
+                                  pedido.numero, exc)
+            restante = pedido._grava_ja(1)
+        # A nota que acabou de chegar pode ser a que um pedido já despachado
+        # esperava para faturar. Sem isto, o XML entra e a fatura continua
+        # devendo até a madrugada seguinte.
+        completadas = self.env['olist.order']._completar_faturas_pendentes()
+        _logger.info("Olist XML: %s trazido(s), %s sem nota, %s fatura(s) "
+                     "completada(s).", trazidos, falhas, completadas)
+        return trazidos
+
     def _read_detail(self):
         self.ensure_one()
         token = self.account_id.sudo().token
@@ -634,8 +782,22 @@ class OlistOrder(models.Model):
         self._sincroniza_linhas(dados.get('itens') or [])
 
     def _sincroniza_linhas(self, itens):
-        """Reescreve os itens a partir do que veio. O espelho reflete, não acumula."""
+        """Reescreve os itens a partir do que veio. O espelho reflete, não acumula.
+
+        Com uma exceção deliberada: o casamento feito à mão sobrevive. O que o
+        Olist manda (código, descrição, quantidade, valor) é reescrito sem
+        pena, porque a verdade dele é a dele. Qual produto do Odoo é aquele
+        livro, não — essa é a nossa leitura, e apagá-la a cada releitura
+        devolveria ao comercial um pedido que ele já tinha consertado.
+        """
         self.ensure_one()
+        # Guardado ANTES do unlink, pela mesma chave com que o item se
+        # reconhece: o id do Olist quando existe, senão o ISBN sem
+        # separadores (o pedido manda com hífen, o cadastro não).
+        casados_a_mao = {}
+        for antiga in self.line_ids.filtered('product_manual'):
+            casados_a_mao[self._chave_do_item(
+                antiga.codigo, antiga.olist_produto_id)] = antiga.product_id.id
         self.line_ids.unlink()
         for bloco in itens:
             item = bloco.get('item') or bloco
@@ -649,6 +811,11 @@ class OlistOrder(models.Model):
                 codigo=codigo, olist_id=item.get('id_produto'))
             espelho = self.account_id._find_mirror(
                 codigo=codigo, olist_id=item.get('id_produto'))
+            # O automático tem preferência: se o cadastro foi consertado, ele
+            # passou a achar sozinho, e é essa a resposta boa. A escolha à mão
+            # é a rede embaixo, para o ISBN que nunca vai casar.
+            manual = casados_a_mao.get(
+                self._chave_do_item(codigo, item.get('id_produto')))
             self.env['olist.order.line'].create({
                 'mirror_id': espelho.id,
                 'order_id': self.id,
@@ -657,9 +824,17 @@ class OlistOrder(models.Model):
                 'quantidade': float(item.get('quantidade') or 0),
                 'valor_unitario': float(item.get('valor_unitario') or 0),
                 'olist_produto_id': item.get('id_produto') or False,
-                'product_id': produto.id if produto else False,
+                'product_id': produto.id if produto else (manual or False),
+                'product_manual': bool(not produto and manual),
             })
         self._registra_itens_sem_produto()
+
+    @staticmethod
+    def _chave_do_item(codigo, olist_id):
+        """Como um item se reconhece entre duas leituras do mesmo pedido."""
+        if olist_id:
+            return 'olist:%s' % olist_id
+        return 'isbn:%s' % re.sub(r'\D', '', codigo or '')
 
     def _registra_itens_sem_produto(self):
         """Anota no histórico quais livros não foram localizados.
@@ -749,6 +924,8 @@ class OlistOrder(models.Model):
 
     def _import_to_odoo(self):
         self.ensure_one()
+        if self.bonus_ref:
+            return False
         if self.sale_order_id:
             # Já tem S. Se lhe falta a fatura, o trabalho está pela metade e o
             # que a pessoa quer ao clicar de novo é COMPLETAR — não ouvir que
@@ -770,15 +947,6 @@ class OlistOrder(models.Model):
         # consegue faturar depois sem refazer o caminho. 'Com ou sem nota': o
         # pacote não espera o Olist faturar; o S entra sem fatura e o sync a
         # completa quando o XML chegar.
-        if self.xml_status == 'sem_xml':
-            self._fetch_xml()          # tenta agora; pode ser que já esteja lá
-        if self.xml_status != 'arquivado' and self._despacho_exige_nota():
-            raise UserError(_(
-                "sem XML arquivado (%s). A nota é a verdade fiscal da venda e "
-                "a fatura nasce dela — traga o XML antes de importar.",
-                dict(self._fields['xml_status'].selection).get(
-                    self.xml_status, self.xml_status)))
-
         sem_produto = self.line_ids.filtered(lambda l: not l.product_id)
         if sem_produto:
             # O mesmo princípio do espelho de catálogo: ISBN que não casa é
@@ -788,6 +956,27 @@ class OlistOrder(models.Model):
             raise UserError(_(
                 "ISBN sem produto no Odoo: %s",
                 ", ".join(sem_produto.mapped('codigo'))))
+
+        if self.e_bonificacao:
+            # Aqui a estrada se bifurca, e ANTES da regra da nota. O "só com
+            # nota" é política de VENDA: a fatura nasce do XML, e sem ele não
+            # há o que faturar. A bonificação não depende disso -- o livro foi
+            # dado, e o registro do que saiu da casa não pode ficar refém de o
+            # marketplace ter emitido documento. Quando o XML existe, a nota de
+            # remessa nasce dele; quando não existe, a própria ficha B000 sabe
+            # emiti-la depois. Deixar o guarda da venda aqui na frente
+            # trancaria para sempre os 32 pedidos que o Olist despachou sem
+            # nota nenhuma.
+            return self._import_bonificacao()
+
+        if self.xml_status == 'sem_xml':
+            self._fetch_xml()          # tenta agora; pode ser que já esteja lá
+        if self.xml_status != 'arquivado' and self._despacho_exige_nota():
+            raise UserError(_(
+                "sem XML arquivado (%s). A nota é a verdade fiscal da venda e "
+                "a fatura nasce dela — traga o XML antes de importar.",
+                dict(self._fields['xml_status'].selection).get(
+                    self.xml_status, self.xml_status)))
 
         pedido_odoo = self.env['sale.order'].create(self._sale_order_vals())
         self.sale_order_id = pedido_odoo
@@ -808,6 +997,26 @@ class OlistOrder(models.Model):
             _logger.info("Olist pedido %s: importado sem nota; a fatura fica "
                          "para quando o XML chegar.", self.numero)
         return True
+
+    def _import_bonificacao(self):
+        """A raia da bonificação. Quem a percorre é a ponte, não este módulo.
+
+        `liber_olist` sabe RECONHECER a bonificação -- é regra do marketplace,
+        e reconhecê-la aqui é o que impede o pedido de virar venda mesmo sem a
+        ponte instalada. Mas a ficha B000, a cota, a verba e a nota de remessa
+        moram no `capela_influencers`, e exigir esse módulo de quem só quer
+        vender no Olist seria acoplar o marketplace ao marketing.
+
+        Recusar é a resposta certa e não a preguiçosa: o pedido fica parado,
+        visível, dizendo o que falta. Importá-lo como venda é que seria o
+        estrago silencioso.
+        """
+        raise UserError(_(
+            "Pedido %s veio do Olist sem valor: é bonificação, não venda.\n\n"
+            "Livro dado entra pela ficha de bonificação (B000), com a nota de "
+            "remessa e o CFOP 5910/6910 -- nunca como pedido de venda. Para "
+            "que isso aconteça aqui, instale o módulo de ponte "
+            "'liber_olist_bonus'.", self.numero or self.olist_id))
 
     def _carimbar_posicao_fiscal(self, documento):
         """A posição fiscal do marketplace é a da VENDA, e vem das Definições.
@@ -880,6 +1089,12 @@ class OlistOrder(models.Model):
         """
         self.ensure_one()
         self.sale_order_id.action_confirm()
+        # O núcleo carimba "agora" na confirmação (`_prepare_confirmation_
+        # values`): o pedido de 20 de agosto importado em 1º de setembro
+        # virava pedido de setembro na Análise de Vendas -- 154 assim no prod
+        # de 06/09/2026. A data do pedido é a do Olist, e volta aqui.
+        if self.data_pedido:
+            self.sale_order_id.date_order = fields.Datetime.to_datetime(self.data_pedido)
         self._mover_para_a_caixa_marketplaces()
         for picking in self.sale_order_id.picking_ids:
             if picking.state not in ('done', 'cancel'):
@@ -1043,6 +1258,14 @@ class OlistOrder(models.Model):
         self.ensure_one()
         if self.invoice_id:
             return False
+        if self.e_bonificacao:
+            # A nota do livro dado existe e é de REMESSA, não de venda. Deixar
+            # esta função montá-la produziria exatamente o documento que se
+            # está consertando: fatura de venda de mercadoria que ninguém
+            # comprou. Quem monta a nota da bonificação é a ponte.
+            raise UserError(_(
+                "Pedido %s é bonificação: a nota dele é de remessa e nasce na "
+                "ficha B000, não aqui.", self.numero or self.olist_id))
         painel = self.nfe_panel_id
         if not painel:
             raise UserError(_(
@@ -1079,8 +1302,8 @@ class OlistOrder(models.Model):
             'ref': _("NFe %s", painel.danfe_no or painel.key or ''),
             'team_id': self.team_id.id or False,
             'nfe_key': painel.key or False,
-            'invoice_line_ids': [(0, 0, self._linha_de_fatura(item))
-                                 for item in painel.panel_items],
+            'invoice_line_ids': [(0, 0, vals) for vals
+                                 in self._linhas_de_fatura(painel.panel_items)],
         })
         self.invoice_id = fatura
         # Antes de lançar: a posição fiscal é o que classifica a nota na
@@ -1099,27 +1322,224 @@ class OlistOrder(models.Model):
                      self.numero, fatura.name, painel.danfe_no or painel.key)
         return True
 
-    def _linha_de_fatura(self, item):
-        """A linha da fatura, amarrada à linha do PEDIDO quando ela existe.
+    @staticmethod
+    def _isbn_do_produto(produto):
+        """O código que identifica o livro, venha ele de onde vier.
+
+        `default_code` primeiro porque é o que o XML traz em `cProd`; o
+        `barcode` é a segunda chance. Vazio conta como ausente -- string em
+        branco casando com string em branco juntaria livros que não têm nada a
+        ver um com o outro.
+        """
+        if not produto:
+            return False
+        return (produto.default_code or '').strip() or (produto.barcode or '').strip() or False
+
+    def _linha_do_pedido_para(self, item, usadas, produto=None):
+        """Qual linha do pedido esta linha da nota está pagando.
+
+        Duas passagens, nesta ordem. Primeiro pelo produto, que é a resposta
+        exata. Depois pelo ISBN, que é a resposta certa quando o produto da
+        nota e o do pedido são REGISTROS DIFERENTES DO MESMO LIVRO.
+
+        Por que isso acontece. A fatura nasce do XML, e quem resolve o produto
+        do XML é o `liber_nfe_xml`, procurando por `cProd`/`cEAN`. Quando essa
+        procura não acha (a regra de multi-empresa esconde o produto da outra
+        empresa, e a nota da Olist vem com `cEAN` = "SEM GTIN"), ele CRIA um
+        produto ali mesmo -- e nasce um registro cujo nome é o próprio ISBN,
+        sem código de barras e sem empresa. No dev de 01/09/2026 eram 163
+        desses, 136 com gêmeo real do mesmo ISBN.
+
+        O pedido carrega o livro de verdade; a nota carrega o gêmeo. Casando só
+        por `product_id`, nada casa: a nota nasce solta, `qty_invoiced` fica
+        zero e o pedido do marketplace mora para sempre em "A faturar", com a
+        nota emitida, autorizada e paga do outro lado. Eram 58 pedidos no prod.
+
+        `usadas` guarda as linhas já reivindicadas por outro item DESTA MESMA
+        nota. Sem isso, dois itens do mesmo livro amarram os dois na primeira
+        linha do pedido: ela fica com o dobro faturado (saldo negativo) e a
+        segunda com zero. As duas pontas erradas, e as duas mantendo o pedido
+        na fila.
+        """
+        self.ensure_one()
+        # `produto` e o livro JA RESOLVIDO por `_produto_do_item` -- que pode
+        # ter corrigido um registro-lixo consultando o espelho. Casar pelo
+        # `item.ks_product_id` cru desfaria esse conserto na hora de amarrar.
+        if produto is None:
+            produto = item.ks_product_id
+        linhas = self.sale_order_id.order_line.filtered(
+            lambda l: not l.display_type and l.id not in usadas)
+        exata = linhas.filtered(lambda l: l.product_id == produto)
+        if exata:
+            return exata[0]
+        isbn = self._isbn_do_produto(produto)
+        if isbn:
+            por_isbn = linhas.filtered(
+                lambda l: self._isbn_do_produto(l.product_id) == isbn)
+            if por_isbn:
+                return por_isbn[0]
+        # Terceira chance: o NOME. Quando a nota traz o ISBN antigo e a ficha
+        # só conhece o novo, produto e ISBN falham os dois -- mas "Rosacea" na
+        # nota é o começo de "Rosácea (Orides Fontela; Ieda Sallum)" no
+        # pedido, e o preço e a quantidade confirmam.
+        preco = item.ks_price or 0.0
+        mesma_conta = lambda l: (abs(l.price_unit - preco) <= 0.011
+                                 and l.product_uom_qty == item.ks_product_qty)
+        alvo = self._so_letras_e_numeros(item.ks_product_name)
+        if alvo:
+            por_nome = linhas.filtered(
+                lambda l: self._so_letras_e_numeros(
+                    l.product_id.name or l.name).startswith(alvo) and mesma_conta(l))
+            if por_nome:
+                return por_nome[0]
+        # Quarta e última: a candidata ÚNICA -- e só quando a nota NÃO SABE
+        # que livro é (produto-fantasma de ISBN ou de CFOP, ou nenhum). O
+        # catálogo do Olist tem erro de digitação ("QUASIDEAIS" por
+        # "QUASIDEIAS"), nome nenhum casa; mas se o pedido só tem UMA linha
+        # livre com este preço e esta quantidade, é ela. Nota com livro de
+        # verdade que não está no pedido continua solta: amarrar no que
+        # estivesse à mão seria dizer que o pedido faturou o que não faturou.
+        if not produto or self._e_produto_lixo(produto):
+            unica = linhas.filtered(mesma_conta)
+            if len(unica) == 1:
+                return unica
+        return self.env['sale.order.line']
+
+    def _linhas_de_fatura(self, itens):
+        """As linhas da fatura, cada uma amarrada à linha do PEDIDO que paga.
 
         Sem `sale_line_ids` a fatura fica solta: o comercial abre o S e vê
         "Faturado: 0" com a nota emitida e paga do outro lado. É esse vínculo
         que faz o smart button de Faturas aparecer no pedido e as quantidades
         faturadas baterem.
+
+        Precisa ser em lote, e não item a item, porque o casamento tem memória:
+        ver `_linha_do_pedido_para`.
         """
         self.ensure_one()
-        vals = {
-            'product_id': item.ks_product_id.id,
-            'name': item.ks_product_name or item.ks_product_id.display_name,
-            'quantity': item.ks_product_qty,
-            'price_unit': item.ks_price,
-            'discount': 0.0,
-        }
-        linha_pedido = self.sale_order_id.order_line.filtered(
-            lambda l: l.product_id == item.ks_product_id)[:1]
-        if linha_pedido:
-            vals['sale_line_ids'] = [(6, 0, linha_pedido.ids)]
-        return vals
+        usadas = set()
+        linhas = []
+        for item in itens:
+            produto = self._produto_do_item(item)
+            preco, desconto = self._preco_e_desconto(item)
+            vals = {
+                'product_id': produto.id,
+                'name': item.ks_product_name or produto.display_name,
+                'quantity': item.ks_product_qty,
+                'price_unit': preco,
+                'discount': desconto,
+            }
+            linha_pedido = self._linha_do_pedido_para(item, usadas, produto)
+            if linha_pedido:
+                usadas.add(linha_pedido.id)
+                vals['sale_line_ids'] = [(6, 0, linha_pedido.ids)]
+            linhas.append(vals)
+        return linhas
+
+    @staticmethod
+    def _preco_e_desconto(item):
+        """O preço da linha da nota, COM o desconto que a nota declara.
+
+        O parse do XML (`liber_nfe_xml.update_panel_items`) já guarda os três
+        números: `ks_price` é o vUnCom (bruto), `discount_item` é o vDesc
+        dividido pela quantidade (desconto POR UNIDADE) e `net_price` é o
+        líquido por unidade. Esta função só estava jogando os dois últimos
+        fora: gravava `discount: 0.0` fixo e o preço bruto.
+
+        O resultado era fatura acima do que a nota diz. No prod de 05/09/2026
+        eram 288 itens e R$ 3.074,67 de desconto descartado -- e o pedido
+        ficava para sempre "a faturar", porque nem o valor batia.
+
+        O desconto vai em PORCENTAGEM porque é assim que a casa lê a linha
+        (ver `desconto-visivel-na-linha`) e é de `line.discount` que a nota de
+        remessa tira o vDesc. Mas porcentagem arredonda, e nota fiscal não
+        pode fechar por aproximação: quando a conta não reproduz o líquido ao
+        centavo, grava-se o líquido direto e o desconto some. Melhor perder a
+        leitura comercial do que o centavo.
+        """
+        bruto = item.ks_price or 0.0
+        liquido = item.net_price or 0.0
+        if not bruto or not liquido or liquido >= bruto:
+            return bruto, 0.0
+        percentual = (bruto - liquido) / bruto * 100.0
+        qtd = item.ks_product_qty or 0.0
+        confere = round(bruto * qtd * (1 - percentual / 100.0), 2)
+        if confere == round(liquido * qtd, 2):
+            return bruto, percentual
+        return liquido, 0.0
+
+    def _produto_do_item(self, item):
+        """Qual livro é este item da nota, quando o XML não soube dizer.
+
+        A nota que o Olist emite vem com `cEAN` = "SEM GTIN" e, quando o livro
+        não tem código interno lá, com `cProd` = o próprio CFOP. O leitor de
+        XML tomou "CFOP5102" por código de produto e CRIOU um produto com esse
+        código -- e todas as notas seguintes com o mesmo `cProd` casaram com
+        ele. No prod de 05/09/2026 eram dois registros (`CFOP5102` e
+        `CFOP6102`, ambos chamados "Os cantos do homem-sombra") em 50 linhas
+        de fatura e zero linhas de pedido.
+
+        O estrago é maior que o elo perdido: a fatura sai com o livro errado.
+
+        O espelho do Olist sabe a resposta -- ele casou o item pelo ISBN que o
+        Olist manda, e acertou. Então quando o produto do XML é um desses
+        registros-lixo, pergunta-se ao espelho, casando pelo NOME: o `xProd`
+        da nota e a `descricao` do Olist são o mesmo texto, a menos de
+        pontuação (um usa hífen, o outro travessão). Dos 61 itens presos no
+        lixo, 57 se resolvem assim.
+
+        Não achando, devolve o que veio: quem barra é a checagem de "itens sem
+        produto" lá em cima, e barrar é melhor que emitir errado.
+        """
+        produto = item.ks_product_id
+        if not self._e_produto_lixo(produto):
+            return produto
+        alvo = self._so_letras_e_numeros(item.ks_product_name)
+        if not alvo:
+            return produto
+        for linha in self.line_ids:
+            if linha.product_id and self._so_letras_e_numeros(linha.descricao) == alvo:
+                return linha.product_id
+        return produto
+
+    @staticmethod
+    def _e_produto_lixo(produto):
+        """Produto cujo código é um CFOP não é produto: é campo lido errado.
+
+        E produto cujo NOME é o próprio ISBN, sem código de barras, também não
+        é livro: é o registro que o leitor de XML criou quando não achou o
+        `cProd` da nota -- a nota do Olist traz o ISBN ANTIGO do livro (o da
+        Hedra, 978-85-87329...), e a ficha de verdade só conhece o novo
+        (978-65-5159...). No prod de 06/09/2026 eram 161 desses, 22 em uso em
+        fatura, e 119 pedidos de marketplace presos em "A faturar" por causa
+        deles: a fatura apontava o fantasma, o pedido apontava o livro.
+        """
+        if not produto:
+            return False
+        codigo = (produto.default_code or '').strip()
+        if re.fullmatch(r'CFOP\d{4}', codigo, re.I):
+            return True
+        return (bool(re.fullmatch(r'\d{13}', codigo))
+                and (produto.name or '').strip() == codigo
+                and not (produto.barcode or '').strip())
+
+    @staticmethod
+    def _sem_acento(texto):
+        """"Rosácea" e "Rosacea" são o mesmo livro: a nota sai sem acento."""
+        import unicodedata
+        return ''.join(c for c in unicodedata.normalize('NFKD', texto or '')
+                       if not unicodedata.combining(c))
+
+    @classmethod
+    def _so_letras_e_numeros(cls, texto):
+        """Chave de comparação de nome: só letra e número, tudo maiúsculo.
+
+        O XML escreve "QUASIDEAIS - CONVERSAS..." com hífen e o Olist com
+        travessão; um tem dois espaços onde o outro tem um; a nota sai sem
+        acento ("Rosacea") e o pedido com ("Rosácea"). Nenhuma dessas
+        diferenças muda o livro -- e sem tirar o acento ANTES de filtrar as
+        letras, o "Á" sumia e "ROSCEA" não casava com "ROSACEA"."""
+        return re.sub(r'[^A-Za-z0-9]', '', cls._sem_acento(texto)).upper()
 
     def _carimba_nota_na_movimentacao(self, fatura):
         """Leva a nota para a transferência, que é a tela da logística.
@@ -1293,6 +1713,28 @@ class OlistOrderLine(models.Model):
     olist_produto_id = fields.Char("ID do produto no Olist")
     product_id = fields.Many2one('product.product', string="Produto no Odoo",
                                  index='btree_not_null')
+    product_manual = fields.Boolean(
+        "Casado à mão", readonly=True, copy=False,
+        help="Alguém escolheu este produto na tela, e não o casamento "
+             "automático por ISBN. Serve para a releitura do detalhe não "
+             "desfazer o trabalho: o espelho reescreve o que o Olist diz, "
+             "mas não a nossa interpretação de qual livro é esse.")
+
+    def write(self, vals):
+        """Escolher o produto na tela marca a linha como casada à mão.
+
+        A marca não é enfeite: `_sincroniza_linhas` APAGA e recria os itens a
+        cada leitura de detalhe, porque o espelho reflete e não acumula. Sem
+        saber o que foi escolhido a dedo, a próxima leitura devolveria o
+        pedido ao estado travado e o trabalho do comercial evaporaria sem
+        aviso — o mesmo erro que já mordeu o casamento do catálogo.
+
+        A releitura escreve com `olist_sync` no contexto, e aí a marca não se
+        move: o automático não se promove a manual.
+        """
+        if 'product_id' in vals and not self.env.context.get('olist_sync'):
+            vals = dict(vals, product_manual=bool(vals.get('product_id')))
+        return super().write(vals)
     mirror_id = fields.Many2one(
         'olist.product', string="Linha do catálogo", index='btree_not_null',
         ondelete='set null',

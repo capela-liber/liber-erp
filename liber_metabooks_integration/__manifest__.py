@@ -18,7 +18,7 @@ Module Info.
     'website': "http://www.yourcompany.com",
     'license': 'AGPL-3',
     'category': 'Uncategorized',
-    'version': '19.0.1.0.0',
+    'version': '19.0.1.11.0',
     # Original v15 deps (kept for reference):
     # 'depends': ['base','stock','isbn_integration','br_account','account_accountant',
     #             'ean_creator','hedra_vendor_price_list_discount','website_sale', 'product'],
@@ -30,9 +30,14 @@ Module Info.
     'depends': ['base', 'stock', 'purchase', 'website_sale', 'product'],
     'data': [
         'data/contributor_roles.xml',
+        # Padrões internacionais fechados, gerados por
+        # scripts/gerar_listas_classificacao.py -- não se editam na tela.
+        'data/metabooks.thema.code.csv',
+        'data/biblio.bisac.codes.csv',
         'data/metabooks_export_data.xml',
         'security/metabooks_security.xml',
         'security/ir.model.access.csv',
+        'views/metabooks_thema.xml',
         'views/metabooks_menus.xml',
         'views/hedra_res_config.xml',
         'views/metabooks_product.xml',
