@@ -105,6 +105,19 @@ class EventFair(models.Model):
     # circunstancial: ele toca o evento na rua e não decide o que vai nem
     # quanto cada um ganha. A tela precisa saber a diferença, e `groups=` num
     # botão não serve para trancar um campo dentro de uma aba.
+    # A REMESSA DE VOLTA JÁ PEDIDA. O evento continua "Enviado" até a
+    # mercadoria sair da mesa, e sem este campo o botão Retorno seguia
+    # clicável -- um segundo clique criaria uma segunda remessa dos MESMOS
+    # livros, porque a mesa ainda os tem.
+    return_pending = fields.Boolean(
+        string='Return waiting to be packed',
+        compute='_compute_return_pending')
+
+    @api.depends('picking_ids.state', 'picking_ids.fair_operation')
+    def _compute_return_pending(self):
+        for fair in self:
+            fair.return_pending = bool(fair._pendencia_de_retorno())
+
     is_fair_planner = fields.Boolean(
         string='Plans events', compute='_compute_is_fair_planner')
 
@@ -510,6 +523,14 @@ class EventFair(models.Model):
             if fair.state != 'shipped':
                 raise UserError(_(
                     "Fair %s is not out to be returned.", fair.display_name))
+            pendente = fair._pendencia_de_retorno()
+            if pendente:
+                raise UserError(_(
+                    "%(feira)s already has a return waiting to be packed "
+                    "(%(mov)s). Validate it — a second one would ask for the "
+                    "same copies twice.",
+                    feira=fair.display_name,
+                    mov=', '.join(pendente.mapped('name'))))
             fair._close_open_days()
             devolvendo = {
                 line.product_id: line.qty_on_shelf
@@ -536,19 +557,79 @@ class EventFair(models.Model):
         pickings = self.env['stock.picking']
         devolvendo = {p: q for p, q in (devolvendo or {}).items() if q > 0}
         if devolvendo:
-            saida = self._create_fair_picking('return_dispatch', devolvendo)
-            entrada = self._create_fair_picking('return', devolvendo)
-            por_produto = {m.product_id: m for m in entrada.move_ids}
-            for move in saida.move_ids:
-                destino = por_produto.get(move.product_id)
-                if destino:
-                    move.move_dest_ids = [(4, destino.id)]
-            entrada.move_ids.write({'procure_method': 'make_to_order'})
-            entrada.move_ids._recompute_state()
-            pickings |= saida
+            pickings |= self._create_fair_picking('return_dispatch', devolvendo)
         pickings |= self._registrar_perdas(perdas)
-        self.state = 'returned'
+        # A CHEGADA NASCE DEPOIS, quando a mercadoria sai da mesa de verdade
+        # (ver `_abrir_a_chegada_do_retorno`). E o evento só vira RETORNADO
+        # nessa mesma hora.
+        self._talvez_retornado()
         return pickings
+
+    def _pendencia_de_retorno(self):
+        """As remessas de volta que ainda não saíram da mesa."""
+        self.ensure_one()
+        return self.picking_ids.filtered(
+            lambda p: p.fair_operation == 'return_dispatch'
+            and p.state not in ('done', 'cancel'))
+
+    def _talvez_retornado(self):
+        """O evento volta quando a MERCADORIA volta, e não quando se pede.
+
+        Pedir o retorno cria a remessa de volta; a mesa continua cheia até
+        alguém embalar e validar. Gravar `returned` no clique deixava a ficha
+        dizendo que acabou enquanto trinta e quatro exemplares seguiam na
+        praça -- e o estoque do armazém, trinta e quatro menor, com razão.
+        Foi o que o dono viu: "o estoque da loja não batia com o estoque na
+        EV".
+        """
+        for fair in self:
+            if fair.state == 'returned' or fair._pendencia_de_retorno():
+                continue
+            fair.state = 'returned'
+            fair._ao_retornar()
+
+    def _ao_retornar(self):
+        """Gancho do momento em que o evento fecha de fato.
+
+        Aqui não faz nada; as pontes penduram o que é delas (arquivar os
+        caixas, deixar as contas da equipe prontas). Existe para que esse
+        trabalho aconteça QUANDO A MERCADORIA VOLTA, e não quando alguém
+        aperta o botão de pedir.
+        """
+        return True
+
+    def _abrir_a_chegada_do_retorno(self, saida):
+        """A segunda perna da volta: trânsito -> armazém.
+
+        Ela nasce só agora, com a remessa de volta já validada, e por dois
+        motivos:
+
+          - o armazém não pode ver na bancada um cartão VERMELHO de carga que
+            ainda está a seiscentos quilômetros, esperando ser embalada;
+          - nascendo junto com a remessa, ela reservava o que encontrasse no
+            trânsito -- inclusive o exemplar que saiu do depósito e nunca
+            chegou na mesa, que já estava contado como falta. A chegada do
+            retorno ia receber um livro que a feira nunca teve.
+
+        O que ela pede é O QUE SAIU, medido no movimento concluído.
+        """
+        self.ensure_one()
+        quantidades = {}
+        for move in saida.move_ids.filtered(lambda m: m.state == 'done'):
+            if move.quantity > 0:
+                quantidades.setdefault(move.product_id, 0.0)
+                quantidades[move.product_id] += move.quantity
+        if not quantidades:
+            return self.env['stock.picking']
+        entrada = self._create_fair_picking('return', quantidades)
+        por_produto = {m.product_id: m for m in entrada.move_ids}
+        for move in saida.move_ids:
+            destino = por_produto.get(move.product_id)
+            if destino:
+                move.move_dest_ids = [(4, destino.id)]
+        entrada.move_ids.write({'procure_method': 'make_to_order'})
+        entrada.move_ids._recompute_state()
+        return entrada
 
     def _registrar_perdas(self, perdas, stage='fair'):
         """Tira da mesa o que não volta, e guarda por quê."""

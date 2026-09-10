@@ -429,3 +429,19 @@ msgid ""
 msgstr ""
 "Comissão e diária se combinam com quem planeja o evento. Fale com quem montou "
 "a equipe."
+
+#. module: liber_fairs_pos
+#: model:ir.model.fields.selection,name:liber_fairs_pos.selection__event_fair_cashier__role__operator
+msgid "Counter operator"
+msgstr "Operador de caixa"
+
+#. module: liber_fairs_pos
+#: model:ir.model.fields.selection,name:liber_fairs_pos.selection__event_fair_cashier__role__manager
+#: model:res.groups,name:liber_fairs_pos.group_fair_field
+msgid "Fair manager (on site)"
+msgstr "Gerente da feira (na praça)"
+
+#. module: liber_fairs_pos
+#: model:res.groups,name:liber_fairs_pos.group_fair_cashier
+msgid "Fair counter operator"
+msgstr "Operador de caixa da feira"

@@ -60,7 +60,7 @@ O QUE AINDA NÃO ESTÁ AQUI
 """,
     'author': 'EdLab Press',
     'category': 'Inventory',
-    'version': '19.0.5.0.0',
+    'version': '19.0.6.0.0',
     'license': 'AGPL-3',
     'depends': ['stock', 'mail', 'sales_team'],
     'data': [

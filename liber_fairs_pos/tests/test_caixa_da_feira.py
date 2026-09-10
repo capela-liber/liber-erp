@@ -63,6 +63,20 @@ class TestCaixaDaFeira(TransactionCase):
             linhas.append({'fair_id': fair.id, 'partner_id': contato.id})
         return self.env['event.fair.cashier'].create(linhas)
 
+    def _despachar_de_volta(self, despacho):
+        """Embala e valida a remessa de volta.
+
+        É o que faz a mercadoria sair da mesa -- e, desde 10/09/2026, é o que
+        fecha o evento. Pedir o retorno já não basta: a ficha só diz
+        `returned` quando o estoque concorda com ela.
+        """
+        despacho.action_assign()
+        for move in despacho.move_ids:
+            move.quantity = move.product_uom_qty
+            move.picked = True
+        despacho.button_validate()
+        return despacho
+
     def _venda(self, fair, qty, sessao=None):
         """Uma venda de balcão pelo caminho real do PDV.
 
@@ -289,12 +303,18 @@ class TestCaixaDaFeira(TransactionCase):
         dia.line_ids.qty_counted = dia.line_ids.qty_expected
         dia.action_close()
 
-        fair.action_return()
+        despacho = fair.action_return()
 
         self.assertEqual(sessao.state, 'closed',
-                         "O caixa tem de fechar junto com a feira")
+                         "O caixa fecha no PEDIDO do retorno: sessão aberta "
+                         "ainda venderia depois da contagem")
+        self.assertTrue(fair.pos_config_ids.filtered('active'),
+                        "Mas some da lista só quando a mercadoria sai da mesa")
+
+        self._despachar_de_volta(despacho)
+
         self.assertFalse(fair.pos_config_ids.filtered('active'),
-                         "E sair da lista de quem opera PDV todo dia")
+                         "E aí sim sai da lista de quem opera PDV todo dia")
 
     def test_an_unpaid_order_stops_the_return(self):
         """Venda começada e não paga é decisão de quem está no balcão."""
@@ -362,7 +382,7 @@ class TestCaixaDaFeira(TransactionCase):
         dia.action_fill()
         dia.line_ids.qty_counted = 10
         dia.action_close()
-        fair.action_return()
+        self._despachar_de_volta(fair.action_return())
         self.assertFalse(config.active,
                          "Caixa de feira que voltou não fica na tela de quem "
                          "opera PDV todo dia")

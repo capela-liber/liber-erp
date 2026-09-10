@@ -13,8 +13,10 @@
                             invisible="state not in ('planned', 'shipped')"
                             help="Sends what is planned and has not gone yet. Raise a planned quantity and click again to send a replenishment."/>
                     <button name="action_return" type="object"
-                            string="Return" invisible="state != 'shipped'"
+                            string="Return"
+                            invisible="state != 'shipped' or return_pending"
                             help="Sends back what is on the table. The warehouse checks what actually arrives, in Receipts."/>
+                    <field name="return_pending" invisible="1"/>
                     <button name="action_draft" type="object" string="Back to Draft"
                             invisible="state in ('draft', 'returned', 'settled', 'closed')" groups="liber_fairs.group_fair_manager"/>
                     <field name="is_fair_planner" invisible="1"/>
@@ -22,6 +24,12 @@
                            statusbar_visible="draft,planned,shipped,returned"/>
                 </header>
                 <sheet>
+                    <div class="alert alert-info mb-0" role="status"
+                         invisible="not return_pending">
+                        The return is packed and waiting: the copies are still
+                        on the table, and the event only closes when the
+                        dispatch is validated.
+                    </div>
                     <div class="oe_button_box" name="button_box">
                         <button name="action_view_pickings" type="object"
                                 class="oe_stat_button" icon="fa-truck">

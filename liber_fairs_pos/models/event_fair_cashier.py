@@ -36,12 +36,21 @@ class EventFairCashier(models.Model):
     # o evento sabe quem vende no balcão e quem responde pelo evento, e
     # ninguém vai à administração de usuários por causa de uma feira de três
     # dias.
+    # "Gerente" sozinho virou palavra ambígua na casa: existe o GERENTE
+    # COMERCIAL, que é cargo, e existe o gerente DESTA feira, que é função de
+    # três dias. O rótulo diz de qual se fala.
     role = fields.Selection(
-        [('operator', 'Operator'), ('manager', 'Manager')],
+        [('operator', 'Counter operator'),
+         ('manager', 'Fair manager (on site)')],
         string='Profile', default='operator', required=True,
-        help="Operator sells at the counter, counts the table and confirms "
-             "what arrives. Manager does all that and also plans, dispatches "
-             "and closes the event.")
+        help="The counter operator sells at their own register and, alone on "
+             "site, confirms the load that arrives. The fair manager does "
+             "that and what only somebody on site can do: opens a "
+             "colleague's register to sort out a problem, discounts beyond "
+             "the practised price, counts the table, closes the day, records "
+             "losses and sends the goods home. Planning the event and "
+             "agreeing what each person earns belong to whoever puts the "
+             "fair together, back at the house.")
     user_id = fields.Many2one(
         'res.users', string='Account', compute='_compute_user',
         store=True, readonly=True,

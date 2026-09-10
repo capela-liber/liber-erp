@@ -381,7 +381,7 @@ class OlistAccount(models.Model):
         completadas = self.env['olist.order']._completar_faturas_pendentes(
             account=self)
 
-        self._carimba_last_sync()
+        self._carimba_relogio('last_sync')
         _logger.info("Olist %s: %s imported, %s cancelled, %s already known "
                      "(%s adopted), %s invoices completed.",
                      self.name, imported, cancelled, skipped, adopted,
@@ -391,38 +391,47 @@ class OlistAccount(models.Model):
                 'completadas': completadas}
 
 
-    def _carimba_last_sync(self):
-        """Grava "Notas lidas em" FORA da transação da rodada.
+    #: Os carimbos de relógio da ficha da conta. São informativos: dizem
+    #: "quando isto rodou pela última vez" e nada mais depende deles.
+    CARIMBOS = ('last_sync', 'last_orders_pull', 'last_catalogue_pull',
+                'last_stock_pull', 'last_stock_push')
 
-        Duas rotinas escrevem na MESMA linha de `olist_account`: o push de
-        estoque grava `stock_push_cursor` a cada livro (de dois em dois
-        segundos, durante a varredura inteira) e a leitura de notas grava
-        `last_sync` no fim de uma transação de trinta segundos. O Postgres
-        recusa a segunda com `could not serialize access due to concurrent
-        update`, e a rodada inteira de notas morre por causa de um carimbo de
-        relógio: quatro falhas seguidas em 08/09/2026, com o Odoo ameaçando
-        desativar o cron.
+    def _carimba_relogio(self, campo, quando=None):
+        """Grava um carimbo de "rodou em" FORA da transação da rodada.
+
+        Todas as rotinas desta classe escrevem na MESMA linha de
+        `olist_account`, e o push de estoque a reescreve a cada livro -- de
+        dois em dois segundos, durante a varredura inteira, em laço contínuo
+        enquanto tem fila. Quem grava o próprio carimbo no fim de uma
+        transação longa colide, e o Postgres recusa com `could not serialize
+        access due to concurrent update`. A rodada inteira morre por causa de
+        um campo que só serve para mostrar uma data na tela.
+
+        Aconteceu duas vezes em uma semana, e a segunda é a lição: em 08/09
+        consertei o `last_sync` e só ele; em 10/09 o mesmo erro voltou pelo
+        `last_orders_pull`. Era defeito de CLASSE, não de campo -- por isso
+        agora todos os cinco carimbos passam por aqui.
 
         A gravação vai para um cursor PRÓPRIO, que abre, escreve e fecha na
-        hora. Assim a linha fica presa por milissegundos em vez de meio
-        minuto, e o carimbo deixa de poder derrubar o trabalho de verdade. Se
-        ainda assim ele colidir, o resultado é um `last_sync` desatualizado --
-        um campo informativo -- e não uma rodada perdida.
+        hora: a linha fica presa por milissegundos em vez de meio minuto. Se
+        ainda assim colidir, o preço é uma data desatualizada, nunca a rodada.
 
         Em teste escreve direto: cursor novo não enxerga a transação do teste,
         e o registro nem existiria lá.
         """
         self.ensure_one()
-        agora = fields.Datetime.now()
+        if campo not in self.CARIMBOS:
+            raise ValueError("carimbo desconhecido: %s" % campo)
+        quando = quando or fields.Datetime.now()
         if tools.config['test_enable'] or modules.module.current_test:
-            self.last_sync = agora
+            self.sudo().write({campo: quando})
             return True
         try:
             with self.pool.cursor() as cr:
-                self.with_env(self.env(cr=cr)).last_sync = agora
+                self.with_env(self.env(cr=cr)).sudo().write({campo: quando})
         except Exception as exc:  # noqa: BLE001 - carimbo não derruba rodada
-            _logger.warning("Olist %s: não deu para carimbar last_sync (%s).",
-                            self.name, exc)
+            _logger.warning("Olist %s: não deu para carimbar %s (%s).",
+                            self.name, campo, exc)
         return True
 
     # ------------------------------------------------------------------
@@ -553,7 +562,7 @@ class OlistAccount(models.Model):
             else:
                 Mirror.create(dict(vals, account_id=self.id, olist_id=olist_id))
                 criados += 1
-        self.last_catalogue_pull = fields.Datetime.now()
+        self._carimba_relogio('last_catalogue_pull')
         _logger.info("Olist %s: espelho com %s novos e %s atualizados.",
                      self.name, criados, atualizados)
         return self.env['olist.product']._notificacao(
@@ -767,7 +776,7 @@ class OlistAccount(models.Model):
         # conta, que é onde moram o token e a trava "Somente leitura". A data
         # da última leitura é contabilidade do próprio ato, não decisão de
         # configuração; negá-la faria o botão inteiro falhar por um relógio.
-        self.sudo().last_orders_pull = fields.Datetime.now()
+        self._carimba_relogio('last_orders_pull')
         _logger.info("Olist %s: %s pedidos novos, %s atualizados.",
                      self.name, novos, atualizados)
         if not interactive:
@@ -940,7 +949,7 @@ class OlistAccount(models.Model):
         self.ensure_one()
         linhas = self.env['olist.product'].search([('account_id', '=', self.id)])
         lidas = sum(1 for linha in linhas if linha._read_saldo())
-        self.last_stock_pull = fields.Datetime.now()
+        self._carimba_relogio('last_stock_pull')
         return self.env['olist.product']._notificacao(
             _("Saldos lidos"), _("%s linha(s).", lidas), 'success')
 
@@ -996,7 +1005,7 @@ class OlistAccount(models.Model):
                 'saldo_olist_date': fields.Datetime.now(),
             })
             tocadas += 1
-        self.last_stock_pull = fields.Datetime.now()
+        self._carimba_relogio('last_stock_pull')
         _logger.info("Olist %s: janela trouxe %s produto(s) alterados.",
                      self.name, tocadas)
         return tocadas + self._reler_saldos_mais_velhos()
@@ -1145,7 +1154,7 @@ class OlistAccount(models.Model):
             # Catálogo varrido inteiro: a próxima noite recomeça do começo.
             self.stock_push_cursor = 0
 
-        self.last_stock_push = fields.Datetime.now()
+        self._carimba_relogio('last_stock_push')
         _logger.info(
             "Olist %s: stock pushed for %s products, %s error(s)%s.",
             self.name, ok, len(errors),

@@ -18,7 +18,7 @@
          única tela dele é o caixa. O grupo existe para carregar a regra
          abaixo, que o prende AO CAIXA DELE. -->
     <record id="group_fair_cashier" model="res.groups">
-        <field name="name">Event cashier</field>
+        <field name="name">Fair counter operator</field>
         <field name="privilege_id" ref="liber_fairs.privilege_fairs"/>
         <field name="implied_ids"
                eval="[(4, ref('point_of_sale.group_pos_user'))]"/>
@@ -34,7 +34,7 @@
          Ele implica `base.group_user` porque sem isso não se escreve nem no
          chatter, e a conferência morre de AccessError. -->
     <record id="group_fair_field" model="res.groups">
-        <field name="name">Event manager on site</field>
+        <field name="name">Fair manager (on site)</field>
         <field name="privilege_id" ref="liber_fairs.privilege_fairs"/>
         <!-- (6, 0, ...) e não (4, ...): somar só ACRESCENTA, e a implicação
              antiga (o papel de Feiras da casa) sobreviveria calada ao

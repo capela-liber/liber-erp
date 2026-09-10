@@ -190,19 +190,25 @@ class TestRetornoCurto(TransactionCase):
         self.assertEqual(fair.qty_returned, 25)
         self.assertEqual(self._na_mesa(fair), 0)
 
-    def test_the_arrival_still_refuses_to_run_ahead_of_the_dispatch(self):
-        """A trava de setembro continua de pé com a mudança de hoje."""
-        from odoo.exceptions import UserError
+    def test_there_is_nothing_to_run_ahead_of_the_dispatch_anymore(self):
+        """A trava de setembro virou desenho: não há o que travar.
+
+        Antes a chegada do retorno nascia junto com o pedido, e uma guarda
+        impedia validá-la antes de a mercadoria sair da mesa -- guarda que
+        existia porque o documento existia cedo demais. Agora ela só nasce
+        quando a remessa de volta é validada, e o erro fica impossível em vez
+        de proibido.
+        """
         fair = self._na_praca(25)
         self._fechar_o_dia(fair)
         fair.action_return()                     # despacho NÃO validado
+
         chegada = fair.picking_ids.filtered(
             lambda p: p.fair_operation == 'return')
-        self.assertFalse(chegada.fair_on_the_road)
-        with self.assertRaises(UserError):
-            chegada.button_validate()
+
+        self.assertFalse(chegada, "Documento que não existe não se valida")
         self.assertFalse(fair.loss_ids,
-                         "E a tentativa não pode inventar perda nenhuma")
+                         "E nada inventa perda pelo caminho")
 
     # --- a mesma doença na IDA -------------------------------------------
     def test_what_the_warehouse_could_not_find_is_not_the_fairs_loss(self):
@@ -262,3 +268,76 @@ class TestRetornoCurto(TransactionCase):
         self.assertEqual(fair.qty_sent, 0)
         self.assertEqual(fair.line_ids.qty_requested, 0,
                          "E a grade volta a mostrar os dez a despachar")
+
+    # --- o retorno PEDIDO e não embalado ---------------------------------
+    def test_asking_for_the_return_does_not_empty_the_table(self):
+        """O defeito que o dono viu: ficha dizendo que acabou, mesa cheia.
+
+        Pedir o retorno cria a remessa de volta; até alguém embalar e validar,
+        os livros continuam na praça -- e o armazém continua sem eles. Gravar
+        `returned` no clique fazia a ficha do evento mentir sobre onde a
+        mercadoria estava, e era exatamente a diferença entre o estoque da
+        loja e o estoque do evento.
+
+        Nenhum teste pegava isso porque todos validavam a remessa na linha
+        seguinte à de criá-la: o estado intermediário nunca existia.
+        """
+        fair = self._na_praca(25)
+        self._fechar_o_dia(fair)
+
+        despacho = fair.action_return()
+
+        self.assertEqual(fair.state, 'shipped',
+                         "A mercadoria ainda está na mesa: não voltou nada")
+        self.assertEqual(self._na_mesa(fair), 25,
+                         "E o estoque diz a mesma coisa que a ficha")
+        self.assertFalse(
+            fair.picking_ids.filtered(lambda p: p.fair_operation == 'return'),
+            "O armazém não pode ver cartão de carga que nem saiu")
+        self.assertEqual(despacho.state, 'assigned')
+
+    def test_the_warehouse_card_is_born_when_the_goods_leave(self):
+        fair = self._na_praca(25)
+        self._fechar_o_dia(fair)
+        despacho = fair.action_return()
+
+        self._validar(despacho)
+
+        chegada = fair.picking_ids.filtered(
+            lambda p: p.fair_operation == 'return')
+        self.assertEqual(len(chegada), 1, "Agora sim existe trabalho lá")
+        self.assertEqual(sum(chegada.move_ids.mapped('product_uom_qty')), 25,
+                         "E ela pede o que SAIU, medido no movimento")
+        self.assertEqual(fair.state, 'returned',
+                         "O evento fecha quando a mercadoria sai da mesa")
+        self.assertEqual(self._na_mesa(fair), 0)
+
+    def test_the_return_does_not_steal_what_never_arrived(self):
+        """O exemplar que sumiu na estrada não volta pela porta dos fundos.
+
+        Ele ficou parado no trânsito, contado como falta na chegada e
+        esperando explicação em Perdas. A chegada do retorno, nascendo junto
+        com o pedido, reservava justamente esse exemplar -- e o armazém
+        receberia um livro que a feira nunca teve.
+        """
+        fair = self.env['event.fair'].create({
+            'name': 'Feira com sumiço', 'date_start': date.today(),
+            'date_end': date.today(), 'company_id': self.company.id,
+            'line_ids': [(0, 0, {
+                'product_id': self.livro.id, 'qty_planned': 10})]})
+        fair.action_plan()
+        self._validar(fair.action_ship())
+        chegada = fair.picking_ids.filtered(
+            lambda p: p.fair_operation == 'receipt' and p.state != 'done')
+        # Chegaram nove: um ficou na estrada. (Pelo `button_validate`, e não
+        # pelo Confirmar o que chegou, que grava o que o DOCUMENTO declara.)
+        self._validar(chegada, quantidade=9)
+        self.assertEqual(self._no_transito(fair), 1)
+
+        self._fechar_o_dia(fair)
+        self._validar(fair.action_return())
+
+        volta = fair.picking_ids.filtered(
+            lambda p: p.fair_operation == 'return')
+        self.assertEqual(sum(volta.move_ids.mapped('product_uom_qty')), 9,
+                         "Pede os nove que saíram da mesa, não os dez")

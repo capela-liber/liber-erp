@@ -259,6 +259,12 @@ class TestNotaDeRemessa(TransactionCase):
         antes = len(fair.message_ids)
         retorno = fair.action_return()
         self.assertTrue(retorno, "O retorno tem de acontecer")
+        # O evento fecha quando a MERCADORIA sai da mesa, e não no clique.
+        retorno.action_assign()
+        for move in retorno.move_ids:
+            move.quantity = move.product_uom_qty
+            move.picked = True
+        retorno.button_validate()
         self.assertEqual(fair.state, 'returned')
         self.assertFalse(retorno.fair_note_move_id)
         self.assertGreater(len(fair.message_ids), antes,

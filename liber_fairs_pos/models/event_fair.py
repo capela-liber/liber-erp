@@ -594,8 +594,15 @@ class EventFair(models.Model):
             listas.write({'fair_id': False})
         return super().unlink()
 
-    def _do_return(self, devolvendo, perdas):
-        res = super()._do_return(devolvendo, perdas)
+    def _ao_retornar(self):
+        """O que só faz sentido com a MERCADORIA de volta.
+
+        Arquivar o caixa e deixar as contas da equipe prontas acontecia no
+        clique de pedir o retorno -- quando a mesa ainda estava cheia e a
+        conferência do armazém nem tinha começado. Agora acontece quando o
+        evento fecha de verdade.
+        """
+        res = super()._ao_retornar()
         self._contas_da_equipe_no_fechamento()
         # O caixa da feira que acabou SAI DA LISTA de quem opera PDV todo
         # dia: ele é arquivado, não apagado -- a venda que passou por ele

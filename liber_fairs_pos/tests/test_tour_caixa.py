@@ -111,8 +111,25 @@ class TestTourCaixa(HttpCase):
         # provar.
         todos.invalidate_recordset()
         sessao.invalidate_recordset()
+        fair.invalidate_recordset()
         self.assertEqual(sessao.state, 'closed',
                          "E o caixa que vendia tinha de fechar no retorno")
+        self.assertEqual(fair.state, 'shipped',
+                         "Pedir o retorno não traz a mercadoria de volta")
+        self.assertTrue(fair.return_pending,
+                        "O que existe é uma remessa de volta esperando")
+
+        # A van sai: é isto que fecha o evento e tira os caixas da tela.
+        despacho = fair.picking_ids.filtered(
+            lambda p: p.fair_operation == 'return_dispatch'
+            and p.state not in ('done', 'cancel'))
+        despacho.action_assign()
+        for move in despacho.move_ids:
+            move.quantity = move.product_uom_qty
+            move.picked = True
+        despacho.button_validate()
+
+        todos.invalidate_recordset()
         self.assertFalse(todos.pos_config_ids.filtered('active'),
                          "Os caixas saem da lista quando a feira volta")
         self.assertEqual(fair.state, 'returned')

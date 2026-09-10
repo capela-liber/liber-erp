@@ -1,13 +1,16 @@
 # -*- coding: utf-8 -*-
-"""O carimbo do relógio não pode derrubar a leitura de notas.
+"""Nenhum carimbo de relógio pode derrubar a rodada que o grava.
 
 Em 08/09/2026 o cron "Olist: pull NFe XMLs" falhou quatro vezes seguidas no
-prod, e o Odoo avisou que ia desativá-lo. A causa não estava na API: duas
-rotinas escrevem na MESMA linha de `olist_account` — o push de estoque grava
-`stock_push_cursor` a cada livro, e a leitura de notas grava `last_sync` no
-fim de uma transação de trinta segundos. O Postgres recusou a segunda com
-`could not serialize access due to concurrent update` e a rodada inteira
-morreu por causa de um campo informativo.
+prod, e o Odoo avisou que ia desativá-lo. A causa não estava na API: todas as
+rotinas escrevem na MESMA linha de `olist_account`, e o push de estoque a
+reescreve a cada livro. Quem grava o próprio carimbo no fim de uma transação
+longa colide, e o Postgres recusa com `could not serialize access due to
+concurrent update`.
+
+Em 10/09 o MESMO erro voltou por outro campo, `last_orders_pull`, derrubando
+"Olist: ler pedidos". Era defeito de classe e eu tinha consertado só uma
+instância — por isso o teste abaixo varre a lista inteira de carimbos.
 """
 from unittest.mock import patch
 
@@ -27,11 +30,18 @@ class TestCarimboLastSync(TransactionCase):
             'token': "TOKEN-C", 'read_only': True,
         })
 
-    def test_o_carimbo_grava_o_relogio(self):
-        self.assertFalse(self.account.last_sync)
-        self.account._carimba_last_sync()
-        self.assertTrue(self.account.last_sync,
-                        "a rodada não registrou quando leu as notas")
+    def test_todo_carimbo_grava_o_relogio(self):
+        """Varre a lista inteira: foi consertar um só que deixou o furo."""
+        for campo in self.env['olist.account'].CARIMBOS:
+            self.account.write({campo: False})
+            self.account._carimba_relogio(campo)
+            self.assertTrue(self.account[campo],
+                            "o carimbo %s não gravou" % campo)
+
+    def test_carimbo_desconhecido_e_recusado(self):
+        """Nome errado é erro de programação, e erro de programação grita."""
+        with self.assertRaises(ValueError):
+            self.account._carimba_relogio('last_coisa_nenhuma')
 
     def _fora_do_teste(self):
         """Força o caminho de produção: cursor próprio em vez de escrita direta."""
@@ -43,7 +53,7 @@ class TestCarimboLastSync(TransactionCase):
              patch('odoo.addons.liber_olist.models.olist_account.modules'
                    '.module.current_test', None), \
              patch.object(type(self.env.registry), 'cursor') as cursor:
-            self.account._carimba_last_sync()
+            self.account._carimba_relogio('last_sync')
         cursor.assert_called_once()
 
     def test_o_carimbo_que_falha_nao_derruba_a_rodada(self):
@@ -60,4 +70,4 @@ class TestCarimboLastSync(TransactionCase):
                           side_effect=SerializationFailure(
                               "could not serialize access")):
             # Não levanta: é este o contrato.
-            self.assertTrue(self.account._carimba_last_sync())
+            self.assertTrue(self.account._carimba_relogio('last_sync'))

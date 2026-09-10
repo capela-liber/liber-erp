@@ -262,7 +262,23 @@ class StockPicking(models.Model):
         self._ajustar_a_perna_seguinte()
         for picking_id, linhas in faltas.items():
             self.browse(picking_id)._registrar_a_falta(linhas)
+        self._fechar_a_volta()
         return res
+
+    def _fechar_a_volta(self):
+        """A mesa esvaziou: agora sim o armazém tem trabalho, e o evento fecha.
+
+        A remessa de volta validada é o instante em que a mercadoria deixa a
+        praça. É aqui que nasce o cartão do armazém (e não antes, quando ele
+        seria um vermelho de carga que nem saiu) e é aqui que o evento vira
+        RETORNADO.
+        """
+        voltas = self.filtered(
+            lambda p: p.fair_id and p.fair_operation == 'return_dispatch'
+            and p.state == 'done')
+        for picking in voltas:
+            picking.fair_id._abrir_a_chegada_do_retorno(picking)
+        voltas.fair_id._talvez_retornado()
 
     def _ajustar_a_perna_seguinte(self):
         """O que saiu é o que pode chegar.
