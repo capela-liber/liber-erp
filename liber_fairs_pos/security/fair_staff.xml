@@ -9,11 +9,24 @@
          Odoo soma as regras dos grupos de cada pessoa com OU. Quem está SÓ
          aqui vê o evento em que trabalha; quem também é do Comercial vê o
          resto por causa do outro grupo. -->
+    <!-- O GERENTE DE CAMPO é circunstancial: ele toca o evento na praça e
+         NÃO faz parte do planejamento. Por isso ele não herda mais o papel de
+         Feiras da casa (`group_fair_user`), que traz grade, modelos e o
+         cadastro inteiro junto. Quem decide o que vai, quando vai e quanto
+         cada um ganha é quem planeja, e isso acontece antes de a feira
+         existir na rua.
+
+         Ele implica `base.group_user` porque sem isso não se escreve nem no
+         chatter, e a conferência morre de AccessError. -->
     <record id="group_fair_field" model="res.groups">
-        <field name="name">Event staff</field>
+        <field name="name">Event manager on site</field>
         <field name="privilege_id" ref="liber_fairs.privilege_fairs"/>
+        <!-- (6, 0, ...) e não (4, ...): somar só ACRESCENTA, e a implicação
+             antiga (o papel de Feiras da casa) sobreviveria calada ao
+             upgrade. O gerente continuaria vendo os modelos de grade. -->
         <field name="implied_ids"
-               eval="[(4, ref('liber_fairs.group_fair_user'))]"/>
+               eval="[(6, 0, [ref('base.group_user'),
+                              ref('liber_fairs_pos.group_fair_cashier')])]"/>
     </record>
 
     <!-- Quem só opera o balcão. Não é a "equipe do evento" (que enxerga o
@@ -28,6 +41,24 @@
     </record>
 
     <data noupdate="1">
+        <!-- A OPERADORA sozinha na praça. A caixa de livro chega no meio do
+             movimento, e esperar o gerente para conferir é deixar a carga na
+             calçada. Ela vê a feira DELA (só leitura) e confere a chegada
+             dela — e nada mais: nem grade, nem perda, nem outro evento. -->
+        <record id="rule_fair_cashier_own_fair" model="ir.rule">
+            <field name="name">Event cashier: only their own events</field>
+            <field name="model_id" ref="liber_fairs.model_event_fair"/>
+            <field name="domain_force">[('cashier_ids.partner_id.user_ids', '=', user.id)]</field>
+            <field name="groups" eval="[(4, ref('group_fair_cashier'))]"/>
+        </record>
+
+        <record id="rule_fair_cashier_own_picking" model="ir.rule">
+            <field name="name">Event cashier: arrivals of their own events</field>
+            <field name="model_id" ref="stock.model_stock_picking"/>
+            <field name="domain_force">[('fair_id.cashier_ids.partner_id.user_ids', '=', user.id)]</field>
+            <field name="groups" eval="[(4, ref('group_fair_cashier'))]"/>
+        </record>
+
         <record id="rule_fair_cashier_own_register" model="ir.rule">
             <field name="name">Event cashier: only their own register</field>
             <field name="model_id" ref="point_of_sale.model_pos_config"/>
@@ -40,6 +71,25 @@
             <field name="model_id" ref="point_of_sale.model_pos_session"/>
             <field name="domain_force">[('config_id.fair_cashier_id.partner_id.user_ids', '=', user.id)]</field>
             <field name="groups" eval="[(4, ref('group_fair_cashier'))]"/>
+        </record>
+
+        <!-- O GERENTE ENTRA NO CAIXA DAS COLEGAS. Balcão travado, troco
+             errado, venda pela metade: quem resolve isso é quem está na
+             praça, e a regra do operador ("só o meu caixa") o impediria de
+             chegar lá. A soma das regras é OU: o gerente vê o dele por uma
+             regra e o dos outros por esta. -->
+        <record id="rule_fair_lead_team_registers" model="ir.rule">
+            <field name="name">Event manager: every register of their events</field>
+            <field name="model_id" ref="point_of_sale.model_pos_config"/>
+            <field name="domain_force">[('fair_id.cashier_ids.partner_id.user_ids', '=', user.id)]</field>
+            <field name="groups" eval="[(4, ref('group_fair_field'))]"/>
+        </record>
+
+        <record id="rule_fair_lead_team_sessions" model="ir.rule">
+            <field name="name">Event manager: every session of their events</field>
+            <field name="model_id" ref="point_of_sale.model_pos_session"/>
+            <field name="domain_force">[('config_id.fair_id.cashier_ids.partner_id.user_ids', '=', user.id)]</field>
+            <field name="groups" eval="[(4, ref('group_fair_field'))]"/>
         </record>
 
         <record id="rule_fair_staff_own_event" model="ir.rule">

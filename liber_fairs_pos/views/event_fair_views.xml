@@ -43,7 +43,11 @@
                         does not open the system.
                     </div>
                 </page>
-                <page string="Commissions" name="commissions">
+                <!-- QUEM DECIDE QUANTO SE GANHA É QUEM PLANEJA. O gerente de
+                     campo é circunstancial e não entra nesta conversa:
+                     a aba inteira é de quem monta o evento. -->
+                <page string="Commissions" name="commissions"
+                      groups="liber_fairs.group_fair_manager">
                     <!-- Editável: o percentual, a diária e os dias se
                          digitam AQUI. O resto é conta, e conta não se
                          digita. E nada se digita antes do Planejar: é ele

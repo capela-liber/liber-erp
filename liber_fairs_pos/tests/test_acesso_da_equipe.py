@@ -77,26 +77,94 @@ class TestAcessoDaEquipe(TransactionCase):
                          "Operador não é gerente")
         self.assertEqual(linha.access_state, 'granted')
 
-    def test_the_manager_profile_gives_the_manager_group(self):
+    def test_the_manager_on_site_is_not_the_house_manager(self):
+        """O gerente de campo é CIRCUNSTANCIAL, e a régua mudou aqui.
+
+        Ele toca o evento na praça e não faz parte do planejamento: não decide
+        o que vai, não decide quando vai e -- principalmente -- não decide
+        quanto cada um ganha. Dar-lhe o papel de Administrador de Feiras da
+        casa trazia as três coisas junto.
+        """
         contato, usuario = self._pessoa('Alejandra Luciani')
         fair = self._feira('Feira da Gerente')
         self._escalar(fair, contato, role='manager')
         fair.action_plan()
-        self.assertIn(self.gerente, usuario.all_group_ids)
         self.assertIn(self.campo, usuario.all_group_ids,
                       "É o grupo que o prende ao evento dele")
         self.assertIn(self.pdv, usuario.all_group_ids,
                       "E ele também opera caixa")
+        self.assertNotIn(self.gerente, usuario.all_group_ids,
+                         "O papel da CASA não é dele: quem planeja é outro")
 
-    def test_the_assistant_sees_no_event_at_all(self):
-        """O assistente só tem o caixa: evento nenhum na tela dele."""
-        contato, usuario = self._pessoa('Só Balcão')
-        fair = self._feira('Feira do balcão')
-        self._escalar(fair, contato)
+    def test_the_manager_on_site_cannot_set_what_people_earn(self):
+        """Juiz em causa própria: a combinação é anterior ao evento."""
+        contato, usuario = self._pessoa('Gerente Sem Cofre')
+        fair = self._feira('Feira do cofre')
+        linha = self._escalar(fair, contato, role='manager')
         fair.action_plan()
         self.env.invalidate_all()
         with self.assertRaises(Exception):
-            self.env['event.fair'].with_user(usuario).search([])
+            linha.with_user(usuario).write({'commission_pc': 30.0})
+        with self.assertRaises(Exception):
+            linha.with_user(usuario).write({'daily_rate': 500.0})
+
+    def test_the_manager_on_site_reaches_the_other_registers(self):
+        """Balcão travado se resolve na praça, e não por telefone com a casa."""
+        gerente, usuario = self._pessoa('Gerente que Destrava')
+        colega, _u = self._pessoa('Colega de Balcão')
+        fair = self._feira('Feira de dois caixas')
+        self._escalar(fair, gerente, role='manager')
+        linha_colega = self._escalar(fair, colega)
+        fair.action_plan()
+        fair.action_open_pos()
+        self.env.invalidate_all()
+
+        visiveis = self.env['pos.config'].with_user(usuario).search([])
+
+        self.assertIn(linha_colega.pos_config_id, visiveis,
+                      "O gerente entra no caixa da colega para resolver")
+
+    def test_the_assistant_sees_her_own_event_and_nothing_else(self):
+        """Ela pode ficar SOZINHA na praça, e caixa de livro não espera.
+
+        Ver o evento dela é o que permite conferir a chegada. O que ela não vê
+        é o resto: perda, grade de outro evento, evento de outra gente.
+        """
+        contato, usuario = self._pessoa('Só Balcão')
+        fair = self._feira('Feira do balcão')
+        outra = self._feira('Feira de outra gente')
+        self._escalar(fair, contato)
+        fair.action_plan()
+        outra.action_plan()
+        self.env.invalidate_all()
+
+        visiveis = self.env['event.fair'].with_user(usuario).search([])
+
+        self.assertEqual(visiveis, fair, "A dela, e só a dela")
+        with self.assertRaises(Exception):
+            self.env['event.fair.loss'].with_user(usuario).search([])
+
+    def test_the_assistant_can_check_the_arrival_alone(self):
+        """Sem gerente por perto, a carga ainda entra na mesa."""
+        contato, usuario = self._pessoa('Recebe Sozinha')
+        fair = self._feira('Feira da chegada')
+        self._escalar(fair, contato)
+        fair.action_plan()
+        saida = fair.action_ship()
+        saida.action_assign()
+        for move in saida.move_ids:
+            move.quantity = move.product_uom_qty
+            move.picked = True
+        saida.button_validate()
+        self.env.invalidate_all()
+
+        chegada = self.env['stock.picking'].with_user(usuario).search(
+            [('fair_id', '=', fair.id), ('fair_operation', '=', 'receipt')])
+        self.assertTrue(chegada, "A chegada da feira dela tem de aparecer")
+        chegada.action_fair_check()
+
+        self.assertTrue(all(p.state == 'done' for p in chegada),
+                        "E ela conclui a conferência sozinha")
 
     def test_a_contact_without_an_account_works_the_counter_anyway(self):
         contato = self.env['res.partner'].create({'name': 'Sem conta'})

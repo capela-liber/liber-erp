@@ -182,15 +182,19 @@ class EventFairCashier(models.Model):
         aplicativo inteiro seria dar-lhe telas que ele não vai usar e dados
         que não são dele.
 
-        O GERENTE tem tudo do evento DELE: o papel de administrador de feiras
-        mais o grupo que carrega a regra de registro que o prende ao evento em
-        que está escalado.
+        O GERENTE é CIRCUNSTANCIAL, e é aí que a régua mudou. Ele toca o
+        evento na praça: entra no caixa das colegas para destravar problema,
+        dá desconto acima do praticado, confere carga, conta a mesa, fecha o
+        dia e registra perda. Ele NÃO planeja: grade, modelo, remessa e --
+        principalmente -- quanto cada um ganha são decisões de quem monta o
+        evento, tomadas antes de a feira existir na rua. Por isso ele deixou
+        de receber o papel de Administrador de Feiras da casa, que trazia
+        tudo isso junto.
         """
         self.ensure_one()
         grupos = self.env.ref('liber_fairs_pos.group_fair_cashier')
         if self.role == 'manager':
             grupos |= self.env.ref('liber_fairs_pos.group_fair_field')
-            grupos |= self.env.ref('liber_fairs.group_fair_manager')
         return grupos
 
     def _sincronizar_acesso(self):
@@ -281,6 +285,7 @@ class EventFairCashier(models.Model):
     _DINHEIRO = ('commission_pc', 'daily_rate', 'days')
 
     def write(self, vals):
+        self._exigir_quem_planeja(vals)
         self._exigir_o_planejamento(vals)
         res = super().write(vals)
         if {'role', 'partner_id'} & set(vals):
@@ -290,6 +295,26 @@ class EventFairCashier(models.Model):
             # pode. A chave do desconto acompanha o papel.
             self.fair_id._sincronizar_desconto()
         return res
+
+    def _exigir_quem_planeja(self, vals):
+        """Quanto cada um ganha é de quem PLANEJA o evento.
+
+        O gerente de campo é circunstancial: ele toca a feira na praça, entra
+        no caixa das colegas, dá desconto, conta a mesa e registra perda. O
+        que ele não faz é decidir a própria remuneração nem a dos outros --
+        seria juiz em causa própria, e a combinação é anterior ao evento.
+
+        A aba fica escondida para ele, e isto é a tranca: aba escondida não
+        impede escrita por outro caminho.
+        """
+        if not set(vals) & set(self._DINHEIRO):
+            return
+        if self.env.su or self.env.user.has_group(
+                'liber_fairs.group_fair_manager'):
+            return
+        raise UserError(_(
+            "Commission and daily rate are agreed by whoever plans the "
+            "event. Talk to the person who put the team together."))
 
     def _exigir_o_planejamento(self, vals):
         """Comissão e diária só depois do Planejar.

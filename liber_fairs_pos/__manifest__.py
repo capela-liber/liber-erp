@@ -37,7 +37,7 @@ a conciliação da taxa acontece depois, no financeiro.
 """,
     'author': 'EdLab Press',
     'category': 'Inventory',
-    'version': '19.0.8.0.0',
+    'version': '19.0.9.0.0',
     'license': 'AGPL-3',
     # pos_discount: é ele que traz o desconto global com percentual
     # fixo, que é como a feira pratica desconto -- um número decidido no
@@ -53,10 +53,12 @@ a conciliação da taxa acontece depois, no financeiro.
         'views/event_fair_views.xml',
         'views/event_fair_day_views.xml',
         'views/pos_config_views.xml',
+        'views/liber_fairs_menus.xml',
     ],
     'assets': {
         'web.assets_backend': [
             'liber_fairs_pos/static/src/js/fair_pos_tour.js',
+            'liber_fairs_pos/static/src/js/fair_team_tour.js',
         ],
         'point_of_sale._assets_pos': [
             'liber_fairs_pos/static/src/js/fair_shelf.js',

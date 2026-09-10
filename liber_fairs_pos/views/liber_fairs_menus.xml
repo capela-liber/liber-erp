@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- OS MENUS DE QUEM ESTÁ NA PRAÇA.
+         O aplicativo Eventos é da casa (`group_fair_user`), e a equipe de
+         campo não tem esse papel: ela entra para trabalhar um evento e sai
+         quando a mercadoria volta. Aqui os menus que ela precisa ganham o
+         grupo dela, um a um. Somar grupo é ABRIR para mais gente, nunca
+         fechar: quem já via continua vendo. -->
+
+    <!-- A raiz, para as duas: sem ela não existe porta de entrada.
+         A operadora sozinha na praça precisa chegar aos Recebimentos, que
+         não têm grupo próprio e seguem a raiz. -->
+    <record id="liber_fairs.menu_fairs_root" model="ir.ui.menu">
+        <field name="group_ids" eval="[(4, ref('group_fair_cashier'))]"/>
+    </record>
+
+    <!-- O gerente de campo: o evento dele, o calendário, o fechamento do dia
+         e as perdas. NÃO os modelos de grade, que são do planejamento. -->
+    <record id="liber_fairs.menu_fairs_fairs" model="ir.ui.menu">
+        <field name="group_ids" eval="[(4, ref('group_fair_field'))]"/>
+    </record>
+    <record id="liber_fairs.menu_fairs_calendar" model="ir.ui.menu">
+        <field name="group_ids" eval="[(4, ref('group_fair_field'))]"/>
+    </record>
+    <record id="liber_fairs.menu_fairs_days" model="ir.ui.menu">
+        <field name="group_ids" eval="[(4, ref('group_fair_field'))]"/>
+    </record>
+    <record id="liber_fairs.menu_fairs_losses" model="ir.ui.menu">
+        <field name="group_ids" eval="[(4, ref('group_fair_field'))]"/>
+    </record>
+</odoo>

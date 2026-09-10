@@ -2085,3 +2085,17 @@ msgstr "Responsável pelos eventos"
 #: model:ir.model.fields,field_description:liber_fairs.field_event_fair_loss__charged_to_team
 msgid "Team pays"
 msgstr "A equipe paga"
+
+#. module: liber_fairs
+#: code:addons/liber_fairs/models/stock_picking.py:0
+msgid ""
+"Checking a fair load is for whoever works the fairs, or for the team "
+"scheduled on the event."
+msgstr ""
+"Conferir carga de feira é de quem trabalha as feiras, ou de quem está "
+"escalado no evento."
+
+#. module: liber_fairs
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair__is_fair_planner
+msgid "Plans events"
+msgstr "Planeja eventos"

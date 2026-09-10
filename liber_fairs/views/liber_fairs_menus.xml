@@ -18,13 +18,15 @@
               name="Calendar"
               parent="menu_fairs_root"
               action="action_event_fair_calendar"
-              sequence="10"/>
+              sequence="10"
+              groups="liber_fairs.group_fair_user"/>
 
     <menuitem id="menu_fairs_fairs"
               name="Events"
               parent="menu_fairs_root"
               action="action_event_fair"
-              sequence="20"/>
+              sequence="20"
+              groups="liber_fairs.group_fair_user"/>
 
     <menuitem id="menu_fairs_receipts"
               name="Receipts"
@@ -36,17 +38,20 @@
               name="Losses"
               parent="menu_fairs_root"
               action="action_event_fair_loss"
-              sequence="35"/>
+              sequence="35"
+              groups="liber_fairs.group_fair_user"/>
 
     <menuitem id="menu_fairs_templates"
               name="Grid Templates"
               parent="menu_fairs_root"
               action="action_event_fair_template"
-              sequence="40"/>
+              sequence="40"
+              groups="liber_fairs.group_fair_user"/>
 
     <menuitem id="menu_fairs_days"
               name="Daily Closings"
               parent="menu_fairs_root"
               action="action_event_fair_day"
-              sequence="30"/>
+              sequence="30"
+              groups="liber_fairs.group_fair_user"/>
 </odoo>

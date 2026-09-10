@@ -130,11 +130,19 @@ class StockPicking(models.Model):
         # no histórico. A assinatura é o que substitui o direito.
         # `env.su` passa: cron, script e teste chamam como sistema, e barrar
         # o sistema seria barrar a própria automação.
-        if not self.env.su and not self.env.user.has_group(
-                'liber_fairs.group_fair_user'):
+        # Quem trabalha as feiras na casa, OU quem está escalado no evento.
+        # A operadora pode ficar sozinha na praça, e caixa de livro chega no
+        # meio do movimento: esperar alguém com o papel da casa para dizer
+        # "chegou" é deixar a mercadoria na calçada. O que ela pode conferir
+        # já está limitado pela regra de registro -- a carga do evento dela.
+        papeis = ('liber_fairs.group_fair_user',
+                  'liber_fairs_pos.group_fair_cashier')
+        if not self.env.su and not any(
+                self.env.user.has_group(p) for p in papeis
+                if self.env.ref(p, raise_if_not_found=False)):
             raise UserError(_(
-                "Checking a fair load is for whoever works the fairs. Ask "
-                "for the Fairs role."))
+                "Checking a fair load is for whoever works the fairs, or for "
+                "the team scheduled on the event."))
         for picking in self:
             if not picking.fair_is_arrival:
                 raise UserError(_(

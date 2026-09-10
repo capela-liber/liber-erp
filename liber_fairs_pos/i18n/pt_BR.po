@@ -415,3 +415,17 @@ msgid ""
 msgstr ""
 "Planeje a %(feira)s primeiro: comissão e diária se combinam num evento "
 "planejado, que é o que já tem os dias e o analítico dele."
+
+#. module: liber_fairs_pos
+#: model:res.groups,name:liber_fairs_pos.group_fair_field
+msgid "Event manager on site"
+msgstr "Gerente de campo do evento"
+
+#. module: liber_fairs_pos
+#: code:addons/liber_fairs_pos/models/event_fair_cashier.py:0
+msgid ""
+"Commission and daily rate are agreed by whoever plans the event. Talk to the "
+"person who put the team together."
+msgstr ""
+"Comissão e diária se combinam com quem planeja o evento. Fale com quem montou "
+"a equipe."

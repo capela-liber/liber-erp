@@ -101,6 +101,19 @@ class EventFair(models.Model):
          ('closed', 'Closed')],
         string='Status', default='draft', required=True, tracking=True)
 
+    # QUEM PLANEJA, e não quem está na praça. O gerente de campo é
+    # circunstancial: ele toca o evento na rua e não decide o que vai nem
+    # quanto cada um ganha. A tela precisa saber a diferença, e `groups=` num
+    # botão não serve para trancar um campo dentro de uma aba.
+    is_fair_planner = fields.Boolean(
+        string='Plans events', compute='_compute_is_fair_planner')
+
+    @api.depends_context('uid')
+    def _compute_is_fair_planner(self):
+        pode = self.env.user.has_group('liber_fairs.group_fair_manager')
+        for fair in self:
+            fair.is_fair_planner = pode
+
     line_ids = fields.One2many(
         'event.fair.line', 'fair_id', string='Grid', copy=True)
     day_ids = fields.One2many(

@@ -3,3 +3,20 @@ access_fair_pos_config_read,pos.config read for fairs,point_of_sale.model_pos_co
 access_fair_pos_order_read,pos.order read for fairs,point_of_sale.model_pos_order,liber_fairs.group_fair_user,1,0,0,0
 access_fair_pos_session_read,pos.session read for fairs,point_of_sale.model_pos_session,liber_fairs.group_fair_user,1,0,0,0
 access_fair_cashier_user,event.fair.cashier for the fair team,model_event_fair_cashier,liber_fairs.group_fair_user,1,1,1,1
+access_fair_lead_fair,event.fair for the manager on site,liber_fairs.model_event_fair,group_fair_field,1,1,0,0
+access_fair_lead_line,event.fair.line read for the manager on site,liber_fairs.model_event_fair_line,group_fair_field,1,0,0,0
+access_fair_lead_day,event.fair.day for the manager on site,liber_fairs.model_event_fair_day,group_fair_field,1,1,1,0
+access_fair_lead_day_line,event.fair.day.line for the manager on site,liber_fairs.model_event_fair_day_line,group_fair_field,1,1,1,0
+access_fair_lead_loss,event.fair.loss for the manager on site,liber_fairs.model_event_fair_loss,group_fair_field,1,1,1,0
+access_fair_lead_cashier,event.fair.cashier read for the manager on site,model_event_fair_cashier,group_fair_field,1,0,0,0
+access_fair_lead_picking,stock.picking for the manager on site,stock.model_stock_picking,group_fair_field,1,1,0,0
+access_fair_lead_move,stock.move for the manager on site,stock.model_stock_move,group_fair_field,1,1,0,0
+access_fair_lead_move_line,stock.move.line for the manager on site,stock.model_stock_move_line,group_fair_field,1,1,1,0
+access_fair_lead_pos_config,pos.config read for the manager on site,point_of_sale.model_pos_config,group_fair_field,1,0,0,0
+access_fair_lead_pos_session,pos.session read for the manager on site,point_of_sale.model_pos_session,group_fair_field,1,0,0,0
+access_fair_lead_pos_order,pos.order read for the manager on site,point_of_sale.model_pos_order,group_fair_field,1,0,0,0
+access_fair_cashier_fair,event.fair read for the cashier,liber_fairs.model_event_fair,group_fair_cashier,1,0,0,0
+access_fair_cashier_line,event.fair.line read for the cashier,liber_fairs.model_event_fair_line,group_fair_cashier,1,0,0,0
+access_fair_cashier_picking,stock.picking for the cashier receiving alone,stock.model_stock_picking,group_fair_cashier,1,1,0,0
+access_fair_cashier_move,stock.move for the cashier receiving alone,stock.model_stock_move,group_fair_cashier,1,1,0,0
+access_fair_cashier_move_line,stock.move.line for the cashier receiving alone,stock.model_stock_move_line,group_fair_cashier,1,1,1,0

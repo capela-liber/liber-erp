@@ -7,16 +7,17 @@
             <form string="Fair">
                 <header>
                     <button name="action_plan" type="object" string="Plan"
-                            class="btn-primary" invisible="state != 'draft'"/>
+                            class="btn-primary" invisible="state != 'draft'" groups="liber_fairs.group_fair_manager"/>
                     <button name="action_ship" type="object" string="Ship"
-                            class="btn-primary"
+                            class="btn-primary" groups="liber_fairs.group_fair_manager"
                             invisible="state not in ('planned', 'shipped')"
                             help="Sends what is planned and has not gone yet. Raise a planned quantity and click again to send a replenishment."/>
                     <button name="action_return" type="object"
                             string="Return" invisible="state != 'shipped'"
                             help="Sends back what is on the table. The warehouse checks what actually arrives, in Receipts."/>
                     <button name="action_draft" type="object" string="Back to Draft"
-                            invisible="state in ('draft', 'returned', 'settled', 'closed')"/>
+                            invisible="state in ('draft', 'returned', 'settled', 'closed')" groups="liber_fairs.group_fair_manager"/>
+                    <field name="is_fair_planner" invisible="1"/>
                     <field name="state" widget="statusbar"
                            statusbar_visible="draft,planned,shipped,returned"/>
                 </header>
@@ -75,7 +76,7 @@
                     </group>
                     <notebook>
                         <page string="Grid" name="grid">
-                            <div class="mb-2">
+                            <div class="mb-2" groups="liber_fairs.group_fair_manager">
                                 <button name="%(action_event_fair_add_products)d" type="action"
                                         string="Add titles" class="btn-secondary"
                                         context="{'default_fair_id': id}"/>
@@ -87,7 +88,11 @@
                                         invisible="not line_ids"
                                         context="{'default_fair_id': id}"/>
                             </div>
-                            <field name="line_ids">
+                            <!-- A GRADE É DE QUEM PLANEJA. Na praça ela se
+                                 lê: mudar o que devia ter vindo, depois de
+                                 vir, é reescrever a conferência. -->
+                            <field name="line_ids"
+                                   readonly="not is_fair_planner">
                                 <list editable="bottom" decoration-danger="is_short">
                                     <field name="is_short" column_invisible="1"/>
                                     <field name="product_id"/>
