@@ -284,3 +284,30 @@ class TestAcessoDaEquipe(TransactionCase):
         self.assertIn(self.pdv, usuario.all_group_ids,
                       "E não se tira o que não se deu: ele continua operando "
                       "o PDV do dia a dia")
+
+
+@tagged('post_install', '-at_install', 'liber_fairs_pos')
+class TestVitrineVeOBalcao(TransactionCase):
+    """O manual fala do caixa metade do tempo; a demonstração tem de ter um."""
+
+    def test_the_public_visitor_reaches_the_register_app(self):
+        visitante = self.env.ref('liber_roles.group_visitante',
+                                 raise_if_not_found=False)
+        if not visitante:
+            self.skipTest('liber_roles não está instalado neste banco')
+        pdv = self.env.ref('point_of_sale.group_pos_user')
+
+        self.assertIn(pdv, visitante.all_implied_ids,
+                      "Sem isto, o manual fala de uma tela que não existe")
+
+    def test_but_the_visitor_still_does_not_write(self):
+        """Ver o balcão, sim; abrir sessão, não. A trava é no ORM."""
+        visitante = self.env.ref('liber_roles.group_visitante',
+                                 raise_if_not_found=False)
+        if not visitante:
+            self.skipTest('liber_roles não está instalado neste banco')
+        from odoo.addons.liber_roles.models.ir_model_access import (
+            VISITOR_WRITABLE_MODELS)
+
+        self.assertNotIn('pos.session', VISITOR_WRITABLE_MODELS)
+        self.assertNotIn('pos.order', VISITOR_WRITABLE_MODELS)
