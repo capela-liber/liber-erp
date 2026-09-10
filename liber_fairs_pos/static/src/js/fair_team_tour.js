@@ -17,7 +17,7 @@ registry.category("web_tour.tours").add("fair_operator_tour", {
     steps: () => [
         {
             trigger: ".o_app[data-menu-xmlid='liber_fairs.menu_fairs_root']",
-            content: "A operadora tem o aplicativo Eventos: é por ele que ela chega à carga",
+            content: "A atendente tem o aplicativo Eventos: é por ele que ela chega à carga",
             run: "click",
         },
         {
@@ -62,7 +62,7 @@ registry.category("web_tour.tours").add("fair_lead_tour", {
     steps: () => [
         {
             trigger: ".o_app[data-menu-xmlid='liber_fairs.menu_fairs_root']",
-            content: "O gerente de campo entra pelo mesmo aplicativo",
+            content: "O supervisor entra pelo mesmo aplicativo",
             run: "click",
         },
         {
@@ -99,7 +99,7 @@ registry.category("web_tour.tours").add("fair_lead_tour", {
         },
         {
             // A aba inteira some. Decidir quanto cada um ganha -- inclusive
-            // ele -- é de quem monta o evento; gerente circunstancial não é
+            // ele -- é de quem monta o evento; supervisor circunstancial não é
             // juiz em causa própria.
             trigger: ".o_notebook:not(:has(.nav-link:contains('Comissões')))",
             content: "A aba de comissões não existe para ele",

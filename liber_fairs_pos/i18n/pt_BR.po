@@ -445,3 +445,24 @@ msgstr "Gerente da feira (na praça)"
 #: model:res.groups,name:liber_fairs_pos.group_fair_cashier
 msgid "Fair counter operator"
 msgstr "Operador de caixa da feira"
+
+#. module: liber_fairs_pos
+#: model:ir.model.fields.selection,name:liber_fairs_pos.selection__event_fair_cashier__role__operator
+#: model:res.groups,name:liber_fairs_pos.group_fair_cashier
+msgid "Attendant"
+msgstr "Atendente"
+
+#. module: liber_fairs_pos
+#: model:ir.model.fields.selection,name:liber_fairs_pos.selection__event_fair_cashier__role__manager
+msgid "Supervisor"
+msgstr "Supervisor"
+
+#. module: liber_fairs_pos
+#: model:res.groups,name:liber_fairs_pos.group_fair_cashier
+msgid "Fair attendant"
+msgstr "Atendente da feira"
+
+#. module: liber_fairs_pos
+#: model:res.groups,name:liber_fairs_pos.group_fair_field
+msgid "Fair supervisor"
+msgstr "Supervisor da feira"
