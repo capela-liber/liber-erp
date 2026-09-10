@@ -99,6 +99,16 @@ class MetabooksProduct(models.Model):
     metabooks_has_dust_jacket = fields.Boolean('With Dust Jacket', tracking=True)
     metabooks_has_thumb_index = fields.Boolean('With Thumb Index', tracking=True)
     metabooks_has_ribbon = fields.Boolean('With Ribbon Marker', tracking=True)
+    # Acabamento de capa que a ONIX nomeia (lista 175, faixa B4xx). O que ela
+    # NÃO nomeia -- laminação fosca contra brilho, reserva, verniz, gramatura
+    # do miolo -- é texto livre no liber_print_quote, porque a Metabooks só
+    # aceita código de lista e não teria onde guardar.
+    metabooks_has_lamination = fields.Boolean('Laminated Cover', tracking=True)
+    metabooks_has_emboss = fields.Boolean('Embossed Cover', tracking=True)
+    metabooks_has_foil_cover = fields.Boolean('Foil on Cover', tracking=True)
+    metabooks_has_foil_jacket = fields.Boolean('Foil on Jacket', tracking=True)
+    metabooks_has_decorated_edges = fields.Boolean('Decorated Page Edges', tracking=True)
+    metabooks_has_belly_band = fields.Boolean('Belly Band', tracking=True)
     metabooks_ebook_format = fields.Char('E-book Format', tracking=True)
     metabooks_front_matter_pages = fields.Integer('Front Matter Pages', tracking=True)
     metabooks_back_matter_pages = fields.Integer('Back Matter Pages', tracking=True)

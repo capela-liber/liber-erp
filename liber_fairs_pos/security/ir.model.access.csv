@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_fair_pos_config_read,pos.config read for fairs,point_of_sale.model_pos_config,liber_fairs.group_fair_user,1,0,0,0
+access_fair_pos_order_read,pos.order read for fairs,point_of_sale.model_pos_order,liber_fairs.group_fair_user,1,0,0,0
+access_fair_pos_session_read,pos.session read for fairs,point_of_sale.model_pos_session,liber_fairs.group_fair_user,1,0,0,0
+access_fair_cashier_user,event.fair.cashier for the fair team,model_event_fair_cashier,liber_fairs.group_fair_user,1,1,1,1

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_event_fair_day_form_pos" model="ir.ui.view">
+        <field name="name">event.fair.day.form.pos</field>
+        <field name="model">event.fair.day</field>
+        <field name="inherit_id" ref="liber_fairs.view_event_fair_day_form"/>
+        <field name="arch" type="xml">
+            <!-- Ao lado do Vendido, que é subtração, o número que o BALCÃO
+                 registrou. A diferença entre os dois é venda que não passou
+                 pelo caixa, ou exemplar que sumiu da mesa. -->
+            <xpath expr="//field[@name='line_ids']/list/field[@name='qty_sold']"
+                   position="after">
+                <field name="qty_pos" readonly="1" optional="show"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

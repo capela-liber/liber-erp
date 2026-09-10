@@ -532,6 +532,7 @@ class OlistOrder(models.Model):
         # armazenado, então precisa ser recomputado para a tela mudar de estado.
         self.invalidate_recordset(['nfe_panel_id', 'xml_status'])
         self.modified(['id_nota_fiscal'])
+        self._carimbar_canal_na_nota()
         _logger.info("Olist: XML da nota %s arquivado (pedido %s)",
                      self.id_nota_fiscal, self.numero)
         return 'OK', _("arquivado")
@@ -1162,6 +1163,10 @@ class OlistOrder(models.Model):
         if vals.get('codigo_rastreamento'):
             for pedido in self.filtered('sale_order_id'):
                 pedido._carimba_rastreio()
+        # O canal que chega DEPOIS (o espelho mapeado a posteriori) também
+        # alcança a nota, como já alcançava o pedido.
+        if vals.get('team_id'):
+            self._carimbar_canal_na_nota()
         return resultado
 
     def _carimba_rastreio(self):
@@ -1231,6 +1236,7 @@ class OlistOrder(models.Model):
             pedido.modified(['id_nota_fiscal'])
             if pedido.xml_status != 'arquivado':
                 continue
+            pedido._carimbar_canal_na_nota()
             try:
                 with self.env.cr.savepoint():
                     if pedido._create_invoice():
@@ -1242,6 +1248,29 @@ class OlistOrder(models.Model):
             _logger.info("Olist: %s fatura(s) completada(s) por nota que "
                          "chegou depois do despacho.", completadas)
         return completadas
+
+    def _carimbar_canal_na_nota(self):
+        """O canal de venda do pedido vai para a nota fiscal dele.
+
+        O espelho carimbava o canal no pedido de venda e na fatura, e nunca no
+        painel da NFe -- e é o painel que o Painel de Vendas lê ("Notas sem
+        pedido", "Vendido com nota, por canal"). Em 06/09/2026, no `dev`, 257
+        das 286 notas ligadas a um pedido do Olist com canal estavam sem canal
+        nenhum, agrupadas num "Nenhum" que parecia mau uso e era só um campo
+        que ninguém escrevia.
+
+        Só escreve onde está vazio: canal já posto na nota -- pela pessoa, ou
+        pelo padrão do parceiro que o `liber_nfe_xml` aplica ao ler o XML -- é
+        decisão, e não se reescreve (a mesma regra do pedido, ver
+        `test_mapping_does_not_overwrite_a_channel_set_by_hand`).
+        """
+        carimbadas = self.env['nfe.xml.panel']
+        for pedido in self:
+            painel = pedido.nfe_panel_id
+            if pedido.team_id and painel and not painel.team_id:
+                painel.team_id = pedido.team_id
+                carimbadas |= painel
+        return carimbadas
 
     def _create_invoice(self):
         """A fatura nasce do XML, não do pedido — e a diferença é o ponto.
@@ -1306,6 +1335,7 @@ class OlistOrder(models.Model):
                                  in self._linhas_de_fatura(painel.panel_items)],
         })
         self.invoice_id = fatura
+        self._carimbar_canal_na_nota()
         # Antes de lançar: a posição fiscal é o que classifica a nota na
         # contabilidade, e depois do action_post não se muda mais.
         self._carimbar_posicao_fiscal(fatura)

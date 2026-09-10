@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<script>
+/* Servido por /liber_site/static/docs/, este arquivo vem com uma semana de
+   cache e o docs.js sem versão -- e o índice monta a lista a partir dele. Foi
+   assim que a emissão de NF-e e o manual da Amazon ficaram invisíveis: o
+   catálogo em cache era anterior aos dois. A rota /liber/docs/ serve o mesmo
+   arquivo sem cache e com ?v=<mtime> nos assets. Quem chegar pelo caminho
+   antigo (favorito, link velho, resultado de busca) vai para lá antes de a
+   página montar qualquer coisa. */
+(function () {
+  var antigo = "/liber_site/static/docs/";
+  if (location.pathname.indexOf(antigo) === 0) {
+    location.replace("/liber/docs/" + location.pathname.slice(antigo.length) +
+                     location.search + location.hash);
+  }
+})();
+</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cotação de impressão — Manuais do Liber</title>
+<link rel="icon" type="image/png" href="../logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;600;700&display=swap">
+<link rel="stylesheet" href="docs.css">
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="../index.html"><img src="../logo.png" alt="">liber<span>.</span></a>
+    <span class="doc-tag">Manuais</span>
+    <nav><a href="index.html">Índice</a><a href="../index.html">Site</a></nav>
+  </div>
+</header>
+<div class="wrap">
+  <div class="layout">
+    <aside class="sidebar" id="sidebar"></aside>
+    <article class="doc">
+      <div class="breadcrumb"><a href="index.html">Manuais</a><span class="sep">›</span>Produção<span class="sep">›</span>Cotação de impressão</div>
+      <h1>Cotação de impressão</h1>
+      <p class="lead">A ficha técnica do livro viaja no pedido de cotação: a gráfica orça pelo que está no PDF, e cada pergunta que volta é um dia.</p>
+
+      <h2 id="visao-geral">Visão geral</h2>
+      <p>A gráfica orça pelo que está no PDF que recebe. Sem formato, papel e acabamento, a cotação volta como <em>pergunta</em> — e cada volta custa um dia. Este módulo põe a ficha técnica do livro na linha do pedido de cotação e do pedido de compra, e no documento que sai impresso.</p>
+
+      <h2 id="de-onde-vem">De onde vem cada coisa</h2>
+      <table>
+        <thead><tr><th>Vem do catálogo</th><th>Digita-se aqui</th></tr></thead>
+        <tbody>
+          <tr><td>Formato e dimensões, número de páginas, tipo de encadernação e os acabamentos que a norma ONIX nomeia.</td><td>Laminação (fosca ou brilho), reserva, verniz, gramatura e tipo do papel do miolo.</td></tr>
+        </tbody>
+      </table>
+      <p>A divisão não é arbitrária: o que a ONIX nomeia mora no catálogo, porque é de lá que o metadado sai para o mercado. O que a norma <em>não</em> nomeia só aceita código de lista, e não teria onde ser guardado — por isso entra aqui, em texto livre.</p>
+
+      <h2 id="uso">Como se usa</h2>
+      <ol class="steps">
+        <li>Na ficha do produto, aba de compras, preencha o que é da impressão e não do catálogo.</li>
+        <li>Monte o pedido de cotação normalmente.</li>
+        <li>Imprima: a ficha sai debaixo de cada linha, na língua da gráfica — formato, páginas, papel, acabamento.</li>
+      </ol>
+
+      <div class="seealso">
+        <strong>Ver também</strong>
+        <ul>
+          <li><a href="liber_metabooks_integration.html">Integração Metabooks</a> — de onde vem a metade da ficha.</li>
+          <li><a href="liber_metabrasil.html">Impressão sob demanda</a> — quando a tiragem é de um exemplar.</li>
+        </ul>
+      </div>
+
+      <nav class="pager" id="pager"></nav>
+    </article>
+  </div>
+</div>
+<script src="docs.js"></script>
+</body>
+</html>

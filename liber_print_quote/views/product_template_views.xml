@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_product_template_print_finish" model="ir.ui.view">
+        <field name="name">product.template.form.print.finish</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id"
+               ref="liber_metabooks_integration.metabooks_product_inherit_form"/>
+        <field name="arch" type="xml">
+            <!-- O bloco "Acabamento" do módulo do Metabooks é, item por item,
+                 acabamento de CAPA: orelha, sobrecapa, marcador, laminação,
+                 relevo, hotstamp, faca, cinta. Vira o bloco da Capa, e não um
+                 terceiro bloco ao lado dele. Antes os separadores caíam DENTRO
+                 dele e a tela lia "Acabamento > Capa > Miolo", com o índice
+                 lateral sobrando no fim. -->
+            <group name="metabooks_finishing" position="attributes">
+                <attribute name="string">Cover</attribute>
+            </group>
+
+            <!-- A medida da orelha nasce junto da bandeira: marcou, aparece.
+                 Largura sem orelha não quer dizer nada. -->
+            <field name="metabooks_has_flaps" position="after">
+                <field name="print_flap_width"
+                       invisible="not metabooks_has_flaps"/>
+            </field>
+
+            <!-- Com que cor, em que papel, com que acabamento: a ordem em que
+                 a gráfica pergunta, fechando o bloco da capa. -->
+            <field name="metabooks_has_thumb_index" position="after">
+                <field name="print_cover_colors"/>
+                <field name="print_cover_paper"
+                       placeholder="250gsm coated board"/>
+                <field name="print_cover_finish"
+                       placeholder="matte lamination with spot UV, gold foil on the spine..."/>
+            </field>
+
+            <!-- O miolo, em bloco próprio. A Encadernação vem para cá: costura
+                 e cola são acabamento de miolo, e liam-se soltas em outro
+                 bloco, à esquerda. -->
+            <group name="metabooks_finishing" position="after">
+                <group name="print_body" string="Body">
+                    <field name="print_body_colors"/>
+                    <field name="print_body_extra_colors"
+                           placeholder="1 signature in 4x4, pages 65-80"/>
+                    <field name="print_body_paper"
+                           placeholder="80gsm bulky paper"/>
+                </group>
+                <!-- O que não cabe em campo nenhum. Linha inteira porque é
+                     texto corrido, e por último porque é o que se lê depois
+                     de a ficha já ter respondido o que era previsível. -->
+                <group name="print_notes_group" colspan="2">
+                    <field name="print_notes" nolabel="0"
+                           placeholder="insert, packaging, colour reference, deadline..."/>
+                </group>
+            </group>
+            <!-- O `move` tem de ser filho direto de um `position`, e não
+                 aparecer solto dentro de um grupo que está sendo inserido:
+                 assim ele é ignorado em silêncio e a Encadernação fica onde
+                 estava. `inside` a jogaria para o fim do bloco; `before` a põe
+                 onde ela pertence, abrindo o miolo. O teste de ordem contou as
+                 duas coisas. -->
+            <xpath expr="//field[@name='print_body_colors']" position="before">
+                <xpath expr="//field[@name='metabooks_binding']" position="move"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

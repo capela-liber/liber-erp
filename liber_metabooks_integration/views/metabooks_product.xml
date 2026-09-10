@@ -105,6 +105,12 @@
                                 <field name="metabooks_has_flaps"/>
                                 <field name="metabooks_has_dust_jacket"/>
                                 <field name="metabooks_has_ribbon"/>
+                                <field name="metabooks_has_lamination"/>
+                                <field name="metabooks_has_emboss"/>
+                                <field name="metabooks_has_foil_cover"/>
+                                <field name="metabooks_has_foil_jacket"/>
+                                <field name="metabooks_has_decorated_edges"/>
+                                <field name="metabooks_has_belly_band"/>
                                 <field name="metabooks_has_thumb_index"/>
                             </group>
                             <group name="metabooks_extent" string="Extent">

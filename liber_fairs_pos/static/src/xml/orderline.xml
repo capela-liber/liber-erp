@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates id="template" xml:space="preserve">
+    <t t-name="liber_fairs_pos.OrderlineFairPrice"
+       t-inherit="point_of_sale.Orderline" t-inherit-mode="extension">
+        <xpath expr="//li[hasclass('price-per-unit')][1]" position="after">
+            <li t-if="this.fairFullPrice" class="price-per-unit">
+                <i class="fa fa-tag pe-1"/>
+                <span class="text-decoration-line-through me-1"
+                      t-out="this.fairFullPrice.full"/>
+                <em>(<t t-out="this.fairFullPrice.off"/>%)</em>
+            </li>
+        </xpath>
+    </t>
+</templates>

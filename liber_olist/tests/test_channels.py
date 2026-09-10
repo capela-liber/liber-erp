@@ -141,6 +141,51 @@ class TestOlistChannels(TransactionCase):
         self.assertEqual(pedido.invoice_id.team_id, equipe,
                          "a fatura entrou sem canal")
 
+    def test_a_mapped_channel_stamps_the_fiscal_note_too(self):
+        """A NFe é o que o Painel de Vendas lê: sem canal nela, a venda do
+        Olist caía num "Nenhum" (257 de 286 notas no `dev`, 06/09/2026)."""
+        equipe = self.env['crm.team'].create({
+            'name': "Marketplaces", 'company_id': self.account.company_id.id})
+        self._pull()
+        pedido = self._pedido()
+        self._detalhe(pedido)
+        self._espelho().team_id = equipe
+        painel = self._arquiva_xml(pedido)
+        self.assertFalse(painel.team_id, "a nota nasce sem canal")
+        pedido._import_to_odoo()
+        self.assertEqual(painel.team_id, equipe, "a fatura nasceu e a nota ficou sem canal")
+
+    def test_a_channel_mapped_after_the_note_reaches_the_note(self):
+        """O caminho inverso: a nota já estava lá, e o canal chegou depois."""
+        equipe = self.env['crm.team'].create({
+            'name': "Marketplaces", 'company_id': self.account.company_id.id})
+        self._pull()
+        pedido = self._pedido()
+        self._detalhe(pedido)
+        painel = self._arquiva_xml(pedido)
+        self.assertFalse(pedido.team_id)
+        self._espelho().team_id = equipe
+        pedido.invalidate_recordset()
+        self.assertEqual(pedido.team_id, equipe)
+        self.assertEqual(painel.team_id, equipe, "o mapeamento tardio não alcançou a nota")
+
+    def test_a_channel_already_on_the_note_is_not_overwritten(self):
+        """Canal posto na nota (pela pessoa, ou pelo padrão do parceiro que o
+        liber_nfe_xml aplica) é decisão: a regra é a mesma do pedido."""
+        na_nota = self.env['crm.team'].create({
+            'name': "Posto na nota", 'company_id': self.account.company_id.id})
+        equipe = self.env['crm.team'].create({
+            'name': "Marketplaces", 'company_id': self.account.company_id.id})
+        self._pull()
+        pedido = self._pedido()
+        self._detalhe(pedido)
+        painel = self._arquiva_xml(pedido)
+        painel.team_id = na_nota
+        self._espelho().team_id = equipe
+        pedido.invalidate_recordset()
+        pedido._import_to_odoo()
+        self.assertEqual(painel.team_id, na_nota)
+
     def test_mapping_does_not_overwrite_a_channel_set_by_hand(self):
         """Canal escolhido a dedo num pedido é decisão, e não se reescreve."""
         a_dedo = self.env['crm.team'].create({

@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_event_fair_form_pos" model="ir.ui.view">
+        <field name="name">event.fair.form.pos</field>
+        <field name="model">event.fair</field>
+        <field name="inherit_id" ref="liber_fairs.view_event_fair_form"/>
+        <field name="arch" type="xml">
+            <button name="action_return" position="before">
+                <button name="action_open_pos" type="object"
+                        string="Cash register" class="btn-secondary"
+                        invisible="state not in ('planned', 'shipped')"
+                        help="Opens one Point of Sale register per operator. They sell the copies on the table, not the warehouse stock."/>
+            </button>
+            <div name="button_box" position="inside">
+                <button name="action_view_pos_orders" type="object"
+                        class="oe_stat_button" icon="fa-shopping-basket"
+                        invisible="pos_order_count == 0">
+                    <field name="pos_order_count" widget="statinfo"
+                           string="Register sales"/>
+                </button>
+            </div>
+            <!-- Quem opera é cadastro do evento, como a grade: quem monta a
+                 feira sabe quem vai estar no balcão. -->
+            <page name="days" position="before">
+                <page string="Registers" name="cashiers">
+                    <field name="cashier_ids">
+                        <list editable="bottom">
+                            <field name="sequence" widget="handle"/>
+                            <field name="partner_id"/>
+                            <field name="role"/>
+                            <field name="access_state" widget="badge"
+                                   readonly="1"
+                                   decoration-warning="access_state == 'no_account'"
+                                   decoration-success="access_state == 'granted'"/>
+                            <field name="pos_config_id" readonly="1"/>
+                        </list>
+                    </field>
+                    <div class="text-muted mt-2">
+                        One register per operator. Access is given while the
+                        event is on the road and taken back when the goods
+                        come home; each person sees only the events they work
+                        on. Somebody without an account works the counter but
+                        does not open the system.
+                    </div>
+                </page>
+                <page string="Commissions" name="commissions">
+                    <!-- Editável: o percentual, a diária e os dias se
+                         digitam AQUI. O resto é conta, e conta não se
+                         digita. E nada se digita antes do Planejar: é ele
+                         que monta os dias e abre o analítico. -->
+                    <div class="alert alert-info mb-2" role="status"
+                         invisible="state != 'draft'">
+                        Plan the event to agree on commissions: the days each
+                        person works and the analytic account that carries
+                        the cost are born there.
+                    </div>
+                    <field name="commission_line_ids"
+                           readonly="state == 'draft'">
+                        <list editable="bottom" create="false" delete="false">
+                            <field name="partner_id"/>
+                            <field name="role"/>
+                            <field name="pos_amount" sum="Sold"/>
+                            <field name="commission_pc"/>
+                            <field name="commission_amount" sum="Commission"/>
+                            <field name="daily_rate"/>
+                            <field name="days"/>
+                            <field name="daily_amount" sum="Dailies"/>
+                            <field name="loss_share" sum="Loss share"/>
+                            <field name="net_amount" sum="To pay"/>
+                            <field name="uncovered_loss" sum="Still owed"
+                                   optional="show"/>
+                            <field name="bill_id" optional="show"/>
+                            <field name="currency_id" column_invisible="1"/>
+                        </list>
+                    </field>
+                    <group class="mt-2">
+                        <group>
+                            <field name="commission_total"/>
+                            <field name="daily_total"/>
+                        </group>
+                        <group>
+                            <field name="loss_total"/>
+                            <field name="team_loss_total"/>
+                            <field name="payout_total"/>
+                        </group>
+                    </group>
+                    <div class="text-muted">
+                        Commission is a percentage on what each person sold at
+                        their own register. What vanished UNDER THEIR WATCH,
+                        at cost, is split equally between them: the table is
+                        everybody's, and nobody knows whose copy went missing.
+                        What never arrived — the copy that left the warehouse
+                        and did not reach the table — is not theirs and is not
+                        split.
+                        A bill is never negative — what the commission and the
+                        dailies do not cover is written down, not charged.
+                    </div>
+                    <button name="action_generate_bills" type="object"
+                            string="Create the bills" class="btn-primary mt-2"
+                            invisible="state != 'returned'"
+                            help="One payable per person, with the event in the name and in the analytic account."/>
+                </page>
+            </page>
+            <field name="stock_location_id" position="after">
+                <field name="discount_pc"/>
+                <field name="pos_amount_total" readonly="1"
+                       invisible="pos_order_count == 0"/>
+                <field name="company_currency_id" invisible="1"/>
+            </field>
+        </field>
+    </record>
+</odoo>

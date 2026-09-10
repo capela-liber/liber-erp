@@ -864,12 +864,14 @@ class TestMetabooksCorteDoHistorico(TestMetabooksExport):
         livro.with_context(metabooks_from_sync=True).write(
             {'metabooks_page_count': 420})
         self._settle(self.env)
-        self._edit(records=livro, metabooks_collections='Hedra Edições')
+        # Palavra-chave, e não Série: a coluna Série só sai com o código deles,
+        # então uma coleção nossa não produziria mudança nenhuma aqui.
+        self._edit(records=livro, metabooks_keywords='cordel')
         batch = self._batch()
         batch.action_prepare()
         linha = batch.line_ids.filtered(lambda l: l.product_id == livro)
         self.assertEqual(
-            set(linha.change_ids.mapped('column')), {'Série'},
+            set(linha.change_ids.mapped('column')), {'Palavra-chave'},
             "só a edição feita depois do sync tem notícia para eles")
 
 
@@ -1416,3 +1418,183 @@ class TestCopiaNaoEnviaParaAMetabooks(TestMetabooksExport):
             self.lote.action_send_ftp()
         ftp.storbinary.assert_called_once()
         self.assertEqual(self.lote.state, 'sent')
+
+
+@tagged('post_install', '-at_install')
+class TestSerieSoPorCodigo(TestMetabooksExport):
+    """MDS062: a coluna Série quer o código deles, não o nome da coleção."""
+
+    def _celula(self, texto):
+        self._edit(metabooks_collections=texto)
+        return self.book._metabooks_cell('Série')
+
+    def test_nome_de_colecao_nao_vai(self):
+        """O caso real: 49 livros recusados por 'Biblioteca de Cordel'."""
+        self.assertFalse(self._celula('Biblioteca de Cordel'))
+        self.assertFalse(self._celula('Hedra de Bolso'))
+
+    def test_codigo_da_metabooks_vai(self):
+        self.assertEqual(self._celula('AAA123456'), 'AAA123456')
+
+    def test_vazio_continua_vazio(self):
+        self.assertFalse(self._celula(''))
+
+    def test_o_resto_do_livro_ainda_sai_na_planilha(self):
+        """O ponto todo: a recusa levava junto Thema, BISAC e palavras-chave."""
+        self._edit(metabooks_collections='Biblioteca de Cordel',
+                   metabooks_keywords='cordel, poesia')
+        lote = self._batch()
+        lote.action_prepare()
+        colunas = set(lote.change_ids.mapped('column'))
+        self.assertNotIn('Série', colunas,
+                         'coluna que a Metabooks recusaria não entra no lote')
+        self.assertIn('Palavra-chave', colunas)
+
+
+@tagged('post_install', '-at_install')
+class TestRetornoDaMetabooks(TestMetabooksExport):
+    """Ler a planilha que eles mandam depois da meia-noite."""
+
+    def setUp(self):
+        super().setUp()
+        self.env['ir.config_parameter'].sudo().set_param(
+            'database.is_neutralized', False)
+        self._edit(metabooks_page_count=360)
+        self.lote = self._batch()
+        self.lote.action_prepare()
+        self.track_antes = self.book.metabooks_export_last_track
+        self.lote.action_generate()
+        self.lote.action_mark_sent()
+
+    def _relatorio(self, linhas, aba='Rejeitados', arquivo=None):
+        """Uma planilha no formato deles, com o cabeçalho que eles escrevem."""
+        import openpyxl
+        wb = openpyxl.Workbook()
+        ws = wb.active
+        ws.title = aba
+        ws.append(['GTIN', 'Mensagem de erro', 'Detalhes',
+                   'Status do produto', 'Hora do registro',
+                   'Nome do arquivo', 'Código do erro'])
+        for gtin, msg, cod in linhas:
+            ws.append([gtin, msg, '', 'ativo', '2026-09-03 22:11:36',
+                       arquivo or ('!jsallum!_%s_3789aa56'
+                                   % (self.lote.filename or '').rsplit('.', 1)[0]),
+                       cod])
+        buffer = io.BytesIO()
+        wb.save(buffer)
+        return base64.b64encode(buffer.getvalue())
+
+    def _ler(self, linhas, **kw):
+        wizard = self.env['metabooks.import.report'].create({
+            'file': self._relatorio(linhas, **kw),
+            'filename': 'relatorio.xlsx',
+        })
+        return wizard.action_import()
+
+    def test_livro_recusado_volta_para_a_fila(self):
+        self.assertFalse(self.book.metabooks_export_pending)
+
+        self._ler([(self.book.barcode,
+                    'Por favor especifique título da série.', 'MDS062')])
+
+        self.assertTrue(self.book.metabooks_export_pending,
+                        'recusado não foi entregue, então continua devendo')
+        linha = self.lote.line_ids.filtered(
+            lambda l: l.product_id == self.book)
+        self.assertTrue(linha.rejected)
+        self.assertEqual(linha.error_code, 'MDS062')
+        self.assertIn('série', linha.error_message)
+        self.assertEqual(self.lote.rejected_count, 1)
+        self.assertTrue(self.lote.report_on)
+
+    def test_a_alteracao_recusada_volta_a_aparecer(self):
+        """Sem restaurar o corte, a mudança que não chegou some para sempre."""
+        self._ler([(self.book.barcode, 'Erro qualquer', 'MDS062')])
+        self.assertEqual(self.book.metabooks_export_last_track,
+                         self.track_antes)
+
+        novo = self._batch()
+        novo.action_prepare()
+        colunas = set(novo.change_ids.mapped('column'))
+        self.assertIn('Número de páginas', colunas,
+                      'a alteração que a Metabooks recusou volta ao próximo lote')
+
+    def test_livro_aceito_nao_e_mexido(self):
+        outro = self.book.copy({'name': 'Aceito', 'barcode': '9788599296400'})
+        self._ler([(self.book.barcode, 'Erro', 'MDS062')])
+        self.assertFalse(outro.metabooks_export_pending or False)
+        linhas = self.lote.line_ids.filtered(lambda l: not l.rejected)
+        self.assertFalse(linhas.mapped('error_code') and
+                         any(linhas.mapped('error_code')))
+
+    def test_isbn_que_nao_e_nosso_nao_derruba_a_leitura(self):
+        """Borda: relatório com um ISBN de outro envio, ou de outra editora."""
+        acao = self._ler([(self.book.barcode, 'Erro', 'MDS062'),
+                          ('9789999999990', 'Erro', 'MDS062')])
+        self.assertEqual(acao['params']['type'], 'warning')
+        self.assertTrue(self.book.metabooks_export_pending)
+
+    def test_relatorio_sem_recusa_avisa_e_nao_mexe(self):
+        with self.assertRaises(UserError):
+            self._ler([])
+        self.assertFalse(self.book.metabooks_export_pending)
+
+    def test_arquivo_que_nao_e_planilha_da_recado(self):
+        wizard = self.env['metabooks.import.report'].create({
+            'file': base64.b64encode(b'nem xlsx nem nada'),
+            'filename': 'foto.png',
+        })
+        with self.assertRaises(UserError):
+            wizard.action_import()
+
+    def test_em_analise_tambem_conta_como_nao_entregue(self):
+        self._ler([(self.book.barcode, '', '')], aba='Em análise')
+        self.assertTrue(self.book.metabooks_export_pending)
+        linha = self.lote.line_ids.filtered(
+            lambda l: l.product_id == self.book)
+        self.assertTrue(linha.rejected)
+        self.assertTrue(linha.error_message, 'sem mensagem deles, a nossa')
+
+
+@tagged('post_install', '-at_install')
+class TestAcabamentoNaPlanilha(TestMetabooksExport):
+    """A coluna Acabamento é a lista 175 inteira, não só a encadernação.
+
+    "Código ONIX (Lista 175) para detalhes adicionais ao tipo de acabamento",
+    diz o manual deles, com `B504 = Com orelhas` de exemplo. Mandávamos só a
+    encadernação: orelha, sobrecapa, marcador e todo o acabamento de capa
+    ficavam sabidos aqui dentro e não chegavam lá.
+    """
+
+    def test_o_apelido_da_encadernacao_vira_codigo_onix(self):
+        """Guardamos "adhesive"; a lista 175 conhece B305, não "adhesive"."""
+        self._edit(metabooks_binding='adhesive')
+        self.assertEqual(self.book._metabooks_cell('Acabamento'), 'B305')
+
+    def test_os_acabamentos_marcados_viajam_junto(self):
+        self._edit(metabooks_binding='adhesive', metabooks_has_flaps=True,
+                   metabooks_has_lamination=True, metabooks_has_foil_cover=True)
+        celula = self.book._metabooks_cell('Acabamento')
+        self.assertEqual(celula.split(';')[0], 'B305',
+                         'a encadernação abre a lista')
+        self.assertEqual(set(celula.split(';')), {'B305', 'B504', 'B415', 'B422'})
+
+    def test_sem_encadernacao_o_acabamento_ainda_sai(self):
+        """Borda: e-book laminado não existe, mas brochura sem código, sim."""
+        self._edit(metabooks_binding=False, metabooks_has_lamination=True)
+        self.assertEqual(self.book._metabooks_cell('Acabamento'), 'B415')
+
+    def test_livro_sem_nada_nao_manda_lixo(self):
+        self._edit(metabooks_binding=False, metabooks_has_flaps=False,
+                   metabooks_has_lamination=False)
+        self.assertFalse(self.book._metabooks_cell('Acabamento'))
+
+    def test_a_importacao_le_o_acabamento_de_capa(self):
+        """O outro lado: o que eles mandam, nós lemos."""
+        vals = self.env['metabooks.connector']._parse_technical({
+            'form': {'productFormDetail': ['B415', 'B422', 'B504']},
+        })
+        self.assertTrue(vals['metabooks_has_lamination'])
+        self.assertTrue(vals['metabooks_has_foil_cover'])
+        self.assertTrue(vals['metabooks_has_flaps'])
+        self.assertFalse(vals['metabooks_has_emboss'])

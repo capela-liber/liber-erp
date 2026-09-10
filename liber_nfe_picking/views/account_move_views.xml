@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- O botão que traz caixas e peso da movimentação. Fica ao lado dos
+         campos, na aba NFe: quem fatura vê o número, e decide se aceita.
+         Rótulo em português na fonte, como o resto da aba: a aba é do
+         liber_nfe_focus, que escreve fiscal em português. -->
+    <record id="view_move_form_inherit_transport_volumes" model="ir.ui.view">
+        <field name="name">account.move.form.liber.nfe.picking.volumes</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="liber_nfe_focus.view_move_form_focus"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group[@name='nfe_volumes']" position="inside">
+                <button name="action_liber_puxar_volumes" type="object"
+                        string="Trazer da movimentação" class="btn-link"
+                        icon="fa-truck" colspan="2"
+                        invisible="focus_status in ('autorizado', 'processando_autorizacao', 'cancelado')"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

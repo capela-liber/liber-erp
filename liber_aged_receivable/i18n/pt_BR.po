@@ -1,0 +1,306 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* liber_aged_receivable
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: pt_BR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#. module: liber_aged_receivable
+#: model:ir.actions.act_window,name:liber_aged_receivable.liber_aged_receivable_action
+#: model:ir.model,name:liber_aged_receivable.model_liber_aged_receivable
+#: model:ir.ui.menu,name:liber_aged_receivable.liber_aged_receivable_menu
+#: model_terms:ir.ui.view,arch_db:liber_aged_receivable.liber_aged_receivable_list
+#: model_terms:ir.ui.view,arch_db:liber_aged_receivable.liber_aged_receivable_pivot
+#: model_terms:ir.ui.view,arch_db:liber_aged_receivable.liber_aged_receivable_search
+msgid "Aged Receivable"
+msgstr "Contas a Receber por Idade"
+
+#. module: liber_aged_receivable
+#: model:ir.model,name:liber_aged_receivable.model_liber_aged_balance_abstract
+msgid "Aged Balance (shared engine)"
+msgstr "Saldos por Idade (motor comum)"
+
+#. module: liber_aged_receivable
+#: model:ir.model.fields,field_description:liber_aged_receivable.field_liber_aged_balance_abstract__partner_id
+#: model:ir.model.fields,field_description:liber_aged_receivable.field_liber_aged_receivable__partner_id
+#: model_terms:ir.ui.view,arch_db:liber_aged_receivable.liber_aged_receivable_search
+msgid "Customer"
+msgstr "Cliente"
+
+#. module: liber_aged_receivable
+#: model:ir.model.fields,field_description:liber_aged_receivable.field_liber_aged_balance_abstract__partner_id
+msgid "Partner"
+msgstr "Parceiro"
+
+#. module: liber_aged_receivable
+#: model:ir.model.fields,field_description:liber_aged_receivable.field_liber_aged_receivable__amount_current
+#: model_terms:ir.ui.view,arch_db:liber_aged_receivable.liber_aged_receivable_list
+#: model_terms:ir.ui.view,arch_db:liber_aged_receivable.liber_aged_receivable_search
+msgid "Not Due"
+msgstr "A vencer"
+
+#. module: liber_aged_receivable
+#: model:ir.model.fields,field_description:liber_aged_receivable.field_liber_aged_receivable__amount_30
+#: model_terms:ir.ui.view,arch_db:liber_aged_receivable.liber_aged_receivable_list
+msgid "1-30"
+msgstr "1-30"
+
+#. module: liber_aged_receivable
+#: model:ir.model.fields,field_description:liber_aged_receivable.field_liber_aged_receivable__amount_60
+#: model_terms:ir.ui.view,arch_db:liber_aged_receivable.liber_aged_receivable_list
+msgid "31-60"
+msgstr "31-60"
+
+#. module: liber_aged_receivable
+#: model:ir.model.fields,field_description:liber_aged_receivable.field_liber_aged_receivable__amount_90
+#: model_terms:ir.ui.view,arch_db:liber_aged_receivable.liber_aged_receivable_list
+msgid "61-90"
+msgstr "61-90"
+
+#. module: liber_aged_receivable
+#: model:ir.model.fields,field_description:liber_aged_receivable.field_liber_aged_receivable__amount_120
+#: model_terms:ir.ui.view,arch_db:liber_aged_receivable.liber_aged_receivable_list
+msgid "91-120"
+msgstr "91-120"
+
+#. module: liber_aged_receivable
+#: model:ir.model.fields,field_description:liber_aged_receivable.field_liber_aged_receivable__amount_older
+#: model_terms:ir.ui.view,arch_db:liber_aged_receivable.liber_aged_receivable_list
+msgid "Older"
+msgstr "Mais antigo"
+
+#. module: liber_aged_receivable
+#: model:ir.model.fields,field_description:liber_aged_receivable.field_liber_aged_receivable__amount_total
+#: model_terms:ir.ui.view,arch_db:liber_aged_receivable.liber_aged_receivable_list
+msgid "Total"
+msgstr "Total"
+
+#. module: liber_aged_receivable
+#: model:ir.model.fields,field_description:liber_aged_receivable.field_liber_aged_receivable__days_overdue
+msgid "Days Overdue"
+msgstr "Dias em atraso"
+
+#. module: liber_aged_receivable
+#: model:ir.model.fields,field_description:liber_aged_receivable.field_liber_aged_receivable__days_to_due
+msgid "Days to Due"
+msgstr "Dias para vencer"
+
+#. module: liber_aged_receivable
+#: model:ir.model.fields,field_description:liber_aged_receivable.field_liber_aged_receivable__can_reconcile
+msgid "Can Be Reconciled"
+msgstr "Pode ser conciliado"
+
+#. module: liber_aged_receivable
+#: model:ir.model.fields,field_description:liber_aged_receivable.field_liber_aged_receivable__date_maturity
+#: model_terms:ir.ui.view,arch_db:liber_aged_receivable.liber_aged_receivable_search
+msgid "Due Date"
+msgstr "Vencimento"
+
+#. module: liber_aged_receivable
+#: model:ir.model.fields,field_description:liber_aged_receivable.field_liber_aged_receivable__invoice_date
+#: model_terms:ir.ui.view,arch_db:liber_aged_receivable.liber_aged_receivable_list
+msgid "Invoice Date"
+msgstr "Data da fatura"
+
+#. module: liber_aged_receivable
+#: model:ir.model.fields,field_description:liber_aged_receivable.field_liber_aged_receivable__move_name
+#: model_terms:ir.ui.view,arch_db:liber_aged_receivable.liber_aged_receivable_list
+msgid "Number"
+msgstr "Número"
+
+#. module: liber_aged_receivable
+#: model:ir.model.fields,field_description:liber_aged_receivable.field_liber_aged_receivable__move_id
+msgid "Document"
+msgstr "Documento"
+
+#. module: liber_aged_receivable
+#: model:ir.model.fields,field_description:liber_aged_receivable.field_liber_aged_receivable__line_id
+msgid "Journal Item"
+msgstr "Item de diário"
+
+#. module: liber_aged_receivable
+#: model:ir.model.fields,field_description:liber_aged_receivable.field_liber_aged_receivable__account_id
+#: model_terms:ir.ui.view,arch_db:liber_aged_receivable.liber_aged_receivable_search
+msgid "Account"
+msgstr "Conta"
+
+#. module: liber_aged_receivable
+#: model:ir.model.fields,field_description:liber_aged_receivable.field_liber_aged_receivable__journal_id
+#: model_terms:ir.ui.view,arch_db:liber_aged_receivable.liber_aged_receivable_search
+msgid "Journal"
+msgstr "Diário"
+
+#. module: liber_aged_receivable
+#: model:ir.model.fields,field_description:liber_aged_receivable.field_liber_aged_receivable__company_id
+#: model_terms:ir.ui.view,arch_db:liber_aged_receivable.liber_aged_receivable_search
+msgid "Company"
+msgstr "Empresa"
+
+#. module: liber_aged_receivable
+#: model:ir.model.fields,field_description:liber_aged_receivable.field_liber_aged_receivable__currency_id
+#: model_terms:ir.ui.view,arch_db:liber_aged_receivable.liber_aged_receivable_search
+msgid "Currency"
+msgstr "Moeda"
+
+#. module: liber_aged_receivable
+#: model_terms:ir.ui.view,arch_db:liber_aged_receivable.liber_aged_receivable_search
+msgid "Overdue"
+msgstr "Vencido"
+
+#. module: liber_aged_receivable
+#: model_terms:ir.ui.view,arch_db:liber_aged_receivable.liber_aged_receivable_search
+msgid "Over 90 days"
+msgstr "Mais de 90 dias"
+
+#. module: liber_aged_receivable
+#: model_terms:ir.ui.view,arch_db:liber_aged_receivable.liber_aged_receivable_search
+msgid "Owed by the customer"
+msgstr "O cliente deve"
+
+#. module: liber_aged_receivable
+#: model_terms:ir.ui.view,arch_db:liber_aged_receivable.liber_aged_receivable_search
+msgid "Unapplied payments"
+msgstr "Pagamentos sem baixa"
+
+#. module: liber_aged_receivable
+#: model_terms:ir.ui.view,arch_db:liber_aged_receivable.liber_aged_receivable_search
+msgid "Ready to reconcile"
+msgstr "Pronto para conciliar"
+
+#. module: liber_aged_receivable
+#: model_terms:ir.ui.view,arch_db:liber_aged_receivable.liber_aged_receivable_search
+msgid "Without customer"
+msgstr "Sem cliente"
+
+#. module: liber_aged_receivable
+#: model_terms:ir.ui.view,arch_db:liber_aged_receivable.liber_aged_receivable_search
+msgid "Group By"
+msgstr "Agrupar por"
+
+#. module: liber_aged_receivable
+#: model_terms:ir.ui.view,arch_db:liber_aged_receivable.liber_aged_receivable_list
+msgid "Open the invoice or the payment"
+msgstr "Abrir a fatura ou o pagamento"
+
+#. module: liber_aged_receivable
+#: model_terms:ir.ui.view,arch_db:liber_aged_receivable.liber_aged_receivable_list
+msgid "Match this customer's payments against the open invoices"
+msgstr "Casar os pagamentos deste cliente com as faturas em aberto"
+
+#. module: liber_aged_receivable
+#: model_terms:ir.actions.act_window,help:liber_aged_receivable.liber_aged_receivable_action
+msgid "Nothing open to age"
+msgstr "Nada em aberto para envelhecer"
+
+#. module: liber_aged_receivable
+#: model_terms:ir.actions.act_window,help:liber_aged_receivable.liber_aged_receivable_action
+msgid ""
+"Every receivable line is settled. When a customer invoice is\n"
+"               left open, or a payment lands without settling one, it shows\n"
+"               up here under the bracket its due date falls in."
+msgstr ""
+"Toda linha a receber está baixada. Quando uma fatura de cliente\n"
+"               fica em aberto, ou um pagamento entra sem baixar nenhuma, ela\n"
+"               aparece aqui na faixa em que o vencimento cai."
+
+#. module: liber_aged_receivable
+#. odoo-python
+#: code:addons/liber_aged_receivable/models/liber_aged_balance_abstract.py:0
+msgid ""
+"This line has no partner, so Odoo has no set of entries to match it against. "
+"Set the partner on the journal item and the line becomes reconcilable."
+msgstr ""
+"Esta linha não tem parceiro, então o Odoo não tem um conjunto de lançamentos "
+"contra o qual casá-la. Preencha o parceiro no item de diário e a linha passa "
+"a ser conciliável."
+
+#. module: liber_aged_receivable
+#. odoo-python
+#: code:addons/liber_aged_receivable/models/liber_aged_balance_abstract.py:0
+msgid ""
+"Nothing to match here. Reconciling means cancelling a debit against a credit "
+"inside one account, and every open line of %(partner)s on %(account)s is on "
+"the same side. What is missing is the other half of the entry, not the "
+"matching."
+msgstr ""
+"Não há o que casar aqui. Conciliar é anular um débito contra um crédito "
+"dentro de uma conta, e todas as linhas em aberto de %(partner)s em "
+"%(account)s estão do mesmo lado. O que falta é a outra metade do lançamento, "
+"não a conciliação."
+
+#. module: liber_aged_receivable
+#. odoo-python
+#: code:addons/liber_aged_receivable/models/liber_aged_balance_abstract.py:0
+msgid ""
+"Odoo has no reconciliation view for %(partner)s on %(account)s. This usually "
+"means the open lines sit in different currencies."
+msgstr ""
+"O Odoo não tem tela de conciliação para %(partner)s em %(account)s. "
+"Normalmente isso quer dizer que as linhas em aberto estão em moedas "
+"diferentes."
+
+#. module: liber_aged_receivable
+#: model:ir.model.fields,field_description:liber_aged_receivable.field_liber_aged_receivable__partner_off_ledger
+#: model_terms:ir.ui.view,arch_db:liber_aged_receivable.liber_aged_receivable_search
+msgid "Wrong Ledger"
+msgstr "Razão errado"
+
+#. module: liber_aged_receivable
+#: model:ir.model.fields,help:liber_aged_receivable.field_liber_aged_receivable__partner_off_ledger
+msgid ""
+"The partner has never issued a document on this side, so no invoice is "
+"coming. The line needs reclassifying, not chasing."
+msgstr ""
+"O parceiro nunca emitiu um documento deste lado, então não há fatura a "
+"caminho. A linha precisa ser reclassificada, não cobrada."
+
+#. module: liber_aged_receivable
+#: model_terms:ir.ui.view,arch_db:liber_aged_receivable.liber_aged_receivable_list
+msgid "Not a Customer"
+msgstr "Não é cliente"
+
+#. module: liber_aged_receivable
+#: model_terms:ir.ui.view,arch_db:liber_aged_receivable.liber_aged_receivable_search
+msgid "Never invoiced as a customer"
+msgstr "Nunca faturado como cliente"
+
+#. module: liber_aged_receivable
+#: model:ir.model.fields,field_description:liber_aged_receivable.field_liber_aged_receivable__partner_group
+#: model_terms:ir.ui.view,arch_db:liber_aged_receivable.liber_aged_receivable_search
+msgid "Economic Group"
+msgstr "Grupo econômico"
+
+#. module: liber_aged_receivable
+#: model:ir.model.fields,field_description:liber_aged_receivable.field_liber_aged_receivable__team_id
+#: model_terms:ir.ui.view,arch_db:liber_aged_receivable.liber_aged_receivable_search
+msgid "Sales Channel"
+msgstr "Canal de venda"
+
+#. module: liber_aged_receivable
+#: model:ir.actions.server,name:liber_aged_receivable.liber_aged_receivable_pagar
+msgid "Register Payment"
+msgstr "Pagar"
+
+#. module: liber_aged_receivable
+#: model_terms:ir.ui.view,arch_db:liber_aged_receivable.liber_aged_receivable_search
+msgid "Drafts"
+msgstr "Rascunhos"
+
+#. module: liber_aged_receivable
+#: model_terms:ir.ui.view,arch_db:liber_aged_receivable.liber_aged_receivable_search
+msgid "Posted"
+msgstr "Lançados"
+
+#. module: liber_aged_receivable
+#: model:ir.model.fields,field_description:liber_aged_receivable.field_liber_aged_receivable__move_state
+msgid "Document Status"
+msgstr "Situação do documento"

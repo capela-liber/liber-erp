@@ -1,0 +1,44 @@
+<!-- GERADO por scripts/gen_module_descriptions.py a partir de
+     liber_site/static/docs/liber_aged_payable.html -- não edite aqui.
+     O Odoo mostra este arquivo em Apps > Module Info. -->
+<div class="oe_container liber_manual" style="max-width:900px;margin:0 auto;padding:8px 4px 24px;color:#251d2b;background:transparent;font:15px/1.7 Inter,'Segoe UI',system-ui,sans-serif;"><h1 style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:32px;line-height:1.2;letter-spacing:-.015em;margin:0 0 10px;color:#251d2b;">Contas a pagar por idade</h1>
+      <p class="lead" style="font-size:17.5px;color:#5d5266;margin:0 0 26px;max-width:62ch;">A gêmea do relatório de receber, do outro lado do razão: o que a casa deve, por fornecedor e por faixa de atraso.</p>
+
+      <h2 id="visao-geral" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">Visão geral</h2>
+      <p style="margin:0 0 12px;">A gêmea do <a href="/liber_site/static/docs/liber_aged_receivable.html" target="_blank" rel="noopener" style="color:#6e2f91;">Contas a receber por idade</a>, olhando o
+      outro lado do razão: o que a casa <strong style="color:#251d2b;">deve</strong>, por fornecedor e por faixa de
+      atraso.</p>
+      <p style="margin:0 0 12px;">Toda a mecânica é herdada e idêntica — a mesma leitura direta das linhas em aberto,
+      calculada na hora e sem cron; as mesmas faixas do Enterprise medidas pela data de vencimento;
+      o mesmo par de botões em cada linha. O que muda é o lado: contas a pagar em vez de a receber,
+      e o sinal do saldo invertido para que a tela mostre dívida como número positivo.</p>
+
+      <h2 id="configuracao" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">Configuração</h2>
+      <p style="margin:0 0 12px;">Nenhuma. Instalar já basta — e instalar esta puxa a de receber, que é onde a mecânica
+      mora.</p>
+      <p style="margin:0 0 12px;">Onde fica: <span class="menupath" style="display:inline-block;background:#f1eaf6;border:1px solid #e5dbee;border-radius:6px;padding:1px 8px;font-size:13.5px;color:#251d2b;white-space:nowrap;">Contabilidade<i style="font-style:normal;color:#6e2f91;margin:0 4px;font-weight:700;">‣</i>Relatórios<i style="font-style:normal;color:#6e2f91;margin:0 4px;font-weight:700;">‣</i>Aged
+      Payable</span>.</p>
+
+      <h2 id="dia-a-dia" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">O dia a dia</h2>
+      <p style="margin:0 0 12px;">Agrupe por fornecedor e as faixas somam por grupo; filtre por empresa, por conta, por
+      grupo econômico. <strong style="color:#251d2b;">Abrir</strong> leva à fatura de fornecedor ou ao pagamento;
+      <strong style="color:#251d2b;">Conciliar</strong> leva à tela de conciliação posicionada naquele fornecedor e
+      naquela conta.</p>
+      <p style="margin:0 0 12px;">O uso mais comum não é ler o total: é <strong style="color:#251d2b;">ordenar pela faixa mais antiga</strong> e ver
+      o que está parado há mais de 120 dias sem ninguém ter notado — que é o que uma migração
+      costuma deixar para trás.</p>
+
+      <h2 id="limitacoes" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">Limitações conhecidas</h2>
+      <ul style="margin:0 0 14px 22px;padding:0;">
+        <li style="margin:0 0 7px;">As mesmas do relatório de receber, ponto por ponto — inclusive a dependência da tela de
+        conciliação da <abbr class="sigla" title="Odoo Community Association: a associação que mantém módulos livres para o Odoo." style="text-decoration:none;border-bottom:1px dotted #8a4bad;cursor:help;">OCA</abbr> para o botão Conciliar.</li>
+        <li style="margin:0 0 7px;"><strong style="color:#251d2b;">Não é uma agenda de pagamentos.</strong> Ela diz o que está em aberto e há
+        quanto tempo; decidir o que pagar continua sendo do financeiro.</li>
+      </ul>
+
+      <div class="seealso" style="border:1px solid #e5dbee;border-radius:12px;background:#f1eaf6;padding:16px 20px;margin:32px 0 0;">
+        <strong style="font-weight:700;font-size:12px;letter-spacing:.08em;text-transform:uppercase;display:block;margin:0 0 8px;color:#5d5266;">Ver também</strong>
+        <ul style="margin:0 0 14px 22px;padding:0;">
+          <li style="margin:0 0 7px;"><a href="/liber_site/static/docs/liber_aged_receivable.html" target="_blank" rel="noopener" style="color:#6e2f91;">Contas a receber por idade</a> — a tela irmã, com a explicação completa da mecânica.</li>
+        </ul>
+      </div><p style="margin:28px 0 0;padding-top:14px;border-top:1px solid #e5dbee;font-size:13px;color:#5d5266;">Manual completo, com busca e as demais páginas: <a href="/liber_site/static/docs/liber_aged_payable.html" target="_blank" rel="noopener" style="color:#6e2f91;">Contas a pagar por idade</a>.</p></div>

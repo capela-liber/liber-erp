@@ -1,0 +1,57 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* liber_nfe_picking
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Language: pt_BR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#. module: liber_nfe_picking
+#: model:ir.model.fields,field_description:liber_nfe_picking.field_stock_picking__nfe_move_id
+msgid "Fiscal Note"
+msgstr "Nota fiscal"
+
+#. module: liber_nfe_picking
+#: model:ir.model.fields,field_description:liber_nfe_picking.field_stock_picking__nfe_numero
+msgid "NFe Number"
+msgstr "Nº da NFe"
+
+#. module: liber_nfe_picking
+#: model:ir.model.fields,field_description:liber_nfe_picking.field_stock_picking__nfe_status
+msgid "NFe Status"
+msgstr "Situação da NFe"
+
+#. module: liber_nfe_picking
+#: model:ir.model.fields,field_description:liber_nfe_picking.field_stock_picking__has_nfe
+msgid "Has Fiscal Note"
+msgstr "Tem nota fiscal"
+
+#. module: liber_nfe_picking
+#: model:ir.model.fields,help:liber_nfe_picking.field_stock_picking__nfe_move_id
+msgid ""
+"The NFe issued for the order behind this transfer. Stamped automatically "
+"when SEFAZ authorizes the note."
+msgstr ""
+"A NFe emitida para o pedido por trás desta transferência. Carimbada "
+"automaticamente quando a SEFAZ autoriza a nota."
+
+#. module: liber_nfe_picking
+#: model:ir.actions.report,name:liber_nfe_picking.action_report_picking_danfe
+msgid "Fiscal Notes"
+msgstr "Notas fiscais"
+
+#. module: liber_nfe_picking
+#: model_terms:ir.ui.view,arch_db:liber_nfe_picking.view_picking_search_nfe
+msgid "With Fiscal Note"
+msgstr "Com nota fiscal"
+
+#. module: liber_nfe_picking
+#: model_terms:ir.ui.view,arch_db:liber_nfe_picking.view_picking_search_nfe
+msgid "Without Fiscal Note"
+msgstr "Sem nota fiscal"

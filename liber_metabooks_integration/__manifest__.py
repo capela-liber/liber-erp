@@ -17,8 +17,9 @@ Module Info.
     'author': 'EdLab Press',
     'website': "http://www.yourcompany.com",
     'license': 'AGPL-3',
+    'post_init_hook': 'traduzir_os_rotulos',
     'category': 'Uncategorized',
-    'version': '19.0.1.11.0',
+    'version': '19.0.1.14.0',
     # Original v15 deps (kept for reference):
     # 'depends': ['base','stock','isbn_integration','br_account','account_accountant',
     #             'ean_creator','hedra_vendor_price_list_discount','website_sale', 'product'],
@@ -50,6 +51,7 @@ Module Info.
         'views/metabooks_import_job_views.xml',
         'wizards/metabooks_import_isbn_views.xml',
         'wizards/metabooks_import_vendor_views.xml',
+        'wizards/metabooks_import_report_views.xml',
     ],
     'assets': {
         'web.assets_frontend': [

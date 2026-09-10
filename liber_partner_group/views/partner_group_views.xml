@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="view_partner_group_list" model="ir.ui.view">
+        <field name="name">liber.partner.group.list</field>
+        <field name="model">liber.partner.group</field>
+        <field name="arch" type="xml">
+            <!-- Editável para arrumar vários de uma vez (o gosto da grade de
+                 canais), e com o botão de abrir a ficha: em lista editável o
+                 clique na célula edita, não navega — o tour contou. -->
+            <list editable="bottom" open_form_view="1">
+                <field name="name"/>
+                <field name="cnpj_roots"/>
+                <field name="partner_count" string="Members"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_partner_group_form" model="ir.ui.view">
+        <field name="name">liber.partner.group.form</field>
+        <field name="model">liber.partner.group</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="name" placeholder="e.g. Travessa"/></h1>
+                    </div>
+                    <group>
+                        <field name="cnpj_roots"/>
+                    </group>
+                    <group>
+                        <button name="action_claim_matching_partners" type="object"
+                                string="Claim matching partners"
+                                help="Assign every ungrouped company whose CNPJ starts with one of the declared roots to this group. Companies already in a group are left alone."
+                                class="btn-secondary" colspan="2"/>
+                    </group>
+                    <notebook>
+                        <page string="Members" name="members">
+                            <field name="partner_ids">
+                                <list>
+                                    <field name="name"/>
+                                    <field name="legal_name" optional="show"/>
+                                    <field name="vat"/>
+                                    <field name="city" optional="show"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_partner_group" model="ir.actions.act_window">
+        <field name="name">Commercial Groups</field>
+        <field name="res_model">liber.partner.group</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Create a commercial group</p>
+            <p>A group is the network above the branches -- Travessa, Leitura --
+               used to read reports network-first while every store keeps its
+               own CNPJ, contract and fiscal documents.</p>
+        </field>
+    </record>
+
+    <menuitem id="menu_partner_group" action="action_partner_group"
+              parent="sale.menu_sale_config" sequence="25"/>
+</odoo>

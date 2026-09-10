@@ -74,6 +74,13 @@ BINDING_BY_DETAIL = {
     "B310": "saddle",
 }
 
+# O caminho de volta: o apelido que guardamos -> o código que a planilha pede.
+# Vários B3xx caem no mesmo apelido (as três folhas soltas), então a volta
+# escolhe um representante -- o primeiro da lista acima, que é o mais geral.
+DETAIL_BY_BINDING = {}
+for _codigo, _apelido in BINDING_BY_DETAIL.items():
+    DETAIL_BY_BINDING.setdefault(_apelido, _codigo)
+
 BINDING = [
     ("sewn", "Sewn"),
     ("adhesive", "Unsewn / adhesive bound"),
@@ -90,6 +97,31 @@ DETAIL_DUST_JACKET = ("B501", "B502", "B503")
 DETAIL_FLAPS = "B504"
 DETAIL_THUMB_INDEX = "B505"
 DETAIL_RIBBON = "B506"
+
+# B4xx: how the cover is finished. Mesma lista 175, e é o que a gráfica
+# pergunta primeiro depois do formato. A norma vai até aqui e para: existe
+# "laminada", não existe fosca contra brilho, e não existe reserva nem verniz.
+# O que ela não nomeia mora no texto livre do liber_print_quote.
+DETAIL_LAMINATED = "B415"
+DETAIL_EMBOSSED = "B421"
+DETAIL_FOIL_COVER = "B422"
+DETAIL_FOIL_JACKET = "B423"
+DETAIL_DECORATED_EDGES = "B419"
+DETAIL_BELLY_BAND = "B427"
+
+# Campo do produto -> código da lista 175. Uma tabela só, para a leitura da
+# importação e a escrita da planilha não saírem de sincronia.
+FINISH_BY_FIELD = {
+    "metabooks_has_flaps": DETAIL_FLAPS,
+    "metabooks_has_thumb_index": DETAIL_THUMB_INDEX,
+    "metabooks_has_ribbon": DETAIL_RIBBON,
+    "metabooks_has_lamination": DETAIL_LAMINATED,
+    "metabooks_has_emboss": DETAIL_EMBOSSED,
+    "metabooks_has_foil_cover": DETAIL_FOIL_COVER,
+    "metabooks_has_foil_jacket": DETAIL_FOIL_JACKET,
+    "metabooks_has_decorated_edges": DETAIL_DECORATED_EDGES,
+    "metabooks_has_belly_band": DETAIL_BELLY_BAND,
+}
 
 # E1xx: e-publication file formats.
 EBOOK_FORMAT = {

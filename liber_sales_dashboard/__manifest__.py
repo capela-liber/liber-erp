@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     'name': 'Liber Sales Dashboard',
-    'version': '19.0.1.0.0',
+    'version': '19.0.1.1.0',
     'summary': 'The Sales dashboard reads two clocks: the order and the fiscal note',
     'description': """
 A publishing house sells twice: once when the order is taken (the commercial
@@ -24,7 +24,9 @@ no second "Sales" in the sidebar):
 * a click on any card or chart opens the list it was computed from, with the
   dashboard period carried along.
 
-It also gives the sales manager two lists under Sales > Fiscal notes, and a
+It also gives the sales manager two lists under Sales > Fiscal notes (with
+three filters that split a note by what it has behind it: without invoice,
+invoice without order, tied to an order), and a
 tz-aware ``order_date`` on the sales analysis (the core ``date`` is a UTC
 datetime, and the month grouping slid one day back).
 
@@ -44,6 +46,7 @@ one to put the content back.
     ],
     'data': [
         'views/nfe_xml_menus.xml',
+        'views/nfe_xml_search.xml',
         'data/dashboard.xml',
     ],
     'assets': {

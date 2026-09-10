@@ -100,9 +100,16 @@
              alt="A lista Notas sem pedido, agrupada por mês, com o Valor líquido somado no rodapé">
         <figcaption>Notas sem pedido: cada linha é uma venda que saiu com nota sem passar por pedido — venda direta, ou uma fatura que perdeu o vínculo.</figcaption>
       </figure>
-      <p>Uma nota nesta lista pede uma de duas coisas: ou é venda direta (e está certo), ou a fatura dela existe e
-      não foi amarrada ao pedido — nesse caso o pedido continua "a faturar" do outro lado. Amarrar é abrir a fatura
-      e preencher, em cada linha, o pedido de venda que ela paga.</p>
+      <p>Uma nota nesta lista é uma de duas coisas, e o nome do cartão só diz uma delas. Os filtros separam:</p>
+      <div class="tablewrap"><table>
+        <thead><tr><th>Filtro</th><th>O que é</th><th>O que fazer</th></tr></thead>
+        <tbody>
+          <tr><td><span class="field">Sem fatura</span></td><td>O XML está aqui e ninguém criou a fatura dele no Odoo. No site, é o pedido do Olist que ainda não foi importado.</td><td>Importar o pedido (Olist ‣ A importar) ou criar a fatura a partir da nota.</td></tr>
+          <tr><td><span class="field">Fatura sem pedido</span></td><td>A fatura existe e nenhuma linha dela está amarrada a um pedido de venda: venda direta, ou fatura feita à mão.</td><td>Se há pedido, abrir a fatura e preencher, em cada linha, o pedido que ela paga — senão ele fica "a faturar" do outro lado.</td></tr>
+          <tr><td><span class="field">Com pedido</span></td><td>A fatura paga pelo menos uma linha de pedido. É o normal, e fica fora do cartão.</td><td>Nada.</td></tr>
+        </tbody>
+      </table></div>
+      <p>Os três filtros ficam na busca de qualquer lista de notas fiscais, não só nas do cartão.</p>
     </article>
   </div>
 </div>

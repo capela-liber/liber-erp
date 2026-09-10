@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Importação em formato brasileiro — Liber Base Import BR</title>
+</head>
+<body>
+<article class="doc">
+  <h1>Importação em formato brasileiro</h1>
+  <p class="lead">A tela de importação passa a assumir o que a planilha brasileira escreve: vírgula decimal, ponto de milhar e data em dia/mês/ano. Um patch técnico — não há tela nova, nem menu, nem nada a configurar.</p>
+
+  <h2 id="problema">O problema que ele resolve</h2>
+  <p>A tela de importação do sistema vinha de fábrica com os separadores americanos — milhar "," e decimal "." — fixos, qualquer que fosse o idioma. Um preço escrito <code>59,90</code> tinha a vírgula tratada como marca de milhar e entrava como <strong>5990,00</strong>: cem vezes maior, sem erro e sem nada na prévia para denunciar. As datas tinham o problema gêmeo: <code>05/03/2026</code> podia ser lido como 3 de maio. Valores com os dois separadores (<code>1.234,56</code>) eram deduzidos certos, o que tornava o estrago misto e fácil de passar despercebido.</p>
+
+  <h2 id="o-que-muda">O que muda</h2>
+  <p>Instalado o módulo, os três padrões da seção <span class="field">Formatação</span> da tela de importação já vêm brasileiros:</p>
+  <div class="tablewrap"><table>
+    <tr><th>Opção</th><th>Antes</th><th>Agora</th></tr>
+    <tr><td><span class="field">Separador decimal</span></td><td>Ponto</td><td>Vírgula</td></tr>
+    <tr><td><span class="field">Separador de milhares</span></td><td>Vírgula</td><td>Ponto</td></tr>
+    <tr><td><span class="field">Formato de data</span></td><td>o do idioma da sessão</td><td><code>DD/MM/YYYY</code></td></tr>
+  </table></div>
+  <figure class="shot"><img src="img/importacao-formato-br.png" alt="Tela de importação com o separador de milhares em Ponto, o decimal em Vírgula e o formato de data DD/MM/YYYY, e a prévia mostrando 59,90 e 05/03/2026 nas colunas do arquivo."><figcaption>Os padrões já chegam brasileiros: 59,90 importa como 59,90 e 05/03/2026 é 5 de março.</figcaption></figure>
+  <p>São apenas <strong>padrões</strong>: os três seletores continuam na tela e continuam editáveis. Para importar um arquivo em formato americano, basta trocá-los ali mesmo, naquele arquivo — nada fica travado.</p>
+  <div class="callout note"><span class="title">Nota</span><p>O módulo se instala sozinho junto com a importação e vale para qualquer tela de importar — produtos, contatos, lançamentos. Não há opção em Definições: o comportamento é este, sempre.</p></div>
+</article>
+</body>
+</html>

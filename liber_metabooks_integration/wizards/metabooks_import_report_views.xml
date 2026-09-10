@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_metabooks_import_report_form" model="ir.ui.view">
+        <field name="name">metabooks.import.report.form</field>
+        <field name="model">metabooks.import.report</field>
+        <field name="arch" type="xml">
+            <form string="Ler retorno da Metabooks">
+                <div class="alert alert-info" role="status">
+                    A Metabooks manda por e-mail, depois da meia-noite, uma
+                    planilha dizendo o que entrou e o que foi recusado. Suba o
+                    arquivo aqui: os livros recusados voltam para a fila de
+                    pendências com o motivo registrado.
+                </div>
+                <group>
+                    <field name="file" filename="filename"
+                           string="Relatório (.xlsx)"/>
+                    <field name="filename" invisible="1"/>
+                    <field name="batch_id" invisible="1"/>
+                </group>
+                <footer>
+                    <button name="action_import" type="object"
+                            string="Ler relatório" class="btn-primary"/>
+                    <button string="Cancelar" class="btn-secondary"
+                            special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_metabooks_import_report" model="ir.actions.act_window">
+        <field name="name">Ler retorno da Metabooks</field>
+        <field name="res_model">metabooks.import.report</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <!-- Mora aqui, e não no arquivo dos envios: o menu precisa da ação, e a
+         ação nasce neste arquivo, carregado depois daquele. -->
+    <menuitem id="menu_metabooks_import_report"
+              name="Ler retorno da Metabooks"
+              parent="liber_metabooks_integration.menu_metabooks_exports"
+              action="action_metabooks_import_report"
+              sequence="3"/>
+
+</odoo>

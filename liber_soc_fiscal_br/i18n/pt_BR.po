@@ -428,3 +428,23 @@ msgstr ""
 "enquanto o pedido continuaria contando como venda na Análise de Vendas. "
 "Consignação é o documento da Operação de Consignação, não uma posição "
 "fiscal que se põe numa venda."
+
+#. module: liber_soc_fiscal_br
+#: model:ir.model.fields,field_description:liber_soc_fiscal_br.field_sale_order__remessa_status
+msgid "Remessa Status"
+msgstr "Situação da remessa"
+
+#. module: liber_soc_fiscal_br
+#: model:ir.model.fields.selection,name:liber_soc_fiscal_br.selection__sale_order__remessa_status__no
+msgid "Nothing to Issue"
+msgstr "Nada a emitir"
+
+#. module: liber_soc_fiscal_br
+#: model:ir.model.fields.selection,name:liber_soc_fiscal_br.selection__sale_order__remessa_status__to_issue
+msgid "To Issue"
+msgstr "A emitir"
+
+#. module: liber_soc_fiscal_br
+#: model:ir.model.fields.selection,name:liber_soc_fiscal_br.selection__sale_order__remessa_status__issued
+msgid "Issued"
+msgstr "Emitida"

@@ -1,0 +1,76 @@
+<!-- GERADO por scripts/gen_module_descriptions.py a partir de
+     liber_site/static/docs/liber_aged_receivable.html -- não edite aqui.
+     O Odoo mostra este arquivo em Apps > Module Info. -->
+<div class="oe_container liber_manual" style="max-width:900px;margin:0 auto;padding:8px 4px 24px;color:#251d2b;background:transparent;font:15px/1.7 Inter,'Segoe UI',system-ui,sans-serif;"><h1 style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:32px;line-height:1.2;letter-spacing:-.015em;margin:0 0 10px;color:#251d2b;">Contas a receber por idade</h1>
+      <p class="lead" style="font-size:17.5px;color:#5d5266;margin:0 0 26px;max-width:62ch;">O saldo em aberto de cada cliente por faixa de atraso, em tela navegável — e, na linha, o caminho até o documento e até a conciliação.</p>
+
+      <h2 id="visao-geral" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">Visão geral</h2>
+      <p style="margin:0 0 12px;">O relatório <em>Aged Receivable</em> — o saldo em aberto de cada cliente distribuído por
+      faixa de atraso — é do Odoo Enterprise. No Community 19 ele simplesmente não existe: o texto
+      está nos arquivos de tradução e a tela, em lugar nenhum. A alternativa da
+      <abbr class="sigla" title="Odoo Community Association: a associação que mantém módulos livres para o Odoo." style="text-decoration:none;border-bottom:1px dotted #8a4bad;cursor:help;">OCA</abbr>
+      é um assistente que <strong style="color:#251d2b;">imprime</strong>: escolhem-se as faixas, sai um PDF.</p>
+      <p style="margin:0 0 12px;">Isso responde <em>"quanto está vencido"</em>. Não responde <em>"qual cobrança eu vou
+      resolver agora"</em>. Esta tela responde a segunda pergunta.</p>
+      <p style="margin:0 0 12px;">É uma <strong style="color:#251d2b;">lista navegável</strong>, não um papel: cada linha é um documento em aberto,
+      com as faixas de atraso em colunas, e dois botões que levam ao trabalho — abrir o documento,
+      ou ir conciliar.</p>
+
+      <h2 id="configuracao" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">Configuração</h2>
+      <p style="margin:0 0 12px;">Nenhuma. A tela é uma leitura direta das linhas em aberto das contas a receber, calculada
+      no momento em que você abre — <strong style="color:#251d2b;">não há cron, não há tabela intermediária e não há como
+      ficar desatualizada</strong>. As faixas são medidas contra a data de hoje, a cada consulta.</p>
+      <p style="margin:0 0 12px;">Onde fica: <span class="menupath" style="display:inline-block;background:#f1eaf6;border:1px solid #e5dbee;border-radius:6px;padding:1px 8px;font-size:13.5px;color:#251d2b;white-space:nowrap;">Contabilidade<i style="font-style:normal;color:#6e2f91;margin:0 4px;font-weight:700;">‣</i>Relatórios<i style="font-style:normal;color:#6e2f91;margin:0 4px;font-weight:700;">‣</i>Aged
+      Receivable</span>. Quem enxerga o quê segue as regras de acesso da contabilidade e a
+      separação por empresa, como o resto do sistema.</p>
+
+      <h2 id="faixas" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">As faixas</h2>
+      <p style="margin:0 0 12px;">São as mesmas do Enterprise, para que o número seja comparável com o de quem usa a versão
+      paga: <span class="field" style="font-weight:600;color:#251d2b;">A vencer</span>, <span class="field" style="font-weight:600;color:#251d2b;">1–30</span>,
+      <span class="field" style="font-weight:600;color:#251d2b;">31–60</span>, <span class="field" style="font-weight:600;color:#251d2b;">61–90</span>,
+      <span class="field" style="font-weight:600;color:#251d2b;">91–120</span> e <span class="field" style="font-weight:600;color:#251d2b;">Mais antigo</span>.</p>
+      <p style="margin:0 0 12px;">A régua é a <strong style="color:#251d2b;">data de vencimento</strong>. Quando a linha não tem vencimento — e no
+      livro migrado há muitas —, vale a data do lançamento, para que ela não desapareça da conta.</p>
+
+      <h2 id="dia-a-dia" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">O dia a dia</h2>
+      <p style="margin:0 0 12px;">Como é um modelo comum do Odoo, tudo o que a interface oferece funciona sem que ninguém
+      tenha precisado programar: <strong style="color:#251d2b;">agrupe por cliente</strong> e as faixas somam por grupo,
+      exatamente como na tela do Enterprise; filtre, ordene, busque, exporte para planilha. Há
+      ainda o <span class="field" style="font-weight:600;color:#251d2b;">Grupo econômico</span> e o <span class="field" style="font-weight:600;color:#251d2b;">Canal de
+      vendas</span> como colunas de agrupamento — a rede acima da loja, e o time que responde por
+      ela.</p>
+      <p style="margin:0 0 12px;">Em cada linha, dois gestos:</p>
+      <ul style="margin:0 0 14px 22px;padding:0;">
+        <li style="margin:0 0 7px;"><strong style="color:#251d2b;">Abrir</strong> leva à fatura ou ao pagamento em si.</li>
+        <li style="margin:0 0 7px;"><strong style="color:#251d2b;">Conciliar</strong> leva à tela de conciliação já posicionada naquele cliente e
+        naquela conta — que é onde a baixa manual acontece.</li>
+      </ul>
+      <div class="callout" style="border:1px solid #e5dbee;border-left:4px solid #6e2f91;border-radius:10px;background:#f1eaf6;padding:14px 18px;margin:0 0 16px;"><span class="title" style="font-weight:700;font-size:12px;letter-spacing:.08em;text-transform:uppercase;display:block;margin:0 0 4px;color:#6e2f91;">Nota</span><p style="margin:0 0 12px;">O botão
+      <span class="field" style="font-weight:600;color:#251d2b;">Conciliar</span> só aparece na linha em que há mesmo o que conciliar: é
+      preciso existir, do outro lado, saldo do mesmo cliente na mesma conta. Na carteira da casa
+      isso vale para menos de um quinto das linhas — mostrar o botão nas outras seria oferecer um
+      caminho que termina em tela vazia.</p></div>
+
+      <h2 id="sem-parceiro" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">As linhas sem cliente</h2>
+      <p style="margin:0 0 12px;">Linha em aberto sem parceiro <strong style="color:#251d2b;">não é escondida</strong>. Nenhum relatório de idade
+      as mostraria, e é justamente por isso que elas se acumulam: escondê-las faria o total da tela
+      discordar do razão. Elas aparecem agrupadas sob a ausência de cliente, e costumam ser o
+      primeiro trabalho que a tela revela.</p>
+
+      <h2 id="limitacoes" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">Limitações conhecidas</h2>
+      <ul style="margin:0 0 14px 22px;padding:0;">
+        <li style="margin:0 0 7px;"><strong style="color:#251d2b;">É leitura.</strong> Nada se escreve aqui; a tela mostra o que o razão diz, e o
+        conserto se faz no documento ou na conciliação.</li>
+        <li style="margin:0 0 7px;"><strong style="color:#251d2b;">Depende da conciliação da OCA</strong> (<span class="field" style="font-weight:600;color:#251d2b;">account_reconcile_oca</span>)
+        para o botão Conciliar — o Community 19 não traz a tela de conciliação de fábrica.</li>
+        <li style="margin:0 0 7px;"><strong style="color:#251d2b;">Não substitui o balancete.</strong> Ela olha as contas a receber em aberto, não
+        a contabilidade inteira.</li>
+      </ul>
+
+      <div class="seealso" style="border:1px solid #e5dbee;border-radius:12px;background:#f1eaf6;padding:16px 20px;margin:32px 0 0;">
+        <strong style="font-weight:700;font-size:12px;letter-spacing:.08em;text-transform:uppercase;display:block;margin:0 0 8px;color:#5d5266;">Ver também</strong>
+        <ul style="margin:0 0 14px 22px;padding:0;">
+          <li style="margin:0 0 7px;"><a href="/liber_site/static/docs/liber_aged_payable.html" target="_blank" rel="noopener" style="color:#6e2f91;">Contas a pagar por idade</a> — a mesma tela, do outro lado do razão.</li>
+          <li style="margin:0 0 7px;"><a href="/liber_site/static/docs/liber_in_payment.html" target="_blank" rel="noopener" style="color:#6e2f91;">Estado Em pagamento</a> — por que uma fatura baixada pode não ser dinheiro em caixa.</li>
+        </ul>
+      </div><p style="margin:28px 0 0;padding-top:14px;border-top:1px solid #e5dbee;font-size:13px;color:#5d5266;">Manual completo, com busca e as demais páginas: <a href="/liber_site/static/docs/liber_aged_receivable.html" target="_blank" rel="noopener" style="color:#6e2f91;">Contas a receber por idade</a>.</p></div>

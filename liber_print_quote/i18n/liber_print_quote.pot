@@ -1,0 +1,130 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* liber_print_quote
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0-20260630\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-09-09 19:15+0000\n"
+"PO-Revision-Date: 2026-09-09 19:15+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: liber_print_quote
+#. odoo-python
+#: code:addons/liber_print_quote/models/product_template.py:0
+msgid "%(h)s x %(w)s x %(d)s mm"
+msgstr ""
+
+#. module: liber_print_quote
+#. odoo-python
+#: code:addons/liber_print_quote/models/product_template.py:0
+msgid "%s g"
+msgstr ""
+
+#. module: liber_print_quote
+#. odoo-python
+#: code:addons/liber_print_quote/models/product_template.py:0
+msgid "Binding"
+msgstr ""
+
+#. module: liber_print_quote
+#: model:ir.model.fields,field_description:liber_print_quote.field_product_product__print_body_finish
+#: model:ir.model.fields,field_description:liber_print_quote.field_product_template__print_body_finish
+msgid "Body Finish"
+msgstr ""
+
+#. module: liber_print_quote
+#. odoo-python
+#: code:addons/liber_print_quote/models/product_template.py:0
+msgid "Body finish"
+msgstr ""
+
+#. module: liber_print_quote
+#: model:ir.model.fields,field_description:liber_print_quote.field_product_product__print_cover_finish
+#: model:ir.model.fields,field_description:liber_print_quote.field_product_template__print_cover_finish
+msgid "Cover Finish"
+msgstr ""
+
+#. module: liber_print_quote
+#. odoo-python
+#: code:addons/liber_print_quote/models/product_template.py:0
+msgid "Cover finish"
+msgstr ""
+
+#. module: liber_print_quote
+#. odoo-python
+#: code:addons/liber_print_quote/models/product_template.py:0
+msgid "Dimensions"
+msgstr ""
+
+#. module: liber_print_quote
+#: model:ir.model.fields,field_description:liber_print_quote.field_product_template__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: liber_print_quote
+#. odoo-python
+#: code:addons/liber_print_quote/models/product_template.py:0
+msgid "Finishing"
+msgstr ""
+
+#. module: liber_print_quote
+#. odoo-python
+#: code:addons/liber_print_quote/models/product_template.py:0
+msgid "Format"
+msgstr ""
+
+#. module: liber_print_quote
+#: model:ir.model.fields,field_description:liber_print_quote.field_product_template__id
+msgid "ID"
+msgstr ""
+
+#. module: liber_print_quote
+#: model:ir.model.fields,help:liber_print_quote.field_product_product__print_cover_finish
+#: model:ir.model.fields,help:liber_print_quote.field_product_template__print_cover_finish
+msgid ""
+"O que a ONIX não nomeia: laminação fosca ou brilho, reserva, verniz, "
+"hotstamp em cor, relevo. Vai no PDF que a gráfica orça, e não para a "
+"Metabooks -- lá só entra código de lista."
+msgstr ""
+
+#. module: liber_print_quote
+#. odoo-python
+#: code:addons/liber_print_quote/models/product_template.py:0
+msgid "Pages"
+msgstr ""
+
+#. module: liber_print_quote
+#: model:ir.model.fields,help:liber_print_quote.field_product_product__print_body_finish
+#: model:ir.model.fields,help:liber_print_quote.field_product_template__print_body_finish
+msgid ""
+"Papel do miolo, gramatura, cores de impressão (1x1, 4x4). A ONIX não tem "
+"nada disso."
+msgstr ""
+
+#. module: liber_print_quote
+#: model:ir.model,name:liber_print_quote.model_product_template
+msgid "Product"
+msgstr ""
+
+#. module: liber_print_quote
+#. odoo-python
+#: code:addons/liber_print_quote/models/product_template.py:0
+msgid "Weight"
+msgstr ""
+
+#. module: liber_print_quote
+#: model_terms:ir.ui.view,arch_db:liber_print_quote.view_product_template_print_finish
+msgid "laminação fosca com reserva, hotstamp ouro na lombada..."
+msgstr ""
+
+#. module: liber_print_quote
+#: model_terms:ir.ui.view,arch_db:liber_print_quote.view_product_template_print_finish
+msgid "pólen soft 80g, 1x1..."
+msgstr ""

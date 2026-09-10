@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <!-- O grupo econômico colado na razão social: documento, nome legal e
+         entidade acima dele contam uma história só (pedido de 23/08). A
+         âncora é o campo que o liber_nfe_xml põe na view — a dependência
+         garante que ele chegou primeiro. Só empresas: pessoa não pertence
+         a grupo. -->
+    <record id="view_partner_form_group" model="ir.ui.view">
+        <field name="name">res.partner.form.partner.group</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='legal_name']" position="after">
+                <field name="partner_group_id" invisible="not is_company"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_partner_filter_group" model="ir.ui.view">
+        <field name="name">res.partner.select.partner.group</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_res_partner_filter"/>
+        <field name="arch" type="xml">
+            <field name="category_id" position="after">
+                <field name="partner_group_id"/>
+            </field>
+            <filter name="group_company" position="after">
+                <filter name="group_partner_group" string="Commercial Group"
+                        context="{'group_by': 'commercial_group_display'}"/>
+            </filter>
+        </field>
+    </record>
+</odoo>

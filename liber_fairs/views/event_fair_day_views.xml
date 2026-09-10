@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_event_fair_day_form" model="ir.ui.view">
+        <field name="name">event.fair.day.form</field>
+        <field name="model">event.fair.day</field>
+        <field name="arch" type="xml">
+            <form string="Daily Closing">
+                <header>
+                    <button name="action_fill" type="object"
+                            string="Bring the table in" class="btn-secondary"
+                            invisible="state == 'closed'"
+                            help="Fills the count with what should be on the table. Correct downwards what was sold."/>
+                    <button name="action_close" type="object"
+                            string="Close the day" class="btn-primary"
+                            invisible="state == 'closed'"/>
+                    <!-- Sempre visível, dia aberto ou fechado. Botão que
+                         aparece e some conforme se digita faz a pessoa
+                         duvidar se existe. Apertado sem nada preenchido, ele
+                         diz o que falta preencher. -->
+                    <button name="action_replenish" type="object"
+                            string="Send a replenishment" class="btn-secondary"
+                            invisible="state == 'closed'"
+                            help="Sends what the count says ran out. Raises the fair grid and ships the difference to the same table."/>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_in_transit" type="object"
+                                class="oe_stat_button" icon="fa-truck"
+                                invisible="in_transit_count == 0">
+                            <field name="in_transit_count" widget="statinfo"
+                                   string="On the way"/>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <h1><field name="date"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="fair_id" readonly="1"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                        <group>
+                            <field name="qty_sold"/>
+                            <field name="picking_id" readonly="1"/>
+                            <field name="qty_replenish" invisible="1"/>
+                            <field name="is_sealed" invisible="1"/>
+                        </group>
+                    </group>
+                    <!-- A contagem trava ao fechar o dia; o pedido de
+                         reposição não: o dia fecha e a reposição do dia
+                         seguinte ainda se decide olhando esta mesma tabela. -->
+                    <field name="line_ids">
+                        <!-- Sem criar nem apagar linha: a contagem vem da
+                             mesa pelo botão "Trazer a mesa", não da mão de
+                             quem digita. Linha à mão aqui inventaria título
+                             que não foi para a feira, e apagar uma esconderia
+                             exemplar que está lá. -->
+                        <list editable="bottom" create="false" delete="false">
+                            <field name="product_id" readonly="1"/>
+                            <field name="qty_expected"
+                                   readonly="parent.state == 'closed'"/>
+                            <field name="qty_counted" class="o_fair_input"
+                                   readonly="parent.state == 'closed'"/>
+                            <field name="qty_sold" readonly="1"/>
+                            <field name="qty_min" readonly="1" optional="show"/>
+                            <field name="qty_in_transit" readonly="1"
+                                   optional="show"/>
+                            <field name="qty_replenish" class="o_fair_input"
+                                   readonly="parent.state == 'closed'"/>
+                        </list>
+                    </field>
+                    <field name="note" placeholder="What happened today..."/>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_event_fair_day_list" model="ir.ui.view">
+        <field name="name">event.fair.day.list</field>
+        <field name="model">event.fair.day</field>
+        <field name="arch" type="xml">
+            <list string="Daily Closings" default_order="date desc">
+                <field name="fair_id"/>
+                <field name="fair_state" widget="badge" optional="show"/>
+                <field name="date"/>
+                <field name="qty_sold"/>
+                <field name="picking_id"/>
+                <field name="state" widget="badge"
+                       decoration-success="state == 'closed'"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_event_fair_day_search" model="ir.ui.view">
+        <field name="name">event.fair.day.search</field>
+        <field name="model">event.fair.day</field>
+        <field name="arch" type="xml">
+            <search string="Daily Closings">
+                <field name="fair_id"/>
+                <field name="date"/>
+                <!-- O que importa nesta lista é o dia que ainda espera
+                     alguém. Dia de feira que já voltou é histórico: ele não
+                     some, mas sai da frente. -->
+                <!-- O que está em curso: a feira está na rua com livro na
+                     mesa. É o recorte que faz esta lista ser trabalho em vez
+                     de arquivo. -->
+                <filter name="filter_running" string="Fair running"
+                        domain="[('fair_state', '=', 'shipped')]"/>
+                <filter name="filter_to_close" string="Waiting to be closed"
+                        domain="[('state', '=', 'draft'),
+                                 ('fair_state', 'not in',
+                                  ('returned', 'settled', 'closed'))]"/>
+                <filter name="filter_today" string="Today"
+                        domain="[('date', '=', context_today().strftime('%Y-%m-%d'))]"/>
+                <filter name="filter_late" string="Late"
+                        domain="[('state', '=', 'draft'),
+                                 ('date', '&lt;', context_today().strftime('%Y-%m-%d')),
+                                 ('fair_state', '=', 'shipped')]"/>
+                <separator/>
+                <filter name="filter_open" string="Open"
+                        domain="[('state', '=', 'draft')]"/>
+                <filter name="filter_closed" string="Closed"
+                        domain="[('state', '=', 'closed')]"/>
+                <group>
+                    <filter name="group_fair" string="Fair"
+                            context="{'group_by': 'fair_id'}"/>
+                    <filter name="group_state" string="Status"
+                            context="{'group_by': 'state'}"/>
+                    <filter name="group_fair_state" string="Fair status"
+                            context="{'group_by': 'fair_state'}"/>
+                    <filter name="group_date" string="Day"
+                            context="{'group_by': 'date'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_event_fair_day" model="ir.actions.act_window">
+        <field name="name">Daily Closings</field>
+        <field name="res_model">event.fair.day</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_event_fair_day_search"/>
+        <!-- Abre já filtrado no que espera alguém. Quem quiser o histórico
+             tira o filtro; quem abre o menu quer saber o que falta fazer. -->
+        <field name="context">{'search_default_filter_running': 1,
+                               'search_default_group_fair': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">No fair out there right now</p>
+            <p>This list opens on the fairs that are running. Clear the filter
+               to see the closings of fairs already back.</p>
+        </field>
+    </record>
+</odoo>

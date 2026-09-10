@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="module_category_fairs" model="ir.module.category">
+        <field name="name">Fairs</field>
+        <field name="sequence">21</field>
+    </record>
+
+    <!-- v19: res.groups não carrega mais category_id; quem carrega é a
+         res.groups.privilege, e o grupo aponta para ela por privilege_id. -->
+    <record id="privilege_fairs" model="res.groups.privilege">
+        <field name="name">Fairs</field>
+        <field name="sequence">21</field>
+        <field name="category_id" ref="module_category_fairs"/>
+    </record>
+
+    <record id="group_fair_user" model="res.groups">
+        <field name="name">User</field>
+        <field name="privilege_id" ref="privilege_fairs"/>
+        <!-- Quem trabalha a feira é gente da casa: sem isto, o papel de
+             Feiras sozinho não escreve nem no chatter (mail.message pede
+             base.group_user) e a conferência morre de AccessError. -->
+        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+    </record>
+
+    <!-- Quem ABRE e FECHA uma feira é o gerente, pelo mesmo motivo do
+         contrato de consignação: planejar um evento compromete estoque da
+         casa fora da casa, por dias, sob a guarda de outra pessoa. O usuário
+         opera o que existe (lança contagem, fecha o dia, despacha a
+         reposição), e é ele quem está na praça com o celular na mão. O que
+         ele não faz é criar a feira nem apagá-la. Está no
+         security/ir.model.access.csv, que é CSV e não comporta comentário. -->
+    <record id="group_fair_manager" model="res.groups">
+        <field name="name">Administrator</field>
+        <field name="privilege_id" ref="privilege_fairs"/>
+        <field name="implied_ids" eval="[(4, ref('group_fair_user'))]"/>
+        <field name="user_ids" eval="[(4, ref('base.user_admin'))]"/>
+    </record>
+
+    <data noupdate="1">
+        <record id="event_fair_company_rule" model="ir.rule">
+            <field name="name">Fair: multi-company</field>
+            <field name="model_id" ref="model_event_fair"/>
+            <field name="global" eval="True"/>
+            <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+        </record>
+        <record id="event_fair_line_company_rule" model="ir.rule">
+            <field name="name">Fair Grid Line: multi-company</field>
+            <field name="model_id" ref="model_event_fair_line"/>
+            <field name="global" eval="True"/>
+            <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+        </record>
+        <record id="event_fair_day_company_rule" model="ir.rule">
+            <field name="name">Fair Daily Closing: multi-company</field>
+            <field name="model_id" ref="model_event_fair_day"/>
+            <field name="global" eval="True"/>
+            <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+        </record>
+    </data>
+</odoo>

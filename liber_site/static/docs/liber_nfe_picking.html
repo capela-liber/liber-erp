@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<script>
+/* Servido por /liber_site/static/docs/, este arquivo vem com uma semana de
+   cache e o docs.js sem versão -- e o índice monta a lista a partir dele. Foi
+   assim que a emissão de NF-e e o manual da Amazon ficaram invisíveis: o
+   catálogo em cache era anterior aos dois. A rota /liber/docs/ serve o mesmo
+   arquivo sem cache e com ?v=<mtime> nos assets. Quem chegar pelo caminho
+   antigo (favorito, link velho, resultado de busca) vai para lá antes de a
+   página montar qualquer coisa. */
+(function () {
+  var antigo = "/liber_site/static/docs/";
+  if (location.pathname.indexOf(antigo) === 0) {
+    location.replace("/liber/docs/" + location.pathname.slice(antigo.length) +
+                     location.search + location.hash);
+  }
+})();
+</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DANFE na transferência — Manuais do Liber</title>
+<link rel="icon" type="image/png" href="../logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;600;700&display=swap">
+<link rel="stylesheet" href="docs.css">
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="../index.html"><img src="../logo.png" alt="">liber<span>.</span></a>
+    <span class="doc-tag">Manuais</span>
+    <nav><a href="index.html">Índice</a><a href="../index.html">Site</a></nav>
+  </div>
+</header>
+<div class="wrap">
+  <div class="layout">
+    <aside class="sidebar" id="sidebar"></aside>
+    <article class="doc">
+      <div class="breadcrumb"><a href="index.html">Manuais</a><span class="sep">›</span>Logística<span class="sep">›</span>DANFE na transferência</div>
+      <h1>DANFE na transferência</h1>
+      <p class="lead">Quem embala e despacha vive na transferência, e não deve precisar do app de Faturamento para pegar o documento que viaja com a caixa.</p>
+
+      <h2 id="visao-geral">Visão geral</h2>
+      <p>A DANFE nasce no faturamento e é usada no depósito. Enquanto ela morar só lá, quem embala precisa abrir um aplicativo que não é o dele, procurar a nota do pedido certo e imprimir — para cada caixa. Este módulo leva o documento até onde o trabalho acontece.</p>
+
+      <h2 id="o-que-faz">O que passa a acontecer</h2>
+      <ul>
+        <li><strong>Autorizada a nota</strong>, o PDF da DANFE é postado no histórico de cada transferência por trás dela, e a transferência ganha o vínculo com a nota — número e situação na ficha.</li>
+        <li><strong>Cancelada depois</strong>, o histórico avisa: PDF anexado não pode ficar mentindo sozinho no registro.</li>
+        <li><strong>Na lista de transferências</strong>, dois filtros novos — <span class="field">Com nota fiscal</span> e <span class="field">Sem nota fiscal</span> —, que separam o que já pode viajar do que ainda espera emissão.</li>
+        <li><strong>No menu Imprimir</strong>, a opção <span class="field">Notas fiscais</span>: selecione os movimentos e as DANFEs saem num PDF só, para a bancada de expedição.</li>
+      </ul>
+      <p>Seleção com movimento sem nota não imprime pela metade — avisa qual falta.</p>
+
+      <h2 id="caminho">Como a nota encontra a transferência</h2>
+      <table>
+        <thead><tr><th>Documento</th><th>O elo</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Venda</strong></td><td>Linhas da fatura, linhas do pedido, transferências.</td></tr>
+          <tr><td><strong>Consignação e remessa</strong></td><td>A nota nasce sem linha ligada ao pedido; o elo é a origem carimbada com o nome do pedido.</td></tr>
+          <tr><td><strong>Acerto</strong></td><td>Nenhum. De propósito: o acerto fatura sem transferência — os livros já estão na prateleira do cliente.</td></tr>
+        </tbody>
+      </table>
+
+      <h2 id="volumes">Volumes e peso viajam pela mesma ponte</h2>
+      <p>A nota fiscal precisa declarar quantas caixas vão e quanto pesam. A caixa quem conta é quem embala, na transferência; o peso o Odoo soma dos produtos, e quem fatura corrige quando o cadastro não tem. <strong>Nota com movimentação não é emitida sem os dois</strong> — e o acerto, que não move caixa nenhuma, passa direto.</p>
+
+      <div class="callout"><span class="title">Nota</span><p>Falha na propagação nunca derruba a emissão: a nota já está autorizada na SEFAZ, e o aviso à logística se refaz na consulta seguinte da tarefa agendada. Documento fiscal não se desfaz porque um anexo não colou.</p></div>
+
+      <div class="seealso">
+        <strong>Ver também</strong>
+        <ul>
+          <li><a href="liber_nfe_focus.html">Emissão de NF-e</a> — de onde a DANFE vem.</li>
+          <li><a href="liber_transport.html">Transportadora e coleta</a> — o resto do que a caixa precisa para viajar.</li>
+        </ul>
+      </div>
+
+      <nav class="pager" id="pager"></nav>
+    </article>
+  </div>
+</div>
+<script src="docs.js"></script>
+</body>
+</html>

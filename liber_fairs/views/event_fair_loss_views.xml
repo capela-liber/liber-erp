@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_event_fair_loss_list" model="ir.ui.view">
+        <field name="name">event.fair.loss.list</field>
+        <field name="model">event.fair.loss</field>
+        <field name="arch" type="xml">
+            <list string="Fair Losses" editable="bottom"
+                  decoration-danger="to_explain">
+                <field name="fair_id"/>
+                <field name="date"/>
+                <field name="product_id"/>
+                <field name="qty" sum="Copies"/>
+                <field name="to_explain" column_invisible="1"/>
+                <!-- SEM widget de crachá: é aqui que a pergunta vira
+                     resposta, e crachá não se edita na lista. A linha em
+                     vermelho já diz quais faltam explicar. -->
+                <field name="reason"/>
+                <field name="stage"/>
+                <field name="charged_to_team" optional="show"/>
+                <field name="unit_cost" optional="hide"/>
+                <field name="value" sum="Value"/>
+                <field name="picking_id" optional="hide"/>
+                <field name="write_off_picking_id" optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_event_fair_loss_search" model="ir.ui.view">
+        <field name="name">event.fair.loss.search</field>
+        <field name="model">event.fair.loss</field>
+        <field name="arch" type="xml">
+            <search string="Fair Losses">
+                <field name="fair_id"/>
+                <field name="product_id"/>
+                <filter name="filter_to_explain" string="To explain"
+                        domain="[('to_explain', '=', True)]"/>
+                <separator/>
+                <filter name="filter_not_returned" string="Did not come back"
+                        domain="[('reason', '=', 'not_returned')]"/>
+                <separator/>
+                <filter name="filter_missing" string="Missing"
+                        domain="[('reason', '=', 'missing')]"/>
+                <filter name="filter_damaged" string="Damaged"
+                        domain="[('reason', '=', 'damaged')]"/>
+                <group>
+                    <filter name="group_fair" string="Fair"
+                            context="{'group_by': 'fair_id'}"/>
+                    <filter name="group_reason" string="Reason"
+                            context="{'group_by': 'reason'}"/>
+                    <filter name="group_product" string="Title"
+                            context="{'group_by': 'product_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_event_fair_loss" model="ir.actions.act_window">
+        <field name="name">Losses</field>
+        <field name="res_model">event.fair.loss</field>
+        <field name="view_mode">list,form</field>
+        <!-- Abre na FILA, e não agrupada: agrupado por motivo a tela dá
+             cabeçalho e nenhuma linha, e o que se vem fazer aqui é explicar o
+             que ainda não tem motivo. O agrupamento continua no painel de
+             busca, para quem quer ler o resumo. -->
+        <field name="context">{'search_default_filter_to_explain': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">No losses recorded</p>
+            <p>Every copy that left came back, was sold, or was given away on
+               purpose. Losses show up here when a return is checked.</p>
+        </field>
+    </record>
+</odoo>

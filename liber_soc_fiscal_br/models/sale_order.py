@@ -183,6 +183,61 @@ class SaleOrder(models.Model):
     remessa_note_label = fields.Char(
         compute='_compute_remessa_note_label', string="Note")
 
+    # ------------------------------------------------------------------
+    # A MESMA LÍNGUA DAS VENDAS
+    # ------------------------------------------------------------------
+    # "Deveria ser algo parecido com o que já temos em vendas, para não
+    # obrigar a equipe a decorar duas linguagens: item em menu, filtro,
+    # status."
+    #
+    # Em Vendas os três existem há sempre, e giram em torno de UM campo:
+    # `invoice_status` (Nada a faturar / A faturar / Totalmente faturado), que
+    # é badge na lista, filtro na busca e menu em "A faturar". Quem trabalha
+    # ali lê o estado, filtra por ele e o encontra no menu — três portas, um
+    # conceito.
+    #
+    # A consignação tinha o conceito e não tinha o campo: o estado da remessa
+    # vivia espalhado em `qty_delivered` de um lado e `remessa_note_move_id`
+    # do outro, e cada tela remontava a conta com um domínio composto. Ler a
+    # tela exigia saber a receita. Este campo é a tradução do `invoice_status`
+    # para o documento que a consignação emite -- mesmos três degraus, mesmas
+    # cores, mesma posição na linha:
+    #
+    #     Vendas         invoice_status : Nada a faturar  A faturar  Faturado
+    #     Consignação    remessa_status : Nada a emitir   A emitir   Emitida
+    #
+    # A palavra muda porque o documento muda -- remessa não é fatura, e o dono
+    # foi explícito nisso. A GRAMÁTICA não muda, que é o que a equipe decora.
+    remessa_status = fields.Selection([
+        ('no', "Nothing to Issue"),
+        ('to issue', "To Issue"),
+        ('issued', "Issued"),
+    ], string="Remessa Status", compute='_compute_remessa_status', store=True,
+        help="Where the consignment shipment note (REM/) stands, the way "
+             "Invoice Status says where the invoice stands.")
+
+    @api.depends('is_consignment', 'state', 'order_line.qty_delivered',
+                 'remessa_note_move_id', 'remessa_note_move_id.state')
+    def _compute_remessa_status(self):
+        for order in self:
+            nota = order.remessa_note_move_id
+            if nota and nota.state != 'cancel':
+                # Nota cancelada não é nota -- a mesma regra do rótulo e do
+                # botão. Cancelada, o pedido volta a "A emitir" sozinho.
+                order.remessa_status = 'issued'
+            elif not order.is_consignment or order.state not in ('sale',):
+                order.remessa_status = 'no'
+            elif any(line.qty_delivered > 0 for line in order.order_line
+                     if not line.display_type):
+                # A MESMA RÉGUA DO BOTÃO (`_remessa_linhas_a_faturar`): a nota
+                # declara o que SAIU. Um pedido cuja carga saiu e voltou tem
+                # líquido zero e não tem o que declarar -- o botão recusa, e o
+                # status tem de dizer o mesmo, senão a tela promete o que o
+                # botão nega.
+                order.remessa_status = 'to issue'
+            else:
+                order.remessa_status = 'no'
+
     @api.depends('remessa_note_move_id.name', 'remessa_note_move_id.state')
     def _compute_remessa_note_label(self):
         # Nota cancelada não é nota: o botão volta a dizer "A emitir", que é a

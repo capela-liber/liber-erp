@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- A ficha: o número e a situação da nota, só quando há nota. -->
+    <record id="view_picking_form_nfe" model="ir.ui.view">
+        <field name="name">stock.picking.form.nfe</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form"/>
+        <field name="arch" type="xml">
+            <field name="origin" position="after">
+                <field name="has_nfe" invisible="1"/>
+                <field name="nfe_numero" invisible="not has_nfe"/>
+                <field name="nfe_status" invisible="not has_nfe"/>
+            </field>
+        </field>
+    </record>
+
+    <!-- A lista: separar o que já pode viajar do que ainda espera nota. -->
+    <record id="view_picking_search_nfe" model="ir.ui.view">
+        <field name="name">stock.picking.search.nfe</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_internal_search"/>
+        <field name="arch" type="xml">
+            <xpath expr="//search" position="inside">
+                <separator/>
+                <filter name="filter_has_nfe" string="With Fiscal Note"
+                        domain="[('has_nfe', '=', True)]"/>
+                <filter name="filter_no_nfe" string="Without Fiscal Note"
+                        domain="[('has_nfe', '=', False)]"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

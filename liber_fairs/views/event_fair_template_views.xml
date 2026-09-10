@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- A AÇÃO VEM ANTES da view que a chama: `%(...)d` se resolve na
+         leitura, de cima para baixo. Com ela no fim do arquivo o upgrade
+         passa (o id já existe da versão anterior) e a INSTALAÇÃO DO ZERO
+         morre com "External ID not found" — foi o que o staging pegou. -->
+    <record id="action_event_fair_add_products" model="ir.actions.act_window">
+        <field name="name">Add Titles</field>
+        <field name="res_model">event.fair.add.products</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <record id="view_event_fair_template_form" model="ir.ui.view">
+        <field name="name">event.fair.template.form</field>
+        <field name="model">event.fair.template</field>
+        <field name="arch" type="xml">
+            <form string="Grid Template">
+                <sheet>
+                    <widget name="web_ribbon" title="Archived" bg_color="text-bg-danger"
+                            invisible="active"/>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1><field name="name" placeholder="Book fair, general profile"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                            <field name="active" invisible="1"/>
+                        </group>
+                        <group>
+                            <field name="line_count"/>
+                            <field name="qty_total"/>
+                        </group>
+                    </group>
+                    <div class="mb-2">
+                        <button name="%(action_event_fair_add_products)d" type="action"
+                                string="Add titles" class="btn-secondary"
+                                context="{'default_template_id': id}"/>
+                    </div>
+                    <field name="line_ids">
+                        <list editable="bottom">
+                            <field name="product_id"/>
+                            <field name="qty_planned"/>
+                            <field name="qty_min"/>
+                        </list>
+                    </field>
+                    <field name="note" placeholder="What this grid is for, and what the last fair taught about it..."/>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_event_fair_template_list" model="ir.ui.view">
+        <field name="name">event.fair.template.list</field>
+        <field name="model">event.fair.template</field>
+        <field name="arch" type="xml">
+            <list string="Grid Templates">
+                <field name="name"/>
+                <field name="line_count"/>
+                <field name="qty_total"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="action_event_fair_template" model="ir.actions.act_window">
+        <field name="name">Grid Templates</field>
+        <field name="res_model">event.fair.template</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Save the first grid</p>
+            <p>A recurring fair has a similar grid every year. Save one and
+               apply it to the next event instead of building it again.</p>
+        </field>
+    </record>
+
+    <!-- assistentes -->
+    <record id="view_event_fair_add_products_form" model="ir.ui.view">
+        <field name="name">event.fair.add.products.form</field>
+        <field name="model">event.fair.add.products</field>
+        <field name="arch" type="xml">
+            <form string="Add Titles">
+                <field name="fair_id" invisible="1"/>
+                <field name="template_id" invisible="1"/>
+                <group string="Pick the shelf">
+                    <group>
+                        <field name="filter_categ_id"/>
+                        <field name="filter_tag_ids" widget="many2many_tags"/>
+                        <field name="min_stock"/>
+                    </group>
+                    <group>
+                        <label for="filter_price_min" string="Price"/>
+                        <div class="o_row">
+                            <field name="filter_price_min" nolabel="1"/>
+                            <span class="mx-1">a</span>
+                            <field name="filter_price_max" nolabel="1"/>
+                        </div>
+                        <field name="order"/>
+                        <field name="months"
+                               invisible="order != 'bestsellers'"/>
+                        <field name="limit"/>
+                    </group>
+                </group>
+                <div class="mb-2">
+                    <button name="action_search" type="object" string="Search"
+                            class="btn-secondary"/>
+                    <field name="found_count" class="ms-2 oe_inline"
+                           readonly="1" invisible="not found_count"/>
+                </div>
+                <group>
+                    <field name="qty_planned"/>
+                    <field name="qty_min"/>
+                    <field name="skip_existing"/>
+                </group>
+                <field name="warehouse_location_id" invisible="1"/>
+                <field name="product_ids" widget="many2many"
+                       options="{'no_create': True}"
+                       context="{'location': warehouse_location_id}">
+                    <list>
+                        <field name="default_code" optional="show"/>
+                        <field name="name"/>
+                        <field name="barcode" optional="show"/>
+                        <field name="qty_available" string="In stock"/>
+                        <field name="free_qty" string="Free"/>
+                        <field name="list_price"/>
+                    </list>
+                </field>
+                <footer>
+                    <button name="action_add" type="object" string="Add to the grid"
+                            class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_event_fair_apply_template_form" model="ir.ui.view">
+        <field name="name">event.fair.apply.template.form</field>
+        <field name="model">event.fair.apply.template</field>
+        <field name="arch" type="xml">
+            <form string="Apply a Template">
+                <field name="fair_id" invisible="1"/>
+                <group>
+                    <field name="template_id"/>
+                    <field name="mode" widget="radio"/>
+                </group>
+                <p class="text-muted">
+                    Replacing clears only what has not shipped yet: a title
+                    already sent stays in the grid.
+                </p>
+                <footer>
+                    <button name="action_apply" type="object" string="Apply"
+                            class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_event_fair_apply_template" model="ir.actions.act_window">
+        <field name="name">Apply a Template</field>
+        <field name="res_model">event.fair.apply.template</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <record id="view_event_fair_save_template_form" model="ir.ui.view">
+        <field name="name">event.fair.save.template.form</field>
+        <field name="model">event.fair.save.template</field>
+        <field name="arch" type="xml">
+            <form string="Save as Template">
+                <field name="fair_id" invisible="1"/>
+                <group>
+                    <field name="name"/>
+                    <field name="use_sent"/>
+                </group>
+                <footer>
+                    <button name="action_save" type="object" string="Save"
+                            class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_event_fair_save_template" model="ir.actions.act_window">
+        <field name="name">Save as Template</field>
+        <field name="res_model">event.fair.save.template</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+</odoo>

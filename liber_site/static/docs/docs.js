@@ -33,9 +33,14 @@ var DOCS = [
   ]},
   { area: "Produção", desc: "O livro impresso quando alguém compra — tiragem, frete e entrega.", items: [
     { slug: "liber_metabrasil", title: "Impressão sob demanda (Metabrasil)", desc: "Preço por tiragem, cotação de frete, dropship e acompanhamento da gráfica." },
+    { slug: "liber_print_quote", title: "Cotação de impressão", desc: "A ficha técnica do livro viaja no pedido de cotação — a gráfica orça sem precisar perguntar." },
+  ]},
+  { area: "Eventos", desc: "A feira: o estoque que sai da editora, vende num balcão que não é o ERP, e volta incompleto.", items: [
+    { slug: "liber_fairs", title: "Eventos e feiras", desc: "O evento com grade, remessa em duas pernas, fechamento diário, caixa de PDV na mesa, perdas explicadas e a conta a pagar da equipe." },
   ]},
   { area: "Logística", desc: "Do depósito à porta do cliente — a transportadora de cada um, os volumes da nota e a coleta pedida em lote.", items: [
     { slug: "liber_transport", title: "Transportadora e coleta", desc: "A transportadora do cliente na entrega, caixas e peso para a nota, e o pedido de coleta por e-mail." },
+    { slug: "liber_nfe_picking", title: "DANFE na transferência", desc: "O documento que viaja com a caixa aparece onde a caixa é embalada, e sai em lote para a expedição." },
   ]},
   { area: "Arquivos", desc: "O acervo da editora nas nuvens, com o Odoo de porteiro — mesma disciplina em três estantes.", items: [
     { slug: "liber_cloud_files", title: "O chassi dos arquivos", desc: "A disciplina que as três estantes herdam: conta por empresa, pasta com dono, e o porteiro na frente." },
@@ -45,6 +50,7 @@ var DOCS = [
   ]},
   { area: "Comercial", desc: "Como a editora classifica quem compra, e o que essa classificação decide.", items: [
     { slug: "liber_partner_commercial", title: "Canal de vendas do cliente", desc: "A classificação comercial na ficha, herdada pelos documentos — e o desconto que não se dilui no preço." },
+    { slug: "liber_partner_group", title: "Grupo econômico do cliente", desc: "A rede acima da filial: uma linha para o comercial, oito CNPJs para o fisco." },
   ]},
   { area: "Atendimento", desc: "A conversa com o cliente dentro do sistema — quem escreveu, quem responde, e em quanto tempo.", items: [
     { slug: "liber_support", title: "Atendimento ao cliente", desc: "O e-mail da caixa comercial vira chamado, a triagem vira quadro e o prazo vira relógio em horas úteis." },
@@ -57,7 +63,14 @@ var DOCS = [
     { slug: "liber_geo_brasil", title: "O mapa do Brasil no dashboard", desc: "Vendas por UF no lugar do mapa-múndi, e exemplares no lugar de pedidos." },
     { slug: "liber_aged_receivable", title: "Contas a receber por idade", desc: "O saldo aberto de cada cliente por faixa de atraso, com o caminho até a conciliação." },
     { slug: "liber_aged_payable", title: "Contas a pagar por idade", desc: "A gêmea do outro lado do razão: o que a casa deve, por fornecedor e por faixa." },
+    { slug: "liber_receivables_dashboard", title: "Histórico dos recebíveis", desc: "A foto mensal da carteira por faixa de atraso: o relatório de idade sabe hoje, este sabe março." },
+    { slug: "liber_intercompany_mirror", title: "O espelho entre empresas", desc: "O documento que a empresa irmã ganhou, a um clique — e o caminho de volta." },
     { slug: "liber_roles", title: "Papéis de acesso", desc: "Perfis prontos por área e a conta de visitante somente-leitura." },
+  ]},
+  { area: "Ferramentas", desc: "Consertos pequenos que valem para o sistema inteiro — e que se sente falta justamente quando ninguém os vê.", items: [
+    { slug: "liber_base_import_br", title: "Importar planilha em formato brasileiro", desc: "59,90 entra como 59,90, e 05/03/2026 como 5 de março." },
+    { slug: "liber_account_group_panel", title: "Plano de contas por grupo", desc: "A lateral do plano mostra a hierarquia de verdade, e não os dois primeiros caracteres do código." },
+    { slug: "liber_dashboard_top", title: "Os primeiros do gráfico", desc: "O painel de Produtos com os cinquenta mais vendidos, pelo título — sem a cauda e sem o ISBN na frente." },
   ]},
   { area: "Referência", desc: "O que vale para o sistema inteiro, e por isso não cabe em nenhum manual sozinho.", items: [
     { slug: "instalacao", title: "Roteiro de instalação", desc: "Do computador vazio ao sistema no ar: máquina, Linux, Docker, git, a escada dev-staging-prod, acesso de fora e backup." },

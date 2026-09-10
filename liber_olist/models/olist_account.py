@@ -381,7 +381,7 @@ class OlistAccount(models.Model):
         completadas = self.env['olist.order']._completar_faturas_pendentes(
             account=self)
 
-        self.last_sync = fields.Datetime.now()
+        self._carimba_last_sync()
         _logger.info("Olist %s: %s imported, %s cancelled, %s already known "
                      "(%s adopted), %s invoices completed.",
                      self.name, imported, cancelled, skipped, adopted,
@@ -389,6 +389,41 @@ class OlistAccount(models.Model):
         return {'imported': imported, 'cancelled': cancelled,
                 'skipped': skipped, 'adopted': adopted,
                 'completadas': completadas}
+
+
+    def _carimba_last_sync(self):
+        """Grava "Notas lidas em" FORA da transação da rodada.
+
+        Duas rotinas escrevem na MESMA linha de `olist_account`: o push de
+        estoque grava `stock_push_cursor` a cada livro (de dois em dois
+        segundos, durante a varredura inteira) e a leitura de notas grava
+        `last_sync` no fim de uma transação de trinta segundos. O Postgres
+        recusa a segunda com `could not serialize access due to concurrent
+        update`, e a rodada inteira de notas morre por causa de um carimbo de
+        relógio: quatro falhas seguidas em 08/09/2026, com o Odoo ameaçando
+        desativar o cron.
+
+        A gravação vai para um cursor PRÓPRIO, que abre, escreve e fecha na
+        hora. Assim a linha fica presa por milissegundos em vez de meio
+        minuto, e o carimbo deixa de poder derrubar o trabalho de verdade. Se
+        ainda assim ele colidir, o resultado é um `last_sync` desatualizado --
+        um campo informativo -- e não uma rodada perdida.
+
+        Em teste escreve direto: cursor novo não enxerga a transação do teste,
+        e o registro nem existiria lá.
+        """
+        self.ensure_one()
+        agora = fields.Datetime.now()
+        if tools.config['test_enable'] or modules.module.current_test:
+            self.last_sync = agora
+            return True
+        try:
+            with self.pool.cursor() as cr:
+                self.with_env(self.env(cr=cr)).last_sync = agora
+        except Exception as exc:  # noqa: BLE001 - carimbo não derruba rodada
+            _logger.warning("Olist %s: não deu para carimbar last_sync (%s).",
+                            self.name, exc)
+        return True
 
     # ------------------------------------------------------------------
     # Products

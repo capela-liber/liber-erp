@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- A EQUIPE DO EVENTO é gente de fora da rotina da casa: entra para
+         trabalhar uma feira e sai quando a mercadoria volta. Por isso ela tem
+         um grupo próprio, e não o papel permanente de Feiras: o grupo carrega
+         a regra que a prende ao evento dela, e o Comercial da casa (que não
+         está neste grupo) continua enxergando tudo.
+
+         Odoo soma as regras dos grupos de cada pessoa com OU. Quem está SÓ
+         aqui vê o evento em que trabalha; quem também é do Comercial vê o
+         resto por causa do outro grupo. -->
+    <record id="group_fair_field" model="res.groups">
+        <field name="name">Event staff</field>
+        <field name="privilege_id" ref="liber_fairs.privilege_fairs"/>
+        <field name="implied_ids"
+               eval="[(4, ref('liber_fairs.group_fair_user'))]"/>
+    </record>
+
+    <!-- Quem só opera o balcão. Não é a "equipe do evento" (que enxerga o
+         evento inteiro): é quem foi contratado para vender três dias, e a
+         única tela dele é o caixa. O grupo existe para carregar a regra
+         abaixo, que o prende AO CAIXA DELE. -->
+    <record id="group_fair_cashier" model="res.groups">
+        <field name="name">Event cashier</field>
+        <field name="privilege_id" ref="liber_fairs.privilege_fairs"/>
+        <field name="implied_ids"
+               eval="[(4, ref('point_of_sale.group_pos_user'))]"/>
+    </record>
+
+    <data noupdate="1">
+        <record id="rule_fair_cashier_own_register" model="ir.rule">
+            <field name="name">Event cashier: only their own register</field>
+            <field name="model_id" ref="point_of_sale.model_pos_config"/>
+            <field name="domain_force">[('fair_cashier_id.partner_id.user_ids', '=', user.id)]</field>
+            <field name="groups" eval="[(4, ref('group_fair_cashier'))]"/>
+        </record>
+
+        <record id="rule_fair_cashier_own_session" model="ir.rule">
+            <field name="name">Event cashier: only sessions of their register</field>
+            <field name="model_id" ref="point_of_sale.model_pos_session"/>
+            <field name="domain_force">[('config_id.fair_cashier_id.partner_id.user_ids', '=', user.id)]</field>
+            <field name="groups" eval="[(4, ref('group_fair_cashier'))]"/>
+        </record>
+
+        <record id="rule_fair_staff_own_event" model="ir.rule">
+            <field name="name">Event staff: only their own events</field>
+            <field name="model_id" ref="liber_fairs.model_event_fair"/>
+            <field name="domain_force">[('cashier_ids.partner_id.user_ids', '=', user.id)]</field>
+            <field name="groups" eval="[(4, ref('group_fair_field'))]"/>
+        </record>
+
+        <record id="rule_fair_staff_own_day" model="ir.rule">
+            <field name="name">Event staff: closings of their own events</field>
+            <field name="model_id" ref="liber_fairs.model_event_fair_day"/>
+            <field name="domain_force">[('fair_id.cashier_ids.partner_id.user_ids', '=', user.id)]</field>
+            <field name="groups" eval="[(4, ref('group_fair_field'))]"/>
+        </record>
+
+        <record id="rule_fair_staff_own_line" model="ir.rule">
+            <field name="name">Event staff: grid of their own events</field>
+            <field name="model_id" ref="liber_fairs.model_event_fair_line"/>
+            <field name="domain_force">[('fair_id.cashier_ids.partner_id.user_ids', '=', user.id)]</field>
+            <field name="groups" eval="[(4, ref('group_fair_field'))]"/>
+        </record>
+
+        <record id="rule_fair_staff_own_loss" model="ir.rule">
+            <field name="name">Event staff: losses of their own events</field>
+            <field name="model_id" ref="liber_fairs.model_event_fair_loss"/>
+            <field name="domain_force">[('fair_id.cashier_ids.partner_id.user_ids', '=', user.id)]</field>
+            <field name="groups" eval="[(4, ref('group_fair_field'))]"/>
+        </record>
+
+        <record id="rule_fair_staff_own_cashier" model="ir.rule">
+            <field name="name">Event staff: the team of their own events</field>
+            <field name="model_id" ref="model_event_fair_cashier"/>
+            <field name="domain_force">[('fair_id.cashier_ids.partner_id.user_ids', '=', user.id)]</field>
+            <field name="groups" eval="[(4, ref('group_fair_field'))]"/>
+        </record>
+
+        <!-- Recebimentos: a equipe confere a carga DELA. Movimento que não é
+             de feira nenhuma não é assunto de quem está na praça. -->
+        <record id="rule_fair_staff_own_picking" model="ir.rule">
+            <field name="name">Event staff: transfers of their own events</field>
+            <field name="model_id" ref="stock.model_stock_picking"/>
+            <field name="domain_force">[('fair_id.cashier_ids.partner_id.user_ids', '=', user.id)]</field>
+            <field name="groups" eval="[(4, ref('group_fair_field'))]"/>
+        </record>
+    </data>
+</odoo>

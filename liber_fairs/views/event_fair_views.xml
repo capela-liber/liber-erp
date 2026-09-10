@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_event_fair_form" model="ir.ui.view">
+        <field name="name">event.fair.form</field>
+        <field name="model">event.fair</field>
+        <field name="arch" type="xml">
+            <form string="Fair">
+                <header>
+                    <button name="action_plan" type="object" string="Plan"
+                            class="btn-primary" invisible="state != 'draft'"/>
+                    <button name="action_ship" type="object" string="Ship"
+                            class="btn-primary"
+                            invisible="state not in ('planned', 'shipped')"
+                            help="Sends what is planned and has not gone yet. Raise a planned quantity and click again to send a replenishment."/>
+                    <button name="action_return" type="object"
+                            string="Return" invisible="state != 'shipped'"
+                            help="Sends back what is on the table. The warehouse checks what actually arrives, in Receipts."/>
+                    <button name="action_draft" type="object" string="Back to Draft"
+                            invisible="state in ('draft', 'returned', 'settled', 'closed')"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,planned,shipped,returned"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_pickings" type="object"
+                                class="oe_stat_button" icon="fa-truck">
+                            <field name="picking_count" widget="statinfo"
+                                   string="Transfers"/>
+                        </button>
+                        <button name="action_view_losses" type="object"
+                                class="oe_stat_button" icon="fa-exclamation-triangle"
+                                invisible="loss_count == 0">
+                            <field name="loss_count" widget="statinfo"
+                                   string="Losses"/>
+                        </button>
+                        <button name="action_view_days" type="object"
+                                class="oe_stat_button" icon="fa-calendar-check-o">
+                            <field name="day_count" widget="statinfo"
+                                   string="Days"/>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1><field name="name" placeholder="Fair name"/></h1>
+                        <h3><field name="code" readonly="1"/></h3>
+                    </div>
+                    <group>
+                        <group string="Event">
+                            <field name="date_start"/>
+                            <field name="date_end"/>
+                            <field name="team_id"/>
+                            <field name="location"/>
+                        </group>
+                        <group string="Who answers">
+                            <field name="responsible_id"/>
+                            <field name="analytic_account_id"
+                                   options="{'no_create': True}"
+                                   readonly="1"/>
+                            <field name="partner_id"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                        <group string="Copies">
+                            <field name="qty_planned"/>
+                            <field name="qty_sent"/>
+                            <field name="qty_sold"/>
+                            <field name="qty_returned"/>
+                            <field name="qty_lost"/>
+                            <field name="qty_on_shelf"/>
+                            <field name="stock_location_id" readonly="1"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Grid" name="grid">
+                            <div class="mb-2">
+                                <button name="%(action_event_fair_add_products)d" type="action"
+                                        string="Add titles" class="btn-secondary"
+                                        context="{'default_fair_id': id}"/>
+                                <button name="%(action_event_fair_apply_template)d" type="action"
+                                        string="Apply a template" class="btn-secondary ms-1"
+                                        context="{'default_fair_id': id}"/>
+                                <button name="%(action_event_fair_save_template)d" type="action"
+                                        string="Save as template" class="btn-link ms-1"
+                                        invisible="not line_ids"
+                                        context="{'default_fair_id': id}"/>
+                            </div>
+                            <field name="line_ids">
+                                <list editable="bottom" decoration-danger="is_short">
+                                    <field name="is_short" column_invisible="1"/>
+                                    <field name="product_id"/>
+                                    <field name="qty_warehouse" readonly="1"/>
+                                    <field name="qty_free" readonly="1"/>
+                                    <field name="qty_planned"/>
+                                    <field name="qty_min"/>
+                                    <field name="qty_sent" readonly="1"/>
+                                    <field name="qty_in_transit" readonly="1"
+                                           optional="show"/>
+                                    <field name="qty_sold" readonly="1"/>
+                                    <field name="qty_returned" readonly="1"/>
+                                    <field name="qty_on_shelf" readonly="1"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Daily closings" name="days">
+                            <field name="day_ids" readonly="1">
+                                <list>
+                                    <field name="date"/>
+                                    <field name="qty_sold"/>
+                                    <field name="state" widget="badge"/>
+                                    <field name="picking_id"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_event_fair_list" model="ir.ui.view">
+        <field name="name">event.fair.list</field>
+        <field name="model">event.fair</field>
+        <field name="arch" type="xml">
+            <list string="Fairs">
+                <field name="code"/>
+                <field name="name"/>
+                <field name="date_start"/>
+                <field name="date_end"/>
+                <field name="location"/>
+                <field name="responsible_id"/>
+                <field name="qty_sent"/>
+                <field name="qty_sold"/>
+                <field name="qty_on_shelf"/>
+                <field name="state" widget="badge"
+                       decoration-success="state in ('returned', 'settled', 'closed')"
+                       decoration-info="state == 'shipped'"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- O calendário mostra o PERÍODO DO EVENTO. A janela logística (envio ->
+         retorno) é sempre maior e não cabe na mesma barra sem mentir sobre
+         quando a feira acontece; ela mora nos campos, e é o que a checagem de
+         sobreposição de acervo vai ler quando essa função chegar. -->
+    <record id="view_event_fair_calendar" model="ir.ui.view">
+        <field name="name">event.fair.calendar</field>
+        <field name="model">event.fair</field>
+        <field name="arch" type="xml">
+            <calendar string="Fairs" date_start="date_start" date_stop="date_end"
+                      color="team_id" mode="month" event_open_popup="true"
+                      quick_create="0">
+                <field name="responsible_id" filters="1"/>
+                <field name="location"/>
+                <field name="state"/>
+            </calendar>
+        </field>
+    </record>
+
+    <record id="view_event_fair_search" model="ir.ui.view">
+        <field name="name">event.fair.search</field>
+        <field name="model">event.fair</field>
+        <field name="arch" type="xml">
+            <search string="Fairs">
+                <field name="name"/>
+                <field name="code"/>
+                <field name="location"/>
+                <field name="partner_id"/>
+                <field name="responsible_id"/>
+                <field name="team_id"/>
+                <!-- "Books out": os livros saíram e ainda não voltaram. O
+                     rótulo anterior era "Na praça", gíria de quem trabalha
+                     com feira para a cidade onde o evento acontece. O dono da
+                     casa precisou perguntar o que era, o que já é a resposta
+                     sobre o rótulo. -->
+                <filter name="filter_running" string="Books out"
+                        domain="[('state', '=', 'shipped')]"/>
+                <filter name="filter_returned" string="Already back"
+                        domain="[('state', 'in', ('returned', 'settled', 'closed'))]"/>
+                <!-- Encerrada é RETORNADA: a feira acaba quando a mercadoria
+                     volta, não quando a data passa. Acertado e Encerrado são
+                     degraus do faturamento, que ainda não existe; filtrar só
+                     por "closed" fazia este filtro não filtrar nada, e a
+                     lista mostrava para sempre feira que já tinha voltado. -->
+                <filter name="filter_open" string="Not closed"
+                        domain="[('state', 'not in', ('returned', 'settled', 'closed'))]"/>
+                <separator/>
+                <filter name="filter_mine" string="My fairs"
+                        domain="[('responsible_id', '=', uid)]"/>
+                <group>
+                    <filter name="group_state" string="Status"
+                            context="{'group_by': 'state'}"/>
+                    <filter name="group_team" string="Sales Channel"
+                            context="{'group_by': 'team_id'}"/>
+                    <filter name="group_responsible" string="Responsible"
+                            context="{'group_by': 'responsible_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_event_fair" model="ir.actions.act_window">
+        <field name="name">Fairs</field>
+        <field name="res_model">event.fair</field>
+        <field name="view_mode">list,calendar,form</field>
+        <field name="context">{'search_default_filter_open': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Open the first fair</p>
+            <p>A fair is not a sale: it is stock that leaves the house for a
+               few days and comes back incomplete. Everything about the event
+               hangs here.</p>
+        </field>
+    </record>
+
+    <record id="action_event_fair_calendar" model="ir.actions.act_window">
+        <field name="name">Fair Calendar</field>
+        <field name="res_model">event.fair</field>
+        <field name="view_mode">calendar,list,form</field>
+    </record>
+</odoo>

@@ -139,6 +139,7 @@
         <li>Clique em <b>Gerar planilha</b>. O arquivo <code>.xlsx</code> sai com o nome que a Metabooks espera (por exemplo <code>V_BR5108985_20260720_Alteracoes.xlsx</code>) e com <b>as células alteradas em vermelho</b> — a própria planilha é o documento de conferência: o que está vermelho é o que estamos pedindo para mudar.</li>
         <li>Clique em <b>Enviar por FTP</b>. Ele gera a planilha, sobe para a Metabooks e, se o servidor a aceitou, marca o envio e tira os livros da fila. Se falhar, a tela mostra o motivo e nada muda. A planilha fica arquivada no histórico do envio de qualquer jeito &mdash; nada é baixado para o seu computador sem você pedir. Nas bases de teste (dev e staging) o envio é recusado de propósito: elas carregam o dado e a senha da produção, e um clique ali chegaria à Metabooks de verdade.</li>
         <li>Se preferir conferir antes, clique em <b>Gerar planilha</b> e depois em <b>Baixar</b>. Entregando à mão, use <b>Marcar como enviada</b> só depois que o upload der certo: é esse passo, e não a geração do arquivo, que tira os livros da fila.</li>
+        <li>Depois da meia-noite a Metabooks manda por e-mail uma planilha dizendo o que entrou e o que recusou. Suba esse arquivo em <span class="menupath">Envios<i>‣</i>Ler retorno da Metabooks</span> (ou pelo botão dentro do envio): os livros recusados voltam para a fila com o motivo registrado, e aparecem em vermelho na aba Livros. A recusa deles é do <b>registro inteiro</b> &mdash; um livro barrado por uma coluna perde também as outras que iam na mesma linha.</li>
       </ol>
       <p>O histórico fica: <span class="menupath">Metabooks<i>‣</i>Envios<i>‣</i>Histórico</span> lista, campo a campo, tudo o que já foi pedido à Metabooks, em qual envio e com qual antes/depois.</p>
 
@@ -148,7 +149,7 @@
       </figure>
 
       <div class="callout note"><span class="title">Nota</span>
-        <p>A atualização na Metabooks é <b>incremental</b>: a planilha leva só o <abbr class="sigla" title="International Standard Book Number: o número internacional que identifica cada edição de livro.">ISBN</abbr>, o título (para a linha ser legível) e as colunas que mudaram — o que não vai na planilha permanece intocado lá. Das 74 colunas do modelo oficial, o sistema sabe preencher as que de fato existem no cadastro daqui; as demais nunca são escritas.</p>
+        <p>A atualização na Metabooks é <b>incremental</b>: a planilha leva só o <abbr class="sigla" title="International Standard Book Number: o número internacional que identifica cada edição de livro.">ISBN</abbr>, o título (para a linha ser legível) e as colunas que mudaram — o que não vai na planilha permanece intocado lá. Das 74 colunas do modelo oficial, o sistema sabe preencher as que de fato existem no cadastro daqui; as demais nunca são escritas. A coluna <b>Série</b> é a exceção que já custou caro: ela aceita apenas o <i>código</i> de uma série já cadastrada na Metabooks (no formato <code>AAA123456</code>), nunca o nome da coleção. Enquanto a coleção não tiver esse código, a coluna não é enviada &mdash; foi o que recusou 49 livros na remessa de 03/09/2026.</p>
       </div>
 
       <h2 id="regras">Regras e guardas</h2>

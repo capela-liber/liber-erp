@@ -2002,3 +2002,39 @@ msgstr "Encadernação (ONIX)"
 #: model:ir.model.fields,field_description:liber_metabooks_integration.field_product_template__metabooks_ncm
 msgid "NCM (Metabooks)"
 msgstr "NCM (Metabooks)"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_product_product__metabooks_has_lamination
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_product_template__metabooks_has_lamination
+msgid "Laminated Cover"
+msgstr "Capa laminada"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_product_product__metabooks_has_emboss
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_product_template__metabooks_has_emboss
+msgid "Embossed Cover"
+msgstr "Capa com relevo"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_product_product__metabooks_has_foil_cover
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_product_template__metabooks_has_foil_cover
+msgid "Foil on Cover"
+msgstr "Hotstamp na capa"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_product_product__metabooks_has_foil_jacket
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_product_template__metabooks_has_foil_jacket
+msgid "Foil on Jacket"
+msgstr "Hotstamp na sobrecapa"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_product_product__metabooks_has_decorated_edges
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_product_template__metabooks_has_decorated_edges
+msgid "Decorated Page Edges"
+msgstr "Faca"
+
+#. module: liber_metabooks_integration
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_product_product__metabooks_has_belly_band
+#: model:ir.model.fields,field_description:liber_metabooks_integration.field_product_template__metabooks_has_belly_band
+msgid "Belly Band"
+msgstr "Cinta"

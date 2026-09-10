@@ -1,0 +1,115 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* liber_partner_group
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-08-23 12:00+0000\n"
+"PO-Revision-Date: 2026-08-23 12:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: liber_partner_group
+#: model:ir.model,name:liber_partner_group.model_liber_partner_group
+msgid "Commercial Group (bookstore network)"
+msgstr "Grupo econômico (rede de livrarias)"
+
+#. module: liber_partner_group
+#: model:ir.model.fields,field_description:liber_partner_group.field_res_partner__partner_group_id
+#: model:ir.model.fields,field_description:liber_partner_group.field_res_users__partner_group_id
+#: model:ir.model.fields,field_description:liber_partner_group.field_sale_report__partner_group_id
+#: model:ir.model.fields,field_description:liber_partner_group.field_nfe_xml_panel__partner_group_id
+#: model_terms:ir.ui.view,arch_db:liber_partner_group.view_partner_filter_group
+#: model_terms:ir.ui.view,arch_db:liber_partner_group.view_order_product_search_group
+#: model_terms:ir.ui.view,arch_db:liber_partner_group.view_soc_xml_panel_search_group
+msgid "Commercial Group"
+msgstr "Grupo econômico"
+
+#. module: liber_partner_group
+#: model:ir.actions.act_window,name:liber_partner_group.action_partner_group
+#: model:ir.ui.menu,name:liber_partner_group.menu_partner_group
+msgid "Commercial Groups"
+msgstr "Grupos econômicos"
+
+#. module: liber_partner_group
+#: model:ir.model.fields,field_description:liber_partner_group.field_liber_partner_group__name
+msgid "Name"
+msgstr "Nome"
+
+#. module: liber_partner_group
+#: model:ir.model.fields,field_description:liber_partner_group.field_liber_partner_group__cnpj_roots
+msgid "CNPJ roots"
+msgstr "Raízes de CNPJ"
+
+#. module: liber_partner_group
+#: model:ir.model.fields,help:liber_partner_group.field_liber_partner_group__cnpj_roots
+msgid ""
+"First 8 digits of the CNPJs belonging to this group, separated by commas "
+"(punctuation is ignored). New partner records whose CNPJ starts with one of "
+"these are suggested into the group. A franchise network has too many roots "
+"to be worth listing -- assign its stores by hand instead."
+msgstr ""
+"Os 8 primeiros dígitos dos CNPJs deste grupo, separados por vírgula (a "
+"pontuação é ignorada). Fichas novas cujo CNPJ começa por uma dessas raízes "
+"caem no grupo sozinhas. Franquia tem raiz demais para valer a lista -- "
+"filie as lojas à mão."
+
+#. module: liber_partner_group
+#: model:ir.model.fields,field_description:liber_partner_group.field_liber_partner_group__partner_ids
+#: model_terms:ir.ui.view,arch_db:liber_partner_group.view_partner_group_form
+#: model_terms:ir.ui.view,arch_db:liber_partner_group.view_partner_group_list
+msgid "Members"
+msgstr "Membros"
+
+#. module: liber_partner_group
+#: model:ir.model.fields,help:liber_partner_group.field_res_partner__partner_group_id
+#: model:ir.model.fields,help:liber_partner_group.field_res_users__partner_group_id
+msgid ""
+"The network this store belongs to -- the axis reports group by. Suggested "
+"from the CNPJ root when empty; setting it by hand always wins. Fiscal "
+"documents never read it."
+msgstr ""
+"O grupo econômico a que esta loja pertence -- o eixo pelo qual os "
+"relatórios agrupam. "
+"Sugerido pela raiz do CNPJ quando vazio; a escolha manual sempre vence. "
+"Nenhum documento fiscal a lê."
+
+#. module: liber_partner_group
+#: model_terms:ir.ui.view,arch_db:liber_partner_group.view_partner_group_form
+msgid "Claim matching partners"
+msgstr "Puxar fichas pela raiz"
+
+#. module: liber_partner_group
+#: model_terms:ir.ui.view,arch_db:liber_partner_group.view_partner_group_form
+msgid "e.g. Travessa"
+msgstr "ex.: Travessa"
+
+#. module: liber_partner_group
+#: model:ir.model.constraint,message:liber_partner_group.constraint_liber_partner_group__name_uniq
+msgid "A commercial group with this name already exists."
+msgstr "Já existe um grupo econômico com este nome."
+
+#. module: liber_partner_group
+#: model:ir.model.fields,field_description:liber_partner_group.field_res_partner__commercial_group_display
+#: model:ir.model.fields,field_description:liber_partner_group.field_res_users__commercial_group_display
+#: model:ir.model.fields,field_description:liber_partner_group.field_sale_report__commercial_group_display
+#: model:ir.model.fields,field_description:liber_partner_group.field_nfe_xml_panel__commercial_group_display
+msgid "Group / Client"
+msgstr "Grupo / Cliente"
+
+#. module: liber_partner_group
+#: model:ir.model.fields,help:liber_partner_group.field_res_partner__commercial_group_display
+#: model:ir.model.fields,help:liber_partner_group.field_res_users__commercial_group_display
+msgid ""
+"What reports group by: the commercial group when the record belongs to one, "
+"the client itself otherwise. Nobody lands in an anonymous 'None' bucket."
+msgstr ""
+"O eixo pelo qual os relatórios agrupam: o grupo econômico quando a ficha "
+"pertence a um, o próprio cliente quando não. Ninguém cai num balde anônimo de "
+"\"Nenhum\"."

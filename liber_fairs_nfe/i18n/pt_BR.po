@@ -1,0 +1,286 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* liber_fairs_nfe
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0-20260630\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-09-08 11:49+0000\n"
+"PO-Revision-Date: 2026-09-08 11:49+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: liber_fairs_nfe
+#. odoo-python
+#: code:addons/liber_fairs_nfe/models/event_fair.py:0
+msgid ""
+"%(feira)s has not shipped yet: there is nothing to declare.\n"
+"\n"
+"Validate %(mov)s first — the note travels with the load, and a note declaring books that did not leave does not match the van."
+msgstr ""
+
+#. module: liber_fairs_nfe
+#. odoo-python
+#: code:addons/liber_fairs_nfe/models/event_fair.py:0
+msgid "%s has no return travelling without a note."
+msgstr "%s não tem retorno viajando sem nota."
+
+#. module: liber_fairs_nfe
+#. odoo-python
+#: code:addons/liber_fairs_nfe/models/event_fair.py:0
+msgid ""
+"<p><b>%(feira)s — the return went out without a fiscal note.</b> The fair "
+"return fiscal position of %(empresa)s is not configured (it needs Auto "
+"Invoice Paid and its account, in Settings &gt; Fairs). Fix it and press "
+"<b>Fiscal note</b>.</p>"
+msgstr "<p><b>%(feira)s — o retorno saiu sem nota fiscal.</b> A posição fiscal de retorno de feira da %(empresa)s não está configurada (falta a baixa automática e a conta dela, em Definições &gt; Feiras). Ajuste e aperte <b>Nota fiscal</b>.</p>"
+
+#. module: liber_fairs_nfe
+#. odoo-python
+#: code:addons/liber_fairs_nfe/models/event_fair.py:0
+msgid ""
+"<p><b>%(feira)s</b> — %(tipo)s <b>%(nota)s</b> issued for <b>%(mov)s</b>. It"
+" lives in Invoicing &gt; Customers &gt; Remessas.</p>"
+msgstr "<p><b>%(feira)s</b> — %(tipo)s <b>%(nota)s</b> emitida para <b>%(mov)s</b>. Ela fica em Faturamento &gt; Clientes &gt; Remessas.</p>"
+
+#. module: liber_fairs_nfe
+#: model:ir.model,name:liber_fairs_nfe.model_res_company
+msgid "Companies"
+msgstr "Empresas"
+
+#. module: liber_fairs_nfe
+#: model:ir.model,name:liber_fairs_nfe.model_res_config_settings
+msgid "Config Settings"
+msgstr "Configurações"
+
+#. module: liber_fairs_nfe
+#: model:ir.model.fields,field_description:liber_fairs_nfe.field_account_journal__display_name
+#: model:ir.model.fields,field_description:liber_fairs_nfe.field_account_move__display_name
+#: model:ir.model.fields,field_description:liber_fairs_nfe.field_event_fair__display_name
+#: model:ir.model.fields,field_description:liber_fairs_nfe.field_res_company__display_name
+#: model:ir.model.fields,field_description:liber_fairs_nfe.field_res_config_settings__display_name
+#: model:ir.model.fields,field_description:liber_fairs_nfe.field_stock_picking__display_name
+msgid "Display Name"
+msgstr "Nome exibido"
+
+#. module: liber_fairs_nfe
+#. odoo-python
+#: code:addons/liber_fairs_nfe/models/event_fair.py:0
+msgid "Every shipment of %s already has its note."
+msgstr "Toda remessa de %s já tem a sua nota."
+
+#. module: liber_fairs_nfe
+#: model:ir.model.fields,field_description:liber_fairs_nfe.field_account_bank_statement_line__fair_id
+#: model:ir.model.fields,field_description:liber_fairs_nfe.field_account_move__fair_id
+#: model:ir.model.fields.selection,name:liber_fairs_nfe.selection__account_journal__remessa_kind__event
+#: model:ir.model.fields.selection,name:liber_fairs_nfe.selection__account_move__remessa_origin__event
+msgid "Fair"
+msgstr "Feira"
+
+#. module: liber_fairs_nfe
+#: model:ir.model,name:liber_fairs_nfe.model_event_fair
+msgid "Fair / Event"
+msgstr "Feira / Evento"
+
+#. module: liber_fairs_nfe
+#. odoo-python
+#: code:addons/liber_fairs_nfe/models/event_fair.py:0
+msgid "Fair Notes"
+msgstr "Notas da feira"
+
+#. module: liber_fairs_nfe
+#: model:ir.model.fields,field_description:liber_fairs_nfe.field_stock_picking__fair_note_move_id
+msgid "Fair Remessa Note"
+msgstr "Nota de remessa da feira"
+
+#. module: liber_fairs_nfe
+#: model:ir.model.fields,field_description:liber_fairs_nfe.field_res_company__fair_return_fiscal_position_id
+#: model:ir.model.fields,field_description:liber_fairs_nfe.field_res_config_settings__fair_return_fiscal_position_id
+msgid "Fair Return Fiscal Position"
+msgstr "Posição fiscal do retorno de feira"
+
+#. module: liber_fairs_nfe
+#: model:ir.model.fields,field_description:liber_fairs_nfe.field_res_company__fair_shipment_fiscal_position_id
+#: model:ir.model.fields,field_description:liber_fairs_nfe.field_res_config_settings__fair_shipment_fiscal_position_id
+msgid "Fair Shipment Fiscal Position"
+msgstr "Posição fiscal da remessa para feira"
+
+#. module: liber_fairs_nfe
+#: model_terms:ir.ui.view,arch_db:liber_fairs_nfe.res_config_settings_view_form_fairs
+msgid "Fair return"
+msgstr "Retorno de feira"
+
+#. module: liber_fairs_nfe
+#: model_terms:ir.ui.view,arch_db:liber_fairs_nfe.res_config_settings_view_form_fairs
+msgid "Fair shipment"
+msgstr "Remessa para feira"
+
+#. module: liber_fairs_nfe
+#: model_terms:ir.ui.view,arch_db:liber_fairs_nfe.res_config_settings_view_form_fairs
+msgid "Fairs"
+msgstr "Feiras"
+
+#. module: liber_fairs_nfe
+#: model_terms:ir.ui.view,arch_db:liber_fairs_nfe.res_config_settings_view_form_fairs
+msgid "Fiscal"
+msgstr "Fiscal"
+
+#. module: liber_fairs_nfe
+#: model_terms:ir.ui.view,arch_db:liber_fairs_nfe.view_event_fair_form_nfe
+msgid "Fiscal note"
+msgstr "Nota fiscal"
+
+#. module: liber_fairs_nfe
+#: model:ir.model.fields,field_description:liber_fairs_nfe.field_account_journal__id
+#: model:ir.model.fields,field_description:liber_fairs_nfe.field_account_move__id
+#: model:ir.model.fields,field_description:liber_fairs_nfe.field_event_fair__id
+#: model:ir.model.fields,field_description:liber_fairs_nfe.field_res_company__id
+#: model:ir.model.fields,field_description:liber_fairs_nfe.field_res_config_settings__id
+#: model:ir.model.fields,field_description:liber_fairs_nfe.field_stock_picking__id
+msgid "ID"
+msgstr ""
+
+#. module: liber_fairs_nfe
+#: model_terms:ir.ui.view,arch_db:liber_fairs_nfe.view_event_fair_form_nfe
+msgid ""
+"Issues one simples remessa note per shipment already out, to ourselves, "
+"under the fair fiscal position."
+msgstr ""
+
+#. module: liber_fairs_nfe
+#: model:ir.model,name:liber_fairs_nfe.model_account_journal
+msgid "Journal"
+msgstr "Diário"
+
+#. module: liber_fairs_nfe
+#: model:ir.model,name:liber_fairs_nfe.model_account_move
+msgid "Journal Entry"
+msgstr "Lançamento de diário"
+
+#. module: liber_fairs_nfe
+#: model:ir.model.fields,field_description:liber_fairs_nfe.field_event_fair__note_count
+msgid "Note Count"
+msgstr ""
+
+#. module: liber_fairs_nfe
+#: model_terms:ir.ui.view,arch_db:liber_fairs_nfe.view_event_fair_form_nfe
+msgid "Notes"
+msgstr "Notas"
+
+#. module: liber_fairs_nfe
+#: model:ir.model.fields,field_description:liber_fairs_nfe.field_event_fair__pickings_without_note
+msgid "Pickings Without Note"
+msgstr ""
+
+#. module: liber_fairs_nfe
+#: model:ir.model.fields,field_description:liber_fairs_nfe.field_event_fair__note_move_ids
+msgid "Remessa Notes"
+msgstr "Notas de remessa"
+
+#. module: liber_fairs_nfe
+#: model:ir.model.fields,field_description:liber_fairs_nfe.field_account_journal__remessa_kind
+msgid "Remessa kind"
+msgstr "Tipo de remessa"
+
+#. module: liber_fairs_nfe
+#: model:ir.model.fields,field_description:liber_fairs_nfe.field_account_bank_statement_line__remessa_origin
+#: model:ir.model.fields,field_description:liber_fairs_nfe.field_account_move__remessa_origin
+msgid "Remessa origin"
+msgstr "Origem da remessa"
+
+#. module: liber_fairs_nfe
+#: model_terms:ir.ui.view,arch_db:liber_fairs_nfe.res_config_settings_view_form_fairs
+msgid ""
+"Remessa para exposição ou feira (5.914 / 6.914). The note is issued to "
+"ourselves and must never bill anyone: it needs Auto Invoice Paid with its "
+"account, and one account mapping starting on a revenue account."
+msgstr ""
+
+#. module: liber_fairs_nfe
+#: model:ir.model.fields,help:liber_fairs_nfe.field_res_company__fair_shipment_fiscal_position_id
+#: model:ir.model.fields,help:liber_fairs_nfe.field_res_config_settings__fair_shipment_fiscal_position_id
+msgid ""
+"Remessa para exposição ou feira (CFOP 5.914 / 6.914). It needs Auto Invoice "
+"Paid with its account, and exactly one account mapping starting on a revenue"
+" account: a remessa is not revenue, and the map is what moves it out of "
+"revenue."
+msgstr ""
+
+#. module: liber_fairs_nfe
+#. odoo-python
+#: code:addons/liber_fairs_nfe/models/event_fair.py:0
+msgid "Remessas de Feira"
+msgstr ""
+
+#. module: liber_fairs_nfe
+#: model_terms:ir.ui.view,arch_db:liber_fairs_nfe.res_config_settings_view_form_fairs
+msgid ""
+"Retorno de mercadoria remetida para exposição ou feira (1.914 / 2.914). Not "
+"used yet: the return note comes with the return count."
+msgstr ""
+
+#. module: liber_fairs_nfe
+#: model:ir.model.fields,help:liber_fairs_nfe.field_res_company__fair_return_fiscal_position_id
+#: model:ir.model.fields,help:liber_fairs_nfe.field_res_config_settings__fair_return_fiscal_position_id
+msgid ""
+"Retorno de mercadoria remetida para exposição ou feira (CFOP 1.914 / 2.914)."
+" Not used yet: the return note comes with the return count."
+msgstr ""
+
+#. module: liber_fairs_nfe
+#: model:ir.model.fields,help:liber_fairs_nfe.field_event_fair__pickings_without_note
+msgid "Shipments already out with no fiscal note covering them."
+msgstr "Remessas já despachadas sem nota fiscal que as cubra."
+
+#. module: liber_fairs_nfe
+#. odoo-python
+#: code:addons/liber_fairs_nfe/models/event_fair.py:0
+msgid ""
+"The fair return fiscal position of %(empresa)s is not ready: it needs Auto Invoice Paid and its account. Set it in Settings > Fairs.\n"
+"\n"
+"The books cannot travel back without a note."
+msgstr "A posição fiscal de retorno de feira da %(empresa)s não está pronta: falta a baixa automática e a conta dela. Ajuste em Definições > Feiras.\n\nOs livros não podem voltar sem nota."
+
+#. module: liber_fairs_nfe
+#. odoo-python
+#: code:addons/liber_fairs_nfe/models/event_fair.py:0
+msgid ""
+"The fair shipment fiscal position of %(empresa)s is not ready: it needs Auto Invoice Paid and its account. Set it in Settings > Fairs.\n"
+"\n"
+"A remessa para feira must never bill anyone: the books are going to our own table, and the company cannot owe money to itself."
+msgstr ""
+
+#. module: liber_fairs_nfe
+#: model:ir.model,name:liber_fairs_nfe.model_stock_picking
+msgid "Transfer"
+msgstr "Transferir"
+
+#. module: liber_fairs_nfe
+#: model:ir.model.fields,help:liber_fairs_nfe.field_account_journal__remessa_kind
+msgid ""
+"Which operation this remessa journal serves. Each kind books to its own "
+"account, carried by the journal."
+msgstr "Qual operação este diário de remessa atende. Cada tipo lança na sua própria conta, carregada pelo diário."
+
+#. module: liber_fairs_nfe
+#. odoo-python
+#: code:addons/liber_fairs_nfe/models/event_fair.py:0
+msgid "fair_id"
+msgstr ""
+
+#. module: liber_fairs_nfe
+#. odoo-python
+#: code:addons/liber_fairs_nfe/models/event_fair.py:0
+msgid "remessa note"
+msgstr "nota de remessa"
+
+#. module: liber_fairs_nfe
+#. odoo-python
+#: code:addons/liber_fairs_nfe/models/event_fair.py:0
+msgid "return note"
+msgstr "nota de retorno"

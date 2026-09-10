@@ -1,0 +1,468 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* liber_copyright_contracts_intercompany
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0-20260619\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-08-06 16:06+0000\n"
+"PO-Revision-Date: 2026-08-06 16:06+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: liber_copyright_contracts_intercompany
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_intercompany.view_move_form_edlab_intercompany
+msgid ""
+"<span class=\"o_stat_text\">Origin</span>\n"
+"                        <span class=\"o_stat_text\">Invoice</span>"
+msgstr ""
+"<span class=\"o_stat_text\">Fatura de</span>\n"
+"                        <span class=\"o_stat_text\">Origem</span>"
+
+#. module: liber_copyright_contracts_intercompany
+#: model:ir.model.fields,help:liber_copyright_contracts_intercompany.field_account_bank_statement_line__edlab_is_interco_invoice
+#: model:ir.model.fields,help:liber_copyright_contracts_intercompany.field_account_move__edlab_is_interco_invoice
+msgid ""
+"Accumulator customer invoice of the contract company charging a selling "
+"company for the royalties accrued on its sales (one line per contract x work"
+" x beneficiary)."
+msgstr ""
+"Fatura de cliente acumuladora da empresa detentora dos contratos, cobrando "
+"de uma empresa vendedora os royalties apurados sobre as vendas dela (uma "
+"linha por contrato × obra × favorecido)."
+
+#. module: liber_copyright_contracts_intercompany
+#: model:ir.model.fields,help:liber_copyright_contracts_intercompany.field_res_company__contract_interco_markup
+#: model:ir.model.fields,help:liber_copyright_contracts_intercompany.field_res_config_settings__contract_interco_markup
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_intercompany.res_config_settings_view_form_intercompany
+msgid ""
+"Administration percentage added on top of the accrued royalty when charging "
+"the selling company. 0 = charge the exact royalty."
+msgstr ""
+"Percentual administrativo somado ao royalty apurado na cobrança da empresa "
+"vendedora. 0 = cobra o royalty exato."
+
+#. module: liber_copyright_contracts_intercompany
+#: model:ir.model,name:liber_copyright_contracts_intercompany.model_account_analytic_line
+msgid "Analytic Line"
+msgstr "Linha analítica"
+
+#. module: liber_copyright_contracts_intercompany
+#: model:ir.model.fields,field_description:liber_copyright_contracts_intercompany.field_account_bank_statement_line__edlab_interco_source_company_id
+#: model:ir.model.fields,field_description:liber_copyright_contracts_intercompany.field_account_move__edlab_interco_source_company_id
+msgid "Charged Company"
+msgstr "Empresa Cobrada"
+
+#. module: liber_copyright_contracts_intercompany
+#: model:ir.model,name:liber_copyright_contracts_intercompany.model_res_company
+msgid "Companies"
+msgstr "Empresas"
+
+#. module: liber_copyright_contracts_intercompany
+#: model:ir.model.fields,help:liber_copyright_contracts_intercompany.field_account_analytic_line__edlab_source_company_id
+msgid ""
+"Company that made the sale this royalty accrued from. Sales of a company "
+"other than the contract's are charged back to it through the intercompany "
+"royalty invoice."
+msgstr ""
+"Empresa que fez a venda da qual este royalty foi apurado. Vendas de uma "
+"empresa diferente da do contrato são cobradas dela pela fatura de royalties "
+"entre empresas."
+
+#. module: liber_copyright_contracts_intercompany
+#: model:ir.model,name:liber_copyright_contracts_intercompany.model_res_config_settings
+msgid "Config Settings"
+msgstr "Configurações"
+
+#. module: liber_copyright_contracts_intercompany
+#. odoo-python
+#: code:addons/liber_copyright_contracts_intercompany/models/account_move.py:0
+msgid "Contracts: %s"
+msgstr "Contratos: %s"
+
+#. module: liber_copyright_contracts_intercompany
+#: model:ir.model,name:liber_copyright_contracts_intercompany.model_edlab_contract
+msgid "Copyright Contract"
+msgstr "Contrato de Direitos Autorais"
+
+#. module: liber_copyright_contracts_intercompany
+#: model:ir.model.fields,help:liber_copyright_contracts_intercompany.field_account_bank_statement_line__edlab_interco_mirror_move_id
+#: model:ir.model.fields,help:liber_copyright_contracts_intercompany.field_account_move__edlab_interco_mirror_move_id
+msgid "Customer invoice (on the contract company) this vendor bill mirrors."
+msgstr ""
+"Fatura de cliente (na empresa detentora dos contratos) que esta fatura de "
+"fornecedor espelha."
+
+#. module: liber_copyright_contracts_intercompany
+#: model:ir.model.fields,field_description:liber_copyright_contracts_intercompany.field_account_analytic_line__display_name
+#: model:ir.model.fields,field_description:liber_copyright_contracts_intercompany.field_account_move__display_name
+#: model:ir.model.fields,field_description:liber_copyright_contracts_intercompany.field_account_move_line__display_name
+#: model:ir.model.fields,field_description:liber_copyright_contracts_intercompany.field_edlab_contract__display_name
+#: model:ir.model.fields,field_description:liber_copyright_contracts_intercompany.field_edlab_contract_royalty_line__display_name
+#: model:ir.model.fields,field_description:liber_copyright_contracts_intercompany.field_res_company__display_name
+#: model:ir.model.fields,field_description:liber_copyright_contracts_intercompany.field_res_config_settings__display_name
+msgid "Display Name"
+msgstr "Nome exibido"
+
+#. module: liber_copyright_contracts_intercompany
+#: model:ir.model.fields,help:liber_copyright_contracts_intercompany.field_res_company__contract_interco_expense_account_id
+#: model:ir.model.fields,help:liber_copyright_contracts_intercompany.field_res_config_settings__contract_interco_expense_account_id
+msgid ""
+"Expense account of the mirrored intercompany vendor bill lines. Leave empty "
+"to use the product's default expense account."
+msgstr ""
+"Conta de despesa das linhas da fatura de fornecedor espelho. Vazio usa a "
+"conta de despesa padrão do produto."
+
+#. module: liber_copyright_contracts_intercompany
+#: model:ir.model.fields,field_description:liber_copyright_contracts_intercompany.field_account_analytic_line__id
+#: model:ir.model.fields,field_description:liber_copyright_contracts_intercompany.field_account_move__id
+#: model:ir.model.fields,field_description:liber_copyright_contracts_intercompany.field_account_move_line__id
+#: model:ir.model.fields,field_description:liber_copyright_contracts_intercompany.field_edlab_contract__id
+#: model:ir.model.fields,field_description:liber_copyright_contracts_intercompany.field_edlab_contract_royalty_line__id
+#: model:ir.model.fields,field_description:liber_copyright_contracts_intercompany.field_res_company__id
+#: model:ir.model.fields,field_description:liber_copyright_contracts_intercompany.field_res_config_settings__id
+msgid "ID"
+msgstr "ID"
+
+#. module: liber_copyright_contracts_intercompany
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_intercompany.res_config_settings_view_form_intercompany
+msgid ""
+"Income account of the accumulator invoice lines. Leave empty to use the "
+"product's default income account."
+msgstr ""
+"Conta de receita das linhas da fatura acumuladora. Vazio usa a conta de "
+"receita padrão do produto."
+
+#. module: liber_copyright_contracts_intercompany
+#: model:ir.model.fields,help:liber_copyright_contracts_intercompany.field_res_company__contract_interco_income_account_id
+#: model:ir.model.fields,help:liber_copyright_contracts_intercompany.field_res_config_settings__contract_interco_income_account_id
+msgid ""
+"Income account of the intercompany royalty invoice lines. Leave empty to use"
+" the product's default income account."
+msgstr ""
+"Conta de receita das linhas da fatura de royalties entre empresas. Vazio "
+"usa a conta de receita padrão do produto."
+
+#. module: liber_copyright_contracts_intercompany
+#: model:ir.model.fields,field_description:liber_copyright_contracts_intercompany.field_account_analytic_line__edlab_interco_move_line_id
+msgid "Intercompany Charge Line"
+msgstr "Linha de Cobrança entre Empresas"
+
+#. module: liber_copyright_contracts_intercompany
+#: model:ir.model.fields,field_description:liber_copyright_contracts_intercompany.field_res_company__contract_interco_expense_account_id
+#: model:ir.model.fields,field_description:liber_copyright_contracts_intercompany.field_res_config_settings__contract_interco_expense_account_id
+msgid "Intercompany Expense Account"
+msgstr "Conta de Despesa entre Empresas"
+
+#. module: liber_copyright_contracts_intercompany
+#: model:ir.model.fields,field_description:liber_copyright_contracts_intercompany.field_res_company__contract_interco_income_account_id
+#: model:ir.model.fields,field_description:liber_copyright_contracts_intercompany.field_res_config_settings__contract_interco_income_account_id
+msgid "Intercompany Income Account"
+msgstr "Conta de Receita entre Empresas"
+
+#. module: liber_copyright_contracts_intercompany
+#: model:ir.model.fields,field_description:liber_copyright_contracts_intercompany.field_res_company__contract_interco_markup
+#: model:ir.model.fields,field_description:liber_copyright_contracts_intercompany.field_res_config_settings__contract_interco_markup
+msgid "Intercompany Markup (%)"
+msgstr "Margem entre Empresas (%)"
+
+#. module: liber_copyright_contracts_intercompany
+#: model:ir.model.fields,field_description:liber_copyright_contracts_intercompany.field_res_company__contract_interco_purchase_journal_id
+#: model:ir.model.fields,field_description:liber_copyright_contracts_intercompany.field_res_config_settings__contract_interco_purchase_journal_id
+msgid "Intercompany Purchase Journal"
+msgstr "Diário de Compras entre Empresas"
+
+#. module: liber_copyright_contracts_intercompany
+#: model:ir.model.fields,field_description:liber_copyright_contracts_intercompany.field_res_company__contract_interco_product_id
+#: model:ir.model.fields,field_description:liber_copyright_contracts_intercompany.field_res_config_settings__contract_interco_product_id
+msgid "Intercompany Royalties Product"
+msgstr "Produto de Royalties entre Empresas"
+
+#. module: liber_copyright_contracts_intercompany
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_intercompany.res_config_settings_view_form_intercompany
+msgid "Intercompany Royalties — Contract Holder"
+msgstr "Royalties entre Empresas — Detentora dos Contratos"
+
+#. module: liber_copyright_contracts_intercompany
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_intercompany.res_config_settings_view_form_intercompany
+msgid "Intercompany Royalties — Selling Company"
+msgstr "Royalties entre Empresas — Vendedora"
+
+#. module: liber_copyright_contracts_intercompany
+#: model:ir.model.fields,field_description:liber_copyright_contracts_intercompany.field_account_bank_statement_line__edlab_is_interco_bill
+#: model:ir.model.fields,field_description:liber_copyright_contracts_intercompany.field_account_move__edlab_is_interco_bill
+msgid "Intercompany Royalty Bill"
+msgstr "Fatura Espelho de Royalties entre Empresas"
+
+#. module: liber_copyright_contracts_intercompany
+#: model:ir.model.fields,field_description:liber_copyright_contracts_intercompany.field_account_bank_statement_line__edlab_is_interco_invoice
+#: model:ir.model.fields,field_description:liber_copyright_contracts_intercompany.field_account_move__edlab_is_interco_invoice
+msgid "Intercompany Royalty Invoice"
+msgstr "Fatura Acumuladora de Royalties entre Empresas"
+
+#. module: liber_copyright_contracts_intercompany
+#: model:ir.model.fields,field_description:liber_copyright_contracts_intercompany.field_account_move_line__edlab_interco_royalty_line_id
+msgid "Intercompany Royalty Line"
+msgstr "Linha de Royalty entre Empresas"
+
+#. module: liber_copyright_contracts_intercompany
+#: model:ir.model.fields,field_description:liber_copyright_contracts_intercompany.field_res_company__contract_interco_journal_id
+#: model:ir.model.fields,field_description:liber_copyright_contracts_intercompany.field_res_config_settings__contract_interco_journal_id
+msgid "Intercompany Sale Journal"
+msgstr "Diário de Vendas entre Empresas"
+
+#. module: liber_copyright_contracts_intercompany
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_intercompany.res_config_settings_view_form_intercompany
+msgid "Intercompany expense account"
+msgstr "Conta de despesa entre empresas"
+
+#. module: liber_copyright_contracts_intercompany
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_intercompany.res_config_settings_view_form_intercompany
+msgid "Intercompany income account"
+msgstr "Conta de receita entre empresas"
+
+#. module: liber_copyright_contracts_intercompany
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_intercompany.res_config_settings_view_form_intercompany
+msgid "Intercompany purchase journal"
+msgstr "Diário de compras entre empresas"
+
+#. module: liber_copyright_contracts_intercompany
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_intercompany.res_config_settings_view_form_intercompany
+msgid "Intercompany royalties product"
+msgstr "Produto de royalties entre empresas"
+
+#. module: liber_copyright_contracts_intercompany
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_intercompany.res_config_settings_view_form_intercompany
+msgid "Intercompany sale journal"
+msgstr "Diário de vendas entre empresas"
+
+#. module: liber_copyright_contracts_intercompany
+#: model:ir.model,name:liber_copyright_contracts_intercompany.model_account_move
+msgid "Journal Entry"
+msgstr "Lançamento de diário"
+
+#. module: liber_copyright_contracts_intercompany
+#: model:ir.model,name:liber_copyright_contracts_intercompany.model_account_move_line
+msgid "Journal Item"
+msgstr "Item de diário"
+
+#. module: liber_copyright_contracts_intercompany
+#: model:ir.model.fields,help:liber_copyright_contracts_intercompany.field_account_analytic_line__edlab_interco_move_line_id
+msgid ""
+"Line of the intercompany royalty invoice charging this accrual to the "
+"selling company. Empty = not charged yet; pointing to a draft invoice = "
+"still accumulating; pointing to a posted invoice = frozen."
+msgstr ""
+"Linha da fatura de royalties entre empresas que cobra este provisionamento "
+"da empresa vendedora. Vazio = ainda não cobrado; apontando para fatura em "
+"rascunho = ainda acumulando; apontando para fatura lançada = congelado."
+
+#. module: liber_copyright_contracts_intercompany
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_intercompany.res_config_settings_view_form_intercompany
+msgid "Markup (%)"
+msgstr "Margem (%)"
+
+#. module: liber_copyright_contracts_intercompany
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_intercompany.view_move_form_edlab_intercompany
+msgid "Mirror Bill"
+msgstr "Fatura Espelho"
+
+#. module: liber_copyright_contracts_intercompany
+#. odoo-python
+#: code:addons/liber_copyright_contracts_intercompany/models/account_move.py:0
+#: model:ir.model.fields,field_description:liber_copyright_contracts_intercompany.field_account_bank_statement_line__edlab_interco_mirror_of_ids
+#: model:ir.model.fields,field_description:liber_copyright_contracts_intercompany.field_account_move__edlab_interco_mirror_of_ids
+msgid "Mirror Bills"
+msgstr "Faturas Espelho"
+
+#. module: liber_copyright_contracts_intercompany
+#: model:ir.model.fields,field_description:liber_copyright_contracts_intercompany.field_account_bank_statement_line__edlab_interco_mirror_count
+#: model:ir.model.fields,field_description:liber_copyright_contracts_intercompany.field_account_move__edlab_interco_mirror_count
+msgid "Mirror Bills Count"
+msgstr "Número de Faturas Espelho"
+
+#. module: liber_copyright_contracts_intercompany
+#: model:ir.model.fields,field_description:liber_copyright_contracts_intercompany.field_account_bank_statement_line__edlab_interco_mirror_move_id
+#: model:ir.model.fields,field_description:liber_copyright_contracts_intercompany.field_account_move__edlab_interco_mirror_move_id
+msgid "Origin Intercompany Invoice"
+msgstr "Fatura de Origem entre Empresas"
+
+#. module: liber_copyright_contracts_intercompany
+#. odoo-python
+#: code:addons/liber_copyright_contracts_intercompany/models/account_move.py:0
+msgid ""
+"Origin intercompany invoice %s was reset to draft after this bill was posted"
+" - manual adjustment needed."
+msgstr ""
+"A fatura de origem entre empresas %s voltou a rascunho depois desta fatura "
+"espelho ter sido lançada — é preciso ajustar manualmente."
+
+#. module: liber_copyright_contracts_intercompany
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_intercompany.res_config_settings_view_form_intercompany
+msgid ""
+"Product of the intercompany royalty invoice lines. Leave empty to use the "
+"'Royalties entre Empresas' product shipped with this module."
+msgstr ""
+"Produto das linhas da fatura de royalties entre empresas. Vazio usa o "
+"produto 'Royalties entre Empresas' que acompanha o módulo."
+
+#. module: liber_copyright_contracts_intercompany
+#: model:ir.model.fields,help:liber_copyright_contracts_intercompany.field_res_company__contract_interco_product_id
+#: model:ir.model.fields,help:liber_copyright_contracts_intercompany.field_res_config_settings__contract_interco_product_id
+msgid ""
+"Product placed on the intercompany royalty invoice lines. Leave empty to use"
+" the \"Royalties entre Empresas\" service product shipped with this module."
+msgstr ""
+"Produto colocado nas linhas da fatura de royalties entre empresas. Vazio "
+"usa o produto de serviço \"Royalties entre Empresas\" que acompanha o "
+"módulo."
+
+#. module: liber_copyright_contracts_intercompany
+#: model:ir.model.fields,help:liber_copyright_contracts_intercompany.field_res_company__contract_interco_purchase_journal_id
+#: model:ir.model.fields,help:liber_copyright_contracts_intercompany.field_res_config_settings__contract_interco_purchase_journal_id
+msgid ""
+"Purchase journal of the mirrored intercompany vendor bill. Leave empty to "
+"use the company default purchase journal."
+msgstr ""
+"Diário de compras da fatura de fornecedor espelho. Vazio usa o diário de "
+"compras padrão da empresa."
+
+#. module: liber_copyright_contracts_intercompany
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_intercompany.res_config_settings_view_form_intercompany
+msgid ""
+"Read on the SELLING company when the mirrored vendor bill is created there. "
+"Leave empty to use the company default purchase journal."
+msgstr ""
+"Lido na empresa VENDEDORA quando a fatura de fornecedor espelho é criada "
+"nela. Vazio usa o diário de compras padrão da empresa."
+
+#. module: liber_copyright_contracts_intercompany
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_intercompany.res_config_settings_view_form_intercompany
+msgid ""
+"Read on the SELLING company: expense account of the mirrored vendor bill "
+"lines. Leave empty to use the product's default expense account."
+msgstr ""
+"Lida na empresa VENDEDORA: conta de despesa das linhas da fatura de "
+"fornecedor espelho. Vazio usa a conta de despesa padrão do produto."
+
+#. module: liber_copyright_contracts_intercompany
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_intercompany.res_config_settings_view_form_intercompany
+msgid ""
+"Read on the company that OWNS the contracts. Sister companies whose PAID "
+"sales also feed this company's royalty accrual. Empty = only this company's "
+"own sales. Their sales are charged back through the intercompany royalty "
+"invoice."
+msgstr ""
+"Lido na empresa DETENTORA dos contratos. Empresas irmãs cujas vendas PAGAS "
+"também alimentam a apuração de royalties desta empresa. Vazio = só as "
+"vendas da própria empresa. As vendas delas são cobradas de volta pela "
+"fatura de royalties entre empresas."
+
+#. module: liber_copyright_contracts_intercompany
+#: model:product.template,description_sale:liber_copyright_contracts_intercompany.product_interco_royalty
+msgid ""
+"Royalties accrued on the buyer company's sales of works under the seller "
+"company's copyright contracts."
+msgstr ""
+"Royalties apurados sobre as vendas, pela empresa cobrada, de obras sob "
+"contratos de direitos autorais da empresa detentora."
+
+#. module: liber_copyright_contracts_intercompany
+#: model:product.template,name:liber_copyright_contracts_intercompany.product_interco_royalty
+msgid "Royalties entre Empresas"
+msgstr "Royalties entre Empresas"
+
+#. module: liber_copyright_contracts_intercompany
+#: model:product.template,description_purchase:liber_copyright_contracts_intercompany.product_interco_royalty
+msgid ""
+"Royalties owed to the contract-holding company on this company's sales of "
+"contracted works."
+msgstr ""
+"Royalties devidos à empresa detentora dos contratos sobre as vendas de "
+"obras contratadas feitas por esta empresa."
+
+#. module: liber_copyright_contracts_intercompany
+#: model:ir.model,name:liber_copyright_contracts_intercompany.model_edlab_contract_royalty_line
+msgid "Royalty Line (beneficiary x work)"
+msgstr "Linha de Royalty (beneficiário x obra)"
+
+#. module: liber_copyright_contracts_intercompany
+#: model:ir.model.fields,field_description:liber_copyright_contracts_intercompany.field_res_company__contract_interco_source_company_ids
+#: model:ir.model.fields,field_description:liber_copyright_contracts_intercompany.field_res_config_settings__contract_interco_source_company_ids
+msgid "Royalty Source Companies"
+msgstr "Empresas-Fonte de Royalties"
+
+#. module: liber_copyright_contracts_intercompany
+#: model:ir.model.fields,help:liber_copyright_contracts_intercompany.field_account_move_line__edlab_interco_royalty_line_id
+msgid ""
+"Royalty line (contract x work x beneficiary) whose cross-company accruals "
+"this intercompany invoice line charges."
+msgstr ""
+"Linha de royalty (contrato × obra × favorecido) cujos provisionamentos de "
+"origem em outra empresa esta linha de fatura cobra."
+
+#. module: liber_copyright_contracts_intercompany
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_intercompany.res_config_settings_view_form_intercompany
+msgid "Royalty source companies"
+msgstr "Empresas-fonte de royalties"
+
+#. module: liber_copyright_contracts_intercompany
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_intercompany.res_config_settings_view_form_intercompany
+msgid ""
+"Sale journal of the accumulator invoice charging the selling companies. "
+"Leave empty to use the company default."
+msgstr ""
+"Diário de vendas da fatura acumuladora que cobra as empresas vendedoras. "
+"Vazio usa o padrão da empresa."
+
+#. module: liber_copyright_contracts_intercompany
+#: model:ir.model.fields,help:liber_copyright_contracts_intercompany.field_res_company__contract_interco_journal_id
+#: model:ir.model.fields,help:liber_copyright_contracts_intercompany.field_res_config_settings__contract_interco_journal_id
+msgid ""
+"Sale journal of the intercompany royalty invoice. Leave empty to use the "
+"company default sale journal."
+msgstr ""
+"Diário de vendas da fatura de royalties entre empresas. Vazio usa o diário "
+"de vendas padrão da empresa."
+
+#. module: liber_copyright_contracts_intercompany
+#: model:ir.model.fields,help:liber_copyright_contracts_intercompany.field_account_bank_statement_line__edlab_interco_source_company_id
+#: model:ir.model.fields,help:liber_copyright_contracts_intercompany.field_account_move__edlab_interco_source_company_id
+msgid "Selling company this intercompany royalty invoice charges."
+msgstr "Empresa vendedora cobrada por esta fatura de royalties entre empresas."
+
+#. module: liber_copyright_contracts_intercompany
+#: model:ir.model.fields,help:liber_copyright_contracts_intercompany.field_res_company__contract_interco_source_company_ids
+#: model:ir.model.fields,help:liber_copyright_contracts_intercompany.field_res_config_settings__contract_interco_source_company_ids
+msgid ""
+"Sister companies whose PAID sales also feed this company's royalty accrual. "
+"Empty = only this company's own sales accrue. Royalties accrued on these "
+"companies' sales are charged back to them through the intercompany royalty "
+"invoice."
+msgstr ""
+"Empresas irmãs cujas vendas PAGAS também alimentam a apuração de royalties "
+"desta empresa. Vazio = apura só as vendas da própria empresa. Os royalties "
+"apurados sobre as vendas dessas empresas são cobrados de volta delas pela "
+"fatura de royalties entre empresas."
+
+#. module: liber_copyright_contracts_intercompany
+#: model:ir.model.fields,field_description:liber_copyright_contracts_intercompany.field_account_analytic_line__edlab_source_company_id
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_intercompany.view_analytic_line_filter_interco
+msgid "Source Company"
+msgstr "Empresa de Origem"
+
+#. module: liber_copyright_contracts_intercompany
+#: model:ir.model.fields,help:liber_copyright_contracts_intercompany.field_account_bank_statement_line__edlab_is_interco_bill
+#: model:ir.model.fields,help:liber_copyright_contracts_intercompany.field_account_move__edlab_is_interco_bill
+msgid ""
+"Vendor bill of the selling company mirroring the posted intercompany royalty"
+" invoice of the contract company."
+msgstr ""
+"Fatura de fornecedor da empresa vendedora que espelha a fatura de royalties "
+"entre empresas lançada pela detentora dos contratos."

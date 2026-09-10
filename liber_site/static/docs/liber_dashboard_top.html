@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<script>
+/* Servido por /liber_site/static/docs/, este arquivo vem com uma semana de
+   cache e o docs.js sem versão -- e o índice monta a lista a partir dele. Foi
+   assim que a emissão de NF-e e o manual da Amazon ficaram invisíveis: o
+   catálogo em cache era anterior aos dois. A rota /liber/docs/ serve o mesmo
+   arquivo sem cache e com ?v=<mtime> nos assets. Quem chegar pelo caminho
+   antigo (favorito, link velho, resultado de busca) vai para lá antes de a
+   página montar qualquer coisa. */
+(function () {
+  var antigo = "/liber_site/static/docs/";
+  if (location.pathname.indexOf(antigo) === 0) {
+    location.replace("/liber/docs/" + location.pathname.slice(antigo.length) +
+                     location.search + location.hash);
+  }
+})();
+</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Os primeiros do gráfico — Manuais do Liber</title>
+<link rel="icon" type="image/png" href="../logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;600;700&display=swap">
+<link rel="stylesheet" href="docs.css">
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="../index.html"><img src="../logo.png" alt="">liber<span>.</span></a>
+    <span class="doc-tag">Manuais</span>
+    <nav><a href="index.html">Índice</a><a href="../index.html">Site</a></nav>
+  </div>
+</header>
+<div class="wrap">
+  <div class="layout">
+    <aside class="sidebar" id="sidebar"></aside>
+    <article class="doc">
+      <div class="breadcrumb"><a href="index.html">Manuais</a><span class="sep">›</span>Ferramentas<span class="sep">›</span>Os primeiros do gráfico</div>
+      <h1>Os primeiros do gráfico</h1>
+      <p class="lead">O painel de Produtos mostrando os cinquenta mais vendidos, pelo título — e não uma parede de palitos com a cauda inteira do catálogo.</p>
+
+      <h2 id="visao-geral">Visão geral</h2>
+      <p>O painel <span class="menupath">Painéis<i>‣</i>Vendas<i>‣</i>Produtos</span> desenha "melhores vendedores por receita" com <em>todo</em> produto vendido no período. Numa editora com centenas de títulos em giro, isso é uma parede de palitos cuja metade direita é ruído: a cauda de quem vendeu um exemplar. O que se quer ver ali são os primeiros.</p>
+
+      <h2 id="duas-pecas">São duas peças</h2>
+      <p>A primeira é genérica de propósito, e serve a qualquer gráfico:</p>
+      <ul>
+        <li><strong>Um limite no gráfico.</strong> A definição do gráfico ganha uma chave a mais — um inteiro que corta nos N primeiros grupos do eixo. Como a ordenação é aplicada <em>antes</em> do corte, "os cinquenta primeiros" são os cinquenta maiores. Gráfico sem limite fica exatamente como era.</li>
+        <li><strong>O painel de Produtos, na leitura.</strong> A troca acontece quando o painel é lido, e não no dado gravado — todo upgrade do Odoo reescreve esse JSON, e o que se grava ali se perde na atualização seguinte.</li>
+      </ul>
+      <p>A regra é estreita de propósito: só gráfico de barras agrupado exatamente por produto, e só se já vier ordenado — cortar um gráfico sem ordem mostraria cinquenta produtos quaisquer, e não os cinquenta primeiros. Quem já tem um limite fica com o seu.</p>
+
+      <h2 id="titulo">O título sem o ISBN na frente</h2>
+      <p>O rótulo de cada barra é o nome de exibição do produto, que no Odoo é <code>[código] nome</code> — e o código, numa editora, é o ISBN: treze dígitos que não dizem nada num eixo e comem o espaço do título. A mesma leitura tira o código do rótulo do gráfico. Na lista que o clique abre, ele continua lá.</p>
+
+      <div class="callout"><span class="title">Nota</span><p>O corte é feito nos <em>pontos</em>, antes de virarem séries. É o que mantém coerentes o rótulo, cada série de um gráfico empilhado e o filtro que o clique na barra leva para a lista.</p></div>
+
+      <nav class="pager" id="pager"></nav>
+    </article>
+  </div>
+</div>
+<script src="docs.js"></script>
+</body>
+</html>

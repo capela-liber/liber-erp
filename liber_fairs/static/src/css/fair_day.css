@@ -1,0 +1,23 @@
+/* As duas colunas que se PREENCHEM no fechamento do dia.
+ *
+ * Quem conta a mesa está num balcão de feira, com o celular na mão, e a
+ * tabela tem seis colunas de números parecidos. Marcar as duas em que se
+ * digita -- Contado e Repor -- é a diferença entre olhar e procurar. As
+ * outras quatro são cálculo do sistema e não se tocam.
+ */
+.o_list_renderer td.o_fair_input:not(.o_readonly_modifier) {
+    background-color: #f1f2fb;
+}
+
+/* E o realce SOME quando o campo trava. Dia fechado não se conta de novo, e
+ * pintar de "pode preencher" o que não se pode preencher é pior do que não
+ * pintar nada.
+ *
+ * O !important existe por um motivo concreto: a coluna Repor
+ * (`qty_replenish`) é campo calculado E gravável, e o próprio Odoo pinta
+ * células assim com regra dele. Sem sobrepor, a coluna continuava azul num
+ * dia fechado enquanto a Contado, ao lado, já tinha apagado -- as duas
+ * dizendo coisas diferentes sobre a mesma trava. */
+.o_list_renderer td.o_fair_input.o_readonly_modifier {
+    background-color: transparent !important;
+}

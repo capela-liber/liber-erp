@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--
+        O modelo é uma VIEW SQL. O Odoo põe o filtro de multi-empresa sozinho
+        em modelo com tabela e "company_id", mas não em "_auto = False": sem
+        esta regra o relatório mostra as SEIS empresas do grupo mesmo com uma
+        só marcada no seletor, e cada editora enxerga a carteira das outras.
+
+        Regra GLOBAL (sem "groups"): vale para todo mundo, inclusive o
+        administrador. Quem é de mais de uma empresa continua vendo todas as
+        que marcar, porque "company_ids" é o que está marcado no seletor, e
+        não o que a pessoa tem direito de ver.
+    -->
+    <record id="liber_aged_receivable_company_rule" model="ir.rule">
+        <field name="name">Aged Receivable: multi-company</field>
+        <field name="model_id" ref="model_liber_aged_receivable"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+</odoo>

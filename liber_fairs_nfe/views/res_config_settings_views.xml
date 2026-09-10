@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Seção própria em Definições: as duas posições fiscais da feira. -->
+    <record id="res_config_settings_view_form_fairs" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.liber.fairs</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="base.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form" position="inside">
+                <app data-string="Fairs" string="Fairs" name="liber_fairs">
+                    <block title="Fiscal" name="fairs_fiscal">
+                        <setting id="fair_shipment_fpos_setting"
+                                 string="Fair shipment"
+                                 help="Remessa para exposição ou feira (5.914 / 6.914). The note is issued to ourselves and must never bill anyone: it needs Auto Invoice Paid with its account, and one account mapping starting on a revenue account.">
+                            <field name="fair_shipment_fiscal_position_id"/>
+                        </setting>
+                        <setting id="fair_return_fpos_setting"
+                                 string="Fair return"
+                                 help="Retorno de mercadoria remetida para exposição ou feira (1.914 / 2.914). Not used yet: the return note comes with the return count.">
+                            <field name="fair_return_fiscal_position_id"/>
+                        </setting>
+                    </block>
+                </app>
+            </xpath>
+        </field>
+    </record>
+</odoo>

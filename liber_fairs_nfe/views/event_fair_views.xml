@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_event_fair_form_nfe" model="ir.ui.view">
+        <field name="name">event.fair.form.nfe</field>
+        <field name="model">event.fair</field>
+        <field name="inherit_id" ref="liber_fairs.view_event_fair_form"/>
+        <field name="arch" type="xml">
+            <button name="action_return" position="before">
+                <button name="action_generate_remessa_note" type="object"
+                        string="Fiscal note" class="btn-secondary"
+                        invisible="pickings_without_note == 0"
+                        help="Issues one simples remessa note per shipment already out, to ourselves, under the fair fiscal position."/>
+            </button>
+            <div name="button_box" position="inside">
+                <button name="action_view_notes" type="object"
+                        class="oe_stat_button" icon="fa-file-text-o"
+                        invisible="note_count == 0">
+                    <field name="note_count" widget="statinfo" string="Notes"/>
+                </button>
+            </div>
+            <field name="stock_location_id" position="after">
+                <field name="pickings_without_note" invisible="1"/>
+            </field>
+        </field>
+    </record>
+</odoo>

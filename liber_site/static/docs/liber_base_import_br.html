@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<script>
+/* Servido por /liber_site/static/docs/, este arquivo vem com uma semana de
+   cache e o docs.js sem versão -- e o índice monta a lista a partir dele. Foi
+   assim que a emissão de NF-e e o manual da Amazon ficaram invisíveis: o
+   catálogo em cache era anterior aos dois. A rota /liber/docs/ serve o mesmo
+   arquivo sem cache e com ?v=<mtime> nos assets. Quem chegar pelo caminho
+   antigo (favorito, link velho, resultado de busca) vai para lá antes de a
+   página montar qualquer coisa. */
+(function () {
+  var antigo = "/liber_site/static/docs/";
+  if (location.pathname.indexOf(antigo) === 0) {
+    location.replace("/liber/docs/" + location.pathname.slice(antigo.length) +
+                     location.search + location.hash);
+  }
+})();
+</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Importar planilha em formato brasileiro — Manuais do Liber</title>
+<link rel="icon" type="image/png" href="../logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;600;700&display=swap">
+<link rel="stylesheet" href="docs.css">
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="../index.html"><img src="../logo.png" alt="">liber<span>.</span></a>
+    <span class="doc-tag">Manuais</span>
+    <nav><a href="index.html">Índice</a><a href="../index.html">Site</a></nav>
+  </div>
+</header>
+<div class="wrap">
+  <div class="layout">
+    <aside class="sidebar" id="sidebar"></aside>
+    <article class="doc">
+      <div class="breadcrumb"><a href="index.html">Manuais</a><span class="sep">›</span>Ferramentas<span class="sep">›</span>Importar planilha em formato brasileiro</div>
+      <h1>Importar planilha em formato brasileiro</h1>
+      <p class="lead">Planilha com 59,90 e 05/03/2026 entra como está escrito — e não como cinco mil e novecentos e noventa em 3 de maio.</p>
+
+      <h2 id="visao-geral">Visão geral</h2>
+      <p>A tela de importação do Odoo chega com os separadores <strong>americanos</strong> já preenchidos — milhar <code>,</code> e decimal <code>.</code> — em qualquer idioma. E é justamente por chegarem preenchidos que o detector automático do servidor nunca roda: um número com um separador só cai no padrão.</p>
+      <p>O estrago é silencioso. <strong>59,90 era lido como 5990,00</strong> — cem vezes maior — sem erro, sem aviso e sem nada na pré-visualização que denunciasse. A data tinha o problema gêmeo: numa sessão em inglês, <code>05/03/2026</code> virava 3 de maio.</p>
+
+      <h2 id="o-que-muda">O que o módulo faz</h2>
+      <p>Vira os três padrões para o brasileiro:</p>
+      <table>
+        <thead><tr><th>Opção</th><th>Antes</th><th>Depois</th></tr></thead>
+        <tbody>
+          <tr><td>Separador decimal</td><td><code>.</code></td><td><code>,</code></td></tr>
+          <tr><td>Separador de milhar</td><td><code>,</code></td><td><code>.</code></td></tr>
+          <tr><td>Formato de data</td><td>MM/DD/AAAA</td><td>DD/MM/AAAA</td></tr>
+        </tbody>
+      </table>
+      <p>As opções continuam <strong>editáveis na tela</strong>: quem estiver importando um arquivo americano muda de volta e segue. O módulo troca o padrão, não a liberdade.</p>
+
+      <div class="callout warn"><span class="title">Confira a pré-visualização</span><p>Antes de qualquer importação grande, olhe a coluna de valor na pré-visualização e confirme que <em>59,90</em> aparece como 59,90. É a checagem de dois segundos que evita a correção de duas horas.</p></div>
+
+      <h2 id="instalacao">Instalação</h2>
+      <p>Não há configuração. Instalado, vale para toda importação daquele banco.</p>
+
+      <nav class="pager" id="pager"></nav>
+    </article>
+  </div>
+</div>
+<script src="docs.js"></script>
+</body>
+</html>

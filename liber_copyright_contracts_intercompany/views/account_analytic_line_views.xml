@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- The company of the sale each royalty accrued from: the whole point
+         of the intercompany layer is that own sales and sister-company
+         sales read differently, so surface the origin where the accruals
+         are inspected. -->
+    <record id="view_analytic_line_tree_interco" model="ir.ui.view">
+        <field name="name">account.analytic.line.tree.interco</field>
+        <field name="model">account.analytic.line</field>
+        <field name="inherit_id" ref="liber_copyright_contracts_analytics.view_analytic_line_tree_royalty"/>
+        <field name="arch" type="xml">
+            <field name="edlab_royalty_percentage" position="after">
+                <field name="edlab_source_company_id" optional="show"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="view_analytic_line_filter_interco" model="ir.ui.view">
+        <field name="name">account.analytic.line.filter.interco</field>
+        <field name="model">account.analytic.line</field>
+        <field name="inherit_id" ref="analytic.view_account_analytic_line_filter"/>
+        <field name="arch" type="xml">
+            <xpath expr="//search" position="inside">
+                <field name="edlab_source_company_id"/>
+                <filter string="Source Company" name="group_edlab_source_company"
+                        context="{'group_by': 'edlab_source_company_id'}"/>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Royalty Debts: a colaboração entre editoras se lê AQUI — o que a
+         irmã vendeu tem que aparecer separado do que a casa vendeu. -->
+    <record id="view_royalty_debt_tree_interco" model="ir.ui.view">
+        <field name="name">edlab.royalty.debt.tree.interco</field>
+        <field name="model">account.analytic.line</field>
+        <field name="inherit_id" ref="liber_copyright_contracts_analytics.view_royalty_debt_tree"/>
+        <field name="arch" type="xml">
+            <field name="edlab_royalty_percentage" position="before">
+                <field name="edlab_source_company_id" optional="show"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="view_royalty_debt_search_interco" model="ir.ui.view">
+        <field name="name">edlab.royalty.debt.search.interco</field>
+        <field name="model">account.analytic.line</field>
+        <field name="inherit_id" ref="liber_copyright_contracts_analytics.view_royalty_debt_search"/>
+        <field name="arch" type="xml">
+            <field name="product_id" position="after">
+                <field name="edlab_source_company_id"/>
+            </field>
+            <filter name="g_work" position="after">
+                <filter name="g_source_company" string="Source Company"
+                        context="{'group_by': 'edlab_source_company_id'}"/>
+            </filter>
+        </field>
+    </record>
+
+</odoo>

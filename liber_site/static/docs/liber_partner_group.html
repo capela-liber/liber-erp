@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<script>
+/* Servido por /liber_site/static/docs/, este arquivo vem com uma semana de
+   cache e o docs.js sem versão -- e o índice monta a lista a partir dele. Foi
+   assim que a emissão de NF-e e o manual da Amazon ficaram invisíveis: o
+   catálogo em cache era anterior aos dois. A rota /liber/docs/ serve o mesmo
+   arquivo sem cache e com ?v=<mtime> nos assets. Quem chegar pelo caminho
+   antigo (favorito, link velho, resultado de busca) vai para lá antes de a
+   página montar qualquer coisa. */
+(function () {
+  var antigo = "/liber_site/static/docs/";
+  if (location.pathname.indexOf(antigo) === 0) {
+    location.replace("/liber/docs/" + location.pathname.slice(antigo.length) +
+                     location.search + location.hash);
+  }
+})();
+</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Grupo econômico do cliente — Manuais do Liber</title>
+<link rel="icon" type="image/png" href="../logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;600;700&display=swap">
+<link rel="stylesheet" href="docs.css">
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="../index.html"><img src="../logo.png" alt="">liber<span>.</span></a>
+    <span class="doc-tag">Manuais</span>
+    <nav><a href="index.html">Índice</a><a href="../index.html">Site</a></nav>
+  </div>
+</header>
+<div class="wrap">
+  <div class="layout">
+    <aside class="sidebar" id="sidebar"></aside>
+    <article class="doc">
+      <div class="breadcrumb"><a href="index.html">Manuais</a><span class="sep">›</span>Comercial<span class="sep">›</span>Grupo econômico do cliente</div>
+      <h1>Grupo econômico do cliente</h1>
+      <p class="lead">A rede acima da filial: a Travessa é uma só para o comercial, e continuam sendo oito CNPJs para o fisco.</p>
+
+      <h2 id="visao-geral">Visão geral</h2>
+      <p>Cada loja de uma rede de livrarias é um CNPJ próprio — e tem de continuar sendo: contrato de consignação, prateleira, saldo e nota fiscal são <em>por filial</em>, e o fisco não aceita outra coisa. Mas relatório lido loja a loja não conta a história de ninguém: <em>Livraria da Travessa</em> aparece oito vezes idênticas na Análise de Vendas, e a pergunta que o comercial faz é "quanto vendemos <strong>para a Travessa</strong>?".</p>
+      <p>Este módulo põe um eixo de agrupamento acima da filial — o <span class="field">Grupo econômico</span> — sem tocar em nada do que é fiscal. O grão de tudo continua sendo a loja.</p>
+
+      <h2 id="por-que">Por que um campo novo</h2>
+      <p>Os três caminhos que já existiam no Odoo foram testados antes, e nenhum serve:</p>
+      <table>
+        <thead><tr><th>Caminho</th><th>Por que não</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Parceiro comercial</strong></td><td>Filial com CNPJ próprio é empresa, logo é o próprio parceiro comercial. O campo não sobe um nível.</td></tr>
+          <tr><td><strong>Empresa-mãe</strong></td><td>Carrega efeitos que rede nenhuma pediu: sincroniza campos comerciais e endereço, e o casamento de NF-e por documento prefere ficha sem pai.</td></tr>
+          <tr><td><strong>Razão social</strong></td><td>Agrupa a Travessa (uma razão, muitas filiais) e não agrupa a Leitura, que é franquia — cada loja com razão e raiz de CNPJ diferentes.</td></tr>
+        </tbody>
+      </table>
+
+      <h2 id="cadastro">O cadastro</h2>
+      <p>Os grupos ficam em <span class="menupath">Vendas<i>‣</i>Configuração<i>‣</i>Grupos econômicos</span>. Cada um tem nome e, opcionalmente, as <span class="field">raízes de CNPJ</span> que lhe pertencem.</p>
+      <p>Na ficha do cliente, o campo <span class="field">Grupo econômico</span>. Ele aceita ser preenchido à mão, e é isso que resolve a franquia.</p>
+
+      <div class="callout"><span class="title">Nota</span><p>A raiz do CNPJ <em>sugere</em>, a ficha <em>decide</em>. Os oito primeiros dígitos identificam a entidade legal — toda filial da Travessa começa com a mesma raiz —, então uma ficha nova cai no grupo sozinha. Uma escolha feita à mão nunca é desfeita pela sugestão.</p></div>
+
+      <h2 id="onde-aparece">Onde o eixo aparece</h2>
+      <ul>
+        <li><strong>Análise de Vendas</strong> — agrupe por <span class="field">Grupo econômico</span> e a rede vira uma linha.</li>
+        <li><strong>Painel de Notas Fiscais</strong> — o mesmo eixo, do lado fiscal.</li>
+        <li><strong>Contas a receber por idade</strong> — a cobrança olha a rede: uma loja em atraso é conversa com a rede, não com a loja.</li>
+      </ul>
+
+      <h2 id="dado">O cadastro é dado, não código</h2>
+      <p>As redes em si não vêm no módulo: elas são cadastro, nascem no banco de produção e descem para os bancos de ensaio. Para montar um ambiente de teste existe o roteiro <code>scripts/seed_redes.py</code>.</p>
+
+      <div class="seealso">
+        <strong>Ver também</strong>
+        <ul>
+          <li><a href="liber_partner_commercial.html">Canal de vendas do cliente</a> — a outra classificação comercial da ficha.</li>
+          <li><a href="liber_aged_receivable.html">Contas a receber por idade</a> — onde a rede muda a conversa de cobrança.</li>
+        </ul>
+      </div>
+
+      <nav class="pager" id="pager"></nav>
+    </article>
+  </div>
+</div>
+<script src="docs.js"></script>
+</body>
+</html>

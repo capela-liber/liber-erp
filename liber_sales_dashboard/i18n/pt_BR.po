@@ -50,3 +50,33 @@ msgstr "Nenhuma nota de venda neste período"
 #: model_terms:ir.actions.act_window,help:liber_sales_dashboard.action_notas_sem_pedido
 msgid "Every sales note in this period is tied to an order"
 msgstr "Toda nota de venda deste período está ligada a um pedido"
+
+#. module: liber_sales_dashboard
+#: model_terms:ir.ui.view,arch_db:liber_sales_dashboard.view_nfe_xml_panel_search_ledger
+msgid "Without invoice"
+msgstr "Sem fatura"
+
+#. module: liber_sales_dashboard
+#: model_terms:ir.ui.view,arch_db:liber_sales_dashboard.view_nfe_xml_panel_search_ledger
+msgid "The XML is here and nobody created its invoice in Odoo"
+msgstr "O XML está aqui e ninguém criou a fatura dele no Odoo"
+
+#. module: liber_sales_dashboard
+#: model_terms:ir.ui.view,arch_db:liber_sales_dashboard.view_nfe_xml_panel_search_ledger
+msgid "Invoice without order"
+msgstr "Fatura sem pedido"
+
+#. module: liber_sales_dashboard
+#: model_terms:ir.ui.view,arch_db:liber_sales_dashboard.view_nfe_xml_panel_search_ledger
+msgid "The invoice exists and none of its lines is tied to a sales order"
+msgstr "A fatura existe e nenhuma linha dela está amarrada a um pedido de venda"
+
+#. module: liber_sales_dashboard
+#: model_terms:ir.ui.view,arch_db:liber_sales_dashboard.view_nfe_xml_panel_search_ledger
+msgid "Tied to an order"
+msgstr "Com pedido"
+
+#. module: liber_sales_dashboard
+#: model_terms:ir.ui.view,arch_db:liber_sales_dashboard.view_nfe_xml_panel_search_ledger
+msgid "The invoice pays at least one sales order line"
+msgstr "A fatura paga pelo menos uma linha de pedido"

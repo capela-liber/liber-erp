@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_picking_form_fair" model="ir.ui.view">
+        <field name="name">stock.picking.form.fair</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form"/>
+        <field name="arch" type="xml">
+            <field name="origin" position="after">
+                <field name="fair_id" readonly="1" invisible="not fair_id"/>
+                <field name="fair_operation" readonly="1" invisible="not fair_id"/>
+                <field name="fair_day_id" readonly="1" invisible="not fair_day_id"/>
+            </field>
+        </field>
+    </record>
+    <!-- A bancada da logística é a LISTA. É nela que a reposição tem de se
+         distinguir da primeira remessa: quem separa precisa saber que aquela
+         caixa é esperada numa feira que já está rolando. -->
+    <record id="view_picking_tree_fair" model="ir.ui.view">
+        <field name="name">stock.picking.list.fair</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.vpicktree"/>
+        <field name="arch" type="xml">
+            <field name="state" position="before">
+                <field name="is_fair_replenishment" string="Replenishment"
+                       widget="boolean_toggle" readonly="1" optional="show"/>
+            </field>
+            <!-- A linha inteira muda de cor: numa fila de trinta
+                 transferências, uma coluna a mais só se vê quem procura, e
+                 quem separa não está procurando reposição, está separando. -->
+            <list position="attributes">
+                <attribute name="decoration-info">is_fair_replenishment</attribute>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_picking_search_fair" model="ir.ui.view">
+        <field name="name">stock.picking.search.fair</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_internal_search"/>
+        <field name="arch" type="xml">
+            <filter name="late" position="after">
+                <separator/>
+                <filter name="filter_fair_replenishment"
+                        string="Fair replenishment"
+                        domain="[('is_fair_replenishment', '=', True)]"/>
+            </filter>
+        </field>
+    </record>
+</odoo>

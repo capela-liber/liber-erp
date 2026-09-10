@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <!-- A rede na Análise de Vendas, colada no agrupamento por cliente:
+         agrupa pela rede, abre, e vê as lojas pelo nome de todo dia. -->
+    <record id="view_order_product_search_group" model="ir.ui.view">
+        <field name="name">sale.report.search.partner.group</field>
+        <field name="model">sale.report</field>
+        <field name="inherit_id" ref="sale.view_order_product_search"/>
+        <field name="arch" type="xml">
+            <field name="partner_id" position="after">
+                <field name="partner_group_id"/>
+            </field>
+            <!-- O agrupamento usa o eixo rede-ou-cliente: ninguém cai num
+                 balde "Nenhum", quem não é rede é ele mesmo. O Many2one
+                 fica como campo de busca ("Rede = Travessa"). -->
+            <filter name="Customer" position="after">
+                <filter string="Commercial Group" name="partner_group"
+                        context="{'group_by': 'commercial_group_display'}"/>
+            </filter>
+        </field>
+    </record>
+</odoo>

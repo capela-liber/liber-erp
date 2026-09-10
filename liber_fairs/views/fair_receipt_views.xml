@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- RECEBIMENTOS.
+         Não é rotina de depósito, é rotina de confusão de feira: a caixa
+         chega no meio do movimento, ninguém tem tempo de abrir uma a uma e
+         digitar a mesma quantidade que já está escrita. Duas colunas, um
+         botão, e a assinatura de quem contou. A falta, quando houver, se
+         explica depois em Perdas. -->
+    <record id="view_fair_receipt_list" model="ir.ui.view">
+        <field name="name">stock.picking.list.fair.receipt</field>
+        <field name="model">stock.picking</field>
+        <field name="arch" type="xml">
+            <list string="Receipts" create="false"
+                  default_order="scheduled_date desc"
+                  decoration-warning="fair_shortfall &gt; 0">
+                <header>
+                    <button name="action_fair_check" type="object"
+                            string="Confirm what arrived" class="btn-primary"
+                            help="Confirms the whole load as received, and signs who checked it."/>
+                </header>
+                <field name="fair_id"/>
+                <field name="name" string="Transfer"/>
+                <field name="fair_operation" string="Arrival"/>
+                <field name="scheduled_date" string="When"/>
+                <field name="fair_qty_received" sum="Received"/>
+                <field name="fair_qty_checked" sum="Checked"/>
+                <field name="fair_shortfall" sum="Missing" optional="show"/>
+                <field name="fair_checked_by_id" optional="show"/>
+                <field name="fair_checked_on" optional="hide"/>
+                <field name="state" widget="badge"
+                       decoration-success="state == 'done'"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_fair_receipt_search" model="ir.ui.view">
+        <field name="name">stock.picking.search.fair.receipt</field>
+        <field name="model">stock.picking</field>
+        <field name="arch" type="xml">
+            <search string="Receipts">
+                <field name="fair_id"/>
+                <field name="name"/>
+                <!-- PRONTO, e só. Carga que o depósito ainda não despachou não
+                     está a caminho de lugar nenhum, e mostrá-la aqui convida a
+                     conferir a chegada de quem não saiu: foi assim que uma volta
+                     de 107 exemplares fechou com 8, e 99 viraram perda. O
+                     movimento entra nesta lista quando o estoque está no
+                     trânsito, isto é, quando a carga saiu de verdade. -->
+                <filter name="filter_to_check" string="Waiting to be checked"
+                        domain="[('fair_on_the_road', '=', True),
+                                 ('state', 'not in', ('done', 'cancel'))]"/>
+                <filter name="filter_short" string="Arrived short"
+                        domain="[('fair_shortfall', '>', 0)]"/>
+                <separator/>
+                <filter name="filter_at_fair" string="At the fair"
+                        domain="[('fair_operation', '=', 'receipt')]"/>
+                <filter name="filter_at_warehouse" string="Back at the warehouse"
+                        domain="[('fair_operation', '=', 'return')]"/>
+                <group>
+                    <filter name="group_fair" string="Fair"
+                            context="{'group_by': 'fair_id'}"/>
+                    <filter name="group_operation" string="Arrival"
+                            context="{'group_by': 'fair_operation'}"/>
+                    <filter name="group_checked" string="Checked by"
+                            context="{'group_by': 'fair_checked_by_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_fair_receipt" model="ir.actions.act_window">
+        <field name="name">Receipts</field>
+        <field name="res_model">stock.picking</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('fair_is_arrival', '=', True)]</field>
+        <field name="search_view_id" ref="view_fair_receipt_search"/>
+        <!-- SEM agrupamento padrão: a pessoa abre e vê a lista, não um
+             cabeçalho para clicar. Agrupar por feira está no menu, para
+             quando alguém quiser. -->
+        <field name="context">{'search_default_filter_to_check': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Nothing waiting to be checked</p>
+            <p>Every load that left has arrived and been confirmed. Clear the
+               filter to see what was already checked, and by whom.</p>
+        </field>
+    </record>
+
+    <record id="action_fair_receipt_list_view" model="ir.actions.act_window.view">
+        <field name="sequence" eval="1"/>
+        <field name="view_mode">list</field>
+        <field name="view_id" ref="view_fair_receipt_list"/>
+        <field name="act_window_id" ref="action_fair_receipt"/>
+    </record>
+</odoo>

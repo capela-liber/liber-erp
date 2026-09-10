@@ -22,6 +22,9 @@
                     <button name="action_download" type="object"
                             string="Baixar"
                             invisible="state != 'generated'"/>
+                    <button name="action_open_report" type="object"
+                            string="Ler retorno da Metabooks"
+                            invisible="state != 'sent'"/>
                     <button name="action_mark_sent" type="object"
                             string="Marcar como enviada"
                             invisible="state != 'generated'"
@@ -54,6 +57,10 @@
                         </group>
                         <group>
                             <field name="selected_count" string="Livros marcados"/>
+                            <field name="rejected_count" string="Recusados"
+                                   invisible="not rejected_count"/>
+                            <field name="report_on" string="Retorno lido em"
+                                   invisible="not report_on"/>
                             <field name="change_count" string="Campos alterados"/>
                             <field name="filename" invisible="not filename"/>
                             <field name="attachment_id" invisible="1"/>
@@ -84,7 +91,8 @@
                         <page string="Livros" name="books">
                             <field name="line_ids" nolabel="1"
                                    readonly="state in ('sent', 'cancel')">
-                                <list editable="bottom" create="false">
+                                <list editable="bottom" create="false"
+                                      decoration-danger="rejected">
                                     <field name="selected" widget="boolean_toggle"/>
                                     <field name="gtin" readonly="1"/>
                                     <field name="title" readonly="1"/>
@@ -92,6 +100,12 @@
                                            readonly="1"/>
                                     <field name="no_history" string="Sem histórico"
                                            readonly="1" optional="show"/>
+                                    <field name="rejected" string="Recusado"
+                                           readonly="1" optional="show"/>
+                                    <field name="error_message" string="Motivo"
+                                           readonly="1" optional="show"/>
+                                    <field name="error_code" string="Código"
+                                           readonly="1" optional="hide"/>
                                     <field name="product_id" readonly="1"
                                            optional="hide"/>
                                 </list>
@@ -282,6 +296,6 @@
               name="Histórico"
               parent="menu_metabooks_exports"
               action="action_metabooks_export_change"
-              sequence="3"/>
+              sequence="4"/>
 
 </odoo>

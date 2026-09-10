@@ -626,6 +626,10 @@ class MetabooksConnector(models.AbstractModel):
                 d in details for d in onix_codes.DETAIL_DUST_JACKET),
             "metabooks_has_thumb_index": onix_codes.DETAIL_THUMB_INDEX in details,
             "metabooks_has_ribbon": onix_codes.DETAIL_RIBBON in details,
+            **{campo: codigo in details
+               for campo, codigo in onix_codes.FINISH_BY_FIELD.items()
+               if campo not in ("metabooks_has_flaps", "metabooks_has_thumb_index",
+                                "metabooks_has_ribbon")},
             "metabooks_ebook_format": ebook_format,
             "metabooks_page_count": pages,
             "metabooks_front_matter_pages": self._to_int(

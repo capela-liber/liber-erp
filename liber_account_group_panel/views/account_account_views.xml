@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_account_search" model="ir.ui.view">
+        <field name="name">account.account.search.group.panel</field>
+        <field name="model">account.account</field>
+        <field name="inherit_id" ref="account.view_account_search"/>
+        <field name="arch" type="xml">
+            <!--
+                The whole element is replaced, class included. The core class
+                "account_root" is styling for a panel that only ever showed one
+                or two characters: it hides the section header, squeezes the
+                panel to 55px and sets the labels to "display: contents" - which
+                makes a rubric name such as "Cost of Goods Sold" unreadable (and
+                invisible to any DOM measurement, tours included).
+            -->
+            <xpath expr="//searchpanel" position="replace">
+                <searchpanel>
+                    <field name="group_id" icon="fa-sitemap" enable_counters="1" limit="false"/>
+                </searchpanel>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

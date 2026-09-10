@@ -1,0 +1,417 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* liber_fairs_pos
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0-20260630\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-09-09 14:59+0000\n"
+"PO-Revision-Date: 2026-09-09 14:59+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: liber_fairs_pos
+#. odoo-python
+#: code:addons/liber_fairs_pos/models/event_fair.py:0
+msgid ""
+"%(feira)s — cash register %(caixa)s opened. It sells from the table, not "
+"from the warehouse."
+msgstr "%(feira)s — caixa %(caixa)s aberto. Ele vende a mesa, não o armazém."
+
+#. module: liber_fairs_pos
+#. odoo-python
+#: code:addons/liber_fairs_pos/models/event_fair.py:0
+msgid "%(feira)s — register %(caixa)s closed with the return."
+msgstr "%(feira)s — caixa %(caixa)s fechado com o retorno."
+
+#. module: liber_fairs_pos
+#. odoo-python
+#: code:addons/liber_fairs_pos/models/event_fair.py:0
+msgid ""
+"%s has no bank or cash journal: the register cannot take money in a company "
+"that has no place to put it."
+msgstr "%s não tem diário de banco nem de caixa: o caixa não pode receber dinheiro numa empresa que não tem onde guardá-lo."
+
+#. module: liber_fairs_pos
+#. odoo-python
+#: code:addons/liber_fairs_pos/models/event_fair.py:0
+msgid ""
+"%s has no warehouse, and the register needs one to hang the operation on."
+msgstr "%s não tem armazém, e o caixa precisa de um para pendurar a operação."
+
+#. module: liber_fairs_pos
+#. odoo-python
+#: code:addons/liber_fairs_pos/models/event_fair.py:0
+msgid "%s says it has no cash register. Raise the number of registers first."
+msgstr "%s diz não ter caixa nenhum. Aumente o número de caixas primeiro."
+
+#. module: liber_fairs_pos
+#. odoo-python
+#: code:addons/liber_fairs_pos/models/event_fair.py:0
+#: model:ir.model.fields,field_description:liber_fairs_pos.field_event_fair__pos_config_id
+#: model_terms:ir.ui.view,arch_db:liber_fairs_pos.view_event_fair_form_pos
+msgid "Cash register"
+msgstr "Caixa"
+
+#. module: liber_fairs_pos
+#. odoo-python
+#: code:addons/liber_fairs_pos/models/event_fair.py:0
+#: model:ir.model.fields,field_description:liber_fairs_pos.field_event_fair__pos_count
+msgid "Cash registers"
+msgstr "Caixas"
+
+#. module: liber_fairs_pos
+#: model:ir.model.fields,field_description:liber_fairs_pos.field_event_fair__company_currency_id
+msgid "Currency"
+msgstr "Moeda"
+
+#. module: liber_fairs_pos
+#: model:ir.model.fields,field_description:liber_fairs_pos.field_event_fair__display_name
+#: model:ir.model.fields,field_description:liber_fairs_pos.field_pos_config__display_name
+#: model:ir.model.fields,field_description:liber_fairs_pos.field_stock_picking__display_name
+#: model:ir.model.fields,field_description:liber_fairs_pos.field_stock_picking_type__display_name
+msgid "Display Name"
+msgstr "Nome exibido"
+
+#. module: liber_fairs_pos
+#: model:ir.model.fields,field_description:liber_fairs_pos.field_pos_config__fair_id
+#: model:ir.model.fields,field_description:liber_fairs_pos.field_stock_picking_type__fair_id
+msgid "Fair"
+msgstr "Feira"
+
+#. module: liber_fairs_pos
+#. odoo-python
+#: code:addons/liber_fairs_pos/models/event_fair.py:0
+msgid "Fair %s"
+msgstr "Feira %s"
+
+#. module: liber_fairs_pos
+#: model:ir.model,name:liber_fairs_pos.model_event_fair
+msgid "Fair / Event"
+msgstr "Feira / Evento"
+
+#. module: liber_fairs_pos
+#. odoo-python
+#: code:addons/liber_fairs_pos/models/event_fair.py:0
+msgid "Fair register %s"
+msgstr "Caixa da feira %s"
+
+#. module: liber_fairs_pos
+#: model:ir.model.fields,help:liber_fairs_pos.field_event_fair__pos_count
+msgid ""
+"How many Point of Sale registers this fair needs. One queue is a queue that "
+"does not move; a big fair has two or three."
+msgstr "Quantos caixas de Ponto de Venda esta feira precisa. Uma fila só é uma fila que não anda; feira grande tem dois ou três."
+
+#. module: liber_fairs_pos
+#: model:ir.model.fields,field_description:liber_fairs_pos.field_event_fair__id
+#: model:ir.model.fields,field_description:liber_fairs_pos.field_pos_config__id
+#: model:ir.model.fields,field_description:liber_fairs_pos.field_stock_picking__id
+#: model:ir.model.fields,field_description:liber_fairs_pos.field_stock_picking_type__id
+msgid "ID"
+msgstr ""
+
+#. module: liber_fairs_pos
+#: model_terms:ir.ui.view,arch_db:liber_fairs_pos.view_event_fair_form_pos
+msgid ""
+"Opens this fair's Point of Sale registers. They sell the copies on the "
+"table, not the warehouse stock."
+msgstr "Abre os caixas do Ponto de Venda desta feira. Eles vendem os exemplares que estão na mesa, não o estoque do armazém."
+
+#. module: liber_fairs_pos
+#: model:ir.model,name:liber_fairs_pos.model_stock_picking_type
+msgid "Picking Type"
+msgstr "Tipo de separação"
+
+#. module: liber_fairs_pos
+#: model:ir.model,name:liber_fairs_pos.model_pos_config
+msgid "Point of Sale Configuration"
+msgstr "Configuração do ponto de venda"
+
+#. module: liber_fairs_pos
+#: model:ir.model.fields,field_description:liber_fairs_pos.field_event_fair__pos_picking_type_id
+msgid "Register operation"
+msgstr "Operação do caixa"
+
+#. module: liber_fairs_pos
+#: model:ir.model.fields,field_description:liber_fairs_pos.field_event_fair__pos_picking_type_ids
+msgid "Register operations"
+msgstr "Operações dos caixas"
+
+#. module: liber_fairs_pos
+#. odoo-python
+#: code:addons/liber_fairs_pos/models/event_fair.py:0
+#: model:ir.model.fields,field_description:liber_fairs_pos.field_event_fair__pos_order_count
+#: model_terms:ir.ui.view,arch_db:liber_fairs_pos.view_event_fair_form_pos
+msgid "Register sales"
+msgstr "Vendas no caixa"
+
+#. module: liber_fairs_pos
+#. odoo-python
+#: code:addons/liber_fairs_pos/models/event_fair.py:0
+msgid "Register — %s"
+msgstr "Caixa — %s"
+
+#. module: liber_fairs_pos
+#: model:ir.model.fields,field_description:liber_fairs_pos.field_event_fair__pos_config_ids
+msgid "Registers"
+msgstr "Caixas"
+
+#. module: liber_fairs_pos
+#: model:ir.model.fields,field_description:liber_fairs_pos.field_event_fair__pos_open_count
+msgid "Registers open"
+msgstr "Caixas abertos"
+
+#. module: liber_fairs_pos
+#: model:ir.model.fields,help:liber_fairs_pos.field_stock_picking_type__fair_id
+msgid ""
+"Set on the operation type the fair's cash register uses. Any transfer of "
+"this type belongs to that fair."
+msgstr "Marcado no tipo de operação que o caixa da feira usa. Toda transferência desse tipo pertence àquela feira."
+
+#. module: liber_fairs_pos
+#: model:ir.model.fields,field_description:liber_fairs_pos.field_event_fair__pos_amount_total
+msgid "Sold at the register"
+msgstr "Vendido no caixa"
+
+#. module: liber_fairs_pos
+#: model:ir.model.fields,help:liber_fairs_pos.field_pos_config__fair_id
+msgid ""
+"The fair this register belongs to. It sells from that fair's table, not from"
+" the warehouse."
+msgstr "A feira a que este caixa pertence. Ele vende a mesa daquela feira, não o armazém."
+
+#. module: liber_fairs_pos
+#. odoo-python
+#: code:addons/liber_fairs_pos/models/event_fair.py:0
+msgid ""
+"The register %(caixa)s of %(feira)s still has an unpaid order. Finish or "
+"cancel it in the Point of Sale, then ask for the return."
+msgstr "O caixa %(caixa)s de %(feira)s ainda tem um pedido sem pagamento. Termine ou cancele no Ponto de Venda, e então peça o retorno."
+
+#. module: liber_fairs_pos
+#. odoo-python
+#: code:addons/liber_fairs_pos/models/event_fair.py:0
+msgid ""
+"The register opens for a fair that is planned or already on the road. %s is "
+"not."
+msgstr "O caixa abre para feira planejada ou já na estrada. %s não é nenhuma das duas."
+
+#. module: liber_fairs_pos
+#: model:ir.model,name:liber_fairs_pos.model_stock_picking
+msgid "Transfer"
+msgstr "Transferir"
+
+#. module: liber_fairs_pos
+#. odoo-python
+#: code:addons/liber_fairs_pos/models/event_fair.py:0
+msgid "config_id"
+msgstr ""
+
+#. module: liber_fairs_pos
+#. odoo-python
+#: code:addons/liber_fairs_pos/models/event_fair.py:0
+msgid "fair_id"
+msgstr ""
+
+#. module: liber_fairs_pos
+#: model:ir.model.fields,field_description:liber_fairs_pos.field_event_fair_cashier__name
+msgid "Operator"
+msgstr "Operador"
+
+#. module: liber_fairs_pos
+#: model:ir.model.fields,field_description:liber_fairs_pos.field_event_fair__cashier_ids
+msgid "Operators"
+msgstr "Operadores"
+
+#. module: liber_fairs_pos
+#: model:ir.model,name:liber_fairs_pos.model_event_fair_cashier
+msgid "Fair Cash Register Operator"
+msgstr "Operador de caixa da feira"
+
+#. module: liber_fairs_pos
+#. odoo-python
+#: code:addons/liber_fairs_pos/models/event_fair.py:0
+msgid ""
+"Say who works the counter first: add at least one operator in the Registers "
+"tab of %s. A register with nobody on it is a machine, not a cash register."
+msgstr "Diga primeiro quem fica no balcão: some pelo menos um operador na aba Caixas de %s. Caixa sem gente é máquina, não caixa."
+
+#. module: liber_fairs_pos
+#: model_terms:ir.ui.view,arch_db:liber_fairs_pos.view_event_fair_form_pos
+msgid ""
+"One register per operator. The register is named after\n                        "
+"the fair and the person, and it sells what is on the\n                        "
+"table."
+msgstr "Um caixa por operador. O caixa se chama pelo nome da feira e da pessoa, e vende o que está na mesa."
+
+#. module: liber_fairs_pos
+#: model:ir.model.fields,field_description:liber_fairs_pos.field_event_fair_cashier__pos_config_id
+msgid "Register"
+msgstr "Caixa"
+
+
+#. module: liber_fairs_pos
+#: model:ir.model.fields,field_description:liber_fairs_pos.field_event_fair_cashier__role
+msgid "Profile"
+msgstr "Perfil"
+
+#. module: liber_fairs_pos
+#: model:ir.model.fields.selection,name:liber_fairs_pos.selection__event_fair_cashier__role__manager
+msgid "Manager"
+msgstr "Gerente"
+
+#. module: liber_fairs_pos
+#: model:ir.model.fields,field_description:liber_fairs_pos.field_event_fair_cashier__access_state
+msgid "Access"
+msgstr "Acesso"
+
+#. module: liber_fairs_pos
+#: model:ir.model.fields.selection,name:liber_fairs_pos.selection__event_fair_cashier__access_state__no_account
+msgid "No account"
+msgstr "Sem conta"
+
+#. module: liber_fairs_pos
+#: model:ir.model.fields.selection,name:liber_fairs_pos.selection__event_fair_cashier__access_state__granted
+msgid "Has access"
+msgstr "Com acesso"
+
+#. module: liber_fairs_pos
+#: model:ir.model.fields.selection,name:liber_fairs_pos.selection__event_fair_cashier__access_state__ended
+msgid "Access ended"
+msgstr "Acesso encerrado"
+
+#. module: liber_fairs_pos
+#: model:res.groups,name:liber_fairs_pos.group_fair_field
+msgid "Event staff"
+msgstr "Equipe do evento"
+
+#. module: liber_fairs_pos
+#: model:ir.model.fields,field_description:liber_fairs_pos.field_event_fair_day_line__qty_pos
+msgid "At the register"
+msgstr "No caixa"
+
+#. module: liber_fairs_pos
+#. odoo-python
+#: code:addons/liber_fairs_pos/models/event_fair_cashier.py:0
+msgid ""
+"%(pessoa)s now has access to %(feira)s as %(papel)s. It ends when the event "
+"comes home."
+msgstr "%(pessoa)s passou a ter acesso a %(feira)s como %(papel)s. O acesso termina quando o evento voltar."
+
+#. module: liber_fairs_pos
+#. odoo-python
+#: code:addons/liber_fairs_pos/models/event_fair_cashier.py:0
+msgid "%(pessoa)s no longer has access to the events: %(feira)s came home."
+msgstr "%(pessoa)s não tem mais acesso aos eventos: %(feira)s voltou."
+
+#. module: liber_fairs_pos
+#: model:ir.model.fields,field_description:liber_fairs_pos.field_event_fair__discount_pc
+msgid "Fair discount (%)"
+msgstr "Desconto da feira (%)"
+
+#. module: liber_fairs_pos
+#: model:ir.model.fields,field_description:liber_fairs_pos.field_event_fair_cashier__commission_pc
+msgid "Commission (%)"
+msgstr "Comissão (%)"
+
+#. module: liber_fairs_pos
+#: model:ir.model.fields,field_description:liber_fairs_pos.field_event_fair_cashier__daily_rate
+msgid "Daily rate"
+msgstr "Diária"
+
+#. module: liber_fairs_pos
+#: model:ir.model.fields,field_description:liber_fairs_pos.field_event_fair_cashier__days
+msgid "Days"
+msgstr "Dias"
+
+#. module: liber_fairs_pos
+#: model:ir.model.fields,field_description:liber_fairs_pos.field_event_fair_cashier__pos_amount
+msgid "Sold"
+msgstr "Vendido"
+
+#. module: liber_fairs_pos
+#: model:ir.model.fields,field_description:liber_fairs_pos.field_event_fair_cashier__commission_amount
+#: model:ir.model.fields,field_description:liber_fairs_pos.field_event_fair__commission_total
+msgid "Commission"
+msgstr "Comissão"
+
+#. module: liber_fairs_pos
+#: model:ir.model.fields,field_description:liber_fairs_pos.field_event_fair_cashier__daily_amount
+#: model:ir.model.fields,field_description:liber_fairs_pos.field_event_fair__daily_total
+msgid "Dailies"
+msgstr "Diárias"
+
+#. module: liber_fairs_pos
+#: model:ir.model.fields,field_description:liber_fairs_pos.field_event_fair_cashier__loss_share
+msgid "Loss share"
+msgstr "Rateio da perda"
+
+#. module: liber_fairs_pos
+#: model:ir.model.fields,field_description:liber_fairs_pos.field_event_fair_cashier__net_amount
+#: model:ir.model.fields,field_description:liber_fairs_pos.field_event_fair__payout_total
+msgid "To pay"
+msgstr "A pagar"
+
+#. module: liber_fairs_pos
+#: model:ir.model.fields,field_description:liber_fairs_pos.field_event_fair_cashier__uncovered_loss
+msgid "Still owed"
+msgstr "Ainda devido"
+
+#. module: liber_fairs_pos
+#: model:ir.model.fields,field_description:liber_fairs_pos.field_event_fair__loss_total
+msgid "Losses at cost"
+msgstr "Perdas a custo"
+
+#. module: liber_fairs_pos
+#: model:ir.model.fields,field_description:liber_fairs_pos.field_event_fair_cashier__bill_id
+msgid "Bill"
+msgstr "Conta a pagar"
+
+#. module: liber_fairs_pos
+#: model_terms:ir.ui.view,arch_db:liber_fairs_pos.view_event_fair_form_pos
+msgid "Commissions"
+msgstr "Comissões"
+
+#. module: liber_fairs_pos
+#: model_terms:ir.ui.view,arch_db:liber_fairs_pos.view_event_fair_form_pos
+msgid "Create the bills"
+msgstr "Gerar as contas a pagar"
+
+#. module: liber_fairs_pos
+#: model:res.groups,name:liber_fairs_pos.group_fair_cashier
+msgid "Event cashier"
+msgstr "Balcão do evento"
+
+#. module: liber_fairs_pos
+#: model:ir.model.fields,field_description:liber_fairs_pos.field_product_template__fair_qty
+msgid "On the table"
+msgstr "Na mesa"
+
+#. module: liber_fairs_pos
+#: model:ir.model.fields,field_description:liber_fairs_pos.field_event_fair__team_loss_total
+msgid "Split with the team"
+msgstr "Rateado com a equipe"
+#. module: liber_fairs_pos
+#: model_terms:ir.ui.view,arch_db:liber_fairs_pos.view_event_fair_form_pos
+msgid ""
+"Plan the event to agree on commissions: the days each\n"
+"                        person works and the analytic account that carries\n"
+"                        the cost are born there."
+msgstr ""
+"Planeje o evento para combinar as comissões: os dias de cada um e o "
+"analítico que carrega o custo nascem ali."
+
+#. module: liber_fairs_pos
+#: code:addons/liber_fairs_pos/models/event_fair_cashier.py:0
+msgid ""
+"Plan %(feira)s first: commission and daily rate are agreed on a planned "
+"event, which is the one that already has its days and its analytic account."
+msgstr ""
+"Planeje a %(feira)s primeiro: comissão e diária se combinam num evento "
+"planejado, que é o que já tem os dias e o analítico dele."

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<script>
+/* Servido por /liber_site/static/docs/, este arquivo vem com uma semana de
+   cache e o docs.js sem versão -- e o índice monta a lista a partir dele. Foi
+   assim que a emissão de NF-e e o manual da Amazon ficaram invisíveis: o
+   catálogo em cache era anterior aos dois. A rota /liber/docs/ serve o mesmo
+   arquivo sem cache e com ?v=<mtime> nos assets. Quem chegar pelo caminho
+   antigo (favorito, link velho, resultado de busca) vai para lá antes de a
+   página montar qualquer coisa. */
+(function () {
+  var antigo = "/liber_site/static/docs/";
+  if (location.pathname.indexOf(antigo) === 0) {
+    location.replace("/liber/docs/" + location.pathname.slice(antigo.length) +
+                     location.search + location.hash);
+  }
+})();
+</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>O espelho entre empresas — Manuais do Liber</title>
+<link rel="icon" type="image/png" href="../logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;600;700&display=swap">
+<link rel="stylesheet" href="docs.css">
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="../index.html"><img src="../logo.png" alt="">liber<span>.</span></a>
+    <span class="doc-tag">Manuais</span>
+    <nav><a href="index.html">Índice</a><a href="../index.html">Site</a></nav>
+  </div>
+</header>
+<div class="wrap">
+  <div class="layout">
+    <aside class="sidebar" id="sidebar"></aside>
+    <article class="doc">
+      <div class="breadcrumb"><a href="index.html">Manuais</a><span class="sep">›</span>Gestão<span class="sep">›</span>O espelho entre empresas</div>
+      <h1>O espelho entre empresas</h1>
+      <p class="lead">A nota que a empresa irmã ganhou existe desde sempre; o que faltava era um botão para chegar até ela.</p>
+
+      <h2 id="visao-geral">Visão geral</h2>
+      <p>Quando uma fatura é publicada tendo uma <strong>empresa irmã</strong> como cliente, o módulo da OCA que trata de operações entre empresas cria, do outro lado, o documento correspondente — a conta a pagar da irmã. Ele guarda o vínculo num campo, e não mostra nada na tela.</p>
+      <p>Na prática, quem publicou a fatura não tinha como achar o espelho a não ser procurando na lista da outra empresa pela referência. Este módulo põe o vínculo onde ele é necessário.</p>
+
+      <h2 id="botoes">Os dois botões</h2>
+      <table>
+        <thead><tr><th>Onde</th><th>O que aparece</th></tr></thead>
+        <tbody>
+          <tr><td><strong>No documento de origem</strong></td><td>O botão <span class="field">Espelho</span>, com a contagem, que abre o documento (ou os documentos) da outra empresa.</td></tr>
+          <tr><td><strong>No espelho</strong></td><td>O botão <span class="field">Origem</span>, e o campo <span class="field">Documento de origem</span> na aba de outras informações.</td></tr>
+        </tbody>
+      </table>
+
+      <div class="callout"><span class="title">Nota</span><p>Abrir documento de outra empresa exige que ela esteja <strong>ligada no seletor de empresas</strong>, como vale para qualquer registro em ambiente multiempresa. Com a empresa desligada, o botão existe e a abertura recusa — não é falha do vínculo.</p></div>
+
+      <h2 id="quando">Quando o botão não aparece</h2>
+      <p>Se não houve espelho, não há o que mostrar. Isso acontece quando a operação não é entre empresas do mesmo banco, quando a empresa irmã não está configurada para receber o documento, ou quando a fatura ainda está em rascunho — o espelho nasce na <em>publicação</em>.</p>
+
+      <div class="seealso">
+        <strong>Ver também</strong>
+        <ul>
+          <li><a href="liber_copyright_contracts_intercompany.html">Cessão de uso entre empresas</a> — o caso da casa que gera esses pares.</li>
+        </ul>
+      </div>
+
+      <nav class="pager" id="pager"></nav>
+    </article>
+  </div>
+</div>
+<script src="docs.js"></script>
+</body>
+</html>

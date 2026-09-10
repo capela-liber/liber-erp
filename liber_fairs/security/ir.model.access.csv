@@ -1,0 +1,22 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_event_fair_user,event.fair user,model_event_fair,liber_fairs.group_fair_user,1,1,0,0
+access_event_fair_manager,event.fair manager,model_event_fair,liber_fairs.group_fair_manager,1,1,1,1
+access_event_fair_line_user,event.fair.line user,model_event_fair_line,liber_fairs.group_fair_user,1,1,1,1
+access_event_fair_line_manager,event.fair.line manager,model_event_fair_line,liber_fairs.group_fair_manager,1,1,1,1
+access_event_fair_day_user,event.fair.day user,model_event_fair_day,liber_fairs.group_fair_user,1,1,1,0
+access_event_fair_day_manager,event.fair.day manager,model_event_fair_day,liber_fairs.group_fair_manager,1,1,1,1
+access_event_fair_day_line_user,event.fair.day.line user,model_event_fair_day_line,liber_fairs.group_fair_user,1,1,1,1
+access_event_fair_day_line_manager,event.fair.day.line manager,model_event_fair_day_line,liber_fairs.group_fair_manager,1,1,1,1
+access_event_fair_template_user,event.fair.template user,model_event_fair_template,liber_fairs.group_fair_user,1,1,1,0
+access_event_fair_template_manager,event.fair.template manager,model_event_fair_template,liber_fairs.group_fair_manager,1,1,1,1
+access_event_fair_template_line_user,event.fair.template.line user,model_event_fair_template_line,liber_fairs.group_fair_user,1,1,1,1
+access_event_fair_template_line_manager,event.fair.template.line manager,model_event_fair_template_line,liber_fairs.group_fair_manager,1,1,1,1
+access_event_fair_add_products,event.fair.add.products,model_event_fair_add_products,liber_fairs.group_fair_user,1,1,1,1
+access_event_fair_apply_template,event.fair.apply.template,model_event_fair_apply_template,liber_fairs.group_fair_user,1,1,1,1
+access_event_fair_save_template,event.fair.save.template,model_event_fair_save_template,liber_fairs.group_fair_user,1,1,1,1
+access_event_fair_loss_user,event.fair.loss user,model_event_fair_loss,liber_fairs.group_fair_user,1,1,1,0
+access_event_fair_loss_manager,event.fair.loss manager,model_event_fair_loss,liber_fairs.group_fair_manager,1,1,1,1
+access_fair_stock_picking_read,stock.picking read for fairs,stock.model_stock_picking,liber_fairs.group_fair_user,1,0,0,0
+access_fair_stock_move_read,stock.move read for fairs,stock.model_stock_move,liber_fairs.group_fair_user,1,0,0,0
+access_fair_stock_move_line_read,stock.move.line read for fairs,stock.model_stock_move_line,liber_fairs.group_fair_user,1,0,0,0
+access_fair_orderpoint_read,stock.warehouse.orderpoint read for fairs,stock.model_stock_warehouse_orderpoint,liber_fairs.group_fair_user,1,0,0,0

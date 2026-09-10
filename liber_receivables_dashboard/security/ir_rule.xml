@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- A foto tem empresa, e cada editora enxerga só a sua — o mesmo
+         recorte do relatório por idade que a alimenta. Global: vale para o
+         administrador também; quem marca várias empresas no seletor vê as
+         que marcou. -->
+    <record id="liber_receivables_snapshot_company_rule" model="ir.rule">
+        <field name="name">Receivables Snapshot: multi-company</field>
+        <field name="model_id" ref="model_liber_receivables_snapshot"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+</odoo>

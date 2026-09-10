@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_move_form_mirror_link" model="ir.ui.view">
+        <field name="name">account.move.form.liber.intercompany.mirror</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form"/>
+        <field name="arch" type="xml">
+            <div name="button_box" position="inside">
+                <field name="mirror_count" invisible="1"/>
+                <field name="auto_invoice_id" invisible="1"/>
+                <button name="action_open_mirror" type="object" class="oe_stat_button"
+                        icon="fa-clone" invisible="mirror_count == 0"
+                        help="The counterpart document created in the sister company">
+                    <field name="mirror_count" widget="statinfo" string="Mirror"/>
+                </button>
+                <button name="action_open_mirror_source" type="object" class="oe_stat_button"
+                        icon="fa-external-link" invisible="not auto_invoice_id"
+                        help="The document in the sister company this one was created from">
+                    <div class="o_stat_info">
+                        <span class="o_stat_text">Source</span>
+                    </div>
+                </button>
+            </div>
+            <!-- The Accounting group: visible for every document type. The
+                 "Invoice" group next to it is hidden on vendor bills, and the
+                 mirror of a customer invoice IS a vendor bill. -->
+            <xpath expr="//page[@id='other_tab']//group[@name='accounting_info_group']//field[@name='company_id']" position="after">
+                <field name="auto_invoice_id" string="Source document" readonly="1"
+                       invisible="not auto_invoice_id"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

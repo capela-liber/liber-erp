@@ -25,3 +25,4 @@ from . import test_casamento_da_fatura
 from . import test_desconto_e_produto_da_nota
 from . import test_tour_nota_do_olist
 from . import test_isbn_antigo_na_nota
+from . import test_carimbo_last_sync

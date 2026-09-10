@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <!-- Dia 1 de cada mês, de madrugada: a carteira como fechou o mês
+         anterior. Se a máquina estiver fora, o Odoo roda o cron atrasado no
+         primeiro acordar, e a foto fica com a data desse dia — ainda uma
+         por mês, que é o que o gráfico exige. -->
+    <record id="cron_receivables_snapshot" model="ir.cron">
+        <field name="name">Receivables: monthly snapshot of the portfolio</field>
+        <field name="model_id" ref="model_liber_receivables_snapshot"/>
+        <field name="user_id" ref="base.user_root"/>
+        <field name="state">code</field>
+        <field name="code">model._cron_tirar_foto()</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">months</field>
+        <field name="active" eval="True"/>
+        <field name="nextcall"
+               eval="(DateTime.now().replace(day=1, hour=3, minute=0, second=0) + relativedelta(months=1))"/>
+    </record>
+</odoo>

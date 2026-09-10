@@ -13,6 +13,7 @@ import json
 
 from odoo.exceptions import AccessError
 from odoo.tests import TransactionCase, tagged
+from odoo.tools.safe_eval import safe_eval
 
 
 @tagged("post_install", "-at_install", "liber_sales_dashboard")
@@ -192,6 +193,43 @@ class TestSalesDashboard(TransactionCase):
         self.assertEqual(cadeias, {"order_date", "file_create_date"})
 
     # -- a tela ------------------------------------------------------------
+    # -- os filtros da lista que o cartão abre -----------------------------
+    def _filtro(self, nome):
+        """O domínio do filtro como a tela o recebe, com a view herdada aplicada."""
+        from lxml import etree
+        arch = self.env["nfe.xml.panel"].get_view(view_type="search")["arch"]
+        achados = etree.fromstring(arch).xpath("//filter[@name='%s']" % nome)
+        if not achados:
+            self.fail("a busca das notas perdeu o filtro %r" % nome)
+        return safe_eval(achados[0].get("domain"))
+
+    def test_a_lista_separa_sem_fatura_de_fatura_sem_pedido(self):
+        """"Notas sem fatura nenhuma é muito estranho" -- o cartão soma dois
+        casos que pedem remédios diferentes, e a lista tem de separá-los sem
+        ler linha por linha: sem fatura, fatura sem pedido, com pedido."""
+        pedido = self._pedido()
+        pedido.order_line.qty_delivered = 2
+        ligada = pedido._create_invoices()
+        solta = self.env["account.move"].create({
+            "move_type": "out_invoice", "partner_id": self.cliente.id,
+            "invoice_line_ids": [(0, 0, {"product_id": self.livro.id,
+                                         "quantity": 1, "price_unit": 90.0})]})
+        com_pedido = self._xml(100.0)
+        com_pedido.invoice_id = ligada
+        sem_pedido = self._xml(90.0)
+        sem_pedido.invoice_id = solta
+        sem_fatura = self._xml(60.0)
+        self.env.flush_all()
+        minhas = [("partner_id", "=", self.cliente.id)]
+        Nota = self.env["nfe.xml.panel"]
+        self.assertEqual(Nota.search(self._filtro("sem_fatura") + minhas), sem_fatura)
+        self.assertEqual(Nota.search(self._filtro("fatura_sem_pedido") + minhas), sem_pedido)
+        self.assertEqual(Nota.search(self._filtro("com_pedido") + minhas), com_pedido)
+        # Os dois primeiros filtros, juntos, são exatamente o cartão.
+        acao = self.env.ref("liber_sales_dashboard.action_notas_sem_pedido")
+        self.assertEqual(Nota.search(safe_eval(acao.domain) + minhas),
+                         sem_fatura | sem_pedido)
+
     def test_e_o_proprio_painel_de_vendas_do_core(self):
         """Uma entrada só: o conteúdo mora no registro do core, com o nome,
         o grupo e a posição dele -- não há um segundo "Sales" na lateral."""

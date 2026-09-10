@@ -1,0 +1,141 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* liber_receivables_dashboard
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: pt_BR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#. module: liber_receivables_dashboard
+#: model:ir.model,name:liber_receivables_dashboard.model_liber_receivables_snapshot
+msgid "Receivables Snapshot"
+msgstr "Foto dos Recebíveis"
+
+#. module: liber_receivables_dashboard
+#: model:ir.actions.act_window,name:liber_receivables_dashboard.liber_receivables_snapshot_action
+#: model:ir.ui.menu,name:liber_receivables_dashboard.liber_receivables_snapshot_menu
+msgid "Receivables History"
+msgstr "Histórico dos Recebíveis"
+
+#. module: liber_receivables_dashboard
+#: model_terms:ir.ui.view,arch_db:liber_receivables_dashboard.liber_receivables_snapshot_list
+#: model_terms:ir.ui.view,arch_db:liber_receivables_dashboard.liber_receivables_snapshot_search
+msgid "Receivables Snapshots"
+msgstr "Fotos dos Recebíveis"
+
+#. module: liber_receivables_dashboard
+#: model:ir.actions.server,name:liber_receivables_dashboard.liber_receivables_snapshot_tirar_foto
+msgid "Take today's snapshot"
+msgstr "Tirar a foto de hoje"
+
+#. module: liber_receivables_dashboard
+#: model:ir.cron,cron_name:liber_receivables_dashboard.cron_receivables_snapshot
+msgid "Receivables: monthly snapshot of the portfolio"
+msgstr "Recebíveis: foto mensal da carteira"
+
+#. module: liber_receivables_dashboard
+#: model:ir.model.fields,field_description:liber_receivables_dashboard.field_liber_receivables_snapshot__date
+msgid "Snapshot Date"
+msgstr "Data da foto"
+
+#. module: liber_receivables_dashboard
+#: model:ir.model.fields,field_description:liber_receivables_dashboard.field_liber_receivables_snapshot__company_id
+msgid "Company"
+msgstr "Empresa"
+
+#. module: liber_receivables_dashboard
+#: model:ir.model.fields,field_description:liber_receivables_dashboard.field_liber_receivables_snapshot__bracket
+msgid "Bracket"
+msgstr "Faixa"
+
+#. module: liber_receivables_dashboard
+#: model:ir.model.fields,field_description:liber_receivables_dashboard.field_liber_receivables_snapshot__amount
+msgid "Amount"
+msgstr "Valor"
+
+#. module: liber_receivables_dashboard
+#: model:ir.model.fields.selection,name:liber_receivables_dashboard.selection__liber_receivables_snapshot__bracket__current
+msgid "Not due"
+msgstr "A vencer"
+
+#. module: liber_receivables_dashboard
+#: model:ir.model.fields.selection,name:liber_receivables_dashboard.selection__liber_receivables_snapshot__bracket__older
+msgid "Older"
+msgstr "Mais de 120"
+
+#. module: liber_receivables_dashboard
+#: model:ir.model.fields.selection,name:liber_receivables_dashboard.selection__liber_receivables_snapshot__bracket__credit
+msgid "Customer credits"
+msgstr "Créditos de clientes"
+
+#. module: liber_receivables_dashboard
+#: model:ir.model.fields.selection,name:liber_receivables_dashboard.selection__liber_receivables_snapshot__bracket__off_ledger
+msgid "Wrong ledger"
+msgstr "Fora do razão"
+
+#. module: liber_receivables_dashboard
+#: model_terms:ir.ui.view,arch_db:liber_receivables_dashboard.liber_receivables_snapshot_search
+msgid "Portfolio"
+msgstr "Carteira"
+
+#. module: liber_receivables_dashboard
+#: model_terms:ir.ui.view,arch_db:liber_receivables_dashboard.liber_receivables_snapshot_search
+msgid "Outside the portfolio"
+msgstr "Fora da carteira"
+
+#. module: liber_receivables_dashboard
+#: model_terms:ir.ui.view,arch_db:liber_receivables_dashboard.liber_receivables_snapshot_search
+msgid "Month"
+msgstr "Mês"
+
+#. module: liber_receivables_dashboard
+#: model_terms:ir.ui.view,arch_db:liber_receivables_dashboard.liber_receivables_snapshot_list
+msgid "Total"
+msgstr "Total"
+
+#. module: liber_receivables_dashboard
+#: model_terms:ir.actions.act_window,help:liber_receivables_dashboard.liber_receivables_snapshot_action
+msgid "No snapshot yet"
+msgstr "Nenhuma foto ainda"
+
+#. module: liber_receivables_dashboard
+#: model_terms:ir.actions.act_window,help:liber_receivables_dashboard.liber_receivables_snapshot_action
+msgid ""
+"Once a month the receivables portfolio is photographed, by\n"
+"               company and by age bracket, so the Receivables dashboard can\n"
+"               show how the overdue amount moves over time. Use the action\n"
+"               \"Take today's snapshot\" to photograph it now."
+msgstr ""
+"Uma vez por mês a carteira de recebíveis é fotografada, por\n"
+"               empresa e por faixa de atraso, para o painel de Recebíveis\n"
+"               mostrar como o vencido anda no tempo. Use a ação\n"
+"               \"Tirar a foto de hoje\" para fotografá-la agora."
+
+#. module: liber_receivables_dashboard
+#: model:ir.model.constraint,message:liber_receivables_dashboard.constraint_liber_receivables_snapshot__unica_por_dia
+msgid "One snapshot per day, company and bracket."
+msgstr "Uma foto por dia, empresa e faixa."
+
+#. module: liber_receivables_dashboard
+#. odoo-python
+#: code:addons/liber_receivables_dashboard/models/receivables_snapshot.py:0
+msgid ""
+"A snapshot cannot be dated in the future (%(dia)s): the aging report only "
+"knows how the portfolio stands today."
+msgstr ""
+"Uma foto não pode ter data no futuro (%(dia)s): o relatório por idade só "
+"sabe como a carteira está hoje."
+
+#. module: liber_receivables_dashboard
+#. odoo-python
+#: code:addons/liber_receivables_dashboard/models/receivables_snapshot.py:0
+msgid "Today's snapshot of the receivables portfolio was taken."
+msgstr "A foto de hoje da carteira de recebíveis foi tirada."

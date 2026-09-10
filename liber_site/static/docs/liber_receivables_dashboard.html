@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<script>
+/* Servido por /liber_site/static/docs/, este arquivo vem com uma semana de
+   cache e o docs.js sem versão -- e o índice monta a lista a partir dele. Foi
+   assim que a emissão de NF-e e o manual da Amazon ficaram invisíveis: o
+   catálogo em cache era anterior aos dois. A rota /liber/docs/ serve o mesmo
+   arquivo sem cache e com ?v=<mtime> nos assets. Quem chegar pelo caminho
+   antigo (favorito, link velho, resultado de busca) vai para lá antes de a
+   página montar qualquer coisa. */
+(function () {
+  var antigo = "/liber_site/static/docs/";
+  if (location.pathname.indexOf(antigo) === 0) {
+    location.replace("/liber/docs/" + location.pathname.slice(antigo.length) +
+                     location.search + location.hash);
+  }
+})();
+</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Histórico dos recebíveis — Manuais do Liber</title>
+<link rel="icon" type="image/png" href="../logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;600;700&display=swap">
+<link rel="stylesheet" href="docs.css">
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="../index.html"><img src="../logo.png" alt="">liber<span>.</span></a>
+    <span class="doc-tag">Manuais</span>
+    <nav><a href="index.html">Índice</a><a href="../index.html">Site</a></nav>
+  </div>
+</header>
+<div class="wrap">
+  <div class="layout">
+    <aside class="sidebar" id="sidebar"></aside>
+    <article class="doc">
+      <div class="breadcrumb"><a href="index.html">Manuais</a><span class="sep">›</span>Gestão<span class="sep">›</span>Histórico dos recebíveis</div>
+      <h1>Histórico dos recebíveis</h1>
+      <p class="lead">Um retrato mensal da carteira por faixa de atraso: o relatório de idade sabe como hoje está, e não sabe como março estava.</p>
+
+      <h2 id="visao-geral">Visão geral</h2>
+      <p>O relatório de <a href="liber_aged_receivable.html">contas a receber por idade</a> responde uma pergunta só, e no presente: <em>como a carteira está agora</em>. Ele não sabe dizer quanto estava vencido em março — e é essa a pergunta que aparece quando alguém quer saber se a cobrança está melhorando ou piorando.</p>
+      <p>Este módulo fotografa a carteira uma vez por mês, por empresa e por faixa de atraso, e guarda a foto. O histórico passa a existir em <span class="menupath">Contabilidade<i>‣</i>Relatórios<i>‣</i>Histórico dos recebíveis</span>, com lista e gráfico.</p>
+
+      <h2 id="quando">Quando a foto é tirada</h2>
+      <ol class="steps">
+        <li>Uma tarefa agendada roda no <strong>dia 1º</strong> de cada mês.</li>
+        <li>É uma foto por mês e por empresa — tirar de novo <em>substitui</em> a do mês, não empilha.</li>
+        <li>O botão <span class="field">Tirar a foto de hoje</span> força uma agora, para conferir ou para corrigir um mês torto.</li>
+        <li>A primeira foto é tirada na instalação, para o relatório não nascer vazio.</li>
+      </ol>
+
+      <h2 id="carteira">O que conta como carteira</h2>
+      <p>A carteira é a parte <strong>publicada, positiva e de cliente de verdade</strong> do relatório de idade. Duas coisas ficam de fora dela, cada uma no seu balde:</p>
+      <table>
+        <thead><tr><th>Fora da carteira</th><th>Por quê</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Crédito de cliente</strong></td><td>Saldo negativo não é coisa a receber; somado à carteira, esconde atraso.</td></tr>
+          <tr><td><strong>Parceiro que nunca foi cliente</strong></td><td>Linha em conta de recebível com parceiro que não vende nada é erro de lançamento, e erro não vira meta.</td></tr>
+        </tbody>
+      </table>
+      <p>Elas continuam visíveis — só não se misturam ao número que se cobra.</p>
+
+      <div class="callout"><span class="title">Nota</span><p>O módulo nasceu em 06/09/2026 com um painel próprio de recebíveis. No mesmo dia as peças daquele painel foram para o painel dos Ativos, e o painel separado foi aposentado; o que ficou aqui é a foto mensal. O nome técnico do módulo continua o de origem.</p></div>
+
+      <div class="seealso">
+        <strong>Ver também</strong>
+        <ul>
+          <li><a href="liber_aged_receivable.html">Contas a receber por idade</a> — o retrato de hoje, que este módulo arquiva.</li>
+        </ul>
+      </div>
+
+      <nav class="pager" id="pager"></nav>
+    </article>
+  </div>
+</div>
+<script src="docs.js"></script>
+</body>
+</html>

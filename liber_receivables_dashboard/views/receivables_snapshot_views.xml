@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="liber_receivables_snapshot_list" model="ir.ui.view">
+        <field name="name">liber.receivables.snapshot.list</field>
+        <field name="model">liber.receivables.snapshot</field>
+        <field name="arch" type="xml">
+            <list string="Receivables Snapshots" create="false" edit="false"
+                  default_order="date desc, company_id, bracket">
+                <field name="date"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+                <field name="bracket"/>
+                <field name="amount" sum="Total"/>
+                <field name="currency_id" column_invisible="True"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="liber_receivables_snapshot_search" model="ir.ui.view">
+        <field name="name">liber.receivables.snapshot.search</field>
+        <field name="model">liber.receivables.snapshot</field>
+        <field name="arch" type="xml">
+            <search string="Receivables Snapshots">
+                <field name="date"/>
+                <field name="company_id"/>
+                <filter name="carteira" string="Portfolio"
+                        domain="[('bracket', 'in', ('current', 'd30', 'd60', 'd90', 'd120', 'older'))]"/>
+                <filter name="fora" string="Outside the portfolio"
+                        domain="[('bracket', 'in', ('credit', 'off_ledger'))]"/>
+                <separator/>
+                <filter name="by_month" string="Month" domain="[]"
+                        context="{'group_by': 'date:month'}"/>
+                <filter name="by_company" string="Company" domain="[]"
+                        context="{'group_by': 'company_id'}"
+                        groups="base.group_multi_company"/>
+                <filter name="by_bracket" string="Bracket" domain="[]"
+                        context="{'group_by': 'bracket'}"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="liber_receivables_snapshot_action" model="ir.actions.act_window">
+        <field name="name">Receivables History</field>
+        <field name="res_model">liber.receivables.snapshot</field>
+        <field name="view_mode">list,graph</field>
+        <field name="search_view_id" ref="liber_receivables_snapshot_search"/>
+        <field name="context">{'search_default_by_month': 1,
+                              'search_default_by_bracket': 2,
+                              'search_default_carteira': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">No snapshot yet</p>
+            <p>Once a month the receivables portfolio is photographed, by
+               company and by age bracket, so the Receivables dashboard can
+               show how the overdue amount moves over time. Use the action
+               "Take today's snapshot" to photograph it now.</p>
+        </field>
+    </record>
+
+    <!-- O botão "foto de hoje", no menu Ações da lista. Grupo declarado: o
+         Odoo 19 só deixa rodar ação de servidor sem grupo quem tem escrita
+         no modelo (ver o `liber_aged_receivable_pagar`). -->
+    <record id="liber_receivables_snapshot_tirar_foto" model="ir.actions.server">
+        <field name="name">Take today's snapshot</field>
+        <field name="model_id" ref="model_liber_receivables_snapshot"/>
+        <field name="binding_model_id" ref="model_liber_receivables_snapshot"/>
+        <field name="binding_view_types">list</field>
+        <field name="group_ids" eval="[(4, ref('account.group_account_user'))]"/>
+        <field name="state">code</field>
+        <field name="code">action = model.action_tirar_foto()</field>
+    </record>
+
+    <menuitem id="liber_receivables_snapshot_menu"
+              name="Receivables History"
+              parent="account.menu_finance_reports"
+              action="liber_receivables_snapshot_action"
+              sequence="26"/>
+</odoo>

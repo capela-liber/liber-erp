@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <!-- The intercompany charge needs a product on both sides of the pair
+             (sold by the contract company, purchased by the selling company).
+             Ship the obvious default so the feature works out of the box; the
+             company setting still overrides it. Taxes are deliberately NOT
+             stripped from the pair's lines: this is a real fiscal document of
+             a rights assignment, so the product's taxes / fiscal position
+             decide. -->
+        <record id="product_interco_royalty" model="product.template">
+            <field name="name">Royalties entre Empresas</field>
+            <field name="type">service</field>
+            <field name="sale_ok" eval="True"/>
+            <field name="purchase_ok" eval="True"/>
+            <field name="list_price">0.0</field>
+            <field name="standard_price">0.0</field>
+            <field name="description_sale">Royalties accrued on the buyer company's sales of works under the seller company's copyright contracts.</field>
+            <field name="description_purchase">Royalties owed to the contract-holding company on this company's sales of contracted works.</field>
+        </record>
+
+    </data>
+</odoo>

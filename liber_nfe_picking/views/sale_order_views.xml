@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- A modalidade de frete se negocia no pedido, ao lado da posição
+         fiscal: os dois decidem juntos como a nota vai sair. -->
+    <record id="view_order_form_nfe_frete" model="ir.ui.view">
+        <field name="name">sale.order.form.nfe.frete</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <field name="fiscal_position_id" position="after">
+                <field name="nfe_modalidade_frete"/>
+            </field>
+        </field>
+    </record>
+</odoo>

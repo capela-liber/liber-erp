@@ -579,89 +579,6 @@
        }
       }
      }
-    },
-    {
-     "id": "c2a70000-0000-4000-8000-000000000014",
-     "tag": "chart",
-     "col": 0,
-     "row": 0,
-     "offset": {
-      "x": 0,
-      "y": 1564
-     },
-     "width": 1000,
-     "height": 300,
-     "data": {
-      "type": "odoo_line",
-      "title": {
-       "text": "Vendas mensais (pedidos)",
-       "color": "#434343",
-       "bold": true
-      },
-      "background": "#FFFFFF",
-      "legendPosition": "none",
-      "metaData": {
-       "groupBy": [
-        "order_date:month"
-       ],
-       "measure": "price_subtotal",
-       "order": null,
-       "resModel": "sale.report",
-       "mode": "line",
-       "cumulatedStart": false
-      },
-      "searchParams": {
-       "comparison": null,
-       "context": {
-        "group_by": []
-       },
-       "domain": [
-        [
-         "state",
-         "in",
-         [
-          "sale",
-          "done"
-         ]
-        ]
-       ],
-       "groupBy": [
-        "order_date:month"
-       ],
-       "orderBy": []
-      },
-      "dataSets": [
-       {}
-      ],
-      "verticalAxisPosition": "left",
-      "stacked": false,
-      "cumulative": false,
-      "cumulatedStart": false,
-      "axesDesign": {
-       "y": {
-        "title": {
-         "text": "Receita"
-        }
-       }
-      },
-      "fillArea": true,
-      "chartId": "c2a70000-0000-4000-8000-000000000014",
-      "fieldMatching": {
-       "f2a70000-0000-4000-8000-000000000001": {
-        "chain": "order_date",
-        "type": "date",
-        "offset": 0
-       },
-       "f2a70000-0000-4000-8000-000000000002": {
-        "chain": "partner_id",
-        "type": "many2one"
-       },
-       "f2a70000-0000-4000-8000-000000000003": {
-        "chain": "team_id",
-        "type": "many2one"
-       }
-      }
-     }
     }
    ],
    "tables": [],
@@ -1422,7 +1339,6 @@
   "c2a70000-0000-4000-8000-000000000024": "liber_sales_dashboard.menu_notas_sem_pedido",
   "c2a70000-0000-4000-8000-000000000013": "liber_sales_dashboard.menu_notas_de_venda",
   "c2a70000-0000-4000-8000-000000000011": "sale.menu_reporting_sales",
-  "c2a70000-0000-4000-8000-000000000012": "liber_sales_dashboard.menu_notas_de_venda",
-  "c2a70000-0000-4000-8000-000000000014": "sale.menu_reporting_sales"
+  "c2a70000-0000-4000-8000-000000000012": "liber_sales_dashboard.menu_notas_de_venda"
  }
 }

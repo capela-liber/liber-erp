@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- O ícone da feira no cartão do Ponto de Venda.
+         A tela do PDV junta os caixas da casa e os das feiras, e um caixa de
+         feira tem vida curta: nasce para o evento e é arquivado quando a
+         mercadoria volta. O ícone diz de relance qual é qual, sem obrigar a
+         ler o nome inteiro de cada cartão. -->
+    <record id="view_pos_config_kanban_fair" model="ir.ui.view">
+        <field name="name">pos.config.kanban.fair</field>
+        <field name="model">pos.config</field>
+        <field name="inherit_id" ref="point_of_sale.view_pos_config_kanban"/>
+        <field name="arch" type="xml">
+            <field name="cash_control" position="before">
+                <field name="fair_id"/>
+            </field>
+            <div name="card_title" position="inside">
+                <div t-if="record.fair_id.raw_value"
+                     class="d-flex align-items-center gap-2 mt-1">
+                    <img src="/liber_fairs/static/description/icon.png"
+                         alt="Feira" height="20" width="20"
+                         class="rounded"/>
+                    <field name="fair_id" class="text-muted"/>
+                </div>
+            </div>
+        </field>
+    </record>
+
+    <!-- A Visão geral do Inventário é BANCADA de quem trabalha no depósito, e
+         caixa de feira não é trabalho dele: a feira está a quilômetros dali. O
+         Ponto de Venda recusa arquivar a operação enquanto o caixa existir
+         (constraint do núcleo), então o jeito de tirar da frente é não listá-la
+         aqui. As operações que o depósito TRABALHA de verdade continuam
+         visíveis: a remessa que sai e a carga que volta. -->
+    <record id="stock.stock_picking_type_action" model="ir.actions.act_window">
+        <field name="domain">[('is_fair_register', '=', False)]</field>
+    </record>
+
+    <record id="stock.action_picking_type_list" model="ir.actions.act_window">
+        <field name="domain">[('is_fair_register', '=', False)]</field>
+    </record>
+</odoo>

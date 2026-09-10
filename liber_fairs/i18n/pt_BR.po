@@ -1,0 +1,2087 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* liber_fairs
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0-20260630\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-09-08 21:35+0000\n"
+"PO-Revision-Date: 2026-09-08 21:35+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: liber_fairs
+#. odoo-python
+#: code:addons/liber_fairs/models/event_fair_day.py:0
+msgid "%(feira)s / replenishment of %(dia)s"
+msgstr "%(feira)s / reposição de %(dia)s"
+
+#. module: liber_fairs
+#. odoo-python
+#: code:addons/liber_fairs/models/event_fair_line.py:0
+#: code:addons/liber_fairs/models/event_fair_template.py:0
+msgid ""
+"%(titulo)s: the minimum on the table (%(minimo)s) cannot be more than the "
+"copies being sent (%(planejado)s). Raise the copies, or lower the minimum."
+msgstr "%(titulo)s: o mínimo na mesa (%(minimo)s) não pode ser maior que os exemplares que vão (%(planejado)s). Aumente os exemplares, ou baixe o mínimo."
+
+#. module: liber_fairs
+#. odoo-python
+#: code:addons/liber_fairs/models/stock_picking.py:0
+msgid "%s is not a fair arrival: there is nothing to check here."
+msgstr "%s não é uma chegada de feira: não há o que conferir aqui."
+
+#. module: liber_fairs
+#. odoo-python
+#: code:addons/liber_fairs/models/stock_picking.py:0
+msgid "<p><b>%(feira)s</b> — %(tipo)s.</p>"
+msgstr "<p><b>%(feira)s</b> — %(tipo)s.</p>"
+
+#. module: liber_fairs
+#. odoo-python
+#: code:addons/liber_fairs/models/stock_picking.py:0
+msgid ""
+"<p><b>%(feira)s</b> — checked by <b>%(quem)s</b> on %(quando)s: %(qtd)s "
+"copies.</p>"
+msgstr "<p><b>%(feira)s</b> — conferido por <b>%(quem)s</b> em %(quando)s: %(qtd)s exemplares.</p>"
+
+#. module: liber_fairs
+#. odoo-python
+#: code:addons/liber_fairs/models/event_fair_day.py:0
+msgid ""
+"<p><b>%(feira)s</b> — replenishment asked from the closing of "
+"<b>%(dia)s</b>, on <b>%(mov)s</b>:</p><ul>%(linhas)s</ul>"
+msgstr "<p><b>%(feira)s</b> — reposição pedida no fechamento de <b>%(dia)s</b>, pelo movimento <b>%(mov)s</b>:</p><ul>%(linhas)s</ul>"
+
+#. module: liber_fairs
+#: model_terms:ir.ui.view,arch_db:liber_fairs.view_event_fair_add_products_form
+msgid "<span class=\"mx-1\">a</span>"
+msgstr ""
+
+#. module: liber_fairs
+#: model:ir.model.constraint,message:liber_fairs.constraint_event_fair_day_fair_date_uniq
+msgid "A fair has one closing per day."
+msgstr "Uma feira tem um fechamento por dia."
+
+#. module: liber_fairs
+#: model_terms:ir.actions.act_window,help:liber_fairs.action_event_fair
+msgid ""
+"A fair is not a sale: it is stock that leaves the house for a\n"
+"               few days and comes back incomplete. Everything about the event\n"
+"               hangs here."
+msgstr "Feira não é venda: é estoque que sai da casa por alguns dias e volta incompleto. Tudo do evento pendura aqui."
+
+#. module: liber_fairs
+#: model:ir.model.fields,help:liber_fairs.field_stock_picking__fair_is_arrival
+msgid ""
+"A leg that ARRIVES somewhere: at the fair table, or back at the warehouse. "
+"These are the ones somebody has to check."
+msgstr "A perna que CHEGA em algum lugar: na mesa da feira, ou de volta no armazém. São essas que alguém tem de conferir."
+
+#. module: liber_fairs
+#: model_terms:ir.actions.act_window,help:liber_fairs.action_event_fair_template
+msgid ""
+"A recurring fair has a similar grid every year. Save one and\n"
+"               apply it to the next event instead of building it again."
+msgstr "Feira recorrente tem grade parecida todo ano. Guarde uma e aplique no próximo evento em vez de montar de novo."
+
+#. module: liber_fairs
+#: model:ir.model.constraint,message:liber_fairs.constraint_event_fair_line_fair_product_uniq
+msgid "A title can only appear once in a fair grid."
+msgstr "Um título só aparece uma vez na grade da feira."
+
+#. module: liber_fairs
+#: model:ir.model.constraint,message:liber_fairs.constraint_event_fair_template_line_template_product_uniq
+msgid "A title can only appear once in a template."
+msgstr "Um título só aparece uma vez num modelo."
+
+#. module: liber_fairs
+#: model:ir.model,name:liber_fairs.model_res_groups
+msgid "Access Groups"
+msgstr "Grupos de acesso"
+
+#. module: liber_fairs
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair__message_needaction
+msgid "Action Needed"
+msgstr ""
+
+#. module: liber_fairs
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair_template__active
+msgid "Active"
+msgstr "Ativo"
+
+#. module: liber_fairs
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair__activity_ids
+msgid "Activities"
+msgstr ""
+
+#. module: liber_fairs
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair__activity_exception_decoration
+msgid "Activity Exception Decoration"
+msgstr ""
+
+#. module: liber_fairs
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair__activity_state
+msgid "Activity State"
+msgstr ""
+
+#. module: liber_fairs
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair__activity_type_icon
+msgid "Activity Type Icon"
+msgstr ""
+
+#. module: liber_fairs
+#: model:ir.actions.act_window,name:liber_fairs.action_event_fair_add_products
+#: model_terms:ir.ui.view,arch_db:liber_fairs.view_event_fair_add_products_form
+msgid "Add Titles"
+msgstr "Somar títulos"
+
+#. module: liber_fairs
+#: model:ir.model,name:liber_fairs.model_event_fair_add_products
+msgid "Add Titles to the Fair Grid"
+msgstr "Somar títulos à grade da feira"
+
+#. module: liber_fairs
+#: model_terms:ir.ui.view,arch_db:liber_fairs.view_event_fair_form
+#: model_terms:ir.ui.view,arch_db:liber_fairs.view_event_fair_template_form
+msgid "Add titles"
+msgstr "Somar títulos"
+
+#. module: liber_fairs
+#: model_terms:ir.ui.view,arch_db:liber_fairs.view_event_fair_add_products_form
+msgid "Add to the grid"
+msgstr "Somar à grade"
+
+#. module: liber_fairs
+#: model:ir.model.fields.selection,name:liber_fairs.selection__event_fair_apply_template__mode__add
+msgid "Add to what is already there"
+msgstr "Somar ao que já está lá"
+
+#. module: liber_fairs
+#: model:res.groups,name:liber_fairs.group_fair_manager
+msgid "Administrator"
+msgstr "Administrador"
+
+#. module: liber_fairs
+#: model_terms:ir.ui.view,arch_db:liber_fairs.view_event_fair_search
+msgid "Already back"
+msgstr "Já voltaram"
+
+#. module: liber_fairs
+#: model:ir.model.fields,help:liber_fairs.field_event_fair_day_line__qty_in_transit
+msgid ""
+"Already dispatched to the fair and not received yet, on the day this count "
+"was taken."
+msgstr "Já despachado para a feira e ainda não recebido, no dia em que esta contagem foi feita."
+
+#. module: liber_fairs
+#: model:ir.model.fields,help:liber_fairs.field_event_fair_add_products__filter_tag_ids
+msgid "Any of them. The house tags come from the Metabooks subjects."
+msgstr "Qualquer uma delas. As etiquetas da casa vêm dos assuntos da Metabooks.Qualquer uma delas. As etiquetas da casa vêm dos assuntos da Metabooks.Qualquer uma delas. As etiquetas da casa vêm dos assuntos da Metabooks.Qualquer uma delas. As etiquetas da casa vêm dos assuntos da Metabooks.Qualquer uma delas. As etiquetas da casa vêm dos assuntos da Metabooks.Qualquer uma delas. As etiquetas da casa vêm dos assuntos da Metabooks.Qualquer uma delas. As etiquetas da casa vêm dos assuntos da Metabooks."
+
+#. module: liber_fairs
+#: model_terms:ir.ui.view,arch_db:liber_fairs.view_event_fair_apply_template_form
+msgid "Apply"
+msgstr "Aplicar"
+
+#. module: liber_fairs
+#: model:ir.model,name:liber_fairs.model_event_fair_apply_template
+msgid "Apply a Grid Template to the Fair"
+msgstr "Aplicar um modelo de grade à feira"
+
+#. module: liber_fairs
+#: model:ir.actions.act_window,name:liber_fairs.action_event_fair_apply_template
+#: model_terms:ir.ui.view,arch_db:liber_fairs.view_event_fair_apply_template_form
+msgid "Apply a Template"
+msgstr "Aplicar um modelo"
+
+#. module: liber_fairs
+#: model_terms:ir.ui.view,arch_db:liber_fairs.view_event_fair_form
+msgid "Apply a template"
+msgstr "Aplicar um modelo"
+
+#. module: liber_fairs
+#: model_terms:ir.ui.view,arch_db:liber_fairs.view_event_fair_template_form
+msgid "Archived"
+msgstr "Arquivado"
+
+#. module: liber_fairs
+#: model_terms:ir.ui.view,arch_db:liber_fairs.view_fair_receipt_list
+#: model_terms:ir.ui.view,arch_db:liber_fairs.view_fair_receipt_search
+msgid "Arrival"
+msgstr "Chegada"
+
+#. module: liber_fairs
+#: model_terms:ir.ui.view,arch_db:liber_fairs.view_fair_receipt_search
+msgid "Arrived short"
+msgstr "Chegou curto"
+
+#. module: liber_fairs
+#: model:ir.model.fields,help:liber_fairs.field_event_fair_line__qty_requested
+msgid ""
+"Asked for and not on the table yet, whether still in the warehouse or "
+"already on the road."
+msgstr "Pedido e ainda não na mesa, esteja no armazém ou já na estrada."
+
+#. module: liber_fairs
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair_add_products__limit
+msgid "At most"
+msgstr "No máximo"
+
+#. module: liber_fairs
+#: model:ir.model.fields.selection,name:liber_fairs.selection__event_fair_loss__stage__fair
+#: model_terms:ir.ui.view,arch_db:liber_fairs.view_fair_receipt_search
+msgid "At the fair"
+msgstr "Na feira"
+
+#. module: liber_fairs
+#: model:ir.model.fields,help:liber_fairs.field_event_fair_loss__stage
+msgid ""
+"At the fair: the table had fewer copies than it should. On the way back: the"
+" fair sent more than the warehouse received."
+msgstr "Na feira: a mesa tinha menos exemplares do que devia. Na volta: a praça mandou mais do que o armazém recebeu."
+
+#. module: liber_fairs
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair__message_attachment_count
+msgid "Attachment Count"
+msgstr ""
+
+#. module: liber_fairs
+#: model_terms:ir.ui.view,arch_db:liber_fairs.view_fair_receipt_search
+msgid "Back at the warehouse"
+msgstr "De volta no armazém"
+
+#. module: liber_fairs
+#: model_terms:ir.ui.view,arch_db:liber_fairs.view_event_fair_form
+msgid "Back to Draft"
+msgstr "Voltar a rascunho"
+
+#. module: liber_fairs
+#: model:ir.model.fields.selection,name:liber_fairs.selection__event_fair_add_products__order__bestsellers
+msgid "Best sellers first"
+msgstr "Mais vendidos primeiro"
+
+#. module: liber_fairs
+#: model_terms:ir.ui.view,arch_db:liber_fairs.view_event_fair_template_form
+msgid "Book fair, general profile"
+msgstr "Feira literária, perfil geral"
+
+#. module: liber_fairs
+#: model_terms:ir.ui.view,arch_db:liber_fairs.view_event_fair_search
+msgid "Books out"
+msgstr "Livros fora"
+
+#. module: liber_fairs
+#: model_terms:ir.ui.view,arch_db:liber_fairs.view_event_fair_day_form
+msgid "Bring the table in"
+msgstr "Trazer a mesa"
+
+#. module: liber_fairs
+#: model:ir.model.fields.selection,name:liber_fairs.selection__event_fair_add_products__order__name
+msgid "By title"
+msgstr "Por título"
+
+#. module: liber_fairs
+#: model:ir.ui.menu,name:liber_fairs.menu_fairs_calendar
+msgid "Calendar"
+msgstr "Calendário"
+
+#. module: liber_fairs
+#: model_terms:ir.ui.view,arch_db:liber_fairs.view_event_fair_add_products_form
+#: model_terms:ir.ui.view,arch_db:liber_fairs.view_event_fair_apply_template_form
+#: model_terms:ir.ui.view,arch_db:liber_fairs.view_event_fair_save_template_form
+msgid "Cancel"
+msgstr "Cancelar"
+
+#. module: liber_fairs
+#: model:ir.model.fields,field_description:liber_fairs.field_stock_picking__fair_qty_checked
+#: model_terms:ir.ui.view,arch_db:liber_fairs.view_fair_receipt_list
+msgid "Checked"
+msgstr "Conferido"
+
+#. module: liber_fairs
+#: model:ir.model.fields,field_description:liber_fairs.field_stock_picking__fair_checked_by_id
+#: model_terms:ir.ui.view,arch_db:liber_fairs.view_fair_receipt_search
+msgid "Checked by"
+msgstr "Conferido por"
+
+#. module: liber_fairs
+#: model:ir.model.fields,field_description:liber_fairs.field_stock_picking__fair_checked_on
+msgid "Checked on"
+msgstr "Conferido em"
+
+#. module: liber_fairs
+#: model_terms:ir.ui.view,arch_db:liber_fairs.view_event_fair_day_form
+msgid "Close the day"
+msgstr "Fechar o dia"
+
+#. module: liber_fairs
+#: model:ir.model.fields.selection,name:liber_fairs.selection__event_fair__state__closed
+#: model:ir.model.fields.selection,name:liber_fairs.selection__event_fair_day__state__closed
+#: model_terms:ir.ui.view,arch_db:liber_fairs.view_event_fair_day_search
+msgid "Closed"
+msgstr "Fechado"
+
+#. module: liber_fairs
+#: model:ir.model,name:liber_fairs.model_res_company
+msgid "Companies"
+msgstr "Empresas"
+
+#. module: liber_fairs
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair__company_id
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair_day__company_id
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair_line__company_id
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair_loss__company_id
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair_template__company_id
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair_template_line__company_id
+msgid "Company"
+msgstr "Empresa"
+
+#. module: liber_fairs
+#. odoo-python
+#: code:addons/liber_fairs/models/res_company.py:0
+msgid "Company %s has no scrap location to book the loss to."
+msgstr "A empresa %s não tem localização de perdas onde lançar a baixa."
+
+#. module: liber_fairs
+#. odoo-python
+#: code:addons/liber_fairs/models/res_company.py:0
+msgid "Company %s has no transit location to move the fair load through."
+msgstr "A empresa %s não tem localização de trânsito por onde passar a carga da feira."
+
+#. module: liber_fairs
+#. odoo-python
+#: code:addons/liber_fairs/models/event_fair.py:0
+msgid "Company %s has no warehouse to ship the fair from."
+msgstr "A empresa %s não tem armazém de onde despachar a feira."
+
+#. module: liber_fairs
+#: model_terms:ir.ui.view,arch_db:liber_fairs.view_fair_receipt_list
+msgid "Confirm what arrived"
+msgstr "Confirmar o que chegou"
+
+#. module: liber_fairs
+#: model_terms:ir.ui.view,arch_db:liber_fairs.view_fair_receipt_list
+msgid "Confirms the whole load as received, and signs who checked it."
+msgstr "Confirma a carga inteira como recebida, e assina quem conferiu."
+
+#. module: liber_fairs
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair_loss__qty
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair_template__qty_total
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair_template_line__qty_planned
+#: model_terms:ir.ui.view,arch_db:liber_fairs.view_event_fair_form
+#: model_terms:ir.ui.view,arch_db:liber_fairs.view_event_fair_loss_list
+msgid "Copies"
+msgstr "Exemplares"
+
+#. module: liber_fairs
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair_add_products__qty_planned
+msgid "Copies each"
+msgstr "Exemplares de cada"
+
+#. module: liber_fairs
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair_day__line_ids
+msgid "Count"
+msgstr "Contagem"
+
+#. module: liber_fairs
+#. odoo-python
+#: code:addons/liber_fairs/models/event_fair_day.py:0
+msgid "Count the table before closing %s."
+msgstr "Conte a mesa antes de fechar %s."
+
+#. module: liber_fairs
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair_day_line__qty_counted
+msgid "Counted"
+msgstr "Contado"
+
+#. module: liber_fairs
+#. odoo-python
+#: code:addons/liber_fairs/models/event_fair_day.py:0
+msgid ""
+"Counted more than the table should hold: %s. Either a replenishment was not "
+"recorded, or the count is wrong."
+msgstr "Contado mais do que a mesa deveria ter: %s. Ou a reposição não foi lançada, ou a contagem errou."
+
+#. module: liber_fairs
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair__create_uid
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair_add_products__create_uid
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair_apply_template__create_uid
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair_day__create_uid
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair_day_line__create_uid
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair_line__create_uid
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair_loss__create_uid
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair_save_template__create_uid
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair_template__create_uid
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair_template_line__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: liber_fairs
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair__create_date
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair_add_products__create_date
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair_apply_template__create_date
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair_day__create_date
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair_day_line__create_date
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair_line__create_date
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair_loss__create_date
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair_save_template__create_date
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair_template__create_date
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair_template_line__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: liber_fairs
+#: model:ir.model.fields,help:liber_fairs.field_event_fair_add_products__limit
+msgid "Cuts the result after this many titles. Zero brings all."
+msgstr "Corta o resultado depois desta quantidade de títulos. Zero traz todos.Corta o resultado depois desta quantidade de títulos. Zero traz todos.Corta o resultado depois desta quantidade de títulos. Zero traz todos.Corta o resultado depois desta quantidade de títulos. Zero traz todos.Corta o resultado depois desta quantidade de títulos. Zero traz todos.Corta o resultado depois desta quantidade de títulos. Zero traz todos.Corta o resultado depois desta quantidade de títulos. Zero traz todos."
+
+#. module: liber_fairs
+#: model_terms:ir.ui.view,arch_db:liber_fairs.view_event_fair_day_form
+msgid "Daily Closing"
+msgstr "Fechamento diário"
+
+#. module: liber_fairs
+#. odoo-python
+#: code:addons/liber_fairs/models/event_fair.py:0
+#: model:ir.actions.act_window,name:liber_fairs.action_event_fair_day
+#: model:ir.ui.menu,name:liber_fairs.menu_fairs_days
+#: model_terms:ir.ui.view,arch_db:liber_fairs.view_event_fair_day_list
+#: model_terms:ir.ui.view,arch_db:liber_fairs.view_event_fair_day_search
+msgid "Daily Closings"
+msgstr "Fechamentos diários"
+
+#. module: liber_fairs
+#: model_terms:ir.ui.view,arch_db:liber_fairs.view_event_fair_form
+msgid "Daily closings"
+msgstr "Fechamentos diários"
+
+#. module: liber_fairs
+#: model_terms:ir.ui.view,arch_db:liber_fairs.view_event_fair_loss_search
+msgid "Damaged"
+msgstr ""
+
+#. module: liber_fairs
+#: model:ir.model.fields.selection,name:liber_fairs.selection__event_fair_loss__reason__damaged
+msgid "Damaged beyond sale"
+msgstr "Avariado, sem venda"
+
+#. module: liber_fairs
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair_loss__date
+msgid "Date"
+msgstr "Data"
+
+#. module: liber_fairs
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair_day__date
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair_day_line__day_id
+#: model_terms:ir.ui.view,arch_db:liber_fairs.view_event_fair_day_search
+msgid "Day"
+msgstr "Dia"
+
+#. module: liber_fairs
+#. odoo-python
+#: code:addons/liber_fairs/models/event_fair_day.py:0
+msgid "Day %s is already closed."
+msgstr "O dia %s já está fechado."
+
+#. module: liber_fairs
+#. odoo-python
+#: code:addons/liber_fairs/models/event_fair_day.py:0
+msgid ""
+"Day %s is closed. To send more books now, raise the grid on the fair and "
+"dispatch from there."
+msgstr "O dia %s está fechado. Para mandar mais livro agora, suba a grade na feira e despache de lá."
+
+#. module: liber_fairs
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair__day_count
+msgid "Day Count"
+msgstr "Dias"
+
+#. module: liber_fairs
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair__day_ids
+#: model_terms:ir.ui.view,arch_db:liber_fairs.view_event_fair_form
+msgid "Days"
+msgstr "Dias"
+
+#. module: liber_fairs
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair__display_name
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair_add_products__display_name
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair_apply_template__display_name
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair_day__display_name
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair_day_line__display_name
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair_line__display_name
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair_loss__display_name
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair_save_template__display_name
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair_template__display_name
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair_template_line__display_name
+#: model:ir.model.fields,field_description:liber_fairs.field_res_company__display_name
+#: model:ir.model.fields,field_description:liber_fairs.field_res_groups__display_name
+#: model:ir.model.fields,field_description:liber_fairs.field_stock_location__display_name
+#: model:ir.model.fields,field_description:liber_fairs.field_stock_picking__display_name
+msgid "Display Name"
+msgstr "Nome exibido"
+
+#. module: liber_fairs
+#: model:ir.model.fields.selection,name:liber_fairs.selection__event_fair__state__draft
+msgid "Draft"
+msgstr "Rascunho"
+
+#. module: liber_fairs
+#: model:ir.model.fields,help:liber_fairs.field_event_fair__code
+msgid ""
+"E00001. The number that names the fair's stock location and every document "
+"of the event."
+msgstr "E00001. O número que dá nome à localização de estoque da feira e a todo documento do evento."
+
+#. module: liber_fairs
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair__date_end
+msgid "End"
+msgstr "Fim"
+
+#. module: liber_fairs
+#: model_terms:ir.ui.view,arch_db:liber_fairs.view_event_fair_form
+msgid "Event"
+msgstr "Evento"
+
+#. module: liber_fairs
+#: model_terms:ir.actions.act_window,help:liber_fairs.action_event_fair_loss
+msgid ""
+"Every copy that left came back, was sold, or was given away on\n"
+"               purpose. Losses show up here when a return is checked."
+msgstr ""
+
+#. module: liber_fairs
+#: model_terms:ir.actions.act_window,help:liber_fairs.action_fair_receipt
+msgid ""
+"Every load that left has arrived and been confirmed. Clear the\n"
+"               filter to see what was already checked, and by whom."
+msgstr "Toda carga que saiu chegou e foi confirmada. Tire o filtro para ver o que já foi conferido, e por quem."
+
+#. module: liber_fairs
+#. odoo-python
+#: code:addons/liber_fairs/models/event_fair.py:0
+msgid ""
+"Everything planned for %(feira)s is already on its way (%(qtd)s copies, "
+"still to be validated by the warehouse). Raise a planned quantity to send "
+"more."
+msgstr "Tudo o que está planejado para %(feira)s já está a caminho (%(qtd)s exemplares, ainda por validar no armazém). Aumente uma quantidade planejada para mandar mais."
+
+#. module: liber_fairs
+#. odoo-python
+#: code:addons/liber_fairs/models/event_fair.py:0
+msgid ""
+"Everything planned for %s has already been shipped. Raise a planned quantity"
+" to send a replenishment."
+msgstr "Tudo o que estava planejado para %s já foi despachado. Aumente uma quantidade planejada para mandar reposição."
+
+#. module: liber_fairs
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair_day_line__qty_expected
+msgid "Expected"
+msgstr "Esperado"
+
+#. module: liber_fairs
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair_add_products__fair_id
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair_apply_template__fair_id
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair_day__fair_id
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair_line__fair_id
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair_loss__fair_id
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair_save_template__fair_id
+#: model:ir.model.fields,field_description:liber_fairs.field_stock_location__fair_id
+#: model:ir.model.fields,field_description:liber_fairs.field_stock_picking__fair_id
+#: model_terms:ir.ui.view,arch_db:liber_fairs.view_event_fair_day_search
+#: model_terms:ir.ui.view,arch_db:liber_fairs.view_event_fair_form
+#: model_terms:ir.ui.view,arch_db:liber_fairs.view_event_fair_loss_search
+#: model_terms:ir.ui.view,arch_db:liber_fairs.view_fair_receipt_search
+msgid "Fair"
+msgstr "Feira"
+
+#. module: liber_fairs
+#. odoo-python
+#: code:addons/liber_fairs/models/event_fair.py:0
+msgid "Fair %s already moved stock: it cannot go back to draft."
+msgstr "A feira %s já movimentou estoque: não volta a rascunho."
+
+#. module: liber_fairs
+#. odoo-python
+#: code:addons/liber_fairs/models/event_fair_day.py:0
+msgid ""
+"Fair %s has already come back: there is no table left to send books to."
+msgstr "A feira %s já voltou: não há mais mesa para onde mandar livro."
+
+#. module: liber_fairs
+#. odoo-python
+#: code:addons/liber_fairs/models/event_fair.py:0
+msgid "Fair %s has no grid: there is nothing to send."
+msgstr "A feira %s não tem grade: não há o que mandar."
+
+#. module: liber_fairs
+#. odoo-python
+#: code:addons/liber_fairs/models/event_fair.py:0
+msgid "Fair %s is already back: it cannot be shipped again."
+msgstr "A feira %s já voltou: não dá para despachar de novo."
+
+#. module: liber_fairs
+#. odoo-python
+#: code:addons/liber_fairs/models/event_fair.py:0
+msgid "Fair %s is not out to be returned."
+msgstr "A feira %s não está na praça para voltar."
+
+#. module: liber_fairs
+#: model:ir.model.fields,help:liber_fairs.field_res_company__fair_sale_operation_type_id
+msgid ""
+"Fair -> customers, what the daily closing sold. Numbered FEIRA/VND/. It "
+"moves stock only; the invoice comes later."
+msgstr "Feira -> clientes, o que o fechamento diário vendeu. Numerado FEIRA/VND/. Move só estoque; a fatura vem depois."
+
+#. module: liber_fairs
+#: model:ir.model.fields,help:liber_fairs.field_res_company__fair_loss_operation_type_id
+msgid ""
+"Fair -> losses, for what did not come back and was not sold. Numbered "
+"FEIRA/PRD/."
+msgstr "Feira -> perdas, para o que não voltou e não foi vendido. Numerado FEIRA/PRD/."
+
+#. module: liber_fairs
+#: model:ir.model,name:liber_fairs.model_event_fair
+msgid "Fair / Event"
+msgstr "Feira / Evento"
+
+#. module: liber_fairs
+#: model:ir.model.fields,field_description:liber_fairs.field_stock_picking__fair_is_arrival
+msgid "Fair Arrival"
+msgstr "Chegada de feira"
+
+#. module: liber_fairs
+#: model:ir.actions.act_window,name:liber_fairs.action_event_fair_calendar
+msgid "Fair Calendar"
+msgstr "Calendário de feiras"
+
+#. module: liber_fairs
+#: model:ir.model,name:liber_fairs.model_event_fair_day
+msgid "Fair Daily Closing"
+msgstr "Fechamento diário da feira"
+
+#. module: liber_fairs
+#: model:ir.model,name:liber_fairs.model_event_fair_day_line
+msgid "Fair Daily Count Line"
+msgstr "Linha da contagem diária"
+
+#. module: liber_fairs
+#: model:ir.model.fields,field_description:liber_fairs.field_stock_picking__fair_day_id
+msgid "Fair Day"
+msgstr "Dia da feira"
+
+#. module: liber_fairs
+#: model:ir.model,name:liber_fairs.model_event_fair_line
+msgid "Fair Grid Line"
+msgstr "Linha da grade da feira"
+
+#. module: liber_fairs
+#: model:ir.model,name:liber_fairs.model_event_fair_template
+msgid "Fair Grid Template"
+msgstr "Modelo de grade"
+
+#. module: liber_fairs
+#: model:ir.model,name:liber_fairs.model_event_fair_template_line
+msgid "Fair Grid Template Line"
+msgstr "Linha do modelo de grade"
+
+#. module: liber_fairs
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair__stock_location_id
+#: model:ir.model.fields,field_description:liber_fairs.field_stock_location__is_fair_location
+msgid "Fair Location"
+msgstr "Localização da feira"
+
+#. module: liber_fairs
+#. odoo-python
+#: code:addons/liber_fairs/models/res_company.py:0
+#: model:ir.model,name:liber_fairs.model_event_fair_loss
+msgid "Fair Loss"
+msgstr "Perda em feira"
+
+#. module: liber_fairs
+#: model:ir.model.fields,field_description:liber_fairs.field_res_company__fair_loss_operation_type_id
+msgid "Fair Loss Operation"
+msgstr "Operação de perda em feira"
+
+#. module: liber_fairs
+#. odoo-python
+#: code:addons/liber_fairs/models/event_fair.py:0
+#: model_terms:ir.ui.view,arch_db:liber_fairs.view_event_fair_loss_list
+#: model_terms:ir.ui.view,arch_db:liber_fairs.view_event_fair_loss_search
+msgid "Fair Losses"
+msgstr "Perdas da feira"
+
+#. module: liber_fairs
+#: model:ir.model.fields,field_description:liber_fairs.field_stock_picking__fair_operation
+msgid "Fair Operation"
+msgstr "Operação de feira"
+
+#. module: liber_fairs
+#. odoo-python
+#: code:addons/liber_fairs/models/res_company.py:0
+msgid "Fair Receipt"
+msgstr "Recebimento na feira"
+
+#. module: liber_fairs
+#: model:ir.model.fields,field_description:liber_fairs.field_res_company__fair_receipt_operation_type_id
+msgid "Fair Receipt Operation"
+msgstr "Operação de recebimento na feira"
+
+#. module: liber_fairs
+#: model:ir.model.fields,field_description:liber_fairs.field_stock_picking__is_fair_replenishment
+msgid "Fair Replenishment"
+msgstr "Reposição de feira"
+
+#. module: liber_fairs
+#. odoo-python
+#: code:addons/liber_fairs/models/res_company.py:0
+msgid "Fair Return"
+msgstr "Retorno de feira"
+
+#. module: liber_fairs
+#. odoo-python
+#: code:addons/liber_fairs/models/res_company.py:0
+msgid "Fair Return Dispatch"
+msgstr "Despacho do retorno"
+
+#. module: liber_fairs
+#: model:ir.model.fields,field_description:liber_fairs.field_res_company__fair_return_dispatch_operation_type_id
+msgid "Fair Return Dispatch Operation"
+msgstr "Operação de despacho do retorno"
+
+#. module: liber_fairs
+#: model:ir.model.fields,field_description:liber_fairs.field_res_company__fair_return_operation_type_id
+msgid "Fair Return Operation"
+msgstr "Operação de retorno de feira"
+
+#. module: liber_fairs
+#: model:ir.model.fields,field_description:liber_fairs.field_stock_location__is_fair_root
+msgid "Fair Root"
+msgstr "Raiz das feiras"
+
+#. module: liber_fairs
+#. odoo-python
+#: code:addons/liber_fairs/models/res_company.py:0
+msgid "Fair Sale"
+msgstr "Venda em feira"
+
+#. module: liber_fairs
+#: model:ir.model.fields,field_description:liber_fairs.field_res_company__fair_sale_operation_type_id
+msgid "Fair Sale Operation"
+msgstr "Operação de venda em feira"
+
+#. module: liber_fairs
+#. odoo-python
+#: code:addons/liber_fairs/models/res_company.py:0
+msgid "Fair Shipment"
+msgstr "Remessa para feira"
+
+#. module: liber_fairs
+#: model:ir.model.fields,field_description:liber_fairs.field_res_company__fair_shipment_operation_type_id
+msgid "Fair Shipment Operation"
+msgstr "Operação de remessa para feira"
+
+#. module: liber_fairs
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair_day__fair_state
+msgid "Fair Status"
+msgstr "Situação da feira"
+
+#. module: liber_fairs
+#. odoo-python
+#: code:addons/liber_fairs/models/event_fair.py:0
+msgid "Fair Transfers"
+msgstr "Transferências da feira"
+
+#. module: liber_fairs
+#: model:ir.model.fields.selection,name:liber_fairs.selection__stock_picking__fair_operation__loss
+msgid "Fair loss"
+msgstr "Perda em feira"
+
+#. module: liber_fairs
+#: model_terms:ir.ui.view,arch_db:liber_fairs.view_event_fair_form
+msgid "Fair name"
+msgstr "Nome da feira"
+
+#. module: liber_fairs
+#: model:ir.model.fields.selection,name:liber_fairs.selection__stock_picking__fair_operation__receipt
+msgid "Fair receipt"
+msgstr "Recebimento na feira"
+
+#. module: liber_fairs
+#: model_terms:ir.ui.view,arch_db:liber_fairs.view_picking_search_fair
+msgid "Fair replenishment"
+msgstr "Reposição de feira"
+
+#. module: liber_fairs
+#: model:ir.model.fields.selection,name:liber_fairs.selection__stock_picking__fair_operation__return
+msgid "Fair return"
+msgstr "Retorno de feira"
+
+#. module: liber_fairs
+#: model:ir.model.fields.selection,name:liber_fairs.selection__stock_picking__fair_operation__return_dispatch
+msgid "Fair return dispatch"
+msgstr "Despacho do retorno de feira"
+
+#. module: liber_fairs
+#: model_terms:ir.ui.view,arch_db:liber_fairs.view_event_fair_day_search
+msgid "Fair running"
+msgstr "Feira em curso"
+
+#. module: liber_fairs
+#: model:ir.model.fields.selection,name:liber_fairs.selection__stock_picking__fair_operation__sale
+msgid "Fair sale"
+msgstr "Venda em feira"
+
+#. module: liber_fairs
+#: model:ir.model.fields.selection,name:liber_fairs.selection__stock_picking__fair_operation__shipment
+msgid "Fair shipment"
+msgstr "Remessa para feira"
+
+#. module: liber_fairs
+#: model_terms:ir.ui.view,arch_db:liber_fairs.view_event_fair_day_search
+msgid "Fair status"
+msgstr "Situação da feira"
+
+#. module: liber_fairs
+#: model:ir.model.fields,help:liber_fairs.field_res_company__fair_return_dispatch_operation_type_id
+msgid ""
+"Fair table -> transit, when the boxes are packed at the fair. Numbered "
+"FEIRA/RET/. It is what the return note declares."
+msgstr "Mesa da feira -> trânsito, quando as caixas são embaladas na praça. Numerado FEIRA/RET/. É o que a nota de retorno declara."
+
+#. module: liber_fairs
+#: model:ir.actions.act_window,name:liber_fairs.action_event_fair
+#: model:ir.module.category,name:liber_fairs.module_category_fairs
+#: model:ir.ui.menu,name:liber_fairs.menu_fairs_fairs
+#: model:ir.ui.menu,name:liber_fairs.menu_fairs_root
+#: model:res.groups.privilege,name:liber_fairs.privilege_fairs
+#: model_terms:ir.ui.view,arch_db:liber_fairs.view_event_fair_calendar
+#: model_terms:ir.ui.view,arch_db:liber_fairs.view_event_fair_list
+#: model_terms:ir.ui.view,arch_db:liber_fairs.view_event_fair_search
+msgid "Fairs"
+msgstr "Eventos"
+
+#. module: liber_fairs
+#: model_terms:ir.ui.view,arch_db:liber_fairs.view_event_fair_day_form
+msgid ""
+"Fills the count with what should be on the table. Correct downwards what was"
+" sold."
+msgstr "Preenche a contagem com o que deveria estar na mesa. Corrija para baixo o que vendeu."
+
+#. module: liber_fairs
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair__message_follower_ids
+msgid "Followers"
+msgstr ""
+
+#. module: liber_fairs
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair__message_partner_ids
+msgid "Followers (Partners)"
+msgstr ""
+
+#. module: liber_fairs
+#: model:ir.model.fields,help:liber_fairs.field_event_fair__activity_type_icon
+msgid "Font awesome icon e.g. fa-tasks"
+msgstr ""
+
+#. module: liber_fairs
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair_add_products__found_count
+msgid "Found"
+msgstr "Encontrados"
+
+#. module: liber_fairs
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair_line__qty_free
+#: model_terms:ir.ui.view,arch_db:liber_fairs.view_event_fair_add_products_form
+msgid "Free"
+msgstr "Livre"
+
+#. module: liber_fairs
+#: model:ir.model.fields.selection,name:liber_fairs.selection__event_fair_loss__reason__courtesy
+msgid "Given away at the fair"
+msgstr "Doado na feira"
+
+#. module: liber_fairs
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair__line_ids
+#: model_terms:ir.ui.view,arch_db:liber_fairs.view_event_fair_form
+msgid "Grid"
+msgstr "Grade"
+
+#. module: liber_fairs
+#: model_terms:ir.ui.view,arch_db:liber_fairs.view_event_fair_template_form
+msgid "Grid Template"
+msgstr "Modelo de grade"
+
+#. module: liber_fairs
+#: model:ir.actions.act_window,name:liber_fairs.action_event_fair_template
+#: model:ir.ui.menu,name:liber_fairs.menu_fairs_templates
+#: model_terms:ir.ui.view,arch_db:liber_fairs.view_event_fair_template_list
+msgid "Grid Templates"
+msgstr "Modelos de grade"
+
+#. module: liber_fairs
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair__has_message
+msgid "Has Message"
+msgstr ""
+
+#. module: liber_fairs
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair_apply_template__mode
+msgid "How"
+msgstr "Como"
+
+#. module: liber_fairs
+#: model:ir.model.fields,help:liber_fairs.field_event_fair_add_products__months
+msgid "How far back the best-seller ranking looks."
+msgstr "Até quando o ranking dos mais vendidos olha para trás."
+
+#. module: liber_fairs
+#: model:ir.model.fields,help:liber_fairs.field_event_fair_line__qty_min
+msgid ""
+"How few copies may be left on the table before this title has to be "
+"replenished. The daily count uses it to suggest the replenishment. Zero "
+"means no minimum."
+msgstr "Com quantos exemplares na mesa este título já precisa de reposição. A contagem diária usa isso para sugerir a reposição. Zero quer dizer sem mínimo."
+
+#. module: liber_fairs
+#: model:ir.model.fields,help:liber_fairs.field_event_fair_template_line__qty_min
+msgid ""
+"How few copies of this title may be left on the table before it has to be "
+"replenished. Decided here, once, by whoever runs the grid; the daily count "
+"then suggests the replenishment on its own. Zero means no minimum."
+msgstr "Com quantos exemplares na mesa este título já precisa de reposição. Decide-se aqui, uma vez, por quem monta a grade; a contagem diária passa a sugerir a reposição sozinha. Zero quer dizer sem mínimo."
+
+#. module: liber_fairs
+#: model:ir.model.fields,help:liber_fairs.field_event_fair_add_products__qty_planned
+msgid ""
+"How many copies of each selected title. Adjust title by title in the grid "
+"afterwards."
+msgstr "Quantos exemplares de cada título escolhido. Ajuste título a título na grade depois."
+
+#. module: liber_fairs
+#: model:ir.model.fields,help:liber_fairs.field_event_fair_line__qty_planned
+msgid ""
+"How many copies the grid calls for. Raise it during the event to trigger a "
+"replenishment."
+msgstr "Quantos exemplares a grade pede. Aumente durante o evento para disparar uma reposição."
+
+#. module: liber_fairs
+#: model:ir.model.fields,help:liber_fairs.field_event_fair_day_line__qty_replenish
+msgid ""
+"How many more copies to send for the next day. Suggested from the minimum on"
+" the table, minus what was counted, minus what is already on the way; type "
+"over it whenever the fair says otherwise."
+msgstr "Quantos exemplares mandar a mais para o dia seguinte. Sugerido pelo mínimo na mesa, menos o que foi contado, menos o que já está a caminho; escreva por cima sempre que a feira disser outra coisa."
+
+#. module: liber_fairs
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair__id
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair_add_products__id
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair_apply_template__id
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair_day__id
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair_day_line__id
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair_line__id
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair_loss__id
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair_save_template__id
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair_template__id
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair_template_line__id
+#: model:ir.model.fields,field_description:liber_fairs.field_res_company__id
+#: model:ir.model.fields,field_description:liber_fairs.field_res_groups__id
+#: model:ir.model.fields,field_description:liber_fairs.field_stock_location__id
+#: model:ir.model.fields,field_description:liber_fairs.field_stock_picking__id
+msgid "ID"
+msgstr ""
+
+#. module: liber_fairs
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair__activity_exception_icon
+msgid "Icon"
+msgstr ""
+
+#. module: liber_fairs
+#: model:ir.model.fields,help:liber_fairs.field_event_fair__activity_exception_icon
+msgid "Icon to indicate an exception activity."
+msgstr ""
+
+#. module: liber_fairs
+#: model:ir.model.fields,help:liber_fairs.field_event_fair__message_needaction
+msgid "If checked, new messages require your attention."
+msgstr ""
+
+#. module: liber_fairs
+#: model:ir.model.fields,help:liber_fairs.field_event_fair__message_has_error
+#: model:ir.model.fields,help:liber_fairs.field_event_fair__message_has_sms_error
+msgid "If checked, some messages have a delivery error."
+msgstr ""
+
+#. module: liber_fairs
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair_day__in_transit_count
+msgid "In Transit Count"
+msgstr ""
+
+#. module: liber_fairs
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair_line__qty_warehouse
+#: model_terms:ir.ui.view,arch_db:liber_fairs.view_event_fair_add_products_form
+msgid "In stock"
+msgstr "Em estoque"
+
+#. module: liber_fairs
+#: model:ir.model.fields,help:liber_fairs.field_stock_location__is_fair_location
+msgid "Internal location holding our stock physically at a fair."
+msgstr "Localização interna que guarda o nosso estoque fisicamente numa feira.Localização interna que guarda o nosso estoque fisicamente numa feira.Localização interna que guarda o nosso estoque fisicamente numa feira.Localização interna que guarda o nosso estoque fisicamente numa feira.Localização interna que guarda o nosso estoque fisicamente numa feira.Localização interna que guarda o nosso estoque fisicamente numa feira.Localização interna que guarda o nosso estoque fisicamente numa feira.Localização interna que guarda o nosso estoque fisicamente numa feira.Localização interna que guarda o nosso estoque fisicamente numa feira."
+
+#. module: liber_fairs
+#: model:ir.model,name:liber_fairs.model_stock_location
+msgid "Inventory Locations"
+msgstr "Locais de inventário"
+
+#. module: liber_fairs
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair__message_is_follower
+msgid "Is Follower"
+msgstr ""
+
+#. module: liber_fairs
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair__write_uid
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair_add_products__write_uid
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair_apply_template__write_uid
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair_day__write_uid
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair_day_line__write_uid
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair_line__write_uid
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair_loss__write_uid
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair_save_template__write_uid
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair_template__write_uid
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair_template_line__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: liber_fairs
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair__write_date
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair_add_products__write_date
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair_apply_template__write_date
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair_day__write_date
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair_day_line__write_date
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair_line__write_date
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair_loss__write_date
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair_save_template__write_date
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair_template__write_date
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair_template_line__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: liber_fairs
+#: model_terms:ir.ui.view,arch_db:liber_fairs.view_event_fair_day_search
+msgid "Late"
+msgstr "Atrasados"
+
+#. module: liber_fairs
+#: model:ir.model.fields,help:liber_fairs.field_event_fair_line__qty_in_transit
+msgid "Left the warehouse and has not been received at the fair yet."
+msgstr "Saiu do armazém e ainda não foi recebido na feira."
+
+#. module: liber_fairs
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair_template__line_count
+msgid "Line Count"
+msgstr "Títulos"
+
+#. module: liber_fairs
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair__loss_count
+msgid "Loss Count"
+msgstr ""
+
+#. module: liber_fairs
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair__loss_value
+msgid "Loss value"
+msgstr "Valor das perdas"
+
+#. module: liber_fairs
+#: model:ir.actions.act_window,name:liber_fairs.action_event_fair_loss
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair__loss_ids
+#: model:ir.ui.menu,name:liber_fairs.menu_fairs_losses
+#: model_terms:ir.ui.view,arch_db:liber_fairs.view_event_fair_form
+msgid "Losses"
+msgstr "Perdas"
+
+#. module: liber_fairs
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair__qty_lost
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair_line__qty_lost
+msgid "Lost"
+msgstr "Perdido"
+
+#. module: liber_fairs
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair__message_has_error
+msgid "Message Delivery error"
+msgstr ""
+
+#. module: liber_fairs
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair__message_ids
+msgid "Messages"
+msgstr ""
+
+#. module: liber_fairs
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair_add_products__qty_min
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair_day_line__qty_min
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair_line__qty_min
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair_template_line__qty_min
+msgid "Minimum"
+msgstr "Mínimo"
+
+#. module: liber_fairs
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair_add_products__min_stock
+msgid "Minimum free stock"
+msgstr "Estoque mínimo livre"
+
+#. module: liber_fairs
+#: model:ir.model.fields,field_description:liber_fairs.field_stock_picking__fair_shortfall
+#: model:ir.model.fields.selection,name:liber_fairs.selection__event_fair_loss__reason__missing
+#: model_terms:ir.ui.view,arch_db:liber_fairs.view_event_fair_loss_search
+#: model_terms:ir.ui.view,arch_db:liber_fairs.view_fair_receipt_list
+msgid "Missing"
+msgstr "Falta"
+
+#. module: liber_fairs
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair_add_products__months
+msgid "Months of sales"
+msgstr "Meses de venda"
+
+#. module: liber_fairs
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair__my_activity_date_deadline
+msgid "My Activity Deadline"
+msgstr ""
+
+#. module: liber_fairs
+#: model_terms:ir.ui.view,arch_db:liber_fairs.view_event_fair_search
+msgid "My fairs"
+msgstr "Minhas feiras"
+
+#. module: liber_fairs
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair__name
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair_save_template__name
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair_template__name
+msgid "Name"
+msgstr "Nome"
+
+#. module: liber_fairs
+#. odoo-python
+#: code:addons/liber_fairs/models/event_fair.py:0
+msgid "New"
+msgstr ""
+
+#. module: liber_fairs
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair__activity_calendar_event_id
+msgid "Next Activity Calendar Event"
+msgstr ""
+
+#. module: liber_fairs
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair__activity_date_deadline
+msgid "Next Activity Deadline"
+msgstr ""
+
+#. module: liber_fairs
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair__activity_summary
+msgid "Next Activity Summary"
+msgstr ""
+
+#. module: liber_fairs
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair__activity_type_id
+msgid "Next Activity Type"
+msgstr ""
+
+#. module: liber_fairs
+#: model_terms:ir.actions.act_window,help:liber_fairs.action_event_fair_day
+msgid "No fair out there right now"
+msgstr "Nenhuma feira na rua agora"
+
+#. module: liber_fairs
+#: model_terms:ir.actions.act_window,help:liber_fairs.action_event_fair_loss
+msgid "No losses recorded"
+msgstr "Nenhuma perda registrada"
+
+#. module: liber_fairs
+#: model_terms:ir.ui.view,arch_db:liber_fairs.view_event_fair_search
+msgid "Not closed"
+msgstr "Não encerradas"
+
+#. module: liber_fairs
+#: model:ir.model.fields.selection,name:liber_fairs.selection__event_fair_loss__reason__not_received
+msgid "Not received (to explain)"
+msgstr "Não recebido (a explicar)"
+
+#. module: liber_fairs
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair_loss__note
+msgid "Note"
+msgstr "Observação"
+
+#. module: liber_fairs
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair_day__note
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair_template__note
+msgid "Notes"
+msgstr "Observações"
+
+#. module: liber_fairs
+#. odoo-python
+#: code:addons/liber_fairs/models/event_fair_day.py:0
+msgid "Nothing has been shipped to %s yet: there is no table to count."
+msgstr "Nada foi despachado para %s ainda: não há mesa a contar."
+
+#. module: liber_fairs
+#. odoo-python
+#: code:addons/liber_fairs/models/event_fair.py:0
+msgid "Nothing to move: every quantity is zero."
+msgstr "Não há o que movimentar: todas as quantidades são zero."
+
+#. module: liber_fairs
+#. odoo-python
+#: code:addons/liber_fairs/models/event_fair_day.py:0
+msgid ""
+"Nothing to replenish: fill the \"To replenish\" column with what has to go "
+"back to the table."
+msgstr "Nada a repor: preencha a coluna \"Repor\" com o que tem de voltar para a mesa."
+
+#. module: liber_fairs
+#: model_terms:ir.actions.act_window,help:liber_fairs.action_fair_receipt
+msgid "Nothing waiting to be checked"
+msgstr "Nada a conferir"
+
+#. module: liber_fairs
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair__message_needaction_counter
+msgid "Number of Actions"
+msgstr ""
+
+#. module: liber_fairs
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair__message_has_error_counter
+msgid "Number of errors"
+msgstr ""
+
+#. module: liber_fairs
+#: model:ir.model.fields,help:liber_fairs.field_event_fair__message_needaction_counter
+msgid "Number of messages requiring action"
+msgstr ""
+
+#. module: liber_fairs
+#: model:ir.model.fields,help:liber_fairs.field_event_fair__message_has_error_counter
+msgid "Number of messages with delivery error"
+msgstr ""
+
+#. module: liber_fairs
+#: model:ir.model.fields,help:liber_fairs.field_event_fair_add_products__skip_existing
+msgid ""
+"Off, the quantity of a title already in the grid is raised by this many "
+"copies instead of being left alone."
+msgstr "Desligado, a quantidade de um título que já está na grade sobe estes exemplares em vez de ficar como estava."
+
+#. module: liber_fairs
+#: model:ir.model.fields,help:liber_fairs.field_event_fair_save_template__use_sent
+msgid ""
+"Off, the template keeps the planned quantities. On, it keeps what was "
+"actually shipped, replenishment included, which is the grid the fair really "
+"had."
+msgstr "Desligado, o modelo guarda as quantidades planejadas. Ligado, guarda o que de fato foi despachado, reposição incluída, que é a grade que a feira teve de verdade."
+
+#. module: liber_fairs
+#: model:ir.model.fields,help:liber_fairs.field_event_fair_line__qty_free
+msgid ""
+"On hand in the warehouse minus what is already reserved for other orders. "
+"This is what you can actually send."
+msgstr "Em mãos no armazém menos o que já está reservado para outros pedidos. É o que dá para mandar de verdade."
+
+#. module: liber_fairs
+#: model:ir.model.fields,help:liber_fairs.field_event_fair_line__qty_warehouse
+msgid ""
+"On hand in the warehouse. Does not count copies already at a fair: those are"
+" ours, but they are not here."
+msgstr "Em mãos no armazém. Não conta o exemplar que já está numa feira: ele é nosso, mas não está aqui."
+
+#. module: liber_fairs
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair__qty_on_shelf
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair_line__qty_on_shelf
+msgid "On the table"
+msgstr "Na mesa"
+
+#. module: liber_fairs
+#. odoo-python
+#: code:addons/liber_fairs/models/event_fair_day.py:0
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair_day__in_transit_picking_ids
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair_day_line__qty_in_transit
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair_line__qty_in_transit
+#: model_terms:ir.ui.view,arch_db:liber_fairs.view_event_fair_day_form
+msgid "On the way"
+msgstr "A caminho"
+
+#. module: liber_fairs
+#: model:ir.model.fields.selection,name:liber_fairs.selection__event_fair_loss__stage__transit
+msgid "On the way back"
+msgstr "Na volta"
+
+#. module: liber_fairs
+#: model:ir.model.fields,help:liber_fairs.field_event_fair_add_products__min_stock
+msgid ""
+"Only brings titles with at least this many copies free in the warehouse. "
+"Zero brings everything, in stock or not -- which is the default when "
+"building a template, since a template plans and does not dispatch."
+msgstr "Só traz títulos com pelo menos esta quantidade livre no armazém. Zero traz tudo, com estoque ou sem — e zero é o padrão ao montar um modelo, que planeja e não despacha."
+
+#. module: liber_fairs
+#: model:ir.model.fields.selection,name:liber_fairs.selection__event_fair_day__state__draft
+#: model_terms:ir.ui.view,arch_db:liber_fairs.view_event_fair_day_search
+msgid "Open"
+msgstr "Aberto"
+
+#. module: liber_fairs
+#: model_terms:ir.actions.act_window,help:liber_fairs.action_event_fair
+msgid "Open the first fair"
+msgstr "Abra a primeira feira"
+
+#. module: liber_fairs
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair_add_products__order
+msgid "Order"
+msgstr "Ordem"
+
+#. module: liber_fairs
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair__partner_id
+msgid "Organiser"
+msgstr "Organizador"
+
+#. module: liber_fairs
+#: model:ir.model.fields,help:liber_fairs.field_stock_location__is_fair_root
+msgid "Parent (view) location grouping every fair location of the company."
+msgstr "Localização de visão que agrupa todas as feiras da empresa."
+
+#. module: liber_fairs
+#. odoo-python
+#: code:addons/liber_fairs/wizards/event_fair_add_products.py:0
+msgid "Pick at least one title."
+msgstr "Escolha ao menos um título."
+
+#. module: liber_fairs
+#: model_terms:ir.ui.view,arch_db:liber_fairs.view_event_fair_add_products_form
+msgid "Pick the shelf"
+msgstr "Escolher a prateleira"
+
+#. module: liber_fairs
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair__picking_count
+msgid "Picking Count"
+msgstr "Transferências"
+
+#. module: liber_fairs
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair__location
+msgid "Place"
+msgstr "Local"
+
+#. module: liber_fairs
+#: model_terms:ir.ui.view,arch_db:liber_fairs.view_event_fair_form
+msgid "Plan"
+msgstr "Planejar"
+
+#. module: liber_fairs
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair__qty_planned
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair_line__qty_planned
+#: model:ir.model.fields.selection,name:liber_fairs.selection__event_fair__state__planned
+msgid "Planned"
+msgstr "Planejado"
+
+#. module: liber_fairs
+#: model_terms:ir.ui.view,arch_db:liber_fairs.view_event_fair_add_products_form
+msgid "Price"
+msgstr "Preço"
+
+#. module: liber_fairs
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair_add_products__filter_price_min
+msgid "Price from"
+msgstr "Preço de"
+
+#. module: liber_fairs
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair_add_products__filter_price_max
+msgid "Price to"
+msgstr "Preço até"
+
+#. module: liber_fairs
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair_add_products__filter_categ_id
+msgid "Product category"
+msgstr "Categoria de produtos"
+
+#. module: liber_fairs
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair__rating_ids
+msgid "Ratings"
+msgstr ""
+
+#. module: liber_fairs
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair_loss__reason
+#: model_terms:ir.ui.view,arch_db:liber_fairs.view_event_fair_loss_search
+msgid "Reason"
+msgstr "Motivo"
+
+#. module: liber_fairs
+#: model:ir.actions.act_window,name:liber_fairs.action_fair_receipt
+#: model:ir.ui.menu,name:liber_fairs.menu_fairs_receipts
+#: model_terms:ir.ui.view,arch_db:liber_fairs.view_fair_receipt_list
+#: model_terms:ir.ui.view,arch_db:liber_fairs.view_fair_receipt_search
+msgid "Receipts"
+msgstr "Recebimentos"
+
+#. module: liber_fairs
+#: model:ir.model.fields,field_description:liber_fairs.field_stock_picking__fair_qty_received
+#: model_terms:ir.ui.view,arch_db:liber_fairs.view_fair_receipt_list
+msgid "Received"
+msgstr "Recebido"
+
+#. module: liber_fairs
+#: model:ir.model.fields,help:liber_fairs.field_stock_picking__fair_shortfall
+msgid "Received minus checked: what did not arrive."
+msgstr "Recebido menos conferido: o que não chegou."
+
+#. module: liber_fairs
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair_save_template__use_sent
+msgid "Record what actually went"
+msgstr "Registrar o que realmente foi"
+
+#. module: liber_fairs
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair__code
+msgid "Reference"
+msgstr "Referência"
+
+#. module: liber_fairs
+#: model:ir.model.fields.selection,name:liber_fairs.selection__event_fair_apply_template__mode__replace
+msgid "Replace the grid"
+msgstr "Substituir a grade"
+
+#. module: liber_fairs
+#: model_terms:ir.ui.view,arch_db:liber_fairs.view_event_fair_apply_template_form
+msgid ""
+"Replacing clears only what has not shipped yet: a title\n"
+"                    already sent stays in the grid."
+msgstr "Substituir limpa só o que ainda não saiu: título já despachado fica na grade."
+
+#. module: liber_fairs
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair_day__replenish_count
+msgid "Replenish Count"
+msgstr ""
+
+#. module: liber_fairs
+#: model_terms:ir.ui.view,arch_db:liber_fairs.view_picking_tree_fair
+msgid "Replenishment"
+msgstr "Reposição"
+
+#. module: liber_fairs
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair_day__replenish_picking_ids
+msgid "Replenishments"
+msgstr "Reposições"
+
+#. module: liber_fairs
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair_line__qty_requested
+msgid "Requested"
+msgstr "Pedido"
+
+#. module: liber_fairs
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair__responsible_id
+#: model_terms:ir.ui.view,arch_db:liber_fairs.view_event_fair_search
+msgid "Responsible"
+msgstr "Responsável"
+
+#. module: liber_fairs
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair__activity_user_id
+msgid "Responsible User"
+msgstr ""
+
+#. module: liber_fairs
+#: model_terms:ir.ui.view,arch_db:liber_fairs.view_event_fair_form
+msgid "Return"
+msgstr "Retorno"
+
+#. module: liber_fairs
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair__qty_returned
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair_line__qty_returned
+#: model:ir.model.fields.selection,name:liber_fairs.selection__event_fair__state__returned
+msgid "Returned"
+msgstr "Retornado"
+
+#. module: liber_fairs
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair__message_has_sms_error
+msgid "SMS Delivery error"
+msgstr ""
+
+#. module: liber_fairs
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair_day__picking_id
+msgid "Sale Transfer"
+msgstr "Transferência de venda"
+
+#. module: liber_fairs
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair__team_id
+#: model_terms:ir.ui.view,arch_db:liber_fairs.view_event_fair_search
+msgid "Sales Channel"
+msgstr "Canal de vendas"
+
+#. module: liber_fairs
+#: model_terms:ir.ui.view,arch_db:liber_fairs.view_event_fair_save_template_form
+msgid "Save"
+msgstr "Guardar"
+
+#. module: liber_fairs
+#: model:ir.actions.act_window,name:liber_fairs.action_event_fair_save_template
+#: model_terms:ir.ui.view,arch_db:liber_fairs.view_event_fair_save_template_form
+msgid "Save as Template"
+msgstr "Guardar como modelo"
+
+#. module: liber_fairs
+#: model_terms:ir.ui.view,arch_db:liber_fairs.view_event_fair_form
+msgid "Save as template"
+msgstr "Guardar como modelo"
+
+#. module: liber_fairs
+#: model:ir.model,name:liber_fairs.model_event_fair_save_template
+msgid "Save the Fair Grid as a Template"
+msgstr "Guardar a grade da feira como modelo"
+
+#. module: liber_fairs
+#: model_terms:ir.actions.act_window,help:liber_fairs.action_event_fair_template
+msgid "Save the first grid"
+msgstr "Guarde o primeiro modelo"
+
+#. module: liber_fairs
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair_day__is_sealed
+msgid "Sealed"
+msgstr "Lacrado"
+
+#. module: liber_fairs
+#: model_terms:ir.ui.view,arch_db:liber_fairs.view_event_fair_add_products_form
+msgid "Search"
+msgstr "Buscar"
+
+#. module: liber_fairs
+#: model_terms:ir.ui.view,arch_db:liber_fairs.view_event_fair_day_form
+msgid "Send a replenishment"
+msgstr "Mandar reposição"
+
+#. module: liber_fairs
+#: model_terms:ir.ui.view,arch_db:liber_fairs.view_event_fair_form
+msgid ""
+"Sends back what is on the table. The warehouse checks what actually arrives,"
+" in Receipts."
+msgstr "Devolve o que está na mesa. O armazém confere o que de fato chega, em Recebimentos."
+
+#. module: liber_fairs
+#: model_terms:ir.ui.view,arch_db:liber_fairs.view_event_fair_form
+msgid ""
+"Sends what is planned and has not gone yet. Raise a planned quantity and "
+"click again to send a replenishment."
+msgstr "Manda o que está planejado e ainda não foi. Aumente uma quantidade planejada e clique de novo para mandar reposição."
+
+#. module: liber_fairs
+#: model_terms:ir.ui.view,arch_db:liber_fairs.view_event_fair_day_form
+msgid ""
+"Sends what the count says ran out. Raises the fair grid and ships the "
+"difference to the same table."
+msgstr "Manda o que a contagem diz que acabou. Sobe a grade da feira e despacha a diferença para a mesma mesa."
+
+#. module: liber_fairs
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair__qty_sent
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair_line__qty_sent
+msgid "Sent"
+msgstr "Enviado"
+
+#. module: liber_fairs
+#: model:ir.model.fields,help:liber_fairs.field_event_fair_line__qty_on_shelf
+msgid ""
+"Sent minus returned, sold and lost: what should be on the table right now."
+msgstr "Enviado menos retornado, vendido e perdido: o que deveria estar na mesa agora."
+
+#. module: liber_fairs
+#: model:ir.model.fields.selection,name:liber_fairs.selection__event_fair__state__settled
+msgid "Settled"
+msgstr "Acertado"
+
+#. module: liber_fairs
+#: model_terms:ir.ui.view,arch_db:liber_fairs.view_event_fair_form
+msgid "Ship"
+msgstr "Despachar"
+
+#. module: liber_fairs
+#: model:ir.model.fields.selection,name:liber_fairs.selection__event_fair__state__shipped
+msgid "Shipped"
+msgstr "Enviado"
+
+#. module: liber_fairs
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair_line__is_short
+msgid "Short"
+msgstr "Falta"
+
+#. module: liber_fairs
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair_add_products__skip_existing
+msgid "Skip titles already in the grid"
+msgstr "Pular os títulos que já estão na grade"
+
+#. module: liber_fairs
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair__qty_sold
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair_day__qty_sold
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair_day_line__qty_sold
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair_line__qty_sold
+msgid "Sold"
+msgstr "Vendido"
+
+#. module: liber_fairs
+#: model:ir.model.fields.selection,name:liber_fairs.selection__event_fair_loss__reason__sold
+msgid "Sold and not recorded"
+msgstr "Vendido e não lançado"
+
+#. module: liber_fairs
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair__date_start
+msgid "Start"
+msgstr "Começar"
+
+#. module: liber_fairs
+#: model:ir.model.fields,help:liber_fairs.field_event_fair_loss__reason
+msgid ""
+"Starts as \"Not received\" on the way out and \"Did not come back\" on the way "
+"home: the count knows a copy is missing, not why. Change it here, with time "
+"to think."
+msgstr "Começa como \"Não recebido\" na ida e \"Não voltou\" na volta: a contagem sabe que faltou exemplar, não sabe por quê. Troque aqui, com tempo de pensar."
+
+#. module: liber_fairs
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair__state
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair_day__state
+#: model_terms:ir.ui.view,arch_db:liber_fairs.view_event_fair_day_search
+#: model_terms:ir.ui.view,arch_db:liber_fairs.view_event_fair_search
+msgid "Status"
+msgstr "Situação"
+
+#. module: liber_fairs
+#: model:ir.model.fields,help:liber_fairs.field_event_fair__activity_state
+msgid ""
+"Status based on activities\n"
+"Overdue: Due date is already passed\n"
+"Today: Activity date is today\n"
+"Planned: Future activities."
+msgstr "Pega tudo o que está abaixo: o selo traz junto as coleções dele."
+
+#. module: liber_fairs
+#: model:ir.model.fields,help:liber_fairs.field_event_fair_loss__to_explain
+msgid "Still waiting for somebody to say what happened."
+msgstr "Ainda esperando alguém dizer o que aconteceu."
+
+#. module: liber_fairs
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair_add_products__filter_tag_ids
+msgid "Tags"
+msgstr "Etiquetas"
+
+#. module: liber_fairs
+#: model:ir.model.fields,help:liber_fairs.field_event_fair_add_products__filter_categ_id
+msgid ""
+"Takes everything under it. In this catalogue the category tree is the "
+"imprint with its collections below, so picking Editora Hedra brings Mundo "
+"Indígena, Metabiblioteca and the rest along."
+msgstr "Pega tudo o que está abaixo dela. Neste catálogo a árvore de categorias é o selo com as coleções embaixo, então escolher Editora Hedra traz junto Mundo Indígena, Metabiblioteca e as demais."
+
+#. module: liber_fairs
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair_add_products__template_id
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair_apply_template__template_id
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair_template_line__template_id
+msgid "Template"
+msgstr "Modelo"
+
+#. module: liber_fairs
+#: model:ir.model.fields,help:liber_fairs.field_stock_picking__fair_day_id
+msgid "The daily closing that asked for this replenishment."
+msgstr "O fechamento diário que pediu esta reposição."
+
+#. module: liber_fairs
+#: model:ir.model.fields,help:liber_fairs.field_stock_location__fair_id
+msgid "The event this location represents."
+msgstr "O evento que esta localização representa."
+
+#. module: liber_fairs
+#: model:ir.model.fields,help:liber_fairs.field_stock_picking__fair_id
+msgid "The event this transfer belongs to."
+msgstr "O evento a que esta transferência pertence."
+
+#. module: liber_fairs
+#. odoo-python
+#: code:addons/liber_fairs/models/event_fair.py:0
+msgid "The fair cannot end before it starts."
+msgstr "A feira não pode terminar antes de começar."
+
+#. module: liber_fairs
+#: model:ir.model.fields,help:liber_fairs.field_event_fair_day__is_sealed
+msgid "The fair has come back: this day is history now."
+msgstr "A feira voltou: este dia virou histórico."
+
+#. module: liber_fairs
+#: model:ir.model.fields,help:liber_fairs.field_stock_picking__is_fair_replenishment
+msgid ""
+"The fair is already running and ran out of this title. It is not the first "
+"load: it is the one that is being waited for."
+msgstr "A feira já está rolando e ficou sem este título. Não é a primeira carga: é a que estão esperando."
+
+#. module: liber_fairs
+#: model:ir.model.constraint,message:liber_fairs.constraint_event_fair_code_company_uniq
+msgid "The fair reference must be unique per company."
+msgstr "A referência da feira tem de ser única por empresa."
+
+#. module: liber_fairs
+#: model:ir.model.fields,help:liber_fairs.field_event_fair_add_products__qty_min
+msgid ""
+"The minimum each of these titles keeps on the table. The daily count uses it"
+" to suggest the replenishment on its own. Zero means no minimum."
+msgstr "O mínimo que cada um destes títulos mantém na mesa. A contagem diária usa isso para sugerir a reposição sozinha. Zero quer dizer sem mínimo."
+
+#. module: liber_fairs
+#: model:ir.model.fields,help:liber_fairs.field_event_fair_day_line__qty_min
+msgid ""
+"The minimum the grid asked for this title on the day this count was taken."
+msgstr "O mínimo que a grade pedia para este título no dia em que esta contagem foi feita."
+
+#. module: liber_fairs
+#: model:ir.model.fields,help:liber_fairs.field_event_fair_loss__unit_cost
+msgid ""
+"The product's cost when the loss was recorded. Frozen here on purpose: the "
+"cost changes, and what this fair lost does not."
+msgstr "O custo do produto quando a perda foi registrada. Congelado de propósito: o custo muda, e o que esta feira perdeu não."
+
+#. module: liber_fairs
+#: model:ir.model.fields,help:liber_fairs.field_event_fair_loss__picking_id
+msgid "The stock move that took these copies off the table."
+msgstr "O movimento de estoque que tirou estes exemplares da mesa."
+
+#. module: liber_fairs
+#: model:ir.model.fields,help:liber_fairs.field_event_fair_day__picking_id
+msgid "The stock move this closing generated."
+msgstr "O movimento de estoque que este fechamento gerou."
+
+#. module: liber_fairs
+#: model:ir.model.fields,help:liber_fairs.field_event_fair__stock_location_id
+msgid ""
+"The virtual location holding this fair's stock. Created when the fair is "
+"planned; its balance is what is physically on the table right now."
+msgstr "A localização virtual que guarda o estoque desta feira. Criada quando a feira é planejada; o saldo dela é o que está fisicamente na mesa agora."
+
+#. module: liber_fairs
+#: model:ir.model.constraint,message:liber_fairs.constraint_event_fair_template_name_company_uniq
+msgid "There is already a grid template with this name."
+msgstr "Já existe um modelo de grade com este nome."
+
+#. module: liber_fairs
+#. odoo-python
+#: code:addons/liber_fairs/wizards/event_fair_add_products.py:0
+msgid "There is nothing in this grid to save."
+msgstr "Não há nada nesta grade para guardar."
+
+#. module: liber_fairs
+#: model_terms:ir.actions.act_window,help:liber_fairs.action_event_fair_day
+msgid ""
+"This list opens on the fairs that are running. Clear the filter\n"
+"               to see the closings of fairs already back."
+msgstr "Esta lista abre nas feiras que estão em curso. Tire o filtro para ver os fechamentos das feiras que já voltaram."
+
+#. module: liber_fairs
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair_day_line__product_id
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair_line__product_id
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair_loss__product_id
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair_template_line__product_id
+#: model_terms:ir.ui.view,arch_db:liber_fairs.view_event_fair_loss_search
+msgid "Title"
+msgstr "Título"
+
+#. module: liber_fairs
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair_add_products__product_ids
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair_template__line_ids
+msgid "Titles"
+msgstr "Títulos"
+
+#. module: liber_fairs
+#. odoo-python
+#: code:addons/liber_fairs/wizards/event_fair_add_products.py:0
+msgid ""
+"Titles go either into a fair grid or into a template, not both and not "
+"neither."
+msgstr "Os títulos vão para a grade de uma feira ou para um modelo, não para os dois e não para nenhum."
+
+#. module: liber_fairs
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair_loss__to_explain
+#: model_terms:ir.ui.view,arch_db:liber_fairs.view_event_fair_loss_search
+msgid "To explain"
+msgstr "A explicar"
+
+#. module: liber_fairs
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair_day__qty_replenish
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair_day_line__qty_replenish
+msgid "To replenish"
+msgstr "Repor"
+
+#. module: liber_fairs
+#: model_terms:ir.ui.view,arch_db:liber_fairs.view_event_fair_day_search
+msgid "Today"
+msgstr "Hoje"
+
+#. module: liber_fairs
+#: model:ir.model,name:liber_fairs.model_stock_picking
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair_loss__picking_id
+#: model_terms:ir.ui.view,arch_db:liber_fairs.view_fair_receipt_list
+msgid "Transfer"
+msgstr "Transferência"
+
+#. module: liber_fairs
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair__picking_ids
+#: model_terms:ir.ui.view,arch_db:liber_fairs.view_event_fair_form
+msgid "Transfers"
+msgstr "Transferências"
+
+#. module: liber_fairs
+#: model:ir.model.fields,help:liber_fairs.field_res_company__fair_receipt_operation_type_id
+msgid ""
+"Transit -> fair table, confirmed by whoever is at the fair. Numbered "
+"FEIRA/REC/. It is the leg that says the books actually arrived."
+msgstr "Trânsito -> mesa da feira, confirmado por quem está na feira. Numerado FEIRA/REC/. É a perna que diz que os livros chegaram de verdade."
+
+#. module: liber_fairs
+#: model:ir.model.fields,help:liber_fairs.field_res_company__fair_return_operation_type_id
+msgid ""
+"Transit -> warehouse, checked on arrival. Numbered FEIRA/IN/. This is the "
+"leg where the count happens."
+msgstr "Trânsito -> armazém, conferido na chegada. Numerado FEIRA/IN/. É a perna em que a contagem acontece."
+
+#. module: liber_fairs
+#: model:ir.model.fields,help:liber_fairs.field_event_fair__activity_exception_decoration
+msgid "Type of the exception activity on record."
+msgstr ""
+
+#. module: liber_fairs
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair_loss__unit_cost
+msgid "Unit cost"
+msgstr "Custo unitário"
+
+#. module: liber_fairs
+#. odoo-python
+#: code:addons/liber_fairs/models/event_fair.py:0
+msgid "Unknown fair operation: %s"
+msgstr "Operação de feira desconhecida: %s"
+
+#. module: liber_fairs
+#: model:res.groups,name:liber_fairs.group_fair_user
+msgid "User"
+msgstr "Usuário"
+
+#. module: liber_fairs
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair_loss__value
+#: model_terms:ir.ui.view,arch_db:liber_fairs.view_event_fair_loss_list
+msgid "Value"
+msgstr "Valor"
+
+#. module: liber_fairs
+#: model_terms:ir.ui.view,arch_db:liber_fairs.view_fair_receipt_search
+msgid "Waiting to be checked"
+msgstr "A conferir"
+
+#. module: liber_fairs
+#: model_terms:ir.ui.view,arch_db:liber_fairs.view_event_fair_day_search
+msgid "Waiting to be closed"
+msgstr "A fechar"
+
+#. module: liber_fairs
+#: model:ir.model.fields,help:liber_fairs.field_res_company__fair_shipment_operation_type_id
+msgid ""
+"Warehouse -> fair. Numbered FEIRA/OUT/. It is not a delivery: the books stay"
+" ours while they sit on the table."
+msgstr "Armazém -> feira. Numerado FEIRA/OUT/. Não é uma entrega: os livros continuam nossos enquanto estão na mesa."
+
+#. module: liber_fairs
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair_add_products__warehouse_location_id
+msgid "Warehouse Stock"
+msgstr "Estoque do armazém"
+
+#. module: liber_fairs
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair__website_message_ids
+msgid "Website Messages"
+msgstr ""
+
+#. module: liber_fairs
+#: model:ir.model.fields,help:liber_fairs.field_event_fair__website_message_ids
+msgid "Website communication history"
+msgstr ""
+
+#. module: liber_fairs
+#: model_terms:ir.ui.view,arch_db:liber_fairs.view_event_fair_day_form
+msgid "What happened today..."
+msgstr "O que aconteceu hoje..."
+
+#. module: liber_fairs
+#: model:ir.model.fields,help:liber_fairs.field_event_fair_day_line__qty_counted
+msgid "What is actually on the table at closing time."
+msgstr "O que está de fato na mesa na hora de fechar."
+
+#. module: liber_fairs
+#: model:ir.model.fields,help:liber_fairs.field_event_fair_line__is_short
+msgid "What still has to be shipped is more than the warehouse has free."
+msgstr "O que ainda falta despachar é mais do que o armazém tem livre."
+
+#. module: liber_fairs
+#: model:ir.model.fields,help:liber_fairs.field_event_fair_day_line__qty_expected
+msgid ""
+"What the system says should be on the table: opening balance plus anything "
+"replenished today."
+msgstr "O que o sistema diz que deveria estar na mesa: saldo de abertura mais o que foi reposto hoje."
+
+#. module: liber_fairs
+#: model:ir.model.fields,help:liber_fairs.field_event_fair_template__note
+msgid "What this grid is for, and what it learned from the last time."
+msgstr "Para que serve esta grade, e o que a última vez ensinou sobre ela."
+
+#. module: liber_fairs
+#: model_terms:ir.ui.view,arch_db:liber_fairs.view_event_fair_template_form
+msgid "What this grid is for, and what the last fair taught about it..."
+msgstr "Para que serve esta grade, e o que a última feira ensinou..."
+
+#. module: liber_fairs
+#: model:ir.model.fields,help:liber_fairs.field_stock_picking__fair_qty_checked
+msgid "What whoever received it counted."
+msgstr "O que quem recebeu contou."
+
+#. module: liber_fairs
+#: model:ir.model.fields,help:liber_fairs.field_stock_picking__fair_qty_received
+msgid "What whoever sent it says was sent."
+msgstr "O que quem mandou diz que mandou."
+
+#. module: liber_fairs
+#: model_terms:ir.ui.view,arch_db:liber_fairs.view_fair_receipt_list
+msgid "When"
+msgstr "Quando"
+
+#. module: liber_fairs
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair_loss__stage
+msgid "Where"
+msgstr "Onde"
+
+#. module: liber_fairs
+#: model:ir.model.fields,help:liber_fairs.field_event_fair__location
+msgid "Where the event happens: city, venue, address."
+msgstr "Onde o evento acontece: cidade, local, endereço."
+
+#. module: liber_fairs
+#: model:ir.model.fields,help:liber_fairs.field_event_fair__team_id
+msgid "Which sales channel this event reports into."
+msgstr "Em qual canal de vendas este evento entra."
+
+#. module: liber_fairs
+#: model_terms:ir.ui.view,arch_db:liber_fairs.view_event_fair_form
+msgid "Who answers"
+msgstr "Quem responde"
+
+#. module: liber_fairs
+#: model:ir.model.fields,help:liber_fairs.field_event_fair__responsible_id
+msgid "Who answers for the stock in the field."
+msgstr "Quem responde pelo estoque em campo."
+
+#. module: liber_fairs
+#: model:ir.model.fields,help:liber_fairs.field_event_fair__partner_id
+msgid "Who runs the event, or answers for the table."
+msgstr "Quem organiza o evento, ou responde pela mesa."
+
+#. module: liber_fairs
+#. odoo-python
+#: code:addons/liber_fairs/models/event_fair.py:0
+msgid "fair_id"
+msgstr ""
+
+#. module: liber_fairs
+#. odoo-python
+#: code:addons/liber_fairs/models/event_fair_day.py:0
+msgid "id"
+msgstr ""
+
+#. module: liber_fairs
+#. odoo-python
+#: code:addons/liber_fairs/models/stock_picking.py:0
+msgid "loss at the fair"
+msgstr "perda na feira"
+
+#. module: liber_fairs
+#. odoo-python
+#: code:addons/liber_fairs/models/stock_picking.py:0
+msgid "return from the fair"
+msgstr "retorno da feira"
+
+#. module: liber_fairs
+#. odoo-python
+#: code:addons/liber_fairs/models/stock_picking.py:0
+msgid "sale at the fair"
+msgstr "venda na feira"
+
+#. module: liber_fairs
+#. odoo-python
+#: code:addons/liber_fairs/models/stock_picking.py:0
+msgid "shipment to the fair"
+msgstr "remessa para a feira"
+
+#. module: liber_fairs
+#: model:ir.model.fields.selection,name:liber_fairs.selection__event_fair_loss__reason__not_returned
+msgid "Did not come back (to explain)"
+msgstr "Não voltou (a explicar)"
+
+#. module: liber_fairs
+#: model_terms:ir.ui.view,arch_db:liber_fairs.view_event_fair_loss_search
+msgid "Did not come back"
+msgstr "Não voltou"
+
+#. module: liber_fairs
+#: code:addons/liber_fairs/models/stock_picking.py:0
+msgid ""
+"<p><b>%(feira)s</b> — <b>%(mov)s</b> arrived short: %(qtd)s copies did not "
+"come. They are in Losses as <b>%(motivo)s</b>, waiting for somebody to say "
+"what happened.</p>"
+msgstr "<p><b>%(feira)s</b> — <b>%(mov)s</b> chegou curta: %(qtd)s exemplares não vieram. Estão em Perdas como <b>%(motivo)s</b>, esperando alguém dizer o que houve.</p>"
+
+#. module: liber_fairs
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair_loss__write_off_picking_id
+msgid "Write-off"
+msgstr "Baixa"
+
+#. module: liber_fairs
+#: model:ir.model.fields,help:liber_fairs.field_event_fair_loss__write_off_picking_id
+msgid ""
+"The transfer that took these copies out of transit, once somebody said what "
+"happened to them."
+msgstr "A transferência que tirou estes exemplares do trânsito, quando alguém disse o que houve com eles."
+
+#. module: liber_fairs
+#. odoo-python
+#: code:addons/liber_fairs/models/event_fair_loss.py:0
+msgid ""
+"%(feira)s — %(titulo)s: nothing of this loss was still in transit, so no "
+"stock was moved. The reason was recorded anyway."
+msgstr "%(feira)s — %(titulo)s: nada desta perda ainda estava no trânsito, então nenhum estoque se moveu. O motivo ficou registrado de todo jeito."
+
+#. module: liber_fairs
+#. odoo-python
+#: code:addons/liber_fairs/models/event_fair_loss.py:0
+msgid "%(feira)s — %(qtd)s of %(titulo)s left transit as %(motivo)s, on %(mov)s."
+msgstr "%(feira)s — %(qtd)s de %(titulo)s saíram do trânsito como %(motivo)s, em %(mov)s."
+
+#. module: liber_fairs
+#: model:ir.ui.menu,name:liber_fairs.menu_fairs_root
+#: model:ir.ui.menu,name:liber_fairs.menu_fairs_fairs
+msgid "Events"
+msgstr "Eventos"
+
+#. module: liber_fairs
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair__analytic_account_id
+msgid "Analytic account"
+msgstr "Analítico"
+
+#. module: liber_fairs
+#: model:ir.model.fields,field_description:liber_fairs.field_res_company__fair_analytic_plan_id
+#: model:ir.model.fields,field_description:liber_fairs.field_res_config_settings__fair_analytic_plan_id
+msgid "Event analytic plan"
+msgstr "Plano analítico dos eventos"
+
+#. module: liber_fairs
+#: model:ir.model.fields,field_description:liber_fairs.field_res_company__fair_service_product_id
+#: model:ir.model.fields,field_description:liber_fairs.field_res_config_settings__fair_service_product_id
+msgid "Event staff service"
+msgstr "Serviço que paga a equipe"
+
+#. module: liber_fairs
+#: model:ir.model.fields,field_description:liber_fairs.field_res_company__fair_manager_id
+#: model:ir.model.fields,field_description:liber_fairs.field_res_config_settings__fair_manager_id
+msgid "Events responsible"
+msgstr "Responsável pelos eventos"
+#. module: liber_fairs
+#: model:ir.model.fields,field_description:liber_fairs.field_event_fair_loss__charged_to_team
+msgid "Team pays"
+msgstr "A equipe paga"

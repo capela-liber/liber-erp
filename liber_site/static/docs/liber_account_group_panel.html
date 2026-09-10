@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<script>
+/* Servido por /liber_site/static/docs/, este arquivo vem com uma semana de
+   cache e o docs.js sem versão -- e o índice monta a lista a partir dele. Foi
+   assim que a emissão de NF-e e o manual da Amazon ficaram invisíveis: o
+   catálogo em cache era anterior aos dois. A rota /liber/docs/ serve o mesmo
+   arquivo sem cache e com ?v=<mtime> nos assets. Quem chegar pelo caminho
+   antigo (favorito, link velho, resultado de busca) vai para lá antes de a
+   página montar qualquer coisa. */
+(function () {
+  var antigo = "/liber_site/static/docs/";
+  if (location.pathname.indexOf(antigo) === 0) {
+    location.replace("/liber/docs/" + location.pathname.slice(antigo.length) +
+                     location.search + location.hash);
+  }
+})();
+</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Plano de contas por grupo — Manuais do Liber</title>
+<link rel="icon" type="image/png" href="../logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;600;700&display=swap">
+<link rel="stylesheet" href="docs.css">
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="../index.html"><img src="../logo.png" alt="">liber<span>.</span></a>
+    <span class="doc-tag">Manuais</span>
+    <nav><a href="index.html">Índice</a><a href="../index.html">Site</a></nav>
+  </div>
+</header>
+<div class="wrap">
+  <div class="layout">
+    <aside class="sidebar" id="sidebar"></aside>
+    <article class="doc">
+      <div class="breadcrumb"><a href="index.html">Manuais</a><span class="sep">›</span>Ferramentas<span class="sep">›</span>Plano de contas por grupo</div>
+      <h1>Plano de contas por grupo</h1>
+      <p class="lead">O painel lateral do plano de contas passa a mostrar a hierarquia de verdade — Ativo, Ativo Circulante, Caixa —, e não os dois primeiros caracteres do código.</p>
+
+      <h2 id="visao-geral">Visão geral</h2>
+      <p>O painel de busca do Plano de Contas do Odoo é preso a um modelo cuja definição inteira é <em>"os dois primeiros caracteres do código da conta"</em>. Com plano de contas pontuado — <code>1.1.1</code>, <code>3.2.4</code> — o segundo caractere é o ponto, e o painel degenera em <code>1</code>, <code>1.</code>, <code>2</code>, <code>2.</code>, <code>3</code>, <code>3.</code>, que não filtra nada de útil.</p>
+      <p>Este módulo aponta o mesmo painel para os <strong>grupos de conta</strong>. A barra lateral passa a mostrar a árvore real do plano, dobrável, com a contagem de contas em cada nó.</p>
+
+      <h2 id="uso">Como se usa</h2>
+      <p>Vá a <span class="menupath">Contabilidade<i>‣</i>Configuração<i>‣</i>Plano de contas</span>. A lateral traz os grupos; clicar num filtra a lista, e o filho soma no pai.</p>
+
+      <div class="callout"><span class="title">Nota</span><p>Nada é gravado e nenhum campo é criado. O vínculo entre conta e grupo continua sendo o cálculo que o próprio Odoo define; o módulo só ensina o banco a expressá-lo em consulta — do mesmo jeito que o núcleo já faz com a raiz. Não há recálculo nem migração de dado.</p></div>
+
+      <h2 id="condicao">Condição</h2>
+      <p>O painel mostra o que existir: se o plano de contas da empresa não tiver <span class="field">grupos</span> cadastrados, a lateral fica vazia. Nesse caso o que falta é o cadastro dos grupos, não o módulo.</p>
+
+      <nav class="pager" id="pager"></nav>
+    </article>
+  </div>
+</div>
+<script src="docs.js"></script>
+</body>
+</html>

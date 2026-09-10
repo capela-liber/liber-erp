@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- 49: COLADO no Ponto de Venda (50). Feira e PDV são o mesmo trabalho
+         visto de dois lados (a feira monta a mesa, o caixa vende dela), e
+         quem abre um abre o outro no mesmo minuto. Antes ficava em 33, ao lado
+         da Consignação, com Atendimento e Painéis no meio do caminho. -->
+    <!-- EVENTOS, e não Feiras: a casa faz feira, bienal, festa literária,
+         evento de escola e lançamento, e "feira" era o nome de um deles
+         apenas. Os modelos e as telas continuam falando de feira onde é feira;
+         o aplicativo fala do gênero. -->
+    <menuitem id="menu_fairs_root"
+              name="Events"
+              web_icon="liber_fairs,static/description/icon.png"
+              sequence="49"
+              groups="liber_fairs.group_fair_user"/>
+
+    <menuitem id="menu_fairs_calendar"
+              name="Calendar"
+              parent="menu_fairs_root"
+              action="action_event_fair_calendar"
+              sequence="10"/>
+
+    <menuitem id="menu_fairs_fairs"
+              name="Events"
+              parent="menu_fairs_root"
+              action="action_event_fair"
+              sequence="20"/>
+
+    <menuitem id="menu_fairs_receipts"
+              name="Receipts"
+              parent="menu_fairs_root"
+              action="action_fair_receipt"
+              sequence="33"/>
+
+    <menuitem id="menu_fairs_losses"
+              name="Losses"
+              parent="menu_fairs_root"
+              action="action_event_fair_loss"
+              sequence="35"/>
+
+    <menuitem id="menu_fairs_templates"
+              name="Grid Templates"
+              parent="menu_fairs_root"
+              action="action_event_fair_template"
+              sequence="40"/>
+
+    <menuitem id="menu_fairs_days"
+              name="Daily Closings"
+              parent="menu_fairs_root"
+              action="action_event_fair_day"
+              sequence="30"/>
+</odoo>

@@ -29,6 +29,7 @@ from odoo.exceptions import UserError
 from odoo.tools import html2plaintext
 
 from ..services import metabooks_mapping as mapping
+from ..services import onix_codes
 from ..services import metabooks_sheet as sheet
 
 _logger = logging.getLogger(__name__)
@@ -64,6 +65,10 @@ _HTML = re.compile(r'<[a-zA-Z/][^>]*>')
 # ISBN-13: the Bookland EAN prefixes, and nothing else, is what makes a
 # product a book for Metabooks' purposes.
 _ISBN13 = re.compile(r'^97[89]\d{10}$')
+
+# The Série column takes a series CODE that already exists at Metabooks
+# (AAA123456 in their guide), never a name. See _metabooks_serie.
+_SERIE_CODE = re.compile(r'^[A-Z]{2,4}\d{4,10}$')
 
 
 def _plain(value):
@@ -298,7 +303,37 @@ class ProductTemplate(models.Model):
             return value or False
         if column == 'Palavra-chave':
             return self._metabooks_palavras_chave(value)
+        if column == 'Acabamento':
+            return self._metabooks_acabamento(value)
+        if column == 'Série':
+            return self._metabooks_serie(value)
         return _plain(value) or False
+
+    def _metabooks_acabamento(self, encadernacao):
+        """A encadernação e os acabamentos, todos códigos da lista 175.
+
+        A coluna deles é "detalhes adicionais ao tipo de acabamento", com a
+        lista 175 inteira -- e nós mandávamos só a encadernação. Orelha,
+        sobrecapa, marcador, laminação, relevo e hotstamp ficavam sabidos aqui
+        dentro e não chegavam à Metabooks.
+
+        RESSALVA, dita porque importa: o manual deles declara o ponto e vírgula
+        para BISAC, Thema e palavra-chave, e **não diz nada** para esta coluna.
+        Adotamos o mesmo separador, que é o único que esta planilha documenta.
+        O primeiro lote com acabamento merece ser de um livro só, para conferir
+        no painel deles antes de ir o catálogo inteiro.
+        """
+        # `metabooks_binding` guarda apelido nosso ("sewn"), e a coluna pede o
+        # código ONIX. Sem esta volta a planilha vinha mandando "sewn" para a
+        # Metabooks desde sempre -- valor que a lista 175 não tem.
+        codigo_encadernacao = onix_codes.DETAIL_BY_BINDING.get(encadernacao)
+        codigos = [codigo_encadernacao] if codigo_encadernacao else []
+        for campo, codigo in onix_codes.FINISH_BY_FIELD.items():
+            if self[campo] and codigo not in codigos:
+                codigos.append(codigo)
+        if self.metabooks_has_dust_jacket:
+            codigos.append(onix_codes.DETAIL_DUST_JACKET[0])
+        return ';'.join(codigos) or False
 
     @staticmethod
     def _metabooks_palavras_chave(valor):
@@ -316,6 +351,26 @@ class ProductTemplate(models.Model):
         texto = _plain(valor) or ''
         palavras = [p.strip() for p in texto.replace(';', ',').split(',')]
         return ';'.join(p for p in palavras if p) or False
+
+    @staticmethod
+    def _metabooks_serie(valor):
+        """Só o código da série deles, nunca o nome da nossa coleção.
+
+        "Apenas títulos de séries já existentes na Metabooks podem ser alocados
+        por meio de importação via Excel, através de seu código (Exemplo:
+        AAA123456)", diz o guia. O campo aqui guarda o nome -- "Biblioteca de
+        Cordel", "Hedra de Bolso" -- e mandá-lo custou caro: na remessa de
+        03/09/2026 os 49 livros que levaram esta coluna voltaram TODOS com
+        MDS062, "Por favor especifique título da série". E a recusa é do
+        registro inteiro, então esses livros perderam junto as palavras-chave,
+        o Thema e o BISAC que iam na mesma linha.
+
+        Enquanto a coleção não tiver código deles, a célula sai vazia: coluna
+        que não vai é coluna que a Metabooks não mexe, e o resto do livro
+        entra.
+        """
+        texto = (_plain(valor) or '').strip()
+        return texto if _SERIE_CODE.match(texto) else False
 
     @staticmethod
     def _metabooks_lista_de_codigos(_campo, principal, lista, atributo):
@@ -401,6 +456,14 @@ class MetabooksExportBatch(models.Model):
     sent_by = fields.Many2one('res.users', readonly=True, copy=False)
     note = fields.Text('Notes')
     is_neutralized = fields.Boolean(compute='_compute_is_neutralized')
+    rejected_count = fields.Integer(compute='_compute_rejected_count')
+    report_on = fields.Datetime(
+        readonly=True, copy=False, string='Report Read On')
+
+    @api.depends('line_ids.rejected')
+    def _compute_rejected_count(self):
+        for batch in self:
+            batch.rejected_count = len(batch.line_ids.filtered('rejected'))
 
     def _compute_is_neutralized(self):
         neutralizado = bool(self.env['ir.config_parameter'].sudo().get_param(
@@ -883,8 +946,14 @@ class MetabooksExportBatch(models.Model):
         return True
 
     def _mark_sent(self, body):
-        products = self.line_ids.filtered('selected').product_id
+        chosen = self.line_ids.filtered('selected')
+        products = chosen.product_id
         now = fields.Datetime.now()
+        # Where each book's history stood before this file: without it, a book
+        # the Metabooks report later refuses cannot be put back -- the cut-off
+        # would swallow the very changes the file failed to deliver.
+        for line in chosen:
+            line.track_before = line.product_id.metabooks_export_last_track
         # Everything tracked up to here is what this file carried; anything
         # recorded after it is a change we still owe them.
         cut_off = self.env['mail.tracking.value'].search(
@@ -995,6 +1064,14 @@ class MetabooksExportBatch(models.Model):
 
     # ---------------------------------------------------------------- #
 
+    def action_open_report(self):
+        """Read Metabooks' answer for this batch."""
+        self.ensure_one()
+        acao = self.env['ir.actions.act_window']._for_xml_id(
+            'liber_metabooks_integration.action_metabooks_import_report')
+        acao['context'] = {'default_batch_id': self.id}
+        return acao
+
     def action_cancel(self):
         self.ensure_one()
         if self.state == 'sent':
@@ -1030,6 +1107,35 @@ class MetabooksExportLine(models.Model):
         readonly=True,
         help="No chatter history was found for this book, so every mapped "
              "field is being sent rather than just what changed.")
+    track_before = fields.Integer(
+        readonly=True, copy=False,
+        help="Where this book's history stood before the file was sent, so a "
+             "book Metabooks refuses can be put back exactly where it was.")
+    rejected = fields.Boolean(
+        readonly=True, copy=False,
+        help="Metabooks refused this book in their upload report.")
+    error_code = fields.Char(readonly=True, copy=False)
+    error_message = fields.Char(readonly=True, copy=False)
+
+    def _refuse(self, code, message):
+        """Metabooks refused this line: record why and put the book back.
+
+        Their refusal is of the whole record, not of the offending column, so
+        everything this row carried -- keywords, Thema, BISAC -- never landed.
+        Restoring the cut-off is what makes the next round pick those changes
+        up again.
+        """
+        self.ensure_one()
+        self.write({
+            'rejected': True,
+            'error_code': code or '',
+            'error_message': (message or '')[:500],
+        })
+        self.product_id.with_context(metabooks_from_sync=True).write({
+            'metabooks_export_pending': True,
+            'metabooks_export_pending_since': fields.Datetime.now(),
+            'metabooks_export_last_track': self.track_before or 0,
+        })
 
     @api.depends('change_ids', 'change_ids.selected')
     def _compute_change_count(self):

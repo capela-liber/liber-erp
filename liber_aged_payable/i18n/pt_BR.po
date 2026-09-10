@@ -1,0 +1,243 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* liber_aged_payable
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: pt_BR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#. module: liber_aged_payable
+#: model:ir.actions.act_window,name:liber_aged_payable.liber_aged_payable_action
+#: model:ir.model,name:liber_aged_payable.model_liber_aged_payable
+#: model:ir.ui.menu,name:liber_aged_payable.liber_aged_payable_menu
+#: model_terms:ir.ui.view,arch_db:liber_aged_payable.liber_aged_payable_list
+#: model_terms:ir.ui.view,arch_db:liber_aged_payable.liber_aged_payable_pivot
+#: model_terms:ir.ui.view,arch_db:liber_aged_payable.liber_aged_payable_search
+msgid "Aged Payable"
+msgstr "Contas a Pagar por Idade"
+
+#. module: liber_aged_payable
+#: model:ir.model.fields,field_description:liber_aged_payable.field_liber_aged_payable__partner_id
+#: model_terms:ir.ui.view,arch_db:liber_aged_payable.liber_aged_payable_search
+msgid "Vendor"
+msgstr "Fornecedor"
+
+#. module: liber_aged_payable
+#: model:ir.model.fields,field_description:liber_aged_payable.field_liber_aged_payable__amount_current
+#: model_terms:ir.ui.view,arch_db:liber_aged_payable.liber_aged_payable_list
+#: model_terms:ir.ui.view,arch_db:liber_aged_payable.liber_aged_payable_search
+msgid "Not Due"
+msgstr "A vencer"
+
+#. module: liber_aged_payable
+#: model:ir.model.fields,field_description:liber_aged_payable.field_liber_aged_payable__amount_30
+#: model_terms:ir.ui.view,arch_db:liber_aged_payable.liber_aged_payable_list
+msgid "1-30"
+msgstr "1-30"
+
+#. module: liber_aged_payable
+#: model:ir.model.fields,field_description:liber_aged_payable.field_liber_aged_payable__amount_60
+#: model_terms:ir.ui.view,arch_db:liber_aged_payable.liber_aged_payable_list
+msgid "31-60"
+msgstr "31-60"
+
+#. module: liber_aged_payable
+#: model:ir.model.fields,field_description:liber_aged_payable.field_liber_aged_payable__amount_90
+#: model_terms:ir.ui.view,arch_db:liber_aged_payable.liber_aged_payable_list
+msgid "61-90"
+msgstr "61-90"
+
+#. module: liber_aged_payable
+#: model:ir.model.fields,field_description:liber_aged_payable.field_liber_aged_payable__amount_120
+#: model_terms:ir.ui.view,arch_db:liber_aged_payable.liber_aged_payable_list
+msgid "91-120"
+msgstr "91-120"
+
+#. module: liber_aged_payable
+#: model:ir.model.fields,field_description:liber_aged_payable.field_liber_aged_payable__amount_older
+#: model_terms:ir.ui.view,arch_db:liber_aged_payable.liber_aged_payable_list
+msgid "Older"
+msgstr "Mais antigo"
+
+#. module: liber_aged_payable
+#: model:ir.model.fields,field_description:liber_aged_payable.field_liber_aged_payable__amount_total
+#: model_terms:ir.ui.view,arch_db:liber_aged_payable.liber_aged_payable_list
+msgid "Total"
+msgstr "Total"
+
+#. module: liber_aged_payable
+#: model:ir.model.fields,field_description:liber_aged_payable.field_liber_aged_payable__days_overdue
+msgid "Days Overdue"
+msgstr "Dias em atraso"
+
+#. module: liber_aged_payable
+#: model:ir.model.fields,field_description:liber_aged_payable.field_liber_aged_payable__days_to_due
+msgid "Days to Due"
+msgstr "Dias para vencer"
+
+#. module: liber_aged_payable
+#: model:ir.model.fields,field_description:liber_aged_payable.field_liber_aged_payable__can_reconcile
+msgid "Can Be Reconciled"
+msgstr "Pode ser conciliado"
+
+#. module: liber_aged_payable
+#: model:ir.model.fields,field_description:liber_aged_payable.field_liber_aged_payable__date_maturity
+#: model_terms:ir.ui.view,arch_db:liber_aged_payable.liber_aged_payable_search
+msgid "Due Date"
+msgstr "Vencimento"
+
+#. module: liber_aged_payable
+#: model:ir.model.fields,field_description:liber_aged_payable.field_liber_aged_payable__invoice_date
+#: model_terms:ir.ui.view,arch_db:liber_aged_payable.liber_aged_payable_list
+msgid "Invoice Date"
+msgstr "Data da fatura"
+
+#. module: liber_aged_payable
+#: model:ir.model.fields,field_description:liber_aged_payable.field_liber_aged_payable__move_name
+#: model_terms:ir.ui.view,arch_db:liber_aged_payable.liber_aged_payable_list
+msgid "Number"
+msgstr "Número"
+
+#. module: liber_aged_payable
+#: model:ir.model.fields,field_description:liber_aged_payable.field_liber_aged_payable__move_id
+msgid "Document"
+msgstr "Documento"
+
+#. module: liber_aged_payable
+#: model:ir.model.fields,field_description:liber_aged_payable.field_liber_aged_payable__line_id
+msgid "Journal Item"
+msgstr "Item de diário"
+
+#. module: liber_aged_payable
+#: model:ir.model.fields,field_description:liber_aged_payable.field_liber_aged_payable__account_id
+#: model_terms:ir.ui.view,arch_db:liber_aged_payable.liber_aged_payable_search
+msgid "Account"
+msgstr "Conta"
+
+#. module: liber_aged_payable
+#: model:ir.model.fields,field_description:liber_aged_payable.field_liber_aged_payable__journal_id
+#: model_terms:ir.ui.view,arch_db:liber_aged_payable.liber_aged_payable_search
+msgid "Journal"
+msgstr "Diário"
+
+#. module: liber_aged_payable
+#: model:ir.model.fields,field_description:liber_aged_payable.field_liber_aged_payable__company_id
+#: model_terms:ir.ui.view,arch_db:liber_aged_payable.liber_aged_payable_search
+msgid "Company"
+msgstr "Empresa"
+
+#. module: liber_aged_payable
+#: model:ir.model.fields,field_description:liber_aged_payable.field_liber_aged_payable__currency_id
+#: model_terms:ir.ui.view,arch_db:liber_aged_payable.liber_aged_payable_search
+msgid "Currency"
+msgstr "Moeda"
+
+#. module: liber_aged_payable
+#: model_terms:ir.ui.view,arch_db:liber_aged_payable.liber_aged_payable_search
+msgid "Overdue"
+msgstr "Vencido"
+
+#. module: liber_aged_payable
+#: model_terms:ir.ui.view,arch_db:liber_aged_payable.liber_aged_payable_search
+msgid "Over 90 days"
+msgstr "Mais de 90 dias"
+
+#. module: liber_aged_payable
+#: model_terms:ir.ui.view,arch_db:liber_aged_payable.liber_aged_payable_search
+msgid "Owed to the vendor"
+msgstr "Devemos ao fornecedor"
+
+#. module: liber_aged_payable
+#: model_terms:ir.ui.view,arch_db:liber_aged_payable.liber_aged_payable_search
+msgid "Payments made, not applied"
+msgstr "Pagamentos feitos, sem baixa"
+
+#. module: liber_aged_payable
+#: model_terms:ir.ui.view,arch_db:liber_aged_payable.liber_aged_payable_search
+msgid "Ready to reconcile"
+msgstr "Pronto para conciliar"
+
+#. module: liber_aged_payable
+#: model_terms:ir.ui.view,arch_db:liber_aged_payable.liber_aged_payable_search
+msgid "Without vendor"
+msgstr "Sem fornecedor"
+
+#. module: liber_aged_payable
+#: model_terms:ir.ui.view,arch_db:liber_aged_payable.liber_aged_payable_search
+msgid "Group By"
+msgstr "Agrupar por"
+
+#. module: liber_aged_payable
+#: model_terms:ir.ui.view,arch_db:liber_aged_payable.liber_aged_payable_list
+msgid "Open the bill or the payment"
+msgstr "Abrir a conta ou o pagamento"
+
+#. module: liber_aged_payable
+#: model_terms:ir.ui.view,arch_db:liber_aged_payable.liber_aged_payable_list
+msgid "Match the payments made against the open bills"
+msgstr "Casar os pagamentos feitos com as contas em aberto"
+
+#. module: liber_aged_payable
+#: model_terms:ir.actions.act_window,help:liber_aged_payable.liber_aged_payable_action
+msgid "Nothing open to age"
+msgstr "Nada em aberto para envelhecer"
+
+#. module: liber_aged_payable
+#: model_terms:ir.actions.act_window,help:liber_aged_payable.liber_aged_payable_action
+msgid ""
+"Every payable line is settled. When a vendor bill is left\n"
+"               open, or a payment leaves without settling one, it shows up\n"
+"               here under the bracket its due date falls in."
+msgstr ""
+"Toda linha a pagar está baixada. Quando uma conta de fornecedor\n"
+"               fica em aberto, ou um pagamento sai sem baixar nenhuma, ela\n"
+"               aparece aqui na faixa em que o vencimento cai."
+
+#. module: liber_aged_payable
+#: model:ir.model.fields,field_description:liber_aged_payable.field_liber_aged_payable__partner_off_ledger
+#: model_terms:ir.ui.view,arch_db:liber_aged_payable.liber_aged_payable_search
+msgid "Wrong Ledger"
+msgstr "Razão errado"
+
+#. module: liber_aged_payable
+#: model_terms:ir.ui.view,arch_db:liber_aged_payable.liber_aged_payable_list
+msgid "Not a Vendor"
+msgstr "Não é fornecedor"
+
+#. module: liber_aged_payable
+#: model_terms:ir.ui.view,arch_db:liber_aged_payable.liber_aged_payable_search
+msgid "Never billed as a vendor"
+msgstr "Nunca lançado como fornecedor"
+
+#. module: liber_aged_payable
+#: model:ir.model.fields,field_description:liber_aged_payable.field_liber_aged_payable__partner_group
+#: model_terms:ir.ui.view,arch_db:liber_aged_payable.liber_aged_payable_search
+msgid "Economic Group"
+msgstr "Grupo econômico"
+#. module: liber_aged_payable
+#: model:ir.actions.server,name:liber_aged_payable.liber_aged_payable_pagar
+msgid "Register Payment"
+msgstr "Pagar"
+
+#. module: liber_aged_payable
+#: model_terms:ir.ui.view,arch_db:liber_aged_payable.liber_aged_payable_search
+msgid "Drafts"
+msgstr "Rascunhos"
+
+#. module: liber_aged_payable
+#: model_terms:ir.ui.view,arch_db:liber_aged_payable.liber_aged_payable_search
+msgid "Posted"
+msgstr "Lançados"
+
+#. module: liber_aged_payable
+#: model:ir.model.fields,field_description:liber_aged_payable.field_liber_aged_payable__move_state
+msgid "Document Status"
+msgstr "Situação do documento"

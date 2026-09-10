@@ -1,0 +1,195 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* liber_print_quote
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0\n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: 2026-09-09 20:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: pt_BR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#. module: liber_print_quote
+#: model:ir.model.fields,field_description:liber_print_quote.field_product_product__print_cover_colors
+#: model:ir.model.fields,field_description:liber_print_quote.field_product_template__print_cover_colors
+msgid "Cover Colors"
+msgstr "Cor da capa"
+
+#. module: liber_print_quote
+#: model:ir.model.fields,field_description:liber_print_quote.field_product_product__print_cover_paper
+#: model:ir.model.fields,field_description:liber_print_quote.field_product_template__print_cover_paper
+msgid "Cover Paper"
+msgstr "Papel da capa"
+
+#. module: liber_print_quote
+#: model:ir.model.fields,field_description:liber_print_quote.field_product_product__print_cover_finish
+#: model:ir.model.fields,field_description:liber_print_quote.field_product_template__print_cover_finish
+msgid "Cover Finish"
+msgstr "Acabamento da capa"
+
+#. module: liber_print_quote
+#: model:ir.model.fields,field_description:liber_print_quote.field_product_product__print_body_colors
+#: model:ir.model.fields,field_description:liber_print_quote.field_product_template__print_body_colors
+msgid "Body Colors"
+msgstr "Cor do miolo"
+
+#. module: liber_print_quote
+#: model:ir.model.fields,field_description:liber_print_quote.field_product_product__print_body_extra_colors
+#: model:ir.model.fields,field_description:liber_print_quote.field_product_template__print_body_extra_colors
+msgid "Special Signatures"
+msgstr "Cadernos especiais"
+
+#. module: liber_print_quote
+#: model:ir.model.fields,field_description:liber_print_quote.field_product_product__print_body_paper
+#: model:ir.model.fields,field_description:liber_print_quote.field_product_template__print_body_paper
+msgid "Body Paper"
+msgstr "Papel do miolo"
+
+#. module: liber_print_quote
+#: model:ir.model.fields,field_description:liber_print_quote.field_product_product__print_flap_width
+#: model:ir.model.fields,field_description:liber_print_quote.field_product_template__print_flap_width
+msgid "Flap Width (mm)"
+msgstr "Largura da orelha (mm)"
+
+#. module: liber_print_quote
+#: model:ir.model.fields,field_description:liber_print_quote.field_product_product__print_notes
+#: model:ir.model.fields,field_description:liber_print_quote.field_product_template__print_notes
+msgid "General Notes"
+msgstr "Observações gerais"
+
+#. module: liber_print_quote
+#: model_terms:ir.ui.view,arch_db:liber_print_quote.view_product_template_print_finish
+msgid "Cover"
+msgstr "Capa"
+
+#. module: liber_print_quote
+#: model_terms:ir.ui.view,arch_db:liber_print_quote.view_product_template_print_finish
+msgid "Body"
+msgstr "Miolo"
+
+#. module: liber_print_quote
+#: model_terms:ir.ui.view,arch_db:liber_print_quote.view_product_template_print_finish
+msgid "matte lamination with spot UV, gold foil on the spine..."
+msgstr "laminação fosca ou brilhante, com reserva, hotstamp..."
+
+#. module: liber_print_quote
+#: model_terms:ir.ui.view,arch_db:liber_print_quote.view_product_template_print_finish
+msgid "250gsm coated board"
+msgstr "cartão triplex 250g"
+
+#. module: liber_print_quote
+#: model_terms:ir.ui.view,arch_db:liber_print_quote.view_product_template_print_finish
+msgid "80gsm bulky paper"
+msgstr "pólen soft 80g"
+
+#. module: liber_print_quote
+#: model_terms:ir.ui.view,arch_db:liber_print_quote.view_product_template_print_finish
+msgid "1 signature in 4x4, pages 65-80"
+msgstr "1 caderno 4x4, páginas 65-80"
+
+#. module: liber_print_quote
+#: model_terms:ir.ui.view,arch_db:liber_print_quote.view_product_template_print_finish
+msgid "insert, packaging, colour reference, deadline..."
+msgstr "encarte, embalagem, referência de cor, prazo..."
+
+#. module: liber_print_quote
+#. odoo-python
+#: code:addons/liber_print_quote/models/product_template.py:0
+msgid "Format"
+msgstr "Formato"
+
+#. module: liber_print_quote
+#. odoo-python
+#: code:addons/liber_print_quote/models/product_template.py:0
+msgid "Dimensions"
+msgstr "Dimensões"
+
+#. module: liber_print_quote
+#. odoo-python
+#: code:addons/liber_print_quote/models/product_template.py:0
+msgid "Pages"
+msgstr "Páginas"
+
+#. module: liber_print_quote
+#. odoo-python
+#: code:addons/liber_print_quote/models/product_template.py:0
+msgid "Weight"
+msgstr "Peso"
+
+#. module: liber_print_quote
+#. odoo-python
+#: code:addons/liber_print_quote/models/product_template.py:0
+msgid "Binding"
+msgstr "Encadernação"
+
+#. module: liber_print_quote
+#. odoo-python
+#: code:addons/liber_print_quote/models/product_template.py:0
+msgid "Finishing"
+msgstr "Acabamento"
+
+#. module: liber_print_quote
+#. odoo-python
+#: code:addons/liber_print_quote/models/product_template.py:0
+msgid "Cover colors"
+msgstr "Cor da capa"
+
+#. module: liber_print_quote
+#. odoo-python
+#: code:addons/liber_print_quote/models/product_template.py:0
+msgid "Cover paper"
+msgstr "Papel da capa"
+
+#. module: liber_print_quote
+#. odoo-python
+#: code:addons/liber_print_quote/models/product_template.py:0
+msgid "Cover finish"
+msgstr "Acabamento da capa"
+
+#. module: liber_print_quote
+#. odoo-python
+#: code:addons/liber_print_quote/models/product_template.py:0
+msgid "Body colors"
+msgstr "Cor do miolo"
+
+#. module: liber_print_quote
+#. odoo-python
+#: code:addons/liber_print_quote/models/product_template.py:0
+msgid "Body paper"
+msgstr "Papel do miolo"
+
+#. module: liber_print_quote
+#. odoo-python
+#: code:addons/liber_print_quote/models/product_template.py:0
+msgid "Flap width"
+msgstr "Largura da orelha"
+
+#. module: liber_print_quote
+#. odoo-python
+#: code:addons/liber_print_quote/models/product_template.py:0
+msgid "Notes"
+msgstr "Observações"
+
+#. module: liber_print_quote
+#. odoo-python
+#: code:addons/liber_print_quote/models/product_template.py:0
+msgid "%s mm"
+msgstr "%s mm"
+
+#. module: liber_print_quote
+#. odoo-python
+#: code:addons/liber_print_quote/models/product_template.py:0
+msgid "%s g"
+msgstr "%s g"
+
+#. module: liber_print_quote
+#. odoo-python
+#: code:addons/liber_print_quote/models/product_template.py:0
+msgid "%(h)s x %(w)s x %(d)s mm"
+msgstr "%(h)s x %(w)s x %(d)s mm"

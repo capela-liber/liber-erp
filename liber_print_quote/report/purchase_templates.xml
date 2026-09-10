@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- A ficha entra nos DOIS documentos. O pedido de cotação é o que sai
+         para a gráfica orçar; o pedido de compra é o que ela produz. Faltando
+         no segundo, a diferença entre o orçado e o impresso vira discussão.
+
+         Os dois relatórios do core chamam a linha por nomes diferentes
+         (`order_line` na cotação, `line` no pedido), então cada herança passa
+         a sua para o bloco em vez de o bloco adivinhar. -->
+
+    <template id="report_purchasequotation_document_specs"
+              inherit_id="purchase.report_purchasequotation_document">
+        <xpath expr="//td[@id='product']/span[@t-field='order_line.name']" position="after">
+            <t t-set="linha_do_pedido" t-value="order_line"/>
+            <t t-call="liber_print_quote.print_spec_block"/>
+        </xpath>
+    </template>
+
+    <template id="report_purchaseorder_document_specs"
+              inherit_id="purchase.report_purchaseorder_document">
+        <xpath expr="//td[@id='product']/span[@t-field='line.name']" position="after">
+            <t t-set="linha_do_pedido" t-value="line"/>
+            <t t-call="liber_print_quote.print_spec_block"/>
+        </xpath>
+    </template>
+
+    <!-- O bloco, uma vez só. Lê uma lista pronta de (rótulo, valor): o QWeb
+         não sabe nada sobre ONIX, e a lista é o que os testes medem.
+
+         LINHA CORRIDA, e não uma por campo. Com quinze campos, um `div` cada
+         fazia a coluna da descrição crescer quinze linhas e a tabela do
+         relatório desmontava, e a ficha ocupava mais espaço que o pedido. Em
+         corpo menor e separada por bolinha, ela cabe embaixo do título como
+         uma legenda, que é o que ela é. -->
+    <template id="print_spec_block">
+        <t t-set="livro" t-value="linha_do_pedido.product_id.product_tmpl_id"/>
+        <t t-if="livro and livro._print_spec_is_relevant(livro)">
+            <t t-set="ficha" t-value="livro._print_spec()"/>
+            <div t-if="ficha" class="text-muted"
+                 style="font-size:.72rem; line-height:1.4;">
+                <t t-foreach="ficha" t-as="linha">
+                    <span t-if="not linha_first"
+                          style="padding:0 .5rem;">&#8226;</span><span
+                          t-esc="linha[0]"/>: <span t-esc="linha[1]"/>
+                </t>
+            </div>
+        </t>
+    </template>
+
+</odoo>

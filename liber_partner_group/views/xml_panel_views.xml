@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <!-- A rede no Painel de Notas Fiscais, ao lado do agrupamento por
+         cliente que já existe. -->
+    <record id="view_soc_xml_panel_search_group" model="ir.ui.view">
+        <field name="name">nfe.xml.panel.search.partner.group</field>
+        <field name="model">nfe.xml.panel</field>
+        <field name="inherit_id" ref="liber_nfe_xml.view_soc_xml_panel_search"/>
+        <field name="arch" type="xml">
+            <filter name="group_by_partner_id" position="after">
+                <filter name="group_by_partner_group" string="Commercial Group"
+                        context="{'group_by': 'commercial_group_display'}"/>
+            </filter>
+        </field>
+    </record>
+</odoo>

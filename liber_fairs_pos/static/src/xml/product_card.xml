@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates id="template" xml:space="preserve">
+    <t t-name="liber_fairs_pos.ProductCardFair"
+       t-inherit="point_of_sale.ProductCard" t-inherit-mode="extension">
+        <!-- Quantos exemplares há NA MESA, no alto à esquerda: o canto de
+             baixo à direita já é da etiqueta preta do núcleo (quantos foram
+             para o pedido). Zerou, fica vermelha — é o título que acabou, e
+             quem está no balcão precisa ver antes de prometer ao cliente. -->
+        <xpath expr="//span[hasclass('product-cart-qty')]" position="before">
+            <span t-if="this.fairQty !== null"
+                  t-out="this.fairQty"
+                  class="position-absolute top-0 start-0 m-1 px-2 rounded fs-5 fw-bolder"
+                  t-att-class="this.fairQtyIsZero ? 'bg-danger text-white' : 'bg-black text-white'"
+                  title="Copies on the table"/>
+        </xpath>
+        <!-- "De R$ 100 por R$ 50": o desconto da feira só vale alguma coisa
+             se quem está do outro lado do balcão puder ver o de-por. -->
+        <!-- O corpo do cartao e uma LINHA (d-flex). Sem deixar quebrar, o
+             de-por entra ao lado do titulo e come o nome do livro. -->
+        <xpath expr="//div[hasclass('product-content')]" position="attributes">
+            <attribute name="class" add="flex-wrap" separator=" "/>
+        </xpath>
+        <xpath expr="//div[hasclass('product-name')]" position="after">
+            <div t-if="this.fairPrices" class="w-100 lh-1 mt-1 text-nowrap">
+                <span class="text-muted text-decoration-line-through me-1"
+                      style="font-size: 0.7rem;"
+                      t-out="this.fairPrices.full"/>
+                <span class="fw-bolder" t-out="this.fairPrices.now"/>
+            </div>
+        </xpath>
+    </t>
+</templates>

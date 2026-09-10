@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Intercompany royalty settings in Settings > Copyright. The source
+         companies list is the on/off switch of the whole feature: empty
+         means "accrue on my own sales only", so leaving it invisible would
+         let cross-company accrual be silently off with nobody knowing
+         where to turn it on. -->
+    <record id="res_config_settings_view_form_intercompany" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.copyright.intercompany</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="liber_copyright_contracts.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//app[@name='liber_copyright_contracts']" position="inside">
+<!-- Two blocks, not one: the settings grid interleaves the settings in
+                     two columns by DOM order, so in a single block the seller-side
+                     fields land visually mixed with the contract-holder ones and
+                     users fill both sides on the wrong company. Each block says on
+                     which company its fields are read. -->
+                <block title="Intercompany Royalties — Contract Holder" name="copyright_interco_block">
+                    <!-- The journal/account domains filter by company_id, so
+                         the field has to be in the record for the client to
+                         evaluate them. -->
+                    <field name="company_id" invisible="1"/>
+                    <setting string="Royalty source companies"
+                             help="Read on the company that OWNS the contracts. Sister companies whose PAID sales also feed this company's royalty accrual. Empty = only this company's own sales. Their sales are charged back through the intercompany royalty invoice.">
+                        <field name="contract_interco_source_company_ids"
+                               widget="many2many_tags"/>
+                    </setting>
+                    <setting string="Intercompany royalties product"
+                             help="Product of the intercompany royalty invoice lines. Leave empty to use the 'Royalties entre Empresas' product shipped with this module.">
+                        <field name="contract_interco_product_id"/>
+                    </setting>
+                    <setting string="Intercompany sale journal"
+                             help="Sale journal of the accumulator invoice charging the selling companies. Leave empty to use the company default.">
+                        <field name="contract_interco_journal_id"/>
+                    </setting>
+                    <setting string="Intercompany income account"
+                             help="Income account of the accumulator invoice lines. Leave empty to use the product's default income account.">
+                        <field name="contract_interco_income_account_id"/>
+                    </setting>
+                    <setting string="Markup (%)"
+                             help="Administration percentage added on top of the accrued royalty when charging the selling company. 0 = charge the exact royalty.">
+                        <field name="contract_interco_markup" class="o_light_label"/>
+                    </setting>
+                </block>
+                <block title="Intercompany Royalties — Selling Company" name="copyright_interco_seller_block">
+                    <setting string="Intercompany purchase journal"
+                             help="Read on the SELLING company when the mirrored vendor bill is created there. Leave empty to use the company default purchase journal.">
+                        <field name="contract_interco_purchase_journal_id"/>
+                    </setting>
+                    <setting string="Intercompany expense account"
+                             help="Read on the SELLING company: expense account of the mirrored vendor bill lines. Leave empty to use the product's default expense account.">
+                        <field name="contract_interco_expense_account_id"/>
+                    </setting>
+                </block>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

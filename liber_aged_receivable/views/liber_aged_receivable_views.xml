@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="liber_aged_receivable_list" model="ir.ui.view">
+        <field name="name">liber.aged.receivable.list</field>
+        <field name="model">liber.aged.receivable</field>
+        <field name="arch" type="xml">
+            <!-- Agrupada por cliente, as seis faixas somam por grupo: é a
+                 matriz da tela do Enterprise, feita pelo próprio framework. -->
+            <!-- groups_limit: o rodape de uma lista AGRUPADA soma so os
+                 grupos CARREGADOS. Isso esta no proprio cliente web do Odoo
+                 (`list_renderer.js`, computeAggregates:
+                 `this.props.list.groups.map(g => g.aggregates)`), e nao ha
+                 ajuste que faca a lista somar o dominio inteiro.
+
+                 O padrao do Odoo e 80, e com 2.849 grupos economicos no a
+                 receber isso fazia o rodape mostrar R$ 555 mil onde ha
+                 milhoes. A tela como ela ABRE ja diz a verdade, porque o
+                 filtro "A vencer" deixa 55 grupos; subir para 250 cobre a
+                 maior parte do trabalho do dia sem custo perceptivel.
+
+                 Alem disso o numero verdadeiro esta sempre no PIVO, que
+                 agrega o dominio inteiro e nao tem limite de grupos. -->
+            <list string="Aged Receivable" create="false" delete="false"
+                  edit="false" default_order="date_maturity"
+                  groups_limit="250">
+                <field name="partner_id" optional="show"/>
+                <field name="partner_group" optional="hide"/>
+                <field name="move_state" optional="hide"/>
+                <field name="team_id" optional="hide"/>
+                <field name="move_name" string="Number"/>
+                <field name="invoice_date" optional="show"/>
+                <field name="date_maturity"/>
+                <field name="days_overdue" optional="hide"/>
+                <field name="days_to_due" optional="hide"/>
+                <field name="journal_id" optional="hide"/>
+                <field name="account_id" optional="hide"/>
+                <field name="company_id" optional="hide"
+                       groups="base.group_multi_company"/>
+                <field name="amount_current" sum="Not Due"/>
+                <field name="amount_30" sum="1-30"/>
+                <field name="amount_60" sum="31-60"/>
+                <field name="amount_90" sum="61-90"/>
+                <field name="amount_120" sum="91-120"/>
+                <field name="amount_older" sum="Older"/>
+                <field name="amount_total" sum="Total"/>
+                <field name="currency_id" column_invisible="True"/>
+                <button name="action_open_move" type="object"
+                        icon="fa-external-link"
+                        title="Open the invoice or the payment"/>
+                <field name="can_reconcile" column_invisible="True"/>
+                <field name="partner_off_ledger" optional="hide"
+                       string="Not a Customer" widget="boolean_toggle" readonly="1"/>
+                <!-- O botão só aparece quando há os dois lados na conta.
+                     Oferecê-lo sempre e recusar depois do clique é constatar
+                     em vez de ajudar. -->
+                <button name="action_open_reconcile" type="object"
+                        icon="fa-exchange" invisible="not can_reconcile"
+                        title="Match this customer's payments against the open invoices"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="liber_aged_receivable_pivot" model="ir.ui.view">
+        <field name="name">liber.aged.receivable.pivot</field>
+        <field name="model">liber.aged.receivable</field>
+        <field name="arch" type="xml">
+            <pivot string="Aged Receivable">
+                <field name="partner_id" type="row"/>
+                <field name="amount_current" type="measure"/>
+                <field name="amount_30" type="measure"/>
+                <field name="amount_60" type="measure"/>
+                <field name="amount_90" type="measure"/>
+                <field name="amount_120" type="measure"/>
+                <field name="amount_older" type="measure"/>
+                <field name="amount_total" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="liber_aged_receivable_search" model="ir.ui.view">
+        <field name="name">liber.aged.receivable.search</field>
+        <field name="model">liber.aged.receivable</field>
+        <field name="arch" type="xml">
+            <search string="Aged Receivable">
+                <field name="partner_id"/>
+                <field name="move_name"/>
+                <field name="account_id"/>
+                <!-- Postados x rascunhos, no MESMO grupo: o Odoo une por OU,
+                     entao marcar os dois mostra tudo. O padrao e so postados,
+                     e "Rascunhos" acrescenta em vez de trocar. O financeiro da
+                     casa provisiona em rascunho, e sao R$ 4,08 milhoes no a
+                     pagar que o relatorio nao mostrava. -->
+                <filter name="postados" string="Posted"
+                        domain="[('move_state', '=', 'posted')]"/>
+                <filter name="rascunhos" string="Drafts"
+                        domain="[('move_state', '=', 'draft')]"/>
+                <separator/>
+                <filter name="overdue" string="Overdue"
+                        domain="[('days_overdue', '&gt;', 0)]"/>
+                <filter name="not_due" string="Not Due"
+                        domain="[('days_overdue', '=', 0)]"/>
+                <separator/>
+                <filter name="over_90" string="Over 90 days"
+                        domain="[('days_overdue', '&gt;', 90)]"/>
+                <separator/>
+                <!-- Cobrança quer o que entra; a conciliação quer os dois
+                     lados. Por isso o crédito solto tem filtro próprio em
+                     vez de ficar de fora da tela. -->
+                <filter name="debit" string="Owed by the customer"
+                        domain="[('amount_total', '&gt;', 0)]"/>
+                <filter name="credit" string="Unapplied payments"
+                        domain="[('amount_total', '&lt;', 0)]"/>
+                <separator/>
+                <filter name="reconcilable" string="Ready to reconcile"
+                        domain="[('can_reconcile', '=', True)]"/>
+                <!-- O parceiro nunca emitiu documento deste lado: não há
+                     fatura a caminho e nunca haverá. Reclassificar, não
+                     cobrar. -->
+                <filter name="off_ledger" string="Never invoiced as a customer"
+                        domain="[('partner_off_ledger', '=', True)]"/>
+                <filter name="no_partner" string="Without customer"
+                        domain="[('partner_id', '=', False)]"/>
+                <separator/>
+                <filter name="by_partner" string="Customer" domain="[]"
+                        context="{'group_by': 'partner_id'}"/>
+                <filter name="by_group" string="Economic Group" domain="[]"
+                        context="{'group_by': 'partner_group'}"/>
+                <filter name="by_team" string="Sales Channel" domain="[]"
+                        context="{'group_by': 'team_id'}"/>
+                <filter name="by_company" string="Company" domain="[]"
+                        context="{'group_by': 'company_id'}"
+                        groups="base.group_multi_company"/>
+                <filter name="by_account" string="Account" domain="[]"
+                        context="{'group_by': 'account_id'}"/>
+                <filter name="by_journal" string="Journal" domain="[]"
+                        context="{'group_by': 'journal_id'}"/>
+                <filter name="by_due" string="Due Date" domain="[]"
+                        context="{'group_by': 'date_maturity'}"/>
+                <filter name="by_off_ledger" string="Wrong Ledger" domain="[]"
+                        context="{'group_by': 'partner_off_ledger'}"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="liber_aged_receivable_action" model="ir.actions.act_window">
+        <field name="name">Aged Receivable</field>
+        <field name="res_model">liber.aged.receivable</field>
+        <field name="view_mode">list,pivot</field>
+        <field name="search_view_id" ref="liber_aged_receivable_search"/>
+        <field name="context">{'search_default_by_team': 1,
+                              'search_default_by_group': 2,
+                              'search_default_not_due': 1,
+                              'search_default_postados': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Nothing open to age</p>
+            <p>Every receivable line is settled. When a customer invoice is
+               left open, or a payment lands without settling one, it shows
+               up here under the bracket its due date falls in.</p>
+        </field>
+    </record>
+
+    <menuitem id="liber_aged_receivable_menu"
+              name="Aged Receivable"
+              parent="account.menu_finance_reports"
+              action="liber_aged_receivable_action"
+              sequence="25"/>
+
+
+    <!--
+        "Pagar" no menu Acoes da lista. O caminho de quem cobra: ve a divida
+        na tela de idade, marca as linhas e baixa dali mesmo, em vez de abrir
+        fatura por fatura. O binding e por LISTA porque so ali existe selecao.
+    -->
+    <record id="liber_aged_receivable_pagar" model="ir.actions.server">
+        <field name="name">Register Payment</field>
+        <field name="model_id" ref="model_liber_aged_receivable"/>
+        <field name="binding_model_id" ref="model_liber_aged_receivable"/>
+        <field name="binding_view_types">list</field>
+        <!-- O Odoo 19 (`_can_execute_action_on_records`) so deixa rodar acao
+             de servidor SEM grupo quem tem direito de ESCRITA no modelo. O
+             relatorio e uma view SQL so de leitura (perm_write=0 para todo
+             mundo, o admin inclusive), entao a acao recusava com "Erro de
+             acesso" antes de chegar no codigo; e o teste de ORM, que chama
+             o metodo direto, nao via. Com grupo declarado a checagem passa a
+             ser de pertencimento, que e o que se quer: quem le o relatorio
+             baixa dali. -->
+        <field name="group_ids" eval="[(4, ref('account.group_account_user'))]"/>
+        <field name="state">code</field>
+        <field name="code">action = records.action_registrar_pagamento()</field>
+    </record>
+</odoo>

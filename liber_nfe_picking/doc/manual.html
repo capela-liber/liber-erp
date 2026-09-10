@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DANFE na transferência — Liber NFe Picking</title>
+</head>
+<body>
+<article class="doc">
+  <h1>DANFE na transferência</h1>
+  <p class="lead">O documento que viaja com a caixa, entregue onde a caixa é fechada: quando a SEFAZ autoriza a NFe, o PDF da DANFE aparece no histórico da própria transferência — a logística não abre o Faturamento.</p>
+
+  <h2 id="visao-geral">Visão geral</h2>
+  <p>Quem embala e despacha trabalha na transferência, não na fatura. A nota, porém, nasce do outro lado: é emitida da fatura, pela integração com a Focus NFe. Este módulo é a ponte entre os dois mundos — no momento em que a SEFAZ autoriza a nota, ele leva a DANFE até cada transferência do pedido e carimba o vínculo na ficha. Pela mesma ponte, no sentido contrário, viajam a contagem de caixas e o peso: nascem na movimentação e chegam à fatura, porque a NFe precisa declará-los.</p>
+  <p>O que a logística ganha, em resumo:</p>
+  <div class="tablewrap"><table>
+    <tr><th>Na tela</th><th>O que aparece</th></tr>
+    <tr><td>Histórico da transferência</td><td>O PDF da DANFE, postado quando a SEFAZ autoriza — e um aviso, se a nota for cancelada depois.</td></tr>
+    <tr><td>Ficha da transferência</td><td><span class="field">Nº da NFe</span> e <span class="field">Situação da NFe</span>, ao lado do documento de origem. Só aparecem quando há nota.</td></tr>
+    <tr><td>Lista de transferências</td><td>Os filtros <span class="field">Com nota fiscal</span> e <span class="field">Sem nota fiscal</span>.</td></tr>
+    <tr><td>Menu Imprimir da lista</td><td><span class="field">Notas fiscais</span>: as DANFEs da seleção, num PDF só.</td></tr>
+  </table></div>
+
+  <h2 id="caminho">Como a nota acha a transferência</h2>
+  <p>O vínculo não se digita — é deduzido do pedido por trás da nota, por duas pernas, porque a casa emite por dois caminhos:</p>
+  <div class="tablewrap"><table>
+    <tr><th>Documento</th><th>O elo</th></tr>
+    <tr><td>Venda (<code>S000</code>)</td><td>As linhas da fatura apontam para as linhas do pedido, e o pedido conhece as suas transferências.</td></tr>
+    <tr><td>Consignação (<code>C000</code>) e remessa (<code>REM/</code>)</td><td>A nota nasce sem linha ligada ao pedido, mas o gerador carimba a origem com o nome do pedido — é por ela que a transferência é encontrada.</td></tr>
+    <tr><td>Acerto (<code>CO</code>)</td><td>Nenhum. O acerto fatura livro que já está na prateleira do cliente, sem movimento físico — e por isso não passa por aqui, de propósito.</td></tr>
+  </table></div>
+  <div class="callout note"><span class="title">Nota</span><p>Uma falha nesta ponte nunca derruba a emissão: a nota já está autorizada na SEFAZ. O aviso à logística se refaz sozinho na próxima consulta da integração — o que não propagou agora propaga depois.</p></div>
+
+  <h2 id="ficha">Na transferência</h2>
+  <p>Quando a SEFAZ autoriza, cada transferência do pedido recebe no histórico uma mensagem — <em>"NFe nº 70123 autorizada pela SEFAZ — a DANFE segue anexa"</em> — com o PDF pronto para imprimir. Na ficha, <span class="field">Nº da NFe</span> e <span class="field">Situação da NFe</span> passam a acompanhar a nota: se ela mudar de situação, o campo muda junto.</p>
+  <figure class="shot"><img src="img/danfe-no-historico.png" alt="Ficha da transferência com Nº da NFe e Situação da NFe, e o PDF da DANFE postado no histórico pelo OdooBot."><figcaption>A DANFE chega sozinha ao histórico do movimento, com número e situação na ficha.</figcaption></figure>
+  <p>Se a nota for <strong>cancelada</strong> depois, o histórico recebe um aviso: a DANFE anexada acima não vale mais como documento de transporte. O PDF não é apagado — histórico não se reescreve — mas também não fica mentindo sozinho no registro. O aviso sai uma vez só.</p>
+
+  <h2 id="filtros">Separar o que já pode viajar</h2>
+  <p>Na lista de transferências, os filtros <span class="field">Com nota fiscal</span> e <span class="field">Sem nota fiscal</span> dividem a fila da expedição: de um lado o que já tem documento e pode ir para a caixa, do outro o que ainda espera a emissão.</p>
+  <figure class="shot"><img src="img/filtros-com-sem-nota.png" alt="Painel de filtros da lista de transferências, com Com nota fiscal e Sem nota fiscal ao fim da coluna Filtros."><figcaption>Os dois filtros na lista de transferências: o que viaja e o que espera.</figcaption></figure>
+
+  <h2 id="imprimir">Imprimir as DANFEs em lote</h2>
+  <ol class="steps">
+    <li>Na lista de transferências, marque os movimentos do dia.</li>
+    <li>Use <span class="menupath">Imprimir<i>‣</i>Notas fiscais</span> — o item fica ao lado de "Guia de entrega" e "Rótulos".</li>
+    <li>Sai um PDF só, com a DANFE de cada transferência, pronto para a bancada de expedição.</li>
+  </ol>
+  <figure class="shot"><img src="img/imprimir-notas-fiscais.png" alt="Lista de transferências com duas selecionadas e o menu Imprimir aberto, mostrando a opção Notas fiscais."><figcaption>Seleciona os movimentos, e as DANFEs saem juntas.</figcaption></figure>
+  <p>Se a seleção incluir movimento <strong>sem nota</strong>, nada é impresso: o aviso diz exatamente quais faltam. Barrar a seleção inteira é de propósito — melhor um aviso agora do que metade das DANFEs na bandeja sem ninguém saber qual ficou de fora. E a impressão não exige acesso ao Faturamento: quem pode abrir a transferência recebe a DANFE dela.</p>
+  <div class="callout tip"><span class="title">Dica</span><p>Nota autorizada cuja DANFE ainda não baixou da Focus também barra a impressão, com aviso próprio — a próxima consulta da integração traz o PDF, e aí é só imprimir de novo.</p></div>
+
+  <h2 id="volumes">Caixas e peso: da movimentação para a nota</h2>
+  <p>A NFe precisa declarar quantos volumes vão e quanto pesam. A caixa quem conta é quem embala, na transferência; o peso o sistema soma do cadastro dos produtos. Este módulo leva os dois até a fatura em dois momentos, com pesos diferentes:</p>
+  <div class="tablewrap"><table>
+    <tr><th>Momento</th><th>O que acontece</th></tr>
+    <tr><td>Confirmar a fatura</td><td>O que estiver vazio na aba NFe é preenchido da movimentação. Se ainda faltar caixa ou peso, um aviso fica no histórico — mas a confirmação passa: a caixa pode ser contada depois.</td></tr>
+    <tr><td>Emitir a NFe</td><td>Barra. Nota com movimentação física não sai sem volumes e peso bruto — a SEFAZ recusa, e a transportadora confere na coleta.</td></tr>
+  </table></div>
+  <p>Só o que está <strong>vazio</strong> é preenchido — vazio, não diferente. Quem fatura confere a caixa fechada na bancada e é a última palavra: um número digitado nunca é sobrescrito pela soma calculada. Para trazer os números da movimentação por cima do que houver, existe o botão <span class="field">Trazer da movimentação</span>, na aba NFe da fatura — aí a decisão é de quem clicou.</p>
+  <p>Pela mesma cascata descem o frete e a transportadora: a <span class="field">Modalidade do frete</span> se negocia no pedido (ao lado da posição fiscal), vem preenchida do cadastro do cliente e, vazia, sai no padrão da casa — CIF, o remetente contrata. A transportadora vem do método de entrega da transferência. O acerto, que não move caixa nenhuma, sai sem ocorrência de transporte.</p>
+
+  <h2 id="faq">Perguntas frequentes</h2>
+  <p><strong>Validei a transferência e não há DANFE no histórico.</strong><br>
+  A DANFE só chega quando a SEFAZ autoriza a nota — a validação do movimento não emite nada. O filtro <span class="field">Sem nota fiscal</span> lista tudo o que ainda espera emissão.</p>
+  <p><strong>A nota foi cancelada. Preciso apagar o PDF?</strong><br>
+  Não. O aviso de cancelamento já ficou no histórico, logo abaixo do anexo, dizendo que aquela DANFE não vale mais como documento de transporte. Apagar o PDF seria reescrever o registro.</p>
+  <p><strong>O acerto de consignação não aparece em nenhuma transferência.</strong><br>
+  Certo: o acerto fatura sem movimento físico — os livros já estão na prateleira do cliente. Não há caixa para despachar, logo não há DANFE a levar para a logística.</p>
+</article>
+</body>
+</html>
