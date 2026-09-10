@@ -9,6 +9,21 @@
          Odoo soma as regras dos grupos de cada pessoa com OU. Quem está SÓ
          aqui vê o evento em que trabalha; quem também é do Comercial vê o
          resto por causa do outro grupo. -->
+    <!-- O CAIXA VEM ANTES DO GERENTE neste arquivo: o gerente o cita em
+         `implied_ids`, e o XML se lê de cima para baixo. Com a ordem
+         trocada o upgrade passa (o id já existe da versão anterior) e a
+         INSTALAÇÃO DO ZERO morre com "External ID not found". -->
+    <!-- Quem só opera o balcão. Não é a "equipe do evento" (que enxerga o
+         evento inteiro): é quem foi contratado para vender três dias, e a
+         única tela dele é o caixa. O grupo existe para carregar a regra
+         abaixo, que o prende AO CAIXA DELE. -->
+    <record id="group_fair_cashier" model="res.groups">
+        <field name="name">Event cashier</field>
+        <field name="privilege_id" ref="liber_fairs.privilege_fairs"/>
+        <field name="implied_ids"
+               eval="[(4, ref('point_of_sale.group_pos_user'))]"/>
+    </record>
+
     <!-- O GERENTE DE CAMPO é circunstancial: ele toca o evento na praça e
          NÃO faz parte do planejamento. Por isso ele não herda mais o papel de
          Feiras da casa (`group_fair_user`), que traz grade, modelos e o
@@ -27,17 +42,6 @@
         <field name="implied_ids"
                eval="[(6, 0, [ref('base.group_user'),
                               ref('liber_fairs_pos.group_fair_cashier')])]"/>
-    </record>
-
-    <!-- Quem só opera o balcão. Não é a "equipe do evento" (que enxerga o
-         evento inteiro): é quem foi contratado para vender três dias, e a
-         única tela dele é o caixa. O grupo existe para carregar a regra
-         abaixo, que o prende AO CAIXA DELE. -->
-    <record id="group_fair_cashier" model="res.groups">
-        <field name="name">Event cashier</field>
-        <field name="privilege_id" ref="liber_fairs.privilege_fairs"/>
-        <field name="implied_ids"
-               eval="[(4, ref('point_of_sale.group_pos_user'))]"/>
     </record>
 
     <data noupdate="1">

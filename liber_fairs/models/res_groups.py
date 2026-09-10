@@ -39,4 +39,15 @@ class ResGroups(models.Model):
         direcao = ref('liber_roles.group_direcao', raise_if_not_found=False)
         if direcao:
             direcao.sudo().implied_ids = [(4, manager.id)]
+        # O VISITANTE da demonstração pública abre em leitura toda tela que
+        # tem manual publicado, e Eventos passou a ter um. Sem isto, quem
+        # entra na vitrine lê o manual da feira e não acha o aplicativo --
+        # que é pior do que não ter o módulo. A escrita não vem junto: a
+        # trava do visitante é no ORM, não no menu.
+        #
+        # O papel de USUÁRIO, e não o de administrador: o visitante olha, e
+        # planejar feira é escrever.
+        visitante = ref('liber_roles.group_visitante', raise_if_not_found=False)
+        if visitante:
+            visitante.sudo().implied_ids = [(4, user.id)]
         return True

@@ -163,3 +163,35 @@ class TestFairAcl(TransactionCase):
             self.skipTest("nenhuma chegada de feira neste banco")
         with self.assertRaises(UserError):
             picking.with_user(estranho).action_fair_check()
+
+
+@tagged('post_install', '-at_install', 'liber_fairs')
+class TestPapeisDaCasa(TransactionCase):
+    """A ponte com os papéis da casa, que roda na instalação do módulo."""
+
+    def test_the_public_visitor_can_open_the_events_app(self):
+        """A vitrine mostra o que ela documenta.
+
+        O visitante da demonstração abre em leitura toda tela que tem manual
+        publicado. Eventos ganhou manual; sem esta ponte, quem lê o manual da
+        feira no site e entra na demonstração não acha o aplicativo -- o que é
+        pior do que não ter o módulo.
+        """
+        visitante = self.env.ref('liber_roles.group_visitante',
+                                 raise_if_not_found=False)
+        if not visitante:
+            self.skipTest('liber_roles não está instalado neste banco')
+        usuario = self.env.ref('liber_fairs.group_fair_user')
+
+        self.assertIn(usuario, visitante.all_implied_ids,
+                      "O visitante tem de alcançar o aplicativo Eventos")
+
+    def test_the_visitor_is_not_a_fair_administrator(self):
+        """Olhar, sim; planejar, não -- planejar é escrever."""
+        visitante = self.env.ref('liber_roles.group_visitante',
+                                 raise_if_not_found=False)
+        if not visitante:
+            self.skipTest('liber_roles não está instalado neste banco')
+        gestor = self.env.ref('liber_fairs.group_fair_manager')
+
+        self.assertNotIn(gestor, visitante.all_implied_ids)

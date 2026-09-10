@@ -657,3 +657,34 @@ class TestCaixaDeCadaUm(TestCaixaDaFeira):
         self.assertFalse(caixa.fair_id)
         self.assertFalse(caixa.fair_cashier_id)
         self.assertFalse(lista.fair_id)
+
+
+@tagged('post_install', '-at_install', 'liber_fairs_pos')
+class TestOCaixaVemNaCaixa(TransactionCase):
+    """O caixa não é opcional: feira sem balcão não sabe o que vendeu.
+
+    Com `auto_install: True` este módulo só nascia se alguém já tivesse
+    instalado o Ponto de Venda por conta própria -- e quem instala Eventos
+    não vai adivinhar que precisa disso. Nomeando o gatilho, o Odoo o traz
+    junto com Eventos e instala o `point_of_sale` como dependência.
+    """
+
+    def test_the_register_comes_with_the_events_app(self):
+        import ast
+        from odoo.modules.module import get_module_path
+        caminho = get_module_path('liber_fairs_pos')
+        manifesto = ast.literal_eval(
+            open('%s/__manifest__.py' % caminho, encoding='utf-8').read())
+        gatilho = manifesto.get('auto_install')
+
+        self.assertIsInstance(gatilho, (list, tuple),
+                              "`True` faria o caixa esperar o PDV já instalado")
+        self.assertIn('liber_fairs', gatilho,
+                      "O gatilho é Eventos: instalou feira, ganhou caixa")
+        self.assertIn('point_of_sale', manifesto['depends'],
+                      "E o PDV entra como dependência, não como sorte")
+
+    def test_the_register_is_installed_here(self):
+        modulo = self.env['ir.module.module'].search(
+            [('name', '=', 'liber_fairs_pos')], limit=1)
+        self.assertEqual(modulo.state, 'installed')

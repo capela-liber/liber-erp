@@ -37,7 +37,7 @@ a conciliação da taxa acontece depois, no financeiro.
 """,
     'author': 'EdLab Press',
     'category': 'Inventory',
-    'version': '19.0.9.0.0',
+    'version': '19.0.10.0.0',
     'license': 'AGPL-3',
     # pos_discount: é ele que traz o desconto global com percentual
     # fixo, que é como a feira pratica desconto -- um número decidido no
@@ -69,6 +69,13 @@ a conciliação da taxa acontece depois, no financeiro.
         ],
     },
     'installable': True,
-    'auto_install': True,
+    # LISTA, e não `True`. Com `True` o caixa só nascia quando alguém já
+    # tivesse instalado o Ponto de Venda por conta própria -- e feira sem
+    # caixa é feira que não sabe o que vendeu, a não ser pela subtração do
+    # fechamento diário. Nomeando só o gatilho, o Odoo instala este módulo
+    # assim que Eventos existir, e traz o `point_of_sale` e o `pos_discount`
+    # junto como dependência. Quem quiser feira sem balcão desinstala este
+    # módulo; o padrão passa a ser o caixa vir na caixa.
+    'auto_install': ['liber_fairs'],
     'application': False,
 }
