@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_event_fair_add_products_form_metabooks" model="ir.ui.view">
+        <field name="name">event.fair.add.products.form.metabooks</field>
+        <field name="model">event.fair.add.products</field>
+        <field name="inherit_id" ref="liber_fairs.view_event_fair_add_products_form"/>
+        <field name="arch" type="xml">
+            <field name="filter_tag_ids" position="after">
+                <field name="filter_thema_id"/>
+            </field>
+            <field name="order" position="before">
+                <label for="filter_published_from" string="Published"/>
+                <div class="o_row">
+                    <field name="filter_published_from" nolabel="1"/>
+                    <span class="mx-1">a</span>
+                    <field name="filter_published_to" nolabel="1"/>
+                </div>
+            </field>
+        </field>
+    </record>
+</odoo>
