@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<script>
+/* Servido por /liber_site/static/docs/, este arquivo vem com uma semana de
+   cache e o docs.js sem versão -- e o índice monta a lista a partir dele. Foi
+   assim que a emissão de NF-e e o manual da Amazon ficaram invisíveis: o
+   catálogo em cache era anterior aos dois. A rota /liber/docs/ serve o mesmo
+   arquivo sem cache e com ?v=<mtime> nos assets. Quem chegar pelo caminho
+   antigo (favorito, link velho, resultado de busca) vai para lá antes de a
+   página montar qualquer coisa. */
+(function () {
+  var antigo = "/liber_site/static/docs/";
+  if (location.pathname.indexOf(antigo) === 0) {
+    location.replace("/liber/docs/" + location.pathname.slice(antigo.length) +
+                     location.search + location.hash);
+  }
+})();
+</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fechamento mensal — Manuais do Liber</title>
+<link rel="icon" type="image/png" href="../logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;600;700&display=swap">
+<link rel="stylesheet" href="docs.css">
+</head>
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="../index.html"><img src="../logo.png" alt="">liber<span>.</span></a>
+    <span class="doc-tag">Manuais</span>
+    <nav><a href="index.html">Índice</a><a href="../index.html">Site</a></nav>
+  </div>
+</header>
+<div class="wrap">
+  <div class="layout">
+    <aside class="sidebar" id="sidebar"></aside>
+    <article class="doc">
+      <div class="breadcrumb"><a href="index.html">Manuais</a><span class="sep">›</span>Gestão<span class="sep">›</span>Fechamento mensal</div>
+      <h1>Fechamento mensal</h1>
+      <p class="lead">O mês que vai para o contador deixa de ser uma rotina na mão de alguém e passa a ser um registro: conferido, empacotado, enviado, e com prova do que foi enviado.</p>
+
+      <h2 id="visao-geral">Visão geral</h2>
+      <p>Todo mês alguém exporta três listas para planilha, junta os arquivos XML das notas e
+      manda tudo por e-mail ao contador. Feito à mão, isso quebra de um jeito que ninguém
+      enxerga: a lista do Odoo exporta a <strong>página carregada</strong>, que são oitenta
+      registros, e a planilha que chega ao contador parece inteira.</p>
+      <p>Um mês real desta casa tinha 200 notas de cliente e 98 contas a pagar. As três
+      planilhas enviadas tinham exatamente oitenta linhas cada. O contador conferiu um mês pela
+      metade e não achou nada de errado — porque nada parecia errado.</p>
+      <p>Este módulo faz o mês virar um registro com três atos, nesta ordem.</p>
+
+      <table>
+        <thead><tr><th>Ato</th><th>O que faz</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Conferir</strong></td><td>Roda a lista de conferências do período e diz o que impede o mês de fechar, antes de qualquer arquivo existir.</td></tr>
+          <tr><td><strong>Empacotar</strong></td><td>Monta um ZIP por empresa e mês: os XMLs, as três planilhas de sempre — agora inteiras — e a folha de conferência.</td></tr>
+          <tr><td><strong>Enviar</strong></td><td>Manda ao contador com os números no corpo da mensagem, e guarda quem enviou, quando, e em que versão.</td></tr>
+        </tbody>
+      </table>
+
+      <p>Não há quarto ato. O fluxo é de mão única por decisão: o contador não tem acesso ao
+      sistema, e nada volta por aqui.</p>
+
+      <h2 id="configuracao">Configuração</h2>
+      <p>Dois campos, ambos <strong>por empresa</strong>, em
+      <span class="menupath">Contabilidade<i>‣</i>Configuração<i>‣</i>Definições</span>, no bloco
+      <span class="field">Pacote mensal para a contabilidade</span>:</p>
+
+      <table>
+        <thead><tr><th>Campo</th><th>Para que serve</th></tr></thead>
+        <tbody>
+          <tr><td><span class="field">E-mail do contador</span></td><td>Para onde o pacote vai. Um endereço por empresa: cada uma tem a sua escrituração, e muitas vezes o seu contador.</td></tr>
+          <tr><td><span class="field">Incluir os documentos das contas</span></td><td>Põe no pacote todo arquivo anexado às contas do mês — nota, boleto e comprovante. Desligado por padrão.</td></tr>
+        </tbody>
+      </table>
+
+      <p>O segundo interruptor tem um custo que vale conhecer antes de ligá-lo: num mês real, os
+      anexos das contas a pagar levam o pacote de pouco mais de um megabyte para cerca de trinta,
+      que é mais do que o e-mail carrega. Um contador que só confere os números não precisa
+      deles; um que escritura a partir dos nossos documentos, sim.</p>
+
+      <h2 id="dia-a-dia">O dia a dia</h2>
+      <p>O fechamento mora em
+      <span class="menupath">Faturamento<i>‣</i>Contabilidade<i>‣</i>Fechamento<i>‣</i>Fechamento Mensal</span>,
+      que é onde o Odoo já guarda o que fecha período.</p>
+
+      <ol class="steps">
+        <li>Abra um registro novo. Ele já nasce com a sua empresa e com o <strong>mês
+        passado</strong>, que é o que se fecha — o corrente ainda está andando. Escolher um dia
+        qualquer fecha o mês inteiro dele.</li>
+        <li>Clique <span class="field">Conferir o mês</span>. A lista de conferências aparece, com
+        a gravidade de cada uma e o detalhe de cada achado.</li>
+        <li>Clique <span class="field">Montar o pacote</span>. O ZIP fica no registro, com o
+        resumo do período ao lado.</li>
+        <li>Clique <span class="field">Enviar ao contador</span>. O e-mail sai com o ZIP anexado e
+        os números no corpo.</li>
+      </ol>
+
+      <p>As conferências são estas, e o que cada uma quer dizer:</p>
+
+      <table>
+        <thead><tr><th>Conferência</th><th>Gravidade</th><th>O que significa</th></tr></thead>
+        <tbody>
+          <tr><td>Lançamentos ainda em rascunho</td><td>Impede</td><td>Rascunho é mês não fechado, e ele não viaja em planilha nenhuma.</td></tr>
+          <tr><td>Lançamentos postados que não fecham</td><td>Impede</td><td>Débito e crédito não batem; estes recusam conciliação e distorcem todos os totais.</td></tr>
+          <tr><td>Notas postadas sem XML</td><td>Olhar</td><td>A nota está na planilha e o XML não está no pacote.</td></tr>
+          <tr><td>XMLs sem nota no sistema</td><td>Olhar</td><td>Uma nota foi emitida e a contabilidade nunca a viu. É a metade que planilha nenhuma pega sozinha.</td></tr>
+          <tr><td>Buracos na numeração</td><td>Olhar</td><td>Número que não existe de nenhum lado: nem postado, nem cancelado.</td></tr>
+          <tr><td>Contas bancárias sem extrato</td><td>Olhar</td><td>Sem extrato, o lado bancário do mês fica sem conferência.</td></tr>
+          <tr><td>Linhas de banco não conciliadas</td><td>Olhar</td><td>Dinheiro que se moveu sem lançamento atrás.</td></tr>
+        </tbody>
+      </table>
+
+      <p>Vermelho não impede enviar. Ele impede enviar <strong>sem saber</strong>, que é o defeito
+      que o módulo existe para consertar.</p>
+
+      <h2 id="o-pacote">O que vai no pacote</h2>
+      <p>O ZIP traz os XMLs do período separados por pasta — saídas, entradas, internas,
+      canceladas e eventos, com a <code>relacao.csv</code> listando cada arquivo — mais quatro
+      planilhas.</p>
+
+      <table>
+        <thead><tr><th>Planilha</th><th>O que traz</th></tr></thead>
+        <tbody>
+          <tr><td><code>00_CONFERENCIA</code></td><td>Os totais do período e as conferências, com uma aba de pendências item a item.</td></tr>
+          <tr><td><code>01_RECEBIMENTOS</code></td><td>O dinheiro que entrou, uma linha por movimento de banco ou caixa, com o elo para a nota que ele liquidou.</td></tr>
+          <tr><td><code>02_CONTAS-A-PAGAR</code></td><td>As contas do mês, canceladas incluídas — elas são documento a mostrar, e ficam fora do total.</td></tr>
+          <tr><td><code>03_FATURAMENTO</code></td><td>As notas do mês, com posição fiscal, situação de pagamento e conta de receita.</td></tr>
+        </tbody>
+      </table>
+
+      <p>As colunas são as mesmas que o contador já recebia. Isso é de propósito: quem confere
+      trabalha de memória, olhando sempre para o mesmo lugar da folha. O que muda não é a forma
+      da planilha — é que ela passa a vir inteira.</p>
+
+      <p>A única coluna nova é a <span class="field">Natureza</span> dos recebimentos, e ela
+      existe por um motivo prático. Numa casa com empresas do mesmo grupo, um mês de meio milhão
+      faturado pode ver quase dois milhões entrarem na conta corrente, porque transferência entre
+      empresas também é dinheiro entrando. Sem a coluna, quem confere lê a diferença como venda.</p>
+
+      <h2 id="o-email">O e-mail é o conhecimento de embarque</h2>
+      <p>O corpo da mensagem traz os números, e não só o anexo: quantas notas, quanto faturado,
+      quantas contas, quanto entrou, quantos XMLs. O contador lê ali o que <strong>deveria</strong>
+      encontrar no ZIP, e reclama quando não bate.</p>
+      <p>É o que faltava. Um anexo mudo não deixa ninguém perceber que faltam cento e vinte notas.</p>
+
+      <h2 id="versoes">Versões</h2>
+      <p>Um pacote já enviado não se reescreve. Corrigido, ele nasce como <strong>versão 2</strong>,
+      e o registro diz que a que está com o contador ficou desatualizada. Sem isso, um reenvio
+      corrigido deixa duas verdades circulando e ninguém sabe qual delas está do outro lado.</p>
+
+      <h2 id="limitacoes">Limitações conhecidas</h2>
+      <ul>
+        <li><strong>Nada volta por aqui.</strong> O módulo não recebe guias, balancete nem
+        classificações do contador. Isso não é falta: é o desenho, para o fluxo de mão única de
+        quem manda documentos a um escritório que não tem acesso ao sistema.</li>
+        <li><strong>Uma empresa por pacote.</strong> Um grupo com seis empresas fecha seis vezes.
+        Cada uma tem a sua escrituração, e misturá-las num ZIP só criaria o trabalho de
+        separá-las de novo.</li>
+        <li><strong>Os recebimentos são todo o dinheiro que entrou</strong> em contas de banco e
+        caixa da empresa, e não apenas o que liquida nota de cliente. A coluna
+        <span class="field">Natureza</span> separa os dois, e o resumo do e-mail traz a quebra.</li>
+        <li><strong>A conferência lê o que existe.</strong> Numa base recém-migrada ela vai achar
+        muito — e isso é o retrato correto do que está no banco, não um defeito do módulo. Costuma
+        ser a primeira surpresa útil que ele dá.</li>
+      </ul>
+
+      <div class="seealso">
+        <strong>Ver também</strong>
+        <ul>
+          <li><a href="liber_nfe_xml.html">Painel de XML</a> — de onde vêm os arquivos das notas e os eventos de cancelamento e carta de correção.</li>
+        </ul>
+      </div>
+
+      <nav class="pager" id="pager"></nav>
+    </article>
+  </div>
+</div>
+<script src="docs.js"></script>
+</body>
+</html>

@@ -62,6 +62,7 @@ var DOCS = [
   { area: "Gestão", desc: "Orçamento, leitura do faturamento e controle de acesso.", items: [
     { slug: "liber_budget", title: "Orçamento", desc: "Orçado × realizado sobre a contabilidade analítica." },
     { slug: "liber_in_payment", title: "Estado Em pagamento", desc: "A fatura fica pendente até o extrato confirmar que o dinheiro entrou." },
+    { slug: "liber_accounting_close", title: "Fechamento mensal", desc: "O mês que vai para o contador: conferido, empacotado e enviado, com prova do que foi enviado." },
     { slug: "liber_sales_dashboard", title: "Painel de Vendas", desc: "Os dois relógios da venda — o pedido e a nota fiscal — um debaixo do outro, com o número que o gerente de vendas pergunta." },
     { slug: "liber_geo_brasil", title: "O mapa do Brasil no dashboard", desc: "Vendas por UF no lugar do mapa-múndi, e exemplares no lugar de pedidos." },
     { slug: "liber_aged_receivable", title: "Contas a receber por idade", desc: "O saldo aberto de cada cliente por faixa de atraso, com o caminho até a conciliação." },

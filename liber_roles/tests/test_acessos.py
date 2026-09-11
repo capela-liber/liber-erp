@@ -876,7 +876,15 @@ class TestAcessos(TransactionCase):
             self._job_de_importacao('marketing_assistente')
 
     def test_editorial_gerente_cria_produto_e_consulta_livros(self):
-        """O pedido do Editorial: criar produto e olhar a estante."""
+        """O pedido do Editorial: criar produto e olhar a estante.
+
+        O EDITORIAL PASSOU A VER A MAQUINARIA em 07/09/2026, junto com o
+        `metabooks_manager_group`. O nome do grupo exagera o que ele guarda:
+        o que está atrás dele é o CATÁLOGO -- Autores, Thema, BISAC,
+        Disponibilidade --, telas de leitura sem as quais quinze telas do app
+        ficavam invisíveis para quem faz o livro. O teste dizia o contrário
+        e era ele que estava desatualizado.
+        """
         self._assert_menu('editorial_gerente',
                           'liber_metabooks_integration.menu_metabooks_books',
                           'Livros', visivel=True)
@@ -884,7 +892,7 @@ class TestAcessos(TransactionCase):
         self.assertTrue(livro.id)
         for xmlid, rotulo in self.MENUS_MAQUINARIA:
             self._assert_menu('editorial_gerente', xmlid, rotulo,
-                              visivel=False)
+                              visivel=True)
 
     def test_a_maquinaria_do_metabooks_nao_e_de_todo_mundo(self):
         """O corte que não existia: coluna de grupo vazia no ir.model.access.
@@ -892,12 +900,22 @@ class TestAcessos(TransactionCase):
         Sem este teste, a volta ao estado anterior é uma linha de CSV — e uma
         linha de CSV não faz barulho nenhum.
         """
+        # O EDITORIAL SAIU DESTA LISTA em 07/09/2026: ele ganhou o
+        # `metabooks_manager_group` para alcançar o catálogo, e o grupo traz a
+        # importação junto -- não existe, no módulo, um nível que abra o
+        # catálogo sem abrir a máquina. A carona fica DITA aqui em vez de
+        # fingida; se um dia nascer o nível estreito, é este teste que volta a
+        # incluí-lo.
         for chave in ('comercial_assistente', 'logistica_assistente',
-                      'financeiro_assistente', 'juridico_assistente',
-                      'editorial_assistente'):
+                      'financeiro_assistente', 'juridico_assistente'):
             with self.assertRaises(AccessError, msg=(
                     '%s dispara importação de catálogo da MVB' % chave)):
                 self._job_de_importacao(chave)
+
+        self.assertTrue(
+            self._job_de_importacao('editorial_assistente').id,
+            'a carona do editorial deixou de existir: se foi de propósito, '
+            'este teste é que tem de mudar')
 
     # == 11. As concessões de 11/08/2026 ===================================
     #

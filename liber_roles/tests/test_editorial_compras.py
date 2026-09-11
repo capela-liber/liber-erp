@@ -57,13 +57,34 @@ class TestEditorialLeCompras(TransactionCase):
         self.assertEqual(po.order_line.product_id, self.livro,
                          "a linha tem que abrir junto: pedido sem linha não diz nada")
 
-    def test_o_editorial_nao_escreve_nem_cria(self):
+    def test_o_editorial_ABRE_pedido_desde_a_cotacao_da_grafica(self):
+        """A premissa mudou em 11/09/2026, e o teste acompanha.
+
+        Em 22/08 o contrato era "lê e só". Depois veio o `liber_print_quote`:
+        a ficha técnica do livro viaja no pedido à gráfica, e quem manda livro
+        para a gráfica é o editorial -- pedir que o financeiro abrisse o
+        pedido para cada cotação é pôr um intermediário no meio de uma
+        conversa que não é dele. O papel ganhou `purchase.group_purchase_user`
+        naquele dia; este teste deixou de dizer a verdade e é ele que estava
+        errado.
+
+        A CARONA FICA DITA, como manda a casa em vez de fingir que não existe:
+        esse grupo do Odoo não separa pedido de compra de fatura de fornecedor
+        e traz escrita em `account.move` junto. Não há grupo mais estreito no
+        núcleo. O app Faturamento segue fechado para o editorial, então o
+        caminho de tela até uma nota é o botão dentro do próprio pedido.
+        """
         self.env.invalidate_all()
-        with self.assertRaises(AccessError):
-            self.po.with_user(self.assistente).write({'partner_ref': 'x'})
-        with self.assertRaises(AccessError):
-            self.env['purchase.order'].with_user(self.assistente).create({
-                'partner_id': self.fornecedor.id})
+
+        self.po.with_user(self.assistente).write({'partner_ref': 'x'})
+        novo = self.env['purchase.order'].with_user(self.assistente).create({
+            'partner_id': self.fornecedor.id})
+
+        self.assertTrue(novo.id, "É ele quem manda livro para a gráfica")
+        self.assertFalse(
+            self.env['ir.ui.menu'].with_user(self.assistente)._visible_menu_ids()
+            & {self.env.ref('account.menu_finance').id},
+            "Mas o app Faturamento continua fora da tela dele")
 
     def test_o_gerente_editorial_herda_a_leitura(self):
         """O gerente implica o assistente: não se declara duas vezes."""

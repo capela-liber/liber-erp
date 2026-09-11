@@ -147,8 +147,16 @@ class TestCoDesdeXml(common.TransactionCase):
         wizard = self._wizard(ticket)
         wizard.action_create_co()
         self.assertTrue(ticket.settlement_id)
-        self.assertEqual(ticket.settlement_id.line_ids.product_id,
-                         self.livro)
+        # O livro do XML tem de estar lá, com a quantidade dele. O que NÃO se
+        # afirma é que ele esteja sozinho: a segunda linha do XML casa por
+        # nome, e o que ela encontra depende do que existe no banco. Afirmar
+        # o conjunto inteiro fazia o teste quebrar no dia em que o Ponto de
+        # Venda entrou e trouxe os produtos de demonstração dele -- e um
+        # "Bagel" passou a parecer com a segunda linha da nota.
+        linha = ticket.settlement_id.line_ids.filtered(
+            lambda l: l.product_id == self.livro)
+        self.assertTrue(linha, "O livro do XML tem de virar linha do acerto")
+        self.assertEqual(linha.product_id, self.livro)
 
     # -- edge: parceiro sem CNPJ na ficha ------------------------------
 
