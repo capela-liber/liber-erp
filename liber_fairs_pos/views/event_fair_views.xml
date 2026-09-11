@@ -18,6 +18,22 @@
                     <field name="pos_order_count" widget="statinfo"
                            string="Register sales"/>
                 </button>
+                <!-- O RESULTADO ONDE O OLHO ESTÁ. A conta mora na aba de
+                     Custos, mas "o evento deu dinheiro?" é a pergunta que se
+                     faz ao abrir a ficha — e a aba fica abaixo de uma dobra
+                     inteira de formulário. O dono procurou duas vezes e não
+                     achou; isso é resposta. -->
+                <button name="action_view_bills" type="object"
+                        class="oe_stat_button" icon="fa-line-chart"
+                        groups="liber_fairs.group_fair_manager"
+                        invisible="not pos_order_count and not bill_ids">
+                    <!-- SEM `string=`: o rótulo vem do próprio campo, que
+                         já tem tradução. Escrito aqui, ele viraria um termo
+                         de view com msgid repetido — e o .po recusa dois
+                         msgid iguais, então a tradução simplesmente não
+                         existiria e o botão diria "Result" em português. -->
+                    <field name="result_total" widget="statinfo"/>
+                </button>
             </div>
             <!-- Quem opera é cadastro do evento, como a grade: quem monta a
                  feira sabe quem vai estar no balcão. -->

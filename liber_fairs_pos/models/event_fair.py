@@ -138,6 +138,22 @@ class EventFair(models.Model):
             ['product_id'], ['qty:sum'])
         return sum(produto.standard_price * qtd for produto, qtd in agrupado)
 
+    def action_view_bills(self):
+        """A lista das contas do evento, pelo botão do alto."""
+        self.ensure_one()
+        return {
+            'type': 'ir.actions.act_window',
+            'name': _('Costs of %s', self.display_name),
+            'res_model': 'account.move',
+            'view_mode': 'list,form',
+            'domain': [('fair_id', '=', self.id)],
+            'context': {
+                'default_move_type': 'in_invoice',
+                'default_fair_id': self.id,
+                'default_company_id': self.company_id.id,
+            },
+        }
+
     def action_add_cost(self):
         """Uma conta a pagar já apontada para o evento."""
         self.ensure_one()

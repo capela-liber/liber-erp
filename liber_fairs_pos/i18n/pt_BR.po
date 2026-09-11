@@ -520,3 +520,4 @@ msgstr ""
 "gasta se lança à mão, e leva o analítico do evento junto. O resultado pega o "
 "que o caixa vendeu, desconta o que aqueles livros custaram à casa e desconta "
 "estes custos. É a diferença entre \"a feira se pagou\" e \"a feira deu lucro\"."
+
