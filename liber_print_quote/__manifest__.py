@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     'name': 'Print Quote Specs',
-    'version': '19.0.1.8.0',
+    'version': '19.0.1.10.0',
     'summary': 'The book technical sheet travels on the RFQ the printer quotes',
     'description': """
 A gráfica orça pelo que está no PDF. Sem formato, papel e acabamento, a cotação

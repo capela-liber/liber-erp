@@ -71,3 +71,19 @@ class TestCarimboLastSync(TransactionCase):
                               "could not serialize access")):
             # Não levanta: é este o contrato.
             self.assertTrue(self.account._carimba_relogio('last_sync'))
+
+    def test_o_push_nao_usa_cursor_proprio(self):
+        """O push é DONO da linha: cursor à parte derrubaria a própria rodada.
+
+        Ele reescreve o `stock_push_cursor` a cada livro e o zera no fim.
+        Quando o carimbo passou a commitar num cursor separado, o zeramento foi
+        recusado com `could not serialize access` — 11/09/2026, 02:46, o
+        conserto de véspera mordendo a si mesmo. Este teste prende a exceção à
+        regra: quem já é dono da linha grava direto.
+        """
+        import inspect
+        from odoo.addons.liber_olist.models import olist_account
+        fonte = inspect.getsource(olist_account.OlistAccount._push_all_stock)
+        self.assertIn("self.last_stock_push = fields.Datetime.now()", fonte,
+                      "o push voltou a carimbar por cursor próprio")
+        self.assertNotIn("_carimba_relogio('last_stock_push')", fonte)

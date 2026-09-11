@@ -32,6 +32,7 @@ CAMPOS_PT_BR = {
 TERMOS_DA_VIEW = {
     'Cover': 'Capa',
     'Body': 'Miolo',
+    'Spine (mm)': 'Lombada (mm)',
     'matte lamination with spot UV, gold foil on the spine...':
         'laminação fosca ou brilhante, com reserva, hotstamp...',
     '250gsm coated board': 'cartão triplex 250g',

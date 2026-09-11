@@ -39,7 +39,9 @@ class TestFichaParaAGrafica(TransactionCase):
 
     def test_a_ficha_traz_o_que_a_grafica_pergunta(self):
         ficha = self._ficha()
-        self.assertEqual(ficha['Dimensões'], '210 x 140 x 23 mm')
+        self.assertEqual(ficha['Dimensões (L x A x lombada)'], '140 x 210 x 23 mm',
+                         'na gráfica "14 x 21" é comprido e "21 x 14" é '
+                         'oblongo: a largura vem primeiro')
         self.assertEqual(ficha['Páginas'], '300')
         self.assertEqual(ficha['Encadernação'], 'Unsewn / adhesive bound')
         self.assertEqual(ficha['Formato'], 'Paperback')
@@ -66,7 +68,7 @@ class TestFichaParaAGrafica(TransactionCase):
 
     def test_medida_redonda_sai_sem_casa_decimal(self):
         """Borda: 210, não 210.0 -- a gráfica lê milímetro inteiro."""
-        self.assertNotIn('.0', self._ficha()['Dimensões'])
+        self.assertNotIn('.0', self._ficha()['Dimensões (L x A x lombada)'])
 
     def test_livro_sem_ficha_nao_gera_bloco_vazio(self):
         """Erro/borda: cadastro cru não pode imprimir rótulos sem valor."""
@@ -156,6 +158,18 @@ class TestFichaParaAGrafica(TransactionCase):
                         'a encadernação tem de ABRIR o bloco do miolo, não '
                         'cair no fim dele')
 
+    def test_a_lombada_mora_no_miolo(self):
+        """A lombada sai do miolo: páginas vezes espessura do papel.
+
+        Estava só dentro das dimensões, onde ninguém a procura na hora de
+        especificar o miolo. E o xpath que a move precisa do predicado do
+        rótulo, porque a view do Metabooks traz o campo duas vezes.
+        """
+        arch = self.env['product.template'].get_view(view_type='form')['arch']
+        miolo = arch[arch.index('name="print_body"'):]
+        self.assertIn('metabooks_thickness', miolo[:miolo.index('</group>')],
+                      'a lombada não entrou no bloco do miolo')
+
     def test_papel_de_capa_e_de_miolo_saem_na_ficha(self):
         self.livro.write({'print_cover_paper': 'cartão triplex 250g',
                           'print_body_paper': 'pólen soft 80g'})
@@ -214,7 +228,7 @@ class TestFichaParaAGrafica(TransactionCase):
         })
         html = self.env['ir.actions.report']._render_qweb_html(
             'purchase.report_purchasequotation', pedido.ids)[0].decode()
-        self.assertIn('210 x 140 x 23 mm', html)
+        self.assertIn('140 x 210 x 23 mm', html)
         self.assertIn('laminação fosca com reserva na lombada', html)
 
 
@@ -352,3 +366,43 @@ class TestPlanilhaParaOOrcamentista(TransactionCase):
         # se mede é que ele CONTINUA indo junto, não a extensão.
         self.assertTrue([n for n in nomes if not n.endswith('.csv')],
                         'o pedido não foi junto da planilha: %s' % nomes)
+
+
+@tagged('post_install', '-at_install')
+class TestOrelhaDesconfiada(TransactionCase):
+    """Orelha menor que metade da largura é quase sempre dedo errado."""
+
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.livro = cls.env['product.template'].create({
+            'name': 'Com orelha', 'barcode': '9788599296295',
+            'metabooks_width': 140.0, 'metabooks_has_flaps': True,
+        })
+
+    def _aviso(self, largura_orelha):
+        self.livro.print_flap_width = largura_orelha
+        return self.livro._onchange_print_flap_width()
+
+    def test_orelha_pequena_demais_avisa(self):
+        """24 mm numa capa de 140: centímetro digitado onde se pede milímetro."""
+        aviso = self._aviso(24)
+        self.assertTrue(aviso, 'passou sem avisar')
+        self.assertIn('24', aviso['warning']['message'])
+        self.assertIn('140', aviso['warning']['message'])
+
+    def test_orelha_plausivel_nao_incomoda(self):
+        """70 mm em 140 é metade exata: o limite não pode acusar o normal."""
+        self.assertFalse(self._aviso(70))
+        self.assertFalse(self._aviso(120))
+
+    def test_sem_largura_nao_ha_o_que_comparar(self):
+        """Borda: livro sem largura no cadastro não vira aviso falso."""
+        self.livro.metabooks_width = 0
+        self.assertFalse(self._aviso(24))
+
+    def test_o_aviso_nao_impede_gravar(self):
+        """Avisar é diferente de barrar: a gráfica manda, não a nossa regra."""
+        self._aviso(24)
+        self.livro.flush_recordset()
+        self.assertEqual(self.livro.print_flap_width, 24)

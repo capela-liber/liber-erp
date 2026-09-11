@@ -61,6 +61,20 @@
                  duas coisas. -->
             <xpath expr="//field[@name='print_body_colors']" position="before">
                 <xpath expr="//field[@name='metabooks_binding']" position="move"/>
+                <!-- A lombada é do MIOLO: sai do número de páginas e da
+                     espessura do papel. Estava só dentro das dimensões, onde
+                     ninguém a procura na hora de especificar o miolo. -->
+                <xpath expr="//group[@name='metabooks_format']/field[@name='metabooks_thickness']"
+                       position="move"/>
+            </xpath>
+            <!-- O caminho pelo GRUPO é obrigatório: a view do Metabooks traz
+                 `metabooks_thickness` duas vezes, em abas diferentes, e sem
+                 isso o xpath move o da aba errada em silêncio. Selecionar por
+                 `string` o Odoo recusa ("may not use attribute 'string' as a
+                 selector"), então o seletor é o nome do grupo. -->
+            <xpath expr="//group[@name='print_body']//field[@name='metabooks_thickness']"
+                   position="attributes">
+                <attribute name="string">Spine (mm)</attribute>
             </xpath>
         </field>
     </record>

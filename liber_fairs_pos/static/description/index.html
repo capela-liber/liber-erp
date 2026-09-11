@@ -1,0 +1,60 @@
+<!-- GERADO por scripts/gen_module_descriptions.py a partir de
+     liber_site/static/docs/liber_fairs_pos.html -- não edite aqui.
+     O Odoo mostra este arquivo em Apps > Module Info. -->
+<div class="oe_container liber_manual" style="max-width:900px;margin:0 auto;padding:8px 4px 24px;color:#251d2b;background:transparent;font:15px/1.7 Inter,'Segoe UI',system-ui,sans-serif;"><h1 style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:32px;line-height:1.2;letter-spacing:-.015em;margin:0 0 10px;color:#251d2b;">O caixa do PDV na feira</h1>
+      <p class="lead" style="font-size:17.5px;color:#5d5266;margin:0 0 26px;max-width:62ch;">Um Ponto de Venda por feira, vendendo o estoque que está na mesa — e o fechamento diário deixa de adivinhar a venda para conferi-la.</p>
+
+      <h2 id="visao-geral" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">Visão geral</h2>
+      <p style="margin:0 0 12px;">Até esta ponte existir, a feira sabia o que mandou, o que chegou e o que voltou. O que ela
+      <strong style="color:#251d2b;">não</strong> sabia era o que <em>vendeu</em> — só por subtração no fechamento diário:
+      "tinha dez, contei seis, logo vendi quatro". É uma conta que fecha, mas não sabe
+      <strong style="color:#251d2b;">quando</strong>, <strong style="color:#251d2b;">por quanto</strong> nem <strong style="color:#251d2b;">para quem</strong>.</p>
+      <p style="margin:0 0 12px;">Esta ponte liga a feira ao <strong style="color:#251d2b;">Ponto de Venda</strong> do Odoo. Cada feira ganha o seu
+      caixa, e o caixa vende <strong style="color:#251d2b;">o estoque que está na mesa</strong>: a operação do PDV nasce
+      apontada para a localização daquela feira, e não para o armazém. Quem está na praça vê a
+      quantidade que tem ali, não a que existe a seiscentos quilômetros.</p>
+
+      <h2 id="o-que-muda" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">O que isso muda no resto da feira</h2>
+      <ul style="margin:0 0 14px 22px;padding:0;">
+        <li style="margin:0 0 7px;"><strong style="color:#251d2b;">O movimento do PDV nasce carimbado como venda da feira.</strong> Sem esse
+        carimbo a feira não veria a saída, o fechamento diário descontaria a mesma venda outra vez e
+        a mesa terminaria negativa.</li>
+        <li style="margin:0 0 7px;"><strong style="color:#251d2b;">O fechamento diário deixa de ser a fonte da venda e passa a ser a conferência
+        dela.</strong> A diferença entre a contagem e o que o caixa registrou é exatamente o que se
+        quer enxergar: venda não lançada, extravio.</li>
+        <li style="margin:0 0 7px;"><strong style="color:#251d2b;">A devolução no balcão devolve o exemplar para a mesa</strong>, e por isso conta
+        com sinal negativo na venda.</li>
+      </ul>
+
+      <h2 id="configuracao" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">Configuração</h2>
+      <ol class="steps" style="margin:0 0 16px 22px;padding:0;">
+        <li style="margin:0 0 7px;">Na feira, o botão que <strong style="color:#251d2b;">cria o caixa</strong>. A operação de PDV nasce apontada
+        para a localização do evento — não mexa nisso à mão depois.</li>
+        <li style="margin:0 0 7px;">A <strong style="color:#251d2b;">lista de preços da feira</strong>, se o preço da praça não for o de tabela.
+        O desconto de feira está no manual de <a href="/liber_site/static/docs/liber_fairs.html" target="_blank" rel="noopener" style="color:#6e2f91;">Eventos e feiras</a>.</li>
+        <li style="margin:0 0 7px;">Os <strong style="color:#251d2b;">atendentes</strong>: o perfil <span class="field" style="font-weight:600;color:#251d2b;">Fair attendant</span> vê
+        apenas o próprio evento, o próprio caixa e as sessões dele; o
+        <span class="field" style="font-weight:600;color:#251d2b;">Fair supervisor</span> alcança o evento inteiro.</li>
+      </ol>
+      <div class="callout" style="border:1px solid #e5dbee;border-left:4px solid #6e2f91;border-radius:10px;background:#f1eaf6;padding:14px 18px;margin:0 0 16px;"><span class="title" style="font-weight:700;font-size:12px;letter-spacing:.08em;text-transform:uppercase;display:block;margin:0 0 4px;color:#6e2f91;">Offline</span><p style="margin:0 0 12px;">O PDV funciona <strong style="color:#251d2b;">offline no
+      navegador</strong> e sincroniza depois. Numa feira com wifi ruim isso não é detalhe — é a
+      diferença entre vender e não vender.</p></div>
+
+      <h2 id="nao-faz" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">O que este módulo não faz, deliberadamente</h2>
+      <ul style="margin:0 0 14px 22px;padding:0;">
+        <li style="margin:0 0 7px;"><strong style="color:#251d2b;">Cupom fiscal.</strong> A <abbr class="sigla" title="Nota Fiscal de Consumidor eletrônica: o cupom fiscal eletrônico do varejo." style="text-decoration:none;border-bottom:1px dotted #8a4bad;cursor:help;">NFC-e</abbr>
+        depende de CSC por empresa na <abbr class="sigla" title="Secretaria da Fazenda: o fisco estadual, que autoriza ou rejeita as notas." style="text-decoration:none;border-bottom:1px dotted #8a4bad;cursor:help;">SEFAZ</abbr>, e será outra ponte. O que sai com nota é a
+        <a href="/liber_site/static/docs/liber_fairs_nfe.html" target="_blank" rel="noopener" style="color:#6e2f91;">carga</a>, não a venda no balcão.</li>
+        <li style="margin:0 0 7px;"><strong style="color:#251d2b;">Maquininha integrada.</strong> A da casa não tem driver de PDV no Odoo: entra
+        como forma de pagamento digitada, e a conciliação da taxa acontece depois, no
+        financeiro.</li>
+      </ul>
+
+      <div class="seealso" style="border:1px solid #e5dbee;border-radius:12px;background:#f1eaf6;padding:16px 20px;margin:32px 0 0;">
+        <strong style="font-weight:700;font-size:12px;letter-spacing:.08em;text-transform:uppercase;display:block;margin:0 0 8px;color:#5d5266;">Ver também</strong>
+        <ul style="margin:0 0 14px 22px;padding:0;">
+          <li style="margin:0 0 7px;"><a href="/liber_site/static/docs/liber_fairs.html" target="_blank" rel="noopener" style="color:#6e2f91;">Eventos e feiras</a> — a escada inteira do evento, onde o caixa é um degrau.</li>
+          <li style="margin:0 0 7px;"><a href="/liber_site/static/docs/liber_fairs_nfe.html" target="_blank" rel="noopener" style="color:#6e2f91;">A nota da carga da feira</a> — o documento que acompanha o estoque até a praça.</li>
+          <li style="margin:0 0 7px;"><a href="/liber_site/static/docs/liber_roles.html" target="_blank" rel="noopener" style="color:#6e2f91;">Papéis de acesso</a> — onde os perfis da casa são descritos.</li>
+        </ul>
+      </div><p style="margin:28px 0 0;padding-top:14px;border-top:1px solid #e5dbee;font-size:13px;color:#5d5266;">Manual completo, com busca e as demais páginas: <a href="/liber_site/static/docs/liber_fairs_pos.html" target="_blank" rel="noopener" style="color:#6e2f91;">O caixa do PDV na feira</a>.</p></div>

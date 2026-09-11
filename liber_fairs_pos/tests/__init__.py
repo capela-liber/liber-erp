@@ -4,3 +4,4 @@ from . import test_tour_caixa
 from . import test_acesso_da_equipe
 from . import test_comissoes
 from . import test_tour_equipe
+from . import test_custos

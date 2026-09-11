@@ -37,7 +37,7 @@
         <li><strong>Localização da feira</strong> (<code>FEIRAS/E00001</code>) — onde o estoque fica enquanto está na praça. É interna, então o livro continua seu e mantém valor no balanço; mas fica fora da árvore do armazém, então não infla o "Em mãos" com exemplar que ninguém pode vender pelo site.</li>
         <li><strong>Fechamento diário</strong> — um por dia do evento. Conta-se o que sobrou na mesa; o vendido é deduzido.</li>
         <li><strong>Canal de vendas</strong> — a equipe comercial em que o evento entra, para a feira aparecer nos relatórios ao lado da Amazon, da distribuição e da loja própria.</li>
-        <li><strong>Uma feira, uma empresa</strong> — o armazém de onde a carga sai, a localização, a posição fiscal e a nota são todos de um CNPJ só. Evento com títulos de mais de um selo são duas feiras, uma por empresa, cada uma com a sua remessa e a sua nota.</li>
+        <li><strong>Uma feira, uma empresa</strong> — o armazém de onde a carga sai, a localização, a posição fiscal e a nota são todos de um <abbr class="sigla" title="Cadastro Nacional da Pessoa Jurídica: o número que identifica a empresa.">CNPJ</abbr> só. Evento com títulos de mais de um selo são duas feiras, uma por empresa, cada uma com a sua remessa e a sua nota.</li>
       </ul>
 
       <figure class="shot"><img src="img/doc-liber_fairs-form.png" alt="Formulário da feira: dados do evento à esquerda, responsáveis e contadores de exemplares à direita, e a grade título a título embaixo."><figcaption>A feira: o período do evento à esquerda, quem responde à direita, e embaixo a grade com o que foi, o que vendeu e o que ainda está na mesa.</figcaption></figure>
@@ -123,7 +123,7 @@
       <p>As perdas de todas as feiras ficam em <span class="menupath">Eventos<i>‣</i>Perdas</span>, agrupadas por motivo.</p>
 
       <h2 id="nota">A nota de simples remessa</h2>
-      <p>Livro na estrada sem nota é livro apreendido. A remessa para uma feira não é venda: a mercadoria não muda de dono ao subir na van, muda de lugar. Por isso ela sai como <strong>simples remessa</strong>, com CFOP de remessa para exposição ou feira, e o destinatário é a <strong>própria editora</strong>.</p>
+      <p>Livro na estrada sem nota é livro apreendido. A remessa para uma feira não é venda: a mercadoria não muda de dono ao subir na van, muda de lugar. Por isso ela sai como <strong>simples remessa</strong>, com <abbr class="sigla" title="Código Fiscal de Operações e Prestações: diz a natureza fiscal de cada item da nota.">CFOP</abbr> de remessa para exposição ou feira, e o destinatário é a <strong>própria editora</strong>.</p>
       <p>Com a carga já despachada, o botão <span class="field">Nota fiscal</span> aparece no alto da feira. Ele emite uma nota por transferência concluída, no diário <code>REM-F</code>, sob a posição fiscal de feira configurada em <span class="menupath">Definições<i>‣</i>Feiras</span>. A nota nasce baixada, porque a editora não pode ficar devendo a si mesma, e declara a quantidade <em>efetivamente despachada</em>, nunca a planejada.</p>
       <p>Uma carga, uma nota. A reposição do meio da feira viaja com a nota dela, e apertar o botão de novo não declara outra vez o que já viajou.</p>
       <p>A <strong>nota da volta</strong> sai no mesmo clique do <span class="field">Retorno</span>, porque ela viaja com as caixas: nota que só saísse na chegada deixaria o caminhão rodar sem documento. É uma nota de crédito, que anula a da ida — a mercadoria saiu e voltou, e nada mudou de dono no caminho —, e referencia a chave da nota de ida.</p>
@@ -190,6 +190,20 @@
       <p><strong>Nem toda perda é deles.</strong> Só entra no rateio o que sumiu sob a guarda da equipe — o que a mesa deveria ter e não entrou na caixa, a avaria, o extravio no meio do movimento. O exemplar que saiu do depósito e <em>nunca chegou</em> na praça sumiu na estrada; o que o depósito não achou simplesmente não foi. Nenhum dos dois é da conta de quem estava no balcão, e a coluna <span class="field">A equipe paga</span>, em Perdas, diz qual é qual — o gerente pode mudar quando souber de algo que o sistema não sabe.</p>
       <p>Uma decência de desenho: <strong>conta a pagar nunca é negativa</strong>. Ninguém paga para ter trabalhado. O que a comissão e a diária não cobrirem fica escrito na coluna <span class="field">Ainda devido</span>, para a conversa acontecer com número em cima da mesa — e não vira cobrança automática.</p>
       <p>Com o evento já retornado, o botão <span class="field">Gerar as contas a pagar</span> cria uma conta por pessoa, com o nome do evento na referência e o <strong>analítico do evento</strong> na linha. Antes do retorno ele recusa: o rateio depende do que a conferência apurou, e pagar antes é pagar por cima de um número que ainda vai mudar. Quem ficou com zero a receber não ganha conta nenhuma.</p>
+
+      <h2 id="custos">O evento deu dinheiro?</h2>
+      <p>Saber isso sempre foi difícil: o analítico responde, mas ninguém do comercial abre relatório analítico — e a resposta chegava semanas depois, quando já não mudava decisão nenhuma. A aba <span class="field">Custos</span> capta na fonte.</p>
+      <p>As contas da equipe caem ali sozinhas quando o evento volta, uma por pessoa e em rascunho. Todo o resto que o evento gasta entra pelo botão <span class="field">Somar um custo</span> — frete especial, taxa de estande, diária da van, hospedagem —, e cada documento leva o <strong>analítico do evento</strong> junto, que é o que a contabilidade lê.</p>
+      <table>
+        <thead><tr><th>Número</th><th>O que ele diz</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Vendido no caixa</strong></td><td>O que o balcão registrou.</td></tr>
+          <tr><td><strong>Custo dos livros vendidos</strong></td><td>O que os exemplares que saíram custaram à casa.</td></tr>
+          <tr><td><strong>Custou</strong></td><td>A soma das contas do evento: a equipe e o resto.</td></tr>
+          <tr><td><strong>Sobrou</strong></td><td>Os três anteriores, na ordem. É a diferença entre "a feira se pagou" e "a feira deu lucro".</td></tr>
+        </tbody>
+      </table>
+      <p>A aba é da <strong>equipe interna</strong>. Atendente e supervisor não a veem — e não é só a aba que está escondida: as contas do evento ficam invisíveis para quem está na praça, porque elas carregam quanto cada um vai receber.</p>
 
       <h2 id="equipe">A equipe do evento</h2>
       <p>Na aba <span class="field">Caixas</span> do evento entram as pessoas que vão trabalhar nele: escolhe-se o contato e o <span class="field">Perfil</span>. Cada pessoa ganha o seu caixa, e o acesso ao sistema vem junto — <em>enquanto o evento estiver na rua</em>.</p>

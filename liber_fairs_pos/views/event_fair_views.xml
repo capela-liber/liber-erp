@@ -99,10 +99,56 @@
                         A bill is never negative — what the commission and the
                         dailies do not cover is written down, not charged.
                     </div>
-                    <button name="action_generate_bills" type="object"
-                            string="Create the bills" class="btn-primary mt-2"
-                            invisible="state != 'returned'"
-                            help="One payable per person, with the event in the name and in the analytic account."/>
+                </page>
+                <!-- O DINHEIRO QUE SAI, todo no mesmo lugar. As contas da
+                     equipe caem aqui sozinhas no fechamento; o resto se
+                     lança aqui, e o analítico do evento vai junto. Mesmo
+                     dono das comissões: quem planeja. -->
+                <page string="Costs" name="costs"
+                      groups="liber_fairs.group_fair_manager">
+                    <div class="mb-2">
+                        <button name="action_add_cost" type="object"
+                                string="Add a cost" class="btn-secondary"
+                                help="A payable already pointed at this event: special freight, stand fee, the van, lodging."/>
+                    </div>
+                    <field name="bill_ids" readonly="1">
+                        <list>
+                            <field name="invoice_date"/>
+                            <field name="name"/>
+                            <field name="partner_id"/>
+                            <field name="ref" optional="show"/>
+                            <field name="amount_total" sum="Cost"/>
+                            <field name="state" widget="badge"
+                                   decoration-info="state == 'draft'"
+                                   decoration-success="state == 'posted'"/>
+                            <field name="payment_state" widget="badge"
+                                   optional="show"/>
+                            <field name="currency_id" column_invisible="1"/>
+                        </list>
+                    </field>
+                    <group class="mt-2">
+                        <group>
+                            <field name="pos_amount_total"/>
+                            <field name="cogs_total"/>
+                        </group>
+                        <group>
+                            <field name="cost_total"/>
+                            <field name="result_total"
+                                   decoration-danger="result_total &lt; 0"
+                                   decoration-bf="1"/>
+                        </group>
+                    </group>
+                    <div class="text-muted">
+                        The team's bills are born here when the event comes
+                        home — one per person, in draft, because creating a
+                        payable is not paying it. Everything else the event
+                        spends goes in by hand, and carries the event's
+                        analytic account with it.
+                        The result takes what the register sold, subtracts
+                        what those books cost the house, and subtracts these
+                        costs. It is the difference between "the fair paid
+                        for itself" and "the fair made money".
+                    </div>
                 </page>
             </page>
             <field name="stock_location_id" position="after">

@@ -471,3 +471,52 @@ msgstr "Supervisor da feira"
 #: model:ir.model.fields,field_description:liber_fairs_pos.field_event_fair_day_line__qty_pos_day
 msgid "Sold today"
 msgstr "Vendido no dia"
+
+#. module: liber_fairs_pos
+#: model_terms:ir.ui.view,arch_db:liber_fairs_pos.view_event_fair_form_pos
+msgid "Costs"
+msgstr "Custos"
+
+#. module: liber_fairs_pos
+#: model_terms:ir.ui.view,arch_db:liber_fairs_pos.view_event_fair_form_pos
+msgid "Add a cost"
+msgstr "Somar um custo"
+
+#. module: liber_fairs_pos
+#: model:ir.model.fields,field_description:liber_fairs_pos.field_event_fair__cost_total
+msgid "Cost"
+msgstr "Custou"
+
+#. module: liber_fairs_pos
+#: model:ir.model.fields,field_description:liber_fairs_pos.field_event_fair__cogs_total
+msgid "Cost of books sold"
+msgstr "Custo dos livros vendidos"
+
+#. module: liber_fairs_pos
+#: model:ir.model.fields,field_description:liber_fairs_pos.field_event_fair__result_total
+msgid "Result"
+msgstr "Sobrou"
+
+#. module: liber_fairs_pos
+#: model:ir.model.fields,field_description:liber_fairs_pos.field_account_move__fair_id
+msgid "Event"
+msgstr "Evento"
+
+#. module: liber_fairs_pos
+#: model_terms:ir.ui.view,arch_db:liber_fairs_pos.view_event_fair_form_pos
+msgid ""
+"The team's bills are born here when the event comes\n"
+"                        home — one per person, in draft, because creating a\n"
+"                        payable is not paying it. Everything else the event\n"
+"                        spends goes in by hand, and carries the event's\n"
+"                        analytic account with it.\n"
+"                        The result takes what the register sold, subtracts\n"
+"                        what those books cost the house, and subtracts these\n"
+"                        costs. It is the difference between \"the fair paid\n"
+"                        for itself\" and \"the fair made money\"."
+msgstr ""
+"As contas da equipe nascem aqui quando o evento volta — uma por pessoa, em "
+"rascunho, porque criar conta a pagar não é pagar. Todo o resto que o evento "
+"gasta se lança à mão, e leva o analítico do evento junto. O resultado pega o "
+"que o caixa vendeu, desconta o que aqueles livros custaram à casa e desconta "
+"estes custos. É a diferença entre \"a feira se pagou\" e \"a feira deu lucro\"."

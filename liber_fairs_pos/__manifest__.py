@@ -37,7 +37,7 @@ a conciliação da taxa acontece depois, no financeiro.
 """,
     'author': 'EdLab Press',
     'category': 'Inventory',
-    'version': '19.0.11.0.0',
+    'version': '19.0.12.0.0',
     'license': 'AGPL-3',
     # pos_discount: é ele que traz o desconto global com percentual
     # fixo, que é como a feira pratica desconto -- um número decidido no

@@ -78,6 +78,82 @@ class EventFair(models.Model):
         compute='_compute_comissoes')
     bill_count = fields.Integer(compute='_compute_comissoes')
 
+    # --- o que o evento CUSTOU, e se ele deu dinheiro --------------------
+    #
+    # "É muito difícil saber se um evento deu dinheiro. Temos o analítico,
+    # mas ter uma estrutura para captar isso direto na fonte é melhor -- na
+    # mão do nosso comercial."
+    #
+    # As contas da equipe caem aqui sozinhas; o resto -- frete especial, taxa
+    # de estande, diária da van, hospedagem -- se lança na aba, e o analítico
+    # do evento vai junto.
+    bill_ids = fields.One2many(
+        'account.move', 'fair_id', string='Costs',
+        domain=[('move_type', 'in', ('in_invoice', 'in_refund'))])
+    cost_total = fields.Monetary(
+        string='Cost', currency_field='company_currency_id',
+        compute='_compute_resultado',
+        help="Everything the event is paying for: the team's bills and every "
+             "other cost booked on it.")
+    cogs_total = fields.Monetary(
+        string='Cost of books sold', currency_field='company_currency_id',
+        compute='_compute_resultado',
+        help="What the copies sold at the register cost the house.")
+    result_total = fields.Monetary(
+        string='Result', currency_field='company_currency_id',
+        compute='_compute_resultado',
+        help="Sold at the register, minus what those books cost, minus the "
+             "event's own costs. It answers the question the owner asks: did "
+             "the fair make money?")
+
+    @api.depends('bill_ids.amount_total', 'bill_ids.state',
+                 'pos_amount_total', 'pos_config_ids')
+    def _compute_resultado(self):
+        for fair in self:
+            contas = fair.bill_ids.filtered(
+                lambda c: c.state != 'cancel')
+            # Nota de crédito de fornecedor devolve dinheiro: entra com sinal.
+            fair.cost_total = sum(
+                c.amount_total * (-1 if c.move_type == 'in_refund' else 1)
+                for c in contas)
+            fair.cogs_total = fair._custo_do_que_vendeu()
+            fair.result_total = (fair.pos_amount_total - fair.cogs_total
+                                 - fair.cost_total)
+
+    def _custo_do_que_vendeu(self):
+        """O custo dos exemplares que passaram pelo caixa.
+
+        É o que separa "a feira pagou as próprias despesas" de "a feira deu
+        lucro" -- e a segunda é a pergunta que o dono faz. O custo é o do
+        produto no momento da leitura; feira é evento curto, e guardar
+        custo congelado por linha seria precisão que ninguém usa.
+        """
+        self.ensure_one()
+        configs = self.with_context(active_test=False).pos_config_ids
+        if not configs:
+            return 0.0
+        agrupado = self.env['pos.order.line'].sudo()._read_group(
+            [('order_id.config_id', 'in', configs.ids),
+             ('order_id.state', '!=', 'cancel')],
+            ['product_id'], ['qty:sum'])
+        return sum(produto.standard_price * qtd for produto, qtd in agrupado)
+
+    def action_add_cost(self):
+        """Uma conta a pagar já apontada para o evento."""
+        self.ensure_one()
+        return {
+            'type': 'ir.actions.act_window',
+            'name': _('Cost of %s', self.display_name),
+            'res_model': 'account.move',
+            'view_mode': 'form',
+            'target': 'current',
+            'context': {
+                'default_move_type': 'in_invoice',
+                'default_fair_id': self.id,
+                'default_company_id': self.company_id.id,
+            },
+        }
+
     @api.depends('cashier_ids.net_amount', 'cashier_ids.bill_id',
                  'loss_ids.value', 'loss_ids.charged_to_team')
     def _compute_comissoes(self):
@@ -118,6 +194,9 @@ class EventFair(models.Model):
                 continue
             conta = self.env['account.move'].create({
                 'move_type': 'in_invoice',
+                # O EVENTO no documento, e não só no analítico: é o que põe a
+                # conta na aba de Custos e a faz somar no resultado.
+                'fair_id': self.id,
                 'partner_id': operador.partner_id.id,
                 'invoice_date': fields.Date.context_today(self),
                 'ref': _('%(feira)s — %(pessoa)s', feira=self.display_name,

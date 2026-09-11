@@ -193,3 +193,9 @@ msgstr "%s g"
 #: code:addons/liber_print_quote/models/product_template.py:0
 msgid "%(h)s x %(w)s x %(d)s mm"
 msgstr "%(h)s x %(w)s x %(d)s mm"
+
+#. module: liber_print_quote
+#. odoo-python
+#: code:addons/liber_print_quote/models/product_template.py:0
+msgid "Confira a orelha"
+msgstr "Confira a orelha"

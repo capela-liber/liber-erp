@@ -9,3 +9,4 @@ from . import event_fair_cashier
 from . import event_fair
 from . import event_fair_day
 from . import res_groups
+from . import account_move

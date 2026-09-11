@@ -416,6 +416,12 @@ class OlistAccount(models.Model):
         hora: a linha fica presa por milissegundos em vez de meio minuto. Se
         ainda assim colidir, o preço é uma data desatualizada, nunca a rodada.
 
+        **Não use em rotina que já é dona da linha.** O push de estoque
+        reescreve o `stock_push_cursor` do começo ao fim da própria rodada:
+        para ele, um cursor à parte commita no meio do voo e derruba a
+        transação que o chamou. Lá o carimbo vai direto, e o comentário no
+        lugar diz por quê. Aqui serve a quem toca a linha UMA vez, no fim.
+
         Em teste escreve direto: cursor novo não enxerga a transação do teste,
         e o registro nem existiria lá.
         """
@@ -1154,7 +1160,15 @@ class OlistAccount(models.Model):
             # Catálogo varrido inteiro: a próxima noite recomeça do começo.
             self.stock_push_cursor = 0
 
-        self._carimba_relogio('last_stock_push')
+        # DIRETO, e não pelo `_carimba_relogio`: esta rotina é DONA da linha
+        # -- ela reescreve o `stock_push_cursor` a cada livro e ainda o zera
+        # logo acima. Um cursor à parte commitaria no meio do voo e derrubaria
+        # a transação que o chamou, que é exatamente o que aconteceu em
+        # 11/09/2026 às 02:46: o `stock_push_cursor = 0` foi recusado com
+        # `could not serialize access` por causa do carimbo que eu mesmo
+        # tinha acabado de mudar de lugar. O cursor próprio serve a quem toca
+        # a linha UMA vez, no fim; aqui ele vira tiro no pé.
+        self.last_stock_push = fields.Datetime.now()
         _logger.info(
             "Olist %s: stock pushed for %s products, %s error(s)%s.",
             self.name, ok, len(errors),

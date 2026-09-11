@@ -139,5 +139,24 @@
             <field name="domain_force">[('fair_id.cashier_ids.partner_id.user_ids', '=', user.id)]</field>
             <field name="groups" eval="[(4, ref('group_fair_field'))]"/>
         </record>
+
+        <!-- O DINHEIRO DO EVENTO NÃO É DA PRAÇA.
+             Atendente e supervisor leem conta a pagar porque o papel de PDV
+             lê fatura por natureza — é assim que o balcão funciona. Só que
+             as contas do evento carregam quanto cada um vai receber, e isso é
+             da equipe interna.
+
+             A regra é GLOBAL de propósito: regra de grupo se soma com OU, e
+             somar uma restrição ao grupo deles não tiraria o que o papel de
+             PDV já concede. Global, ela vale para todos — e o `domain_force`
+             se avalia com o `user` na mão, então quem é da casa passa
+             inteiro e só quem é SÓ da praça fica de fora. Financeiro, que
+             paga essas contas, não é tocado. -->
+        <record id="rule_fair_costs_are_not_for_the_field" model="ir.rule">
+            <field name="name">Event costs: not for the people on site</field>
+            <field name="model_id" ref="account.model_account_move"/>
+            <field name="global" eval="True"/>
+            <field name="domain_force">[('fair_id', '=', False)] if (user.has_group('liber_fairs_pos.group_fair_cashier') and not user.has_group('liber_fairs.group_fair_user')) else [(1, '=', 1)]</field>
+        </record>
     </data>
 </odoo>

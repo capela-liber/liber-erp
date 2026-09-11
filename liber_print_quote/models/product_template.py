@@ -12,7 +12,7 @@ Duas coisas moram aqui, e nenhuma delas cabe no liber_metabooks_integration:
   precisar saber nada sobre ONIX.
 """
 
-from odoo import api, fields, models
+from odoo import _, api, fields, models
 
 from odoo.addons.liber_metabooks_integration.services import onix_codes
 
@@ -70,6 +70,33 @@ class ProductTemplate(models.Model):
              "encarte, brinde, embalagem, prazo, referência de cor. Sai por "
              "último no PDF, depois da ficha.")
 
+    @api.onchange('print_flap_width', 'metabooks_width')
+    def _onchange_print_flap_width(self):
+        """Desconfia de orelha pequena demais, sem impedir nada.
+
+        Nos 91 livros em que a produção mediu, a orelha ficou entre 63% e 92%
+        da largura. Menos da metade é quase sempre dedo errado -- centímetro
+        digitado onde se pede milímetro, ou a medida da dobra no lugar da
+        orelha inteira. Quem sabe que é assim mesmo ignora o aviso e segue:
+        avisar é diferente de barrar, e barrar aqui inventaria uma regra que a
+        gráfica não tem.
+        """
+        self.ensure_one()
+        if not (self.print_flap_width and self.metabooks_width):
+            return
+        if self.print_flap_width >= self.metabooks_width / 2:
+            return
+        return {'warning': {
+            'title': _("Confira a orelha"),
+            'message': _(
+                "A orelha ficou em %(orelha)s mm, menos da metade da largura "
+                "do livro (%(largura)s mm).\n\nNos livros medidos pela "
+                "produção ela fica entre 63%% e 92%% da largura. Confira se "
+                "não é centímetro no lugar de milímetro.",
+                orelha=self.print_flap_width,
+                largura=self._print_mm(self.metabooks_width)),
+        }}
+
     def _print_spec(self):
         """A ficha em linhas (rótulo, valor), na ordem em que a gráfica lê.
 
@@ -103,9 +130,13 @@ class ProductTemplate(models.Model):
                 self.metabooks_product_form, self.metabooks_product_form)))
         if any((self.metabooks_height, self.metabooks_width,
                 self.metabooks_thickness)):
-            linhas.append(('Dimensões', '%s x %s x %s mm' % (
-                self._print_mm(self.metabooks_height),
+            # LARGURA primeiro, e dito no rótulo. Na gráfica "14 x 21" é
+            # comprido e "21 x 14" é oblongo -- a ordem É a informação. Saía
+            # altura primeiro, então todo livro de pé era anunciado deitado.
+            # O rótulo evita que a próxima pessoa tenha de saber a convenção.
+            linhas.append(('Dimensões (L x A x lombada)', '%s x %s x %s mm' % (
                 self._print_mm(self.metabooks_width),
+                self._print_mm(self.metabooks_height),
                 self._print_mm(self.metabooks_thickness))))
         if self.metabooks_page_count:
             linhas.append(('Páginas', str(self.metabooks_page_count)))
