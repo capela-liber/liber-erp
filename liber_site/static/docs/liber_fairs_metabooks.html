@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<script>
+/* Servido por /liber_site/static/docs/, este arquivo vem com uma semana de
+   cache e o docs.js sem versão -- e o índice monta a lista a partir dele. Foi
+   assim que a emissão de NF-e e o manual da Amazon ficaram invisíveis: o
+   catálogo em cache era anterior aos dois. A rota /liber/docs/ serve o mesmo
+   arquivo sem cache e com ?v=<mtime> nos assets. Quem chegar pelo caminho
+   antigo (favorito, link velho, resultado de busca) vai para lá antes de a
+   página montar qualquer coisa. */
+(function () {
+  var antigo = "/liber_site/static/docs/";
+  if (location.pathname.indexOf(antigo) === 0) {
+    location.replace("/liber/docs/" + location.pathname.slice(antigo.length) +
+                     location.search + location.hash);
+  }
+})();
+</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>A grade da feira pelo catálogo — Manuais do Liber</title>
+<link rel="icon" type="image/png" href="../logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;600;700&display=swap">
+<link rel="stylesheet" href="docs.css">
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="../index.html"><img src="../logo.png" alt="">liber<span>.</span></a>
+    <span class="doc-tag">Manuais</span>
+    <nav><a href="index.html">Índice</a><a href="../index.html">Site</a></nav>
+  </div>
+</header>
+<div class="wrap">
+  <div class="layout">
+    <aside class="sidebar" id="sidebar"></aside>
+    <article class="doc">
+      <div class="breadcrumb"><a href="index.html">Manuais</a><span class="sep">›</span>Eventos<span class="sep">›</span>A grade da feira pelo catálogo</div>
+      <h1>A grade da feira pelo catálogo</h1>
+      <p class="lead">Monta a mesa perguntando por assunto Thema e por época de publicação, em vez de título por título — três perguntas novas no assistente da grade.</p>
+
+      <h2 id="visao-geral">Visão geral</h2>
+      <p>O módulo de feiras não exige a Metabooks para existir: uma feira é remessa temporária, e
+      isso vale para quem vende livro catalogado e para quem não vende. Mas quem <strong>tem</strong>
+      o catálogo monta a grade muito melhor — porque pode pedir <strong>por assunto e por
+      época</strong>, em vez de por nome.</p>
+      <p>É só isso que esta ponte faz: acrescenta três perguntas ao assistente
+      <span class="field">Somar títulos</span> da feira.</p>
+
+      <h2 id="o-que-acrescenta">O que ela acrescenta ao "Somar títulos"</h2>
+      <div class="tablewrap"><table>
+        <tr><th>Pergunta</th><th>Para que serve</th></tr>
+        <tr><td><strong>Assunto Thema</strong>, com o galho inteiro</td><td>Escolher o <code>Y</code> traz todo o infantojuvenil, e não só o código exato. É a diferença entre pedir "infantil" e ter de listar catorze subcódigos.</td></tr>
+        <tr><td><strong>Faixa de data de publicação</strong></td><td>É o que separa lançamento de fundo de catálogo — a pergunta que decide a cara da mesa.</td></tr>
+        <tr><td><strong>Ordem "mais novos primeiro"</strong></td><td>Só faz sentido onde existe data de publicação, e por isso só existe aqui.</td></tr>
+      </table></div>
+      <div class="callout"><span class="title">Nota</span><p>Nada disso é campo novo. Tudo já está no
+      produto, posto lá pela importação da Metabooks. O que faltava era poder <em>perguntar</em> por
+      eles na hora de escolher o que vai para a mesa.</p></div>
+
+      <h2 id="configuracao">Configuração</h2>
+      <p>Nenhuma. Instalado o módulo, os campos aparecem no assistente. O que ele exige é que o
+      catálogo esteja de fato importado — um acervo sem assunto Thema nem data de publicação
+      responde vazio, e o problema está na
+      <a href="liber_metabooks_integration.html">importação</a>, não aqui.</p>
+
+      <div class="seealso">
+        <strong>Ver também</strong>
+        <ul>
+          <li><a href="liber_fairs.html">Eventos e feiras</a> — o assistente Somar títulos e o resto da grade.</li>
+          <li><a href="liber_metabooks_integration.html">Integração Metabooks</a> — de onde vêm o assunto Thema e a data de publicação.</li>
+        </ul>
+      </div>
+
+      <nav class="pager" id="pager"></nav>
+    </article>
+  </div>
+</div>
+<script src="docs.js"></script>
+</body>
+</html>

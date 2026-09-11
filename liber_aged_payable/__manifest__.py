@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     'name': 'Aged Payable',
-    'version': '19.0.1.10.0',
+    'version': '19.0.1.11.0',
     'summary': 'Open vendor balances by partner and age bracket, with a jump '
                'to the document and to manual reconciliation',
     'description': """

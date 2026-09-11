@@ -1,0 +1,80 @@
+<!-- GERADO por scripts/gen_module_descriptions.py a partir de
+     liber_site/static/docs/liber_fairs_nfe.html -- não edite aqui.
+     O Odoo mostra este arquivo em Apps > Module Info. -->
+<div class="oe_container liber_manual" style="max-width:900px;margin:0 auto;padding:8px 4px 24px;color:#251d2b;background:transparent;font:15px/1.7 Inter,'Segoe UI',system-ui,sans-serif;"><h1 style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:32px;line-height:1.2;letter-spacing:-.015em;margin:0 0 10px;color:#251d2b;">A nota da carga da feira</h1>
+      <p class="lead" style="font-size:17.5px;color:#5d5266;margin:0 0 26px;max-width:62ch;">A remessa para a feira não é venda: sai como simples remessa, com <abbr class="sigla" title="Código Fiscal de Operações e Prestações: diz a natureza fiscal de cada item da nota." style="text-decoration:none;border-bottom:1px dotted #8a4bad;cursor:help;">CFOP</abbr> de exposição e a própria editora como destinatário — e a nota da volta anula a da ida.</p>
+
+      <h2 id="visao-geral" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">Visão geral</h2>
+      <p style="margin:0 0 12px;">Livro na estrada sem nota é livro apreendido. Mas a carga que vai para uma feira
+      <strong style="color:#251d2b;">não é venda</strong>, e não pode sair na série de venda: ela é uma
+      <strong style="color:#251d2b;">simples remessa</strong>, com <abbr class="sigla" title="Código Fiscal de Operações e Prestações: diz a natureza fiscal de cada item da nota." style="text-decoration:none;border-bottom:1px dotted #8a4bad;cursor:help;">CFOP</abbr> de remessa para exposição ou feira, e o
+      destinatário <strong style="color:#251d2b;">é a própria editora</strong> — a mercadoria não muda de dono ao subir na
+      van, muda de lugar.</p>
+      <p style="margin:0 0 12px;">Esta ponte é o que põe a nota nesse movimento. O fluxo da feira em si — grade, remessa em
+      duas pernas, fechamento diário, retorno — está no manual de
+      <a href="/liber_site/static/docs/liber_fairs.html" target="_blank" rel="noopener" style="color:#6e2f91;">Eventos e feiras</a>; aqui fica só o documento fiscal.</p>
+      <div class="callout" style="border:1px solid #e5dbee;border-left:4px solid #6e2f91;border-radius:10px;background:#f1eaf6;padding:14px 18px;margin:0 0 16px;"><span class="title" style="font-weight:700;font-size:12px;letter-spacing:.08em;text-transform:uppercase;display:block;margin:0 0 4px;color:#6e2f91;">Por que é um módulo separado</span><p style="margin:0 0 12px;">Uma feira é
+      remessa temporária, e isso vale em qualquer país. O módulo de feiras não pode exigir a
+      <abbr class="sigla" title="Nota Fiscal eletrônica: o documento fiscal brasileiro que acompanha a mercadoria." style="text-decoration:none;border-bottom:1px dotted #8a4bad;cursor:help;">NF-e</abbr>
+      brasileira para existir. Quem tem emissão instala esta ponte, e o botão aparece
+      sozinho.</p></div>
+
+      <h2 id="configuracao" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">Configuração</h2>
+      <ol class="steps" style="margin:0 0 16px 22px;padding:0;">
+        <li style="margin:0 0 7px;">Um <strong style="color:#251d2b;">diário de remessas de feira</strong> (<abbr class="sigla" title="Remessa: a nota de simples remessa, sem cobrança." style="text-decoration:none;border-bottom:1px dotted #8a4bad;cursor:help;">REM</abbr>-F), separado do diário de remessa
+        comum — para que a numeração da feira não se misture com a da consignação.</li>
+        <li style="margin:0 0 7px;">A <strong style="color:#251d2b;">posição fiscal de feira</strong> e a <strong style="color:#251d2b;">de retorno</strong>, nas
+        Definições, por empresa. É delas que saem os <abbr class="sigla" title="Código Fiscal de Operações e Prestações: diz a natureza fiscal de cada item da nota." style="text-decoration:none;border-bottom:1px dotted #8a4bad;cursor:help;">CFOPs</abbr> e a conta contra a qual a nota se
+        baixa.</li>
+      </ol>
+      <p style="margin:0 0 12px;">Sem esses dois cadastros o botão recusa a emissão e diz o que falta — não emite nota com
+      <abbr class="sigla" title="Código Fiscal de Operações e Prestações: diz a natureza fiscal de cada item da nota." style="text-decoration:none;border-bottom:1px dotted #8a4bad;cursor:help;">CFOP</abbr> de venda por falta de configuração.</p>
+
+      <h2 id="ida" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">A nota da ida</h2>
+      <p style="margin:0 0 12px;">Na feira, o botão <span class="field" style="font-weight:600;color:#251d2b;">Gerar nota de remessa</span> emite
+      <strong style="color:#251d2b;">uma nota por transferência de remessa já concluída</strong>. Três coisas que ela faz
+      e que vale saber:</p>
+      <ul style="margin:0 0 14px 22px;padding:0;">
+        <li style="margin:0 0 7px;"><strong style="color:#251d2b;">Nasce baixada.</strong> A perna de recebível é reconciliada contra a conta que a
+        posição fiscal declara — a editora nunca fica devendo a si mesma, e a nota não aparece no
+        contas a receber.</li>
+        <li style="margin:0 0 7px;"><strong style="color:#251d2b;">Carimba as duas pontas</strong>: a transferência fica sabendo da nota, e a nota
+        fica sabendo da feira. É o que impede a mesma carga de ser declarada duas vezes.</li>
+        <li style="margin:0 0 7px;"><strong style="color:#251d2b;">Declara o que foi efetivamente despachado</strong>, nunca o planejado. Nota que
+        diz 100 quando saíram 62 não bate com o volume na estrada — e é a nota que o fiscal lê.</li>
+      </ul>
+
+      <h2 id="volta" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">A nota da volta</h2>
+      <p style="margin:0 0 12px;">Sai no mesmo clique do <span class="field" style="font-weight:600;color:#251d2b;">Retorno</span>, e é <strong style="color:#251d2b;">nota de
+      crédito</strong>: a ida e a volta se anulam, que é exatamente o que aconteceu — a mercadoria
+      saiu e voltou, e nada mudou de dono no caminho. Ela referencia a chave da nota de ida, sob a
+      posição fiscal de retorno.</p>
+      <div class="callout" style="border:1px solid #e5dbee;border-left:4px solid #6e2f91;border-radius:10px;background:#f1eaf6;padding:14px 18px;margin:0 0 16px;"><span class="title" style="font-weight:700;font-size:12px;letter-spacing:.08em;text-transform:uppercase;display:block;margin:0 0 4px;color:#6e2f91;">Uma diferença que parece inconsistência e não é</span>
+      <p style="margin:0 0 12px;">A nota de <strong style="color:#251d2b;">ida</strong> declara o que foi <em>despachado</em>, porque ela sai depois
+      de o armazém separar — é ali que se sabe o que entrou na van. A nota da <strong style="color:#251d2b;">volta</strong>
+      declara o que está sendo <em>devolvido</em>, porque ela sai quando as caixas deixam a feira:
+      ela viaja <em>com</em> elas. Nota que só saísse na chegada deixaria o caminhão rodar sem
+      documento.</p></div>
+      <p style="margin:0 0 12px;">A diferença entre o que a nota da volta declara e o que o armazém de fato recebe é assunto
+      da <strong style="color:#251d2b;">conferência do retorno</strong>, em Recebimentos: o que não aparece na caixa vira
+      perda <span class="field" style="font-weight:600;color:#251d2b;">Não voltou (a explicar)</span>. É onde essa conversa tem de
+      acontecer — e não escondida numa nota que ninguém emitiu.</p>
+
+      <h2 id="limitacoes" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">Limitações conhecidas</h2>
+      <ul style="margin:0 0 14px 22px;padding:0;">
+        <li style="margin:0 0 7px;"><strong style="color:#251d2b;">Uma nota por transferência</strong>, não uma por feira: feira com três remessas
+        tem três notas, porque foram três viagens.</li>
+        <li style="margin:0 0 7px;"><strong style="color:#251d2b;">Só depois de concluída.</strong> Transferência em aberto não gera nota — não se
+        sabe ainda o que saiu.</li>
+        <li style="margin:0 0 7px;"><strong style="color:#251d2b;">Não é cupom fiscal.</strong> O que se vende no balcão da feira é outro assunto;
+        ver <a href="/liber_site/static/docs/liber_fairs_pos.html" target="_blank" rel="noopener" style="color:#6e2f91;">o caixa do PDV</a>.</li>
+      </ul>
+
+      <div class="seealso" style="border:1px solid #e5dbee;border-radius:12px;background:#f1eaf6;padding:16px 20px;margin:32px 0 0;">
+        <strong style="font-weight:700;font-size:12px;letter-spacing:.08em;text-transform:uppercase;display:block;margin:0 0 8px;color:#5d5266;">Ver também</strong>
+        <ul style="margin:0 0 14px 22px;padding:0;">
+          <li style="margin:0 0 7px;"><a href="/liber_site/static/docs/liber_fairs.html" target="_blank" rel="noopener" style="color:#6e2f91;">Eventos e feiras</a> — o fluxo inteiro, de que esta nota é uma peça.</li>
+          <li style="margin:0 0 7px;"><a href="/liber_site/static/docs/liber_nfe_remessa.html" target="_blank" rel="noopener" style="color:#6e2f91;">Notas de remessa</a> — o módulo que sustenta a nota sem cobrança, e a baixa automática.</li>
+          <li style="margin:0 0 7px;"><a href="/liber_site/static/docs/liber_nfe_focus.html" target="_blank" rel="noopener" style="color:#6e2f91;">Emissão de NF-e</a> — quem efetivamente transmite à <abbr class="sigla" title="Secretaria da Fazenda: o fisco estadual, que autoriza ou rejeita as notas." style="text-decoration:none;border-bottom:1px dotted #8a4bad;cursor:help;">SEFAZ</abbr>.</li>
+        </ul>
+      </div><p style="margin:28px 0 0;padding-top:14px;border-top:1px solid #e5dbee;font-size:13px;color:#5d5266;">Manual completo, com busca e as demais páginas: <a href="/liber_site/static/docs/liber_fairs_nfe.html" target="_blank" rel="noopener" style="color:#6e2f91;">A nota da carga da feira</a>.</p></div>

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<script>
+/* Servido por /liber_site/static/docs/, este arquivo vem com uma semana de
+   cache e o docs.js sem versão -- e o índice monta a lista a partir dele. Foi
+   assim que a emissão de NF-e e o manual da Amazon ficaram invisíveis: o
+   catálogo em cache era anterior aos dois. A rota /liber/docs/ serve o mesmo
+   arquivo sem cache e com ?v=<mtime> nos assets. Quem chegar pelo caminho
+   antigo (favorito, link velho, resultado de busca) vai para lá antes de a
+   página montar qualquer coisa. */
+(function () {
+  var antigo = "/liber_site/static/docs/";
+  if (location.pathname.indexOf(antigo) === 0) {
+    location.replace("/liber/docs/" + location.pathname.slice(antigo.length) +
+                     location.search + location.hash);
+  }
+})();
+</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>A nota da carga da feira — Manuais do Liber</title>
+<link rel="icon" type="image/png" href="../logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;600;700&display=swap">
+<link rel="stylesheet" href="docs.css">
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="../index.html"><img src="../logo.png" alt="">liber<span>.</span></a>
+    <span class="doc-tag">Manuais</span>
+    <nav><a href="index.html">Índice</a><a href="../index.html">Site</a></nav>
+  </div>
+</header>
+<div class="wrap">
+  <div class="layout">
+    <aside class="sidebar" id="sidebar"></aside>
+    <article class="doc">
+      <div class="breadcrumb"><a href="index.html">Manuais</a><span class="sep">›</span>Eventos<span class="sep">›</span>A nota da carga da feira</div>
+      <h1>A nota da carga da feira</h1>
+      <p class="lead">A remessa para a feira não é venda: sai como simples remessa, com <abbr class="sigla" title="Código Fiscal de Operações e Prestações: diz a natureza fiscal de cada item da nota.">CFOP</abbr> de exposição e a própria editora como destinatário — e a nota da volta anula a da ida.</p>
+
+      <h2 id="visao-geral">Visão geral</h2>
+      <p>Livro na estrada sem nota é livro apreendido. Mas a carga que vai para uma feira
+      <strong>não é venda</strong>, e não pode sair na série de venda: ela é uma
+      <strong>simples remessa</strong>, com <abbr class="sigla" title="Código Fiscal de Operações e Prestações: diz a natureza fiscal de cada item da nota.">CFOP</abbr> de remessa para exposição ou feira, e o
+      destinatário <strong>é a própria editora</strong> — a mercadoria não muda de dono ao subir na
+      van, muda de lugar.</p>
+      <p>Esta ponte é o que põe a nota nesse movimento. O fluxo da feira em si — grade, remessa em
+      duas pernas, fechamento diário, retorno — está no manual de
+      <a href="liber_fairs.html">Eventos e feiras</a>; aqui fica só o documento fiscal.</p>
+      <div class="callout"><span class="title">Por que é um módulo separado</span><p>Uma feira é
+      remessa temporária, e isso vale em qualquer país. O módulo de feiras não pode exigir a
+      <abbr class="sigla" title="Nota Fiscal eletrônica: o documento fiscal brasileiro que acompanha a mercadoria.">NF-e</abbr>
+      brasileira para existir. Quem tem emissão instala esta ponte, e o botão aparece
+      sozinho.</p></div>
+
+      <h2 id="configuracao">Configuração</h2>
+      <ol class="steps">
+        <li>Um <strong>diário de remessas de feira</strong> (<abbr class="sigla" title="Remessa: a nota de simples remessa, sem cobrança.">REM</abbr>-F), separado do diário de remessa
+        comum — para que a numeração da feira não se misture com a da consignação.</li>
+        <li>A <strong>posição fiscal de feira</strong> e a <strong>de retorno</strong>, nas
+        Definições, por empresa. É delas que saem os <abbr class="sigla" title="Código Fiscal de Operações e Prestações: diz a natureza fiscal de cada item da nota.">CFOPs</abbr> e a conta contra a qual a nota se
+        baixa.</li>
+      </ol>
+      <p>Sem esses dois cadastros o botão recusa a emissão e diz o que falta — não emite nota com
+      <abbr class="sigla" title="Código Fiscal de Operações e Prestações: diz a natureza fiscal de cada item da nota.">CFOP</abbr> de venda por falta de configuração.</p>
+
+      <h2 id="ida">A nota da ida</h2>
+      <p>Na feira, o botão <span class="field">Gerar nota de remessa</span> emite
+      <strong>uma nota por transferência de remessa já concluída</strong>. Três coisas que ela faz
+      e que vale saber:</p>
+      <ul>
+        <li><strong>Nasce baixada.</strong> A perna de recebível é reconciliada contra a conta que a
+        posição fiscal declara — a editora nunca fica devendo a si mesma, e a nota não aparece no
+        contas a receber.</li>
+        <li><strong>Carimba as duas pontas</strong>: a transferência fica sabendo da nota, e a nota
+        fica sabendo da feira. É o que impede a mesma carga de ser declarada duas vezes.</li>
+        <li><strong>Declara o que foi efetivamente despachado</strong>, nunca o planejado. Nota que
+        diz 100 quando saíram 62 não bate com o volume na estrada — e é a nota que o fiscal lê.</li>
+      </ul>
+
+      <h2 id="volta">A nota da volta</h2>
+      <p>Sai no mesmo clique do <span class="field">Retorno</span>, e é <strong>nota de
+      crédito</strong>: a ida e a volta se anulam, que é exatamente o que aconteceu — a mercadoria
+      saiu e voltou, e nada mudou de dono no caminho. Ela referencia a chave da nota de ida, sob a
+      posição fiscal de retorno.</p>
+      <div class="callout"><span class="title">Uma diferença que parece inconsistência e não é</span>
+      <p>A nota de <strong>ida</strong> declara o que foi <em>despachado</em>, porque ela sai depois
+      de o armazém separar — é ali que se sabe o que entrou na van. A nota da <strong>volta</strong>
+      declara o que está sendo <em>devolvido</em>, porque ela sai quando as caixas deixam a feira:
+      ela viaja <em>com</em> elas. Nota que só saísse na chegada deixaria o caminhão rodar sem
+      documento.</p></div>
+      <p>A diferença entre o que a nota da volta declara e o que o armazém de fato recebe é assunto
+      da <strong>conferência do retorno</strong>, em Recebimentos: o que não aparece na caixa vira
+      perda <span class="field">Não voltou (a explicar)</span>. É onde essa conversa tem de
+      acontecer — e não escondida numa nota que ninguém emitiu.</p>
+
+      <h2 id="limitacoes">Limitações conhecidas</h2>
+      <ul>
+        <li><strong>Uma nota por transferência</strong>, não uma por feira: feira com três remessas
+        tem três notas, porque foram três viagens.</li>
+        <li><strong>Só depois de concluída.</strong> Transferência em aberto não gera nota — não se
+        sabe ainda o que saiu.</li>
+        <li><strong>Não é cupom fiscal.</strong> O que se vende no balcão da feira é outro assunto;
+        ver <a href="liber_fairs_pos.html">o caixa do PDV</a>.</li>
+      </ul>
+
+      <div class="seealso">
+        <strong>Ver também</strong>
+        <ul>
+          <li><a href="liber_fairs.html">Eventos e feiras</a> — o fluxo inteiro, de que esta nota é uma peça.</li>
+          <li><a href="liber_nfe_remessa.html">Notas de remessa</a> — o módulo que sustenta a nota sem cobrança, e a baixa automática.</li>
+          <li><a href="liber_nfe_focus.html">Emissão de NF-e</a> — quem efetivamente transmite à <abbr class="sigla" title="Secretaria da Fazenda: o fisco estadual, que autoriza ou rejeita as notas.">SEFAZ</abbr>.</li>
+        </ul>
+      </div>
+
+      <nav class="pager" id="pager"></nav>
+    </article>
+  </div>
+</div>
+<script src="docs.js"></script>
+</body>
+</html>

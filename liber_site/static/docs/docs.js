@@ -37,6 +37,9 @@ var DOCS = [
   ]},
   { area: "Eventos", desc: "A feira: o estoque que sai da editora, vende num balcão que não é o ERP, e volta incompleto.", items: [
     { slug: "liber_fairs", title: "Eventos e feiras", desc: "O evento com grade, remessa em duas pernas, fechamento diário, caixa de PDV na mesa, perdas explicadas e a conta a pagar da equipe." },
+    { slug: "liber_fairs_nfe", title: "A nota da carga da feira", desc: "Simples remessa com CFOP de exposição, a própria editora como destinatário, e a nota da volta anulando a da ida." },
+    { slug: "liber_fairs_pos", title: "O caixa do PDV na feira", desc: "Um Ponto de Venda por feira, vendendo o estoque que está na mesa — e o fechamento vira conferência." },
+    { slug: "liber_fairs_metabooks", title: "A grade da feira pelo catálogo", desc: "Pedir a mesa por assunto Thema e por época, em vez de título por título." },
   ]},
   { area: "Logística", desc: "Do depósito à porta do cliente — a transportadora de cada um, os volumes da nota e a coleta pedida em lote.", items: [
     { slug: "liber_transport", title: "Transportadora e coleta", desc: "A transportadora do cliente na entrega, caixas e peso para a nota, e o pedido de coleta por e-mail." },

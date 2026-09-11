@@ -6,6 +6,8 @@ feita a uma conta que vai circular em público. Promessa de segurança sem teste
 é intenção.
 """
 
+import os
+
 from odoo.exceptions import AccessError
 from odoo.tests import TransactionCase, tagged
 
@@ -56,9 +58,12 @@ class TestVisitante(TransactionCase):
         é o que o cliente web chama para montar o home, e é o único que
         responde a mesma coisa que o usuário vê.
 
-        Ausentes de propósito: liber_roles (o painel de acesso exigiria
-        base.group_system) e Dropbox/Drive/GitHub (módulos ainda não
-        instalados nesta base -- quando entrarem, entram aqui também).
+        Esta lista é ÂNCORA, não régua: ela pina treze xmlids que não podem
+        sumir. A régua de verdade é o
+        `test_visitante_alcanca_toda_tela_do_produto`, que deriva a pergunta
+        dos módulos instalados — porque esta lista, escrita à mão, ficou
+        muito atrás do produto sem ninguém notar (ver o docstring de lá, e a
+        medição de 11/09/2026).
         """
         menus = {
             'Acordos de consignação': 'liber_soc_agreements.menu_consignment_root',
@@ -89,6 +94,137 @@ class TestVisitante(TransactionCase):
             invisiveis,
             "manuais publicados cuja tela o visitante não enxerga: %s"
             % ', '.join(invisiveis))
+
+    # ------------------------------------------- o guarda que não envelhece
+    #: Telas que o visitante NÃO alcança, e o motivo. Cada entrada é uma
+    #: decisão, não um bug tolerado — e sai daqui no dia em que a decisão
+    #: mudar. Menu de Configuração não entra nesta lista porque o teste já o
+    #: dispensa por construção: configurar é de administrador.
+    EXCECOES = {
+        'liber_support': (
+            'Atendimento é conversa de cliente, não vitrine, e a conta '
+            'pública circula. Decisão registrada no NOTES do módulo.'),
+        'liber_transport': (
+            'A tela mora dentro do Inventário, que a demo esconde de '
+            'propósito — a demo mostra o Liber, não o Odoo cru.'),
+        'liber_sales_dashboard': (
+            'O menu é trancado por sales_team.group_sale_manager, que o '
+            'visitante remove com (3, ...). Destrancar é decisão do módulo, '
+            'não do visitante.'),
+        'liber_roles': (
+            'O painel de acesso exigiria base.group_system.'),
+    }
+
+    def _modulos_com_manual(self):
+        """Os módulos cujo manual está PUBLICADO no site.
+
+        É essa a régua da demo, e não "todo módulo liber_ instalado": o
+        `liber_bookinfo`, por exemplo, é ensaio e não tem manual, então a demo
+        não deve nada a ele. O catálogo de manuais é o diretório do
+        `liber_site`, que é a fonte de verdade do que está publicado.
+
+        Sem o `liber_site` na base (este módulo não depende dele), o teste não
+        tem régua e se declara sem condição de medir.
+        """
+        from odoo.modules.module import get_module_path
+        caminho = get_module_path('liber_site', display_warning=False)
+        if not caminho:
+            self.skipTest('liber_site ausente: sem catálogo de manuais')
+        docs = os.path.join(caminho, 'static', 'docs')
+        if not os.path.isdir(docs):
+            self.skipTest('liber_site sem static/docs')
+        publicados = {n[:-5] for n in os.listdir(docs) if n.endswith('.html')}
+        instalados = self.env['ir.module.module'].search([
+            ('name', 'like', 'liber_%'), ('state', '=', 'installed')])
+        return [m for m in instalados.mapped('name') if m in publicados]
+
+    def _menus_visiveis(self, user):
+        dados = self.env['ir.ui.menu'].with_user(user).load_menus(False)
+        return {int(k) for k in dados if str(k).isdigit()}
+
+    def _e_configuracao(self, menu):
+        """Configuração é de administrador, e não entra na régua da demo."""
+        no = menu
+        while no:
+            if no.name in ('Configuration', 'Settings', 'Configuração',
+                           'Definições', 'Preferences'):
+                return True
+            no = no.parent_id
+        return False
+
+    def test_visitante_alcanca_toda_tela_do_produto(self):
+        """A régua da demo, derivada — não escrita à mão.
+
+        O teste que existia aqui carregava um dicionário de treze menus,
+        digitado quando o produto tinha vinte e sete manuais. O produto chegou
+        a quarenta e seis módulos e ninguém atualizou a lista: em 11/09/2026 a
+        medição mostrou o visitante alcançando 198 dos 475 menus, com DOZE
+        apps de manual publicado sem abrir uma única tela — Olist, as três
+        estantes de arquivos, Amazon, os dois relatórios de idade. A lista à
+        mão não falhou por descuido; falhou porque lista à mão envelhece calada.
+
+        Então a pergunta passa a ser feita ao banco: para todo menu que o
+        ADMIN alcança e que pertence a um módulo `liber_*` instalado, o
+        visitante também alcança — salvo Configuração (de administrador) e as
+        EXCECOES acima, cada uma com motivo escrito.
+
+        Assim um módulo novo entra no guarda no dia em que é instalado, sem
+        ninguém se lembrar de nada.
+        """
+        admin = self.env.ref('base.user_admin')
+        do_admin = self._menus_visiveis(admin)
+        do_visitante = self._menus_visiveis(self.visitor)
+        self.assertTrue(do_visitante, 'load_menus não devolveu menu nenhum')
+
+        faltando = []
+        for modulo in self._modulos_com_manual():
+            if modulo in self.EXCECOES:
+                continue
+            ids = self.env['ir.model.data'].search([
+                ('module', '=', modulo), ('model', '=', 'ir.ui.menu'),
+            ]).mapped('res_id')
+            for menu in self.env['ir.ui.menu'].browse(ids).exists():
+                if menu.id not in do_admin or menu.id in do_visitante:
+                    continue
+                if self._e_configuracao(menu):
+                    continue
+                faltando.append('%s: %s' % (modulo, menu.complete_name))
+        self.assertFalse(faltando, (
+            'telas do produto que a demonstração não mostra (manual '
+            'prometendo tela que não abre). Conceda o grupo de USUÁRIO do app '
+            'ao visitante, ou registre a exceção em EXCECOES com o motivo: '
+            '%s' % '; '.join(sorted(faltando))))
+
+    def test_visitante_le_o_modelo_de_toda_tela_que_ve(self):
+        """Ver o menu não basta: o clique tem de abrir.
+
+        É a metade que o teste antigo não cobria, e é por onde os dois
+        relatórios de idade escaparam: o menu deles não tinha grupo nenhum
+        (todos veriam) mas a ACL do modelo liberava leitura só ao contador
+        PLENO — e o visitante é contador somente-leitura. O Odoo então some
+        com o menu, e o manual ficou falando de uma tela que a demo não tem.
+        """
+        do_visitante = self._menus_visiveis(self.visitor)
+        sem_leitura = []
+        for modulo in self._modulos_com_manual():
+            ids = self.env['ir.model.data'].search([
+                ('module', '=', modulo), ('model', '=', 'ir.ui.menu'),
+            ]).mapped('res_id')
+            for menu in self.env['ir.ui.menu'].browse(ids).exists():
+                if menu.id not in do_visitante:
+                    continue
+                modelo = getattr(menu.action, 'res_model', None) if menu.action else None
+                Model = self.env.get(modelo) if modelo else None
+                if Model is None:
+                    continue
+                try:
+                    Model.with_user(self.visitor).check_access('read')
+                except AccessError:
+                    sem_leitura.append('%s: %s (%s)' % (
+                        modulo, menu.complete_name, modelo))
+        self.assertFalse(sem_leitura, (
+            'menu que a demo enxerga e cujo modelo ela não lê — o clique dá '
+            'Access Error: %s' % '; '.join(sorted(sem_leitura))))
 
     def test_visitante_ve_a_vitrine_comercial(self):
         """Vendas e eCommerce não têm manual, mas são o que se vende.

@@ -24,7 +24,11 @@ argumento:
   fora do dela. Sem esta linha, dar a Amazon ao Comercial deixaria aquele
   teste vermelho — apontando para cá, corretamente.
 
-O que NENHUM dos dois recebe, e é bom dizer: a **credencial**. O refresh token
+Desde 11/09/2026 o **visitante** da demonstração também recebe o nível
+Operator, por leitura: o app tem manual publicado e não abria nenhuma tela para
+ele. Escrever segue barrado no ORM, não aqui.
+
+O que NENHUM deles recebe, e é bom dizer: a **credencial**. O refresh token
 e os campos da conexão são `groups="base.group_system"` no próprio modelo, e
 nenhum grupo daqui contorna isso. O gerente cria a conta; o administrador cola
 o token.
@@ -67,6 +71,16 @@ class ResGroups(models.Model):
             'liber_roles.group_comercial_assistente': 'group_liber_amazon_user',
             'liber_roles.group_comercial_gerente': 'group_liber_amazon_manager',
             'liber_roles.group_direcao': 'group_liber_amazon_manager',
+            # A demonstração pública abre em leitura toda tela que tem manual
+            # publicado, e este módulo tem um. Medido em 11/09/2026, o
+            # visitante alcançava ZERO dos oito menus daqui: o app inteiro não
+            # existia para quem entra na vitrine, e manual falando de tela que
+            # não existe é pior do que não ter a tela. O nível é o de USUÁRIO,
+            # nunca o de administrador: ele olha, e configurar conta de
+            # integração é escrever. A credencial segue fora do alcance de
+            # qualquer grupo daqui (é base.group_system no próprio campo), e a
+            # gravação continua cortada na allowlist do liber_roles.
+            'liber_roles.group_visitante': 'group_liber_amazon_user',
         }
         for xmlid_perfil, nivel in CONCESSOES.items():
             perfil = self.env.ref(xmlid_perfil, raise_if_not_found=False)

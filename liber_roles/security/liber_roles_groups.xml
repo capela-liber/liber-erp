@@ -352,6 +352,7 @@
             (4, ref('liber_dropbox.group_liber_dropbox_user')),
             (4, ref('liber_gdrive.group_liber_gdrive_user')),
             (4, ref('liber_github.group_liber_github_user')),
+            (4, ref('liber_metabooks_integration.metabooks_manager_group')),
         ]"/>
         <field name="comment">Faz o livro: edita a ficha do catálogo e os metadados no Metabooks, trabalha nas tarefas dos projetos que enxerga, usa os arquivos na nuvem, lê e redige contratos de direitos. Não mexe em acerto de royalty, não tem o app Inventário e não cadastra contato.</field>
     </record>
@@ -520,6 +521,21 @@
 
          A trava de escrita é no ORM (models/ir_model_access.py), não no menu:
          vale para RPC e URL colada, não só para a tela. Não mexer sem motivo. -->
+    <!-- 11/09/2026: medido na demo, o visitante alcançava 198 dos 475 menus, e
+         DOZE apps com manual publicado não abriam nenhuma tela para ele: entre
+         eles Olist (0 de 10 menus) e as três estantes de arquivos (0 de 7 cada).
+         Manual falando de tela que não existe é pior do que não ter a tela.
+         Entraram abaixo os grupos de USUÁRIO desses apps; o de administrador
+         não, porque ele olha e configurar é escrever. Amazon Vendor e Support
+         ficam fora daqui só porque este módulo não depende deles: a ponte de
+         cada um está no próprio módulo, como a das feiras.
+
+         A exceção à regra "usuário, nunca administrador" é o
+         metabooks_manager_group, e ela é aparente: o que esse grupo tranca no
+         Metabooks é o CATÁLOGO, que é tela de leitura (Autores, Thema, BISAC,
+         Disponibilidade). O nome exagera o que ele guarda ali, e sem ele 15
+         telas do app ficavam invisíveis. O fecho dele é de três grupos, os
+         dois de baixo o visitante já tinha: não arrasta nada novo. -->
     <record id="group_visitante" model="res.groups">
         <field name="name">Visitante (demonstração)</field>
         <field name="privilege_id" ref="privilege_visitante"/>
@@ -534,6 +550,11 @@
             (4, ref('liber_budget.group_budget_user')),
             (4, ref('account.group_account_readonly')),
             (4, ref('sales_team.group_sale_salesman_all_leads')),
+            (4, ref('liber_olist.group_olist_operador')),
+            (4, ref('liber_dropbox.group_liber_dropbox_user')),
+            (4, ref('liber_gdrive.group_liber_gdrive_user')),
+            (4, ref('liber_github.group_liber_github_user')),
+            (4, ref('liber_metabooks_integration.metabooks_manager_group')),
             (3, ref('sales_team.group_sale_manager')),
             (3, ref('stock.group_stock_manager')),
             (3, ref('project.group_project_user')),
@@ -541,7 +562,7 @@
             (3, ref('liber_soc_agreements.group_soc_manager')),
             (3, ref('liber_budget.group_budget_manager')),
         ]"/>
-        <field name="comment">Conta de demonstração pública: abre em leitura toda tela que tem manual publicado — consignação, direitos autorais e seus royalties, fiscal, catálogo e orçamento — mais Vendas e eCommerce, que são a vitrine. Escreve só no chatter; a trava de escrita é no ORM, não no menu.</field>
+        <field name="comment">Conta de demonstração pública: abre em leitura toda tela que tem manual publicado — consignação, direitos autorais e seus royalties, fiscal, catálogo, orçamento, marketplaces e os arquivos na nuvem — mais Vendas e eCommerce, que são a vitrine. O que fica fora é configuração, que é de administrador. Escreve só no chatter; a trava de escrita é no ORM, não no menu.</field>
     </record>
 
 </odoo>

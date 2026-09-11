@@ -1,2 +1,2 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_liber_aged_payable,liber.aged.payable.accountant,model_liber_aged_payable,account.group_account_user,1,0,0,0
+access_liber_aged_payable,liber.aged.payable.accountant,model_liber_aged_payable,account.group_account_readonly,1,0,0,0
