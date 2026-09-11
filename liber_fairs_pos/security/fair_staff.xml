@@ -44,6 +44,23 @@
                               ref('liber_fairs_pos.group_fair_cashier')])]"/>
     </record>
 
+    <!-- QUEM TRABALHA FEIRA ENXERGA O BALCÃO.
+         Instalar o Ponto de Venda não o faz aparecer: o aplicativo só existe
+         na tela de quem tem o papel dele. Instalado e invisível foi
+         exatamente o que aconteceu no staging e no prod — os módulos lá,
+         dois usuários enxergando, e o gerente que precisa ABRIR o caixa da
+         feira sem achar a tela.
+
+         O papel de Feiras da casa passa a implicar o de usuário do PDV. É
+         condição do módulo, e não tarefa de administrador banco a banco: a
+         feira vende no balcão, e uma feira sem caixa não sabe o que vendeu.
+         O papel temporário do atendente já o implicava; o que faltava era
+         quem monta e acompanha o evento. -->
+    <record id="liber_fairs.group_fair_user" model="res.groups">
+        <field name="implied_ids"
+               eval="[(4, ref('point_of_sale.group_pos_user'))]"/>
+    </record>
+
     <data noupdate="1">
         <!-- A ATENDENTE sozinha na praça. A caixa de livro chega no meio do
              movimento, e esperar o gerente para conferir é deixar a carga na

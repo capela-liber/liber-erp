@@ -311,3 +311,27 @@ class TestVitrineVeOBalcao(TransactionCase):
 
         self.assertNotIn('pos.session', VISITOR_WRITABLE_MODELS)
         self.assertNotIn('pos.order', VISITOR_WRITABLE_MODELS)
+
+
+@tagged('post_install', '-at_install', 'liber_fairs_pos')
+class TestOBalcaoVemComAFeira(TransactionCase):
+    """Instalar o PDV não o faz aparecer: o app é de quem tem o papel dele."""
+
+    def test_whoever_works_fairs_sees_the_register_app(self):
+        feiras = self.env.ref('liber_fairs.group_fair_user')
+        pdv = self.env.ref('point_of_sale.group_pos_user')
+
+        self.assertIn(pdv, feiras.all_implied_ids,
+                      "Feira vende no balcão: quem monta o evento precisa "
+                      "alcançar o caixa")
+
+    def test_the_house_roles_reach_it_through_the_bridge(self):
+        papel = self.env.ref('liber_roles.group_comercial_gerente',
+                             raise_if_not_found=False)
+        if not papel:
+            self.skipTest('liber_roles não está instalado neste banco')
+        pdv = self.env.ref('point_of_sale.group_pos_user')
+
+        self.assertIn(pdv, papel.all_implied_ids,
+                      "O comercial trabalha feira, e a ponte já o liga ao "
+                      "papel de Feiras")
