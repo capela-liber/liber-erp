@@ -11,6 +11,10 @@
             <xpath expr="//field[@name='line_ids']/list/field[@name='qty_sold']"
                    position="after">
                 <field name="qty_pos" readonly="1" optional="show"/>
+                <!-- O dia fica à mão de quem quiser, escondido por padrão:
+                     a pergunta do fechamento é sobre a MESA, e a mesa é o
+                     acumulado. -->
+                <field name="qty_pos_day" readonly="1" optional="hide"/>
             </xpath>
         </field>
     </record>

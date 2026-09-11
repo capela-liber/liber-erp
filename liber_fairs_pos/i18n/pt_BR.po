@@ -466,3 +466,8 @@ msgstr "Atendente da feira"
 #: model:res.groups,name:liber_fairs_pos.group_fair_field
 msgid "Fair supervisor"
 msgstr "Supervisor da feira"
+
+#. module: liber_fairs_pos
+#: model:ir.model.fields,field_description:liber_fairs_pos.field_event_fair_day_line__qty_pos_day
+msgid "Sold today"
+msgstr "Vendido no dia"

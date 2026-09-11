@@ -234,7 +234,6 @@ class TestFairStock(TransactionCase):
         retorno = fair.action_return()
         self.assertEqual(retorno.fair_operation, 'return_dispatch')
         self.assertEqual(sum(retorno.move_ids.mapped('product_uom_qty')), 6)
-        self._validate(retorno)
         self._receber_retorno(fair)
         self.assertEqual(fair.state, 'returned')
         self.assertEqual(fair.qty_returned, 6)
@@ -493,7 +492,7 @@ class TestFairStock(TransactionCase):
         primeiro.line_ids.qty_counted = 6
         primeiro.action_close()
         self.assertEqual(segundo.state, 'draft')
-        self._validate(fair.action_return())
+        fair.action_return()     # o clique já fecha a volta
         self.assertEqual(segundo.state, 'closed',
                          "O dia que ninguém fechou tem de fechar no retorno")
         self.assertTrue(segundo.is_sealed)
@@ -509,7 +508,7 @@ class TestFairStock(TransactionCase):
         dia.action_fill()
         dia.line_ids.qty_counted = 4
         dia.action_close()
-        self._validate(fair.action_return())
+        fair.action_return()     # o clique já fecha a volta
         dia.line_ids.qty_replenish = 5
         with self.assertRaises(UserError):
             dia.action_replenish()
@@ -519,7 +518,7 @@ class TestFairStock(TransactionCase):
         fair = self._fair(qty=10)
         fair.action_plan()
         self._entregar(fair)
-        self._validate(fair.action_return())
+        fair.action_return()     # o clique já fecha a volta
         self._receber_retorno(fair)
         for dia in fair.day_ids:
             self.assertEqual(dia.state, 'closed')
@@ -595,7 +594,7 @@ class TestFairStock(TransactionCase):
         voltou = self._fair(qty=4)
         voltou.action_plan()
         self._entregar(voltou)
-        self._validate(voltou.action_return())
+        voltou.action_return()   # o clique já fecha a volta
 
         domain = [('state', '=', 'draft'),
                   ('fair_id.state', 'not in',
@@ -678,7 +677,7 @@ class TestFairStock(TransactionCase):
         ja_voltou = self._fair(qty=4)
         ja_voltou.action_plan()
         self._entregar(ja_voltou)
-        self._validate(ja_voltou.action_return())
+        ja_voltou.action_return()   # o clique já fecha a volta
 
         em_curso = self.env['event.fair.day'].search(
             [('fair_state', '=', 'shipped')])
@@ -744,12 +743,11 @@ class TestFairStock(TransactionCase):
         self.assertEqual(
             sum(retorno.move_ids.mapped('product_uom_qty')), 6,
             "O retorno pede SEIS, que é o que sobrou depois do fechamento")
-        retorno.action_assign()
-        self.assertEqual(retorno.state, 'assigned',
-                         "e por isso a transferência fica disponível")
+        self.assertEqual(retorno.state, 'done',
+                         "e ela sai no clique, sem 'Não disponível'")
         for move in retorno.move_ids:
             self.assertEqual(move.quantity, 6,
-                             "com tudo reservado, sem 'Não disponível'")
+                             "com tudo o que estava na mesa dentro da caixa")
 
     def test_the_transfer_says_which_fair_it_belongs_to(self):
         """A conversa da equipe acontece no histórico da transferência.

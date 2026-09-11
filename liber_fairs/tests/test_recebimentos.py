@@ -154,11 +154,8 @@ class TestRecebimentos(TransactionCase):
 
         saida_de_volta = fair.action_return()
         self.assertEqual(saida_de_volta.fair_operation, 'return_dispatch')
-        saida_de_volta.action_assign()
-        for move in saida_de_volta.move_ids:
-            move.quantity = move.product_uom_qty
-            move.picked = True
-        saida_de_volta.button_validate()
+        self.assertEqual(saida_de_volta.state, 'done',
+                         "O clique em Retorno já tira a carga da mesa")
 
         volta = self._chegada(fair)
         self.assertEqual(volta.fair_operation, 'return')

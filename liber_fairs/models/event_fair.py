@@ -557,7 +557,21 @@ class EventFair(models.Model):
         pickings = self.env['stock.picking']
         devolvendo = {p: q for p, q in (devolvendo or {}).items() if q > 0}
         if devolvendo:
-            pickings |= self._create_fair_picking('return_dispatch', devolvendo)
+            saida = self._create_fair_picking('return_dispatch', devolvendo)
+            # O CLIQUE FECHA. Pedir o retorno é o gesto de quem já embalou: a
+            # van está na porta, e ninguém volta ao sistema para dizer "agora
+            # sim". Deixar a remessa reservada esperando validação criava um
+            # meio-termo em que a feira não fechava e a equipe ia embora.
+            #
+            # O que porventura ficou para trás não se perde: sai da mesa aqui
+            # e aparece na CONFERÊNCIA DO ARMAZÉM, onde a diferença entre o
+            # que a praça mandou e o que chegou vira falta com nome.
+            saida.action_assign()
+            for move in saida.move_ids:
+                move.quantity = move.product_uom_qty
+                move.picked = True
+            saida.button_validate()
+            pickings |= saida
         pickings |= self._registrar_perdas(perdas)
         # A CHEGADA NASCE DEPOIS, quando a mercadoria sai da mesa de verdade
         # (ver `_abrir_a_chegada_do_retorno`). E o evento só vira RETORNADO

@@ -111,6 +111,8 @@ class TestTourFeiraCompleta(HttpCase):
             linha.qty_counted = max(0, linha.qty_expected - 3)
         dia.action_close()
         volta = passada.action_return()
+        if volta.state in ('done', 'cancel'):
+            return volta
         volta.action_assign()
         for move in volta.move_ids:
             move.quantity = move.product_uom_qty

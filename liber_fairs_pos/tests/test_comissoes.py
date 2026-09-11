@@ -106,12 +106,9 @@ class TestComissoes(TestCaixaDaFeira):
         dia.action_fill()
         dia.line_ids.qty_counted = dia.line_ids.qty_expected
         dia.action_close()
+        # Desde 10/09/2026 o clique já valida a remessa de volta: pedir o
+        # retorno é o gesto de quem embalou.
         despacho = fair.action_return()
-        despacho.action_assign()
-        for move in despacho.move_ids:
-            move.quantity = move.product_uom_qty
-            move.picked = True
-        despacho.button_validate()
         chegada = fair.picking_ids.filtered(
             lambda p: p.fair_operation == 'return' and p.state != 'done')
         if chegada:

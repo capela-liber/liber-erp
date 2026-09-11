@@ -6,7 +6,7 @@ existir: a venda do balcão TEM de aparecer como venda da feira. Se não
 aparecer, o fechamento diário -- que desconta a diferença entre o esperado e
 o contado -- lança a mesma venda de novo, e a mesa fica negativa.
 """
-from datetime import date
+from datetime import date, datetime, time, timedelta
 
 from odoo.exceptions import UserError
 from odoo.tests import TransactionCase, tagged
@@ -70,11 +70,12 @@ class TestCaixaDaFeira(TransactionCase):
         fecha o evento. Pedir o retorno já não basta: a ficha só diz
         `returned` quando o estoque concorda com ela.
         """
-        despacho.action_assign()
-        for move in despacho.move_ids:
-            move.quantity = move.product_uom_qty
-            move.picked = True
-        despacho.button_validate()
+        if despacho.state not in ('done', 'cancel'):
+            despacho.action_assign()
+            for move in despacho.move_ids:
+                move.quantity = move.product_uom_qty
+                move.picked = True
+            despacho.button_validate()
         return despacho
 
     def _venda(self, fair, qty, sessao=None):
@@ -261,15 +262,17 @@ class TestCaixaDaFeira(TransactionCase):
         O que faltava era o OUTRO número, o que o balcão registrou. A
         diferença entre os dois é o que ninguém vê de outro jeito.
         """
+        # Fuso e hora FIXOS: sem isso o teste depende do relógio da máquina --
+        # venda das 22h UTC já é o dia seguinte num fuso à frente, e a
+        # asserção quebra à noite e passa de manhã.
+        self.env.user.tz = 'UTC'
         fair = self._feira_na_praca(10)
         self._operadores(fair, 'Marta')
         fair.action_open_pos()
-        self._venda(fair, 3)
-
-        # A venda pertence ao DIA DO CALENDÁRIO em que aconteceu; a feira do
-        # teste está marcada para setembro, e a venda é de hoje.
+        _sessao, pedido = self._venda(fair, 3)
         dia = fair.day_ids[0]
-        dia.date = date.today()
+        pedido.sudo().write({'date_order': datetime.combine(
+            dia.date, time(12, 0))})
         dia.action_fill()
         linha = dia.line_ids
 
@@ -303,18 +306,13 @@ class TestCaixaDaFeira(TransactionCase):
         dia.line_ids.qty_counted = dia.line_ids.qty_expected
         dia.action_close()
 
-        despacho = fair.action_return()
+        fair.action_return()
 
         self.assertEqual(sessao.state, 'closed',
-                         "O caixa fecha no PEDIDO do retorno: sessão aberta "
-                         "ainda venderia depois da contagem")
-        self.assertTrue(fair.pos_config_ids.filtered('active'),
-                        "Mas some da lista só quando a mercadoria sai da mesa")
-
-        self._despachar_de_volta(despacho)
-
+                         "O caixa fecha no retorno: sessão aberta ainda "
+                         "venderia depois da contagem")
         self.assertFalse(fair.pos_config_ids.filtered('active'),
-                         "E aí sim sai da lista de quem opera PDV todo dia")
+                         "E sai da lista de quem opera PDV todo dia")
 
     def test_an_unpaid_order_stops_the_return(self):
         """Venda começada e não paga é decisão de quem está no balcão."""
@@ -708,3 +706,73 @@ class TestOCaixaVemNaCaixa(TransactionCase):
         modulo = self.env['ir.module.module'].search(
             [('name', '=', 'liber_fairs_pos')], limit=1)
         self.assertEqual(modulo.state, 'installed')
+
+
+@tagged('post_install', '-at_install', 'liber_fairs_pos')
+class TestOVendidoNoFechamento(TestCaixaDaFeira):
+    """O que o caixa vendeu tem de APARECER na contagem da mesa."""
+
+    def test_the_register_column_is_the_event_so_far(self):
+        """Acumulado, e não o dia.
+
+        A janela do dia deixava venda de fora -- sessão aberta na véspera para
+        testar o balcão, venda depois da meia-noite, feira cujo movimento
+        começou antes da data cadastrada -- e a coluna dizia zero numa mesa
+        que tinha vendido. Acumulado também é o que casa com o Esperado, que
+        já desconta toda a venda do evento.
+        """
+        fair = self._feira_na_praca(10)
+        self._operadores(fair, 'Marta')
+        fair.action_open_pos()
+        self._venda(fair, 3)
+
+        dia = fair.day_ids[0]
+        dia.action_fill()
+        linha = dia.line_ids.filtered(lambda l: l.product_id == self.livro)
+
+        self.assertEqual(linha.qty_pos, 3,
+                         "Três exemplares passaram pelo caixa")
+        self.assertEqual(linha.qty_expected, 7,
+                         "E o esperado desconta os mesmos três")
+
+    def test_yesterdays_sale_still_shows_today(self):
+        """Venda de ontem não some da contagem de hoje."""
+        fair = self._feira_na_praca(10)
+        self._operadores(fair, 'Marta')
+        fair.action_open_pos()
+        sessao, pedido = self._venda(fair, 2)
+        # A venda aconteceu ANTES do dia que se está fechando.
+        pedido.sudo().write({'date_order': datetime.combine(
+            fair.date_start - timedelta(days=1), datetime.min.time())})
+
+        dia = fair.day_ids[0]
+        dia.action_fill()
+        linha = dia.line_ids.filtered(lambda l: l.product_id == self.livro)
+
+        self.assertEqual(linha.qty_pos, 2,
+                         "O acumulado do evento não conhece meia-noite")
+        self.assertEqual(linha.qty_pos_day, 0,
+                         "E a coluna do dia continua dizendo a verdade dela")
+
+    def test_the_evening_sale_belongs_to_the_evening(self):
+        """Feira vende de noite, e o banco guarda UTC.
+
+        Uma venda das 21h em São Paulo é 00h do dia seguinte em UTC. Comparada
+        crua com a data da feira, ela contava para o dia errado -- e a coluna
+        do dia, que existe para dizer como foi o sábado, dizia o domingo.
+        """
+        self.env.user.tz = 'America/Sao_Paulo'
+        fair = self._feira_na_praca(10)
+        self._operadores(fair, 'Marta')
+        fair.action_open_pos()
+        sessao, pedido = self._venda(fair, 2)
+        # 21h no fuso de quem vende = 00h do dia seguinte em UTC.
+        pedido.sudo().write({'date_order': datetime.combine(
+            fair.date_start, time(0, 0)) + timedelta(days=1)})
+
+        dia = fair.day_ids[0]
+        dia.action_fill()
+        linha = dia.line_ids.filtered(lambda l: l.product_id == self.livro)
+
+        self.assertEqual(linha.qty_pos_day, 2,
+                         "A venda das 21h é do dia em que ela aconteceu")

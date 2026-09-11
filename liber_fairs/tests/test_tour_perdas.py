@@ -44,21 +44,25 @@ class TestTourPerdas(HttpCase):
         dia.action_fill()
         dia.line_ids.qty_counted = dia.line_ids.qty_expected
         dia.action_close()
-        despacho = fair.action_return()
-        despacho.action_assign()
-        for move in despacho.move_ids:
+        # O clique em Retorno já esvazia a mesa; a falta que sobra para
+        # explicar na tela é a da ESTRADA -- o armazém conta três a menos.
+        fair.action_return()
+        chegada = fair.picking_ids.filtered(
+            lambda p: p.fair_operation == 'return' and p.state != 'done')
+        chegada.action_assign()
+        for move in chegada.move_ids:
             move.quantity = move.product_uom_qty - 3
             move.picked = True
-        despacho.button_validate()
+        chegada.button_validate()
 
         perda = fair.loss_ids
         self.assertEqual(len(perda), 1)
         self.assertTrue(perda.to_explain)
         self.assertFalse(perda.write_off_picking_id)
-        na_mesa = livro.with_context(
-            location=fair.stock_location_id.id,
+        no_transito = livro.with_context(
+            location=fair._get_transit_location().id,
             company_id=company.id).qty_available
-        self.assertEqual(na_mesa, 3, "Os três continuam na mesa")
+        self.assertEqual(no_transito, 3, "Os três ficaram na estrada")
 
         usuario = self.env['res.users'].with_context(
             no_reset_password=True).create({
@@ -81,9 +85,9 @@ class TestTourPerdas(HttpCase):
         self.assertTrue(perda.write_off_picking_id,
                         "Explicar tem de BAIXAR o exemplar")
         self.assertEqual(perda.write_off_picking_id.move_ids.location_id,
-                         fair.stock_location_id,
-                         "Da mesa, que é onde eles estavam")
+                         fair._get_transit_location(),
+                         "Do trânsito, que é onde eles ficaram")
         na_mesa = livro.with_context(
-            location=fair.stock_location_id.id,
+            location=fair._get_transit_location().id,
             company_id=company.id).qty_available
         self.assertEqual(na_mesa, 0, "A mesa esvaziou")
