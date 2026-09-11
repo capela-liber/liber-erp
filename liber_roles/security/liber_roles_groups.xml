@@ -353,6 +353,7 @@
             (4, ref('liber_gdrive.group_liber_gdrive_user')),
             (4, ref('liber_github.group_liber_github_user')),
             (4, ref('liber_metabooks_integration.metabooks_manager_group')),
+            (4, ref('purchase.group_purchase_user')),
         ]"/>
         <field name="comment">Faz o livro: edita a ficha do catálogo e os metadados no Metabooks, trabalha nas tarefas dos projetos que enxerga, usa os arquivos na nuvem, lê e redige contratos de direitos. Não mexe em acerto de royalty, não tem o app Inventário e não cadastra contato.</field>
     </record>
@@ -471,6 +472,7 @@
             (4, ref('group_marketing_assistente')),
             (4, ref('website.group_website_designer')),
             (4, ref('liber_metabooks_integration.metabooks_manager_group')),
+            (4, ref('purchase.group_purchase_user')),
             (4, ref('group_project_task_editor')),
             (4, ref('base.group_partner_manager')),
             (4, ref('base.group_allow_export')),
@@ -535,7 +537,14 @@
          Metabooks é o CATÁLOGO, que é tela de leitura (Autores, Thema, BISAC,
          Disponibilidade). O nome exagera o que ele guarda ali, e sem ele 15
          telas do app ficavam invisíveis. O fecho dele é de três grupos, os
-         dois de baixo o visitante já tinha: não arrasta nada novo. -->
+         dois de baixo o visitante já tinha: não arrasta nada novo
+
+         COMPRAS entra em 11/09/2026, e é mudança de premissa, não exceção: o
+         liber_print_quote (a ficha técnica que viaja no pedido à gráfica) não
+         declara menu próprio, ele ESTENDE o pedido de compra. Quer dizer que
+         o app de Compras deixou de ser "Odoo cru" e passou a hospedar tela do
+         Liber, com manual publicado. Enquanto a demo escondia Compras, o
+         manual falava de uma tela que ela não tinha. -->
     <record id="group_visitante" model="res.groups">
         <field name="name">Visitante (demonstração)</field>
         <field name="privilege_id" ref="privilege_visitante"/>
@@ -555,6 +564,7 @@
             (4, ref('liber_gdrive.group_liber_gdrive_user')),
             (4, ref('liber_github.group_liber_github_user')),
             (4, ref('liber_metabooks_integration.metabooks_manager_group')),
+            (4, ref('purchase.group_purchase_user')),
             (3, ref('sales_team.group_sale_manager')),
             (3, ref('stock.group_stock_manager')),
             (3, ref('project.group_project_user')),

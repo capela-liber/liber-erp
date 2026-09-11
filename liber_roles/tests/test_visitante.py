@@ -324,20 +324,53 @@ class TestVisitante(TransactionCase):
     def test_visitante_nao_ve_o_que_nao_tem_manual(self):
         """A régua corta dos dois lados, senão vira 'gerente em tudo' de novo.
 
-        Compras, Inventário e Projeto não têm manual publicado e são apps do
-        Odoo cru -- a demo mostra o Liber, não o Odoo. Este teste é o freio
-        da v3: sem ele, a próxima frouxidão passa sem ninguém notar.
+        Inventário e Projeto não têm manual publicado e são apps do Odoo cru
+        -- a demo mostra o Liber, não o Odoo. Este teste é o freio da v3: sem
+        ele, a próxima frouxidão passa sem ninguém notar.
+
+        COMPRAS SAIU desta lista em 11/09/2026, e a distinção importa: não foi
+        frouxidão, foi a premissa que mudou. O `liber_print_quote` -- a ficha
+        técnica do livro que viaja no pedido à gráfica -- não declara menu
+        próprio: ele ESTENDE o pedido de compra. Compras deixou de ser app do
+        Odoo cru e passou a hospedar tela do Liber, com manual publicado.
+        Enquanto a demo o escondia, o manual falava de uma tela que ela não
+        tinha.
+
+        Fica a lição para o guarda derivado: ele compara MENUS declarados por
+        módulo, e um módulo que só estende a tela de outro app não declara
+        menu nenhum -- escapa por construção. Módulo assim tem de ser lembrado
+        aqui, à mão, porque não há o que derivar.
         """
         dados = self.as_visitor['ir.ui.menu'].load_menus(False)
         visiveis = {int(k) for k in dados if str(k).isdigit()}
-        for rotulo, xmlid in (('Compras', 'purchase.menu_purchase_root'),
-                              ('Inventário', 'stock.menu_stock_root'),
+        for rotulo, xmlid in (('Inventário', 'stock.menu_stock_root'),
                               ('Projeto', 'project.menu_main_pm')):
             menu = self.env.ref(xmlid, raise_if_not_found=False)
             if menu:
                 self.assertNotIn(
                     menu.id, visiveis,
                     "%s não tem manual e não deveria aparecer na demo" % rotulo)
+
+    def test_visitante_ve_compras_porque_ela_hospeda_a_ficha_tecnica(self):
+        """O contrário do teste acima, e por isso vem logo depois dele.
+
+        Se um dia o liber_print_quote sair do produto, este teste cai junto e
+        Compras volta para a lista de apps escondidos -- que é o
+        comportamento certo. Enquanto ele estiver instalado, esconder Compras
+        é esconder uma tela com manual.
+        """
+        if not self.env['ir.module.module'].search_count([
+                ('name', '=', 'liber_print_quote'), ('state', '=', 'installed')]):
+            self.skipTest('liber_print_quote não instalado nesta base')
+        menu = self.env.ref('purchase.menu_purchase_root',
+                            raise_if_not_found=False)
+        if not menu:
+            self.skipTest('app de Compras ausente')
+        self.assertIn(
+            menu.id, self._menus_visiveis(self.visitor),
+            'Compras hospeda a ficha técnica do liber_print_quote, que tem '
+            'manual publicado: escondê-la deixa o manual falando de uma tela '
+            'que a demonstração não mostra')
 
     # ------------------------------------------------------------ não grava
     def test_visitante_nao_emite_pedido(self):

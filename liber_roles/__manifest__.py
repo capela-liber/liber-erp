@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     'name': 'Liber Roles (as funções da casa)',
-    'version': '19.0.2.12.0',
+    'version': '19.0.2.13.0',
     'summary': 'Perfis por função: departamento + nível, embrulhando os grupos do Odoo',
     'description': """
 Os "perfis" nativos do Odoo são recortes por aplicativo (Vendas: Usuário,
