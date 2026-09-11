@@ -237,6 +237,39 @@ class EventFairDay(models.Model):
             por_produto = {
                 line.product_id: line for line in fair.line_ids
             }
+            # O QUE JÁ ESTÁ A CAMINHO NÃO SE PEDE DE NOVO.
+            #
+            # A coluna sugerida já desconta o trânsito, mas ela é uma FOTO do
+            # dia em que a contagem foi tirada -- e o número é editável. Dois
+            # dias diferentes pedindo o mesmo título, ou um pedido digitado
+            # por cima de outro que saiu ontem, faziam a mesa receber em
+            # dobro justamente o que estava faltando. Foi o que aconteceu com
+            # Os Sertões em 11/09/2026: quatro pedidos no fechamento de 30/09
+            # e mais quatro no de 29/09, um minuto depois.
+            #
+            # Aqui a conferência é AO VIVO, na hora de despachar, contra o que
+            # a grade sabe: pedido e ainda não chegou, esteja ele parado no
+            # armazém ou na estrada.
+            ja_a_caminho = {}
+            for product in list(pedido):
+                linha = por_produto.get(product)
+                pendente = linha.qty_requested if linha else 0.0
+                if pendente <= 0:
+                    continue
+                sobra = pedido[product] - pendente
+                ja_a_caminho[product] = min(pendente, pedido[product])
+                if sobra > 0:
+                    pedido[product] = sobra
+                else:
+                    del pedido[product]
+            if not pedido:
+                raise UserError(_(
+                    "Nothing to send: %(titulos)s already asked for and on "
+                    "the way. Wait for it to arrive, or raise the grid on "
+                    "the fair if the fair really needs more.",
+                    titulos=', '.join(
+                        '%s (%s)' % (produto.display_name, int(qtd))
+                        for produto, qtd in ja_a_caminho.items())))
             for product, qty in pedido.items():
                 linha = por_produto.get(product)
                 if linha:
@@ -260,11 +293,11 @@ class EventFairDay(models.Model):
             })
             day.replenish_picking_ids = [(4, p.id) for p in novos]
             day.line_ids.write({'qty_replenish': 0.0})
-            day._avisar_a_reposicao(pedido, novos)
+            day._avisar_a_reposicao(pedido, novos, ja_a_caminho)
             pickings |= novos
         return pickings
 
-    def _avisar_a_reposicao(self, pedido, pickings):
+    def _avisar_a_reposicao(self, pedido, pickings, ja_a_caminho=None):
         """Conta no histórico da feira que a reposição foi pedida.
 
         Sem isto, a reposição vira movimento e mais nada: quem está no
@@ -289,6 +322,15 @@ class EventFairDay(models.Model):
             "<b>%(dia)s</b>, on <b>%(mov)s</b>:</p><ul>%(linhas)s</ul>",
             feira=self.fair_id.display_name,
             dia=self.date, mov=refs, linhas=linhas)
+        # O que foi descontado fica DITO. Quem pediu dez e viu sair quatro
+        # precisa saber que os outros seis já estavam na estrada, senão pede
+        # de novo amanhã.
+        if ja_a_caminho:
+            corpo += _(
+                "<p>Already on the way, and not asked again: %(titulos)s.</p>",
+                titulos=', '.join(
+                    '%s (%s)' % (produto.display_name, int(qtd))
+                    for produto, qtd in ja_a_caminho.items()))
         self.fair_id.message_post(body=Markup(corpo))
         return True
 

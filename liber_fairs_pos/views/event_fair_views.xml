@@ -126,6 +126,18 @@
                         <button name="action_add_cost" type="object"
                                 string="Add a cost" class="btn-secondary"
                                 help="A payable already pointed at this event: special freight, stand fee, the van, lodging."/>
+                        <!-- PORTA DE REPESCAGEM, e só. As contas da equipe
+                             nascem sozinhas no fechamento; quem preencher
+                             comissão ou diária DEPOIS disso ficaria sem a
+                             dele. O botão só aparece quando há alguém nessa
+                             situação, e nunca duplica: quem já tem conta é
+                             pulado. -->
+                        <button name="action_generate_bills" type="object"
+                                string="Create the missing bills"
+                                class="btn-secondary ms-1"
+                                invisible="state != 'returned' or bills_pending == 0"
+                                help="Somebody had their numbers filled in after the event closed. This creates only the bills that are missing."/>
+                        <field name="bills_pending" invisible="1"/>
                     </div>
                     <field name="bill_ids" readonly="1">
                         <list>

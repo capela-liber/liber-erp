@@ -865,3 +865,106 @@ class TestFairStock(TransactionCase):
             ('product_id', '=', self.product.id)])
         self.assertEqual(sum(armazem.mapped('quantity')), 90,
                          "e não voltaram para o armazém sozinhos")
+
+
+@tagged('post_install', '-at_install', 'liber_fairs')
+class TestReposicaoEmDobro(TransactionCase):
+    """O que já está a caminho não se pede de novo.
+
+    "Tem que entender por que teve duas reposições dos Sertões. Isso não
+    deveria acontecer." Dois dias diferentes pediram o mesmo título, com um
+    minuto de diferença, e a mesa receberia oito exemplares onde faltavam
+    quatro. A coluna sugerida já descontava o trânsito -- mas ela é uma FOTO
+    do dia em que a contagem foi tirada, e o número é editável.
+    """
+
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.company = cls.env.company
+        cls.armazem = cls.env['stock.warehouse'].search(
+            [('company_id', '=', cls.company.id)], limit=1)
+        cls.livro = cls.env['product.product'].create({
+            'name': 'Os Sertões do Teste', 'type': 'consu',
+            'is_storable': True, 'standard_price': 20.0})
+        cls.env['stock.quant']._update_available_quantity(
+            cls.livro, cls.armazem.lot_stock_id, 200)
+
+    def _feira_de_dois_dias(self):
+        hoje = date.today()
+        fair = self.env['event.fair'].create({
+            'name': 'Feira de dois dias', 'date_start': hoje,
+            'date_end': hoje + timedelta(days=1),
+            'company_id': self.company.id,
+            'line_ids': [(0, 0, {
+                'product_id': self.livro.id, 'qty_planned': 10,
+                'qty_min': 8})]})
+        fair.action_plan()
+        saida = fair.action_ship()
+        saida.action_assign()
+        for move in saida.move_ids:
+            move.quantity = move.product_uom_qty
+            move.picked = True
+        saida.button_validate()
+        fair.picking_ids.filtered(
+            lambda p: p.fair_operation == 'receipt'
+            and p.state != 'done').action_fair_check()
+        return fair
+
+    def test_the_second_day_does_not_ask_for_what_is_already_coming(self):
+        fair = self._feira_de_dois_dias()
+        primeiro, segundo = fair.day_ids[0], fair.day_ids[1]
+        primeiro.action_fill()
+        primeiro.line_ids.qty_replenish = 4
+        primeiro.action_replenish()
+        self.assertEqual(fair.line_ids.qty_requested, 4,
+                         "Quatro pedidos e ainda não chegaram")
+
+        segundo.action_fill()
+        segundo.line_ids.qty_replenish = 4
+
+        with self.assertRaises(UserError) as erro:
+            segundo.action_replenish()
+
+        self.assertIn('Os Sertões do Teste', str(erro.exception),
+                      "E a recusa tem de dizer QUAL título já vem vindo")
+
+    def test_what_is_missing_beyond_the_road_still_goes(self):
+        """Descontar não é recusar: o que falta ALÉM do que vem, sai."""
+        fair = self._feira_de_dois_dias()
+        primeiro, segundo = fair.day_ids[0], fair.day_ids[1]
+        primeiro.action_fill()
+        primeiro.line_ids.qty_replenish = 4
+        primeiro.action_replenish()
+
+        segundo.action_fill()
+        segundo.line_ids.qty_replenish = 10   # pede dez, quatro já vêm
+
+        novos = segundo.action_replenish()
+
+        self.assertEqual(sum(novos.move_ids.mapped('product_uom_qty')), 6,
+                         "Saem seis: os quatro da estrada não se pedem de novo")
+
+    def test_after_it_arrives_the_title_can_be_asked_again(self):
+        """Chegou, acabou de novo: pedir outra vez é legítimo."""
+        fair = self._feira_de_dois_dias()
+        primeiro, segundo = fair.day_ids[0], fair.day_ids[1]
+        primeiro.action_fill()
+        primeiro.line_ids.qty_replenish = 4
+        reposicao = primeiro.action_replenish()
+        reposicao.action_assign()
+        for move in reposicao.move_ids:
+            move.quantity = move.product_uom_qty
+            move.picked = True
+        reposicao.button_validate()
+        fair.picking_ids.filtered(
+            lambda p: p.fair_operation == 'receipt'
+            and p.state != 'done').action_fair_check()
+        self.assertEqual(fair.line_ids.qty_requested, 0,
+                         "Chegou: não há mais nada a caminho")
+
+        segundo.action_fill()
+        segundo.line_ids.qty_replenish = 4
+        novos = segundo.action_replenish()
+
+        self.assertEqual(sum(novos.move_ids.mapped('product_uom_qty')), 4)

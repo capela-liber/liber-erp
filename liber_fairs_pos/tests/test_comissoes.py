@@ -381,3 +381,55 @@ class TestComissoes(TestCaixaDaFeira):
         marta.role = 'manager'
 
         self.assertEqual(marta.role, 'manager')
+
+    # --- a repescagem -----------------------------------------------------
+    def test_numbers_filled_after_the_close_still_get_their_bill(self):
+        """A pergunta do dono: "e se rodarmos antes os custos e depois tiver
+        comissão pra pagar?"
+
+        As contas nascem no fechamento. Quem preencher comissão ou diária
+        depois disso ficaria sem a dele -- e sem porta nenhuma para pedir,
+        depois que o botão saiu da tela. O botão volta como REPESCAGEM: ele
+        aparece só quando falta conta de alguém.
+        """
+        self._preparar_contabilidade()
+        fair = self._feira_na_praca(20)
+        marta, joana = self._equipe(fair, 'Marta', 'Joana')
+        marta.write({'daily_rate': 100.0, 'days': 1})
+
+        self._fechar(fair)
+
+        self.assertTrue(marta.bill_id, "A dela nasceu no fechamento")
+        self.assertFalse(joana.bill_id, "A dela não, porque não havia número")
+        self.assertEqual(fair.bills_pending, 0,
+                         "E sem número não falta conta nenhuma")
+
+        # O combinado aparece depois: a diária da Joana entra agora.
+        joana.write({'daily_rate': 80.0, 'days': 1})
+        fair.invalidate_recordset()
+
+        self.assertEqual(fair.bills_pending, 1,
+                         "Agora falta uma, e o botão tem de aparecer")
+
+        fair.action_generate_bills()
+
+        joana.invalidate_recordset()
+        self.assertTrue(joana.bill_id, "E a repescagem cria a que faltava")
+
+    def test_the_catch_up_never_duplicates(self):
+        """Rodar de novo não cria segunda conta para quem já tem."""
+        self._preparar_contabilidade()
+        fair = self._feira_na_praca(20)
+        marta, = self._equipe(fair, 'Marta')
+        marta.write({'daily_rate': 100.0, 'days': 1})
+        self._fechar(fair)
+        primeira = marta.bill_id
+        self.assertTrue(primeira)
+
+        fair.action_generate_bills()
+        fair.action_generate_bills()
+
+        marta.invalidate_recordset()
+        self.assertEqual(marta.bill_id, primeira, "A mesma conta, uma só")
+        self.assertEqual(len(fair.bill_ids), 1,
+                         "E o evento não ganhou custo duplicado")

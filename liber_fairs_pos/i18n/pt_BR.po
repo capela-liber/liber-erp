@@ -521,3 +521,13 @@ msgstr ""
 "que o caixa vendeu, desconta o que aqueles livros custaram à casa e desconta "
 "estes custos. É a diferença entre \"a feira se pagou\" e \"a feira deu lucro\"."
 
+
+#. module: liber_fairs_pos
+#: model_terms:ir.ui.view,arch_db:liber_fairs_pos.view_event_fair_form_pos
+msgid "Create the missing bills"
+msgstr "Gerar as contas que faltam"
+
+#. module: liber_fairs_pos
+#: model:ir.model.fields,field_description:liber_fairs_pos.field_event_fair__bills_pending
+msgid "Bills missing"
+msgstr "Contas a gerar"

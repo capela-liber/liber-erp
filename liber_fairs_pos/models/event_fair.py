@@ -77,6 +77,10 @@ class EventFair(models.Model):
         string='To pay', currency_field='company_currency_id',
         compute='_compute_comissoes')
     bill_count = fields.Integer(compute='_compute_comissoes')
+    bills_pending = fields.Integer(
+        string='Bills missing', compute='_compute_comissoes',
+        help="People with something to receive and no bill yet. It is what "
+             "makes the catch-up button appear.")
 
     # --- o que o evento CUSTOU, e se ele deu dinheiro --------------------
     #
@@ -182,6 +186,12 @@ class EventFair(models.Model):
                 'charged_to_team').mapped('value'))
             fair.payout_total = sum(equipe.mapped('net_amount'))
             fair.bill_count = len(equipe.mapped('bill_id'))
+            # Quem tem a receber e ainda não tem conta. As contas nascem no
+            # fechamento; quem preencher comissão DEPOIS disso ficaria sem a
+            # dele, e sem porta nenhuma para pedir -- foi o que a remoção do
+            # botão tinha criado.
+            fair.bills_pending = len(equipe.filtered(
+                lambda o: not o.bill_id and o.net_amount > 0))
 
     def action_generate_bills(self):
         """Uma conta a pagar por pessoa, com o evento no nome e no analítico.
