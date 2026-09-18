@@ -14,7 +14,6 @@
                             <field name="code" placeholder="101"/>
                             <field name="sentido"/>
                             <field name="name"/>
-                <field name="letra" optional="show"/>
                             <field name="letra"/>
                             <field name="document_kind"/>
                             <field name="active" widget="boolean_toggle"/>

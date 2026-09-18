@@ -1,0 +1,74 @@
+{
+ "curso": "Curso Royalties I: contratos de direitos autorais",
+ "aula": 4,
+ "titulo": "Linhas de royalty e faixas",
+ "abertura": "Esta aula é o miolo do contrato: uma linha por favorecido e obra, os adiantamentos, e as faixas de percentual por acumulado de exemplares vendidos.",
+ "fecho": "Cada linha é favorecido × obra; as faixas dizem quanto por cento a cada tanto de exemplares acumulados; a última faixa tem Até igual a zero, que quer dizer sem teto.",
+ "youtube": "https://www.youtube.com/watch?v=cWSGoemsgxU",
+ "quiz": [
+  {
+   "pergunta": "O que é uma linha de royalty?",
+   "opcoes": [
+    "Uma parcela a pagar",
+    "Uma venda",
+    "Uma nota fiscal",
+    "Um favorecido numa obra, com suas condições"
+   ],
+   "comentarios": [
+    "Pagamento é outro módulo.",
+    "Venda é do comercial.",
+    "Não é fiscal.",
+    "Coautoria são duas linhas na mesma obra."
+   ],
+   "correta": 3
+  },
+  {
+   "pergunta": "As faixas medem o quê?",
+   "opcoes": [
+    "O preço do livro",
+    "O acumulado de exemplares vendidos da obra",
+    "O tempo de contrato",
+    "O número de edições"
+   ],
+   "comentarios": [
+    "O preço entra no cálculo, não na faixa.",
+    "Dez por cento até 3.000, doze até 5.000, quinze dali em diante — por exemplo.",
+    "Não é tempo.",
+    "Não é edição."
+   ],
+   "correta": 1
+  },
+  {
+   "pergunta": "Até = 0 na última faixa quer dizer o quê?",
+   "opcoes": [
+    "Que a faixa está desligada",
+    "Que o percentual é zero",
+    "Que não há teto: vale dali em diante",
+    "Que é um erro"
+   ],
+   "comentarios": [
+    "Está ligada.",
+    "O percentual é o da linha.",
+    "É a convenção da última faixa.",
+    "É intencional."
+   ],
+   "correta": 2
+  },
+  {
+   "pergunta": "O que são os dois adiantamentos?",
+   "opcoes": [
+    "Dois pagamentos ao autor antes das vendas, que as apurações descontam",
+    "Duas parcelas do preço de capa",
+    "Dois impostos",
+    "Duas multas"
+   ],
+   "comentarios": [
+    "O adiantamento é royalty pago antes; a apuração o abate.",
+    "Não é preço.",
+    "Não é imposto.",
+    "Não é multa."
+   ],
+   "correta": 0
+  }
+ ]
+}

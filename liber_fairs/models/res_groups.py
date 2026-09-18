@@ -17,14 +17,32 @@ class ResGroups(models.Model):
         ref = self.env.ref
         user = ref('liber_fairs.group_fair_user', raise_if_not_found=False)
         manager = ref('liber_fairs.group_fair_manager', raise_if_not_found=False)
-        if not user or not manager:
+        planner = ref('liber_fairs.group_fair_planner', raise_if_not_found=False)
+        if not user or not manager or not planner:
             return False
         # Quem está na praça com o celular é o assistente comercial: lança
-        # contagem, fecha o dia, despacha reposição. Quem abre e fecha a feira
-        # é o gerente. A logística entra como usuária porque é ela quem
-        # separa, embala e confere o retorno.
+        # contagem, fecha o dia, despacha reposição. A logística entra como
+        # usuária porque é ela quem separa, embala e confere o retorno.
+        #
+        # ABRIR a feira era só do gerente, pelo mesmo motivo do contrato de
+        # consignação: planejar um evento compromete estoque da casa fora da
+        # casa. Deixou de ser (15/09/2026, decisão do dono): a feira nasce da
+        # agenda comercial, e quem a agenda é quem fala com a praça. Segurar
+        # a criação no gerente fazia o assistente pedir por e-mail o que ele
+        # mesmo já vai operar do começo ao fim. O Comercial é equipe interna
+        # da casa -- o cerco que existe nas feiras é contra o balcão
+        # (atendente e supervisor), não contra quem planeja daqui.
+        #
+        # A LOGÍSTICA continua só operando: ela separa e confere o que o
+        # Comercial decidiu mandar. Quem abre evento é quem o vende.
+        #
+        # O assistente entra como PLANEJADOR, não como administrador: duas
+        # coisas ficam resguardadas no gerente -- apagar a feira (que já tem
+        # analítico e movimento de estoque atrás dela) e decidir quanto a
+        # equipe ganha (combinação anterior ao evento, e ninguém decide a
+        # própria diária).
         mapa = [
-            ('liber_roles.group_comercial_assistente', user),
+            ('liber_roles.group_comercial_assistente', planner),
             ('liber_roles.group_logistica_assistente', user),
             ('liber_roles.group_comercial_gerente', manager),
             ('liber_roles.group_logistica_gerente', manager),

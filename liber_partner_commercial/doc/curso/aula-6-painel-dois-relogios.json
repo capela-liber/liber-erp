@@ -1,0 +1,74 @@
+{
+ "curso": "Curso Comercial: clientes, canal e painel",
+ "aula": 6,
+ "titulo": "Painel de Vendas: os dois relógios",
+ "abertura": "Esta aula é o painel de Vendas: cinco cartões, a linha do faturamento e as barras por canal, e por que o número do pedido e o da nota fiscal nunca batem.",
+ "fecho": "Faturas é o relógio fiscal, Pedidos o comercial; fechados e abertos dividem os pedidos, e Faturas sem pedido é o que entrou por fora. A próxima aula é sobre filtros e as listas atrás dos números.",
+ "youtube": "https://www.youtube.com/watch?v=JViBwbTG4dU",
+ "quiz": [
+  {
+   "pergunta": "O que o cartão Faturas mostra?",
+   "opcoes": [
+    "As faturas em aberto no financeiro",
+    "O que falta faturar",
+    "O total dos pedidos confirmados",
+    "O vendido com nota fiscal, líquido, sem frete"
+   ],
+   "comentarios": [
+    "O painel não lê o financeiro.",
+    "Isso é Pedidos abertos.",
+    "Isso é o cartão Pedidos.",
+    "É o relógio fiscal: o que saiu com documento."
+   ],
+   "correta": 3
+  },
+  {
+   "pergunta": "Por que Faturas e Pedidos não batem?",
+   "opcoes": [
+    "Porque um é bruto e o outro é líquido",
+    "Porque o painel está com erro",
+    "Um mede a data do pedido, o outro a data da nota; parte do pedido ainda não saiu",
+    "Porque o frete entra num e não no outro"
+   ],
+   "comentarios": [
+    "Os dois são líquidos.",
+    "A diferença é o trabalho do painel.",
+    "São dois relógios, e não devem bater.",
+    "O frete fica fora dos dois."
+   ],
+   "correta": 2
+  },
+  {
+   "pergunta": "O que é Pedidos abertos?",
+   "opcoes": [
+    "Pedidos sem cliente",
+    "Vendido menos faturado: prometido e ainda não saído",
+    "Cotações não confirmadas",
+    "Faturas vencidas"
+   ],
+   "comentarios": [
+    "Todo pedido tem cliente.",
+    "É a parte dos pedidos que ainda não virou fatura.",
+    "Cotações não entram no painel.",
+    "Vencimento é do financeiro."
+   ],
+   "correta": 1
+  },
+  {
+   "pergunta": "O que significa um valor alto em Faturas sem pedido?",
+   "opcoes": [
+    "Venda que entrou por fora do fluxo de pedidos, e merece olhar",
+    "Que o frete subiu",
+    "Que as notas foram canceladas",
+    "Que o painel está desatualizado"
+   ],
+   "comentarios": [
+    "Notas cuja fatura não está presa a pedido nenhum.",
+    "Frete não entra.",
+    "Cancelada fica fora.",
+    "O painel lê ao vivo."
+   ],
+   "correta": 0
+  }
+ ]
+}

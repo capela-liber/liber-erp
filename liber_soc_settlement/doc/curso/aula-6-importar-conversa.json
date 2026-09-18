@@ -1,0 +1,78 @@
+{
+ "curso": "Curso de Consignação II",
+ "aula": 6,
+ "titulo": "Importar a conversa do cliente",
+ "abertura": "A livraria responde ao mapa como fala: três disto, duas vezes aquilo, uma planilha do Excel. O assistente Importar lê isso e propõe linhas conferidas.",
+ "fecho": "Da conversa ao documento: e-mail, colagem, planilha, PDF com texto ou XML de nota, casados por título e por ISBN. Na próxima aula, campanhas e ruptura.",
+ "youtube": "https://www.youtube.com/watch?v=FOxJLt6KA9k",
+ "quiz": [
+  {
+   "pergunta": "A conversa diz \"2x Banguela\" e \"Fim do SUS?\" sem número. O que a importação propõe?",
+   "opcoes": [
+    "Uma linha de 2 e nada para o segundo título",
+    "Uma linha de 3, somando os dois títulos",
+    "Erro de leitura, pedindo que a livraria mande uma planilha",
+    "Uma linha de 2 e uma linha de 1: título sem número vale um"
+   ],
+   "comentarios": [
+    "Título sem número vale um exemplar.",
+    "São dois títulos, duas linhas.",
+    "Lê os dois; a planilha é só mais uma fonte.",
+    "O leitor entende o jeito real de pedir livro."
+   ],
+   "correta": 3
+  },
+  {
+   "pergunta": "Um título da conversa já está no mapa da operação. O que a importação faz?",
+   "opcoes": [
+    "Ignora o título e avisa que já existe",
+    "Substitui a quantidade do mapa pela da conversa",
+    "Soma a quantidade na linha que já existe no mapa",
+    "Cria uma segunda linha para o mesmo título"
+   ],
+   "comentarios": [
+    "Não ignora: a conversa acrescenta ao mapa.",
+    "Soma, não substitui.",
+    "Título novo entra como linha nova.",
+    "Não duplica: soma."
+   ],
+   "correta": 2
+  },
+  {
+   "pergunta": "Na conversa, o ISBN e o nome do livro apontam para títulos diferentes. Qual vale?",
+   "opcoes": [
+    "O que aparecer primeiro na linha",
+    "Nenhum: a linha é descartada por conflito",
+    "O ISBN: é o casamento mais seguro com o catálogo",
+    "O nome, porque é o que a livraria escreveu"
+   ],
+   "comentarios": [
+    "A ordem na linha não decide nada.",
+    "A linha entra; a confiança avisa.",
+    "A linha entra com a confiança marcada, para conferir.",
+    "O nome é ambíguo; o ISBN não."
+   ],
+   "correta": 2
+  },
+  {
+   "pergunta": "Que PDF a importação consegue ler?",
+   "opcoes": [
+    "Qualquer PDF, inclusive foto de página",
+    "PDF com camada de texto, como o gerado por sistema",
+    "Nenhum: PDF precisa virar planilha antes",
+    "Só PDF assinado digitalmente"
+   ],
+   "comentarios": [
+    "Só com camada de texto.",
+    "Foto de página escaneada não tem texto para ler.",
+    "Lê PDF com texto direto.",
+    "Assinatura não importa; texto importa."
+   ],
+   "correta": 1
+  }
+ ],
+ "youtube_anterior": [
+  "https://www.youtube.com/watch?v=DMhwOB97zy8"
+ ],
+ "youtube_quadro": "2912x2080"
+}

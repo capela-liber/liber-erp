@@ -1,0 +1,78 @@
+{
+ "curso": "Curso de Consignação II",
+ "aula": 11,
+ "titulo": "O disparo automático do mapa mensal",
+ "abertura": "Última aula do curso dois, e é de configuração: o envio automático do mapa mensal. Diferente do Enviar Mapa da operação, que é a proposta negociada, este abre a rodada do mês para todo cliente com livro na prateleira e manda o mapa sozinho, no dia que você escolher.",
+ "fecho": "Um interruptor e um dia do mês: ligado, todo contrato válido com prateleira ganha a operação do mês e recebe o mapa dela; mês curto sai no último dia; quem faltou entra na madrugada seguinte; ninguém recebe duas vezes. Fim do curso Consignação II.",
+ "youtube": "https://www.youtube.com/watch?v=iZCZQiIret4",
+ "quiz": [
+  {
+   "pergunta": "Onde se liga o envio automático do mapa mensal?",
+   "opcoes": [
+    "No contrato de cada cliente, marcando Envio mensal",
+    "Em Configuração, Configurações, bloco Mapa de Consignação: Mapa mensal por e-mail",
+    "No cadastro do cliente, na aba Contatos",
+    "Na operação, pelo botão Enviar Mapa"
+   ],
+   "comentarios": [
+    "O contrato não tem esse campo; é uma chave da empresa.",
+    "Só o administrador do sistema vê o menu.",
+    "A aba Contatos diz quem recebe, não quando.",
+    "Enviar Mapa é o envio manual da proposta."
+   ],
+   "correta": 1
+  },
+  {
+   "pergunta": "Ligado, o que o disparo faz no dia escolhido?",
+   "opcoes": [
+    "Abre uma segunda operação para quem já tem uma aberta",
+    "Executa os acertos pendentes e fatura",
+    "Envia um extrato da prateleira sem abrir operação nenhuma",
+    "Abre a operação do mês para todo contrato válido com livro na prateleira, ou reaproveita a que está sendo trabalhada, e envia o mapa dela"
+   ],
+   "comentarios": [
+    "Reaproveita a que existe; nunca duas rodadas.",
+    "Executar é decisão de gente, não do relógio.",
+    "Sempre há uma operação por trás: é ato do comercial.",
+    "A resposta do cliente cai numa operação com dono e prazo."
+   ],
+   "correta": 3
+  },
+  {
+   "pergunta": "O dia escolhido é 31 e o mês é fevereiro. Quando o mapa sai?",
+   "opcoes": [
+    "No último dia de fevereiro: o mês nunca é pulado",
+    "Não sai em fevereiro",
+    "No dia 1 de fevereiro, adiantado",
+    "Em 3 de março, três dias depois"
+   ],
+   "comentarios": [
+    "Quem escolheu 31 quis dizer o fim do mês.",
+    "Sai no último dia do mês.",
+    "Não adianta; apara no fim do mês.",
+    "Não passa para o mês seguinte."
+   ],
+   "correta": 0
+  },
+  {
+   "pergunta": "A leva foi interrompida no meio, ou a chave foi ligada no dia 12. O que acontece?",
+   "opcoes": [
+    "O restante só sai no mês seguinte",
+    "Quem ainda não recebeu no mês entra na rodada da madrugada seguinte; ninguém recebe duas vezes",
+    "É preciso rodar o Mapa de Consignação em lote à mão",
+    "Todo mundo recebe de novo na rodada seguinte"
+   ],
+   "comentarios": [
+    "A janela fica aberta até o fim do mês.",
+    "O carimbo por mês tira do lote quem já recebeu.",
+    "O cron completa sozinho; o lote manual é outra rotina.",
+    "O carimbo impede o envio repetido."
+   ],
+   "correta": 1
+  }
+ ],
+ "youtube_anterior": [
+  "https://www.youtube.com/watch?v=4Adrk-1KfJ4"
+ ],
+ "youtube_quadro": "2912x2080"
+}

@@ -10,3 +10,4 @@ from . import test_pedido_c_prateleira
 from . import test_tour_pedido_c
 from . import test_s_nao_vira_c
 from . import test_pedido_c_nao_nasce_da_tela
+from . import test_operation_type_race

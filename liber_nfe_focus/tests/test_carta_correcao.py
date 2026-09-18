@@ -9,19 +9,47 @@ from .test_account_move_focus import preparar_documento_latam
 from odoo.exceptions import UserError
 from odoo.tests import tagged
 
-from ..models.focus_client import FocusValidationError
+from ..models.focus_client import FocusError, FocusValidationError
+
+
+PDF_CARTA = b'%PDF-1.4 carta de correcao'
 
 
 class FakeFocusClient(object):
-    def __init__(self, erro=None):
+    """Cliente falso. Com `com_pdf`, responde como a Focus de verdade: o
+    caminho do PDF da carta e o número dela vêm na resposta do envio."""
+
+    def __init__(self, erro=None, com_pdf=False, pdf_falha=False):
         self.erro = erro
+        self.com_pdf = com_pdf
+        self.pdf_falha = pdf_falha
         self.cartas = []
+        self.baixados = []
 
     def carta_correcao(self, ref, correcao):
         if self.erro:
             raise self.erro
         self.cartas.append((ref, correcao))
-        return {'status': 'registrado', 'correcao': correcao}
+        resposta = {'status': 'autorizado', 'correcao': correcao}
+        if self.com_pdf:
+            n = len(self.cartas)
+            resposta.update({
+                'numero_carta_correcao': n,
+                'caminho_xml_carta_correcao': '/arquivos/x/cce-%d.xml' % n,
+                'caminho_pdf_carta_correcao': '/arquivos/x/cce-%d.pdf' % n,
+            })
+        return resposta
+
+    def baixar(self, caminho):
+        self.baixados.append(caminho)
+        if self.pdf_falha:
+            raise FocusError('Falha ao baixar %s (HTTP 500).' % caminho)
+        if caminho.endswith('.pdf'):
+            return PDF_CARTA + caminho.encode()
+        n = caminho.rsplit('-', 1)[-1].split('.')[0]
+        return ('<procEventoNFe><evento><infEvento><tpEvento>110110</tpEvento>'
+                '<nSeqEvento>%s</nSeqEvento></infEvento></evento>'
+                '</procEventoNFe>' % n).encode()
 
 
 @tagged('post_install', '-at_install', 'focus_nfe')
@@ -95,6 +123,99 @@ class TestCartaCorrecao(AccountTestInvoicingCommon):
 
         self.assertIn('leia-se Rua B', wizard.correcao)
         self.assertIn('leia-se Rua B', wizard.historico)
+
+    # -- o PDF da carta ------------------------------------------------
+    def _cartas_da(self, move):
+        return move._focus_anexos_de_carta()
+
+    def test_pdf_da_carta_fica_na_fatura_com_a_mensagem(self):
+        """A Focus gera PDF para a carta (e só para ela). O comercial olha a
+        fatura: é lá que o PDF tem de estar, ao lado do DANFE, e carregado
+        pela mensagem que anuncia a carta."""
+        move = self._nota_autorizada()
+        antes = len(move.message_ids)
+
+        falso = self._enviar(move, 'Onde se le Rua A, leia-se Rua B',
+                             FakeFocusClient(com_pdf=True))
+
+        self.assertIn('/arquivos/x/cce-1.pdf', falso.baixados)
+        cartas = self._cartas_da(move)
+        self.assertEqual(cartas.mapped('name'),
+                         ['TESTE-1-carta-correcao-1.pdf'])
+        self.assertEqual(cartas.mimetype, 'application/pdf')
+        self.assertTrue(cartas.raw.startswith(PDF_CARTA))
+        novas = move.message_ids[:len(move.message_ids) - antes]
+        self.assertTrue(any(cartas <= m.attachment_ids for m in novas),
+                        "a mensagem da carta tem de carregar o PDF")
+        self.assertTrue(any('nº 1' in (m.body or '') for m in novas))
+
+    def test_segunda_carta_ganha_o_seu_pdf_e_a_primeira_fica(self):
+        """Na SEFAZ a última substitui a anterior; no histórico as duas
+        ficam, cada uma com o seu número."""
+        move = self._nota_autorizada()
+        falso = FakeFocusClient(com_pdf=True)
+
+        self._enviar(move, 'Primeira correcao do endereco', falso)
+        self._enviar(move, 'Segunda correcao, agora do transportador', falso)
+
+        self.assertEqual(self._cartas_da(move).mapped('name'), [
+            'TESTE-1-carta-correcao-1.pdf', 'TESTE-1-carta-correcao-2.pdf'])
+
+    def test_reconsulta_nao_duplica_o_pdf_nem_a_mensagem(self):
+        """O cron consulta a nota todo dia; a resposta da consulta traz o
+        mesmo caminho da carta. Uma carta, um anexo, uma mensagem."""
+        move = self._nota_autorizada()
+        falso = FakeFocusClient(com_pdf=True)
+        self._enviar(move, 'Onde se le Rua A, leia-se Rua B', falso)
+        mensagens = len(move.message_ids)
+        resposta = {
+            'status': 'autorizado', 'chave_nfe': '8' * 44,
+            'numero_carta_correcao': 1,
+            'caminho_xml_carta_correcao': '/arquivos/x/cce-1.xml',
+            'caminho_pdf_carta_correcao': '/arquivos/x/cce-1.pdf',
+        }
+
+        with patch.object(type(move), '_focus_client_da_nota', return_value=falso):
+            move._focus_guardar_documentos(resposta)
+            move._focus_guardar_documentos(resposta)
+
+        self.assertEqual(len(self._cartas_da(move)), 1)
+        self.assertEqual(len(move.message_ids), mensagens,
+                         "anexo que já existia não gera aviso novo")
+
+    def test_carta_emitida_fora_chega_pela_consulta(self):
+        """Carta feita no painel da Focus, sem passar pelo assistente: a
+        consulta é a rede. Sem número na resposta, o `nSeqEvento` do XML
+        numera o anexo -- e aí a mensagem nasce aqui."""
+        move = self._nota_autorizada()
+        falso = FakeFocusClient(com_pdf=True)
+        antes = len(move.message_ids)
+        resposta = {
+            'status': 'autorizado', 'chave_nfe': '8' * 44,
+            'caminho_xml_carta_correcao': '/arquivos/x/cce-3.xml',
+            'caminho_pdf_carta_correcao': '/arquivos/x/cce-3.pdf',
+        }
+
+        with patch.object(type(move), '_focus_client_da_nota', return_value=falso):
+            move._focus_guardar_documentos(resposta)
+
+        self.assertEqual(self._cartas_da(move).mapped('name'),
+                         ['TESTE-1-carta-correcao-3.pdf'])
+        self.assertEqual(falso.baixados.count('/arquivos/x/cce-3.xml'), 1,
+                         "o XML da carta desce uma vez: PDF e painel dividem")
+        novas = move.message_ids[:len(move.message_ids) - antes]
+        self.assertTrue(any('nº 3' in (m.body or '') for m in novas))
+
+    def test_pdf_que_nao_baixou_nao_derruba_a_carta(self):
+        """A carta já vale na SEFAZ quando o download falha: o texto entra
+        no histórico, o PDF fica para a próxima consulta."""
+        move = self._nota_autorizada()
+
+        self._enviar(move, 'Onde se le Rua A, leia-se Rua B',
+                     FakeFocusClient(com_pdf=True, pdf_falha=True))
+
+        self.assertIn('leia-se Rua B', move.focus_correcoes)
+        self.assertFalse(self._cartas_da(move))
 
     # -- casos de erro -------------------------------------------------
     def test_nota_nao_autorizada_nao_tem_o_que_corrigir(self):

@@ -9,7 +9,7 @@ ou desconto), e ninguém perceberia.
 """
 from unittest.mock import patch
 
-from odoo.exceptions import UserError
+from odoo.exceptions import UserError, ValidationError
 from odoo.tests import TransactionCase, tagged
 
 from odoo.addons.liber_olist.models import olist_client
@@ -334,19 +334,98 @@ class TestOlistInvoice(TransactionCase):
         pedido._import_to_odoo()
         self.assertEqual(pedido.invoice_id.payment_state, 'not_paid')
 
+    def _diario_carteira(self):
+        """Um diário de marketplace como ele deve ser: liquida na própria conta.
+
+        A conta é de tipo caixa (`asset_cash`) e é ao mesmo tempo a conta
+        padrão do diário e a conta de destino do método de pagamento — o
+        desenho que a casa já usa nos diários VISA e Máquina de Cartão.
+        """
+        conta = self.env['account.account'].create({
+            'name': "(±) Gateway: Marketplace (teste)",
+            'code': 'X11106',
+            'account_type': 'asset_cash',
+            'company_ids': [(4, self.env.company.id)],
+        })
+        diario = self.env['account.journal'].create({
+            'name': "Marketplace (teste)", 'code': 'MKTT', 'type': 'bank',
+            'company_id': self.env.company.id,
+            'default_account_id': conta.id,
+        })
+        diario.inbound_payment_method_line_ids.payment_account_id = conta
+        diario.outbound_payment_method_line_ids.payment_account_id = conta
+        return diario, conta
+
     def test_the_invoice_is_born_paid_when_a_journal_is_set(self):
         """O comprador já pagou ao Olist: deixar em aberto faria o financeiro
-        cobrar quem já pagou."""
-        diario = self.env['account.journal'].search(
-            [('type', 'in', ('bank', 'cash')),
-             ('company_id', '=', self.env.company.id)], limit=1)
-        if not diario:
-            self.skipTest("a empresa não tem diário de banco/caixa")
+        cobrar quem já pagou.
+
+        O teste força o estado "Em pagamento" a existir (o que o
+        `liber_in_payment` faz nos bancos da casa desde 25/08/2026). Sem
+        forçar, o Community responde "paid" a tudo e o teste passaria verde
+        mesmo com o diário errado — foi essa frouxidão que deixou o defeito
+        chegar ao financeiro.
+        """
+        diario, conta = self._diario_carteira()
         self.account.payment_journal_id = diario
         pedido, _painel = self._pedido_com_nota()
-        pedido._import_to_odoo()
-        self.assertIn(pedido.invoice_id.payment_state, ('paid', 'in_payment'),
-                      "a fatura ficou em aberto com o dinheiro já recebido")
+        with patch.object(self.env.registry['account.move'],
+                          '_get_invoice_in_payment_state',
+                          return_value='in_payment'):
+            pedido._import_to_odoo()
+            fatura = pedido.invoice_id
+            fatura.invalidate_recordset(['payment_state'])
+            self.assertEqual(
+                fatura.payment_state, 'paid',
+                "a fatura ficou \"Em pagamento\": o dinheiro já entrou no "
+                "marketplace e não há extrato bancário para confirmá-lo")
+        self.assertEqual(
+            self.env['account.payment'].search(
+                [('journal_id', '=', diario.id)]).outstanding_account_id,
+            conta, "o recebimento não pousou na conta do gateway")
+
+    def test_a_journal_that_settles_elsewhere_is_refused(self):
+        """O defeito de 11/09/2026, barrado no cadastro.
+
+        O diário do Olist apontava para a transitória genérica "Outstanding
+        Receipts", que só se zera contra um extrato bancário — e o extrato
+        nunca vem, porque o dinheiro está com o Olist. Resultado: 582 faturas
+        "Em pagamento" e o financeiro cobrando quem já tinha pagado.
+        """
+        diario, conta = self._diario_carteira()
+        transitoria = self.env['account.account'].create({
+            'name': "Outstanding Receipts (teste)",
+            'code': 'X11481',
+            'account_type': 'asset_current',
+            'reconcile': True,
+            'company_ids': [(4, self.env.company.id)],
+        })
+        diario.inbound_payment_method_line_ids.payment_account_id = transitoria
+        with self.assertRaises(ValidationError):
+            self.account.payment_journal_id = diario
+
+    def test_a_journal_without_an_outstanding_account_is_refused(self):
+        """Sem conta de destino o Odoo recusa lançar o recebimento.
+
+        O núcleo só inventa uma conta de fallback quando a contabilidade
+        completa NÃO está instalada (`account_payment.create`). Com o
+        `liber_in_payment` em pé o fallback não acontece, e o recebimento
+        morreria com UserError no meio da importação — longe de quem
+        configurou o diário. A recusa é aqui, onde se escolhe.
+        """
+        diario, _conta = self._diario_carteira()
+        diario.inbound_payment_method_line_ids.payment_account_id = False
+        with self.assertRaises(ValidationError):
+            self.account.payment_journal_id = diario
+
+    def test_a_journal_without_a_default_account_is_refused(self):
+        """Sem conta padrão o recebimento não tem onde pousar."""
+        diario, _conta = self._diario_carteira()
+        diario.inbound_payment_method_line_ids.payment_account_id = False
+        diario.outbound_payment_method_line_ids.payment_account_id = False
+        diario.default_account_id = False
+        with self.assertRaises(ValidationError):
+            self.account.payment_journal_id = diario
 
     def test_a_picking_created_later_still_gets_the_note(self):
         """O carimbo tem de acontecer quando o picking NASCE.

@@ -1,0 +1,74 @@
+{
+ "curso": "Curso Expedição: transportadora, coleta e DANFE",
+ "aula": 3,
+ "titulo": "O que acontece ao confirmar uma venda",
+ "abertura": "Esta aula é o que o sistema faz sozinho: o comercial confirma o pedido, a entrega nasce, e já nasce com a transportadora do cliente. E os dois números que o depósito preenche.",
+ "fecho": "A transportadora desce do cadastro na confirmação; as caixas quem conta é quem embala; o peso vem dos livros, em gramas. Trocar a transportadora aqui vale só para esta viagem.",
+ "youtube": "https://www.youtube.com/watch?v=7h_fkkQe5Dg",
+ "quiz": [
+  {
+   "pergunta": "De onde vem a transportadora da entrega?",
+   "opcoes": [
+    "Do armazém",
+    "Do vendedor",
+    "Do CEP do destino",
+    "Da ficha do cliente, na confirmação do pedido"
+   ],
+   "comentarios": [
+    "O armazém diz de onde sai, não com quem viaja.",
+    "O vendedor define o canal, não o frete.",
+    "O CEP não escolhe transportadora aqui.",
+    "Ninguém digita: o cadastro desce para o documento."
+   ],
+   "correta": 3
+  },
+  {
+   "pergunta": "Quem preenche as caixas e quem preenche o peso?",
+   "opcoes": [
+    "As caixas, quem embala; o peso, o sistema soma dos livros",
+    "Os dois, o comercial no pedido",
+    "Os dois, a transportadora",
+    "Nenhum dos dois: a nota calcula"
+   ],
+   "comentarios": [
+    "São os dois números que a nota vai declarar, e sem eles a emissão trava.",
+    "O comercial não vê a doca.",
+    "A transportadora recebe, não preenche.",
+    "A nota declara o que a transferência disser."
+   ],
+   "correta": 0
+  },
+  {
+   "pergunta": "O peso dos livros está em que unidade, e de onde vem?",
+   "opcoes": [
+    "Em quilos, digitado a cada venda",
+    "Em gramas, estimado pelo número de páginas",
+    "Em gramas, do cadastro alimentado pela Metabooks",
+    "Em quilos, informado pela transportadora"
+   ],
+   "comentarios": [
+    "Ninguém digita peso por venda.",
+    "Não há estimativa nenhuma.",
+    "Livro sem peso deixa a soma menor que a real, e a transportadora cobra o que pesou.",
+    "A transportadora não alimenta o cadastro."
+   ],
+   "correta": 2
+  },
+  {
+   "pergunta": "Trocar a transportadora dentro de uma transferência muda o cadastro do cliente?",
+   "opcoes": [
+    "Sim, e passa a valer para as próximas",
+    "Sim, e reescreve as entregas já feitas",
+    "Não: vale só para esta viagem",
+    "Não é permitido trocar"
+   ],
+   "comentarios": [
+    "Não sobe para a ficha.",
+    "Nada retroage.",
+    "Exceção do dia se resolve no documento; regra se resolve no cadastro.",
+    "É permitido, e é comum."
+   ],
+   "correta": 2
+  }
+ ]
+}

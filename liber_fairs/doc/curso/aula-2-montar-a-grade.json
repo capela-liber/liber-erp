@@ -1,0 +1,74 @@
+{
+ "curso": "Curso Feiras I: montar e levar",
+ "aula": 2,
+ "titulo": "Montar a grade",
+ "abertura": "Esta aula monta a grade da feira: os títulos que vão e quantos de cada, sem digitar título a título. As colunas do armazém, o assistente Somar títulos, e o mínimo de mesa.",
+ "fecho": "Só o planejado se digita; o resto sai dos movimentos. Somar títulos descreve a prateleira, Buscar traz, você ajusta e soma. A próxima aula pergunta ao catálogo.",
+ "youtube": "https://www.youtube.com/watch?v=-ujcgA-OfzQ",
+ "quiz": [
+  {
+   "pergunta": "Na grade, que colunas se digitam?",
+   "opcoes": [
+    "Todas",
+    "Só Vendido",
+    "Só Enviado",
+    "Planejado e Mínimo de mesa; enviado, vendido, retornado e na mesa saem dos movimentos"
+   ],
+   "comentarios": [
+    "Só duas se digitam.",
+    "Vendido vem do fechamento e do caixa.",
+    "Enviado vem do despacho.",
+    "A grade não mente porque não se escreve o que o estoque sabe."
+   ],
+   "correta": 3
+  },
+  {
+   "pergunta": "A linha da grade ficou vermelha. O que isso diz?",
+   "opcoes": [
+    "O título esgotou na mesa",
+    "Falta despachar mais do que o armazém tem livre",
+    "O mínimo é maior que o planejado",
+    "O preço está errado"
+   ],
+   "comentarios": [
+    "A mesa é outra coluna.",
+    "O número é do armazém, não da empresa: exemplar em outra feira não conta.",
+    "Isso é recusado ao salvar, não fica vermelho.",
+    "Preço não entra na grade."
+   ],
+   "correta": 1
+  },
+  {
+   "pergunta": "O que o Somar títulos pede?",
+   "opcoes": [
+    "Uma descrição da prateleira: selo ou coleção, etiquetas, preço, ordem e um teto",
+    "A planilha da feira anterior",
+    "Uma lista de ISBNs colada",
+    "Um título por vez"
+   ],
+   "comentarios": [
+    "Buscar traz o resultado; você ainda tira e põe à mão.",
+    "A feira anterior vira modelo, outro botão.",
+    "Não se cola ISBN.",
+    "É o contrário do título a título."
+   ],
+   "correta": 0
+  },
+  {
+   "pergunta": "Por que só o que está no armazém vem ligado na busca?",
+   "opcoes": [
+    "Por limite do sistema",
+    "Grade cheia do que não temos é grade que ninguém consegue despachar",
+    "Porque o preço só existe com estoque",
+    "Porque o catálogo é grande demais"
+   ],
+   "comentarios": [
+    "É decisão, não limite.",
+    "O estoque do armazém é a régua.",
+    "Preço existe sem estoque.",
+    "Tamanho não é o motivo."
+   ],
+   "correta": 1
+  }
+ ]
+}

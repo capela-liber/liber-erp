@@ -203,7 +203,11 @@ class ConsignmentTemplate(models.Model):
                 names=", ".join(not_placed.mapped('display_name'))))
         if not short_total and not not_placed:
             body.append(self.env._("Fully supplied."))
-        self.message_post(body=Markup("<br/>".join(body)))
+        # O histórico da campanha é informação do sistema, escrita em nome da
+        # operação: quem aplica campanhas (o Comercial assistente) só LÊ campanhas,
+        # e sem sudo o message_post morria em AccessError na tela (o tour do
+        # curso Consignação II pegou isso em 12/09/2026).
+        self.sudo().message_post(body=Markup("<br/>".join(body)))
 
     # ------------------------------------------------------------------
     # Overdue: the target nobody is pursuing any more (nature 'tempo')

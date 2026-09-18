@@ -1,0 +1,74 @@
+{
+ "curso": "Curso Royalties II: apuração, pagamento e prestação de contas",
+ "aula": 2,
+ "titulo": "Criar as contas analíticas",
+ "abertura": "Esta aula prepara o terreno: o assistente que cria uma conta por linha do contrato, com o nome montado, e o adiantamento como crédito de abertura.",
+ "fecho": "Trabalho de uma vez por contrato. Sem conta, a apuração recusa em vez de lançar no lugar errado.",
+ "youtube": "https://www.youtube.com/watch?v=1pqF4zcS1YY",
+ "quiz": [
+  {
+   "pergunta": "O que o assistente cria?",
+   "opcoes": [
+    "Uma conta por contrato",
+    "Uma conta por linha: favorecido e obra",
+    "Uma conta por autor",
+    "Uma conta por ano"
+   ],
+   "comentarios": [
+    "É mais fino que o contrato.",
+    "Coautoria em duas linhas dá duas contas.",
+    "Um autor com três obras tem três.",
+    "Não é por ano."
+   ],
+   "correta": 1
+  },
+  {
+   "pergunta": "O adiantamento entra como?",
+   "opcoes": [
+    "Despesa",
+    "Não entra",
+    "Multa",
+    "Crédito de abertura na conta: o autor já recebeu isso"
+   ],
+   "comentarios": [
+    "Não é despesa nova.",
+    "Entra, sim.",
+    "Não é multa.",
+    "A apuração abate dele antes de dever."
+   ],
+   "correta": 3
+  },
+  {
+   "pergunta": "Contrato sem conta analítica ao apurar. O que acontece?",
+   "opcoes": [
+    "A apuração recusa e avisa",
+    "Lança numa conta genérica",
+    "Cria a conta sozinha",
+    "Lança no contrato anterior"
+   ],
+   "comentarios": [
+    "É a guarda: primeiro se cria a conta.",
+    "Seria lançar no lugar errado.",
+    "Criar é ação explícita.",
+    "Nunca."
+   ],
+   "correta": 0
+  },
+  {
+   "pergunta": "Com que frequência se cria conta?",
+   "opcoes": [
+    "Todo mês",
+    "A cada venda",
+    "Uma vez por contrato",
+    "Uma vez por ano"
+   ],
+   "comentarios": [
+    "Não se repete.",
+    "Venda é lançamento, não conta.",
+    "Depois disso a apuração usa a que existe.",
+    "Não é por ano."
+   ],
+   "correta": 2
+  }
+ ]
+}

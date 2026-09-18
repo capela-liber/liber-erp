@@ -1,0 +1,74 @@
+{
+ "curso": "Curso de Atendimento ao cliente",
+ "aula": 4,
+ "titulo": "Responder ao cliente",
+ "abertura": "Esta aula é responder: dentro do chamado, pelo histórico. Dois botões com dois destinos, os anexos, e o estágio que pausa o relógio quando a bola está com o cliente.",
+ "fecho": "Enviar mensagem sai por e-mail e carimba a primeira resposta; Nota de Registro fica interna; Aguardando cliente pausa a solução. A próxima aula são os dois relógios do SLA.",
+ "youtube": "https://www.youtube.com/watch?v=1bHp7Wvtcuo",
+ "quiz": [
+  {
+   "pergunta": "Qual a diferença entre Enviar mensagem e Nota de Registro?",
+   "opcoes": [
+    "A mensagem vai por e-mail ao cliente; a nota fica interna, o cliente nunca vê",
+    "A mensagem é formal e a nota é informal",
+    "Nenhuma: os dois ficam no histórico",
+    "A nota vai ao gerente"
+   ],
+   "comentarios": [
+    "Os dois ficam no histórico, mas só um sai.",
+    "Não é questão de tom.",
+    "Um sai por e-mail.",
+    "A nota fica para a equipe."
+   ],
+   "correta": 0
+  },
+  {
+   "pergunta": "O que a primeira resposta enviada faz no SLA?",
+   "opcoes": [
+    "Fecha o chamado",
+    "Carimba a primeira resposta: o primeiro relógio para",
+    "Zera os dois relógios",
+    "Nada; só a solução conta"
+   ],
+   "comentarios": [
+    "Fechar é outro estágio.",
+    "O relógio de solução continua.",
+    "Só o de resposta para.",
+    "A resposta é o primeiro relógio."
+   ],
+   "correta": 1
+  },
+  {
+   "pergunta": "Como se anexa um arquivo à resposta?",
+   "opcoes": [
+    "Pelo clipe do compositor; sai no e-mail",
+    "Não dá para anexar",
+    "Só pelo botão Mapa",
+    "Copiando o link do arquivo"
+   ],
+   "comentarios": [
+    "O PDF de uma nota, por exemplo.",
+    "Dá.",
+    "Mapa é o anexo específico da consignação.",
+    "Link não é anexo."
+   ],
+   "correta": 0
+  },
+  {
+   "pergunta": "Quando mover o chamado para Aguardando cliente?",
+   "opcoes": [
+    "Quando o cliente reclama",
+    "Nunca: é só informativo",
+    "Quando a bola está com o cliente: o relógio de solução pausa enquanto ele não responde",
+    "Quando o chamado está resolvido"
+   ],
+   "comentarios": [
+    "Reclamação não é motivo.",
+    "Ele pausa o relógio.",
+    "O tempo dele não conta contra a equipe.",
+    "Resolvido é outra coluna."
+   ],
+   "correta": 2
+  }
+ ]
+}

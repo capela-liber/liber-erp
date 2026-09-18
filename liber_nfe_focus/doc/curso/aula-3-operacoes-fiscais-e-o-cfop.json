@@ -1,0 +1,103 @@
+{
+ "curso": "Curso NF-e: emitir",
+ "aula": 3,
+ "titulo": "Operações fiscais: o CFOP sem o primeiro dígito",
+ "abertura": "CFOP tem quatro dígitos, e a casa cadastra três. O primeiro não é da operação: é do destino. Esta aula mostra a lista de operações fiscais, a ficha de uma delas e as posições fiscais que vêm prontas, uma por operação e por empresa.",
+ "passos": [
+  {
+   "texto": "O caminho começa na tela inicial, entre os aplicativos."
+  },
+  {
+   "texto": "Faturamento. Esta aula é a operação fiscal: de onde vem o CFOP de cada nota."
+  },
+  {
+   "texto": "Configuração, Operações fiscais."
+  },
+  {
+   "texto": "Repare nos códigos: cento e um, novecentos e dezessete, novecentos e quarenta e nove. Três dígitos, e não quatro — é o CFOP sem o primeiro dígito."
+  },
+  {
+   "texto": "O primeiro dígito não se cadastra porque ele não é da operação: é do destino. Dentro do estado a saída leva cinco; para outro estado, seis. Uma linha por operação, e não duas."
+  },
+  {
+   "texto": "A ficha de uma operação. À esquerda o que ela é; à direita como ela vira nota fiscal: a natureza que aparece no alto da DANFE, a finalidade, e a tributação do ICMS."
+  },
+  {
+   "texto": "A letra é a taxonomia da casa: A é venda, B é consignação nossa, C é consignação de terceiros, D é bonificação, E é remessa. Ela existe para que catorze mil notas antigas ainda se deixem somar por família."
+  },
+  {
+   "texto": "E estas são as posições fiscais, que vêm prontas: uma por operação, por empresa, criadas pelo módulo quando a empresa nasce. O nome diz a letra, a operação e o par de CFOPs."
+  },
+  {
+   "texto": "É a posição fiscal que a fatura veste, e é dela que a nota tira a operação. Escolher a posição fiscal é escolher o CFOP — sem digitar código nenhum."
+  }
+ ],
+ "fecho": "Uma linha por operação, e não duas. Dentro do estado a saída leva cinco, para outro estado leva seis; a entrada leva um ou dois. Quem escolhe a posição fiscal na fatura já escolheu o CFOP, sem digitar código nenhum — e a exportação é a exceção, porque lá o código significa outra coisa e se escreve à mão.",
+ "youtube": "",
+ "quiz": [
+  {
+   "pergunta": "Por que as operações fiscais têm três dígitos e não quatro?",
+   "opcoes": [
+    "Porque o quarto dígito é opcional",
+    "Porque o primeiro dígito vem do destino, não da operação",
+    "Porque o CONFAZ mudou a tabela",
+    "Porque o Odoo só aceita três"
+   ],
+   "comentarios": [
+    "Todos os quatro são obrigatórios na nota.",
+    "Saída dentro do estado é 5, para fora é 6; entrada é 1 ou 2. Uma linha serve aos dois.",
+    "A tabela oficial continua com quatro.",
+    "Não é limitação de tela."
+   ],
+   "correta": 1
+  },
+  {
+   "pergunta": "O que a letra da operação (A, B, C, D, E, Z) representa?",
+   "opcoes": [
+    "A ordem alfabética da lista",
+    "O tipo de imposto",
+    "A taxonomia da casa: venda, consignação nossa, consignação de terceiros, bonificação, remessa e o resto",
+    "A empresa emitente"
+   ],
+   "comentarios": [
+    "Não é ordenação.",
+    "O imposto vem da tributação da operação.",
+    "Ela existe para que as notas antigas ainda se deixem somar por família.",
+    "A posição fiscal já é de uma empresa só; o nome dela não entra."
+   ],
+   "correta": 2
+  },
+  {
+   "pergunta": "De onde a nota tira a operação fiscal, no caso comum?",
+   "opcoes": [
+    "Da posição fiscal que a fatura veste",
+    "Do nome do cliente",
+    "Do diário",
+    "Do usuário que emite"
+   ],
+   "comentarios": [
+    "Cada posição fiscal aponta uma operação, e é assim que o CFOP chega à nota.",
+    "O cliente decide o destino, não a operação.",
+    "O diário separa remessa de venda, mas não dá o CFOP.",
+    "Não depende de quem aperta o botão."
+   ],
+   "correta": 0
+  },
+  {
+   "pergunta": "As posições fiscais precisam ser criadas à mão em cada empresa?",
+   "opcoes": [
+    "Sim, uma por uma",
+    "Não: o módulo as semeia, uma por operação, quando a empresa brasileira nasce",
+    "Só na primeira empresa",
+    "Elas vêm do plano de contas"
+   ],
+   "comentarios": [
+    "Apontar catorze operações em cinco empresas à mão é setenta chances de errar em silêncio.",
+    "Nome no formato da casa e operação já ligada; rodar duas vezes não duplica.",
+    "Toda empresa brasileira recebe as suas.",
+    "O plano de contas não sabe de CFOP."
+   ],
+   "correta": 1
+  }
+ ]
+}

@@ -2,8 +2,8 @@
 """A feira rodada pelos perfis reais da casa, não pelo admin.
 
 O admin passa em tudo e não prova nada sobre o perfil. Este arquivo roda o
-caminho principal como GERENTE COMERCIAL (que abre a feira e despacha) e como
-ASSISTENTE COMERCIAL (que está na praça e fecha o dia). É o teste que pega o
+caminho principal como GERENTE COMERCIAL (que despacha) e como ASSISTENTE
+COMERCIAL (que abre a feira e está na praça fechando o dia). É o teste que pega o
 Access Error do primeiro clique: a feira mexe em stock.picking, stock.move,
 stock.location e ir.sequence, e nada disso está no grupo do módulo.
 
@@ -98,15 +98,64 @@ class TestFairAcl(TransactionCase):
         self.assertEqual(dia.qty_sold, 3)
         self.assertEqual(fair.qty_on_shelf, 5)
 
-    def test_a_fair_user_cannot_open_a_fair(self):
-        """Comprometer estoque da casa fora da casa é decisão de gerente."""
-        assistente = self._user('feira_so_usuaria',
+    def test_the_commercial_assistant_opens_a_fair(self):
+        """A feira nasce da agenda comercial (15/09/2026).
+
+        Era decisão de gerente, pelo mesmo motivo do contrato de consignação.
+        Deixou de ser: quem agenda a praça é o assistente, e ele já opera a
+        feira do começo ao fim. Pedir a abertura por e-mail a quem não vai
+        tocar o evento não protegia nada.
+        """
+        assistente = self._user('feira_assistente_abre',
+                                'liber_roles.group_comercial_assistente')
+        self.env.invalidate_all()
+        self.assertTrue(
+            self.env['event.fair'].with_user(assistente).check_access_rights(
+                'create', raise_exception=False),
+            "O assistente comercial abre feira")
+
+        # e abre de verdade, até o plano -- o botão Planejar é do papel de
+        # administrador, e o ACL sozinho não prova que ele chegou lá
+        fair = self.env['event.fair'].with_user(assistente).create({
+            'name': 'Feira aberta pelo assistente',
+            'date_start': self.today, 'date_end': self.today,
+            'company_id': self.company.id,
+            'line_ids': [(0, 0, {
+                'product_id': self.product.id, 'qty_planned': 3})]})
+        self.assertTrue(fair.is_fair_planner,
+                        "Quem abre a feira também a planeja")
+        fair.action_plan()
+        self.assertEqual(fair.state, 'planned')
+
+    def test_the_commercial_assistant_does_not_erase_a_fair(self):
+        """Apagar não é desfazer: é esconder o rastro.
+
+        Uma feira planejada já tem localização, analítico e movimento de
+        estoque atrás dela. Quem abre pode abrir; quem apaga é o gerente.
+        """
+        assistente = self._user('feira_assistente_apaga',
                                 'liber_roles.group_comercial_assistente')
         self.env.invalidate_all()
         self.assertFalse(
             self.env['event.fair'].with_user(assistente).check_access_rights(
+                'unlink', raise_exception=False),
+            "O assistente abre feira, mas não apaga feira")
+        gerente = self._user('feira_gerente_apaga',
+                             'liber_roles.group_comercial_gerente')
+        self.env.invalidate_all()
+        self.assertTrue(
+            self.env['event.fair'].with_user(gerente).check_access_rights(
+                'unlink', raise_exception=False))
+
+    def test_the_logistics_assistant_does_not_open_a_fair(self):
+        """A logística separa e confere o que o Comercial decidiu mandar."""
+        logistica = self._user('feira_logistica',
+                               'liber_roles.group_logistica_assistente')
+        self.env.invalidate_all()
+        self.assertFalse(
+            self.env['event.fair'].with_user(logistica).check_access_rights(
                 'create', raise_exception=False),
-            "O assistente opera a feira, mas não abre feira")
+            "Quem abre evento é quem o vende")
 
     def test_the_fair_team_checks_without_the_warehouse_role(self):
         """Conferir a caixa da feira não é operar o depósito.
@@ -192,6 +241,6 @@ class TestPapeisDaCasa(TransactionCase):
                                  raise_if_not_found=False)
         if not visitante:
             self.skipTest('liber_roles não está instalado neste banco')
-        gestor = self.env.ref('liber_fairs.group_fair_manager')
-
-        self.assertNotIn(gestor, visitante.all_implied_ids)
+        for xmlid in ('liber_fairs.group_fair_planner',
+                      'liber_fairs.group_fair_manager'):
+            self.assertNotIn(self.env.ref(xmlid), visitante.all_implied_ids)

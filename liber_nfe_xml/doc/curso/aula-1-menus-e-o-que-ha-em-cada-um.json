@@ -1,0 +1,93 @@
+{
+ "curso": "Curso NF-e: o XML de entrada",
+ "aula": 1,
+ "titulo": "O que há em cada menu",
+ "abertura": "Toda nota fiscal que chega à editora passa por aqui, e o que chega é um arquivo XML. Esta aula percorre o menu NFe XML, dentro do Faturamento, e diz para que serve cada entrada dele.",
+ "passos": [
+  {
+   "texto": "O caminho começa na tela inicial, entre os aplicativos."
+  },
+  {
+   "texto": "Faturamento. O XML da nota fiscal mora aqui dentro, num menu só dele."
+  },
+  {
+   "texto": "NFe XML. São sete entradas, e elas contam o fluxo inteiro: importar o arquivo, ver a lista, olhar os itens, os eventos, exportar e analisar."
+  },
+  {
+   "texto": "Importar arquivo XML é a porta de entrada: um ZIP com os XMLs, ou o XML solto que o fornecedor mandou por e-mail."
+  },
+  {
+   "texto": "NFe XML é a lista de tudo que entrou — uma linha por nota, e é onde se passa a maior parte do tempo."
+  },
+  {
+   "texto": "Eventos da NFe guarda os cancelamentos e as cartas de correção, que são documentos à parte da nota."
+  },
+  {
+   "texto": "Painel analítico abre, em outra aba, o resumo de tudo: por mês, por CFOP, por parceiro. É a última aula."
+  },
+  {
+   "texto": "A lista. Cada linha é uma nota fiscal, lida de um arquivo — não digitada por ninguém."
+  },
+  {
+   "texto": "As colunas dizem o essencial sem abrir nada: a direção, a chave de acesso de quarenta e quatro dígitos, a data, o cliente, o número da DANFE e o valor."
+  },
+  {
+   "texto": "E a situação, que é o estado de cada nota: Importada quando o arquivo entrou, Válida depois de lido, Cancelada quando um evento a cancelou."
+  },
+  {
+   "texto": "Falta um lugar, e ele fica em Configuração: CFOPs, a tabela oficial. É o assunto da aula três."
+  }
+ ],
+ "fecho": "Faturamento, menu NFe XML: Importar arquivo XML para a carga, NFe XML para a lista, Eventos da NFe para cancelamentos e cartas, Itens e Etiquetas para o detalhe, Exportar para o contador e o Painel analítico para o resumo. A tabela de CFOP fica em Configuração.",
+ "youtube": "",
+ "quiz": [
+  {
+   "pergunta": "Onde fica o menu do XML de NF-e?",
+   "opcoes": [
+    "Num aplicativo próprio",
+    "Dentro do Faturamento",
+    "Dentro do Estoque",
+    "Em Definições"
+   ],
+   "comentarios": [
+    "Ele não tem aplicativo próprio.",
+    "Faturamento, menu NFe XML.",
+    "Estoque não guarda documento fiscal.",
+    "Definições é administração do sistema."
+   ],
+   "correta": 1
+  },
+  {
+   "pergunta": "Para que serve a entrada \"Eventos da NFe\"?",
+   "opcoes": [
+    "Para importar notas",
+    "Para guardar cancelamentos e cartas de correção",
+    "Para exportar XMLs",
+    "Para criar faturas"
+   ],
+   "comentarios": [
+    "Importar é a entrada de cima.",
+    "O evento é um documento à parte da nota.",
+    "Exportar tem entrada própria.",
+    "Fatura se cria a partir da lista de notas."
+   ],
+   "correta": 1
+  },
+  {
+   "pergunta": "O que significa a situação \"Importada\" numa nota?",
+   "opcoes": [
+    "A nota foi cancelada",
+    "O arquivo entrou, mas ainda não foi lido em detalhe",
+    "A fatura já foi criada",
+    "A nota tem erro"
+   ],
+   "comentarios": [
+    "Cancelada é outra situação.",
+    "Ler o arquivo é o processamento, e leva a nota para Válida.",
+    "A fatura é um passo bem depois.",
+    "Erro é a situação de quem falhou ao ser lido."
+   ],
+   "correta": 1
+  }
+ ]
+}

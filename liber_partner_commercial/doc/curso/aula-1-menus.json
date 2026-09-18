@@ -1,0 +1,74 @@
+{
+ "curso": "Curso Comercial: clientes, canal e painel",
+ "aula": 1,
+ "titulo": "O que há em cada menu",
+ "abertura": "Bem-vindo ao curso Comercial. Ele é sobre o cadastro do cliente, que alimenta a consignação, os royalties e a nota fiscal, e sobre o painel de Vendas, a primeira tela do comercial de manhã. Esta aula é o mapa: o que há em cada menu de Vendas e de Painéis.",
+ "fecho": "Vendas tem Pedidos, A faturar, Produtos, Notas fiscais, Relatórios e Configuração; Painéis tem o painel de Vendas. A próxima aula abre a ficha do cliente e o campo Canal de Vendas.",
+ "youtube": "https://www.youtube.com/watch?v=7VR2_ZljNFo",
+ "quiz": [
+  {
+   "pergunta": "Onde fica o cadastro dos clientes dentro de Vendas?",
+   "opcoes": [
+    "Só no aplicativo Contatos",
+    "Em Pedidos, Clientes",
+    "Em Relatórios, Clientes",
+    "Em Configuração, Clientes"
+   ],
+   "comentarios": [
+    "Contatos também abre a ficha, mas Vendas tem o seu próprio acesso.",
+    "O cadastro mora na seção Pedidos.",
+    "Relatórios, Clientes é a análise de vendas por cliente, não o cadastro.",
+    "Configuração guarda canais e grupos econômicos, não fichas."
+   ],
+   "correta": 1
+  },
+  {
+   "pergunta": "Quais menus de Vendas só o gerente vê?",
+   "opcoes": [
+    "Nenhum: todos veem tudo",
+    "Produtos",
+    "Pedidos e A faturar",
+    "Relatórios, Notas fiscais e Configuração"
+   ],
+   "comentarios": [
+    "O assistente vê Pedidos, A faturar e Produtos.",
+    "Produtos é do assistente.",
+    "Pedidos e A faturar são do assistente.",
+    "Os três exigem o perfil de gerente de vendas."
+   ],
+   "correta": 3
+  },
+  {
+   "pergunta": "O que há em Vendas, Notas fiscais?",
+   "opcoes": [
+    "As notas de compra",
+    "Os pedidos a faturar",
+    "As notas de venda que saíram, e as que saíram sem pedido",
+    "Os XMLs de entrada"
+   ],
+   "comentarios": [
+    "Notas de compra ficam no painel de XML, em Compras.",
+    "A faturar é outra seção.",
+    "É o segundo relógio, o fiscal, que o painel lê.",
+    "Entrada é o painel de XML."
+   ],
+   "correta": 2
+  },
+  {
+   "pergunta": "Onde está o painel de Vendas?",
+   "opcoes": [
+    "No aplicativo Painéis, seção Vendas",
+    "Na tela inicial, como um cartão",
+    "Em Vendas, Relatórios",
+    "Em Vendas, Configuração"
+   ],
+   "comentarios": [
+    "Painéis é o segundo aplicativo deste curso.",
+    "A tela inicial só lista os aplicativos.",
+    "Relatórios é a análise de vendas, não o painel.",
+    "Configuração não tem painel."
+   ],
+   "correta": 0
+  }
+ ]
+}

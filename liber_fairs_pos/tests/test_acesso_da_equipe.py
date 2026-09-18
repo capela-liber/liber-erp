@@ -108,6 +108,56 @@ class TestAcessoDaEquipe(TransactionCase):
         with self.assertRaises(Exception):
             linha.with_user(usuario).write({'daily_rate': 500.0})
 
+    def test_the_commercial_assistant_does_not_set_what_people_earn(self):
+        """A trava não é só contra o balcão (15/09/2026).
+
+        O assistente comercial abre a feira, planeja, despacha e lança os
+        custos -- ele é a peça central do processo. O que ficou resguardado
+        no gerente é quanto a equipe ganha: a combinação é anterior ao
+        evento, e quem toca a praça não fecha a própria remuneração.
+        """
+        papel = self.env.ref('liber_roles.group_comercial_assistente',
+                             raise_if_not_found=False)
+        chefia = self.env.ref('liber_roles.group_comercial_gerente',
+                              raise_if_not_found=False)
+        if not papel or not chefia:
+            self.skipTest('liber_roles não está instalado neste banco')
+        contato, _u = self._pessoa('Quem Trabalha a Praça')
+        LOGIN_ASSIST = 'comercial_assist_feira'
+        assistente = self.env['res.users'].with_context(
+            no_reset_password=True).create({
+                'name': 'Assistente do Comercial',
+                'login': LOGIN_ASSIST,
+                'password': LOGIN_ASSIST,
+                'company_id': self.company.id,
+                'company_ids': [(6, 0, [self.company.id])],
+                'group_ids': [(6, 0, [papel.id])]})
+        fair = self._feira('Feira do assistente')
+        linha = self._escalar(fair, contato)
+        fair.action_plan()
+        self.env.invalidate_all()
+
+        # ele planeja de verdade: a feira é dele do começo ao fim
+        self.assertTrue(fair.with_user(assistente).is_fair_planner)
+        with self.assertRaises(Exception):
+            linha.with_user(assistente).write({'commission_pc': 12.0})
+        with self.assertRaises(Exception):
+            linha.with_user(assistente).write({'daily_rate': 200.0})
+
+        LOGIN_GERENTE = 'comercial_gerente_feira'
+        gerente = self.env['res.users'].with_context(
+            no_reset_password=True).create({
+                'name': 'Gerente do Comercial',
+                'login': LOGIN_GERENTE,
+                'password': LOGIN_GERENTE,
+                'company_id': self.company.id,
+                'company_ids': [(6, 0, [self.company.id])],
+                'group_ids': [(6, 0, [chefia.id])]})
+        self.env.invalidate_all()
+        linha.with_user(gerente).write({'commission_pc': 12.0})
+        self.assertEqual(linha.commission_pc, 12.0,
+                         "Quem combina com a equipe é o gerente")
+
     def test_the_manager_on_site_reaches_the_other_registers(self):
         """Balcão travado se resolve na praça, e não por telefone com a casa."""
         gerente, usuario = self._pessoa('Gerente que Destrava')

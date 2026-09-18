@@ -1,0 +1,74 @@
+{
+ "curso": "Curso de Atendimento ao cliente",
+ "aula": 6,
+ "titulo": "O vínculo com o pedido",
+ "abertura": "Esta aula liga o chamado ao documento de que a conversa trata: o pedido de venda. Um chamado, um documento, e o caminho de ida e volta entre os dois.",
+ "fecho": "Tipo Venda mostra o campo Pedido; o botão do alto abre o pedido; o pedido conta seus chamados e abre um novo já vinculado. A próxima aula é o mesmo vínculo com a consignação.",
+ "youtube": "https://www.youtube.com/watch?v=S1hN6EWLkKs",
+ "quiz": [
+  {
+   "pergunta": "Quando o campo Pedido de venda aparece no chamado?",
+   "opcoes": [
+    "Quando o tipo é Venda, ou quando já está preenchido",
+    "Sempre",
+    "Só em chamados fechados",
+    "Só para o gerente"
+   ],
+   "comentarios": [
+    "Um documento por vez.",
+    "Só no tipo Venda.",
+    "Não depende do estágio.",
+    "Não depende do papel."
+   ],
+   "correta": 0
+  },
+  {
+   "pergunta": "O que o botão Pedido de venda no alto do chamado faz?",
+   "opcoes": [
+    "Fatura o pedido",
+    "Cria um pedido novo",
+    "Envia o pedido ao cliente",
+    "Abre o pedido vinculado"
+   ],
+   "comentarios": [
+    "Não fatura.",
+    "Não cria.",
+    "Não envia.",
+    "Nada de caçar o número na busca."
+   ],
+   "correta": 3
+  },
+  {
+   "pergunta": "O que o botão Atendimento no pedido mostra?",
+   "opcoes": [
+    "A equipe do cliente",
+    "O SLA do pedido",
+    "O atendente responsável pelo pedido",
+    "Quantos chamados estão ligados àquele pedido, e os abre"
+   ],
+   "comentarios": [
+    "Equipe é do chamado.",
+    "SLA é do chamado.",
+    "Pedido não tem atendente.",
+    "É o caminho de volta."
+   ],
+   "correta": 3
+  },
+  {
+   "pergunta": "Como se cria um chamado a partir do pedido?",
+   "opcoes": [
+    "Copiando o número do pedido num chamado novo",
+    "Não dá: chamado só nasce por e-mail",
+    "Abrir chamado, no cabeçalho do pedido: nasce já vinculado",
+    "Enviando um e-mail ao alias com o número"
+   ],
+   "comentarios": [
+    "Dá para colar, mas o botão já vincula.",
+    "Dá, pelo botão.",
+    "Para quando a conversa começa por dentro.",
+    "O e-mail cria sem vínculo."
+   ],
+   "correta": 2
+  }
+ ]
+}

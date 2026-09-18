@@ -1,0 +1,74 @@
+{
+ "curso": "Curso Royalties II: apuração, pagamento e prestação de contas",
+ "aula": 6,
+ "titulo": "IRRF sobre direitos autorais",
+ "abertura": "Esta aula é o imposto: o Modo de IRRF no favorecido, a linha negativa na fatura, e a acumuladora para a Receita.",
+ "fecho": "Pessoa física retém pela tabela; pessoa jurídica é isenta. O retido acumula numa fatura para a Receita Federal, com dia para recolher.",
+ "youtube": "https://www.youtube.com/watch?v=z2uHJO_2auU",
+ "quiz": [
+  {
+   "pergunta": "Onde se decide se há retenção?",
+   "opcoes": [
+    "Na fatura, à mão",
+    "Na tabela do contador",
+    "No Modo de IRRF da ficha do favorecido",
+    "No contrato"
+   ],
+   "comentarios": [
+    "Não é à mão.",
+    "A tabela dá o valor; o modo dá o sim ou não.",
+    "É o modo que decide a linha negativa.",
+    "Não está no contrato."
+   ],
+   "correta": 2
+  },
+  {
+   "pergunta": "Pessoa jurídica como favorecido: qual o modo?",
+   "opcoes": [
+    "Progressivo",
+    "Fixo",
+    "Nenhum: não pode ser favorecido",
+    "Isento"
+   ],
+   "comentarios": [
+    "Progressivo é para pessoa física.",
+    "Não há fixo.",
+    "Pode, e é comum: editora, instituto.",
+    "Sem retenção na fonte."
+   ],
+   "correta": 3
+  },
+  {
+   "pergunta": "Como a retenção aparece na fatura do autor?",
+   "opcoes": [
+    "Como desconto comercial",
+    "Como linha negativa, e o líquido é o que ele recebe",
+    "Não aparece",
+    "Como juros"
+   ],
+   "comentarios": [
+    "Não é desconto.",
+    "É retenção na fonte.",
+    "Aparece.",
+    "Não é juros."
+   ],
+   "correta": 1
+  },
+  {
+   "pergunta": "O que acontece com o imposto retido?",
+   "opcoes": [
+    "Acumula numa fatura para a Receita Federal, com o dia de recolher",
+    "Fica com a casa",
+    "Vai para o autor",
+    "É perdoado"
+   ],
+   "comentarios": [
+    "A casa recolhe o que reteve.",
+    "É da Receita.",
+    "O autor já recebeu o líquido.",
+    "Não."
+   ],
+   "correta": 0
+  }
+ ]
+}

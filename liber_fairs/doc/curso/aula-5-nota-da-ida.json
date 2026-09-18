@@ -1,0 +1,74 @@
+{
+ "curso": "Curso Feiras I: montar e levar",
+ "aula": 5,
+ "titulo": "A nota da ida",
+ "abertura": "Livro na estrada sem nota é livro apreendido. Esta aula é a nota de simples remessa: para exposição ou feira, emitida para a própria editora, uma por carga.",
+ "fecho": "Simples remessa, CFOP de feira, destinatário a própria editora; nasce baixada, declara o despachado; uma carga, uma nota. A próxima aula é o calendário e o número.",
+ "youtube": "https://www.youtube.com/watch?v=_jRUNGrUqp8",
+ "quiz": [
+  {
+   "pergunta": "Quem é o destinatário da nota de remessa da feira?",
+   "opcoes": [
+    "A organização da feira",
+    "O cliente que vai comprar",
+    "A própria editora: a mercadoria muda de lugar, não de dono",
+    "A transportadora"
+   ],
+   "comentarios": [
+    "A feira não recebe a mercadoria em nome próprio.",
+    "Ainda não há cliente.",
+    "Por isso é simples remessa, não venda.",
+    "Transportadora leva; não recebe."
+   ],
+   "correta": 2
+  },
+  {
+   "pergunta": "Em que diário a nota da feira sai?",
+   "opcoes": [
+    "Em nenhum: feira não tem nota",
+    "REM-F, o diário de remessas de feira",
+    "No diário de compras",
+    "No diário de vendas"
+   ],
+   "comentarios": [
+    "Tem.",
+    "Sob a posição fiscal de feira das Definições.",
+    "Não é compra.",
+    "Não é venda."
+   ],
+   "correta": 1
+  },
+  {
+   "pergunta": "A nota declara a quantidade planejada ou a despachada?",
+   "opcoes": [
+    "A efetivamente despachada, nunca a planejada",
+    "A vendida",
+    "A que sobrou",
+    "A planejada"
+   ],
+   "comentarios": [
+    "Nota que diz 100 quando saíram 62 não bate com o volume na estrada.",
+    "Vendido é outro momento.",
+    "Sobra é a volta.",
+    "A grade planeja; a nota declara o que saiu."
+   ],
+   "correta": 0
+  },
+  {
+   "pergunta": "A reposição do meio da feira precisa de nota?",
+   "opcoes": [
+    "Não: a nota da ida cobre tudo",
+    "Sim: viaja com a nota dela, uma carga, uma nota",
+    "Só se passar de cinquenta exemplares",
+    "Só se for interestadual"
+   ],
+   "comentarios": [
+    "Cada carga tem a sua.",
+    "Apertar o botão de novo não declara outra vez o que já viajou.",
+    "Não há limite.",
+    "Dentro do estado também."
+   ],
+   "correta": 1
+  }
+ ]
+}

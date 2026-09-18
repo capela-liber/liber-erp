@@ -1,0 +1,74 @@
+{
+ "curso": "Curso Orçamento",
+ "aula": 2,
+ "titulo": "Configuração",
+ "abertura": "Esta aula é o que se faz antes do primeiro orçamento: as posições orçamentárias, que são a porta do realizado, e os grupos e etiquetas que organizam.",
+ "fecho": "Posição é apelido para um punhado de contas do razão, e é o que faz o realizado entrar sem preparo — inclusive de períodos passados. Configuração é trabalho de uma vez.",
+ "youtube": "https://www.youtube.com/watch?v=G2kyt0CvdZQ",
+ "quiz": [
+  {
+   "pergunta": "O que é uma posição orçamentária?",
+   "opcoes": [
+    "Um valor previsto",
+    "Uma conta analítica",
+    "Um período",
+    "Um apelido para um punhado de contas do razão"
+   ],
+   "comentarios": [
+    "O valor vai na linha.",
+    "Analítica é o outro caminho.",
+    "Período é do cabeçalho.",
+    "Despesas de produção, receita de vendas: cada uma aponta para suas contas."
+   ],
+   "correta": 3
+  },
+  {
+   "pergunta": "Por que o realizado pela posição vale também para o passado?",
+   "opcoes": [
+    "Porque ele lê os lançamentos do razão que já existem, sem preparo nenhum",
+    "Porque o robô recalcula",
+    "Porque as contas são copiadas",
+    "Não vale: só do dia da criação em diante"
+   ],
+   "comentarios": [
+    "É a vantagem sobre o caminho analítico: nada precisa ter sido marcado antes.",
+    "Não há robô.",
+    "Nada é copiado.",
+    "Vale, sim, e é o ponto."
+   ],
+   "correta": 0
+  },
+  {
+   "pergunta": "Quando se usa o caminho analítico em vez da posição?",
+   "opcoes": [
+    "Quando a empresa é pequena",
+    "Quando a despesa é rateada por projeto ou por selo — e alguém precisa ratear",
+    "Quando não há razão",
+    "Nunca"
+   ],
+   "comentarios": [
+    "Tamanho não decide.",
+    "Rateio exige que alguém marque cada lançamento.",
+    "Razão existe sempre.",
+    "Tem seu lugar."
+   ],
+   "correta": 1
+  },
+  {
+   "pergunta": "Configuração é trabalho de quando?",
+   "opcoes": [
+    "De todo mês",
+    "De cada orçamento novo",
+    "De uma vez: feita, o orçamento do ano seguinte é cópia com números novos",
+    "Do contador"
+   ],
+   "comentarios": [
+    "Não se refaz todo mês.",
+    "As posições se reaproveitam.",
+    "É o que torna o segundo ano barato.",
+    "É da casa."
+   ],
+   "correta": 2
+  }
+ ]
+}

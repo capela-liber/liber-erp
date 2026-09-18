@@ -93,6 +93,39 @@ class ResCompany(models.Model):
             'company_id': self.id,
         })
 
+    # Achado em prod na Edlab Press (17/09/2026): dois "Retorno de
+    # Consignação" ativos, cada um com sua própria ir.sequence COM/IN, e o
+    # histórico repartido entre os dois (COM/IN/00001-02 num, COM/IN/00003-10
+    # no outro) -- via `scripts/censo_series_consignacao.sql`. O get-or-create
+    # abaixo dos três métodos `_get_consignment_*_operation_type` não tinha
+    # trava: duas liberações de logística perto o bastante uma da outra, cada
+    # numa transação própria, liam o campo do res.company como vazio ANTES de
+    # qualquer commit e cada uma criava seu tipo+sequence -- quem comitasse
+    # por último "vencia" o ponteiro, e o outro tipo ficava ativo, órfão,
+    # duplicando o cartão na Visão Geral do Inventário.
+    #
+    # O `FOR UPDATE` serializa: a segunda transação bloqueia na trava até a
+    # primeira comitar, e então lê o campo já preenchido -- mesmo padrão do
+    # `_nfe_reservar_numero` em liber_nfe_focus/models/res_company.py. O banco
+    # resolve isso se a gente pedir; em memória, não resolve.
+    def _lock_and_get_consignment_operation_type(
+            self, field_name, name, prefix, seq_name, code='internal',
+            archive_on_create=False):
+        self.ensure_one()
+        empresa = self.sudo()
+        empresa.flush_recordset([field_name])
+        self.env.cr.execute(
+            "SELECT %s FROM res_company WHERE id = %%s FOR UPDATE" %
+            field_name, (empresa.id,))
+        empresa.invalidate_recordset([field_name])
+        if not getattr(empresa, field_name):
+            operation_type = empresa._create_consignment_operation_type(
+                name, prefix, seq_name, code=code)
+            if archive_on_create:
+                operation_type.active = False
+            setattr(empresa, field_name, operation_type)
+        return getattr(empresa, field_name)
+
     def _get_consignment_delivery_operation_type(self):
         """The OUTGOING consignment operation -- what a Pedido C ships on.
 
@@ -104,12 +137,10 @@ class ResCompany(models.Model):
         WH/OUT; the internal shelf flows keep their own COM/MOV series.
         """
         self.ensure_one()
-        if not self.consignment_delivery_operation_type_id:
-            self.sudo().consignment_delivery_operation_type_id = \
-                self._create_consignment_operation_type(
-                    _('Consignment Delivery'), 'COM/OUT/%(year)s/',
-                    'Consignment Delivery Operation', code='outgoing')
-        return self.consignment_delivery_operation_type_id
+        return self._lock_and_get_consignment_operation_type(
+            'consignment_delivery_operation_type_id',
+            _('Consignment Delivery'), 'COM/OUT/%(year)s/',
+            'Consignment Delivery Operation', code='outgoing')
 
     def _get_consignment_shipment_operation_type(self):
         """The INTERNAL shelf flow -- off the Overview since 19.0.2.7.0.
@@ -130,28 +161,22 @@ class ResCompany(models.Model):
         arquivado e some da Visão geral.
         """
         self.ensure_one()
-        if not self.consignment_shipment_operation_type_id:
-            operation_type = \
-                self._create_consignment_operation_type(
-                    # COM/MOV/, seguindo o padrão direcional do core (WH/OUT,
-                    # WH/IN): a remessa ao cliente é COM/OUT, o retorno é
-                    # COM/IN, e os fluxos internos de prateleira ficam em
-                    # COM/MOV -- sequence própria, que não divide mais com a
-                    # remessa. Como no precedente REM->COM, bases antigas
-                    # precisam de UPDATE em ir_sequence + sequence_code: é a
-                    # migração 19.0.2.6.0 (só as séries mudam; documento já
-                    # emitido NUNCA muda de nome).
-                    _('Consignment Shipment'), 'COM/MOV/%(year)s/',
-                    'Consignment Shipment Operation')
-            operation_type.sudo().active = False
-            self.sudo().consignment_shipment_operation_type_id = operation_type
-        return self.consignment_shipment_operation_type_id
+        return self._lock_and_get_consignment_operation_type(
+            'consignment_shipment_operation_type_id',
+            # COM/MOV/, seguindo o padrão direcional do core (WH/OUT,
+            # WH/IN): a remessa ao cliente é COM/OUT, o retorno é
+            # COM/IN, e os fluxos internos de prateleira ficam em
+            # COM/MOV -- sequence própria, que não divide mais com a
+            # remessa. Como no precedente REM->COM, bases antigas
+            # precisam de UPDATE em ir_sequence + sequence_code: é a
+            # migração 19.0.2.6.0 (só as séries mudam; documento já
+            # emitido NUNCA muda de nome).
+            _('Consignment Shipment'), 'COM/MOV/%(year)s/',
+            'Consignment Shipment Operation', archive_on_create=True)
 
     def _get_consignment_return_operation_type(self):
         self.ensure_one()
-        if not self.consignment_return_operation_type_id:
-            self.sudo().consignment_return_operation_type_id = \
-                self._create_consignment_operation_type(
-                    _('Consignment Return'), 'COM/IN/%(year)s/',
-                    'Consignment Return Operation')
-        return self.consignment_return_operation_type_id
+        return self._lock_and_get_consignment_operation_type(
+            'consignment_return_operation_type_id',
+            _('Consignment Return'), 'COM/IN/%(year)s/',
+            'Consignment Return Operation')

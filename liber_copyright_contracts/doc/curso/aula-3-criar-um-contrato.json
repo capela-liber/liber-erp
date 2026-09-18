@@ -1,0 +1,74 @@
+{
+ "curso": "Curso Royalties I: contratos de direitos autorais",
+ "aula": 3,
+ "titulo": "Criar um contrato",
+ "abertura": "Esta aula cria um contrato do zero: o favorecido, as datas, o prazo sugerido, a renovação automática, o responsável, a localização do papel e os marcadores. Ele nasce Minuta.",
+ "fecho": "O contrato nasce Minuta e só passa a valer quando o Jurídico valida. Localização é onde está o papel assinado — o sistema guarda o resumo, não o documento.",
+ "youtube": "https://www.youtube.com/watch?v=wGv_r-4wYiM",
+ "quiz": [
+  {
+   "pergunta": "Em que estado o contrato nasce?",
+   "opcoes": [
+    "Válido",
+    "Vencido",
+    "Minuta",
+    "Renovado"
+   ],
+   "comentarios": [
+    "Só depois de validado.",
+    "Não nasce vencido.",
+    "Redigido, ainda não vale.",
+    "Renovado é depois de uma renovação."
+   ],
+   "correta": 2
+  },
+  {
+   "pergunta": "O que é a Localização?",
+   "opcoes": [
+    "O endereço do autor",
+    "Onde está o contrato assinado: pasta, gaveta, link",
+    "A cidade da assinatura",
+    "O armazém dos livros"
+   ],
+   "comentarios": [
+    "É do contato.",
+    "O sistema guarda o resumo; o papel está em algum lugar, e a ficha diz onde.",
+    "Não é geografia.",
+    "Não tem a ver com estoque."
+   ],
+   "correta": 1
+  },
+  {
+   "pergunta": "Para que serve Renovável?",
+   "opcoes": [
+    "Para o contrato renovar sozinho no vencimento, pela rotina diária",
+    "Para permitir editar depois de válido",
+    "Para dispensar assinatura",
+    "Para o autor receber mais"
+   ],
+   "comentarios": [
+    "É a rotina diária que renova, e o estado vira Renovado.",
+    "Edição não depende disso.",
+    "Assinatura é sempre exigida.",
+    "Não mexe em valor."
+   ],
+   "correta": 0
+  },
+  {
+   "pergunta": "Quem é o Responsável do contrato?",
+   "opcoes": [
+    "O autor",
+    "O Jurídico, sempre",
+    "O gerente financeiro",
+    "O usuário da casa que cuida dele e recebe o lembrete de vencimento"
+   ],
+   "comentarios": [
+    "O autor é favorecido, não responsável.",
+    "Pode ser, mas não é regra.",
+    "Não necessariamente.",
+    "É para ele que a atividade \"vencendo em breve\" vai."
+   ],
+   "correta": 3
+  }
+ ]
+}

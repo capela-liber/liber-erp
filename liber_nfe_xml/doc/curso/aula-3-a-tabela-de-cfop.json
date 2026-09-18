@@ -1,0 +1,87 @@
+{
+ "curso": "Curso NF-e: o XML de entrada",
+ "aula": 3,
+ "titulo": "A tabela de CFOP",
+ "abertura": "O CFOP é o código de quatro dígitos que diz o que a nota está fazendo: vendendo, remetendo em consignação, devolvendo, doando. Esta aula mostra a tabela, o que a casa classifica nela e o que acontece com um código que ela não conhece.",
+ "passos": [
+  {
+   "texto": "O caminho começa na tela inicial, entre os aplicativos."
+  },
+  {
+   "texto": "Faturamento. Esta aula é sobre o código que diz o que a nota está fazendo: o CFOP."
+  },
+  {
+   "texto": "Configuração, CFOPs — a tabela oficial."
+  },
+  {
+   "texto": "O CFOP é um código de quatro dígitos, e o primeiro deles já diz o sentido: um e dois são entrada, cinco e seis são saída. Dentro do estado ou fora dele é o dígito seguinte."
+  },
+  {
+   "texto": "A tabela chega pronta e classificada no que interessa à casa: o que é venda, o que é consignação, o que é acerto, o que é devolução, o que é bonificação, o que é feira."
+  },
+  {
+   "texto": "Essa classificação não é enfeite: é ela que outros módulos leem para reconstruir a prateleira de cada livraria a partir das notas."
+  },
+  {
+   "texto": "E quando chega um XML com um CFOP que a tabela não conhece, o código é criado na hora, sem classificação — e fica esperando que alguém diga o que ele significa."
+  },
+  {
+   "texto": "Isso é de propósito. O contrário seria a nota sumir das análises por causa de um código novo, em silêncio."
+  },
+  {
+   "texto": "Aqui está uma nota com esse caso: o CFOP dela é o cinco mil e cento e dezesseis, entrega por conta e ordem, que a tabela da casa não classifica. A nota entrou igual."
+  }
+ ],
+ "fecho": "Primeiro dígito um ou dois é entrada, cinco ou seis é saída. A tabela chega classificada no que interessa à casa — venda, consignação, acerto, devolução, bonificação, feira — e CFOP desconhecido é criado sem classificação, esperando quem o explique. Nada some por causa de um código novo.",
+ "youtube": "",
+ "quiz": [
+  {
+   "pergunta": "O que diz o primeiro dígito do CFOP?",
+   "opcoes": [
+    "O estado",
+    "Se a operação é de entrada ou de saída",
+    "O imposto",
+    "O tipo do produto"
+   ],
+   "comentarios": [
+    "O estado se deduz do dígito, mas não é isso que ele diz.",
+    "Um e dois são entrada; cinco e seis são saída.",
+    "Imposto é outro campo.",
+    "Produto é o NCM."
+   ],
+   "correta": 1
+  },
+  {
+   "pergunta": "O que acontece quando chega um XML com um CFOP que a tabela não conhece?",
+   "opcoes": [
+    "A nota é recusada",
+    "O código é criado automaticamente, sem classificação",
+    "A nota fica com erro",
+    "O CFOP é trocado pelo mais parecido"
+   ],
+   "comentarios": [
+    "A nota entra normalmente.",
+    "E fica esperando que alguém diga o que ele significa.",
+    "Não é erro: é código novo.",
+    "O sistema não adivinha."
+   ],
+   "correta": 1
+  },
+  {
+   "pergunta": "Por que a classificação do CFOP importa fora desta tela?",
+   "opcoes": [
+    "Não importa, é só documentação",
+    "Outros módulos a leem para reconstruir a prateleira consignada a partir das notas",
+    "Ela calcula o frete",
+    "Ela define o vencimento"
+   ],
+   "comentarios": [
+    "Ela tem efeito.",
+    "Consignação, acerto e devolução movem a prateleira de maneiras diferentes.",
+    "Frete vem do XML.",
+    "Vencimento vem da cobrança do XML."
+   ],
+   "correta": 1
+  }
+ ]
+}

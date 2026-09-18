@@ -1,0 +1,78 @@
+{
+ "curso": "Curso de Consignação I",
+ "aula": 8,
+ "titulo": "Recolher tudo e renovação simbólica",
+ "abertura": "Dois botões do contrato ativo. Recolher Tudo traz a prateleira inteira de volta; a renovação simbólica renova o relógio fiscal sem mover livro.",
+ "fecho": "A renovação fica registrada no histórico do contrato; as duas notas que se compensam são do módulo fiscal. Na próxima aula, campanhas.",
+ "youtube": "https://www.youtube.com/watch?v=EJOE8548UvQ",
+ "quiz": [
+  {
+   "pergunta": "O que o Recolher Tudo monta?",
+   "opcoes": [
+    "Um Pedido C de reposição",
+    "Um CR com todos os títulos e quantidades da prateleira",
+    "Uma auditoria",
+    "Uma fatura de tudo"
+   ],
+   "comentarios": [
+    "É o contrário: volta, não ida.",
+    "Passo obrigatório antes de encerrar.",
+    "Auditoria é outro módulo.",
+    "Fatura vem do acerto."
+   ],
+   "correta": 1
+  },
+  {
+   "pergunta": "A renovação simbólica move livros?",
+   "opcoes": [
+    "Só os vencidos",
+    "Só se a livraria autorizar",
+    "Não: renova o prazo fiscal da prateleira sem movimento físico",
+    "Sim, para o armazém e de volta"
+   ],
+   "comentarios": [
+    "Não há movimento.",
+    "É registro interno.",
+    "Documento criado e concluído na hora.",
+    "Nenhum livro se move."
+   ],
+   "correta": 2
+  },
+  {
+   "pergunta": "Clicar Recolher Tudo com a prateleira vazia:",
+   "opcoes": [
+    "Cria um CR vazio",
+    "Encerra o contrato",
+    "Avisa que a prateleira já está vazia; nada a recolher",
+    "Dá erro de sistema"
+   ],
+   "comentarios": [
+    "Nada é criado.",
+    "Encerrar é outro botão.",
+    "O botão avisa.",
+    "É um aviso, não um erro."
+   ],
+   "correta": 2
+  },
+  {
+   "pergunta": "As duas notas fiscais que se compensam na renovação simbólica são assunto de qual módulo?",
+   "opcoes": [
+    "Do Inventário",
+    "Do módulo fiscal da consignação",
+    "Do contrato",
+    "Do acerto"
+   ],
+   "comentarios": [
+    "Não há movimento físico.",
+    "Retorno simbólico e nova remessa.",
+    "O contrato só registra a renovação.",
+    "O acerto trata de vendas e cobrança."
+   ],
+   "correta": 1
+  }
+ ],
+ "youtube_anterior": [
+  "https://www.youtube.com/watch?v=oasX4V-1yKk"
+ ],
+ "youtube_quadro": "2912x2080"
+}

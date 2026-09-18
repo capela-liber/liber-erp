@@ -38,6 +38,18 @@ class TestAcessoComercial(TransactionCase):
                     'liber_roles.group_comercial_assistente').id)],
             })
 
+        LOGIN_GERENTE = 'comercial_ger_acl'
+        cls.gerente = cls.env['res.users'].with_context(
+            no_reset_password=True).create({
+                'name': "Gerente comercial",
+                'login': LOGIN_GERENTE,
+                'password': LOGIN_GERENTE,
+                'company_id': cls.env.company.id,
+                'company_ids': [(6, 0, [cls.env.company.id])],
+                'group_ids': [(4, cls.env.ref(
+                    'liber_roles.group_comercial_gerente').id)],
+            })
+
     def _como_assistente(self, modelo):
         self.env.invalidate_all()
         return self.env[modelo].with_user(self.assistente)
@@ -64,6 +76,109 @@ class TestAcessoComercial(TransactionCase):
         canal = self.env['olist.channel'].with_user(
             self.assistente)._find_or_create(self.account, "Mercado Livre")
         self.assertTrue(canal.id)
+
+    def test_the_manager_can_fetch_the_xml_from_the_queue(self):
+        """O gerente puxa a nota sem esperar o cron — o pedido de 16/09/2026.
+
+        O cron das notas varre de duas em duas horas e não dá conta; quem está
+        na fila do Despachar precisa perguntar pela nota na hora. O caminho
+        atravessa o `nfe.xml.panel`, que é de OUTRO dono (faturamento), e o
+        token da conta, que nem o Operador pode ler — `_fetch_xml` resolve os
+        dois com `sudo()`. Este teste é o que prova que o sudo cobre o
+        suficiente para o perfil comercial, em vez de supor que cobre.
+
+        Roda nos DOIS perfis: o direito veio pela escada
+        `gerente -> assistente -> olist_operador`, e medir só o gerente
+        esconderia a perda do assistente.
+        """
+        from unittest.mock import patch
+        from odoo.addons.liber_olist.models import olist_client
+
+        for quem, usuario in (('gerente', self.gerente),
+                              ('assistente', self.assistente)):
+            self.env.invalidate_all()
+            pedido = self.env['olist.order'].create({
+                'account_id': self.account.id, 'valor': 100.0,
+                'olist_id': 'ACL-XML-%s' % quem, 'numero': "ACL-X-%s" % quem,
+                'data_pedido': '2026-09-16', 'id_nota_fiscal': '0',
+            })
+            # `id_nota_fiscal` zerado: o Olist ainda não emitiu. O retorno é
+            # uma RECUSA de negócio ("ainda não emitiu nota"), não um
+            # AccessError -- e é exatamente essa a distinção que importa aqui.
+            with patch.object(olist_client, 'get_nota_xml', return_value=None):
+                pedido.with_user(usuario).action_fetch_xml()
+
+    def test_fetching_the_xml_never_deletes_the_lines(self):
+        """Buscar a nota NÃO mexe no pedido nem nos itens (16/09/2026).
+
+        O `action_read_detail` relê o pedido e REESCREVE os itens
+        (`_sincroniza_linhas` faz `line_ids.unlink()`). O botão da fila não
+        pode ser esse: quem clica quer a nota, não perder o casamento de
+        produto já feito à mão.
+        """
+        from unittest.mock import patch
+        from odoo.addons.liber_olist.models import olist_client
+
+        pedido = self.env['olist.order'].create({
+            'account_id': self.account.id, 'valor': 100.0,
+            'olist_id': 'ACL-XML-KEEP', 'numero': "ACL-X-KEEP",
+            'data_pedido': '2026-09-16', 'id_nota_fiscal': '0',
+            'line_ids': [(0, 0, {
+                'codigo': "9786666666663", 'descricao': "Livro",
+                'quantidade': 1, 'valor_unitario': 30.0})],
+        })
+        antes = pedido.line_ids.ids
+
+        with patch.object(olist_client, 'get_nota_xml', return_value=None):
+            pedido.with_user(self.gerente).action_fetch_xml()
+
+        self.assertEqual(pedido.line_ids.ids, antes,
+                         "buscar a nota mexeu nos itens do pedido")
+
+    def test_reading_the_detail_again_needs_to_delete_the_old_lines(self):
+        """O clique da Vivi, 16/09/2026 às 20:43 no prod — três vezes seguidas.
+
+        `_sincroniza_linhas` faz `line_ids.unlink()` antes de regravar: o
+        espelho reflete, não acumula. Reler é então um ato de APAGAR, e sem o
+        direito no ACL a tela respondia "Você não tem permissão para excluir"
+        a quem só queria entender por que o pedido estava incompleto.
+
+        O pedido virgem NÃO prova isto: sem linha antiga não há unlink, e o
+        primeiro clique sempre passou. Por isso o teste cria o pedido COM
+        item — e é a releitura que se mede.
+
+        Nos dois perfis: o direito vem pela escada
+        `gerente -> assistente -> olist_operador`, e medir só um esconderia a
+        perda do outro.
+        """
+        from unittest.mock import patch
+        from odoo.addons.liber_olist.models import olist_client
+
+        for quem, usuario in (('gerente', self.gerente),
+                              ('assistente', self.assistente)):
+            self.env.invalidate_all()
+            pedido = self.env['olist.order'].create({
+                'account_id': self.account.id, 'valor': 100.0,
+                'olist_id': 'ACL-REREAD-%s' % quem, 'numero': "ACL-R-%s" % quem,
+                'data_pedido': '2026-09-16',
+                'line_ids': [(0, 0, {
+                    'codigo': "9786666666663", 'descricao': "Velho",
+                    'quantidade': 1, 'valor_unitario': 30.0})],
+            })
+            detalhe = {
+                'id': pedido.olist_id, 'numero': pedido.numero,
+                'situacao': 'Entregue',
+                'cliente': {'nome': "Comprador", 'cpf_cnpj': '171.037.078-55'},
+                'itens': [{'item': {'codigo': '9786666666663',
+                                    'descricao': 'Novo', 'quantidade': '2',
+                                    'valor_unitario': '40.00'}}],
+            }
+            with patch.object(olist_client, 'get_pedido', return_value=detalhe):
+                pedido.with_user(usuario)._read_detail()
+
+            self.assertEqual(
+                pedido.line_ids.descricao, 'Novo',
+                "o %s releu o detalhe e o item velho ficou" % quem)
 
     def test_the_account_stays_out_of_reach(self):
         """A fronteira: a conta guarda o token e a trava do clone."""

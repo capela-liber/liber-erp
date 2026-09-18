@@ -1,0 +1,74 @@
+{
+ "curso": "Curso Comercial: clientes, canal e painel",
+ "aula": 4,
+ "titulo": "Grupo econômico: a rede acima da loja",
+ "abertura": "Esta aula cadastra a rede de livrarias acima das lojas: o grupo econômico, as raízes de CNPJ que filiam as lojas sozinhas, e a razão social na ficha.",
+ "fecho": "Cada loja continua um CNPJ com contrato, prateleira e nota próprios; a rede é o eixo de leitura, sugerido pela raiz do CNPJ e sempre editável. A próxima aula mostra onde esse eixo aparece.",
+ "youtube": "https://www.youtube.com/watch?v=Y3IZqP7LNs4",
+ "quiz": [
+  {
+   "pergunta": "O que identifica a entidade legal no CNPJ?",
+   "opcoes": [
+    "Os dois dígitos verificadores",
+    "Os quatro dígitos da filial",
+    "A inscrição estadual",
+    "Os oito primeiros dígitos, a raiz"
+   ],
+   "comentarios": [
+    "Os verificadores só conferem o número.",
+    "A filial diferencia as lojas, não a entidade.",
+    "A IE é estadual, não identifica a rede.",
+    "Toda filial da mesma rede começa igual."
+   ],
+   "correta": 3
+  },
+  {
+   "pergunta": "Uma loja recebe CNPJ com raiz declarada num grupo. O que acontece?",
+   "opcoes": [
+    "Ela cai no grupo sozinha, e o campo continua editável",
+    "Nada, até alguém filiar à mão",
+    "A nota fiscal passa a sair no nome da rede",
+    "Ela vira filial da matriz no cadastro"
+   ],
+   "comentarios": [
+    "A raiz sugere, a ficha decide.",
+    "A sugestão é automática; à mão é só para franquia.",
+    "A nota nunca lê o grupo.",
+    "Grupo não é parent_id: não há sincronização."
+   ],
+   "correta": 0
+  },
+  {
+   "pergunta": "Por que uma franquia como a Leitura se monta à mão?",
+   "opcoes": [
+    "Cada loja tem razão social e raiz de CNPJ diferentes",
+    "Porque não emite nota",
+    "Porque tem mais de dez lojas",
+    "Porque o botão não funciona para franquias"
+   ],
+   "comentarios": [
+    "Sem raiz comum, nada sugere; a escolha manual nunca é desfeita.",
+    "Emite nota como qualquer loja.",
+    "O número de lojas não importa.",
+    "O botão funciona; é que não há raiz que case."
+   ],
+   "correta": 0
+  },
+  {
+   "pergunta": "O que a nota fiscal lê da ficha: a razão social ou o grupo econômico?",
+   "opcoes": [
+    "Os dois",
+    "Nenhum dos dois",
+    "A razão social; o grupo nunca",
+    "O grupo; a razão social é decorativa"
+   ],
+   "comentarios": [
+    "O grupo fica fora do fiscal de propósito.",
+    "A razão social é impressa.",
+    "Razão social é o nome do CNPJ, o que a nota imprime.",
+    "O grupo é só relatório."
+   ],
+   "correta": 2
+  }
+ ]
+}

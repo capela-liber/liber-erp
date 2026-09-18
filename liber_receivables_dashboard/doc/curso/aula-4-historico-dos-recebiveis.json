@@ -1,0 +1,74 @@
+{
+ "curso": "Curso Financeiro: a receber, a pagar e os painéis",
+ "aula": 4,
+ "titulo": "Histórico dos recebíveis",
+ "abertura": "Esta aula é a foto mensal: quando é tirada, o que conta como carteira e o que o gráfico por faixa responde.",
+ "fecho": "A foto não recalcula o passado. Se a faixa de mais de 120 cresce mês a mês, a cobrança está perdendo — e é para ver isso que a tela existe.",
+ "youtube": "https://www.youtube.com/watch?v=ROfgrbEFGSY",
+ "quiz": [
+  {
+   "pergunta": "O que é cada registro do histórico?",
+   "opcoes": [
+    "Uma fatura",
+    "Um cliente",
+    "Uma foto do saldo da carteira num dia, repartido pelas faixas",
+    "Um pagamento"
+   ],
+   "comentarios": [
+    "Fatura é o documento.",
+    "Cliente é a linha da outra tela.",
+    "É a carteira inteira congelada naquele dia.",
+    "Pagamento é evento."
+   ],
+   "correta": 2
+  },
+  {
+   "pergunta": "Quem tira a foto, e quando?",
+   "opcoes": [
+    "Um robô, uma vez por mês",
+    "O gerente, quando quer",
+    "O sistema, a cada fatura emitida",
+    "O contador, no fechamento"
+   ],
+   "comentarios": [
+    "É automático e periódico.",
+    "Não depende de ninguém lembrar.",
+    "Seria uma foto por minuto.",
+    "O fechamento é outra rotina."
+   ],
+   "correta": 0
+  },
+  {
+   "pergunta": "A foto do mês passado muda quando uma fatura antiga é paga hoje?",
+   "opcoes": [
+    "Sim, ela se recalcula",
+    "Não: o que passou fica como estava no dia",
+    "Sim, se o pagamento for do mesmo mês",
+    "Só se o robô rodar de novo"
+   ],
+   "comentarios": [
+    "Recalcular apagaria a história.",
+    "É esse o valor da série: comparar fotos comparáveis.",
+    "Não há essa exceção.",
+    "O robô tira a de hoje, não refaz as antigas."
+   ],
+   "correta": 1
+  },
+  {
+   "pergunta": "O que conta como carteira na data da foto?",
+   "opcoes": [
+    "Tudo o que foi faturado no mês",
+    "O que está em aberto: nota emitida e não recebida",
+    "O que foi recebido",
+    "O que está em cobrança judicial"
+   ],
+   "comentarios": [
+    "Faturado e pago não é carteira.",
+    "Aberto é o que ainda se espera receber.",
+    "Recebido saiu da carteira.",
+    "Judicial é um recorte, não o total."
+   ],
+   "correta": 1
+  }
+ ]
+}

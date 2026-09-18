@@ -1,0 +1,78 @@
+{
+ "curso": "Curso de Consignação I",
+ "aula": 6,
+ "titulo": "Validar a transferência, no depósito",
+ "abertura": "O comercial confirmou; quem executa é o depósito, no aplicativo Inventário. Nesta aula, a COM/OUT é validada e os livros trocam de lugar.",
+ "fecho": "Validada, a prateleira da livraria enche. Confirmar reserva; validar move. Na próxima aula, o caminho de volta: a devolução.",
+ "youtube": "https://www.youtube.com/watch?v=T1lFnnAsIIo",
+ "quiz": [
+  {
+   "pergunta": "Depois de confirmar o Pedido C, os livros já saíram do estoque?",
+   "opcoes": [
+    "Não: estão reservados; saem quando o depósito valida a COM/OUT",
+    "Sim, no ato",
+    "Só metade, por segurança",
+    "Só depois da nota fiscal"
+   ],
+   "comentarios": [
+    "Validar move.",
+    "Confirmar reserva.",
+    "Não há saída parcial automática.",
+    "A nota não move estoque."
+   ],
+   "correta": 0
+  },
+  {
+   "pergunta": "Em qual aplicativo o depósito valida a remessa?",
+   "opcoes": [
+    "Inventário, em Operações, Transferências",
+    "Faturamento",
+    "Vendas",
+    "Consignação"
+   ],
+   "comentarios": [
+    "A validação é trabalho do depósito.",
+    "Faturamento é o acerto.",
+    "O Pedido C não passa por Vendas.",
+    "O comercial trabalha lá; o depósito, no Inventário."
+   ],
+   "correta": 0
+  },
+  {
+   "pergunta": "Depois da validação, onde os livros aparecem?",
+   "opcoes": [
+    "No estoque da livraria, no sistema dela",
+    "Na prateleira da livraria, em Relatórios, Na Prateleira",
+    "Em lugar nenhum, até o acerto",
+    "No estoque do armazém"
+   ],
+   "comentarios": [
+    "A livraria não está no sistema.",
+    "Entraram na prateleira.",
+    "Aparecem na hora.",
+    "Saíram de lá."
+   ],
+   "correta": 1
+  },
+  {
+   "pergunta": "Numa lista com centenas de transferências, como o depósito acha a COM/OUT certa?",
+   "opcoes": [
+    "Buscando pelo contato, a livraria",
+    "Rolando a lista",
+    "Pelo tipo de operação apenas",
+    "Pedindo ao comercial o número"
+   ],
+   "comentarios": [
+    "O filtro Contato traz só as dela.",
+    "Funciona, mas é lento.",
+    "Traz todas as COM/OUT; o contato afina.",
+    "O número está no Pedido C, mas a busca é mais rápida."
+   ],
+   "correta": 0
+  }
+ ],
+ "youtube_anterior": [
+  "https://www.youtube.com/watch?v=KK60GZwm1SA"
+ ],
+ "youtube_quadro": "2912x2080"
+}

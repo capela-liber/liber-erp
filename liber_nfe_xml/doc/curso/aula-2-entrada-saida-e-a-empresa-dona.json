@@ -1,0 +1,96 @@
+{
+ "curso": "Curso NF-e: o XML de entrada",
+ "aula": 2,
+ "titulo": "Entrada, saída e a empresa dona da nota",
+ "abertura": "Ninguém digita se a nota é de entrada ou de saída: o sistema deduz isso comparando os dois CNPJs do arquivo com os CNPJs das empresas cadastradas. Esta aula mostra a regra e o que ela faz com o cadastro de contatos.",
+ "passos": [
+  {
+   "texto": "O caminho começa na tela inicial, entre os aplicativos."
+  },
+  {
+   "texto": "Faturamento. Esta aula responde de quem é a nota — e quem responde é o CNPJ."
+  },
+  {
+   "texto": "NFe XML, a lista das notas."
+  },
+  {
+   "texto": "A primeira coluna é a direção, e ela não se digita: o sistema a deduz comparando os dois CNPJs da nota com os CNPJs das nossas empresas."
+  },
+  {
+   "texto": "Saída é nota que uma empresa nossa emitiu. Entrada é nota endereçada a uma empresa nossa. Quando os dois lados são nossos, ela é Interna; quando nenhum é, Externa."
+  },
+  {
+   "texto": "Uma nota de entrada, aberta. No alto, a identificação: a direção, a empresa dona da nota e o cliente."
+  },
+  {
+   "texto": "A empresa dona é a n-1 edições porque é o CNPJ dela que está no destinatário. Não foi escolha de quem importou: veio do arquivo."
+  },
+  {
+   "texto": "E a chave de acesso, os quarenta e quatro dígitos impressos na DANFE. É a identidade da nota: por ela o sistema não importa a mesma nota duas vezes, liga o XML à fatura e reconhece o cancelamento."
+  },
+  {
+   "texto": "Mais abaixo, os papéis fiscais crus, como estão no arquivo: quem emitiu e quem recebeu, com nome e CNPJ. Esses não mudam nunca — é a nota falando."
+  },
+  {
+   "texto": "O outro lado vira o Cliente do registro. Se aquele CNPJ ainda não existia no cadastro de contatos, o contato nasceu aqui, com o nome e o documento que constam no XML."
+  },
+  {
+   "texto": "É um contato como outro qualquer, que se abre e se completa. A pontuação do documento o próprio cadastro escreve: digitou quatorze dígitos, grava CNPJ pontuado."
+  },
+  {
+   "texto": "E quem tem CNPJ é marcado como empresa, porque CNPJ é emitido a pessoa jurídica. O dígito verificador é conferido, mas avisa em vez de barrar: cadastro antigo com documento irregular continua podendo ser salvo."
+  }
+ ],
+ "fecho": "Saída é nota que emitimos, Entrada é nota endereçada a nós, Interna é entre duas empresas nossas e Externa é nota em que nenhum dos lados é nosso. O outro lado vira o Cliente do registro, criado do próprio XML quando o CNPJ ainda não existia. E a chave de acesso é a identidade da nota.",
+ "youtube": "",
+ "quiz": [
+  {
+   "pergunta": "Como o sistema decide se uma nota é de entrada ou de saída?",
+   "opcoes": [
+    "Pelo CFOP",
+    "Comparando os dois CNPJs da nota com os das nossas empresas",
+    "Por quem importou o arquivo",
+    "Pela data de emissão"
+   ],
+   "comentarios": [
+    "O CFOP diz a operação, não a direção da nota no sistema.",
+    "Emitente nosso é saída; destinatário nosso é entrada.",
+    "Quem importou não decide nada disso.",
+    "A data não diz de quem é a nota."
+   ],
+   "correta": 1
+  },
+  {
+   "pergunta": "O que acontece quando o CNPJ do outro lado não existe no cadastro?",
+   "opcoes": [
+    "A importação falha",
+    "O contato é criado com o nome e o CNPJ do XML",
+    "A nota fica sem cliente para sempre",
+    "O sistema pede confirmação"
+   ],
+   "comentarios": [
+    "A nota entra do mesmo jeito.",
+    "A razão social da nota fiscal é a fonte oficial.",
+    "Ele nasce na hora.",
+    "Não há pergunta: é automático."
+   ],
+   "correta": 1
+  },
+  {
+   "pergunta": "Para que serve a chave de acesso de 44 dígitos?",
+   "opcoes": [
+    "Só para consulta no site da SEFAZ",
+    "Para o sistema não duplicar a nota, ligá-la à fatura e reconhecer o cancelamento",
+    "Para numerar as faturas",
+    "Para calcular o imposto"
+   ],
+   "comentarios": [
+    "Serve para isso também, mas aqui ela faz mais.",
+    "É a identidade da nota, e não depende de número interno nenhum.",
+    "A numeração da fatura é outra.",
+    "Imposto não sai de chave."
+   ],
+   "correta": 1
+  }
+ ]
+}

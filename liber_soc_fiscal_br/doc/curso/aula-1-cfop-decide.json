@@ -1,0 +1,74 @@
+{
+ "curso": "Curso de Consignação III",
+ "aula": 1,
+ "titulo": "O CFOP decide o documento",
+ "abertura": "Bem-vindo ao curso três de Consignação. Este é o que fica por baixo dos fluxos: o fiscal, a contabilidade e a auditoria. Três operações tiram livros do armazém sem vender e não são a mesma coisa; é o CFOP que diz qual documento cada uma gera.",
+ "fecho": "Consignação, bonificação e feira saem por CFOPs próprios, e só o acerto fatura. Nas próximas aulas, os blocos das Definições campo a campo, a nota de remessa, e a auditoria.",
+ "youtube": "https://www.youtube.com/watch?v=g8aZYff095I",
+ "quiz": [
+  {
+   "pergunta": "Qual CFOP marca uma remessa em consignação?",
+   "opcoes": [
+    "5910",
+    "5917 (6917 fora do estado)",
+    "5914",
+    "5114"
+   ],
+   "comentarios": [
+    "5910 é bonificação.",
+    "O livro continua seu.",
+    "5914 é feira ou exposição.",
+    "5114 é venda efetivada, o acerto."
+   ],
+   "correta": 1
+  },
+  {
+   "pergunta": "O que o sistema faz com uma nota de consignação emitida com CFOP de bonificação?",
+   "opcoes": [
+    "Aceita e avisa",
+    "Recusa",
+    "Converte para consignação",
+    "Aceita se for interestadual"
+   ],
+   "comentarios": [
+    "Recusa: cada CFOP só aceita o documento do seu tipo.",
+    "Os três tipos não se misturam.",
+    "Não converte.",
+    "O estado só muda 5 para 6."
+   ],
+   "correta": 1
+  },
+  {
+   "pergunta": "Por que a tabela Efeitos de CFOP é editável?",
+   "opcoes": [
+    "Porque o fisco muda todo ano",
+    "Porque clientes erram CFOP com frequência e a classificação precisa ser dado, não código",
+    "Porque cada empresa inventa seus CFOPs",
+    "Não é editável"
+   ],
+   "comentarios": [
+    "Não é por isso.",
+    "Use o filtro Não mapeados para revisar.",
+    "CFOP é nacional.",
+    "É, no menu do administrador."
+   ],
+   "correta": 1
+  },
+  {
+   "pergunta": "Qual das três operações vira receita?",
+   "opcoes": [
+    "Consignação, na remessa",
+    "Bonificação",
+    "Nenhuma na saída; só o acerto, depois",
+    "Feira"
+   ],
+   "comentarios": [
+    "Remessa nunca é receita.",
+    "Livro dado nunca vira receita.",
+    "A venda S é o único momento de receita.",
+    "Feira viaja e volta."
+   ],
+   "correta": 2
+  }
+ ]
+}

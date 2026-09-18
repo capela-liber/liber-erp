@@ -1,0 +1,74 @@
+{
+ "curso": "Curso Feiras I: montar e levar",
+ "aula": 3,
+ "titulo": "A grade pelo catálogo",
+ "abertura": "Onde existe o catálogo da Metabooks, a grade se monta melhor: por assunto Thema e por época de publicação. E os modelos de grade guardam a curadoria que se repete.",
+ "fecho": "Thema desce pelo galho; a janela de publicação separa lançamento de fundo; Aplicar soma ou substitui sem apagar o despachado; Guardar como modelo pode registrar o que realmente foi. A próxima aula é a estrada.",
+ "youtube": "https://www.youtube.com/watch?v=4uksVteUnl0",
+ "quiz": [
+  {
+   "pergunta": "O que o assunto Thema acrescenta que selo e coleção não dizem?",
+   "opcoes": [
+    "Quantos exemplares há no armazém",
+    "Para quem é o livro: escolher Y traz o infantojuvenil inteiro",
+    "Quem é o autor",
+    "O preço de capa"
+   ],
+   "comentarios": [
+    "Estoque já está na grade.",
+    "O código é hierárquico e desce pelo galho.",
+    "Autor não é assunto.",
+    "Preço é outro filtro."
+   ],
+   "correta": 1
+  },
+  {
+   "pergunta": "Para que serve a janela de publicação na busca?",
+   "opcoes": [
+    "Separar lançamento de fundo de catálogo",
+    "Ordenar por preço",
+    "Escolher a editora",
+    "Excluir livros esgotados"
+   ],
+   "comentarios": [
+    "Lançamento quer o que saiu este ano.",
+    "Preço é outra ordem.",
+    "Editora é o selo.",
+    "Esgotado é estoque."
+   ],
+   "correta": 0
+  },
+  {
+   "pergunta": "Aplicar um modelo no modo Substituir apaga títulos já despachados?",
+   "opcoes": [
+    "Não: o movimento já existe, e apagar a linha faria a grade mentir",
+    "Apaga e cria um retorno",
+    "Sim, apaga tudo",
+    "Só se o gerente confirmar"
+   ],
+   "comentarios": [
+    "Substituir limpa o que ainda não saiu.",
+    "Não gera retorno.",
+    "Nunca o despachado.",
+    "Não é questão de confirmação."
+   ],
+   "correta": 0
+  },
+  {
+   "pergunta": "O que Registrar o que realmente foi faz ao guardar um modelo?",
+   "opcoes": [
+    "Guarda o que de fato saiu, reposição incluída, em vez do planejado",
+    "Guarda só o vendido",
+    "Fecha a feira",
+    "Apaga o modelo antigo"
+   ],
+   "comentarios": [
+    "É a grade que a feira teve de verdade.",
+    "Não é o vendido.",
+    "Não muda a feira.",
+    "Cria um modelo novo."
+   ],
+   "correta": 0
+  }
+ ]
+}

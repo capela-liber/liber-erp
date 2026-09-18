@@ -1,0 +1,78 @@
+{
+ "curso": "Curso de Consignação II",
+ "aula": 10,
+ "titulo": "Relatórios do acerto",
+ "abertura": "Última aula: as telas que respondem o que vendeu, por onde cada unidade passou, o que a campanha cobriu, e quanto acertou cada canal.",
+ "fecho": "Acertos, Razão da Prateleira, Cobertura por cliente, e o canal carimbado na operação. Fim do curso dois; o curso três é fiscal e auditoria.",
+ "youtube": "https://www.youtube.com/watch?v=p17epIzOjvA",
+ "quiz": [
+  {
+   "pergunta": "O que o menu Acertos lista?",
+   "opcoes": [
+    "As operações em rascunho do mês",
+    "Todos os pedidos de venda da empresa",
+    "As vendas S nascidas de operações, só leitura",
+    "As notas fiscais dos acertos"
+   ],
+   "comentarios": [
+    "Isso é o quadro das operações.",
+    "Só as vendas S de acertos.",
+    "Nunca são criadas à mão.",
+    "Notas são do módulo fiscal."
+   ],
+   "correta": 2
+  },
+  {
+   "pergunta": "O Razão da Prateleira mostra duas fontes. Quais?",
+   "opcoes": [
+    "Vendas e Compras",
+    "Estoque Odoo e Fiscal, as notas importadas",
+    "Cliente e editora",
+    "Mapa e acerto"
+   ],
+   "comentarios": [
+    "O razão é da prateleira, não do faturamento.",
+    "Agrupe por Fonte para ver onde discordam.",
+    "As duas fontes são registros, não partes.",
+    "São etapas da operação, não fontes."
+   ],
+   "correta": 1
+  },
+  {
+   "pergunta": "O filtro \"Nunca recebeu\", na cobertura por cliente, lista o quê?",
+   "opcoes": [
+    "Os clientes sem contrato ativo",
+    "Os títulos esgotados no armazém",
+    "Os títulos que a campanha quer e o cliente nunca teve",
+    "Os CR vencidos sem retorno"
+   ],
+   "comentarios": [
+    "Lista títulos, não clientes.",
+    "Esgotado é estoque; aqui é prateleira do cliente.",
+    "O universo invisível da campanha.",
+    "Isso é a lista de Devoluções."
+   ],
+   "correta": 2
+  },
+  {
+   "pergunta": "O canal de uma operação vem de onde, e muda se a ficha do cliente for corrigida depois?",
+   "opcoes": [
+    "Da campanha aplicada",
+    "Do vendedor responsável",
+    "Do contrato, e não muda: a apuração é fechada",
+    "Da ficha do cliente, e muda junto"
+   ],
+   "comentarios": [
+    "Campanha não define o canal.",
+    "O vendedor não define o canal da operação.",
+    "Carimbo, não espelho.",
+    "Vem do contrato e fica carimbado."
+   ],
+   "correta": 2
+  }
+ ],
+ "youtube_anterior": [
+  "https://www.youtube.com/watch?v=lU5z00UVBT8"
+ ],
+ "youtube_quadro": "2912x2080"
+}

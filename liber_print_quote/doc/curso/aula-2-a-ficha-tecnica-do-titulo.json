@@ -1,0 +1,46 @@
+{
+ "curso": "Curso Impressão: cotação de gráfica",
+ "aula": 2,
+ "titulo": "A ficha técnica do título",
+ "abertura": "Esta aula preenche a ficha técnica de um livro: formato, capa, miolo e observações. Ela é do título, não do pedido — preenche-se uma vez e vale para toda cotação daquele livro.",
+ "passos": [
+  {
+   "texto": "O caminho começa na tela inicial, entre os aplicativos."
+  },
+  {
+   "texto": "Compras. Esta aula preenche a ficha técnica de um título."
+  },
+  {
+   "texto": "Produtos, Produtos: a ficha é do livro, não do pedido. Preenche-se uma vez, e vale para toda cotação daquele título."
+  },
+  {
+   "texto": "Formato: brochura ou capa dura, largura, altura, lombada e peso. A largura vem primeiro porque, na gráfica, catorze por vinte e um é um livro de pé e vinte e um por catorze é outro."
+  },
+  {
+   "texto": "Capa: a orelha, e a largura dela em milímetros, que só aparece quando há orelha. É a medida que decide o tamanho da folha, e sem ela a gráfica devolve a cotação como pergunta."
+  },
+  {
+   "texto": "Ainda na capa: cor em notação de gráfica — quatro por zero é colorido de um lado só —, o papel com a gramatura, e o acabamento em texto livre, que é onde entra a laminação fosca e a reserva de verniz."
+  },
+  {
+   "texto": "Miolo: encadernação, lombada, cor e papel — e os cadernos especiais, o caderno que foge da regra. O exemplo em cinza diz como se escreve: um caderno quatro por quatro, páginas 65 a 80. É o que mais encarece e o que mais se esquece de dizer."
+  },
+  {
+   "texto": "E as Observações gerais, por último: encarte, embalagem, referência de cor, prazo. O que não cabe em campo nenhum e a gráfica precisa saber."
+  },
+  {
+   "texto": "Um aviso, e não uma trava: orelha de menos da metade da largura quase sempre é centímetro digitado onde se pede milímetro. Quem sabe que é assim mesmo segue em frente."
+  },
+  {
+   "texto": "Agora o contraste: um título com a ficha pela metade."
+  },
+  {
+   "texto": "Este não tem lombada, nem peso, nem orelha. Nada barra a cotação: ela sai com a ficha curta, e a gráfica volta perguntando. Cada volta é um dia."
+  },
+  {
+   "texto": "Uma coisa, porém, o módulo exige em silêncio: o ISBN no código de barras. É por ele que o sistema sabe que a linha é livro — sem ISBN, a ficha não viaja e a cotação sai igual à do Odoo."
+  }
+ ],
+ "fecho": "Nada na ficha é obrigatório, e é por isso que ela merece atenção: o que falta no cadastro falta no PDF, e a gráfica devolve a cotação como pergunta. A exceção é o ISBN: sem ele no código de barras, o sistema não sabe que a linha é livro e a ficha não viaja.",
+ "youtube": ""
+}

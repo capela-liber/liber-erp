@@ -1,0 +1,74 @@
+{
+ "curso": "Curso Expedição: transportadora, coleta e DANFE",
+ "aula": 5,
+ "titulo": "A DANFE no movimento",
+ "abertura": "Esta aula é a nota chegando sozinha ao depósito: como ela acha a transferência, onde o PDF aparece, e o que acontece se ela for cancelada depois.",
+ "fecho": "A nota não se anexa à mão: autorizada, ela acha a transferência pelo pedido e carimba, com o PDF no histórico. Cancelada, avisa uma vez.",
+ "youtube": "https://www.youtube.com/watch?v=iL6r8kHYInI",
+ "quiz": [
+  {
+   "pergunta": "Como a nota acha a transferência dela?",
+   "opcoes": [
+    "Pelo nome do cliente",
+    "Pelo pedido de venda que gerou as duas",
+    "Por quem anexa o PDF à mão",
+    "Pela data"
+   ],
+   "comentarios": [
+    "O mesmo cliente tem muitas entregas.",
+    "Pedido, fatura, transferência: o caminho já existe, e o carimbo o percorre.",
+    "Ninguém anexa nada à mão.",
+    "Data não identifica documento."
+   ],
+   "correta": 1
+  },
+  {
+   "pergunta": "Quando o PDF da DANFE aparece no histórico da transferência?",
+   "opcoes": [
+    "Quando o depósito imprime",
+    "Na autorização da nota pela SEFAZ",
+    "Na confirmação do pedido",
+    "Quando a transportadora coleta"
+   ],
+   "comentarios": [
+    "Imprimir é depois, e não cria nada.",
+    "É o gatilho: autorizou, carimba.",
+    "Na confirmação ainda não há nota.",
+    "A coleta é outro momento."
+   ],
+   "correta": 1
+  },
+  {
+   "pergunta": "O que a transferência mostra da nota, sem sair do depósito?",
+   "opcoes": [
+    "O valor dos impostos",
+    "O XML inteiro",
+    "O protocolo da SEFAZ",
+    "O número e a situação dela"
+   ],
+   "comentarios": [
+    "Imposto é do fiscal.",
+    "O XML fica no painel fiscal.",
+    "O protocolo também é do painel.",
+    "É o que a expedição precisa: qual nota é, e se está de pé."
+   ],
+   "correta": 3
+  },
+  {
+   "pergunta": "A nota daquela transferência foi cancelada. O que o depósito vê?",
+   "opcoes": [
+    "Um aviso no histórico, uma vez só",
+    "Nada: só o fiscal enxerga",
+    "A transferência cancelada junto",
+    "Um aviso repetido a cada consulta"
+   ],
+   "comentarios": [
+    "O aviso não se repete de propósito: cada consulta do robô repetiria a mensagem.",
+    "O depósito precisa saber, e sabe.",
+    "A transferência não se cancela por isso.",
+    "Era exatamente o que se quis evitar."
+   ],
+   "correta": 0
+  }
+ ]
+}

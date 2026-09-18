@@ -1,0 +1,74 @@
+{
+ "curso": "Curso Orçamento",
+ "aula": 3,
+ "titulo": "Criar um orçamento",
+ "abertura": "Esta aula monta o orçamento: o período no cabeçalho, uma linha por posição com o previsto, e a confirmação que o tira do exercício.",
+ "fecho": "O período é do cabeçalho e as linhas o herdam — orçamento mensal é um orçamento por mês. Confirmado, ele passa a valer; e só se apaga rascunho ou cancelado.",
+ "youtube": "https://www.youtube.com/watch?v=QN5AwP_oBlQ",
+ "quiz": [
+  {
+   "pergunta": "Onde fica o período do orçamento?",
+   "opcoes": [
+    "No cabeçalho, e as linhas o herdam",
+    "Em cada linha",
+    "Na posição",
+    "No grupo"
+   ],
+   "comentarios": [
+    "Por isso orçamento mensal é um orçamento por mês, não uma linha por mês.",
+    "A linha não tem data própria.",
+    "A posição não tem data.",
+    "O grupo só organiza."
+   ],
+   "correta": 0
+  },
+  {
+   "pergunta": "Como entram receita e despesa no previsto?",
+   "opcoes": [
+    "As duas positivas",
+    "As duas negativas",
+    "Receita positiva e despesa negativa, no sinal do resultado",
+    "Em valor absoluto"
+   ],
+   "comentarios": [
+    "O total não fecharia.",
+    "A receita não é negativa.",
+    "É a mesma convenção do resultado, e o total vira o resultado previsto.",
+    "O sinal importa."
+   ],
+   "correta": 2
+  },
+  {
+   "pergunta": "O que muda ao confirmar?",
+   "opcoes": [
+    "Nada visível",
+    "As linhas ficam só leitura para sempre",
+    "O realizado começa a contar",
+    "Sai do rascunho e passa a valer; em rascunho ele é um exercício"
+   ],
+   "comentarios": [
+    "Muda a situação.",
+    "Há revisão para mudar.",
+    "O realizado já contava.",
+    "É a linha entre o ensaio e o compromisso."
+   ],
+   "correta": 3
+  },
+  {
+   "pergunta": "Que orçamento se pode apagar?",
+   "opcoes": [
+    "Qualquer um",
+    "Só os em rascunho ou cancelados",
+    "Só os do ano corrente",
+    "Nenhum"
+   ],
+   "comentarios": [
+    "Confirmado vira histórico.",
+    "Histórico não se apaga.",
+    "O ano não é o critério.",
+    "Rascunho se apaga, sim."
+   ],
+   "correta": 1
+  }
+ ]
+}

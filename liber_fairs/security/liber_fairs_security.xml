@@ -22,17 +22,42 @@
         <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
     </record>
 
-    <!-- Quem ABRE e FECHA uma feira é o gerente, pelo mesmo motivo do
-         contrato de consignação: planejar um evento compromete estoque da
-         casa fora da casa, por dias, sob a guarda de outra pessoa. O usuário
-         opera o que existe (lança contagem, fecha o dia, despacha a
-         reposição), e é ele quem está na praça com o celular na mão. O que
-         ele não faz é criar a feira nem apagá-la. Está no
-         security/ir.model.access.csv, que é CSV e não comporta comentário. -->
+    <!-- O MEIO da escada (15/09/2026). Abre a feira, planeja, despacha,
+         encerra e lança os custos do evento. O que ele NÃO faz é apagar a
+         feira nem decidir quanto a equipe ganha: essas duas ficam no
+         Administrador. É o papel do assistente comercial, que é quem agenda
+         a praça e toca o evento do começo ao fim.
+
+         Por que apagar fica de fora: uma feira planejada já tem localização,
+         analítico e movimento de estoque atrás dela. Apagar não é desfazer,
+         é esconder o rastro.
+
+         Por que a remuneração fica de fora: a combinação com a equipe é
+         anterior ao evento e é do gerente. Quem toca a feira na praça não
+         decide a própria diária. A tranca de verdade é no ORM
+         (liber_fairs_pos, _exigir_quem_planeja); a aba escondida é só a
+         porta da frente. -->
+    <record id="group_fair_planner" model="res.groups">
+        <field name="name">Planner</field>
+        <field name="privilege_id" ref="privilege_fairs"/>
+        <field name="implied_ids" eval="[(4, ref('group_fair_user'))]"/>
+    </record>
+
+    <!-- Quem ABRE e FECHA uma feira carrega este papel. O USUÁRIO opera o
+         que existe (lança contagem, fecha o dia, despacha a reposição), e é
+         ele quem está na praça com o celular na mão; o que ele não faz é
+         criar a feira nem apagá-la. Está no security/ir.model.access.csv,
+         que é CSV e não comporta comentário.
+
+         Quem da casa recebe este papel é a ponte do liber_roles, em
+         models/res_groups.py: os dois níveis do Comercial (o assistente
+         desde 15/09/2026, porque a feira nasce da agenda comercial) e o
+         gerente da Logística. A logística assistente fica no papel de
+         usuário: ela separa e confere o que o Comercial decidiu mandar. -->
     <record id="group_fair_manager" model="res.groups">
         <field name="name">Administrator</field>
         <field name="privilege_id" ref="privilege_fairs"/>
-        <field name="implied_ids" eval="[(4, ref('group_fair_user'))]"/>
+        <field name="implied_ids" eval="[(4, ref('group_fair_planner'))]"/>
         <field name="user_ids" eval="[(4, ref('base.user_admin'))]"/>
     </record>
 

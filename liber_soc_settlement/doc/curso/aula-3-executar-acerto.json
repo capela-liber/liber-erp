@@ -1,0 +1,78 @@
+{
+ "curso": "Curso de Consignação II",
+ "aula": 3,
+ "titulo": "Executar um acerto, passo a passo",
+ "abertura": "A rotina de todo mês: abrir a operação, carregar o mapa, digitar o que o cliente vendeu, decidir reposição e devolução, e Executar.",
+ "fecho": "Mapa dez, vendeu quatro, devolve dois: venda S de quatro com a baixa, Pedido C repondo quatro, CR trazendo dois, prateleira em oito. Na próxima aula, de onde vem o preço.",
+ "youtube": "https://www.youtube.com/watch?v=R691QpXuSuU",
+ "quiz": [
+  {
+   "pergunta": "O que o botão Mapa faz na operação?",
+   "opcoes": [
+    "Envia o mapa por e-mail ao cliente",
+    "Imprime o mapa em PDF para o cliente",
+    "Congela as linhas e fecha a operação",
+    "Preenche as linhas com o que está na prateleira do cliente"
+   ],
+   "comentarios": [
+    "Enviar Mapa é outro botão, da aula 5.",
+    "Imprimir é outro botão; o Mapa preenche as linhas.",
+    "Quem congela é o Executar.",
+    "Com o preço e o desconto que o contrato manda."
+   ],
+   "correta": 3
+  },
+  {
+   "pergunta": "Você digita 4 na coluna Acerto. O que a coluna Reposição faz?",
+   "opcoes": [
+    "Fica travada: a reposição só se decide no Pedido C",
+    "Copia o que estiver na coluna Devolução",
+    "Sugere 4, para a prateleira voltar ao que era, e você pode mudar",
+    "Fica em zero até você preencher à mão"
+   ],
+   "comentarios": [
+    "O Pedido C nasce da Reposição, não o contrário.",
+    "Devolução é outra decisão, independente.",
+    "A sugestão é igual ao vendido; continua editável.",
+    "Ela se sugere sozinha."
+   ],
+   "correta": 2
+  },
+  {
+   "pergunta": "Uma reposição pede mais do que há em mãos no armazém. O que o Executar faz?",
+   "opcoes": [
+    "Reduz o Acerto até caber no estoque",
+    "Para e mostra Estoque insuficiente, com a opção Remover e Executar",
+    "Cancela a operação inteira e volta ao rascunho",
+    "Manda o pedido mesmo assim e avisa o depósito"
+   ],
+   "comentarios": [
+    "O Acerto é o que o cliente vendeu; não muda.",
+    "Nenhum plano impossível chega ao armazém.",
+    "Só as linhas excedentes são o problema.",
+    "Ele não deixa passar."
+   ],
+   "correta": 1
+  },
+  {
+   "pergunta": "Quem finaliza a operação depois do Executar?",
+   "opcoes": [
+    "O gerente comercial, ao aprovar",
+    "Uma rotina de meia em meia hora, quando venda, Pedido C e devolução terminaram",
+    "O cliente, ao pagar a venda S",
+    "O operador, com um botão Finalizar"
+   ],
+   "comentarios": [
+    "Aprovação não faz parte do fluxo.",
+    "Ninguém clica em Finalizar.",
+    "O pagamento é do financeiro; a operação fecha antes.",
+    "Não há esse botão."
+   ],
+   "correta": 1
+  }
+ ],
+ "youtube_anterior": [
+  "https://www.youtube.com/watch?v=Tfd0l2in04M"
+ ],
+ "youtube_quadro": "2912x2080"
+}

@@ -1,0 +1,74 @@
+{
+ "curso": "Curso Comercial: clientes, canal e painel",
+ "aula": 7,
+ "titulo": "Painel de Vendas: filtros e listas de notas",
+ "abertura": "Esta aula mexe no painel: o período, o filtro por cliente e por canal, o clique que abre a lista de origem, e os três filtros das Notas de venda.",
+ "fecho": "O painel abre nos doze meses fechados; o período move tudo; cada número tem uma lista atrás; e as Notas de venda se separam em sem fatura, fatura sem pedido e presa a pedido. A última aula é o Top 50 do painel Produto.",
+ "youtube": "https://www.youtube.com/watch?v=1AHUX_3XQW0",
+ "quiz": [
+  {
+   "pergunta": "Que período o painel abre por padrão?",
+   "opcoes": [
+    "Este mês",
+    "Ano até a data",
+    "Desde sempre",
+    "Os últimos doze meses fechados, sem o mês corrente"
+   ],
+   "comentarios": [
+    "Este mês é uma opção do botão.",
+    "Ano até a data é uma opção do botão.",
+    "Sempre há um período.",
+    "Para ver setembro, mude para Ano até a data ou o mês."
+   ],
+   "correta": 3
+  },
+  {
+   "pergunta": "O que acontece ao clicar num cartão do painel?",
+   "opcoes": [
+    "Abre a configuração do cartão",
+    "Abre o pedido mais recente",
+    "Abre a lista de onde o número saiu, com o período e o filtro levados junto",
+    "Nada"
+   ],
+   "comentarios": [
+    "O painel é só leitura.",
+    "Abre a lista inteira, não um registro.",
+    "Nada no painel é número sem lista atrás.",
+    "O clique abre a origem."
+   ],
+   "correta": 2
+  },
+  {
+   "pergunta": "A busca do painel filtra por quê?",
+   "opcoes": [
+    "Empresa",
+    "Vendedor",
+    "Cliente ou canal de vendas",
+    "Produto"
+   ],
+   "comentarios": [
+    "Empresa é o seletor do alto da tela.",
+    "Vendedor não é filtro do painel.",
+    "Digite e escolha em qual dos dois.",
+    "Produto é no painel Produto."
+   ],
+   "correta": 2
+  },
+  {
+   "pergunta": "O filtro Fatura sem pedido, em Notas de venda, mostra o quê?",
+   "opcoes": [
+    "Notas presas a um pedido",
+    "Notas canceladas",
+    "Notas sem fatura",
+    "Notas com fatura, mas sem pedido que a originou"
+   ],
+   "comentarios": [
+    "Isso é o filtro Com pedido.",
+    "Canceladas ficam fora de todas.",
+    "Isso é o filtro Sem fatura.",
+    "É a lista que o gerente abre para perguntar por quê."
+   ],
+   "correta": 3
+  }
+ ]
+}

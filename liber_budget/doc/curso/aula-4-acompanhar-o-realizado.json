@@ -1,0 +1,74 @@
+{
+ "curso": "Curso Orçamento",
+ "aula": 4,
+ "titulo": "Acompanhar o realizado e revisar",
+ "abertura": "Esta aula lê as três colunas ao lado do previsto — teórico, realizado e programado — e mostra o que fazer quando o número muda: revisar, não reescrever.",
+ "fecho": "Realizado é o que já está lançado; programado soma o que está em rascunho; teórico é a régua do tempo. E orçamento confirmado não se reescreve: ganha revisão.",
+ "youtube": "https://www.youtube.com/watch?v=9RRjmsmYoqA",
+ "quiz": [
+  {
+   "pergunta": "De onde vem a coluna Realizado?",
+   "opcoes": [
+    "Do que alguém digita no orçamento",
+    "Da previsão do mês anterior",
+    "Dos lançamentos já lançados no razão, nas contas da posição",
+    "Do contador"
+   ],
+   "comentarios": [
+    "Ninguém digita realizado.",
+    "Não é projeção.",
+    "O dia a dia alimenta a coluna sem ninguém lembrar.",
+    "Não vem de fora."
+   ],
+   "correta": 2
+  },
+  {
+   "pergunta": "O que o Programado tem a mais que o Realizado?",
+   "opcoes": [
+    "A previsão do trimestre",
+    "Os pedidos de compra",
+    "Os impostos",
+    "Os lançamentos em rascunho, ainda não lançados"
+   ],
+   "comentarios": [
+    "Não é previsão.",
+    "Pedido não é lançamento.",
+    "Imposto entra como qualquer despesa.",
+    "É o realizado mais o que já foi digitado e ainda não foi lançado."
+   ],
+   "correta": 3
+  },
+  {
+   "pergunta": "Para que serve o Teórico?",
+   "opcoes": [
+    "Para dizer quanto do previsto já deveria ter sido gasto a esta altura",
+    "Para prever o ano que vem",
+    "Para converter moeda",
+    "Para somar as empresas"
+   ],
+   "comentarios": [
+    "É a régua do tempo: com ela se sabe se o gasto está adiantado.",
+    "Não é projeção do futuro.",
+    "Moeda é outro campo.",
+    "Consolidação é outro campo."
+   ],
+   "correta": 0
+  },
+  {
+   "pergunta": "Mudou o plano no meio do ano. O que se faz?",
+   "opcoes": [
+    "Reescreve-se o orçamento confirmado",
+    "Cria-se uma revisão, e as duas ficam no histórico",
+    "Apaga-se e cria-se outro",
+    "Espera-se o ano que vem"
+   ],
+   "comentarios": [
+    "Reescrever apaga o que foi combinado.",
+    "Fica registrado que houve mudança e qual foi.",
+    "Apagar confirmado não é permitido.",
+    "O ano não espera."
+   ],
+   "correta": 1
+  }
+ ]
+}

@@ -1,0 +1,74 @@
+{
+ "curso": "Curso Feiras I: montar e levar",
+ "aula": 8,
+ "titulo": "Reposição durante o evento",
+ "abertura": "Um título vende no sábado e falta no domingo. Esta aula é a reposição no meio da feira: pedida no fechamento do dia, sugerida pelo mínimo de mesa, descontando o que já está a caminho.",
+ "fecho": "Repor é mínimo menos sobra menos a caminho, sugestão e não ordem; Mandar reposição sai a qualquer hora; a grade sobe e sai a diferença contra a mesma localização. Fim do curso Feiras I.",
+ "youtube": "https://www.youtube.com/watch?v=8M8Imp6ECGA",
+ "quiz": [
+  {
+   "pergunta": "Onde se pede a reposição?",
+   "opcoes": [
+    "Num pedido de venda",
+    "No fechamento do dia, na coluna Repor ao lado da contagem",
+    "Na grade da feira, apagando e refazendo",
+    "Por e-mail ao depósito"
+   ],
+   "comentarios": [
+    "Não é venda.",
+    "É a contagem que acabou de mostrar o que faltou.",
+    "A grade sobe sozinha com o pedido.",
+    "O sistema despacha."
+   ],
+   "correta": 1
+  },
+  {
+   "pergunta": "Como a coluna Repor se preenche sozinha?",
+   "opcoes": [
+    "Igual ao planejado",
+    "Com o que o armazém tem livre",
+    "Igual ao vendido do dia",
+    "Mínimo de mesa, menos o que sobrou, menos o que já está a caminho"
+   ],
+   "comentarios": [
+    "Não é o planejado.",
+    "Livre é a régua, não a sugestão.",
+    "Não é o vendido.",
+    "O número é sugestão; escreva por cima se amanhã chove ou vem escola."
+   ],
+   "correta": 3
+  },
+  {
+   "pergunta": "Por que descontar o que está a caminho?",
+   "opcoes": [
+    "Porque o trânsito não existe no sistema",
+    "Senão a contagem seguinte mandaria tudo de novo, e a feira receberia em dobro o que faltava",
+    "Por limite de estoque",
+    "Porque a nota já foi emitida"
+   ],
+   "comentarios": [
+    "Existe: é a coluna A caminho.",
+    "Um pedido sai numa noite e chega dois dias depois.",
+    "Não é limite.",
+    "A nota não decide reposição."
+   ],
+   "correta": 1
+  },
+  {
+   "pergunta": "Um título já pedido está a caminho e alguém pede de novo. O que o sistema faz?",
+   "opcoes": [
+    "Manda em dobro",
+    "Manda só se o gerente aprovar",
+    "Recusa e diz: espere chegar, ou suba a grade da feira se precisa mesmo de mais",
+    "Cancela o primeiro pedido"
+   ],
+   "comentarios": [
+    "Não dobra.",
+    "Não há aprovação.",
+    "Uma feira, várias remessas, um saldo só.",
+    "Não cancela."
+   ],
+   "correta": 2
+  }
+ ]
+}

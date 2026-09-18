@@ -1,0 +1,74 @@
+{
+ "curso": "Curso Royalties II: apuração, pagamento e prestação de contas",
+ "aula": 9,
+ "titulo": "Entre empresas: apurar, cobrar, e o que não acontece",
+ "abertura": "Esta aula fecha o curso: a venda da irmã entra na apuração com a Empresa de Origem, a fatura acumuladora cresce, lançá-la cria o espelho — e o que o módulo não faz.",
+ "fecho": "O autor recebe da detentora; a irmã deve à detentora. Venda própria não cobra, rodar duas vezes não duplica, cancelar devolve. Fim do curso.",
+ "youtube": "",
+ "quiz": [
+  {
+   "pergunta": "A irmã vendeu o livro. De quem o autor recebe?",
+   "opcoes": [
+    "Da irmã",
+    "Da detentora do direito",
+    "Dos dois",
+    "De nenhum"
+   ],
+   "comentarios": [
+    "A irmã deve à detentora.",
+    "Uma fatura só, da detentora.",
+    "Não são dois.",
+    "Recebe."
+   ],
+   "correta": 1
+  },
+  {
+   "pergunta": "O que a Empresa de Origem marca?",
+   "opcoes": [
+    "O armazém",
+    "O autor",
+    "De qual irmã veio a venda apurada",
+    "O cliente final"
+   ],
+   "comentarios": [
+    "Não.",
+    "Não.",
+    "É o rastro que a cobrança usa.",
+    "Não."
+   ],
+   "correta": 2
+  },
+  {
+   "pergunta": "O que lançar a fatura acumuladora faz?",
+   "opcoes": [
+    "Paga o autor",
+    "Apaga os lançamentos",
+    "Nada",
+    "Cria a fatura espelho na empresa da irmã"
+   ],
+   "comentarios": [
+    "O autor é outra fatura.",
+    "Cancelar é que devolve.",
+    "Faz.",
+    "Os botões Faturas Espelho e Origem ligam as duas."
+   ],
+   "correta": 3
+  },
+  {
+   "pergunta": "Qual destas NÃO acontece?",
+   "opcoes": [
+    "Rodar duas vezes duplica a cobrança",
+    "Cancelar a acumuladora devolve os lançamentos",
+    "Venda da própria detentora não gera cobrança",
+    "O autor recebe uma fatura só"
+   ],
+   "comentarios": [
+    "Não duplica: é a que não acontece.",
+    "Acontece.",
+    "Acontece.",
+    "Acontece."
+   ],
+   "correta": 0
+  }
+ ]
+}

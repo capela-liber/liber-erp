@@ -1,0 +1,74 @@
+{
+ "curso": "Curso Marketplaces via Olist",
+ "aula": 3,
+ "titulo": "O estoque, lado a lado",
+ "abertura": "Esta aula compara os dois estoques: o que a casa tem e o que o anúncio mostra. E o botão que escreve o saldo da casa lá.",
+ "fecho": "De um lado o armazém menos a margem, do outro o anúncio; a mais é promessa que não se cumpre, a menos é venda que não se faz; e Fora do Olist é a pergunta pelo avesso. A próxima aula é o casamento dos títulos.",
+ "youtube": "https://www.youtube.com/watch?v=kt-ME1RdhmI",
+ "quiz": [
+  {
+   "pergunta": "Que saldo a casa manda para o Olist?",
+   "opcoes": [
+    "O da empresa, somando todas as localizações",
+    "O do armazém menos a margem de segurança",
+    "O do armazém inteiro",
+    "O que sobrou do último mês"
+   ],
+   "comentarios": [
+    "Consignação e feira não contam.",
+    "É o que evita prometer o que não há.",
+    "A margem sempre sai.",
+    "É o saldo de agora."
+   ],
+   "correta": 1
+  },
+  {
+   "pergunta": "Olist mostrando mais do que a casa tem significa o quê?",
+   "opcoes": [
+    "Que o anúncio está desativado",
+    "Que o preço está errado",
+    "Anúncio prometendo livro que não há: a venda entra e a casa não entrega",
+    "Que há livro parado no armazém"
+   ],
+   "comentarios": [
+    "Desativado não vende.",
+    "Preço é outro assunto.",
+    "É a linha que se lê primeiro.",
+    "É o contrário."
+   ],
+   "correta": 2
+  },
+  {
+   "pergunta": "Subir estoque agora com a conta em somente leitura:",
+   "opcoes": [
+    "Desliga a chave sozinho",
+    "Avisa e não escreve",
+    "Dá erro e trava a conta",
+    "Escreve assim mesmo"
+   ],
+   "comentarios": [
+    "Não desliga nada.",
+    "A chave existe exatamente para isso.",
+    "Avisa, sem travar.",
+    "Não escreve."
+   ],
+   "correta": 1
+  },
+  {
+   "pergunta": "O que a lista Fora do Olist pergunta?",
+   "opcoes": [
+    "Quais anúncios não têm estoque",
+    "Quais títulos da casa não estão sendo vendidos lá",
+    "Quais títulos foram cancelados",
+    "Quais pedidos não foram importados"
+   ],
+   "comentarios": [
+    "Isso é a comparação de estoque.",
+    "É decisão comercial que ninguém tomou.",
+    "Cancelamento é de pedido.",
+    "Isso é a lista de pedidos."
+   ],
+   "correta": 1
+  }
+ ]
+}

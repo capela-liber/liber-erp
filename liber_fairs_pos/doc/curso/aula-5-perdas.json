@@ -1,0 +1,74 @@
+{
+ "curso": "Curso Feiras II: vender, fechar e voltar",
+ "aula": 5,
+ "titulo": "As perdas",
+ "abertura": "Esta aula é o que não voltou e não foi vendido: onde as perdas nascem, os motivos, o custo congelado, e quem paga.",
+ "fecho": "A falta nasce como pergunta, a explicar; o motivo escolhe o destino; o custo é o do registro; só o que sumiu sob a guarda da equipe entra no rateio. A próxima aula é a nota da volta.",
+ "youtube": "https://www.youtube.com/watch?v=92hgUw321mM",
+ "quiz": [
+  {
+   "pergunta": "Como uma perda nasce?",
+   "opcoes": [
+    "Já com o motivo, baixando o estoque",
+    "Como venda",
+    "Só quando o gerente digita",
+    "Como pergunta, a explicar: Não recebido na ida, Não voltou na volta, sem baixar nada"
+   ],
+   "comentarios": [
+    "A baixa espera o motivo.",
+    "Não é venda.",
+    "Nasce da conferência.",
+    "O exemplar fica parado no trânsito até alguém dizer o que houve."
+   ],
+   "correta": 3
+  },
+  {
+   "pergunta": "Escolhi o motivo Avariado. O que acontece?",
+   "opcoes": [
+    "O exemplar volta para a mesa",
+    "Nada, é só anotação",
+    "Sai uma transferência do trânsito para o descarte, registrada na coluna Baixa",
+    "Sai uma nota fiscal"
+   ],
+   "comentarios": [
+    "Não volta.",
+    "A baixa é real.",
+    "Vendido e não lançado e Doado saem para clientes; Avariado e Extraviado são baixa.",
+    "Não há nota de perda."
+   ],
+   "correta": 2
+  },
+  {
+   "pergunta": "Que custo a perda guarda?",
+   "opcoes": [
+    "O custo congelado no momento do registro",
+    "O preço da feira",
+    "O custo do dia da venda",
+    "O preço de capa"
+   ],
+   "comentarios": [
+    "É esse número que decide o que se manda na próxima vez.",
+    "Não é o desconto.",
+    "É o do registro.",
+    "Não é venda."
+   ],
+   "correta": 0
+  },
+  {
+   "pergunta": "Que perda entra no rateio da equipe?",
+   "opcoes": [
+    "Nenhuma: perda é da casa",
+    "Só o que sumiu sob a guarda dela: o que a mesa deveria ter e não entrou na caixa, avaria, extravio no movimento",
+    "Só a avaria",
+    "Toda perda do evento"
+   ],
+   "comentarios": [
+    "A equipe paga a parte dela.",
+    "O que sumiu na estrada, ou nunca saiu do depósito, não é de quem estava no balcão.",
+    "Extravio na mesa também.",
+    "Não toda."
+   ],
+   "correta": 1
+  }
+ ]
+}

@@ -1,0 +1,74 @@
+{
+ "curso": "Curso Marketplaces via Olist",
+ "aula": 8,
+ "titulo": "Quando algo não sai como esperado",
+ "abertura": "Última aula: os erros comuns, onde eles ficam escritos, e o que nunca se conserta pelo lado do Olist.",
+ "fecho": "Cancelado entra cancelado; sem detalhe espera leitura; livro não localizado se resolve no espelho do catálogo; e o que é do livro da casa se acerta aqui. Fim do curso.",
+ "youtube": "https://www.youtube.com/watch?v=IlmW-Tqc168",
+ "quiz": [
+  {
+   "pergunta": "Um pedido cancelado no Olist:",
+   "opcoes": [
+    "Vira pedido e depois é estornado",
+    "Entra e precisa ser cancelado à mão",
+    "Entra cancelado e não vira documento nenhum",
+    "É ignorado e não aparece"
+   ],
+   "comentarios": [
+    "Não chega a virar documento.",
+    "Não há o que cancelar.",
+    "Nada a desfazer aqui.",
+    "Aparece, cancelado."
+   ],
+   "correta": 2
+  },
+  {
+   "pergunta": "Onde ficam registradas as leituras e as recusas de um pedido?",
+   "opcoes": [
+    "Em lugar nenhum",
+    "Num arquivo de log do servidor",
+    "Na ficha da conta",
+    "No histórico do próprio pedido, com a mensagem que o Olist devolveu"
+   ],
+   "comentarios": [
+    "Fica registrado.",
+    "O log do servidor é para o técnico.",
+    "A conta guarda datas, não o caso.",
+    "É o primeiro lugar a olhar."
+   ],
+   "correta": 3
+  },
+  {
+   "pergunta": "\"Livro não localizado\" na importação quer dizer o quê?",
+   "opcoes": [
+    "O livro está esgotado",
+    "O canal não está mapeado",
+    "O pedido foi cancelado",
+    "O anúncio tem um ISBN que o cadastro da casa não tem"
+   ],
+   "comentarios": [
+    "Esgotado é estoque.",
+    "Canal não bloqueia.",
+    "Cancelado é outro estado.",
+    "Resolve-se no espelho do catálogo, e o pedido importa depois."
+   ],
+   "correta": 3
+  },
+  {
+   "pergunta": "O que nunca se conserta pelo Olist?",
+   "opcoes": [
+    "A descrição do anúncio",
+    "O que é do livro da casa: preço, nota e cadastro se acertam no Odoo",
+    "O título do anúncio",
+    "A foto do anúncio"
+   ],
+   "comentarios": [
+    "Descrição é de lá.",
+    "O Olist recebe o que a casa decidiu.",
+    "Anúncio é de lá.",
+    "Foto é de lá."
+   ],
+   "correta": 1
+  }
+ ]
+}

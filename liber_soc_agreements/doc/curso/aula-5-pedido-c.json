@@ -1,0 +1,78 @@
+{
+ "curso": "Curso de Consignação I",
+ "aula": 5,
+ "titulo": "O Pedido C: a remessa de abertura",
+ "abertura": "A primeira leva de livros para uma livraria é um Pedido C de abertura. Ele chega pronto da operação de consignação; nesta aula, conferimos e confirmamos um.",
+ "fecho": "A entrega nasceu na série COM/OUT, reservada. Na próxima aula, o depósito valida.",
+ "youtube": "https://www.youtube.com/watch?v=LQ-HOwzl51Y",
+ "quiz": [
+  {
+   "pergunta": "Por que a lista de Pedidos não tem botão Novo?",
+   "opcoes": [
+    "Porque pedidos são criados no aplicativo Vendas",
+    "Porque só o gerente cria",
+    "Porque o Pedido C nasce da operação de consignação",
+    "É um defeito"
+   ],
+   "comentarios": [
+    "Pedido C é da Consignação.",
+    "Nem o gerente cria à mão.",
+    "O comercial abre e confirma.",
+    "É desenho: a CO sabe o que cabe em cada prateleira."
+   ],
+   "correta": 2
+  },
+  {
+   "pergunta": "Em que série sai a entrega de um Pedido C?",
+   "opcoes": [
+    "COM/IN",
+    "REM, a nota de remessa",
+    "OUT genérica do armazém",
+    "COM/OUT, o tipo de operação da consignação"
+   ],
+   "comentarios": [
+    "COM/IN é a volta, da prateleira ao armazém.",
+    "REM é a série da nota, não da transferência.",
+    "Nunca no pedido de entrega genérico.",
+    "É por ela que a prateleira enche."
+   ],
+   "correta": 3
+  },
+  {
+   "pergunta": "O que acontece ao confirmar um Pedido C de cliente sem contrato ativo?",
+   "opcoes": [
+    "Vai para aprovação do financeiro",
+    "Cria o contrato sozinho",
+    "É recusado, e o aviso diz o que fazer: abrir o contrato",
+    "Sai mesmo assim"
+   ],
+   "comentarios": [
+    "Não há aprovação nesse caminho.",
+    "Contrato é decisão do gerente.",
+    "O pedido fica em rascunho.",
+    "A casa cobra o contrato ativo no Confirmar."
+   ],
+   "correta": 2
+  },
+  {
+   "pergunta": "O tipo de consignação de um Pedido C criado para uma livraria nova é:",
+   "opcoes": [
+    "Renovação simbólica",
+    "Abertura de Consignação",
+    "Devolução",
+    "Reposição"
+   ],
+   "comentarios": [
+    "Renovação não move livro.",
+    "A primeira leva é sempre abertura.",
+    "Devolução é o CR.",
+    "Reposições nascem do acerto."
+   ],
+   "correta": 1
+  }
+ ],
+ "youtube_anterior": [
+  "https://www.youtube.com/watch?v=PcOxqxi4WhM"
+ ],
+ "youtube_quadro": "2912x2080"
+}

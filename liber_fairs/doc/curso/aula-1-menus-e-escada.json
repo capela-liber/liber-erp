@@ -1,0 +1,74 @@
+{
+ "curso": "Curso Feiras I: montar e levar",
+ "aula": 1,
+ "titulo": "O que há em cada menu, e a escada",
+ "abertura": "Bem-vindo ao curso Feiras I: montar e levar. Feira não é venda: é uma remessa temporária. O livro sai, fica dias sob a guarda de outra pessoa, vende em parte, e volta incompleto. Esta aula é o mapa do aplicativo Eventos e a escada que toda feira sobe.",
+ "fecho": "Calendário, Eventos, Fechamentos diários, Modelos de grade, Perdas e Recebimentos; e a escada Rascunho, Planejado, Enviado, Retornado, um botão por degrau. A próxima aula monta a grade.",
+ "youtube": "https://www.youtube.com/watch?v=gfcR9m4rQN4",
+ "quiz": [
+  {
+   "pergunta": "Por que uma feira não passa pelo fluxo de venda comum?",
+   "opcoes": [
+    "Porque feira não tem nota fiscal",
+    "Porque o desconto é diferente",
+    "Porque a venda baixaria o estoque no envio, reconheceria receita antes de existir venda e não deixaria rastro entre o que foi, vendeu e voltou",
+    "Porque o PDV não aceita venda comum"
+   ],
+   "comentarios": [
+    "Tem nota: a de simples remessa.",
+    "O desconto é um número do evento, não o motivo.",
+    "Três mentiras, e o módulo isola o ciclo num objeto próprio.",
+    "O PDV aceita; a questão é o estoque e a receita."
+   ],
+   "correta": 2
+  },
+  {
+   "pergunta": "O que o botão Planejar faz?",
+   "opcoes": [
+    "Emite a nota de remessa",
+    "Cria a localização da feira e um fechamento para cada dia do evento; exige grade",
+    "Despacha a carga para a praça",
+    "Fecha a feira"
+   ],
+   "comentarios": [
+    "A nota é outro botão, depois do despacho.",
+    "Planejar sem grade não é planejar nada.",
+    "Despachar é o degrau seguinte.",
+    "Retorno fecha."
+   ],
+   "correta": 1
+  },
+  {
+   "pergunta": "O que o botão Despachar solta?",
+   "opcoes": [
+    "Duas transferências: a saída, que o armazém valida, e a chegada, que quem está na praça confere",
+    "O fechamento do primeiro dia",
+    "Uma transferência só, já validada",
+    "A nota fiscal e o caixa"
+   ],
+   "comentarios": [
+    "Entre as duas, os livros estão em trânsito.",
+    "O fechamento nasce no Planejar.",
+    "São duas pernas de propósito.",
+    "Nota e caixa são outros botões."
+   ],
+   "correta": 0
+  },
+  {
+   "pergunta": "Quando uma feira acaba?",
+   "opcoes": [
+    "Quando o caixa é fechado",
+    "Quando a mercadoria volta, no Retorno",
+    "Quando a data do evento passa",
+    "Quando o último dia é fechado"
+   ],
+   "comentarios": [
+    "O caixa fecha no Retorno.",
+    "A data passar não devolve livro nenhum.",
+    "A data não muda o estado.",
+    "Fechar o dia move estoque, não encerra."
+   ],
+   "correta": 1
+  }
+ ]
+}

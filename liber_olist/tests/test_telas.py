@@ -43,6 +43,63 @@ class TestTelasDoOlist(TransactionCase):
             self._lista_da_acao('action_olist_catalog'),
             "Estoque e Produtos respondem perguntas diferentes")
 
+    def test_despachar_busca_o_xml_sem_esperar_o_cron(self):
+        """O cron das notas é lento e a fila não pode depender dele.
+
+        Quem está na fila vê "Sem XML" e, sem este botão, não tem o que fazer
+        senão esperar a próxima varredura. `action_fetch_xml` pergunta pela
+        nota DESTE pedido — ele já sabe o id dela — em vez de percorrer a
+        conta inteira.
+        """
+        lista = self.env.ref('liber_olist.view_olist_order_list_fila')
+
+        self.assertIn('action_fetch_xml', lista.arch,
+                      "a fila não oferece o Buscar o XML")
+        self.assertIn('action_import_selected', lista.arch,
+                      "o Despachar sumiu da fila")
+        self.assertLess(
+            lista.arch.index('action_import_selected'),
+            lista.arch.index('action_fetch_xml'),
+            "o Despachar é a ação principal e vem primeiro: mudar a ordem "
+            "move o botão que a equipe já clica de olhos fechados")
+
+    def test_o_ler_detalhe_avisa_que_regrava(self):
+        """O texto tem de dizer o que o botão FAZ.
+
+        Até 16/09/2026 a ajuda dizia "só leitura" e o método apagava e
+        recriava os itens. Quando o direito faltava, a tela respondia "você
+        não tem permissão para excluir" a quem tinha acabado de ler que
+        aquilo era só leitura — e ninguém conseguia ligar uma coisa à outra.
+        """
+        # Pelo BOTÃO, não pela arch inteira: "só leitura" é verdade no
+        # `action_pull_from_olist` ao lado (ele só traz a listagem), e varrer
+        # o texto todo reprovava a frase honesta do vizinho.
+        from lxml import etree
+        achou = 0
+        for xmlid in ('view_olist_order_list_fila', 'view_olist_order_list'):
+            arch = etree.fromstring(self.env.ref('liber_olist.%s' % xmlid).arch)
+            for botao in arch.xpath("//button[@name='action_read_detail']"):
+                achou += 1
+                ajuda = botao.get('help') or ''
+                self.assertNotIn(
+                    "só leitura", ajuda,
+                    "%s promete 'só leitura' num botão que regrava" % xmlid)
+                self.assertIn(
+                    "REGRAVA", ajuda,
+                    "%s não avisa que o Ler detalhe regrava os itens" % xmlid)
+        self.assertEqual(achou, 2,
+                         "o Ler detalhe tem de estar na fila E na auditoria")
+
+    def test_o_botao_da_fila_aponta_para_metodo_que_existe(self):
+        """Botão de view não é verificado no carregamento.
+
+        Um `name` errado no XML passa no `-u` e só falha no clique, na frente
+        de quem despacha. O teste faz aqui a checagem que o Odoo não faz.
+        """
+        self.assertTrue(
+            hasattr(self.env['olist.order'], 'action_fetch_xml'),
+            "o botão da fila chama um método que não existe")
+
     def test_o_relatorio_mede_quantidade_e_valor_por_livro(self):
         """O Relatório nasce da LINHA (quem sabe livro e quantidade), abre no
         gráfico, exclui cancelados e mora antes das Configurações."""
@@ -82,10 +139,20 @@ class TestTelasDoOlist(TransactionCase):
             self.assertIn(vivo, lista.arch,
                           "a poda levou botão demais: %s" % vivo)
 
-    def test_a_fila_e_uma_tela_com_um_botao_so(self):
+    def test_a_fila_e_uma_tela_enxuta(self):
         """Desenho do dono (19/08/2026), depois de a equipe se perder entre
-        dois filtros gêmeos: a FILA (o que importar, um botão) é uma tela; a
-        lista completa é outra — a auditoria, que abre sem filtro padrão."""
+        dois filtros gêmeos: a FILA (o que importar) é uma tela; a lista
+        completa é outra — a auditoria, que abre sem filtro padrão.
+
+        Nasceu com UM botão. Em 16/09/2026 o dono somou dois, e os dois são a
+        mesma pergunta por metades: `Buscar o XML` para "Nota emitida, XML não
+        arquivado" (o cron varre de 2 em 2h e não dá conta) e `Ler detalhe`
+        para o pedido que chegou sem canal, sem itens ou sem cliente. Trocar de
+        tela para resolver cada metade era o que fazia perder o lugar na fila.
+
+        Continua fora `action_pull_from_olist` (traz a listagem INTEIRA, é o
+        trabalho da auditoria, não o de despachar) e `action_create_invoice`.
+        """
         acao = self.env.ref('liber_olist.action_olist_fila')
         self.assertIn("'nao_importado'", acao.domain,
                       "a fila mostra só o que está pronto para importar")
@@ -95,10 +162,13 @@ class TestTelasDoOlist(TransactionCase):
                       "hardcodeia a DANFE")
         fila = self.env.ref('liber_olist.view_olist_order_list_fila')
         self.assertIn('action_import_selected', fila.arch)
-        for fora in ('action_pull_from_olist', 'action_read_detail',
-                     'action_create_invoice'):
+        self.assertIn('action_fetch_xml', fila.arch,
+                      "sem o Buscar o XML a fila só sabe esperar o cron")
+        self.assertIn('action_read_detail', fila.arch,
+                      "sem o Ler detalhe o pedido incompleto trava a fila")
+        for fora in ('action_pull_from_olist', 'action_create_invoice'):
             self.assertNotIn(fora, fila.arch,
-                             "a fila tem UM botão; %s é da auditoria" % fora)
+                             "a fila é enxuta; %s não é o trabalho dela" % fora)
         self.assertLess(
             self.env.ref('liber_olist.menu_olist_fila').sequence,
             self.env.ref('liber_olist.menu_olist_order').sequence,

@@ -1,0 +1,74 @@
+{
+ "curso": "Curso Comercial: clientes, canal e painel",
+ "aula": 5,
+ "titulo": "Onde o eixo da rede aparece",
+ "abertura": "Esta aula mostra onde a rede vira eixo: na Análise de vendas, no painel de Notas de venda e no filtro dos Clientes.",
+ "fecho": "A rede agrupa pedidos e notas nos relatórios; o que continua por loja é a cobrança, o contrato e a prateleira. As próximas aulas são o painel de Vendas.",
+ "youtube": "https://www.youtube.com/watch?v=NeLNPXfFFHI",
+ "quiz": [
+  {
+   "pergunta": "Como ver quanto se vendeu para a rede inteira?",
+   "opcoes": [
+    "Agrupar a Análise de vendas por Grupo econômico",
+    "Filtrar por razão social",
+    "Abrir a ficha da rede",
+    "Somar as lojas à mão"
+   ],
+   "comentarios": [
+    "As lojas somam numa linha só.",
+    "Razão social não basta: franquia tem uma por loja.",
+    "A ficha do grupo lista membros, não vendas.",
+    "O relatório soma."
+   ],
+   "correta": 0
+  },
+  {
+   "pergunta": "O agrupamento pela rede existe em quais telas?",
+   "opcoes": [
+    "Só na Análise de vendas",
+    "Só na nota fiscal",
+    "Análise de vendas e painel de Notas de venda",
+    "Em todas as telas do Odoo"
+   ],
+   "comentarios": [
+    "O painel de notas também agrupa.",
+    "A nota nunca lê o grupo.",
+    "Os dois relógios, pedido e nota, leem o eixo.",
+    "Contrato, prateleira e cobrança continuam por loja."
+   ],
+   "correta": 2
+  },
+  {
+   "pergunta": "O que NÃO muda quando a loja entra numa rede?",
+   "opcoes": [
+    "O filtro de clientes",
+    "O relatório de vendas",
+    "A cobrança, o contrato e a prateleira, que são da loja",
+    "O agrupamento das notas"
+   ],
+   "comentarios": [
+    "O filtro acha as lojas da rede.",
+    "O relatório passa a poder agrupar pela rede.",
+    "O grão continua a loja; só a leitura sobe.",
+    "As notas agrupam pela rede."
+   ],
+   "correta": 2
+  },
+  {
+   "pergunta": "Como achar todas as lojas de uma rede no cadastro?",
+   "opcoes": [
+    "Buscar pelo Grupo econômico em Clientes",
+    "Não há como",
+    "Abrir Configuração, Equipes de vendas",
+    "Buscar pelo CNPJ completo de cada uma"
+   ],
+   "comentarios": [
+    "O filtro traz as lojas de uma vez.",
+    "Há o filtro.",
+    "Equipes de vendas são os canais.",
+    "O CNPJ completo é por loja."
+   ],
+   "correta": 0
+  }
+ ]
+}

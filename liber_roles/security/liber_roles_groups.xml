@@ -322,8 +322,14 @@
             (4, ref('spreadsheet_dashboard.group_dashboard_manager')),
             (4, ref('base.group_allow_export')),
             (4, ref('hr_expense.group_hr_expense_team_approver')),
+            (4, ref('liber_copyright_contracts.group_contract_manager')),
         ]"/>
-        <field name="comment">Controller: contabilidade completa (valida, estorna, configura plano de contas e impostos), orçamento, contabilidade analítica, extratos e conciliação, painéis próprios, aprovação de conta bancária de fornecedor, e a administração das compras. Aprova despesa da equipe. Exporta.</field>
+        <!-- Contratos de direito autoral como ADMINISTRADOR (decisão do dono,
+             14/09/2026): a apuração e o pagamento de royalties são do
+             Financeiro, e as telas de faturas de autor exigem o grupo de
+             contratos. Junto vem validar/renovar/cancelar e as tabelas de
+             IRRF, que o Jurídico Gerente já tinha. -->
+        <field name="comment">Controller: contabilidade completa (valida, estorna, configura plano de contas e impostos), orçamento, contabilidade analítica, extratos e conciliação, painéis próprios, aprovação de conta bancária de fornecedor, e a administração das compras. Aprova despesa da equipe. Administra os contratos de direito autoral (apuração e pagamento de royalties). Exporta.</field>
     </record>
 
     <!-- ============================ EDITORIAL ============================ -->

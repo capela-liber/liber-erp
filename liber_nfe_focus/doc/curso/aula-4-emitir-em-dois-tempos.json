@@ -1,0 +1,115 @@
+{
+ "curso": "Curso NF-e: emitir",
+ "aula": 4,
+ "titulo": "Emitir uma nota em dois tempos",
+ "abertura": "A emissão tem dois tempos porque a SEFAZ é assíncrona. O primeiro envia e recebe um protocolo de recebimento; o segundo pergunta se foi autorizada. Esta aula percorre os dois, numa fatura confirmada, contra a SEFAZ de homologação.",
+ "passos": [
+  {
+   "texto": "O caminho começa na tela inicial, entre os aplicativos."
+  },
+  {
+   "texto": "Faturamento. Esta aula emite uma nota, de verdade, contra a SEFAZ de homologação."
+  },
+  {
+   "texto": "Clientes, Faturas."
+  },
+  {
+   "texto": "Uma fatura confirmada, com cliente, linhas e valor. Confirmada é o pré-requisito: em rascunho não existe botão de emitir, e isso não é defeito — nota de rascunho não existe."
+  },
+  {
+   "texto": "Antes de emitir, a aba NFe. A operação fiscal já veio da posição fiscal da fatura; o que falta é o transporte."
+  },
+  {
+   "texto": "Volumes, espécie e peso bruto. A casa exige os três: quem recebe a carga confere caixa por caixa contra o que a DANFE diz, e nota sem volume não fecha romaneio."
+  },
+  {
+   "texto": "A modalidade de frete e a transportadora. Com a modalidade nove, sem ocorrência de transporte, o grupo nem viaja na nota — e aí nomear quem carrega seria mentir."
+  },
+  {
+   "texto": "Agora o primeiro tempo: Emitir NFe. Ele monta o JSON, confere o que falta antes de gastar uma chamada, e manda para a Focus."
+  },
+  {
+   "texto": "E a resposta é \"processando autorização\". Não é lentidão nossa: a SEFAZ é assíncrona, e quem emite recebe um protocolo de recebimento, não a autorização."
+  },
+  {
+   "texto": "O segundo tempo é Consultar SEFAZ, que pergunta em que pé está. Existe também uma rotina que pergunta sozinha de dez em dez minutos — o botão é para quem não quer esperar."
+  },
+  {
+   "texto": "Autorizada. A faixa verde no alto diz isso de longe, sem precisar abrir aba nenhuma."
+  },
+  {
+   "texto": "E aqui está o que voltou: a chave de acesso de quarenta e quatro dígitos, o número, a série e o protocolo. A chave é o nome da nota no mundo — é ela que o cliente digita para consultar."
+  },
+  {
+   "texto": "E no histórico da fatura, o registro do que aconteceu, com a chave, o número e o protocolo — e os dois documentos anexados: a DANFE em PDF e o XML. A DANFE de homologação sai com a tarja \"sem valor fiscal\", que é a própria SEFAZ que exige: o ensaio diz que é ensaio."
+  }
+ ],
+ "fecho": "Fatura lançada, transporte preenchido, Emitir NFe, Consultar SEFAZ. Volta a chave de quarenta e quatro dígitos, o número, a série, o protocolo — e a DANFE com o XML, anexados na fatura. Uma rotina pergunta sozinha de dez em dez minutos; o botão é para quem não quer esperar.",
+ "youtube": "",
+ "quiz": [
+  {
+   "pergunta": "Por que o botão Emitir NFe não aparece numa fatura em rascunho?",
+   "opcoes": [
+    "É um defeito conhecido",
+    "Porque falta o NCM",
+    "Porque nota de rascunho não existe: só se emite de fatura lançada",
+    "Porque o rascunho não tem número"
+   ],
+   "comentarios": [
+    "Não é defeito: é a regra.",
+    "O NCM é outro assunto.",
+    "Confirmar a fatura é o pré-requisito, e a porta também está fechada por dentro, no código.",
+    "O número da NFe é outro, e vem depois."
+   ],
+   "correta": 2
+  },
+  {
+   "pergunta": "O que significa o status \"processando autorização\"?",
+   "opcoes": [
+    "A internet caiu",
+    "A Focus recebeu e a SEFAZ ainda não decidiu",
+    "A nota foi rejeitada",
+    "A nota está autorizada"
+   ],
+   "comentarios": [
+    "Não é problema de rede.",
+    "A SEFAZ é assíncrona: quem emite recebe um protocolo de recebimento, não a autorização.",
+    "Rejeição tem status e mensagem próprios.",
+    "Autorizada é o passo seguinte, e a faixa verde o anuncia."
+   ],
+   "correta": 1
+  },
+  {
+   "pergunta": "Por que a casa exige volumes, espécie e peso bruto?",
+   "opcoes": [
+    "Para calcular o frete",
+    "Porque quem recebe confere caixa por caixa contra a DANFE",
+    "Porque a Receita Federal exige",
+    "Para o seguro"
+   ],
+   "comentarios": [
+    "O frete tem campo próprio.",
+    "Nota sem volume não fecha romaneio.",
+    "É regra da casa, não da SEFAZ.",
+    "Seguro é outro valor da nota."
+   ],
+   "correta": 1
+  },
+  {
+   "pergunta": "A DANFE emitida em homologação vale como documento fiscal?",
+   "opcoes": [
+    "Sim, como qualquer outra",
+    "Sim, se for impressa",
+    "Não: sai com a tarja \"sem valor fiscal\", exigida pela própria SEFAZ",
+    "Só vale dentro do estado"
+   ],
+   "comentarios": [
+    "Homologação é ensaio.",
+    "Imprimir não muda o ambiente.",
+    "O ensaio diz que é ensaio, e é bom que diga.",
+    "Não é questão de território."
+   ],
+   "correta": 2
+  }
+ ]
+}

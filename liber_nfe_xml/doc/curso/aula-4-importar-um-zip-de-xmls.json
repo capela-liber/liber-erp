@@ -1,0 +1,93 @@
+{
+ "curso": "Curso NF-e: o XML de entrada",
+ "aula": 4,
+ "titulo": "Importar um ZIP de XMLs",
+ "abertura": "Esta aula importa, de verdade, um ZIP com os XMLs das notas que chegaram no mês. É o caminho da carga em lote — e o mesmo assistente aceita o XML solto que o fornecedor mandou por e-mail.",
+ "passos": [
+  {
+   "texto": "O caminho começa na tela inicial, entre os aplicativos."
+  },
+  {
+   "texto": "Faturamento. Esta aula importa um ZIP de XMLs, de verdade."
+  },
+  {
+   "texto": "NFe XML, Importar arquivo XML."
+  },
+  {
+   "texto": "O assistente pede duas coisas: os arquivos e a empresa sob a qual as notas serão arquivadas."
+  },
+  {
+   "texto": "Aceita ZIP e aceita XML solto, em qualquer mistura. Este ZIP traz as notas de entrada do mês — e um arquivo de texto no meio, que ele vai ignorar sozinho."
+  },
+  {
+   "texto": "A empresa é a n-1 edições, que é onde estamos. Reimportar não assusta: a trava é a chave de acesso, e nota já conhecida é pulada em silêncio."
+  },
+  {
+   "texto": "Importar."
+  },
+  {
+   "texto": "E o assistente não fecha calado: ele conta o que aconteceu com cada arquivo. Três notas importadas, e um arquivo não-XML ignorado."
+  },
+  {
+   "texto": "Se alguma nota falhasse, ela apareceria aqui embaixo, com o nome do arquivo e o motivo — e as outras entrariam assim mesmo."
+  },
+  {
+   "texto": "As três notas que acabaram de nascer. Situação Importada: o arquivo está guardado, mas ainda não foi lido em detalhe."
+  },
+  {
+   "texto": "Por isso as colunas de valor e de cliente ainda estão vazias. Ler o arquivo é o passo seguinte, e é a próxima aula."
+  }
+ ],
+ "fecho": "Faturamento, NFe XML, Importar arquivo XML: anexe os ZIPs ou os XMLs, confira a empresa, clique em Importar. O assistente conta o que aconteceu com cada arquivo — importadas, repetidas, ignoradas e falhas. Reimportar não duplica: a trava é a chave de acesso.",
+ "youtube": "",
+ "quiz": [
+  {
+   "pergunta": "O que o assistente aceita?",
+   "opcoes": [
+    "Só arquivos ZIP",
+    "ZIP e XML solto, em qualquer mistura",
+    "Só XML solto",
+    "ZIP, XML e PDF"
+   ],
+   "comentarios": [
+    "O XML solto é o caso mais comum de todos.",
+    "Um fornecedor manda o XML por e-mail; um histórico vem em ZIP.",
+    "O ZIP é o caminho da carga em lote.",
+    "PDF não é documento fiscal legível aqui."
+   ],
+   "correta": 1
+  },
+  {
+   "pergunta": "O que acontece ao importar de novo um ZIP já importado?",
+   "opcoes": [
+    "As notas são duplicadas",
+    "As notas já conhecidas são puladas em silêncio",
+    "A importação falha",
+    "As notas antigas são apagadas"
+   ],
+   "comentarios": [
+    "A chave de acesso impede isso.",
+    "Só entra o que ainda não existia.",
+    "Não falha: é seguro repetir.",
+    "Nada é apagado."
+   ],
+   "correta": 1
+  },
+  {
+   "pergunta": "Em que situação nasce a nota recém-importada?",
+   "opcoes": [
+    "Válida",
+    "Importada",
+    "Cancelada",
+    "Em rascunho"
+   ],
+   "comentarios": [
+    "Válida é depois de processada.",
+    "O arquivo entrou; falta lê-lo em detalhe.",
+    "Cancelada depende de um evento.",
+    "Rascunho é coisa de fatura."
+   ],
+   "correta": 1
+  }
+ ]
+}

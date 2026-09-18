@@ -16,6 +16,22 @@
          configuração, não de operação. O token já se protege sozinho, no
          campo (groups="base.group_system").
 
+         O ITEM do pedido é o único espelho com direito de APAGAR (16/09/2026).
+         Não é folga: `_sincroniza_linhas` faz `line_ids.unlink()` antes de
+         regravar, porque o espelho reflete e não acumula. Sem isso o "Ler
+         detalhe" morria com "Você não tem permissão para excluir" — foi o que
+         a gerente comercial levou na cara três vezes seguidas no prod, às
+         20:43 de 16/09, tentando entender por que o pedido estava incompleto.
+
+         Quem clica não está apagando dado: está mandando o espelho refletir de
+         novo. O que morre e renasce é o que o Olist manda (código, descrição,
+         quantidade, valor), que vem outra vez a cada leitura. O casamento
+         livro-a-produto feito à MÃO é guardado antes do unlink e reaplicado
+         depois, dentro do próprio `_sincroniza_linhas`.
+
+         A falta se escondeu porque o PRIMEIRO Ler detalhe de um pedido virgem
+         passa — não há o que apagar. Quebra sempre na releitura.
+
          Concedido por PAPEL, no liber_roles, nunca a dedo. -->
     <record id="privilege_olist_operador" model="res.groups.privilege">
         <field name="name">Olist</field>

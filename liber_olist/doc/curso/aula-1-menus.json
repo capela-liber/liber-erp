@@ -1,0 +1,74 @@
+{
+ "curso": "Curso Marketplaces via Olist",
+ "aula": 1,
+ "titulo": "O que há em cada menu",
+ "abertura": "Bem-vindo ao curso de Marketplaces via Olist. A ideia que organiza tudo: o Olist é adaptador, não razão. O livro da casa é o Odoo; o Olist é uma das fontes que o alimentam, como um XML enviado à mão. Esta aula é o mapa dos menus.",
+ "fecho": "Despachar, Pedidos, Produtos, Fora do Olist, Estoque, Relatório e Configurações. A próxima aula abre a conta e o que ela guarda.",
+ "youtube": "https://www.youtube.com/watch?v=-E6gbe7Dz4c",
+ "quiz": [
+  {
+   "pergunta": "O que o Olist é, no desenho da casa?",
+   "opcoes": [
+    "Um adaptador: uma das fontes que alimentam o livro, que é o Odoo",
+    "Um relatório de marketplaces",
+    "O sistema de registro das vendas",
+    "O estoque dos marketplaces"
+   ],
+   "comentarios": [
+    "Tirar o módulo tira a integração e deixa o livro intacto.",
+    "É integração, não relatório.",
+    "O livro é o Odoo.",
+    "O estoque é da casa; o Olist só o espelha."
+   ],
+   "correta": 0
+  },
+  {
+   "pergunta": "O que a fila Despachar mostra?",
+   "opcoes": [
+    "Todos os pedidos do Olist",
+    "Os pedidos que já têm nota emitida no Olist e esperam a saída no depósito",
+    "Os pedidos cancelados",
+    "Os títulos sem anúncio"
+   ],
+   "comentarios": [
+    "Isso é o menu Pedidos.",
+    "A política de quando o pedido entra na fila está nas Definições.",
+    "Cancelado não entra na fila.",
+    "Isso é Fora do Olist."
+   ],
+   "correta": 1
+  },
+  {
+   "pergunta": "Para que serve a lista Fora do Olist?",
+   "opcoes": [
+    "Listar os pedidos sem produto",
+    "Listar os anúncios desativados",
+    "Mostrar os títulos da casa que não têm anúncio nenhum lá",
+    "Listar os títulos esgotados"
+   ],
+   "comentarios": [
+    "Isso é o espelho do catálogo.",
+    "Anúncio desativado continua existindo lá.",
+    "Não é erro do sistema: é decisão comercial que ninguém tomou.",
+    "Esgotado é estoque."
+   ],
+   "correta": 2
+  },
+  {
+   "pergunta": "Por que o módulo foi escrito como adaptador?",
+   "opcoes": [
+    "Porque o Odoo não emite nota",
+    "Porque a pilha fiscal anterior virou caixa-preta de que não se podia sair",
+    "Porque é mais barato",
+    "Porque o Olist exige"
+   ],
+   "comentarios": [
+    "A nota vem do XML, e o Odoo a guarda.",
+    "Removê-lo remove a integração e deixa o livro intacto.",
+    "Não é questão de preço.",
+    "O Olist não exige nada disso."
+   ],
+   "correta": 1
+  }
+ ]
+}

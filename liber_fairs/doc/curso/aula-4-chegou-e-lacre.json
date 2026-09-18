@@ -1,0 +1,74 @@
+{
+ "curso": "Curso Feiras I: montar e levar",
+ "aula": 4,
+ "titulo": "Quem garante que chegou, e o lacre",
+ "abertura": "Esta aula é a estrada: entre o armazém e a mesa a caixa pode não chegar. As duas pernas da ida, a conferência em Recebimentos, a coluna A caminho, e o lacre dos dias no Retorno.",
+ "fecho": "O armazém valida a saída, a praça confere a chegada; o que falta fica no trânsito e vira perda a explicar; A caminho não conta como disponível; o Retorno lacra os dias. A próxima aula é a nota da ida.",
+ "youtube": "https://www.youtube.com/watch?v=V7DATTCgsCg",
+ "quiz": [
+  {
+   "pergunta": "Depois que o depósito despacha, onde estão os livros até a praça conferir?",
+   "opcoes": [
+    "Já na mesa",
+    "Ainda no armazém",
+    "Em Perdas",
+    "Em trânsito: nem no armazém, nem na mesa"
+   ],
+   "comentarios": [
+    "Só depois de conferidos.",
+    "Já saíram.",
+    "Perda é o que falta na conferência.",
+    "A grade mostra isso na coluna A caminho."
+   ],
+   "correta": 3
+  },
+  {
+   "pergunta": "A caixa chegou com três a menos. O que acontece ao confirmar?",
+   "opcoes": [
+    "O armazém recebe os três de volta",
+    "Os três ficam parados no trânsito e nascem em Perdas como Não recebido, a explicar",
+    "Os três somem do sistema",
+    "A feira é cancelada"
+   ],
+   "comentarios": [
+    "Ninguém devolveu nada.",
+    "É dali que sai a pergunta \"onde estão os três?\".",
+    "Nada se dissolve.",
+    "A feira segue."
+   ],
+   "correta": 1
+  },
+  {
+   "pergunta": "Quem confirma a chegada na praça?",
+   "opcoes": [
+    "O sistema, sozinho",
+    "O gerente, no fim do evento",
+    "Quem está na feira, em Eventos, Recebimentos, com Confirmar o que chegou",
+    "O depósito, ao despachar"
+   ],
+   "comentarios": [
+    "Alguém precisa contar a caixa.",
+    "É rotina de praça, não de fim.",
+    "Fica registrado quem conferiu e quando.",
+    "O depósito valida a saída."
+   ],
+   "correta": 2
+  },
+  {
+   "pergunta": "O que o lacre faz com os fechamentos diários?",
+   "opcoes": [
+    "Inventa a contagem dos dias abertos",
+    "Apaga os dias não fechados",
+    "No Retorno eles viram histórico e não aceitam mais pedido de reposição",
+    "Reabre todos os dias"
+   ],
+   "comentarios": [
+    "Nada é inventado.",
+    "Nada é apagado.",
+    "Dia que ninguém fechou é fechado sem inventar contagem.",
+    "Não reabre."
+   ],
+   "correta": 2
+  }
+ ]
+}

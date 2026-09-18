@@ -1,0 +1,78 @@
+{
+ "curso": "Curso de Consignação I",
+ "aula": 7,
+ "titulo": "A devolução: o CR",
+ "abertura": "O CR é o documento que cobra a volta de livros. Ele nasce do acerto ou do Recolher Tudo, e tem dois momentos de propósito: confirmar e liberar.",
+ "fecho": "Confirmar combina; liberar entrega ao depósito. Na próxima aula, o Recolher Tudo e a renovação simbólica.",
+ "youtube": "https://www.youtube.com/watch?v=rk0nllNXvEQ",
+ "quiz": [
+  {
+   "pergunta": "O que o botão Confirmar do CR move no estoque?",
+   "opcoes": [
+    "Reserva no armazém",
+    "Só os títulos com estoque no armazém",
+    "Tudo o que está nas linhas",
+    "Nada: só valida o documento e o deixa Aguardando"
+   ],
+   "comentarios": [
+    "Reserva vem no Liberar, na prateleira.",
+    "Nada se move ainda.",
+    "Nada: só valida o documento comercialmente.",
+    "É a fase de combinar com a livraria."
+   ],
+   "correta": 3
+  },
+  {
+   "pergunta": "O que Liberar para Logística cria?",
+   "opcoes": [
+    "A nota fiscal de devolução",
+    "A transferência COM/IN, da prateleira para o armazém, reservada",
+    "Uma cobrança ao cliente",
+    "Um novo contrato"
+   ],
+   "comentarios": [
+    "Nota é do módulo fiscal.",
+    "O depósito valida quando os livros chegam.",
+    "Cobrança é do acerto.",
+    "Contrato é independente."
+   ],
+   "correta": 1
+  },
+  {
+   "pergunta": "A lista de Devoluções cria CR?",
+   "opcoes": [
+    "Só por importação de planilha",
+    "Só para o gerente",
+    "Sim, pelo botão Novo",
+    "Não: acompanha os que o acerto ou o Recolher Tudo criaram"
+   ],
+   "comentarios": [
+    "Não há importação de CR.",
+    "Nem o gerente cria à mão.",
+    "Não há Novo.",
+    "A lista é acompanhamento."
+   ],
+   "correta": 3
+  },
+  {
+   "pergunta": "Enquanto o CR está Aguardando, o comercial pode:",
+   "opcoes": [
+    "Emitir a nota",
+    "Validar a COM/IN",
+    "Nada: espera o depósito",
+    "Enviá-lo por e-mail e cobrá-lo pela régua de devolução"
+   ],
+   "comentarios": [
+    "A nota vem depois, do módulo fiscal.",
+    "A COM/IN nem existe ainda.",
+    "É a fase dele: combinar com a livraria.",
+    "O CR é documento comercial antes de ser logístico."
+   ],
+   "correta": 3
+  }
+ ],
+ "youtube_anterior": [
+  "https://www.youtube.com/watch?v=Cs6wWGmSdsI"
+ ],
+ "youtube_quadro": "2912x2080"
+}

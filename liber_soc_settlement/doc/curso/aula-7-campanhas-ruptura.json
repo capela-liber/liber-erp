@@ -1,0 +1,78 @@
+{
+ "curso": "Curso de Consignação II",
+ "aula": 7,
+ "titulo": "Campanhas e ruptura",
+ "abertura": "Uma campanha define quantos exemplares de cada título as prateleiras de um canal devem ter. A operação aplica; os relatórios medem o que ficou faltando, e por quê.",
+ "fecho": "Alvo maior vence; repor mira o alvo; Falta e Tempo medem o que não aconteceu. Na próxima aula, a cobrança das devoluções.",
+ "youtube": "https://www.youtube.com/watch?v=QC5ir20yi5M",
+ "quiz": [
+  {
+   "pergunta": "Duas campanhas em curso pedem o mesmo título com alvos diferentes. Qual vale?",
+   "opcoes": [
+    "Nenhum: o sistema acusa conflito e pede escolha",
+    "O alvo maior: a única regra que nunca encolhe um sortimento",
+    "A média dos dois alvos",
+    "O alvo da campanha mais antiga"
+   ],
+   "comentarios": [
+    "Não há conflito; vence o maior.",
+    "A campanha mais generosa manda.",
+    "Não há média: vence o maior.",
+    "A idade da campanha não decide."
+   ],
+   "correta": 1
+  },
+  {
+   "pergunta": "Com uma campanha aplicada, como a reposição passa a ser calculada?",
+   "opcoes": [
+    "Zero: a campanha manda um Pedido C separado",
+    "Igual ao vendido, como sem campanha",
+    "O alvo inteiro, sem descontar a prateleira",
+    "Alvo menos o que sobra na prateleira, limitado ao que há em mãos"
+   ],
+   "comentarios": [
+    "A campanha entra na própria reposição.",
+    "Com campanha, ela mira o alvo.",
+    "Desconta o que já está lá.",
+    "O que não dá para mandar aparece em Faltou."
+   ],
+   "correta": 3
+  },
+  {
+   "pergunta": "A operação rodou sem Aplicar Campanhas, e o canal tinha campanha em curso. Que natureza de ruptura nasce?",
+   "opcoes": [
+    "Falta: o alvo nunca chegou a ser pedido, e o próprio Executar percebe",
+    "Tempo: o cliente ficou sem operação",
+    "Manual: alguém mandou menos tendo estoque",
+    "Estoque: não havia livro para mandar"
+   ],
+   "comentarios": [
+    "Registrada na execução.",
+    "Tempo é cliente parado, sem operação nenhuma.",
+    "Manual é decisão do operador com estoque disponível.",
+    "Estoque é quando não tinha em mãos."
+   ],
+   "correta": 0
+  },
+  {
+   "pergunta": "Quem detecta a ruptura por Tempo?",
+   "opcoes": [
+    "O relatório de Cobertura, quando é aberto",
+    "O operador, no momento de executar a operação",
+    "O cliente, quando reclama que não recebeu",
+    "A rotina noturna, comparando o alvo com os clientes parados"
+   ],
+   "comentarios": [
+    "Cobertura planeja; Ruptura mede.",
+    "Ausência de operação não dispara nada na operação.",
+    "É o sistema que mede, sem depender do cliente.",
+    "Refeita do zero toda noite."
+   ],
+   "correta": 3
+  }
+ ],
+ "youtube_anterior": [
+  "https://www.youtube.com/watch?v=U64SRMSFYT8"
+ ],
+ "youtube_quadro": "2912x2080"
+}

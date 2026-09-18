@@ -1,0 +1,74 @@
+{
+ "curso": "Curso Comercial: clientes, canal e painel",
+ "aula": 8,
+ "titulo": "O painel Produto e o Top 50",
+ "abertura": "Última aula: o painel Produto, que corta o gráfico nos cinquenta mais vendidos e escreve o título sem o ISBN, e as tabelas de principais clientes e canais no pé do painel de Vendas.",
+ "fecho": "Cinquenta primeiros, ordenados antes do corte; título em vez de ISBN; e as tabelas de principais no pé do painel de Vendas. O mapa por UF ainda não tem cartão no painel. Fim do curso Comercial.",
+ "youtube": "https://www.youtube.com/watch?v=jAz12Ccvkdw",
+ "quiz": [
+  {
+   "pergunta": "Por que o gráfico do painel Produto corta em cinquenta?",
+   "opcoes": [
+    "Porque o painel é pago",
+    "Com centenas de títulos, o gráfico inteiro é uma parede de palitos",
+    "Porque só cinquenta títulos venderam",
+    "Porque o Odoo só desenha cinquenta barras"
+   ],
+   "comentarios": [
+    "Não há painel pago.",
+    "A cauda de quem vendeu um exemplar é ruído.",
+    "Vendem centenas.",
+    "O Odoo desenha todos; o corte é da casa."
+   ],
+   "correta": 1
+  },
+  {
+   "pergunta": "Os cinquenta do gráfico são quais?",
+   "opcoes": [
+    "Os cinquenta maiores, porque a ordem vem antes do corte",
+    "Cinquenta quaisquer",
+    "Os cinquenta mais recentes",
+    "Os cinquenta primeiros em ordem alfabética"
+   ],
+   "comentarios": [
+    "Ordena, depois corta.",
+    "Seriam quaisquer se cortasse sem ordenar.",
+    "Não é por data.",
+    "Não é alfabético."
+   ],
+   "correta": 0
+  },
+  {
+   "pergunta": "Por que o rótulo da barra não traz o ISBN?",
+   "opcoes": [
+    "Porque o ISBN é sigiloso",
+    "Treze dígitos não dizem nada num eixo e comem o espaço do título",
+    "Porque o gráfico não aceita números",
+    "Porque o produto não tem ISBN"
+   ],
+   "comentarios": [
+    "O ISBN é público.",
+    "Uma reedição com outro ISBN aparece separada, com um dois entre parênteses.",
+    "Aceita.",
+    "O código do produto é o ISBN."
+   ],
+   "correta": 1
+  },
+  {
+   "pergunta": "Onde ficam as tabelas de principais clientes e principais canais?",
+   "opcoes": [
+    "Em Relatórios, Clientes",
+    "No pé do painel de Vendas, movendo-se com o mesmo período",
+    "Em Vendas, Configuração",
+    "No painel Produto"
+   ],
+   "comentarios": [
+    "É outro relatório, com outro período.",
+    "Rolando o painel até o fim.",
+    "Configuração não tem tabela de vendas.",
+    "O painel Produto é dos títulos."
+   ],
+   "correta": 1
+  }
+ ]
+}

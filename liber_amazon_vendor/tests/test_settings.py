@@ -19,6 +19,23 @@ class TestAmazonSettings(AmazonVendorCase):
 
     # ------------------------------------------------------- o segredo fica
 
+    def test_settings_open_for_an_admin_without_the_amazon_role(self):
+        """
+        A página de Definições é uma só para todos os apps: se a seção da
+        Amazon lê um modelo que o administrador sem o papel da Amazon não
+        pode ler, a página INTEIRA morre em "Erro de acesso" -- foi o que
+        aconteceu com o video_admin do curso em 14/09/2026. A contagem de
+        unidades passa por sudo, como a conta já passava.
+        """
+        admin_sem_amazon = self.env['res.users'].with_context(no_reset_password=True).create({
+            'name': 'Administrador sem Amazon', 'login': 'admin_sem_amazon',
+            'group_ids': [(6, 0, [self.env.ref('base.group_system').id])],
+        })
+        Settings = self.env['res.config.settings'].with_user(admin_sem_amazon)
+        values = Settings.get_values()          # não pode levantar AccessError
+        self.assertIn('amazon_unit_count', values)
+        self.assertGreaterEqual(values['amazon_unit_count'], 0)
+
     def test_secrets_never_reach_the_form(self):
         """
         O core do Odoo devolve a senha guardada e só a pinta de bolinhas —

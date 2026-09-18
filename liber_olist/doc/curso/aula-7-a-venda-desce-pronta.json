@@ -1,0 +1,74 @@
+{
+ "curso": "Curso Marketplaces via Olist",
+ "aula": 7,
+ "titulo": "A venda desce pronta",
+ "abertura": "Esta aula segue um pedido do Olist até virar documento da casa: ler o detalhe, importar, e a saída que a logística valida.",
+ "fecho": "Ler pedidos traz a lista, Ler detalhe completa, Importar cria o pedido de venda com canal, cliente e nota; e a fila Despachar entrega ao depósito. A última aula é o que dá errado.",
+ "youtube": "https://www.youtube.com/watch?v=fYYcvjfjnzU",
+ "quiz": [
+  {
+   "pergunta": "Por que um pedido precisa do detalhe antes de importar?",
+   "opcoes": [
+    "Porque o cliente só vem no detalhe",
+    "É do detalhe que saem as linhas e a nota",
+    "Porque o canal só vem no detalhe",
+    "Porque a Amazon exige"
+   ],
+   "comentarios": [
+    "O cliente também vem na lista.",
+    "Sem detalhe o botão de importar recusa.",
+    "O canal vem na lista.",
+    "A Amazon é outro módulo."
+   ],
+   "correta": 1
+  },
+  {
+   "pergunta": "O que a importação cria no Odoo?",
+   "opcoes": [
+    "Só um registro de leitura",
+    "Uma transferência, sem documento",
+    "Uma fatura, sem pedido",
+    "Um pedido de venda com o canal mapeado, o cliente e a nota fiscal do XML"
+   ],
+   "comentarios": [
+    "Cria documento.",
+    "A transferência vem do pedido.",
+    "O pedido vem primeiro.",
+    "O que nasce aqui é documento da casa, não cópia de tela."
+   ],
+   "correta": 3
+  },
+  {
+   "pergunta": "Onde entra o XML da nota emitida no Olist?",
+   "opcoes": [
+    "No cadastro do cliente",
+    "Só no anexo do pedido",
+    "No painel fiscal, como qualquer outro XML",
+    "Em lugar nenhum"
+   ],
+   "comentarios": [
+    "Cliente não guarda nota.",
+    "Não é só anexo.",
+    "O Olist é uma fonte, e a nota é a mesma nota.",
+    "Entra no painel."
+   ],
+   "correta": 2
+  },
+  {
+   "pergunta": "Quem valida a saída do pedido do Olist?",
+   "opcoes": [
+    "O depósito, na transferência, como numa venda comum",
+    "O comercial, no pedido",
+    "Ninguém: sai sozinha",
+    "O próprio Olist"
+   ],
+   "comentarios": [
+    "A fila Despachar é a porta do depósito.",
+    "O comercial importa; o depósito despacha.",
+    "Nada sai sem validação.",
+    "O Olist não mexe no nosso estoque."
+   ],
+   "correta": 0
+  }
+ ]
+}

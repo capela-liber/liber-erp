@@ -1,0 +1,74 @@
+{
+ "curso": "Curso Royalties II: apuração, pagamento e prestação de contas",
+ "aula": 5,
+ "titulo": "Gerar e pagar as faturas dos autores",
+ "abertura": "Esta aula cobra o saldo: Gerar Faturas de Royalties faz uma conta a pagar por favorecido, e o Financeiro a paga como paga qualquer fornecedor.",
+ "fecho": "Uma fatura por favorecido; quem já tem fatura aberta não ganha outra; pagar avança a data de corte.",
+ "youtube": "https://www.youtube.com/watch?v=CkmLY6BLDFo",
+ "quiz": [
+  {
+   "pergunta": "Gerar Faturas faz quantas?",
+   "opcoes": [
+    "Uma por venda",
+    "Uma por favorecido, com o saldo devido",
+    "Uma por contrato",
+    "Uma por mês, para todos"
+   ],
+   "comentarios": [
+    "Seria uma por linha de venda.",
+    "O autor recebe uma conta só.",
+    "Autor com dois contratos recebe uma.",
+    "Não é consolidada."
+   ],
+   "correta": 1
+  },
+  {
+   "pergunta": "Favorecido com fatura em aberto ao gerar. O que acontece?",
+   "opcoes": [
+    "Não ganha outra: primeiro se paga a que existe",
+    "Ganha outra",
+    "A antiga é cancelada",
+    "As duas se somam"
+   ],
+   "comentarios": [
+    "Evita duas cobranças do mesmo saldo.",
+    "É a guarda.",
+    "Nada é cancelado.",
+    "Não se somam."
+   ],
+   "correta": 0
+  },
+  {
+   "pergunta": "A fatura do autor é o quê, no Faturamento?",
+   "opcoes": [
+    "Uma fatura de cliente",
+    "Um lançamento manual",
+    "Um adiantamento",
+    "Uma conta a pagar comum, com o produto Royalties e o contrato carimbado"
+   ],
+   "comentarios": [
+    "O autor recebe, não paga.",
+    "Não é manual.",
+    "Adiantamento é antes.",
+    "Por isso o Financeiro a paga como qualquer fornecedor."
+   ],
+   "correta": 3
+  },
+  {
+   "pergunta": "O que muda ao pagar?",
+   "opcoes": [
+    "Nada",
+    "O contrato vence",
+    "A fatura vai para Pago e a data de corte da linha avança",
+    "A conta analítica é apagada"
+   ],
+   "comentarios": [
+    "Muda o estado.",
+    "O contrato continua.",
+    "O provisionado vira quitado.",
+    "A conta continua."
+   ],
+   "correta": 2
+  }
+ ]
+}

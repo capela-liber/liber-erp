@@ -1,5 +1,6 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_event_fair_user,event.fair user,model_event_fair,liber_fairs.group_fair_user,1,1,0,0
+access_event_fair_planner,event.fair planner,model_event_fair,liber_fairs.group_fair_planner,1,1,1,0
 access_event_fair_manager,event.fair manager,model_event_fair,liber_fairs.group_fair_manager,1,1,1,1
 access_event_fair_line_user,event.fair.line user,model_event_fair_line,liber_fairs.group_fair_user,1,1,1,1
 access_event_fair_line_manager,event.fair.line manager,model_event_fair_line,liber_fairs.group_fair_manager,1,1,1,1

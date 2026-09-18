@@ -1,0 +1,74 @@
+{
+ "curso": "Curso Royalties II: apuração, pagamento e prestação de contas",
+ "aula": 7,
+ "titulo": "Prestação de contas",
+ "abertura": "Esta aula presta contas ao autor: o assistente por favorecido, a data final, o PDF com vendas, faixa, royalty, adiantamentos e saldo, e o envio por e-mail.",
+ "fecho": "A prestação de contas é por favorecido, do último acerto até a data escolhida. Imprimir gera; Enviar manda. Vendas especiais aparecem à parte.",
+ "youtube": "",
+ "quiz": [
+  {
+   "pergunta": "De onde sai a prestação de contas?",
+   "opcoes": [
+    "Do contrato",
+    "Do relatório de dívidas",
+    "Do Faturamento",
+    "Do favorecido, em Ação, Prestação de contas"
+   ],
+   "comentarios": [
+    "O contrato é um; o extrato é por pessoa.",
+    "Dívidas é resumo.",
+    "Não é lá.",
+    "Um autor com vários contratos recebe um extrato."
+   ],
+   "correta": 3
+  },
+  {
+   "pergunta": "Que período o extrato cobre?",
+   "opcoes": [
+    "O ano",
+    "Do último acerto até a data final escolhida",
+    "O mês corrente",
+    "Desde a assinatura"
+   ],
+   "comentarios": [
+    "Não é por ano.",
+    "A data final é a pergunta do assistente.",
+    "Não é fixo.",
+    "Só o que ainda não foi prestado."
+   ],
+   "correta": 1
+  },
+  {
+   "pergunta": "O que são as vendas especiais no extrato?",
+   "opcoes": [
+    "Feiras e promoções, mostradas à parte",
+    "Vendas canceladas",
+    "Vendas de outra editora",
+    "Devoluções"
+   ],
+   "comentarios": [
+    "O autor vê o que foi vendido em condição especial.",
+    "Cancelada não entra.",
+    "Não.",
+    "Devolução não é venda."
+   ],
+   "correta": 0
+  },
+  {
+   "pergunta": "Por que a aula parou em Imprimir e não clicou em Enviar?",
+   "opcoes": [
+    "Enviar não existe",
+    "Porque o autor não tem e-mail",
+    "Porque no banco de gravação o e-mail não sai: é encenação",
+    "Porque o PDF é pago"
+   ],
+   "comentarios": [
+    "Existe.",
+    "Tem.",
+    "No prod, Enviar manda o PDF ao autor com o texto da casa.",
+    "Não."
+   ],
+   "correta": 2
+  }
+ ]
+}

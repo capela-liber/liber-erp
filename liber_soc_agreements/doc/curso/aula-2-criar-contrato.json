@@ -1,0 +1,78 @@
+{
+ "curso": "Curso de Consignação I",
+ "aula": 2,
+ "titulo": "Criar um contrato",
+ "abertura": "Tudo começa no contrato: um por livraria, com o canal, o desconto e a frequência do acerto. Nesta aula criamos um.",
+ "fecho": "O contrato nasce em rascunho. Na próxima aula, ativar: é aí que a prateleira aparece.",
+ "youtube": "https://www.youtube.com/watch?v=42xbNoQLTBY",
+ "quiz": [
+  {
+   "pergunta": "Que tipo de contato pode ter contrato de consignação?",
+   "opcoes": [
+    "Só contatos marcados como empresa",
+    "Só contatos com CNPJ e e-mail",
+    "Só contatos do canal Livrarias",
+    "Qualquer contato"
+   ],
+   "comentarios": [
+    "Não com uma pessoa.",
+    "O e-mail ajuda nos relatórios, mas não é condição.",
+    "O canal vem da ficha, mas não é condição.",
+    "Consignação é contrato com a livraria."
+   ],
+   "correta": 0
+  },
+  {
+   "pergunta": "De onde vem o canal de vendas do contrato?",
+   "opcoes": [
+    "É digitado sempre à mão",
+    "Do último pedido da livraria",
+    "Da ficha do cliente, e fica carimbado no contrato",
+    "Do agente comercial"
+   ],
+   "comentarios": [
+    "Vem preenchido.",
+    "O pedido herda do contrato, não o contrário.",
+    "Trocar o cliente traz o canal novo; o que você digitar à mão fica.",
+    "O agente é quem responde; o canal é da livraria."
+   ],
+   "correta": 2
+  },
+  {
+   "pergunta": "Quem cria contratos de consignação?",
+   "opcoes": [
+    "O financeiro, no acerto",
+    "O gerente comercial",
+    "Qualquer usuário do app",
+    "A logística, ao receber a primeira remessa"
+   ],
+   "comentarios": [
+    "O acerto usa o contrato; não o cria.",
+    "É desenho dos papéis: o assistente move documentos, o gerente move condições.",
+    "O assistente vê e opera, sem o botão Novo.",
+    "A logística executa; não contrata."
+   ],
+   "correta": 1
+  },
+  {
+   "pergunta": "O desconto padrão do contrato é herdado por:",
+   "opcoes": [
+    "As linhas do acerto, ainda editáveis uma a uma",
+    "A nota fiscal de remessa",
+    "O Pedido C, sem poder mudar",
+    "A prateleira"
+   ],
+   "comentarios": [
+    "É o ponto de partida do acerto.",
+    "A nota sai a valor comercial.",
+    "Vale para o acerto, com edição.",
+    "Prateleira é estoque, não preço."
+   ],
+   "correta": 0
+  }
+ ],
+ "youtube_anterior": [
+  "https://www.youtube.com/watch?v=X2Qk4MrDLxY"
+ ],
+ "youtube_quadro": "2912x2080"
+}

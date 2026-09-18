@@ -1,0 +1,74 @@
+{
+ "curso": "Curso Marketplaces via Olist",
+ "aula": 2,
+ "titulo": "Ligar a integração",
+ "abertura": "Esta aula abre a conta do Olist: onde o token vive, o que a margem de segurança faz, e o que significa uma conta em somente leitura.",
+ "fecho": "Uma conta por conta do Olist, presa a uma empresa; token no banco; somente leitura para ensaiar; margem de segurança para não prometer o que não há. A próxima aula compara os estoques.",
+ "youtube": "https://www.youtube.com/watch?v=ksnrUerHBTM",
+ "quiz": [
+  {
+   "pergunta": "Onde fica o token da conta?",
+   "opcoes": [
+    "Num arquivo de configuração do servidor",
+    "No código do módulo",
+    "No banco, na ficha da conta",
+    "No cadastro do produto"
+   ],
+   "comentarios": [
+    "Não é arquivo.",
+    "Nunca no código.",
+    "Quem o troca é quem tem acesso a esta ficha.",
+    "Produto não guarda credencial."
+   ],
+   "correta": 2
+  },
+  {
+   "pergunta": "O que a chave Somente leitura faz?",
+   "opcoes": [
+    "Esconde a conta dos relatórios",
+    "Deixa a conta inativa",
+    "Impede que qualquer coisa seja escrita no Olist",
+    "Impede a importação de pedidos"
+   ],
+   "comentarios": [
+    "Não muda relatório.",
+    "A conta segue ativa.",
+    "É assim que a casa ensaia sem risco.",
+    "A leitura continua."
+   ],
+   "correta": 2
+  },
+  {
+   "pergunta": "Para que serve a margem de segurança?",
+   "opcoes": [
+    "Arredondar o estoque",
+    "Deixar exemplares de fora do que se anuncia, para a venda no balcão não virar falta",
+    "Guardar livros para consignação",
+    "Reservar para a feira"
+   ],
+   "comentarios": [
+    "Não é arredondamento.",
+    "Dois significa que o Olist nunca vê os dois últimos.",
+    "Consignação tem prateleira própria.",
+    "Feira tem localização própria."
+   ],
+   "correta": 1
+  },
+  {
+   "pergunta": "Com que frequência as leituras rodam sozinhas?",
+   "opcoes": [
+    "A cada venda",
+    "De duas em duas horas, por rotina",
+    "Uma vez por dia",
+    "Só quando alguém aperta o botão"
+   ],
+   "comentarios": [
+    "Não é por venda.",
+    "Nesta encenação os agendamentos estão desligados, e cada botão é o mesmo trabalho à mão.",
+    "É mais frequente.",
+    "Há rotina; o botão é o atalho."
+   ],
+   "correta": 1
+  }
+ ]
+}

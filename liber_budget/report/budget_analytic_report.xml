@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Paisagem: a tabela tem 6 colunas (posição, conta, previsto, teórico,
+         realizado, realizado %) e o retrato apertava os valores. Mesmos
+         números do paperformat_euro (o A4 padrão da casa), só a orientação
+         muda. -->
+    <record id="paperformat_budget_analytic" model="report.paperformat">
+        <field name="name">A4 — Orçamento (Paisagem)</field>
+        <field name="format">A4</field>
+        <field name="orientation">Landscape</field>
+        <field name="margin_top">52</field>
+        <field name="margin_bottom">32</field>
+        <field name="margin_left">0</field>
+        <field name="margin_right">0</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">52</field>
+        <field name="dpi">90</field>
+        <field name="css_margins" eval="True"/>
+    </record>
+
+    <record id="action_report_budget_analytic" model="ir.actions.report">
+        <field name="name">Orçamento</field>
+        <field name="model">budget.analytic</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">liber_budget.report_budget_analytic</field>
+        <field name="report_file">liber_budget.report_budget_analytic</field>
+        <field name="print_report_name">'Orcamento - %s' % (object.name or '')</field>
+        <field name="paperformat_id" ref="paperformat_budget_analytic"/>
+        <field name="binding_model_id" ref="model_budget_analytic"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <template id="report_budget_analytic">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <h2 class="mt-2"><span t-field="doc.name"/></h2>
+                        <div class="row mb-3">
+                            <div class="col-6">
+                                <div><strong>Responsável:</strong> <span t-field="doc.user_id"/></div>
+                                <div><strong>Grupo:</strong> <span t-field="doc.group_id"/></div>
+                                <div t-if="doc.tag_ids"><strong>Etiquetas:</strong> <span t-field="doc.tag_ids"/></div>
+                            </div>
+                            <div class="col-6 text-end">
+                                <div><strong>Período:</strong> <span t-field="doc.date_from"/> a <span t-field="doc.date_to"/></div>
+                                <div><strong>Empresa:</strong> <span t-field="doc.company_id"/></div>
+                                <div t-if="doc.company_names"><strong>Consolidado de:</strong> <span t-field="doc.company_names"/></div>
+                                <div><strong>Status:</strong> <span t-field="doc.state"/></div>
+                            </div>
+                        </div>
+
+                        <table style="width:100%; border-collapse:collapse; font-size:11px;">
+                            <thead>
+                                <tr style="background-color:#2c3e50; color:#ffffff;">
+                                    <th style="text-align:left; padding:6px 10px; font-weight:600;">Posição orçamentária</th>
+                                    <th style="text-align:left; padding:6px 10px; font-weight:600;">Conta analítica</th>
+                                    <th style="text-align:right; padding:6px 10px; font-weight:600;">Previsto</th>
+                                    <th style="text-align:right; padding:6px 10px; font-weight:600;">Teórico</th>
+                                    <th style="text-align:right; padding:6px 10px; font-weight:600;">Realizado</th>
+                                    <th style="text-align:right; padding:6px 10px; font-weight:600;">Realizado (%)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-set="total_budget" t-value="0"/>
+                                <t t-set="total_theoritical" t-value="0"/>
+                                <t t-set="total_practical" t-value="0"/>
+                                <tr t-foreach="doc.budget_line_ids" t-as="line"
+                                    t-att-style="'border-bottom:1px solid #e6e6e6; background-color:' + ('#f7f9fa' if line_index % 2 else '#ffffff') + ';'">
+                                    <t t-set="total_budget" t-value="total_budget + line.budget_amount"/>
+                                    <t t-set="total_theoritical" t-value="total_theoritical + line.theoritical_amount"/>
+                                    <t t-set="total_practical" t-value="total_practical + line.practical_amount"/>
+                                    <td style="padding:6px 10px;"><span t-field="line.position_id"/></td>
+                                    <td style="padding:6px 10px;"><span t-field="line.account_id"/></td>
+                                    <td style="text-align:right; padding:6px 10px;">
+                                        <span t-field="line.budget_amount"
+                                              t-options="{'widget': 'monetary', 'display_currency': line.currency_id}"/>
+                                    </td>
+                                    <td style="text-align:right; padding:6px 10px;">
+                                        <span t-field="line.theoritical_amount"
+                                              t-options="{'widget': 'monetary', 'display_currency': line.currency_id}"/>
+                                    </td>
+                                    <td style="text-align:right; padding:6px 10px;">
+                                        <span t-field="line.practical_amount"
+                                              t-options="{'widget': 'monetary', 'display_currency': line.currency_id}"/>
+                                    </td>
+                                    <td style="text-align:right; padding:6px 10px;">
+                                        <!-- Não existe conversor 'percentage' no QWeb de relatório (widget só
+                                             existe no cliente web): t-field imprimia o float cru, tipo
+                                             "0.8889". Formata-se a mão, com .format(): o QWeb colapsa um
+                                             "%%" em "%" ao compilar o t-out, e '%.2f%%' % (...) virava
+                                             '%.2f%' % (...): incomplete format. -->
+                                        <span t-out="'{:.2f}%'.format(line.practical_percentage * 100)"/>
+                                    </td>
+                                </tr>
+                            </tbody>
+                            <tfoot>
+                                <tr style="border-top:2px solid #2c3e50; background-color:#f0f3f5; font-weight:bold;">
+                                    <td colspan="2" style="text-align:right; padding:8px 10px;">Total</td>
+                                    <td style="text-align:right; padding:8px 10px;">
+                                        <span t-out="total_budget"
+                                              t-options="{'widget': 'monetary', 'display_currency': doc.company_id.currency_id}"/>
+                                    </td>
+                                    <td style="text-align:right; padding:8px 10px;">
+                                        <span t-out="total_theoritical"
+                                              t-options="{'widget': 'monetary', 'display_currency': doc.company_id.currency_id}"/>
+                                    </td>
+                                    <td style="text-align:right; padding:8px 10px;">
+                                        <span t-out="total_practical"
+                                              t-options="{'widget': 'monetary', 'display_currency': doc.company_id.currency_id}"/>
+                                    </td>
+                                    <td/>
+                                </tr>
+                            </tfoot>
+                        </table>
+
+                        <h3 style="margin-top:24px; margin-bottom:2px;">Posições orçamentárias</h3>
+                        <p style="font-size:11px; color:#666; margin:0 0 4px 0;">
+                            As contas do razão que compõem cada posição. Previsto e Teórico são do
+                            plano, e ficam só na linha da posição; a conta mostra o que veio de
+                            lançamento: Realizado (postado) e Programado (rascunho + postado).
+                        </p>
+                        <table style="width:100%; border-collapse:collapse; font-size:11px;">
+                            <thead>
+                                <tr style="background-color:#2c3e50; color:#ffffff;">
+                                    <th style="text-align:left; padding:6px 10px; font-weight:600;">Posição / Conta</th>
+                                    <th style="text-align:right; padding:6px 10px; font-weight:600;">Previsto</th>
+                                    <th style="text-align:right; padding:6px 10px; font-weight:600;">Teórico</th>
+                                    <th style="text-align:right; padding:6px 10px; font-weight:600;">Realizado</th>
+                                    <th style="text-align:right; padding:6px 10px; font-weight:600;">Programado</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-set="positions" t-value="doc.budget_line_ids.mapped('position_id')"/>
+                                <tr t-if="not positions">
+                                    <td colspan="5" style="padding:6px 10px; color:#888;">
+                                        Nenhuma linha deste orçamento usa posição orçamentária.
+                                    </td>
+                                </tr>
+                                <t t-foreach="positions" t-as="position">
+                                    <t t-set="pos_lines"
+                                       t-value="doc.budget_line_ids.filtered(lambda l: l.position_id == position)"/>
+                                    <t t-set="account_actuals" t-value="pos_lines._gl_actuals_by_account_map()"/>
+                                    <tr style="background-color:#eef1f3; font-weight:bold; border-top:1px solid #ccc;">
+                                        <td style="padding:6px 10px;"><span t-out="position.name"/></td>
+                                        <td style="text-align:right; padding:6px 10px;">
+                                            <span t-out="sum(pos_lines.mapped('budget_amount'))"
+                                                  t-options="{'widget': 'monetary', 'display_currency': doc.company_id.currency_id}"/>
+                                        </td>
+                                        <td style="text-align:right; padding:6px 10px;">
+                                            <span t-out="sum(pos_lines.mapped('theoritical_amount'))"
+                                                  t-options="{'widget': 'monetary', 'display_currency': doc.company_id.currency_id}"/>
+                                        </td>
+                                        <td style="text-align:right; padding:6px 10px;">
+                                            <span t-out="sum(pos_lines.mapped('practical_amount'))"
+                                                  t-options="{'widget': 'monetary', 'display_currency': doc.company_id.currency_id}"/>
+                                        </td>
+                                        <td style="text-align:right; padding:6px 10px;">
+                                            <span t-out="sum(pos_lines.mapped('programmed_amount'))"
+                                                  t-options="{'widget': 'monetary', 'display_currency': doc.company_id.currency_id}"/>
+                                        </td>
+                                    </tr>
+                                    <tr t-if="not position.account_ids" style="border-bottom:1px solid #e6e6e6;">
+                                        <td colspan="5" style="padding:3px 10px 3px 28px; color:#999; font-style:italic;">
+                                            Sem contas do razão configuradas.
+                                        </td>
+                                    </tr>
+                                    <tr t-foreach="position.account_ids" t-as="account"
+                                        style="border-bottom:1px solid #e6e6e6;">
+                                        <t t-set="acc_vals" t-value="account_actuals.get(
+                                            account.id, {'practical': 0.0, 'programmed': 0.0})"/>
+                                        <!-- `code` no 19 é computado e NÃO armazenado, resolvido por
+                                             empresa: lido fora do contexto da empresa do orçamento volta
+                                             vazio, e a linha saía como "— Nome da conta", sem número. -->
+                                        <t t-set="acc_code" t-value="account.with_company(doc.company_id).code"/>
+                                        <td style="padding:3px 10px 3px 28px; color:#555;">
+                                            <t t-if="acc_code"><span t-out="acc_code"/> — </t>
+                                            <span t-out="account.name"/>
+                                        </td>
+                                        <!-- Previsto e Teórico são do plano, da posição inteira: não se
+                                             quebram por conta, e inventar um rateio aqui seria dar cara de
+                                             plano a um número que ninguém orçou. Ficam em branco. -->
+                                        <td/>
+                                        <td/>
+                                        <td style="text-align:right; padding:3px 10px; color:#555;">
+                                            <span t-out="acc_vals['practical']"
+                                                  t-options="{'widget': 'monetary', 'display_currency': doc.company_id.currency_id}"/>
+                                        </td>
+                                        <td style="text-align:right; padding:3px 10px; color:#555;">
+                                            <span t-out="acc_vals['programmed']"
+                                                  t-options="{'widget': 'monetary', 'display_currency': doc.company_id.currency_id}"/>
+                                        </td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+</odoo>

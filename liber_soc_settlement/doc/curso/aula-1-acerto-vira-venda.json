@@ -1,0 +1,78 @@
+{
+ "curso": "Curso de Consignação II",
+ "aula": 1,
+ "titulo": "O acerto: quando a consignação vira venda",
+ "abertura": "Bem-vindo ao curso dois de Consignação. O acerto é o único momento em que a consignação vira venda, e tudo passa pela Operação de Consignação: uma por cliente por rodada. Nesta aula, o conceito, numa operação já executada, e o mapa dos menus deste curso.",
+ "fecho": "Venda S, Pedido C e CR nascem do mesmo Executar. Nas próximas aulas: gerar as operações do mês, executar um acerto, preço e desconto, o mapa, a conversa do cliente, campanhas, a cobrança das devoluções, a saúde dos títulos e os relatórios.",
+ "youtube": "https://www.youtube.com/watch?v=WrKb6rjXvgQ",
+ "quiz": [
+  {
+   "pergunta": "Em que momento a consignação vira venda?",
+   "opcoes": [
+    "Quando o CR de devolução é liberado para a logística",
+    "Quando o mapa de consignação é enviado ao cliente no começo do mês",
+    "Quando a remessa sai do armazém para a livraria",
+    "No acerto: quando a operação é executada, nasce a venda S com o que o cliente vendeu"
+   ],
+   "comentarios": [
+    "Devolução é livro voltando; é estoque, não venda.",
+    "O mapa é um extrato do que está na prateleira; não vende nada.",
+    "Remessa é movimento de estoque; o livro continua da editora.",
+    "A venda S nasce do Executar; antes disso nada foi vendido."
+   ],
+   "correta": 3
+  },
+  {
+   "pergunta": "Uma operação já foi executada. O que os três botões do topo abrem?",
+   "opcoes": [
+    "O contrato, a prateleira e a ficha do cliente",
+    "As três últimas operações do mesmo cliente, para comparar",
+    "A venda S, o Pedido C de reposição e o CR de devolução que ela gerou",
+    "As três notas fiscais do mês: remessa, venda e devolução"
+   ],
+   "comentarios": [
+    "Isso está nos campos do cabeçalho, não nos botões.",
+    "A operação é uma rodada só; o histórico fica na lista.",
+    "Cada botão só existe se a coluna correspondente tinha valor.",
+    "Notas são do módulo fiscal e nascem depois, dos documentos."
+   ],
+   "correta": 2
+  },
+  {
+   "pergunta": "O que é o Pedido C de reposição que a operação gera?",
+   "opcoes": [
+    "Um pedido de consignação em rascunho, que o comercial confirma para repor a prateleira",
+    "Uma venda com o desconto do contrato, já faturável",
+    "Uma reserva de estoque sem documento, só para separar os livros",
+    "Uma cobrança da parte que o cliente ainda não pagou"
+   ],
+   "comentarios": [
+    "É movimento de livros, não venda; nunca fatura.",
+    "Quem fatura é a venda S; o Pedido C não cobra ninguém.",
+    "É um documento numerado, com transferência própria.",
+    "Cobrança vem da venda S, pelo financeiro."
+   ],
+   "correta": 0
+  },
+  {
+   "pergunta": "Onde se opera o mês inteiro, uma rodada por cliente, e se envia o mapa a todos?",
+   "opcoes": [
+    "No menu Consignações: Gerar Operações e Mapa de Consignação",
+    "Em Relatórios, pela cobertura por cliente",
+    "No aplicativo Vendas, criando um pedido por cliente",
+    "No menu Contratos, ativando cada contrato de novo"
+   ],
+   "comentarios": [
+    "São as duas rotinas do mês, uma cria e a outra envia.",
+    "Relatórios medem o que aconteceu; não operam.",
+    "O acerto é do aplicativo Consignação, não do Vendas.",
+    "O contrato dá as regras; a rodada é a operação."
+   ],
+   "correta": 0
+  }
+ ],
+ "youtube_anterior": [
+  "https://www.youtube.com/watch?v=r26cHOhnbUw"
+ ],
+ "youtube_quadro": "2912x2080"
+}

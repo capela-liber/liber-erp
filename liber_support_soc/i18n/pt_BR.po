@@ -618,3 +618,8 @@ msgstr ""
 #: code:addons/liber_support_soc/wizard/co_from_conversation.py:0
 msgid "Drafted from %(link)s."
 msgstr "Criado em rascunho a partir de %(link)s."
+
+#. module: liber_support_soc
+#: model_terms:ir.ui.view,arch_db:liber_support_soc.view_support_ticket_form_soc
+msgid "Consignment"
+msgstr "Consignação"

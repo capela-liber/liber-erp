@@ -1,0 +1,74 @@
+{
+ "curso": "Curso Amazon Vendor Central",
+ "aula": 3,
+ "titulo": "Importar os pedidos",
+ "abertura": "Esta aula importa: o botão, a janela de datas, e a lista que nasce — com o estado que a Amazon deu e o estado que é nosso.",
+ "fecho": "A importação relê a janela inteira; a lista mostra linhas, sem produto e valor; estado da Amazon é dela, estado nosso é Importado ou Cotação gerada. A próxima aula resolve o que não casou.",
+ "youtube": "https://www.youtube.com/watch?v=QojO26V_fTc",
+ "quiz": [
+  {
+   "pergunta": "O que o assistente de importação pergunta?",
+   "opcoes": [
+    "O canal de vendas",
+    "A conta e a janela: de quando até quando",
+    "O cliente",
+    "Quais pedidos importar, um a um"
+   ],
+   "comentarios": [
+    "Canal vem do módulo.",
+    "Cada importação relê a janela inteira.",
+    "Cliente vem da unidade.",
+    "Não é seleção."
+   ],
+   "correta": 1
+  },
+  {
+   "pergunta": "Qual a diferença entre Estado na Amazon e Estado?",
+   "opcoes": [
+    "Um é data, outro é texto",
+    "São o mesmo campo com nomes diferentes",
+    "Um é de linha, outro de pedido",
+    "O primeiro é o dela, tal como veio; o segundo é o nosso: Importado ou Cotação gerada"
+   ],
+   "comentarios": [
+    "Ambos são estado.",
+    "São dois.",
+    "Ambos são do pedido.",
+    "Um estado novo que ela invente aparece como veio."
+   ],
+   "correta": 3
+  },
+  {
+   "pergunta": "A Amazon inventa um estado que o módulo não conhece. O que acontece?",
+   "opcoes": [
+    "O estado vira Importado",
+    "A importação falha",
+    "O pedido é ignorado",
+    "Ele aparece como veio, sem quebrar a importação"
+   ],
+   "comentarios": [
+    "O estado dela não é sobrescrito.",
+    "Não falha.",
+    "Não é ignorado.",
+    "O texto dela fica por baixo."
+   ],
+   "correta": 3
+  },
+  {
+   "pergunta": "O que a coluna Sem produto conta?",
+   "opcoes": [
+    "Quantos pedidos sem cliente",
+    "Quantas linhas do pedido ainda não acharam produto no cadastro",
+    "Quantos títulos esgotados",
+    "Quantas linhas canceladas"
+   ],
+   "comentarios": [
+    "Cliente é outro caso.",
+    "É o que impede a cotação.",
+    "Estoque não entra.",
+    "Não há linha cancelada."
+   ],
+   "correta": 1
+  }
+ ]
+}

@@ -1,0 +1,100 @@
+{
+ "curso": "Curso NF-e: emitir",
+ "aula": 6,
+ "titulo": "Devolução",
+ "abertura": "Quando o prazo do cancelamento passou, ou quando o cliente devolve parte do que comprou, o caminho é a nota de devolução — uma nota de crédito que aponta a nota original.",
+ "passos": [
+  {
+   "texto": "O caminho começa na tela inicial, entre os aplicativos."
+  },
+  {
+   "texto": "Faturamento. Esta aula é a devolução: a nota que traz a mercadoria de volta."
+  },
+  {
+   "texto": "Clientes, Notas de crédito. A devolução de venda é uma nota de crédito — o dinheiro volta e a mercadoria também."
+  },
+  {
+   "texto": "Esta devolve cinco exemplares da nota anterior. O valor e as linhas são os da parte devolvida, não os da nota inteira."
+  },
+  {
+   "texto": "Na aba NFe, o campo que faz toda a diferença: a nota de origem. É a chave dela que viaja na devolução."
+  },
+  {
+   "texto": "Sem essa referência a SEFAZ não sabe o que está sendo devolvido, e o módulo nem chega a mandar: ele barra antes, com a mensagem dizendo qual campo falta."
+  },
+  {
+   "texto": "E repare que o CFOP da Nota está em branco. Ele é o campo da exceção: o CFOP normal vem da posição fiscal, e a da devolução de venda é de ENTRADA — mil duzentos e dois dentro do estado, dois mil duzentos e dois para fora — mesmo sendo nós a emitir a nota."
+  },
+  {
+   "texto": "Daí em diante é igual: Emitir NFe, Consultar SEFAZ, chave e DANFE. O que muda na devolução é o cadastro da nota, não o jeito de emitir."
+  }
+ ],
+ "fecho": "O que muda na devolução é o cadastro da nota, não o jeito de emitir: a nota de origem preenchida, e uma operação fiscal de ENTRADA, mesmo sendo nós a emitir. Sem a referência, o módulo barra antes de mandar: a SEFAZ não saberia o que está sendo devolvido.",
+ "youtube": "",
+ "quiz": [
+  {
+   "pergunta": "Que documento é uma devolução de venda no sistema?",
+   "opcoes": [
+    "Uma fatura nova",
+    "Uma nota de crédito de cliente",
+    "Um pedido de compra",
+    "Uma remessa"
+   ],
+   "comentarios": [
+    "Fatura nova cobraria de novo.",
+    "O dinheiro volta e a mercadoria também.",
+    "Compra é outra coisa.",
+    "Remessa não cobra nada e não devolve nada."
+   ],
+   "correta": 1
+  },
+  {
+   "pergunta": "O que acontece se a devolução não apontar a nota de origem?",
+   "opcoes": [
+    "A nota sai assim mesmo",
+    "A SEFAZ rejeita depois",
+    "O módulo barra antes de enviar, dizendo qual campo falta",
+    "O sistema escolhe a nota mais recente"
+   ],
+   "comentarios": [
+    "Não sai: falta a chave da nota devolvida.",
+    "Nem chega à SEFAZ.",
+    "Ele confere o que falta antes de gastar uma chamada.",
+    "Não há palpite: a referência é escolhida."
+   ],
+   "correta": 2
+  },
+  {
+   "pergunta": "Por que a devolução de venda é uma operação de ENTRADA?",
+   "opcoes": [
+    "Porque a mercadoria volta para a casa",
+    "Porque quem emite é o cliente",
+    "Porque o valor é negativo",
+    "Porque é nota de crédito"
+   ],
+   "comentarios": [
+    "O primeiro dígito do CFOP conta o sentido: 1 dentro do estado, 2 para fora — e sair como saída inverteria a operação para a SEFAZ.",
+    "Quem emite continua sendo a casa.",
+    "Sinal não decide sentido fiscal.",
+    "O tipo do documento no Odoo é outra coisa."
+   ],
+   "correta": 0
+  },
+  {
+   "pergunta": "Para que serve o campo \"CFOP da Nota\", que fica em branco no caso comum?",
+   "opcoes": [
+    "Para nada: é resto de versão antiga",
+    "Para escrever o CFOP à mão nas operações que não se deduzem, como a exportação",
+    "Para o contador conferir",
+    "Para guardar o CFOP da nota de origem"
+   ],
+   "comentarios": [
+    "Ele tem uso, e é preciso.",
+    "É o campo da exceção; no caso comum o CFOP vem da posição fiscal.",
+    "Conferência é outra tela.",
+    "A origem tem campo próprio."
+   ],
+   "correta": 1
+  }
+ ]
+}

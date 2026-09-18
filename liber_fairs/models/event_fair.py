@@ -123,7 +123,7 @@ class EventFair(models.Model):
 
     @api.depends_context('uid')
     def _compute_is_fair_planner(self):
-        pode = self.env.user.has_group('liber_fairs.group_fair_manager')
+        pode = self.env.user.has_group('liber_fairs.group_fair_planner')
         for fair in self:
             fair.is_fair_planner = pode
 

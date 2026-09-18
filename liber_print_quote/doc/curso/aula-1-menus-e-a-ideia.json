@@ -1,0 +1,34 @@
+{
+ "curso": "Curso Impressão: cotação de gráfica",
+ "aula": 1,
+ "titulo": "O que há em cada menu, e a ideia",
+ "abertura": "Esta aula é o mapa de um módulo sem menu próprio. A cotação de impressão não ganhou aplicativo: ela mora em dois lugares que já existem — a aba Ficha técnica no cadastro do livro, e a Solicitação de cotação no app Compras.",
+ "passos": [
+  {
+   "texto": "O caminho começa na tela inicial, entre os aplicativos."
+  },
+  {
+   "texto": "Compras. Este curso é a cotação de gráfica: o módulo não tem menu próprio, e é justamente isso que se aprende aqui."
+  },
+  {
+   "texto": "Pedidos, Solicitações de cotação: é daqui que sai o pedido que a gráfica vai orçar."
+  },
+  {
+   "texto": "A lista é a do Odoo de sempre. O que muda é o que viaja dentro de cada cotação quando a linha é um livro."
+  },
+  {
+   "texto": "Produtos, Produtos: e aqui, no cadastro do título, mora a ficha técnica de impressão."
+  },
+  {
+   "texto": "Na ficha do livro, a aba Ficha técnica: formato, capa, miolo e observações. É a aba inteira do curso."
+  },
+  {
+   "texto": "A regra do módulo em uma frase: a gráfica orça pelo que está no papel, e o que está no papel é o que este cadastro diz."
+  },
+  {
+   "texto": "Dois lugares, então, e nenhum menu novo: a ficha no produto, a cotação em Compras. Quem preenche é o Editorial; quem manda para a gráfica pode ser o Financeiro."
+  }
+ ],
+ "fecho": "Dois lugares e nenhum menu novo: a ficha no produto, a cotação em Compras. Quem preenche a ficha é o Editorial; quem manda para a gráfica pode ser o Financeiro. A próxima aula preenche a ficha.",
+ "youtube": ""
+}

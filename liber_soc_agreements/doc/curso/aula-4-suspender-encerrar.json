@@ -1,0 +1,78 @@
+{
+ "curso": "Curso de Consignação I",
+ "aula": 4,
+ "titulo": "Suspender, reativar e encerrar",
+ "abertura": "Três botões, três freios. Suspender segura remessas, reativar solta, encerrar fecha; e encerrar exige a prateleira vazia.",
+ "fecho": "Com livros na prateleira, encerrar é recusado: antes vem o Recolher Tudo, assunto da aula oito.",
+ "youtube": "https://www.youtube.com/watch?v=dd9iBGV81t8",
+ "quiz": [
+  {
+   "pergunta": "O que acontece com um Pedido C confirmado num contrato suspenso?",
+   "opcoes": [
+    "Sai com desconto zero",
+    "É recusado, com a explicação escrita",
+    "Fica aguardando aprovação do gerente",
+    "Sai normalmente"
+   ],
+   "comentarios": [
+    "Suspensão não mexe em preço.",
+    "E fica em rascunho, sem nada sair do armazém.",
+    "Não há fila de aprovação.",
+    "A suspensão existe para segurar a remessa."
+   ],
+   "correta": 1
+  },
+  {
+   "pergunta": "Quando o sistema aceita encerrar um contrato?",
+   "opcoes": [
+    "Só no fim do ano fiscal",
+    "Só com a prateleira vazia",
+    "A qualquer momento",
+    "Só depois de um acerto"
+   ],
+   "comentarios": [
+    "Não há calendário para isso.",
+    "Antes vem o Recolher Tudo.",
+    "Com livros na prateleira, recusa.",
+    "Acerto não é condição; prateleira vazia é."
+   ],
+   "correta": 1
+  },
+  {
+   "pergunta": "Reativar um contrato suspenso:",
+   "opcoes": [
+    "Cria uma prateleira nova",
+    "Perde a prateleira",
+    "Devolve o contrato ao normal, com a mesma prateleira",
+    "Exige um contrato novo"
+   ],
+   "comentarios": [
+    "A prateleira é a mesma.",
+    "Prateleira e histórico são os mesmos.",
+    "Nada é perdido.",
+    "O contrato é o mesmo."
+   ],
+   "correta": 2
+  },
+  {
+   "pergunta": "Para que serve suspender, em vez de encerrar?",
+   "opcoes": [
+    "Para mudar o desconto",
+    "Para apagar o contrato",
+    "Para trocar o cliente",
+    "Para segurar remessas sem perder a prateleira nem o histórico"
+   ],
+   "comentarios": [
+    "O desconto se edita no contrato ativo.",
+    "Não apaga nada.",
+    "O cliente do contrato não muda.",
+    "Inadimplência, desacordo, pausa."
+   ],
+   "correta": 3
+  }
+ ],
+ "youtube_anterior": [
+  "https://www.youtube.com/watch?v=4baKBq_vp54"
+ ],
+ "youtube_quadro": "2912x2080"
+}

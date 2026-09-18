@@ -1,0 +1,78 @@
+{
+ "curso": "Curso de Consignação II",
+ "aula": 5,
+ "titulo": "O mapa em PDF e quem recebe cada papel",
+ "abertura": "Esta aula é sobre o mapa que vai ao cliente: não é um extrato, é a proposta do mês, com a prateleira, o acerto em curso, a reposição sugerida e a devolução sugerida. E sobre quem recebe cada papel na ficha do cliente.",
+ "fecho": "O mapa da operação leva as três decisões e se negocia todo mês; Acertos e Comprador recebem cada um o seu papel; e o Mapa de Consignação em lote é o mesmo envio, manual, para todas as operações abertas de uma vez. O disparo automático mensal é a última aula do curso.",
+ "youtube": "https://www.youtube.com/watch?v=aO4fgbtQiTM",
+ "quiz": [
+  {
+   "pergunta": "O que vai no mapa enviado de uma operação?",
+   "opcoes": [
+    "Só o que o cliente vendeu, para cobrar",
+    "A prateleira, o acerto em curso, a reposição sugerida e a devolução sugerida",
+    "Só a lista do que está na prateleira do cliente",
+    "O contrato e as condições comerciais"
+   ],
+   "comentarios": [
+    "Cobrança vem da venda S, depois do acerto.",
+    "É a proposta do mês, para negociar com o cliente.",
+    "A prateleira é uma coluna; as decisões vão junto.",
+    "O contrato não viaja no mapa."
+   ],
+   "correta": 1
+  },
+  {
+   "pergunta": "Uma operação tem só reposição, nenhum acerto. Quem recebe o e-mail do mapa?",
+   "opcoes": [
+    "Os dois contatos, sempre",
+    "O contato Comprador, que autoriza a entrada de mercadoria",
+    "O contato Acertos, que confere as vendas",
+    "O e-mail principal da livraria"
+   ],
+   "comentarios": [
+    "Os dois só quando a operação tem acerto e reposição.",
+    "Só reposição vai ao Comprador; mista vai aos dois.",
+    "Sem acerto, o papel Acertos não é acionado.",
+    "O mapa vai aos papéis cadastrados, não ao e-mail geral."
+   ],
+   "correta": 1
+  },
+  {
+   "pergunta": "O cliente não tem contato do tipo Acertos. O que acontece ao enviar o mapa?",
+   "opcoes": [
+    "O sistema cria o contato Acertos sozinho a partir da ficha",
+    "A operação é cancelada até o cadastro ser feito",
+    "O mapa não sai, e fica uma atividade pedindo o cadastro",
+    "O sistema envia ao e-mail principal da livraria"
+   ],
+   "comentarios": [
+    "Não inventa contato: pede o cadastro.",
+    "A operação fica; só o envio espera.",
+    "Quem cuida da conta completa o cadastro e reenvia.",
+    "O mapa não é enviado sem o papel certo."
+   ],
+   "correta": 2
+  },
+  {
+   "pergunta": "O que o Mapa de Consignação, em lote, faz?",
+   "opcoes": [
+    "Imprime todos os mapas num PDF só, para postar",
+    "Envia o mapa para os clientes que você selecionar na lista",
+    "Envia o mapa de todas as operações abertas de uma vez, depois de você confirmar",
+    "Abre a operação do mês para cada cliente e envia o mapa no dia marcado"
+   ],
+   "comentarios": [
+    "Ele envia por e-mail; o PDF é por operação.",
+    "Não há seleção: ele conta as elegíveis e pede confirmação.",
+    "É o Enviar Mapa em lote, manual: rascunhos fora das etapas concluídas.",
+    "Isso é o disparo automático mensal, das Definições."
+   ],
+   "correta": 2
+  }
+ ],
+ "youtube_anterior": [
+  "https://www.youtube.com/watch?v=XdqXkCn6mwg"
+ ],
+ "youtube_quadro": "2912x2080"
+}

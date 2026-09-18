@@ -636,6 +636,23 @@ class TestAcessos(TransactionCase):
             'ao banco (lembre que (4, ...) não desfaz aresta -- é (3, ...), e '
             'por último na lista)')
 
+    def test_financeiro_gerente_administra_contratos(self):
+        """Decisão do dono, 14/09/2026: a apuração e o pagamento de royalties
+        são do Financeiro, e as telas de faturas de autor exigem o grupo de
+        contratos. O Gerente ganha `contract_manager` (assina, renova, cancela,
+        tabelas de IRRF); o Assistente continua sem contrato nenhum -- o
+        pedido foi para o controller, não para a mesa de pagamentos."""
+        self.assertTrue(
+            self.usuario['financeiro_gerente'].has_group(
+                'liber_copyright_contracts.group_contract_manager'),
+            'o Financeiro/Gerente não administra contratos: o (4, ...) não '
+            'chegou ao banco')
+        self.assertFalse(
+            self.usuario['financeiro_assistente'].has_group(
+                'liber_copyright_contracts.group_contract_user'),
+            'o Financeiro/Assistente passou a ver contrato: o grupo vazou do '
+            'Gerente para o Assistente')
+
     def test_direcao_nao_perdeu_o_contrato_junto(self):
         """A remoção do Editorial não pode respingar na Direção.
 

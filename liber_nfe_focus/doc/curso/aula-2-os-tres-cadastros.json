@@ -1,0 +1,115 @@
+{
+ "curso": "Curso NF-e: emitir",
+ "aula": 2,
+ "titulo": "Os três cadastros",
+ "abertura": "Nota rejeitada é quase sempre cadastro errado, e o cadastro está em três lugares: a empresa que emite, o cliente que recebe e o produto que sai. Nenhum deles é a nota — preenchidos uma vez, valem para todas as notas que vierem.",
+ "passos": [
+  {
+   "texto": "O caminho começa na tela inicial, entre os aplicativos."
+  },
+  {
+   "texto": "Faturamento. Esta aula é o cadastro: os três lugares que decidem o que sai na nota."
+  },
+  {
+   "texto": "Nenhum deles é a fatura. Começa pelo emitente — a ficha da empresa, em Definições, Usuários e Empresas."
+  },
+  {
+   "texto": "A ficha da Editora Hedra. Quem emite é ela, e o que a SEFAZ confere primeiro é o que está aqui: razão social, CNPJ e endereço."
+  },
+  {
+   "texto": "Mais abaixo, o bloco da Focus. O ambiente diz contra qual SEFAZ se fala: homologação é ensaio, produção vale. Este banco está em homologação, e é por isso que a nota sai com tarja."
+  },
+  {
+   "texto": "A credencial da Focus não aparece aqui, e é bom que não apareça: ela é campo de senha e só quem administra o sistema a enxerga. O botão Testar conexão responde se ela está boa, sem emitir nota nenhuma."
+  },
+  {
+   "texto": "E os padrões fiscais: regime tributário, natureza da operação, o NCM que vale quando o produto não tem o seu, o código de benefício fiscal do estado e a operação fiscal padrão. São eles que preenchem o que ninguém preencheu."
+  },
+  {
+   "texto": "O segundo cadastro é o destinatário: CNPJ, inscrição estadual, indicador de IE, e de novo o número e o bairro separados."
+  },
+  {
+   "texto": "Este é um cliente de verdade, e do próprio grupo: a irmã n-1. A SEFAZ confere os dois CNPJs, o de quem emite e o de quem recebe, contra a Receita Federal — CNPJ inventado não passa nem em homologação."
+  },
+  {
+   "texto": "O indicador é a pergunta que mais derruba nota. Contribuinte tem inscrição estadual, e ela viaja na nota; isento de inscrição não tem; não contribuinte é o consumidor final. E a IE também é conferida contra o cadastro."
+  },
+  {
+   "texto": "O terceiro cadastro é o produto. O NCM é a classificação fiscal da mercadoria — quatro-nove-zero-um é livro — e sem ele a nota não sai."
+  },
+  {
+   "texto": "Ao lado, a origem da mercadoria e o código de benefício fiscal. Livro é imune de ICMS, e o código de benefício é como o estado quer que essa imunidade seja declarada."
+  },
+  {
+   "texto": "Três cadastros, e nenhum deles é da nota: são da empresa, do cliente e do livro. Preenchidos uma vez, valem para todas as notas que vierem."
+  }
+ ],
+ "fecho": "Empresa, cliente e produto. O indicador de IE do cliente é o campo que mais derruba nota: contribuinte tem inscrição estadual e ela viaja; isento de inscrição não tem; não contribuinte é o consumidor final. E a SEFAZ confere tudo contra o cadastro — os dois CNPJs contra a Receita Federal, a IE contra o cadastro estadual. Por isso o cliente deste curso é uma empresa do grupo, e não uma livraria inventada.",
+ "youtube": "",
+ "quiz": [
+  {
+   "pergunta": "O token da Focus aparece na ficha da empresa para quem não administra o sistema?",
+   "opcoes": [
+    "Sim, em texto aberto",
+    "Sim, mas só os últimos dígitos",
+    "Não: é campo de senha e não se desenha em modo leitura",
+    "Não existe token; a Focus usa usuário e senha"
+   ],
+   "comentarios": [
+    "Nunca em texto aberto.",
+    "Não há essa exibição parcial.",
+    "Quem lê a ficha não vê a credencial — e o botão Testar conexão confere sem emitir nada.",
+    "A autenticação é por token, um por ambiente."
+   ],
+   "correta": 2
+  },
+  {
+   "pergunta": "Por que número e bairro são campos separados do logradouro?",
+   "opcoes": [
+    "Porque o Odoo sempre os separou",
+    "Porque a SEFAZ os exige separados, e nota sem bairro é rejeitada",
+    "Porque os Correios pedem",
+    "Porque a transportadora precisa"
+   ],
+   "comentarios": [
+    "O Odoo de fábrica não os tem; o módulo os acrescenta.",
+    "O endereço brasileiro cabe mal em rua e complemento, e a SEFAZ confere os dois campos.",
+    "Não é por causa do frete.",
+    "A transportadora lê o endereço já montado."
+   ],
+   "correta": 1
+  },
+  {
+   "pergunta": "O que é o NCM no cadastro do produto?",
+   "opcoes": [
+    "O código de barras",
+    "O preço de tabela",
+    "A classificação fiscal da mercadoria, exigida pela nota",
+    "O código interno da casa"
+   ],
+   "comentarios": [
+    "O código de barras é o ISBN, e vale como código do produto.",
+    "Preço não é dado fiscal.",
+    "Livro é 4901; sem NCM a nota não sai, e a empresa tem um NCM padrão para quando o produto não tem o seu.",
+    "Esse é a referência interna."
+   ],
+   "correta": 2
+  },
+  {
+   "pergunta": "Em homologação, a SEFAZ aceita um CNPJ inventado com dígito verificador correto?",
+   "opcoes": [
+    "Sim: homologação não confere nada",
+    "Sim, desde que a IE esteja em branco",
+    "Não: ela confere os dois CNPJs, emitente e destinatário, contra a Receita Federal",
+    "Só o do emitente é conferido"
+   ],
+   "comentarios": [
+    "Homologação dispensa o valor fiscal, não o cadastro.",
+    "A IE é outra conferência, à parte.",
+    "Volta como \"CNPJ não cadastrado na Receita Federal\" — e foi por isso que o curso passou a emitir para uma empresa do próprio grupo.",
+    "Os dois são."
+   ],
+   "correta": 2
+  }
+ ]
+}

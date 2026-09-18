@@ -1,0 +1,74 @@
+{
+ "curso": "Curso de Atendimento ao cliente",
+ "aula": 1,
+ "titulo": "O que há em cada menu",
+ "abertura": "Bem-vindo ao curso de Atendimento ao cliente. O e-mail que o cliente manda para a caixa comercial vira um chamado com dono, prazo e documento atrás; o comercial vive nessa tela. Esta aula é o mapa: o quadro, a lista e a Configuração.",
+ "fecho": "Quadro por estágio, lista com filtros, e Configuração com equipes, estágios, etiquetas e definições. A próxima aula mostra de onde vem um chamado.",
+ "youtube": "https://www.youtube.com/watch?v=AvCG4Mz4N6U",
+ "quiz": [
+  {
+   "pergunta": "O que é cada coluna do quadro de Atendimento?",
+   "opcoes": [
+    "Um tipo de documento",
+    "Um estágio do chamado: Novo, Em andamento, Aguardando cliente, Aguardando interno, e os recolhidos",
+    "Uma equipe de atendimento",
+    "Um cliente"
+   ],
+   "comentarios": [
+    "O tipo é um campo do chamado.",
+    "Resolvido, Fechado e Spam ficam recolhidos.",
+    "Equipes são a caixa de e-mail; não são colunas.",
+    "O cliente está no cartão."
+   ],
+   "correta": 1
+  },
+  {
+   "pergunta": "Que filtros a lista de Chamados oferece?",
+   "opcoes": [
+    "Só por cliente",
+    "Por valor do pedido",
+    "Por empresa e por mês",
+    "Meus chamados, Sem responsável, Abertos, Atrasados, Urgentes"
+   ],
+   "comentarios": [
+    "Cliente é busca, não filtro pronto.",
+    "Chamado não tem valor.",
+    "Empresa vem do seletor do alto; mês não é filtro.",
+    "São os cinco filtros prontos da busca."
+   ],
+   "correta": 3
+  },
+  {
+   "pergunta": "Quem vê o menu Configuração do Atendimento?",
+   "opcoes": [
+    "Só o administrador do sistema",
+    "O gerente do atendimento",
+    "O financeiro",
+    "Todo usuário do aplicativo"
+   ],
+   "comentarios": [
+    "O gerente basta.",
+    "Equipes, estágios, etiquetas e definições são dele.",
+    "O financeiro não entra aqui.",
+    "O assistente vê quadro e lista."
+   ],
+   "correta": 1
+  },
+  {
+   "pergunta": "O que o Atendimento NÃO faz, de propósito?",
+   "opcoes": [
+    "Criar chamados por e-mail",
+    "Medir prazos",
+    "Ler uma caixa IMAP ou falar WhatsApp: o e-mail chega por encaminhamento ao alias",
+    "Ligar o chamado a um pedido"
+   ],
+   "comentarios": [
+    "Cria, sim: é o caminho principal.",
+    "Mede, na aula 5.",
+    "A captura é por encaminhamento, como era no Odoo 15.",
+    "Liga, na aula 6."
+   ],
+   "correta": 2
+  }
+ ]
+}

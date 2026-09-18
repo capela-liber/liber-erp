@@ -1,0 +1,74 @@
+{
+ "curso": "Curso de Consignação III",
+ "aula": 6,
+ "titulo": "Resolver, aceitar e ajustar",
+ "abertura": "Cada linha divergente pede uma decisão: o fiscal manda, o mapa manda, ou manual. Aceitar corrige a prateleira por um inventário de verdade e lança a diferença de valor.",
+ "fecho": "Rastro completo: a correção fica no histórico do estoque e o valor na conta de ajuste. Fim do curso três.",
+ "youtube": "https://www.youtube.com/watch?v=pG9DLa-HwfE",
+ "quiz": [
+  {
+   "pergunta": "Aceitar uma auditoria com linha divergente sem resolução:",
+   "opcoes": [
+    "Aceita pelo fiscal por padrão",
+    "Cancela a auditoria",
+    "É recusado: aceite fiscal, mapa ou manual, ou use um dos Aceitar tudo",
+    "Aceita e ignora a linha"
+   ],
+   "comentarios": [
+    "Não há padrão.",
+    "Não cancela.",
+    "Nada é aceito sem resolução.",
+    "Recusa até resolver."
+   ],
+   "correta": 2
+  },
+  {
+   "pergunta": "Quem pode aceitar uma auditoria?",
+   "opcoes": [
+    "O depósito",
+    "O cliente",
+    "Qualquer usuário de consignação",
+    "O gerente de consignação, porque aceitar mexe na prateleira e lança valor"
+   ],
+   "comentarios": [
+    "Não.",
+    "Não.",
+    "Só o gerente.",
+    "O administrador também passa."
+   ],
+   "correta": 3
+  },
+  {
+   "pergunta": "O que o Aceitar gera?",
+   "opcoes": [
+    "Uma venda",
+    "Um CR",
+    "Uma nota fiscal",
+    "Um movimento de Ajuste, de tipo próprio, que corrige a prateleira por inventário e lança a diferença de valor"
+   ],
+   "comentarios": [
+    "Nunca.",
+    "CR é devolução.",
+    "Não.",
+    "A correção fica no histórico do estoque."
+   ],
+   "correta": 3
+  },
+  {
+   "pergunta": "Para onde vai a diferença de valor de um ajuste?",
+   "opcoes": [
+    "Para lugar nenhum",
+    "Para o cliente",
+    "Para a conta de estoque normal",
+    "Para a conta de ajuste configurada nas Definições: perda ou sobra"
+   ],
+   "comentarios": [
+    "O valor é lançado.",
+    "Não.",
+    "Vai para a conta de ajuste das Definições.",
+    "Débito na perda, crédito na sobra."
+   ],
+   "correta": 3
+  }
+ ]
+}

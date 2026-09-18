@@ -1,0 +1,74 @@
+{
+ "curso": "Curso Amazon Vendor Central",
+ "aula": 2,
+ "titulo": "Configuração e as unidades da Amazon",
+ "abertura": "Esta aula abre a conta e as unidades: onde ficam as credenciais, o que é a janela de releitura, e por que um código como GRU8 precisa virar um contato.",
+ "fecho": "Uma conta por conta do Vendor Central, credenciais no banco, janela de dias para trás; e as unidades, que dizem quem é cada código nos nossos contatos. A próxima aula importa os pedidos.",
+ "youtube": "https://www.youtube.com/watch?v=gCq5719HQuM",
+ "quiz": [
+  {
+   "pergunta": "O que o pedido traz para identificar quem comprou?",
+   "opcoes": [
+    "O endereço completo",
+    "O CNPJ do centro de distribuição",
+    "O nome da empresa",
+    "Um código de unidade, como GRU8, e nada mais"
+   ],
+   "comentarios": [
+    "Não vem endereço.",
+    "Não vem CNPJ.",
+    "Não vem nome.",
+    "Nem CNPJ nem endereço atravessam a API."
+   ],
+   "correta": 3
+  },
+  {
+   "pergunta": "Para que serve a Unidade da Amazon?",
+   "opcoes": [
+    "Definir o preço da Amazon",
+    "Guardar o estoque daquele centro",
+    "Dizer quem é aquele código nos nossos contatos, e para onde os livros vão",
+    "Escolher a transportadora"
+   ],
+   "comentarios": [
+    "Preço vem no pedido.",
+    "Estoque é nosso.",
+    "A cotação sai para o cliente da unidade.",
+    "Transporte é outro módulo."
+   ],
+   "correta": 2
+  },
+  {
+   "pergunta": "Um pedido de unidade não mapeada:",
+   "opcoes": [
+    "É apagado na releitura",
+    "É recusado na importação",
+    "Entra com o cliente da conta",
+    "Entra assim mesmo, sem cliente, e não pode virar cotação"
+   ],
+   "comentarios": [
+    "Não é apagado.",
+    "Entra.",
+    "Só quando não há código nenhum.",
+    "Ninguém disse a quem ele pertence."
+   ],
+   "correta": 3
+  },
+  {
+   "pergunta": "Por que existe a janela de dias para trás?",
+   "opcoes": [
+    "Para economizar chamadas",
+    "Para não repetir pedidos",
+    "Porque a API limita a 30 dias",
+    "Porque a Amazon muda o pedido depois de criado, e cada importação relê a janela"
+   ],
+   "comentarios": [
+    "Relê de propósito.",
+    "Repetir é justamente o método.",
+    "Não é limite da API.",
+    "Não se anda com marca d'água."
+   ],
+   "correta": 3
+  }
+ ]
+}

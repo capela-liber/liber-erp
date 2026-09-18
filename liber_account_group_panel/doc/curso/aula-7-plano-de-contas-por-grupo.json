@@ -1,0 +1,74 @@
+{
+ "curso": "Curso Financeiro: a receber, a pagar e os painéis",
+ "aula": 7,
+ "titulo": "Plano de contas por grupo",
+ "abertura": "Esta aula troca o hábito do prefixo pelo grupo: filtrar o plano pela árvore contábil em vez dos dois primeiros dígitos do código.",
+ "fecho": "Procurar pelo prefixo funciona enquanto o plano é o da casa. Por grupo, a pergunta fica certa mesmo quando o código não parece.",
+ "youtube": "https://www.youtube.com/watch?v=KDlLhIj9cKA",
+ "quiz": [
+  {
+   "pergunta": "Como se costuma procurar contas no plano?",
+   "opcoes": [
+    "Pelo nome",
+    "Pelo saldo",
+    "Pela data de criação",
+    "Pelos dois primeiros dígitos do código"
+   ],
+   "comentarios": [
+    "O nome varia demais.",
+    "Saldo não é chave de busca.",
+    "Data não diz nada aqui.",
+    "É o hábito que a tela vem substituir."
+   ],
+   "correta": 3
+  },
+  {
+   "pergunta": "Qual o problema do prefixo?",
+   "opcoes": [
+    "Só funciona enquanto o plano for o da casa; código não é a árvore contábil",
+    "É lento",
+    "Não aceita letras",
+    "Some quando a conta é arquivada"
+   ],
+   "comentarios": [
+    "Plano importado ou herdado quebra a convenção.",
+    "Velocidade não é a questão.",
+    "Aceita.",
+    "Arquivar é outro caso."
+   ],
+   "correta": 0
+  },
+  {
+   "pergunta": "Agrupar por grupo faz o quê?",
+   "opcoes": [
+    "Ordena por saldo",
+    "Esconde as contas sem lançamento",
+    "Dobra o plano pela árvore contábil de verdade",
+    "Junta as contas de todas as empresas"
+   ],
+   "comentarios": [
+    "Ordem é outra coisa.",
+    "Nada é escondido.",
+    "É a mesma pergunta feita direito.",
+    "Empresa continua sendo empresa."
+   ],
+   "correta": 2
+  },
+  {
+   "pergunta": "Qual a vantagem prática?",
+   "opcoes": [
+    "A tela fica mais bonita",
+    "A conta certa aparece mesmo quando o código não parece",
+    "O relatório fica mais rápido",
+    "O contador deixa de ser necessário"
+   ],
+   "comentarios": [
+    "Não é questão de estética.",
+    "É o ganho real: achar pela natureza da conta.",
+    "A velocidade é a mesma.",
+    "Ninguém deixa de ser necessário."
+   ],
+   "correta": 1
+  }
+ ]
+}

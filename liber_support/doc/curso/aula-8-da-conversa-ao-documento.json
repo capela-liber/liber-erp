@@ -1,0 +1,74 @@
+{
+ "curso": "Curso de Atendimento ao cliente",
+ "aula": 8,
+ "titulo": "Da conversa ao documento",
+ "abertura": "Última aula: a conversa vira acerto. O assistente Importar lê o e-mail do cliente, propõe as linhas com o casamento no catálogo, e cria a operação de consignação em rascunho. O mesmo assistente existe do lado da operação.",
+ "fecho": "Importar lê e-mail, planilha, PDF com texto e XML; propõe linhas com confiança; Aplicar como decide a coluna; Criar gera a operação ligada ao chamado. Fim do curso de Atendimento.",
+ "youtube": "https://www.youtube.com/watch?v=j0FK_z-8vvE",
+ "quiz": [
+  {
+   "pergunta": "De onde o assistente Importar tira o texto?",
+   "opcoes": [
+    "Do último pedido",
+    "Do assunto do chamado",
+    "Do cadastro do cliente",
+    "Das mensagens de e-mail do chamado, e de anexos"
+   ],
+   "comentarios": [
+    "Pedido não entra.",
+    "O assunto vira o título, não linhas.",
+    "O cadastro não tem quantidades.",
+    "Texto do e-mail, planilha, PDF com texto ou XML de nota."
+   ],
+   "correta": 3
+  },
+  {
+   "pergunta": "\"3 x Livro que Vende\" no e-mail vira o quê?",
+   "opcoes": [
+    "Três linhas de um",
+    "Um pedido de venda de 3",
+    "Uma linha com o produto casado no catálogo, quantidade 3 e a confiança do casamento",
+    "Uma nota interna"
+   ],
+   "comentarios": [
+    "Uma linha de 3.",
+    "Vira linha da operação de consignação.",
+    "A linha pode ser corrigida antes de Criar.",
+    "Não."
+   ],
+   "correta": 2
+  },
+  {
+   "pergunta": "Chegou um XML de nota junto com o e-mail. O que vale?",
+   "opcoes": [
+    "Os dois somados",
+    "O XML: é a fonte exata e vence o texto",
+    "O texto do e-mail",
+    "Nenhum: XML não é lido"
+   ],
+   "comentarios": [
+    "Não soma.",
+    "Somar duplicaria item.",
+    "O XML vence.",
+    "É lido."
+   ],
+   "correta": 1
+  },
+  {
+   "pergunta": "O que o botão Criar faz?",
+   "opcoes": [
+    "Fecha o chamado",
+    "Executa o acerto e fatura",
+    "Cria uma operação de consignação em rascunho, ligada ao chamado, com as linhas propostas",
+    "Envia as linhas ao cliente"
+   ],
+   "comentarios": [
+    "O chamado continua aberto.",
+    "Executar é decisão de gente.",
+    "O comercial confere e executa depois.",
+    "Nada sai para o cliente."
+   ],
+   "correta": 2
+  }
+ ]
+}

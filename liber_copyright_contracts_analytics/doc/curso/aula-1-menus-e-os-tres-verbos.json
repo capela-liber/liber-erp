@@ -1,0 +1,74 @@
+{
+ "curso": "Curso Royalties II: apuração, pagamento e prestação de contas",
+ "aula": 1,
+ "titulo": "O que há em cada menu, e os três verbos",
+ "abertura": "Esta aula é o mapa do dinheiro: contas analíticas, dívidas, faturas — e o menu Ação, onde moram apurar, faturar e criar contas.",
+ "fecho": "Três verbos, uma vez por mês, nessa ordem: criar contas, preencher linhas, gerar faturas. E o Gerente Financeiro é quem faz.",
+ "youtube": "https://www.youtube.com/watch?v=cwBNRA2FgLU",
+ "quiz": [
+  {
+   "pergunta": "Quem apura e paga royalties, desde 14/09/2026?",
+   "opcoes": [
+    "O Editorial",
+    "O Jurídico",
+    "O Gerente Financeiro, que passou a administrar contratos",
+    "O autor"
+   ],
+   "comentarios": [
+    "O Editorial redige.",
+    "O Jurídico valida.",
+    "É o papel dele, e o grupo veio junto.",
+    "O autor recebe."
+   ],
+   "correta": 2
+  },
+  {
+   "pergunta": "Onde moram os três verbos do curso?",
+   "opcoes": [
+    "Em Configurações",
+    "No menu Ação da lista de contratos",
+    "Em Relatórios",
+    "Na ficha do favorecido"
+   ],
+   "comentarios": [
+    "Configurações prepara.",
+    "Criar Contas Analíticas, Preencher Linhas, Gerar Faturas.",
+    "Relatórios mede.",
+    "A prestação de contas é lá; os verbos não."
+   ],
+   "correta": 1
+  },
+  {
+   "pergunta": "O que é uma conta analítica aqui?",
+   "opcoes": [
+    "Uma conta bancária",
+    "Um relatório",
+    "Um centro de custo do orçamento",
+    "Uma por favorecido e obra, onde a apuração lança o devido"
+   ],
+   "comentarios": [
+    "Não é banco.",
+    "Não é relatório.",
+    "É analítica, mas de royalty.",
+    "É o livro-razão do royalty de cada dupla favorecido-obra."
+   ],
+   "correta": 3
+  },
+  {
+   "pergunta": "Em que ordem os verbos se fazem?",
+   "opcoes": [
+    "Criar contas, preencher linhas, gerar faturas",
+    "Gerar faturas, preencher, criar contas",
+    "Tanto faz",
+    "Preencher, criar contas, gerar"
+   ],
+   "comentarios": [
+    "A conta recebe o lançamento; a fatura cobra o saldo.",
+    "Sem conta não há onde lançar.",
+    "A ordem importa.",
+    "Preencher sem conta é recusado."
+   ],
+   "correta": 0
+  }
+ ]
+}

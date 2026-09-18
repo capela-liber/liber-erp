@@ -1,0 +1,74 @@
+{
+ "curso": "Curso de Consignação III",
+ "aula": 3,
+ "titulo": "Emitir a nota de remessa de um Pedido C",
+ "abertura": "Um Pedido C não fatura, mas precisa de nota fiscal para a mercadoria viajar. Nesta aula, o botão Criar nota e a nota de remessa que nasce dele.",
+ "fecho": "Nota de remessa, série REM, posição fiscal de consignação, baixada automaticamente. Na próxima aula, o que não é consignação.",
+ "youtube": "https://www.youtube.com/watch?v=ak0WpIIjnVg",
+ "quiz": [
+  {
+   "pergunta": "Por que o Pedido C não tem Criar fatura?",
+   "opcoes": [
+    "É um defeito",
+    "Porque falta a posição fiscal",
+    "Porque só o financeiro fatura",
+    "Porque consignação não é venda; há Criar nota, a nota de remessa"
+   ],
+   "comentarios": [
+    "É por desenho: consignação não é venda.",
+    "A posição fiscal é da nota de remessa.",
+    "Não há o que faturar.",
+    "O documento certo para a mercadoria viajar."
+   ],
+   "correta": 3
+  },
+  {
+   "pergunta": "Criar nota antes de validar a transferência:",
+   "opcoes": [
+    "Emite com quantidade zero",
+    "Cria a transferência",
+    "Emite normalmente",
+    "É recusado até a transferência ser validada"
+   ],
+   "comentarios": [
+    "Não emite.",
+    "A transferência é do depósito.",
+    "Recusa: uma nota que declara livro que não saiu não bate com a carga.",
+    "A nota acompanha a carga."
+   ],
+   "correta": 3
+  },
+  {
+   "pergunta": "A nota de remessa da consignação gera cobrança para a livraria?",
+   "opcoes": [
+    "Sim, a valor comercial",
+    "Só se o contrato tiver desconto",
+    "Nunca: é baixada automaticamente ao ser lançada",
+    "Só fora do estado"
+   ],
+   "comentarios": [
+    "Sai a valor comercial, mas é baixada automaticamente.",
+    "Desconto não muda isso.",
+    "A livraria nunca é cobrada por livro que ainda é da editora.",
+    "O estado só muda o CFOP."
+   ],
+   "correta": 2
+  },
+  {
+   "pergunta": "Em que série sai a nota de remessa?",
+   "opcoes": [
+    "REM",
+    "OUT",
+    "COM",
+    "S"
+   ],
+   "comentarios": [
+    "Remessas.",
+    "OUT é transferência.",
+    "COM é o tipo de operação de estoque.",
+    "S é a venda do acerto."
+   ],
+   "correta": 0
+  }
+ ]
+}

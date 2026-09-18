@@ -1,0 +1,74 @@
+{
+ "curso": "Curso Amazon Vendor Central",
+ "aula": 6,
+ "titulo": "Quando a Amazon muda o pedido",
+ "abertura": "Esta aula mostra o que acontece quando a Amazon muda um pedido que já virou cotação: o aviso que aparece e o documento que ninguém reescreve.",
+ "fecho": "A releitura vê a diferença e escreve o aviso; nenhuma linha da cotação é tocada; resolver é decisão comercial, e o aviso se limpa com um botão. A próxima aula é o relatório.",
+ "youtube": "https://www.youtube.com/watch?v=0B91UlCw5uc",
+ "quiz": [
+  {
+   "pergunta": "A Amazon reduziu a quantidade de um pedido já cotado. O que o módulo faz?",
+   "opcoes": [
+    "Cancela a cotação",
+    "Escreve o aviso de divergência e não toca na cotação",
+    "Cria uma segunda cotação",
+    "Reescreve a cotação"
+   ],
+   "comentarios": [
+    "Não cancela.",
+    "O documento é de quem o fez.",
+    "Não duplica.",
+    "Nunca reescreve."
+   ],
+   "correta": 1
+  },
+  {
+   "pergunta": "Por que o módulo não corrige sozinho?",
+   "opcoes": [
+    "Porque ninguém pediu",
+    "Porque a API não permite ler a diferença",
+    "Porque é decisão comercial: pode ser refazer a cotação, pode ser falar com a Amazon",
+    "Porque o Odoo trava documentos"
+   ],
+   "comentarios": [
+    "É desenho, não omissão.",
+    "Ele lê a diferença.",
+    "O sistema mostra e espera.",
+    "O documento é editável."
+   ],
+   "correta": 2
+  },
+  {
+   "pergunta": "Como se enxerga quem está divergente sem abrir pedido a pedido?",
+   "opcoes": [
+    "Pela coluna Divergência na lista de pedidos",
+    "Pelo relatório por título",
+    "Pela conta",
+    "Pelo histórico de cada pedido"
+   ],
+   "comentarios": [
+    "É a varredura de quem cuida da conta.",
+    "O relatório é de títulos.",
+    "A conta guarda datas.",
+    "O histórico é caso a caso."
+   ],
+   "correta": 0
+  },
+  {
+   "pergunta": "Resolvido o assunto, o que se faz com o aviso?",
+   "opcoes": [
+    "Apaga-se o pedido",
+    "Deixa-se para sempre",
+    "Limpa-se pelo botão, e o pedido volta a ser espelho tranquilo",
+    "Refaz-se a importação"
+   ],
+   "comentarios": [
+    "Nunca se apaga.",
+    "Ele se limpa.",
+    "O botão existe para isso.",
+    "Não é preciso."
+   ],
+   "correta": 2
+  }
+ ]
+}

@@ -1,0 +1,105 @@
+{
+ "curso": "Curso NF-e: o XML de entrada",
+ "aula": 5,
+ "titulo": "Processar os XMLs importados",
+ "abertura": "O arquivo entrou, mas ainda não foi lido. Processar é o que extrai da nota os campos e a lista de itens, casa cada item com o produto do catálogo e leva a nota de Importada para Válida.",
+ "passos": [
+  {
+   "texto": "O caminho começa na tela inicial, entre os aplicativos."
+  },
+  {
+   "texto": "Faturamento. Esta aula lê os arquivos que entraram."
+  },
+  {
+   "texto": "NFe XML, a lista."
+  },
+  {
+   "texto": "As notas recém-importadas estão como Importada. O processamento é o que abre o arquivo, extrai os campos e a lista de itens, e leva a nota para Válida."
+  },
+  {
+   "texto": "Uma delas, aberta. Ainda crua: tem o arquivo e a chave, e quase mais nada."
+  },
+  {
+   "texto": "O botão é Processar arquivo XML. Ele está aqui no formulário, e existe também no menu de ações da lista, para processar várias de uma vez."
+  },
+  {
+   "texto": "Válida. Agora a nota tem número de DANFE, data, valor, CFOP e vencimento — tudo lido do arquivo."
+  },
+  {
+   "texto": "E os itens, livro a livro, com código, quantidade, preço e desconto."
+  },
+  {
+   "texto": "Cada item é casado com um produto do catálogo pelo código interno ou pelo código de barras — na prática, o ISBN."
+  },
+  {
+   "texto": "E quando o item não encontra produto nenhum, o produto nasce do próprio XML, com o nome, o código e o preço que estão lá. É o caso deste segundo livro."
+  },
+  {
+   "texto": "O literal \"sem GTIN\", que a NF-e usa quando o item não tem código de barras, é ignorado: ele nunca vira código de produto."
+  },
+  {
+   "texto": "Para várias de uma vez, o caminho é a lista: marcam-se as Importadas e usa-se a mesma ação pelo menu de ações."
+  },
+  {
+   "texto": "Processar arquivo XML."
+  },
+  {
+   "texto": "E o lote inteiro fica Válido. Não é obrigatório fazer isso à mão: uma rotina processa as pendentes de dez em dez minutos — o botão é para quem não quer esperar."
+  },
+  {
+   "texto": "E se uma nota der errado, só ela fica como Erro, com a explicação no histórico do próprio registro; as outras do lote seguem. Corrigida a causa, é só processar de novo."
+  }
+ ],
+ "fecho": "O botão Processar arquivo XML está no formulário e no menu de ações da lista, para várias de uma vez. Os itens são casados pelo código interno ou pelo código de barras, o ISBN; item sem produto faz nascer o produto do próprio XML. Uma rotina processa as pendentes de dez em dez minutos, e a nota com erro é reprocessável.",
+ "youtube": "",
+ "quiz": [
+  {
+   "pergunta": "Por qual campo os itens do XML são casados com o catálogo?",
+   "opcoes": [
+    "Pelo nome do produto",
+    "Pelo código interno ou pelo código de barras (ISBN)",
+    "Pelo NCM",
+    "Pelo CFOP"
+   ],
+   "comentarios": [
+    "Nome é texto livre, e muda de fornecedor para fornecedor.",
+    "São os códigos que identificam o livro.",
+    "O NCM é do tipo de mercadoria, não do título.",
+    "O CFOP é da operação."
+   ],
+   "correta": 1
+  },
+  {
+   "pergunta": "O que acontece com um item cujo produto não existe no catálogo?",
+   "opcoes": [
+    "O item é descartado",
+    "Um produto novo é criado com o nome, o código e o preço do XML",
+    "A nota fica com erro",
+    "O item entra sem produto"
+   ],
+   "comentarios": [
+    "Descartar perderia a nota pela metade.",
+    "O XML é a fonte: ele diz o código, o nome e o preço.",
+    "Isso não é erro.",
+    "Todo item acaba com um produto."
+   ],
+   "correta": 1
+  },
+  {
+   "pergunta": "É obrigatório processar à mão?",
+   "opcoes": [
+    "Sim, sempre",
+    "Não: uma rotina processa as pendentes de dez em dez minutos",
+    "Sim, para notas de entrada",
+    "Só quando há mais de dez notas"
+   ],
+   "comentarios": [
+    "O botão é para quem não quer esperar.",
+    "A rotina faz sozinha o que o botão faz na hora.",
+    "A direção não muda isso.",
+    "A quantidade também não."
+   ],
+   "correta": 1
+  }
+ ]
+}

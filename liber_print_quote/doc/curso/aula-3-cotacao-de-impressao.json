@@ -1,0 +1,46 @@
+{
+ "curso": "Curso Impressão: cotação de gráfica",
+ "aula": 3,
+ "titulo": "Cotação de impressão",
+ "abertura": "Esta aula é o que a gráfica recebe. A cotação é a do Odoo de sempre, com uma diferença: cada linha que é livro leva a ficha técnica junto, em dois documentos — o PDF, para ler, e a planilha CSV, para trabalhar.",
+ "passos": [
+  {
+   "texto": "O caminho começa na tela inicial, entre os aplicativos."
+  },
+  {
+   "texto": "Compras. Esta aula é a cotação de impressão: o que a gráfica recebe."
+  },
+  {
+   "texto": "Pedidos, Solicitações de cotação."
+  },
+  {
+   "texto": "A cotação para a gráfica: três títulos, cada um com a sua tiragem. A tiragem é a quantidade da linha, e é o primeiro número que muda o preço."
+  },
+  {
+   "texto": "Na tela, a linha é o produto de sempre. A ficha técnica não se digita aqui: ela é buscada no cadastro do livro na hora de imprimir."
+  },
+  {
+   "texto": "E este é o PDF que sai para a gráfica: debaixo de cada título, a ficha inteira em linha corrida — formato, dimensões, páginas, encadernação, cores, acabamento, papel e observações."
+  },
+  {
+   "texto": "Repare no terceiro título: a ficha dele é mais curta. O que falta no cadastro falta aqui, e é aqui que a gráfica descobre."
+  },
+  {
+   "texto": "Imprimir dá o PDF avulso, quando se quer só conferir antes de mandar."
+  },
+  {
+   "texto": "Mas o caminho normal é Enviar por e-mail."
+  },
+  {
+   "texto": "E aqui está o segundo documento: além do PDF, uma planilha, Ficha técnica ponto CSV. O PDF é para ler; a planilha é para trabalhar."
+  },
+  {
+   "texto": "Uma linha por título, com a ficha inteira mais a tiragem, em ponto e vírgula: o orçamentista abre no Excel e passa para o sistema dele sem redigitar nada."
+  },
+  {
+   "texto": "Três coisas para levar: a ficha mora no livro, viaja sozinha nos dois documentos, e o que falta no cadastro falta na gráfica. Fim do curso."
+  }
+ ],
+ "fecho": "Três coisas para levar: a ficha mora no livro, viaja sozinha nos dois documentos, e o que falta no cadastro falta na gráfica. Fim do curso.",
+ "youtube": ""
+}

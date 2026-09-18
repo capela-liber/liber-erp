@@ -1,0 +1,74 @@
+{
+ "curso": "Curso Expedição: transportadora, coleta e DANFE",
+ "aula": 4,
+ "titulo": "Pedir a coleta",
+ "abertura": "Esta aula manda a transportadora vir buscar: seleciona-se as entregas na lista, o assistente agrupa por transportadora, e cada uma recebe seu e-mail e seu lote.",
+ "fecho": "A coleta se pede da lista e sai agrupada por transportadora, uma solicitação para cada, com número COL e as caixas e o peso somados. Quem ficou sem transportadora aparece no aviso amarelo.",
+ "youtube": "https://www.youtube.com/watch?v=2RDP27VXR9s",
+ "quiz": [
+  {
+   "pergunta": "Como se pede a coleta?",
+   "opcoes": [
+    "Abrindo cada entrega e clicando em Coletar",
+    "Ligando para a transportadora",
+    "Selecionando as entregas na lista e usando Ações, Solicitar coleta",
+    "Pelo menu Configuração"
+   ],
+   "comentarios": [
+    "Não há botão dentro da entrega.",
+    "O telefone serve para citar o número, não para pedir.",
+    "É um pedido por transportadora, não um por entrega.",
+    "A Configuração cadastra, não opera."
+   ],
+   "correta": 2
+  },
+  {
+   "pergunta": "Marquei dez entregas de duas transportadoras. Quantas solicitações saem?",
+   "opcoes": [
+    "Duas, uma por transportadora, com as entregas somadas",
+    "Dez, uma por entrega",
+    "Uma só, com as duas transportadoras",
+    "Nenhuma: o sistema recusa a mistura"
+   ],
+   "comentarios": [
+    "O assistente agrupa: é isso que faz dele um lote e não um botão.",
+    "Seria um e-mail por caixa.",
+    "Cada transportadora recebe o seu.",
+    "Misturar é o caso normal."
+   ],
+   "correta": 0
+  },
+  {
+   "pergunta": "O aviso amarelo do assistente quer dizer o quê?",
+   "opcoes": [
+    "Que o e-mail vai atrasar",
+    "Que falta peso nos livros",
+    "Que a nota ainda não saiu",
+    "Que alguma entrega marcada não tem transportadora e ficou de fora"
+   ],
+   "comentarios": [
+    "O envio é imediato.",
+    "O peso não bloqueia a coleta.",
+    "A nota é outro assunto.",
+    "Não é erro do assistente: é cadastro a resolver na ficha do cliente."
+   ],
+   "correta": 3
+  },
+  {
+   "pergunta": "O texto do e-mail da coleta se muda onde?",
+   "opcoes": [
+    "Em cada solicitação, antes de enviar",
+    "Nas Definições, por empresa",
+    "No cadastro da transportadora",
+    "Não se muda"
+   ],
+   "comentarios": [
+    "O texto não se digita a cada envio.",
+    "O molde em volta é do sistema; o que a casa escreve é a abertura, e ela é por empresa.",
+    "A transportadora não escreve o que recebe.",
+    "Muda-se, sim."
+   ],
+   "correta": 1
+  }
+ ]
+}

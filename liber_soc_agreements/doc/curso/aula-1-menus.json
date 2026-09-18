@@ -1,0 +1,78 @@
+{
+ "curso": "Curso de Consignação I",
+ "aula": 1,
+ "titulo": "A Operação de Consignação e os menus",
+ "abertura": "Bem-vindo ao curso de Consignação. A editora deixa livros na livraria, que vende e presta contas; até lá, os livros continuam da editora. O centro de tudo é a Operação de Consignação: é nela que acerto, reposição e devolução se decidem juntos. Nesta primeira aula, esse conceito e o mapa dos menus.",
+ "fecho": "A operação é o documento que junta as três decisões; os menus guardam o que ela produz. Nas próximas aulas, o contrato, o Pedido C, a devolução, as campanhas e os relatórios.",
+ "youtube": "https://www.youtube.com/watch?v=qzPF6nLYMyg",
+ "quiz": [
+  {
+   "pergunta": "O que é a Operação de Consignação, a CO?",
+   "opcoes": [
+    "Uma nota fiscal de remessa",
+    "O documento de trabalho, um por cliente por rodada, onde acerto, reposição e devolução se decidem juntos",
+    "O contrato com a livraria",
+    "O relatório mensal de vendas"
+   ],
+   "comentarios": [
+    "Nota é do módulo fiscal.",
+    "É o centro da rotina: mapa da prateleira, o que vendeu, o que repor, o que volta, e Executar.",
+    "O contrato dá as regras; a operação é a rodada.",
+    "O acerto gera o resultado; a CO é onde ele se decide."
+   ],
+   "correta": 1
+  },
+  {
+   "pergunta": "Ao clicar Executar numa CO, o que a coluna Acerto produz?",
+   "opcoes": [
+    "Um CR de devolução",
+    "Um Pedido C em rascunho",
+    "Uma venda de verdade e a baixa que tira o vendido da prateleira",
+    "Nada: só registra"
+   ],
+   "comentarios": [
+    "Devolução é a coluna Devolução.",
+    "Isso é a coluna Reposição.",
+    "É o único momento em que a consignação vira venda.",
+    "Executar gera documentos."
+   ],
+   "correta": 2
+  },
+  {
+   "pergunta": "Uma CO só com quantidades em Reposição, sem acerto nem devolução, é:",
+   "opcoes": [
+    "Inválida",
+    "Uma remessa pura: nada vendido ainda, livros a mais para a prateleira",
+    "Um encerramento de contrato",
+    "Um erro que o sistema recusa"
+   ],
+   "comentarios": [
+    "Qualquer combinação vale.",
+    "É o caso de reabastecer uma prateleira que ainda não vendeu.",
+    "Encerrar é outro caminho.",
+    "O sistema aceita."
+   ],
+   "correta": 1
+  },
+  {
+   "pergunta": "Por que Pedido C e CR não têm botão Novo?",
+   "opcoes": [
+    "Porque só o administrador cria",
+    "Porque são criados pela CO (ou pelo Recolher Tudo, no caso do CR)",
+    "Porque foram desativados",
+    "Porque nascem no aplicativo Vendas"
+   ],
+   "comentarios": [
+    "Nem o administrador cria à mão.",
+    "A operação sabe o que cabe em cada prateleira; o comercial revisa e confirma.",
+    "Estão ativos, sem Novo por desenho.",
+    "Pedido C é da Consignação."
+   ],
+   "correta": 1
+  }
+ ],
+ "youtube_anterior": [
+  "https://www.youtube.com/watch?v=_sKxwvzFcpM"
+ ],
+ "youtube_quadro": "2912x2080"
+}

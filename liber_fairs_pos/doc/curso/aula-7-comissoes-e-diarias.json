@@ -1,0 +1,74 @@
+{
+ "curso": "Curso Feiras II: vender, fechar e voltar",
+ "aula": 7,
+ "titulo": "O balcão de cada um, comissões e diárias",
+ "abertura": "Esta aula é a conta da equipe: comissão sobre o que cada caixa vendeu, diárias, e o rateio da perda que a mesa comeu.",
+ "fecho": "Vendido, Comissão, Diárias, Rateio da perda, A pagar e Ainda devido; a perda rateia igual porque a mesa é guarda coletiva; conta a pagar nunca é negativa. A próxima aula é o resultado do evento.",
+ "youtube": "https://www.youtube.com/watch?v=l2bUz0egx_c",
+ "quiz": [
+  {
+   "pergunta": "Sobre o que a comissão de cada pessoa é calculada?",
+   "opcoes": [
+    "Sobre as diárias",
+    "Sobre o total do evento, dividido igual",
+    "Sobre o planejado",
+    "Sobre o que o caixa daquela pessoa vendeu"
+   ],
+   "comentarios": [
+    "Diária é outra coluna.",
+    "É por caixa.",
+    "Planejado não é venda.",
+    "Quem vendeu mais, ganha mais."
+   ],
+   "correta": 3
+  },
+  {
+   "pergunta": "Por que o rateio da perda é igual entre a equipe?",
+   "opcoes": [
+    "Porque o gerente decidiu assim",
+    "A mesa é guarda coletiva: ninguém sabe de quem era o exemplar que sumiu",
+    "Porque a lei manda",
+    "Porque é mais fácil de calcular"
+   ],
+   "comentarios": [
+    "É desenho, não capricho.",
+    "Cobrar de quem vendeu mais seria punir quem trabalhou mais.",
+    "Não é lei.",
+    "Não é por facilidade."
+   ],
+   "correta": 1
+  },
+  {
+   "pergunta": "A comissão e a diária de alguém não cobrem a parte dela na perda. O que acontece?",
+   "opcoes": [
+    "A perda é perdoada",
+    "A conta fica negativa e vira cobrança",
+    "A conta a pagar fica em zero e o que falta vai para Ainda devido, para a conversa acontecer com número",
+    "A perda passa para os colegas"
+   ],
+   "comentarios": [
+    "Fica escrito.",
+    "Nunca negativa.",
+    "Ninguém paga para ter trabalhado.",
+    "Cada um tem a sua parte."
+   ],
+   "correta": 2
+  },
+  {
+   "pergunta": "Quando a aba Comissões abre?",
+   "opcoes": [
+    "Só depois do Retorno",
+    "Depois do Planejar, que monta os dias e abre o analítico",
+    "Só depois de gerar as contas",
+    "Desde o rascunho"
+   ],
+   "comentarios": [
+    "Abre antes; as contas é que esperam o retorno.",
+    "O que se combinasse antes ficaria pendurado num evento que ainda pode não acontecer; a escala, essa, se faz desde o rascunho.",
+    "As contas vêm dela.",
+    "A escala sim; a comissão não."
+   ],
+   "correta": 1
+  }
+ ]
+}

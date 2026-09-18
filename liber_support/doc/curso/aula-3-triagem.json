@@ -1,0 +1,74 @@
+{
+ "curso": "Curso de Atendimento ao cliente",
+ "aula": 3,
+ "titulo": "A triagem no quadro",
+ "abertura": "Esta aula é a triagem: o que se faz com o que está em Novo. Três gestos: mover de coluna, marcar prioridade e atribuir.",
+ "fecho": "Arrastar muda o estágio; a estrela encurta os prazos; Assumir dá dono ao chamado, e sem dono o prazo estoura em silêncio. A próxima aula é responder.",
+ "youtube": "https://www.youtube.com/watch?v=u15Xy3bV5Uw",
+ "quiz": [
+  {
+   "pergunta": "O que acontece ao arrastar um cartão de Novo para Em andamento?",
+   "opcoes": [
+    "O relógio de resposta para",
+    "O cliente recebe um e-mail",
+    "O chamado ganha dono automaticamente",
+    "O estágio muda, e o relógio de resposta continua contando até alguém responder"
+   ],
+   "comentarios": [
+    "Só a resposta para esse relógio.",
+    "Nada sai para o cliente.",
+    "Dono é o botão Assumir.",
+    "Mover não é responder."
+   ],
+   "correta": 3
+  },
+  {
+   "pergunta": "O que a estrela de prioridade faz?",
+   "opcoes": [
+    "Move o cartão para o topo, só isso",
+    "Marca Urgente e encurta os prazos do SLA",
+    "Manda aviso ao gerente",
+    "Bloqueia o chamado para os outros"
+   ],
+   "comentarios": [
+    "Encurta os prazos também.",
+    "Duas horas úteis para responder, oito para resolver.",
+    "Não há aviso.",
+    "Não bloqueia."
+   ],
+   "correta": 1
+  },
+  {
+   "pergunta": "Por que atribuir um chamado a alguém?",
+   "opcoes": [
+    "Porque o sistema exige para mover",
+    "Para o cliente saber com quem falar",
+    "Sem responsável, ninguém responde e o prazo estoura em silêncio",
+    "Para contar pontos por atendente"
+   ],
+   "comentarios": [
+    "Mover não exige dono.",
+    "O cliente não vê o responsável.",
+    "O dono é quem o filtro Meus chamados mostra.",
+    "Não há pontuação."
+   ],
+   "correta": 2
+  },
+  {
+   "pergunta": "Onde mais o estágio pode ser mudado, além do arrastar?",
+   "opcoes": [
+    "Na lista, editando a coluna",
+    "Só no quadro",
+    "No e-mail de resposta",
+    "Na barra de estágios no alto do chamado"
+   ],
+   "comentarios": [
+    "A lista não edita estágio.",
+    "A barra do formulário também muda.",
+    "A resposta não muda estágio.",
+    "É o mesmo quadro visto de dentro."
+   ],
+   "correta": 3
+  }
+ ]
+}

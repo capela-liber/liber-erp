@@ -1,0 +1,74 @@
+{
+ "curso": "Curso Expedição: transportadora, coleta e DANFE",
+ "aula": 2,
+ "titulo": "Cadastrar a transportadora e dizer qual o cliente usa",
+ "abertura": "Esta aula cadastra as duas pontas: a transportadora, que é uma empresa como outra qualquer, e a linha na ficha do cliente que diz com quem ele recebe.",
+ "fecho": "A transportadora é empresa, com endereço, inscrição estadual e e-mail; o cliente aponta para ela na ficha. Feito isso, ninguém digita transportadora de novo.",
+ "youtube": "https://www.youtube.com/watch?v=Fd3ZOfcN69k",
+ "quiz": [
+  {
+   "pergunta": "A transportadora, no sistema, é o quê?",
+   "opcoes": [
+    "Um campo de texto na transferência",
+    "Um usuário do Odoo",
+    "Uma etiqueta da entrega",
+    "Uma empresa do cadastro, com endereço, inscrição estadual e e-mail"
+   ],
+   "comentarios": [
+    "Texto não recebe e-mail nem entra na nota.",
+    "Ela não entra no sistema.",
+    "Etiqueta não tem dados fiscais.",
+    "A nota vai exigir endereço e inscrição, e a coleta vai exigir o e-mail."
+   ],
+   "correta": 3
+  },
+  {
+   "pergunta": "Onde se diz que a Catavento viaja pela Transpo Express?",
+   "opcoes": [
+    "Em cada transferência, à mão",
+    "Na ficha da Catavento, no método de entrega",
+    "Na ficha da Transpo Express",
+    "Nas Definições da empresa"
+   ],
+   "comentarios": [
+    "Daria certo uma vez e erraria nas outras.",
+    "É essa linha que faz a transportadora descer sozinha para toda entrega dela.",
+    "A transportadora não lista clientes.",
+    "As Definições guardam o texto do e-mail, não o par cliente-transportadora."
+   ],
+   "correta": 1
+  },
+  {
+   "pergunta": "Um cliente sem método de entrega escolhido causa o quê?",
+   "opcoes": [
+    "A venda não confirma",
+    "A entrega dele nasce sem transportadora, e a coleta avisa",
+    "O sistema escolhe a mais barata",
+    "A entrega vai para o gerente aprovar"
+   ],
+   "comentarios": [
+    "Confirma normalmente.",
+    "Não é erro: é cadastro a resolver, e a tela da coleta mostra isso em amarelo.",
+    "O sistema não escolhe transportadora sozinho.",
+    "Não há aprovação nenhuma nesse caminho."
+   ],
+   "correta": 1
+  },
+  {
+   "pergunta": "Sem e-mail na transportadora, o que acontece com a coleta?",
+   "opcoes": [
+    "O sistema manda por SMS",
+    "A solicitação sai do mesmo jeito e chega",
+    "A entrega é cancelada",
+    "Não há para onde mandar a solicitação"
+   ],
+   "comentarios": [
+    "Não há SMS nenhum aqui.",
+    "Não chega a lugar nenhum.",
+    "Nada se cancela por isso.",
+    "O e-mail é o canal: é dele que a solicitação vive."
+   ],
+   "correta": 3
+  }
+ ]
+}

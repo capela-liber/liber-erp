@@ -1,0 +1,74 @@
+{
+ "curso": "Curso Royalties I: contratos de direitos autorais",
+ "aula": 2,
+ "titulo": "Preferências e os três grupos",
+ "abertura": "Esta aula é da Direção: o menu Configurações, as tabelas de IRRF e os três grupos do app — e o que as Preferências guardam, mesmo que hoje só o administrador do sistema as abra.",
+ "fecho": "Uma janela de dias, uma vez, para a base toda — e três grupos que separam redigir, validar e configurar. Feito isso, ninguém volta aqui por meses.",
+ "youtube": "https://www.youtube.com/watch?v=PMv_Gbsdz5g",
+ "quiz": [
+  {
+   "pergunta": "O que a janela do lembrete define?",
+   "opcoes": [
+    "Quantos dias antes do vencimento o responsável recebe a atividade",
+    "O prazo padrão do contrato",
+    "Quantos dias o Jurídico tem para validar",
+    "A validade da senha"
+   ],
+   "comentarios": [
+    "É o aviso \"Contrato vencendo em breve\", que a rotina diária cria.",
+    "O prazo é sugerido na ficha, não aqui.",
+    "Não há prazo de validação.",
+    "Nada a ver."
+   ],
+   "correta": 0
+  },
+  {
+   "pergunta": "A janela vale para quem?",
+   "opcoes": [
+    "Só para os contratos novos",
+    "Só para a empresa atual",
+    "Só para o usuário que a mudou",
+    "Para a base toda, todos os contratos"
+   ],
+   "comentarios": [
+    "Vale para os antigos também.",
+    "É global, não por empresa.",
+    "Não é preferência pessoal.",
+    "É por isso que não é preferência pessoal de ninguém."
+   ],
+   "correta": 3
+  },
+  {
+   "pergunta": "Quais são os três grupos do app?",
+   "opcoes": [
+    "Leitor, Editor, Dono",
+    "Usuário, Administrador e Configuração",
+    "Editorial, Comercial e Financeiro",
+    "Autor, Editora e Jurídico"
+   ],
+   "comentarios": [
+    "Não existem esses nomes.",
+    "Usuário grava; Administrador valida, renova e cancela; Configuração muda as Preferências.",
+    "São perfis da casa, não grupos do app.",
+    "O autor não é usuário."
+   ],
+   "correta": 1
+  },
+  {
+   "pergunta": "Onde ficam as tabelas de IRRF?",
+   "opcoes": [
+    "Em Favorecidos",
+    "Em Contas Analíticas",
+    "Em Configurações, e só o Administrador de contratos vê",
+    "No Financeiro"
+   ],
+   "comentarios": [
+    "Favorecidos lista pessoas.",
+    "Analítica é destino do custo.",
+    "A retenção é regra do app, e mexer nela é do gerente.",
+    "O app guarda as suas."
+   ],
+   "correta": 2
+  }
+ ]
+}

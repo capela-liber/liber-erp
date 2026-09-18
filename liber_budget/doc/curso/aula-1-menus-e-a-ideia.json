@@ -1,0 +1,74 @@
+{
+ "curso": "Curso Orçamento",
+ "aula": 1,
+ "titulo": "O que há em cada menu, e a ideia",
+ "abertura": "Esta aula é o mapa: a lista dos orçamentos, os dois relatórios e a configuração — e a ideia que sustenta o módulo.",
+ "fecho": "O previsto se digita uma vez; o realizado entra sozinho, do razão. Monta-se uma vez por ano e acompanha-se uma vez por mês.",
+ "youtube": "https://www.youtube.com/watch?v=W0yFhcRFRQY",
+ "quiz": [
+  {
+   "pergunta": "A ideia central do módulo é qual?",
+   "opcoes": [
+    "Digitar previsto e realizado lado a lado",
+    "Importar a planilha do contador todo mês",
+    "O previsto se digita uma vez; o realizado entra sozinho, do razão",
+    "Substituir a contabilidade"
+   ],
+   "comentarios": [
+    "Digitar duas vezes é onde o erro nasce.",
+    "Não há planilha no caminho.",
+    "Ninguém lança nada duas vezes.",
+    "O orçamento não substitui o razão: lê dele."
+   ],
+   "correta": 2
+  },
+  {
+   "pergunta": "Com que frequência se mexe no orçamento?",
+   "opcoes": [
+    "Uma vez por ano para montar, uma vez por mês para acompanhar",
+    "Todo dia",
+    "Só no fechamento do ano",
+    "A cada nota emitida"
+   ],
+   "comentarios": [
+    "É o ritmo do gerente financeiro e da direção.",
+    "O dia a dia alimenta sozinho.",
+    "Tarde demais para corrigir.",
+    "A nota alimenta o razão, não o orçamento."
+   ],
+   "correta": 0
+  },
+  {
+   "pergunta": "Onde ficam previsto e realizado cruzados?",
+   "opcoes": [
+    "Na Configuração",
+    "Na lista de orçamentos apenas",
+    "No plano de contas",
+    "Em Relatórios, na Análise do orçamento"
+   ],
+   "comentarios": [
+    "Configuração prepara.",
+    "A lista mostra os orçamentos, não o cruzamento livre.",
+    "O plano é do razão.",
+    "É o relatório que cruza por posição, grupo e mês."
+   ],
+   "correta": 3
+  },
+  {
+   "pergunta": "O que a Demonstração do resultado soma?",
+   "opcoes": [
+    "Só as despesas",
+    "As contas de banco",
+    "As contas de receita, custo e despesa, com o sinal do resultado",
+    "As posições orçamentárias"
+   ],
+   "comentarios": [
+    "Faltaria a receita.",
+    "Banco é patrimonial.",
+    "Receita positiva, despesa negativa, total = resultado líquido.",
+    "Posição é do orçamento, não da demonstração."
+   ],
+   "correta": 2
+  }
+ ]
+}

@@ -1,0 +1,74 @@
+{
+ "curso": "Curso Royalties I: contratos de direitos autorais",
+ "aula": 5,
+ "titulo": "Validar, renovar, cancelar",
+ "abertura": "Esta aula é do Jurídico: os três botões, o que cada um trava, e a rotina diária que vence, renova e avisa.",
+ "fecho": "Validar tira da minuta e trava as condições; Renovar estende o prazo; Cancelar encerra. E a rotina diária faz o resto: vence o que venceu, renova o renovável, e avisa quem é responsável.",
+ "youtube": "https://www.youtube.com/watch?v=Zo-L5_6ds6w",
+ "quiz": [
+  {
+   "pergunta": "Quem vê os botões Validar, Renovar e Cancelar?",
+   "opcoes": [
+    "Todo usuário do app",
+    "Só o Administrador de contratos: o Jurídico Gerente",
+    "Só o admin do sistema",
+    "O autor"
+   ],
+   "comentarios": [
+    "O Editorial não os vê.",
+    "É o grupo que os botões exigem.",
+    "O admin também, mas não é o caminho.",
+    "O autor não entra."
+   ],
+   "correta": 1
+  },
+  {
+   "pergunta": "O que Validar faz?",
+   "opcoes": [
+    "Manda o contrato para o autor assinar",
+    "Gera a primeira apuração",
+    "Cria as contas analíticas",
+    "Tira da Minuta e passa a valer, travando as condições"
+   ],
+   "comentarios": [
+    "A assinatura é anterior.",
+    "A apuração é do curso seguinte.",
+    "As contas são outro botão.",
+    "Depois de válido não se mexe nas faixas: só por renovação ou novo contrato."
+   ],
+   "correta": 3
+  },
+  {
+   "pergunta": "O que a rotina diária faz sozinha?",
+   "opcoes": [
+    "Vence o que passou da data, renova o renovável e cria a atividade de vencimento",
+    "Nada: tudo é manual",
+    "Paga os autores",
+    "Envia o contrato por e-mail"
+   ],
+   "comentarios": [
+    "É ele que faz o lembrete chegar dentro da janela das Preferências.",
+    "Há um cron.",
+    "Pagar é do curso seguinte.",
+    "Não envia."
+   ],
+   "correta": 0
+  },
+  {
+   "pergunta": "Cancelar apaga o contrato?",
+   "opcoes": [
+    "Sim",
+    "Só se for Minuta",
+    "Não: encerra e guarda; contrato é história",
+    "Só o admin apaga"
+   ],
+   "comentarios": [
+    "Não apaga.",
+    "Minuta também não se apaga por cancelar.",
+    "Cancelado fica na lista, com o estado dizendo.",
+    "Apagar é outra coisa, e rara."
+   ],
+   "correta": 2
+  }
+ ]
+}

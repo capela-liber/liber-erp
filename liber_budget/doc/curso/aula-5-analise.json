@@ -1,0 +1,74 @@
+{
+ "curso": "Curso Orçamento",
+ "aula": 5,
+ "titulo": "Análise",
+ "abertura": "Esta aula é o relatório: o previsto contra o realizado solto para cruzar, e a demonstração do resultado ao lado.",
+ "fecho": "Uma mede o plano, a outra mede o fato. Juntas respondem se o ano está indo como a casa combinou.",
+ "youtube": "https://www.youtube.com/watch?v=ArQPVUj4g48",
+ "quiz": [
+  {
+   "pergunta": "O que a Análise do orçamento permite que a lista não permite?",
+   "opcoes": [
+    "Digitar valores",
+    "Confirmar o orçamento",
+    "Apagar linhas",
+    "Cruzar previsto, teórico e realizado por posição, por grupo e por mês"
+   ],
+   "comentarios": [
+    "Análise não digita.",
+    "Confirmar é na ficha.",
+    "Não apaga nada.",
+    "É o mesmo conteúdo, solto para cruzar."
+   ],
+   "correta": 3
+  },
+  {
+   "pergunta": "Qual a pergunta do mês nessa tela?",
+   "opcoes": [
+    "Onde o realizado passou do previsto, e desde quando",
+    "Quanto sobrou em caixa",
+    "Quem gastou mais",
+    "Qual conta tem mais lançamentos"
+   ],
+   "comentarios": [
+    "É o que faz a direção agir a tempo.",
+    "Caixa é outra tela.",
+    "Pessoa não é o corte.",
+    "Quantidade não diz valor."
+   ],
+   "correta": 0
+  },
+  {
+   "pergunta": "O total da Demonstração do resultado é o quê?",
+   "opcoes": [
+    "A soma das despesas",
+    "O saldo em banco",
+    "O resultado líquido: receita positiva menos despesa",
+    "O previsto do ano"
+   ],
+   "comentarios": [
+    "Faltaria a receita.",
+    "Banco é patrimonial.",
+    "É o sinal do resultado aplicado a todas as contas.",
+    "Previsto é do orçamento."
+   ],
+   "correta": 2
+  },
+  {
+   "pergunta": "As duas telas juntas respondem o quê?",
+   "opcoes": [
+    "Quanto imposto pagar",
+    "Se o ano está indo como a casa combinou",
+    "Quanto estoque há",
+    "Quem deve à casa"
+   ],
+   "comentarios": [
+    "Imposto é do fiscal.",
+    "Uma mede o plano, a outra mede o fato.",
+    "Estoque é do depósito.",
+    "Cobrança é do curso do financeiro."
+   ],
+   "correta": 1
+  }
+ ]
+}

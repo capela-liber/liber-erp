@@ -1,0 +1,74 @@
+{
+ "curso": "Curso de Atendimento ao cliente",
+ "aula": 5,
+ "titulo": "O SLA: dois relógios em horas úteis",
+ "abertura": "Esta aula é o SLA: dois relógios em horas úteis, configurados na equipe, e o selo de cada cartão que diz se o prazo está em dia, perto de estourar ou estourado.",
+ "fecho": "Primeira resposta e solução, normal e urgente, no calendário da equipe; verde, amarelo, vermelho; Aguardando cliente pausa. A próxima aula liga o chamado ao pedido.",
+ "youtube": "https://www.youtube.com/watch?v=0_nalzCri58",
+ "quiz": [
+  {
+   "pergunta": "Em que unidade os prazos do SLA contam?",
+   "opcoes": [
+    "Dias úteis, sem hora",
+    "Horas corridas",
+    "Horas úteis do calendário da equipe",
+    "Dias corridos"
+   ],
+   "comentarios": [
+    "A hora conta.",
+    "Não são corridas.",
+    "Fora do expediente o relógio não anda.",
+    "São horas, não dias."
+   ],
+   "correta": 2
+  },
+  {
+   "pergunta": "Com os valores padrão, qual o prazo de primeira resposta de um chamado urgente?",
+   "opcoes": [
+    "Duas horas úteis",
+    "Oito horas úteis",
+    "Um dia útil",
+    "Vinte e quatro horas"
+   ],
+   "comentarios": [
+    "Normal são oito.",
+    "Oito é o normal.",
+    "Não é por dia.",
+    "Vinte e quatro é a solução normal."
+   ],
+   "correta": 0
+  },
+  {
+   "pergunta": "O que o selo vermelho no cartão significa?",
+   "opcoes": [
+    "O cliente está esperando",
+    "Um dos prazos estourou",
+    "O chamado é urgente",
+    "O chamado foi fechado"
+   ],
+   "comentarios": [
+    "Esperar é o estágio.",
+    "Amarelo é perto de estourar; verde, em dia.",
+    "Urgente é a estrela.",
+    "Fechado fica recolhido."
+   ],
+   "correta": 1
+  },
+  {
+   "pergunta": "Quem recalcula os estados do SLA?",
+   "opcoes": [
+    "O gerente, no fim do dia",
+    "Ninguém: é fixo na criação",
+    "O atendente, ao abrir o chamado",
+    "Um cron, a cada meia hora"
+   ],
+   "comentarios": [
+    "Não é manual.",
+    "Muda com o tempo.",
+    "Não depende de abrir.",
+    "Por isso o selo pode demorar minutos para mudar."
+   ],
+   "correta": 3
+  }
+ ]
+}

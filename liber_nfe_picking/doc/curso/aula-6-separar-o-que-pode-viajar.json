@@ -1,0 +1,74 @@
+{
+ "curso": "Curso Expedição: transportadora, coleta e DANFE",
+ "aula": 6,
+ "titulo": "Separar o que já pode viajar",
+ "abertura": "Esta aula é o dia de separação: o filtro que mostra o que tem nota, as DANFEs impressas em lote, e a outra metade da lista, que é cobrança e não trabalho do depósito.",
+ "fecho": "Com nota é o que sai hoje; sem nota é o que se cobra. E fecha o curso: a transportadora veio do cadastro, a coleta saiu da lista, a nota chegou sozinha — nenhuma exigiu abrir o Faturamento.",
+ "youtube": "https://www.youtube.com/watch?v=dV5WIulgx64",
+ "quiz": [
+  {
+   "pergunta": "Imprimir as notas de várias transferências de uma vez dá o quê?",
+   "opcoes": [
+    "Um PDF só, uma folha por transferência",
+    "Um PDF por transferência, em arquivos separados",
+    "Um resumo com os totais",
+    "Um e-mail para a transportadora"
+   ],
+   "comentarios": [
+    "É o maço que vai para a doca, na ordem da lista.",
+    "Seriam muitos arquivos para uma tarefa só.",
+    "Resumo não viaja com a caixa.",
+    "O e-mail é da coleta, não da impressão."
+   ],
+   "correta": 0
+  },
+  {
+   "pergunta": "A lista Sem nota fiscal é trabalho de quem?",
+   "opcoes": [
+    "Do depósito, que deve emitir",
+    "Da transportadora",
+    "Do faturamento, e o depósito cobra",
+    "Do comercial, que deve refazer o pedido"
+   ],
+   "comentarios": [
+    "O depósito não emite nota.",
+    "A transportadora não tem nada com isso.",
+    "Separar sem nota é caixa parada na doca: a lista existe para cobrar.",
+    "O pedido está certo; falta a nota."
+   ],
+   "correta": 2
+  },
+  {
+   "pergunta": "Qual das três coisas do curso exigiu abrir o Faturamento?",
+   "opcoes": [
+    "A transportadora na entrega",
+    "O pedido de coleta",
+    "Nenhuma",
+    "A DANFE no movimento"
+   ],
+   "comentarios": [
+    "Veio do cadastro do cliente.",
+    "Saiu da lista de entregas.",
+    "É a tese do curso: o que a expedição precisa chega sozinho à transferência.",
+    "Chegou pelo carimbo da autorização."
+   ],
+   "correta": 2
+  },
+  {
+   "pergunta": "O que o depósito faz com uma entrega marcada Com nota fiscal?",
+   "opcoes": [
+    "Separa, imprime a DANFE e chama a coleta",
+    "Espera o fiscal liberar",
+    "Confere a inscrição estadual do cliente",
+    "Emite a nota"
+   ],
+   "comentarios": [
+    "É exatamente a sequência do dia.",
+    "A autorização já foi a liberação.",
+    "A inscrição foi conferida na emissão.",
+    "Emitir não é do depósito."
+   ],
+   "correta": 0
+  }
+ ]
+}

@@ -1,0 +1,74 @@
+{
+ "curso": "Curso Royalties I: contratos de direitos autorais",
+ "aula": 1,
+ "titulo": "O que há em cada menu, e os três papéis",
+ "abertura": "Esta aula é o mapa do Direito autoral: Contratos, Favorecidos, Contas Analíticas, Relatórios e Faturas — e por que o Editorial não vê Configurações.",
+ "fecho": "Três papéis, três grupos: quem redige (Editorial), quem valida (Jurídico) e quem configura (Direção). O menu de cada um é o do seu papel.",
+ "youtube": "https://www.youtube.com/watch?v=6fMTDwgLF4k",
+ "quiz": [
+  {
+   "pergunta": "Como o app se chama na tela inicial?",
+   "opcoes": [
+    "Contratos",
+    "Direito autoral",
+    "Royalties",
+    "Obras"
+   ],
+   "comentarios": [
+    "Contratos é o primeiro menu, não o app.",
+    "É o nome do tile.",
+    "Royalties é o assunto, não o app.",
+    "Não há menu Obras: a obra é o produto."
+   ],
+   "correta": 1
+  },
+  {
+   "pergunta": "Onde estão os autores?",
+   "opcoes": [
+    "Em Obras",
+    "Em Contatos, só",
+    "Em Favorecidos",
+    "Em Configurações"
+   ],
+   "comentarios": [
+    "Não há menu Obras.",
+    "Também estão em Contatos, mas o app tem a lista própria.",
+    "Favorecido é quem recebe royalty: autor, tradutor, herdeiro.",
+    "Configuração não lista pessoas."
+   ],
+   "correta": 2
+  },
+  {
+   "pergunta": "Por que o Editorial não vê Configurações?",
+   "opcoes": [
+    "Porque falta instalar um módulo",
+    "Porque é um erro de tela",
+    "Porque só o admin vê qualquer configuração",
+    "Porque as Preferências valem para a base toda, e são da Direção"
+   ],
+   "comentarios": [
+    "O módulo está instalado.",
+    "É o desenho dos perfis.",
+    "A Direção vê, sem ser admin.",
+    "Um número lá (a janela do lembrete) muda o comportamento de todos os contratos."
+   ],
+   "correta": 3
+  },
+  {
+   "pergunta": "Quem valida um contrato?",
+   "opcoes": [
+    "O Jurídico Gerente",
+    "O Editorial, que o escreveu",
+    "Qualquer usuário do app",
+    "O autor, pelo portal"
+   ],
+   "comentarios": [
+    "É o papel dele.",
+    "Quem redige não valida: são quatro olhos.",
+    "Validar exige o grupo de administrador de contratos.",
+    "O autor não entra no sistema."
+   ],
+   "correta": 0
+  }
+ ]
+}

@@ -1,0 +1,96 @@
+{
+ "curso": "Curso NF-e: o XML de entrada",
+ "aula": 6,
+ "titulo": "Criar faturas a partir do XML",
+ "abertura": "Uma nota processada vira fatura com um clique, já com as linhas do XML. Esta aula cria a fatura de fornecedor de uma nota de entrada e mostra o que amarra as duas para sempre: a chave de acesso.",
+ "passos": [
+  {
+   "texto": "O caminho começa na tela inicial, entre os aplicativos."
+  },
+  {
+   "texto": "Faturamento. Esta aula transforma o XML em fatura."
+  },
+  {
+   "texto": "NFe XML, a lista."
+  },
+  {
+   "texto": "Uma nota processada pode virar fatura com os itens já preenchidos. Marca-se a nota na lista."
+  },
+  {
+   "texto": "E no menu de ações: Criar fatura de fornecedor, quando a nota é de entrada e nós devemos; Criar fatura de cliente, quando é de saída e nos devem."
+  },
+  {
+   "texto": "Criar fatura de fornecedor."
+  },
+  {
+   "texto": "E a fatura nasce em rascunho, para conferência. Rascunho é de propósito: o XML é a verdade fiscal do fornecedor, não a nossa contabilidade pronta."
+  },
+  {
+   "texto": "Ela vem com o parceiro da nota, a data de emissão do XML como data da fatura e o número da DANFE como referência."
+  },
+  {
+   "texto": "E uma linha por item cujo produto exista no catálogo, com quantidade, preço e desconto do XML."
+  },
+  {
+   "texto": "No alto, um botão leva de volta ao XML de origem, pelo número da DANFE. Fatura e arquivo ficam a um clique um do outro."
+  },
+  {
+   "texto": "E do lado do XML, o botão contrário: as faturas que nasceram deste arquivo. Os dois se acham sozinhos."
+  },
+  {
+   "texto": "O que liga os dois para sempre é a chave de acesso, gravada na fatura. É por ela que o sistema sabe que esta fatura já nasceu deste XML — e recusa criar uma segunda igual. As guardas do lote: nota cancelada é pulada, nota já faturada é pulada, e um problema numa nota não derruba as demais."
+  }
+ ],
+ "fecho": "Na lista, marque as notas e escolha, no menu de ações, Criar fatura de fornecedor (nota de entrada) ou Criar fatura de cliente (nota de saída). A fatura nasce em rascunho, com o parceiro, a data, o número da DANFE como referência, as linhas e a chave da NFe. Uma fatura ativa por chave e por tipo.",
+ "youtube": "",
+ "quiz": [
+  {
+   "pergunta": "Uma nota de ENTRADA vira que tipo de documento?",
+   "opcoes": [
+    "Fatura de cliente",
+    "Fatura de fornecedor",
+    "Pedido de compra",
+    "Recibo"
+   ],
+   "comentarios": [
+    "Fatura de cliente é para nota de saída, quando nos devem.",
+    "Nota de entrada é do fornecedor: nós devemos.",
+    "O fluxo de pedidos não passa por aqui.",
+    "Recibo não existe nesse caminho."
+   ],
+   "correta": 1
+  },
+  {
+   "pergunta": "Em que estado a fatura nasce?",
+   "opcoes": [
+    "Lançada",
+    "Rascunho, para conferência",
+    "Paga",
+    "Cancelada"
+   ],
+   "comentarios": [
+    "Lançar é decisão de quem confere.",
+    "O XML é a verdade fiscal do outro, não a nossa contabilidade pronta.",
+    "Pagamento é outro assunto.",
+    "Nada nasce cancelado."
+   ],
+   "correta": 1
+  },
+  {
+   "pergunta": "O que impede a mesma NF-e de gerar duas faturas iguais?",
+   "opcoes": [
+    "Nada impede",
+    "A regra de uma fatura ativa por chave de acesso e tipo",
+    "O número da DANFE",
+    "A data da nota"
+   ],
+   "comentarios": [
+    "A guarda existe, e aponta para a fatura que já existe.",
+    "Fatura cancelada libera a chave de novo.",
+    "O número se repete entre emitentes.",
+    "A data não identifica nada."
+   ],
+   "correta": 1
+  }
+ ]
+}

@@ -924,37 +924,29 @@ class AccountMove(models.Model):
         self.message_post(body=corpo, subtype_xmlid='mail.mt_note')
 
     def _focus_guardar_documentos(self, resposta):
-        """Baixa os XMLs e o DANFE, e os entrega ao painel de XMLs.
+        """Baixa os XMLs, o DANFE e o PDF da carta, e os entrega ao painel.
 
         Anexar à fatura não basta: o `liber_nfe_xml` é onde a casa junta TODOS
         os XMLs -- os que chegam de fornecedores e, a partir daqui, os que nós
         emitimos. Uma nota emitida e uma nota recebida passam a estar no mesmo
         lugar, procuráveis pela mesma chave.
 
-        Três documentos, e os três importam:
+        Três XMLs, e os três importam:
           - o XML da nota autorizada  -> vira `nfe.xml.panel`
           - o XML do cancelamento     -> vira `nfe.xml.cancel.event`
           - o XML da carta de correção-> idem, o painel roteia por `tpEvento`
+
+        E dois PDFs, que ficam na fatura para quem a olha: o DANFE e a carta
+        de correção. O cancelamento não tem PDF -- a Focus só gera o XML do
+        evento, e o aviso vai pelo histórico.
 
         Falha aqui não derruba a emissão: a nota já está autorizada na SEFAZ, e
         um documento que não baixou se busca de novo na próxima consulta.
         """
         self.ensure_one()
-        try:
-            client = self._focus_client_da_nota()
-        except UserError:
+        baixar = self._focus_baixador(resposta)
+        if baixar is None:
             return
-
-        def baixar(campo):
-            caminho = resposta.get(campo)
-            if not caminho:
-                return None
-            try:
-                return client.baixar(caminho)
-            except FocusError as exc:
-                _logger.warning("NFe %s: falha ao baixar %s: %s",
-                                self.display_name, campo, exc)
-                return None
 
         # -- anexos na fatura, para quem está olhando a fatura --------
         for campo, sufixo, mimetype in (
@@ -962,21 +954,128 @@ class AccountMove(models.Model):
             ('caminho_danfe', '.pdf', 'application/pdf'),
         ):
             conteudo = baixar(campo)
-            if not conteudo:
-                continue
-            nome = '%s%s' % (self.focus_ref, sufixo)
-            if self.env['ir.attachment'].search_count([
-                    ('res_model', '=', 'account.move'), ('res_id', '=', self.id),
-                    ('name', '=', nome)]):
-                continue
-            self.env['ir.attachment'].create({
-                'name': nome, 'datas': base64.b64encode(conteudo),
-                'mimetype': mimetype, 'res_model': 'account.move',
-                'res_id': self.id,
-            })
+            if conteudo:
+                self._focus_anexar_na_fatura(
+                    '%s%s' % (self.focus_ref, sufixo), conteudo, mimetype)
+
+        # A carta pode ter nascido fora do assistente (no painel da Focus, ou
+        # o download falhou na hora do envio): a consulta é a rede que a traz.
+        # Só avisa quando o anexo é novo -- o assistente já avisou do dele.
+        anexo, novo = self._focus_guardar_pdf_carta(resposta, baixar)
+        if novo:
+            self.message_post(
+                body=Markup(_(
+                    "<p><b>Carta de correção nº %(numero)s registrada na "
+                    "SEFAZ.</b> O PDF segue anexo e substitui as cartas "
+                    "anteriores.</p>")) % {
+                        'numero': self._focus_numero_da_carta(resposta, baixar)
+                        or '?'},
+                attachment_ids=anexo.ids, subtype_xmlid='mail.mt_note')
 
         # -- o painel de XMLs, para quem está olhando a casa ----------
         self._focus_registrar_no_painel(resposta, baixar)
+
+    def _focus_baixador(self, resposta):
+        """O fecho que baixa um campo da resposta da Focus, ou None sem cliente.
+
+        Guarda o que já baixou: o XML da nota é pedido pela fatura e pelo
+        painel, e a carta pelo PDF e pelo painel -- cada um vai à Focus uma
+        vez só. O que falhou fica como None e se busca na próxima consulta.
+        """
+        self.ensure_one()
+        try:
+            client = self._focus_client_da_nota()
+        except UserError:
+            return None
+        cache = {}
+
+        def baixar(campo):
+            if campo in cache:
+                return cache[campo]
+            caminho = resposta.get(campo)
+            conteudo = None
+            if caminho:
+                try:
+                    conteudo = client.baixar(caminho)
+                except FocusError as exc:
+                    _logger.warning("NFe %s: falha ao baixar %s: %s",
+                                    self.display_name, campo, exc)
+            cache[campo] = conteudo
+            return conteudo
+        return baixar
+
+    def _focus_anexar_na_fatura(self, nome, conteudo, mimetype):
+        """Anexa à fatura uma vez só: o nome é a chave da idempotência.
+
+        Devolve (anexo, novo). Reconsultar a nota não duplica o DANFE nem a
+        carta; o que já está lá é devolvido como está.
+        """
+        self.ensure_one()
+        Anexo = self.env['ir.attachment']
+        anexo = Anexo.search([
+            ('res_model', '=', 'account.move'), ('res_id', '=', self.id),
+            ('name', '=', nome)], limit=1)
+        if anexo:
+            return anexo, False
+        return Anexo.create({
+            'name': nome, 'datas': base64.b64encode(conteudo),
+            'mimetype': mimetype, 'res_model': 'account.move',
+            'res_id': self.id,
+        }), True
+
+    def _focus_numero_da_carta(self, resposta, baixar):
+        """O número da carta: da resposta, ou do `nSeqEvento` do XML dela.
+
+        A resposta do envio traz `numero_carta_correcao`; a da consulta nem
+        sempre. O XML do evento sempre diz, e já está baixado.
+        """
+        numero = resposta.get('numero_carta_correcao')
+        if numero:
+            return int(numero)
+        xml = baixar('caminho_xml_carta_correcao')
+        if xml:
+            achado = re.search(rb'<nSeqEvento>\s*(\d+)\s*</nSeqEvento>', xml)
+            if achado:
+                return int(achado.group(1))
+        return 0
+
+    def _focus_guardar_pdf_carta(self, resposta, baixar=None):
+        """Anexa à fatura o PDF da carta de correção, se a resposta o traz.
+
+        É o único evento para o qual a Focus gera PDF (o cancelamento vem só
+        em XML). Cada carta ganha o seu anexo, numerado -- a SEFAZ aceita até
+        vinte e a última substitui as anteriores, mas o histórico não se
+        reescreve: a carta antiga fica, para quem precisar saber o que dizia.
+
+        Devolve (anexo, novo); anexo vazio quando não há PDF ou o download
+        falhou -- a carta já vale na SEFAZ e o PDF se busca de novo na
+        próxima consulta.
+        """
+        self.ensure_one()
+        vazio = self.env['ir.attachment']
+        if not resposta.get('caminho_pdf_carta_correcao'):
+            return vazio, False
+        if baixar is None:
+            baixar = self._focus_baixador(resposta)
+            if baixar is None:
+                return vazio, False
+        conteudo = baixar('caminho_pdf_carta_correcao')
+        if not conteudo:
+            return vazio, False
+        numero = self._focus_numero_da_carta(resposta, baixar)
+        nome = ('%s-carta-correcao-%s.pdf' % (self.focus_ref, numero)
+                if numero else '%s-carta-correcao.pdf' % self.focus_ref)
+        return self._focus_anexar_na_fatura(nome, conteudo, 'application/pdf')
+
+    def _focus_anexos_de_carta(self):
+        """Os PDFs de carta de correção desta nota, do mais antigo ao mais novo."""
+        self.ensure_one()
+        if not self.focus_ref:
+            return self.env['ir.attachment']
+        return self.env['ir.attachment'].search([
+            ('res_model', '=', 'account.move'), ('res_id', '=', self.id),
+            ('name', '=like', '%s-carta-correcao%%.pdf' % self.focus_ref),
+        ], order='name, id')
 
     def _focus_registrar_no_painel(self, resposta, baixar):
         """Entrega os XMLs ao `liber_nfe_xml`, que já sabe lê-los."""

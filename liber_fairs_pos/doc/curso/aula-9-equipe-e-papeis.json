@@ -1,0 +1,74 @@
+{
+ "curso": "Curso Feiras II: vender, fechar e voltar",
+ "aula": 9,
+ "titulo": "A equipe do evento e quem faz o quê",
+ "abertura": "Última aula: a equipe do evento na aba Caixas, os dois perfis, o acesso temporário, e quem, na casa, faz o quê nas feiras.",
+ "fecho": "Atendente vende e confere; Supervisor resolve o que só a praça resolve, sem planejar nem combinar remuneração; Sem conta trabalha o balcão sem entrar no sistema; o acesso vai e volta com o evento. Fim do curso Feiras II.",
+ "youtube": "https://www.youtube.com/watch?v=Q3Kp5OVTda4",
+ "quiz": [
+  {
+   "pergunta": "O que a Atendente pode fazer?",
+   "opcoes": [
+    "Registrar perdas e fechar o dia",
+    "Vender no caixa dela e, se estiver sozinha na praça, conferir a carga que chega",
+    "Ver os outros eventos da casa",
+    "Mudar a grade"
+   ],
+   "comentarios": [
+    "Isso é do Supervisor.",
+    "Fora isso, nada.",
+    "Só o evento dela.",
+    "A grade se lê e não se muda."
+   ],
+   "correta": 1
+  },
+  {
+   "pergunta": "O que o Supervisor NÃO pode fazer?",
+   "opcoes": [
+    "Dar desconto acima do praticado",
+    "Mandar a mercadoria de volta",
+    "Planejar, despachar, mexer nos modelos de grade e combinar a própria remuneração",
+    "Entrar no caixa das colegas"
+   ],
+   "comentarios": [
+    "Pode.",
+    "Pode.",
+    "Ele aparece para tocar o evento na rua; o evento foi montado antes.",
+    "Pode."
+   ],
+   "correta": 2
+  },
+  {
+   "pergunta": "O que significa Sem conta na aba Caixas?",
+   "opcoes": [
+    "Falta cadastrar o e-mail",
+    "A pessoa foi removida do evento",
+    "O caixa está sem dinheiro",
+    "A pessoa trabalha o balcão, mas não abre o sistema; não é erro"
+   ],
+   "comentarios": [
+    "Não é erro de cadastro.",
+    "Continua na escala.",
+    "Não é sobre dinheiro.",
+    "É o caso comum de quem é contratado para três dias."
+   ],
+   "correta": 3
+  },
+  {
+   "pergunta": "Quando o acesso da equipe temporária é retirado?",
+   "opcoes": [
+    "No último dia do evento",
+    "Nunca: fica para a próxima feira",
+    "Quando o gerente lembra",
+    "No Retorno, quando a mercadoria volta"
+   ],
+   "comentarios": [
+    "A data não retira.",
+    "Não fica.",
+    "É automático.",
+    "Quem estiver escalado em outro evento aberto continua entrando por ele; quem é da casa não perde nada."
+   ],
+   "correta": 3
+  }
+ ]
+}

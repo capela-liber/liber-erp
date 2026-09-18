@@ -1,0 +1,74 @@
+{
+ "curso": "Curso Marketplaces via Olist",
+ "aula": 6,
+ "titulo": "Quanto vendemos por dia, e de quê",
+ "abertura": "Esta aula é o relatório do Olist: as linhas dos pedidos em gráfico e em tabela dinâmica, por dia, por canal e por título.",
+ "fecho": "Por dia responde o ritmo; por canal, qual marketplace puxa; por título, o que vende lá. A próxima aula segue a venda que desce pronta.",
+ "youtube": "https://www.youtube.com/watch?v=r86XZiYfy4E",
+ "quiz": [
+  {
+   "pergunta": "Sobre o que o relatório é montado?",
+   "opcoes": [
+    "Sobre as linhas dos pedidos do Olist",
+    "Sobre as notas fiscais",
+    "Sobre o espelho do catálogo",
+    "Sobre o estoque"
+   ],
+   "comentarios": [
+    "É a venda, título a título.",
+    "A nota é outro painel.",
+    "Catálogo é oferta, não venda.",
+    "Estoque é a comparação."
+   ],
+   "correta": 0
+  },
+  {
+   "pergunta": "Agrupar por canal responde o quê?",
+   "opcoes": [
+    "Qual estoque falta",
+    "Qual cliente compra mais",
+    "Qual título vende mais",
+    "Qual marketplace está puxando a venda"
+   ],
+   "comentarios": [
+    "Falta é a comparação de estoque.",
+    "Marketplace não dá cliente.",
+    "Isso é por título.",
+    "É para isso que se mapeiam os canais."
+   ],
+   "correta": 3
+  },
+  {
+   "pergunta": "A tabela dinâmica cruzando título e mês responde:",
+   "opcoes": [
+    "Este livro vende lá?",
+    "Este livro tem anúncio?",
+    "Este livro tem estoque?",
+    "Este livro foi faturado?"
+   ],
+   "comentarios": [
+    "É a mesma pergunta que Fora do Olist faz pelo avesso.",
+    "Anúncio é o catálogo.",
+    "Estoque é outra tela.",
+    "Faturamento é do financeiro."
+   ],
+   "correta": 0
+  },
+  {
+   "pergunta": "O relatório inclui pedidos cancelados?",
+   "opcoes": [
+    "Não: cancelado não vira venda nem linha de relatório",
+    "Sim, com valor negativo",
+    "Sim, marcados em vermelho",
+    "Sim, só no total"
+   ],
+   "comentarios": [
+    "Cancelado entra cancelado e não vira documento.",
+    "Não há negativo.",
+    "Não entra.",
+    "Não soma."
+   ],
+   "correta": 0
+  }
+ ]
+}

@@ -1,0 +1,74 @@
+{
+ "curso": "Curso Feiras II: vender, fechar e voltar",
+ "aula": 3,
+ "titulo": "O caixa do PDV na feira",
+ "abertura": "Esta aula abre o balcão: um caixa por pessoa da equipe, vendendo o estoque que está na mesa, com a capa de cada título, o de-por do desconto e a quantidade que resta.",
+ "fecho": "O caixa nasce apontado para a localização da feira; o balcão mostra só a grade; o movimento nasce carimbado como venda da feira; funciona sem rede. A próxima aula é o dinheiro.",
+ "youtube": "https://www.youtube.com/watch?v=TCF6e2v1ITE",
+ "quiz": [
+  {
+   "pergunta": "Que estoque o caixa da feira vende?",
+   "opcoes": [
+    "O do armazém",
+    "O da empresa inteira",
+    "O que está na mesa: a operação dele aponta para a localização da feira",
+    "O de todas as feiras"
+   ],
+   "comentarios": [
+    "Não é o armazém.",
+    "Não é a empresa.",
+    "Quem está na praça vê a quantidade que tem ali, não a que existe a seiscentos quilômetros.",
+    "É a feira dele."
+   ],
+   "correta": 2
+  },
+  {
+   "pergunta": "O que aparece no balcão do PDV?",
+   "opcoes": [
+    "Só o que vendeu ontem",
+    "Só os títulos com desconto",
+    "O catálogo inteiro da casa",
+    "Os títulos da grade, e só eles, com a capa e quantos ainda há na mesa"
+   ],
+   "comentarios": [
+    "A grade inteira.",
+    "Toda a grade.",
+    "Procurar no catálogo com fila na frente é trabalho que não precisa existir.",
+    "Zerou, o número fica vermelho."
+   ],
+   "correta": 3
+  },
+  {
+   "pergunta": "Por que o movimento do PDV nasce carimbado como venda da feira?",
+   "opcoes": [
+    "Porque o caixa não tem estoque",
+    "Senão a feira não veria a saída e o fechamento descontaria a mesma venda duas vezes",
+    "Porque a nota exige",
+    "Para o relatório ficar bonito"
+   ],
+   "comentarios": [
+    "O caixa tem o estoque da mesa.",
+    "A mesa terminaria negativa e o relatório contaria o dobro.",
+    "A nota não entra aqui.",
+    "É a conta que fecha."
+   ],
+   "correta": 1
+  },
+  {
+   "pergunta": "O que o caixa da feira não faz, de propósito?",
+   "opcoes": [
+    "Venda sem rede",
+    "Cupom fiscal: a NFC-e depende de código de segurança por empresa na Sefaz",
+    "Desconto de feira",
+    "Devolução no balcão"
+   ],
+   "comentarios": [
+    "Funciona offline.",
+    "E a maquininha entra como pagamento digitado.",
+    "O preço já é o da feira.",
+    "Devolve para a mesa."
+   ],
+   "correta": 1
+  }
+ ]
+}

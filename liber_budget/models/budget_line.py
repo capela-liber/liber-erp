@@ -152,6 +152,54 @@ class BudgetLine(models.Model):
         res = AML._read_group(base, [], ['balance:sum'])
         return -self._sum_read_group(res)
 
+    def _gl_signed_sum_by_account(self, accounts, states):
+        """O MESMO `_gl_signed_sum`, agrupado por conta em vez de somado no
+        total. A soma das contas devolve exatamente o total da posição."""
+        AML = self.env['account.move.line'].sudo()
+        base = [
+            ('account_id', 'in', accounts.ids),
+            ('date', '>=', self.date_from),
+            ('date', '<=', self.date_to),
+            ('company_id', 'in', self._companies_for_actuals().ids),
+            ('parent_state', 'in', states),
+        ]
+        res = AML._read_group(base, ['account_id'], ['balance:sum'])
+        return {account.id: -balance for account, balance in res}
+
+    def _gl_actuals_by_account(self):
+        """O MESMO `_gl_actuals` (Realizado e Programado), quebrado por conta
+        do razão -- é o que o relatório mostra na linha de cada conta.
+
+        Só o que veio de LANÇAMENTO se quebra por conta. Previsto e Teórico
+        são um número só, digitado para a posição inteira: não têm quebra por
+        conta e ficam apenas na linha da posição.
+        """
+        self.ensure_one()
+        accounts = self.position_id.account_ids
+        if not accounts:
+            return {}
+        practical = self._gl_signed_sum_by_account(accounts, ('posted',))
+        programmed = self._gl_signed_sum_by_account(accounts, ('draft', 'posted'))
+        return {
+            account.id: {
+                'practical': practical.get(account.id, 0.0),
+                'programmed': programmed.get(account.id, 0.0),
+            }
+            for account in accounts
+        }
+
+    def _gl_actuals_by_account_map(self):
+        """Versão em lote de `_gl_actuals_by_account`: soma a quebra de todas
+        as linhas do conjunto -- no caso normal (uma linha por posição no
+        orçamento) é a de uma linha só, mas soma certo se houver mais."""
+        merged = {}
+        for line in self:
+            for account_id, vals in line._gl_actuals_by_account().items():
+                acc = merged.setdefault(account_id, {'practical': 0.0, 'programmed': 0.0})
+                acc['practical'] += vals['practical']
+                acc['programmed'] += vals['programmed']
+        return merged
+
     @api.constrains(lambda self: self._get_plan_fnames() + ['position_id', 'budget_analytic_id'])
     def _check_account_id(self):
         """Override the core mixin rule: the analytic account is OPTIONAL here.

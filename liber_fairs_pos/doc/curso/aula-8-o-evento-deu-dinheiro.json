@@ -1,0 +1,74 @@
+{
+ "curso": "Curso Feiras II: vender, fechar e voltar",
+ "aula": 8,
+ "titulo": "O evento deu dinheiro?",
+ "abertura": "Esta aula é a aba Custos: as contas da equipe que caem sozinhas, Somar um custo, Gerar as contas a pagar, e os quatro números que dizem se a feira se pagou.",
+ "fecho": "Vendido no caixa, Custo dos livros vendidos, Custou, Sobrou; cada documento leva o analítico do evento; a aba é da equipe interna. A última aula é a equipe do evento.",
+ "youtube": "https://www.youtube.com/watch?v=gG6I0l_dgD0",
+ "quiz": [
+  {
+   "pergunta": "O que cai sozinho na aba Custos quando o evento volta?",
+   "opcoes": [
+    "A nota fiscal da volta",
+    "As contas da equipe, uma por pessoa, em rascunho",
+    "O resultado fechado",
+    "O frete"
+   ],
+   "comentarios": [
+    "A nota é do fiscal.",
+    "O resto entra por Somar um custo.",
+    "O resultado é calculado.",
+    "Frete se soma à mão."
+   ],
+   "correta": 1
+  },
+  {
+   "pergunta": "Por que Gerar as contas a pagar recusa antes do Retorno?",
+   "opcoes": [
+    "Porque o rateio depende do que a conferência apurou; pagar antes é pagar por cima de um número que ainda vai mudar",
+    "Porque o caixa está aberto",
+    "Porque as diárias ainda não foram digitadas",
+    "Porque o financeiro não abriu o mês"
+   ],
+   "comentarios": [
+    "Quem ficou com zero a receber não ganha conta nenhuma.",
+    "O caixa fecha no Retorno.",
+    "Podem estar digitadas.",
+    "Não depende do mês."
+   ],
+   "correta": 0
+  },
+  {
+   "pergunta": "O que é Sobrou?",
+   "opcoes": [
+    "O que voltou para o armazém",
+    "O estoque que ficou na mesa",
+    "A comissão total",
+    "Vendido no caixa, menos o custo dos livros vendidos, menos o que o evento custou"
+   ],
+   "comentarios": [
+    "Isso é retorno de estoque.",
+    "Mesa é estoque, não dinheiro.",
+    "Comissão está dentro de Custou.",
+    "É a diferença entre a feira se pagou e a feira deu lucro."
+   ],
+   "correta": 3
+  },
+  {
+   "pergunta": "O que cada custo somado leva junto?",
+   "opcoes": [
+    "O número da nota da ida",
+    "O desconto da feira",
+    "O nome do fornecedor apenas",
+    "O analítico do evento, que é o que a contabilidade lê"
+   ],
+   "comentarios": [
+    "A nota não entra no custo.",
+    "Desconto é preço.",
+    "Leva o analítico.",
+    "É por ele que se pergunta, no fim do ano, quanto uma feira custou."
+   ],
+   "correta": 3
+  }
+ ]
+}

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     'name': 'Budget (Open)',
-    'version': '19.0.1.2.0',
+    'version': '19.0.1.8.0',
     'summary': 'Orcamentos abertos sobre a Contabilidade Analitica (sem Enterprise)',
     'category': 'Accounting/Accounting',
     'author': 'EdLab Press',
@@ -16,6 +16,7 @@
         'views/budget_tag_views.xml',
         'views/budget_report_views.xml',
         'views/pnl_report_views.xml',
+        'report/budget_analytic_report.xml',
     ],
     'demo': [
         'data/budget_demo.xml',

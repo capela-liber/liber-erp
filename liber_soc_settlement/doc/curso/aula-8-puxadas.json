@@ -1,0 +1,78 @@
+{
+ "curso": "Curso de Consignação II",
+ "aula": 8,
+ "titulo": "Cobrança de devoluções: as puxadas",
+ "abertura": "Toda devolução nasce com um relógio. Enquanto os livros não voltam, uma escada de cobrança sobe sozinha: lembrete, ligação, aviso à equipe, escalonamento.",
+ "fecho": "Cada degrau dispara uma vez só, e tudo para quando a mercadoria volta. Na próxima aula, a saúde de cada título.",
+ "youtube": "https://www.youtube.com/watch?v=B6Bhqo_rci4",
+ "quiz": [
+  {
+   "pergunta": "Como se define o prazo de devolução de um CR?",
+   "opcoes": [
+    "É fixo em 30 dias para todo CR",
+    "A data de criação mais o prazo tolerável das Definições",
+    "É combinado com o cliente em cada CR",
+    "É a data do próximo acerto do cliente"
+   ],
+   "comentarios": [
+    "O prazo é configurável nas Definições.",
+    "Mudar os dias nas Definições reflui o calendário inteiro.",
+    "É da casa, não negociado por CR.",
+    "Não depende do acerto."
+   ],
+   "correta": 1
+  },
+  {
+   "pergunta": "O CR chegou a 25% do prazo. O que acontece?",
+   "opcoes": [
+    "O CR é cancelado e refeito",
+    "Escala para o gerente comercial",
+    "Nada ainda: o primeiro degrau é aos 65%",
+    "O pedido de devolução é reenviado e uma ligação é agendada para o responsável"
+   ],
+   "comentarios": [
+    "Um CR nunca se cancela sozinho.",
+    "Escalonamento é aos 100%.",
+    "O primeiro degrau é aos 25%.",
+    "É o degrau Lembrete."
+   ],
+   "correta": 3
+  },
+  {
+   "pergunta": "A rotina de puxadas rodou duas vezes no mesmo dia. O que muda?",
+   "opcoes": [
+    "Nada: cada degrau dispara uma vez só",
+    "O CR avança dois degraus de uma vez",
+    "As cobranças do dia saem em dobro",
+    "A segunda rodada dá erro"
+   ],
+   "comentarios": [
+    "Recuperar um dia perdido também não duplica.",
+    "Um degrau por porcentagem atingida.",
+    "Cada degrau dispara uma única vez.",
+    "Não há erro; ela não encontra nada a fazer."
+   ],
+   "correta": 0
+  },
+  {
+   "pergunta": "Onde a conversa inteira de cada puxada fica reunida?",
+   "opcoes": [
+    "No relatório de Ruptura",
+    "No canal Consignação, Devoluções, que replica notas, respostas e alertas",
+    "Só na caixa de e-mail de quem enviou",
+    "Na ficha do cliente, no histórico"
+   ],
+   "comentarios": [
+    "Ruptura é campanha, outro assunto.",
+    "Um lugar só para acompanhar.",
+    "Está no canal, para todos.",
+    "A ficha não reúne a conversa das puxadas."
+   ],
+   "correta": 1
+  }
+ ],
+ "youtube_anterior": [
+  "https://www.youtube.com/watch?v=Mzs_6pimDVc"
+ ],
+ "youtube_quadro": "2912x2080"
+}

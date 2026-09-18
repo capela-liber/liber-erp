@@ -1,0 +1,74 @@
+{
+ "curso": "Curso de Consignação III",
+ "aula": 2,
+ "titulo": "Os três blocos, campo a campo",
+ "abertura": "Tudo fica em Consignação, Configuração, Configurações, e só o administrador do sistema vê. Nesta aula, os blocos de contabilidade, fiscal e operações de estoque, e o que cada campo controla.",
+ "fecho": "Conta própria para o consignado, uma posição fiscal por operação, tipos de operação separados do armazém. Na próxima aula, a nota de remessa de um Pedido C.",
+ "youtube": "https://www.youtube.com/watch?v=W4jJhjk-nFY",
+ "quiz": [
+  {
+   "pergunta": "Uma remessa (armazém para prateleira) faz o quê na contabilidade?",
+   "opcoes": [
+    "Cria um recebível",
+    "Debita a conta de consignação e credita Estoque",
+    "Cria uma venda",
+    "Nada"
+   ],
+   "comentarios": [
+    "Nenhum recebível é criado.",
+    "O retorno faz o inverso.",
+    "Movimento de consignação não é venda.",
+    "Move valor entre contas."
+   ],
+   "correta": 1
+  },
+  {
+   "pergunta": "O botão Conectar prateleiras serve para:",
+   "opcoes": [
+    "Zerar as prateleiras",
+    "Enviar o mapa",
+    "Criar prateleiras",
+    "Aplicar a conta de consignação às prateleiras já existentes"
+   ],
+   "comentarios": [
+    "Nunca.",
+    "Mapa é outro botão.",
+    "As prateleiras nascem do contrato.",
+    "As novas já nascem com ela."
+   ],
+   "correta": 3
+  },
+  {
+   "pergunta": "Sem valoração automatizada nas categorias de produto:",
+   "opcoes": [
+    "Só a auditoria falha",
+    "A consignação para de funcionar",
+    "As quantidades funcionam, mas o valor não se move entre as contas",
+    "O sistema liga sozinho"
+   ],
+   "comentarios": [
+    "A auditoria é independente disso.",
+    "As quantidades funcionam normalmente.",
+    "É decisão contábil da empresa inteira.",
+    "O módulo não toma essa decisão por você."
+   ],
+   "correta": 2
+  },
+  {
+   "pergunta": "Qual posição fiscal precisa da baixa automática configurada?",
+   "opcoes": [
+    "A do acerto",
+    "Nenhuma",
+    "A da devolução",
+    "A da remessa (Pedido C), porque a nota de remessa nunca cobra a livraria"
+   ],
+   "comentarios": [
+    "O acerto fatura de verdade.",
+    "A da remessa precisa.",
+    "Devolução não gera cobrança nem baixa.",
+    "Sem isso o Criar nota recusa."
+   ],
+   "correta": 3
+  }
+ ]
+}

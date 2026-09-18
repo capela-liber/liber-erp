@@ -1,0 +1,74 @@
+{
+ "curso": "Curso Marketplaces via Olist",
+ "aula": 5,
+ "titulo": "O canal de lá, o canal da casa",
+ "abertura": "Esta aula mapeia cada canal do Olist num canal de vendas da casa, que é o que faz a venda de marketplace aparecer nos relatórios ao lado das outras.",
+ "fecho": "Mercado Livre, Amazon, loja própria: mapear é dizer qual é qual; canal sem mapear não trava nada, só empobrece o relatório. A próxima aula lê o painel.",
+ "youtube": "https://www.youtube.com/watch?v=5X3T0WlKBAA",
+ "quiz": [
+  {
+   "pergunta": "O que é mapear um canal?",
+   "opcoes": [
+    "Ligar o canal à conta bancária",
+    "Criar um marketplace novo",
+    "Definir o preço do canal",
+    "Dizer qual canal de vendas da casa corresponde ao canal do Olist"
+   ],
+   "comentarios": [
+    "Banco é outro assunto.",
+    "O marketplace é de lá.",
+    "Preço é do anúncio.",
+    "São os mesmos canais do curso Comercial."
+   ],
+   "correta": 3
+  },
+  {
+   "pergunta": "O que acontece com um pedido de canal não mapeado?",
+   "opcoes": [
+    "Fica bloqueado até mapearem",
+    "É recusado na importação",
+    "Entra no canal padrão da empresa",
+    "Entra sem canal: não trava nada, só empobrece o relatório"
+   ],
+   "comentarios": [
+    "Não bloqueia.",
+    "Entra normalmente.",
+    "Não há canal padrão.",
+    "A conta conta quantos faltam mapear."
+   ],
+   "correta": 3
+  },
+  {
+   "pergunta": "Como se mapeia, na prática?",
+   "opcoes": [
+    "Na conta bancária do marketplace",
+    "No cadastro do cliente",
+    "No pedido, um a um",
+    "Na lista de Canais do Olist, que é editável: clique na célula e escolha"
+   ],
+   "comentarios": [
+    "Não é banco.",
+    "Cliente não decide canal aqui.",
+    "Um a um seria o trabalho que o mapa evita.",
+    "O pedido seguinte já nasce com o canal certo."
+   ],
+   "correta": 3
+  },
+  {
+   "pergunta": "O botão Mapear canais, na conta, faz o quê?",
+   "opcoes": [
+    "Mapeia tudo automaticamente pelo nome",
+    "Envia os canais da casa ao Olist",
+    "Lê os canais de lá e cria os que faltam aqui, sem desfazer o que já foi mapeado",
+    "Apaga os canais e refaz"
+   ],
+   "comentarios": [
+    "Quem liga ao canal da casa é gente.",
+    "Nada é enviado.",
+    "Escolha manual não se perde.",
+    "Não apaga."
+   ],
+   "correta": 2
+  }
+ ]
+}

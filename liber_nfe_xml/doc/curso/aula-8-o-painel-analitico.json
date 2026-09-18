@@ -1,0 +1,90 @@
+{
+ "curso": "Curso NF-e: o XML de entrada",
+ "aula": 8,
+ "titulo": "O painel analítico e as guardas",
+ "abertura": "A última aula é o resumo: o painel analítico, que junta todas as notas não canceladas das empresas selecionadas, e as regras que sustentam o módulo inteiro.",
+ "passos": [
+  {
+   "texto": "O caminho começa na tela inicial, entre os aplicativos."
+  },
+  {
+   "texto": "Faturamento. A última aula é o resumo de tudo: o painel."
+  },
+  {
+   "texto": "NFe XML, Painel analítico. Ele abre em outra aba, porque não é uma tela do Odoo: é uma página que o módulo desenha."
+  },
+  {
+   "texto": "O painel resume todas as notas não canceladas das empresas selecionadas — por mês, por CFOP, por parceiro."
+  },
+  {
+   "texto": "Ele é do lado vendedor: entram as notas que as empresas da casa EMITIRAM. As de entrada, compradas de terceiros, ficam de fora dessa análise."
+  },
+  {
+   "texto": "E a própria lista traz as visões do Odoo: gráfico e tabela dinâmica, com valor da DANFE e frete como medidas."
+  },
+  {
+   "texto": "As regras que sustentam tudo isso são poucas. Uma chave de acesso, um registro: reimportar nunca duplica, venha o arquivo de onde vier."
+  },
+  {
+   "texto": "Uma fatura ativa por chave e por tipo: a mesma NF-e não gera duas faturas de fornecedor. E a fatura só é criada se o CNPJ do parceiro for de uma das pontas da nota."
+  },
+  {
+   "texto": "XML que não é NF-e é recusado; CFOP desconhecido é criado sem classificação, para nada sumir; e cada usuário vê só as notas das empresas às quais tem acesso."
+  },
+  {
+   "texto": "É este o curso: o arquivo entra, é lido, vira fatura, e a chave de acesso amarra tudo. Fim do curso."
+  }
+ ],
+ "fecho": "Painel analítico (XML) abre em outra aba e resume as notas emitidas pelas empresas da casa; a lista traz gráfico e tabela dinâmica. As guardas: uma chave, um registro; uma fatura ativa por chave e tipo; parceiro conferido contra o XML; XML que não é NF-e recusado; CFOP desconhecido criado sem classificação; e cada um vê só as notas das suas empresas. Fim do curso.",
+ "youtube": "",
+ "quiz": [
+  {
+   "pergunta": "Que notas entram no painel analítico?",
+   "opcoes": [
+    "Todas, inclusive as canceladas",
+    "As não canceladas, emitidas pelas empresas da casa",
+    "Só as de entrada",
+    "Só as do mês corrente"
+   ],
+   "comentarios": [
+    "As canceladas ficam de fora.",
+    "O painel é do lado vendedor.",
+    "As de entrada são de terceiros, e ficam fora dessa análise.",
+    "O período é escolhido no próprio painel."
+   ],
+   "correta": 1
+  },
+  {
+   "pergunta": "O que garante que a mesma NF-e não entre duas vezes no painel?",
+   "opcoes": [
+    "O nome do arquivo",
+    "A chave de acesso, única no painel",
+    "A data de importação",
+    "O número da DANFE"
+   ],
+   "comentarios": [
+    "O mesmo XML pode chegar com vinte nomes.",
+    "Um XML por chave, venha de ZIP, de anexo ou de integração.",
+    "A data não identifica a nota.",
+    "O número se repete entre emitentes."
+   ],
+   "correta": 1
+  },
+  {
+   "pergunta": "Um usuário vê as notas de quais empresas?",
+   "opcoes": [
+    "De todas as empresas do banco",
+    "Só das empresas às quais tem acesso",
+    "Só da empresa em que foi criado",
+    "De nenhuma, sem permissão especial"
+   ],
+   "comentarios": [
+    "A lista respeita o seletor de empresas.",
+    "É a mesma regra multiempresa do resto do sistema.",
+    "Ele pode ter acesso a várias.",
+    "O perfil Financeiro já enxerga as notas."
+   ],
+   "correta": 1
+  }
+ ]
+}

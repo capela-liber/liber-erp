@@ -7,9 +7,9 @@
             <form string="Fair">
                 <header>
                     <button name="action_plan" type="object" string="Plan"
-                            class="btn-primary" invisible="state != 'draft'" groups="liber_fairs.group_fair_manager"/>
+                            class="btn-primary" invisible="state != 'draft'" groups="liber_fairs.group_fair_planner"/>
                     <button name="action_ship" type="object" string="Ship"
-                            class="btn-primary" groups="liber_fairs.group_fair_manager"
+                            class="btn-primary" groups="liber_fairs.group_fair_planner"
                             invisible="state not in ('planned', 'shipped')"
                             help="Sends what is planned and has not gone yet. Raise a planned quantity and click again to send a replenishment."/>
                     <button name="action_return" type="object"
@@ -18,7 +18,7 @@
                             help="Sends back what is on the table. The warehouse checks what actually arrives, in Receipts."/>
                     <field name="return_pending" invisible="1"/>
                     <button name="action_draft" type="object" string="Back to Draft"
-                            invisible="state in ('draft', 'returned', 'settled', 'closed')" groups="liber_fairs.group_fair_manager"/>
+                            invisible="state in ('draft', 'returned', 'settled', 'closed')" groups="liber_fairs.group_fair_planner"/>
                     <field name="is_fair_planner" invisible="1"/>
                     <field name="state" widget="statusbar"
                            statusbar_visible="draft,planned,shipped,returned"/>
@@ -78,7 +78,7 @@
                     </group>
                     <notebook>
                         <page string="Grid" name="grid">
-                            <div class="mb-2" groups="liber_fairs.group_fair_manager">
+                            <div class="mb-2" groups="liber_fairs.group_fair_planner">
                                 <button name="%(action_event_fair_add_products)d" type="action"
                                         string="Add titles" class="btn-secondary"
                                         context="{'default_fair_id': id}"/>

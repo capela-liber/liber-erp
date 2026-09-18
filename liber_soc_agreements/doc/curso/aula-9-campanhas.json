@@ -1,0 +1,78 @@
+{
+ "curso": "Curso de Consignação I",
+ "aula": 9,
+ "titulo": "Campanhas: listas de títulos prontas",
+ "abertura": "Uma campanha é um kit: títulos e quantidades que o comercial repete em vários clientes. Nesta aula, criamos uma e carregamos num CR.",
+ "fecho": "No módulo de acerto a campanha ganha canal, vigência e cobertura. Na última aula, os relatórios.",
+ "youtube": "https://www.youtube.com/watch?v=Fa0qJfjtPbs",
+ "quiz": [
+  {
+   "pergunta": "O que é uma campanha?",
+   "opcoes": [
+    "Uma lista pré-montada de títulos e quantidades",
+    "Um e-mail de marketing",
+    "Uma promoção de preço",
+    "Um relatório de cobertura"
+   ],
+   "comentarios": [
+    "O kit que se repete em vários clientes.",
+    "Não há e-mail aqui.",
+    "Preço não entra na campanha.",
+    "A cobertura é do módulo de acerto, sobre campanhas."
+   ],
+   "correta": 0
+  },
+  {
+   "pergunta": "Onde se usa a campanha num documento?",
+   "opcoes": [
+    "Num CR em rascunho, escolhendo a campanha e clicando Carregar da Campanha",
+    "Na fatura",
+    "Na prateleira",
+    "No contrato"
+   ],
+   "comentarios": [
+    "Preenche as linhas de uma vez.",
+    "Não há campanha na fatura.",
+    "Prateleira é saldo.",
+    "O contrato não tem linhas de título."
+   ],
+   "correta": 0
+  },
+  {
+   "pergunta": "Depois de carregar da campanha, as linhas do CR:",
+   "opcoes": [
+    "Ficam travadas",
+    "Só a quantidade muda",
+    "Podem ser ajustadas uma a uma antes de confirmar",
+    "Somam-se às linhas que já existiam"
+   ],
+   "comentarios": [
+    "Podem ser ajustadas.",
+    "Título e quantidade são editáveis.",
+    "A campanha é ponto de partida.",
+    "Carregar substitui as linhas."
+   ],
+   "correta": 2
+  },
+  {
+   "pergunta": "Quem cria campanhas?",
+   "opcoes": [
+    "Qualquer usuário do app",
+    "A logística",
+    "O sistema, a partir das vendas",
+    "O gerente comercial"
+   ],
+   "comentarios": [
+    "O usuário só lê campanhas.",
+    "A logística não monta kits comerciais.",
+    "Campanha é decisão humana.",
+    "Mesma regra dos contratos."
+   ],
+   "correta": 3
+  }
+ ],
+ "youtube_anterior": [
+  "https://www.youtube.com/watch?v=VfAHu-ssysI"
+ ],
+ "youtube_quadro": "2912x2080"
+}

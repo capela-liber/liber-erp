@@ -1,0 +1,74 @@
+{
+ "curso": "Curso Feiras II: vender, fechar e voltar",
+ "aula": 4,
+ "titulo": "O dinheiro do balcão",
+ "abertura": "Esta aula segue o dinheiro: os pedidos do PDV, cada venda com valor e forma de pagamento; as sessões de cada caixa; e o que o caixa exige para fechar.",
+ "fecho": "Pedidos do PDV por dia e por balcão; dinheiro, cartão e pix como formas de pagamento; o caixa só fecha com conta de receita nos títulos e a conta de recebível nas Definições. A próxima aula são as perdas.",
+ "youtube": "https://www.youtube.com/watch?v=utWnbe5a3rA",
+ "quiz": [
+  {
+   "pergunta": "Onde se vê cada venda do balcão?",
+   "opcoes": [
+    "Na aba Custos",
+    "No botão Pedidos do PDV da feira: quando, em qual caixa, quanto e como pagou",
+    "Em Perdas",
+    "No fechamento diário"
+   ],
+   "comentarios": [
+    "Custos soma o resultado.",
+    "Dia a dia e balcão a balcão.",
+    "Perdas é o que faltou.",
+    "O fechamento conta a mesa."
+   ],
+   "correta": 1
+  },
+  {
+   "pergunta": "Como a maquininha de cartão entra no caixa?",
+   "opcoes": [
+    "Como forma de pagamento digitada; a taxa se concilia depois, no financeiro",
+    "Integrada, com o valor vindo sozinho",
+    "Não entra: só dinheiro",
+    "Pelo cupom fiscal"
+   ],
+   "comentarios": [
+    "A InfinitePay não conversa com o Odoo.",
+    "Não há driver.",
+    "Cartão e pix entram.",
+    "Não há cupom ainda."
+   ],
+   "correta": 0
+  },
+  {
+   "pergunta": "O caixa travou na hora de fechar, com dinheiro na gaveta. Causa mais provável?",
+   "opcoes": [
+    "Desconto acima do permitido",
+    "Falta de rede",
+    "Um título vendido sem conta de receita, no produto ou na categoria",
+    "Contagem da mesa não feita"
+   ],
+   "comentarios": [
+    "Desconto não trava o fechamento.",
+    "Sem rede ele vende e sincroniza.",
+    "O botão Caixa avisa no histórico da feira quais títulos estão sem conta.",
+    "A contagem é outra rotina."
+   ],
+   "correta": 2
+  },
+  {
+   "pergunta": "O que a empresa precisa ter nas Definições de contabilidade para o caixa fechar?",
+   "opcoes": [
+    "A posição fiscal de feira",
+    "A conta de recebível do Ponto de Venda",
+    "Um plano analítico",
+    "O serviço que paga a equipe"
+   ],
+   "comentarios": [
+    "A posição é da nota.",
+    "É exigência contábil que aparece tarde se ninguém avisar.",
+    "O plano é dos eventos.",
+    "O serviço é da conta da equipe."
+   ],
+   "correta": 1
+  }
+ ]
+}

@@ -41,7 +41,7 @@ SEFAZ, e o aviso à logística se refaz na próxima consulta do cron.
 """,
     'author': 'EdLab Press',
     'category': 'Inventory',
-    'version': '19.0.2.6.0',
+    'version': '19.0.2.7.0',
     'license': 'AGPL-3',
     # liber_transport traz a contagem de caixas na transferência (box_count),
     # que é o que a nota declara e a transportadora confere na coleta.

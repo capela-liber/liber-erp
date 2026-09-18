@@ -1,0 +1,78 @@
+{
+ "curso": "Curso de Consignação II",
+ "aula": 4,
+ "titulo": "Preço, desconto, cancelar e recomeçar",
+ "abertura": "Cada linha do acerto tem preço unitário e desconto, e os dois saem do contrato. Nesta aula, a regra, e o que acontece ao cancelar.",
+ "fecho": "Havendo lista de preços, é ela quem diz o desconto; nunca as duas coisas. Cancelar só em rascunho. Na próxima aula, o mapa e quem o recebe.",
+ "youtube": "https://www.youtube.com/watch?v=HRG6xJIsZAo",
+ "quiz": [
+  {
+   "pergunta": "Um livro de R$ 100. O contrato tem lista de preços com regra de 30% e desconto padrão de 40%. O que vai para a linha?",
+   "opcoes": [
+    "Preço de tabela R$ 100 e 40% no campo desconto: o contrato manda",
+    "Preço R$ 70 já descontado e o campo desconto em zero",
+    "Preço de tabela R$ 100 e 30% no campo desconto: a lista manda, o 40% não entra",
+    "Preço R$ 100, 30% da lista e mais 40% do contrato, um sobre o outro"
+   ],
+   "comentarios": [
+    "Com lista de percentual, o percentual da lista é o desconto.",
+    "Isso é o caso da lista com preço fixo, não da regra de percentual.",
+    "O desconto padrão do contrato não se aplica por cima da lista.",
+    "Nunca os dois: era o erro que a regra corrige."
+   ],
+   "correta": 2
+  },
+  {
+   "pergunta": "Por que existe a regra \"a lista manda\"?",
+   "opcoes": [
+    "Porque lista de 30% e contrato de 40% descontavam duas vezes, e o erro passava despercebido",
+    "Porque toda operação precisa de uma lista de preços",
+    "Porque o desconto do contrato só vale para venda direta",
+    "Porque o Odoo só aceita um desconto por linha"
+   ],
+   "comentarios": [
+    "R$ 100 viravam R$ 42 onde o combinado eram R$ 60.",
+    "Sem lista, vale tabela mais o desconto padrão do contrato.",
+    "O desconto do contrato vale, quando não há lista.",
+    "Aceita mais de um; a regra é da casa, não do Odoo."
+   ],
+   "correta": 0
+  },
+  {
+   "pergunta": "Uma operação já executada pode ser cancelada?",
+   "opcoes": [
+    "Sim, a qualquer momento, pelo botão Cancelar",
+    "Sim, se o gerente comercial cancelar",
+    "Não: o caminho de volta é outra operação que compense, ou um ajuste pela auditoria",
+    "Sim, mas só no mesmo dia da execução"
+   ],
+   "comentarios": [
+    "Cancelar só existe em rascunho.",
+    "Ninguém cancela uma operação executada.",
+    "Cancelar desfaria só o papel; o estoque já saiu e a venda existe.",
+    "O dia não muda a regra: executada não se cancela."
+   ],
+   "correta": 2
+  },
+  {
+   "pergunta": "O desconto digitado na linha do acerto segue para onde?",
+   "opcoes": [
+    "Para lugar nenhum: é só informativo no mapa",
+    "Para a venda S, para o Pedido C de reposição e para a nota de remessa",
+    "Só para a venda S; o Pedido C sai a preço de tabela",
+    "Para o contrato, que é atualizado com o novo desconto"
+   ],
+   "comentarios": [
+    "Ele viaja para os três documentos.",
+    "A nota lê o desconto da linha para declarar o vDesc.",
+    "Segue também para o Pedido C.",
+    "O contrato não muda por causa de uma linha."
+   ],
+   "correta": 1
+  }
+ ],
+ "youtube_anterior": [
+  "https://www.youtube.com/watch?v=II1BXUDjPf0"
+ ],
+ "youtube_quadro": "2912x2080"
+}

@@ -30,6 +30,18 @@ class TestLiberSite(HttpCase):
         self.assertIn("EdLab Press", html)
         self.assertIn("Jorge Sallum", html)
 
+    def test_a_home_chama_para_o_treinamento(self):
+        """A vitrine convida para os cursos em vídeo (14/09/2026): link no
+        menu, botão no herói e uma seção própria -- todos apontando para o
+        eLearning aberto em /slides. Sem um deles a chamada some para quem
+        chega por um caminho diferente."""
+        html = self._pagina()
+        self.assertIn('href="#treinamento"', html, "o menu perdeu o link Treinamento")
+        self.assertIn('id="treinamento"', html, "a seção de treinamento sumiu do HTML")
+        self.assertGreaterEqual(html.count('href="/slides"'), 2,
+                                "o herói e a seção devem levar aos cursos em /slides")
+        self.assertIn("sem cadastro", html, "a chamada deve dizer que os cursos são abertos")
+
     def test_faq_esta_no_ar(self):
         """Caminho feliz: a seção existe, o menu leva até ela, e as perguntas
         são acordeão de verdade (<details>), não um paredão de texto."""

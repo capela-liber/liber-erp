@@ -75,10 +75,17 @@ class NfeFocusCorrecaoWizard(models.TransientModel):
                 "SEFAZ.", fatura=move.display_name, n=anteriores))
 
         try:
-            move._focus_client_da_nota().carta_correcao(
+            resposta = move._focus_client_da_nota().carta_correcao(
                 move.focus_ref, self.correcao)
         except FocusError as exc:
             raise UserError(_("Focus NFe: %s", exc.message)) from exc
+        resposta = resposta if isinstance(resposta, dict) else {}
+
+        # O PDF da carta vem no caminho que a PRÓPRIA resposta do envio traz.
+        # Anexa-se agora, antes da consulta: assim a consulta o encontra já
+        # na fatura e não avisa duas vezes. Se o download falhar, a carta já
+        # vale na SEFAZ e o PDF chega pela próxima consulta.
+        anexo, _novo = move._focus_guardar_pdf_carta(resposta)
 
         # A carta também vira XML de evento, e ele só aparece na consulta.
         try:
@@ -92,7 +99,18 @@ class NfeFocusCorrecaoWizard(models.TransientModel):
             'focus_correcoes': '\n\n'.join(
                 filter(None, [move.focus_correcoes, bloco])),
         })
-        move.message_post(body=Markup(_(
-            "<p><b>Carta de correção enviada à SEFAZ.</b> Ela substitui as "
-            "anteriores.</p><p>%(texto)s</p>")) % {'texto': self.correcao})
+        numero = resposta.get('numero_carta_correcao')
+        if anexo:
+            corpo = Markup(_(
+                "<p><b>Carta de correção nº %(numero)s enviada à SEFAZ.</b> "
+                "Ela substitui as anteriores; o PDF segue anexo.</p>"
+                "<p>%(texto)s</p>")) % {
+                    'numero': numero or '?', 'texto': self.correcao}
+        else:
+            corpo = Markup(_(
+                "<p><b>Carta de correção enviada à SEFAZ.</b> Ela substitui "
+                "as anteriores.</p><p>%(texto)s</p>")) % {
+                    'texto': self.correcao}
+        move.message_post(body=corpo, attachment_ids=anexo.ids,
+                          subtype_xmlid='mail.mt_note')
         return {'type': 'ir.actions.act_window_close'}

@@ -1,0 +1,78 @@
+{
+ "curso": "Curso de Consignação I",
+ "aula": 10,
+ "titulo": "Relatórios: onde estão os meus livros",
+ "abertura": "Última aula: as três telas que respondem onde estão os livros, quanto há em cada prateleira e por onde cada unidade passou.",
+ "fecho": "Na prateleira, Inventário e Razão. Com isso o curso um termina; o curso dois é o acerto: o que a livraria vendeu e o que a editora cobra.",
+ "youtube": "https://www.youtube.com/watch?v=Y_kSZBhyxls",
+ "quiz": [
+  {
+   "pergunta": "O que cada linha de Na Prateleira representa?",
+   "opcoes": [
+    "Um contrato",
+    "Um título numa livraria, com a quantidade que está lá e ainda é da editora",
+    "Uma venda",
+    "Uma nota fiscal"
+   ],
+   "comentarios": [
+    "Contrato tem a própria lista.",
+    "Agrupado por livraria, expande título a título.",
+    "Venda é do acerto.",
+    "Notas ficam no fiscal."
+   ],
+   "correta": 1
+  },
+  {
+   "pergunta": "Para que serve o Razão da prateleira?",
+   "opcoes": [
+    "Para emitir nota",
+    "Para calcular o desconto",
+    "Para cadastrar títulos",
+    "Para ver entrada por entrada, saída por saída, e achar quando o saldo deixou de bater"
+   ],
+   "comentarios": [
+    "Não emite nada.",
+    "Desconto é do contrato.",
+    "Títulos vêm do catálogo.",
+    "O extrato da prateleira."
+   ],
+   "correta": 3
+  },
+  {
+   "pergunta": "A visão de tabela dinâmica de Na Prateleira cruza:",
+   "opcoes": [
+    "Editora e distribuidor",
+    "Campanha e canal",
+    "Mês e vendedor",
+    "Livraria e título"
+   ],
+   "comentarios": [
+    "Não há distribuidor.",
+    "Isso é a cobertura, no acerto.",
+    "Não há vendedor aqui.",
+    "Quanto de cada obra em cada prateleira."
+   ],
+   "correta": 3
+  },
+  {
+   "pergunta": "O saldo de hoje da prateleira não bate com a contagem da livraria. Por onde começar?",
+   "opcoes": [
+    "Pelo Razão, para achar quando deixou de bater",
+    "Refazendo o Pedido C",
+    "Pelas Campanhas",
+    "Apagando o contrato"
+   ],
+   "comentarios": [
+    "Cada remessa, devolução e acerto deixa uma linha.",
+    "Não corrige o passado.",
+    "Campanhas não explicam saldo.",
+    "Nunca."
+   ],
+   "correta": 0
+  }
+ ],
+ "youtube_anterior": [
+  "https://www.youtube.com/watch?v=Zb9-Tg8Q6uE"
+ ],
+ "youtube_quadro": "2912x2080"
+}

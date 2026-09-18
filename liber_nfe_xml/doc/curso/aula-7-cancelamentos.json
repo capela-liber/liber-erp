@@ -1,0 +1,93 @@
+{
+ "curso": "Curso NF-e: o XML de entrada",
+ "aula": 7,
+ "titulo": "Cancelamentos",
+ "abertura": "O cancelamento de uma NF-e é um documento próprio, separado da nota. Esta aula importa um evento de cancelamento e mostra o que ele faz com a nota que cancela — e por que ele chega pelo mesmo assistente das notas.",
+ "passos": [
+  {
+   "texto": "O caminho começa na tela inicial, entre os aplicativos."
+  },
+  {
+   "texto": "Faturamento. Esta aula é o cancelamento — a nota que deixa de valer."
+  },
+  {
+   "texto": "O cancelamento chega como chega uma nota: pelo mesmo assistente de importação."
+  },
+  {
+   "texto": "Só que o arquivo não é uma nota: é um evento. O cancelamento de uma NF-e é um documento próprio, separado da nota que ele cancela."
+  },
+  {
+   "texto": "Um cancelamento aplicado. O sistema achou a nota pela chave de acesso que vem dentro do evento."
+  },
+  {
+   "texto": "E a nota agora está Cancelada, com a faixa vermelha no alto."
+  },
+  {
+   "texto": "A seção Cancelamento diz a data, o protocolo e o motivo — o que o emitente escreveu na justificativa, que a SEFAZ exige com pelo menos quinze caracteres."
+  },
+  {
+   "texto": "E o próprio XML do evento fica anexado aqui, porque ele é parte do arquivo fiscal que o contador guarda."
+  },
+  {
+   "texto": "Todos os eventos moram numa lista só: Eventos da NFe."
+  },
+  {
+   "texto": "Cancelamentos e cartas de correção, com a chave da nota, o tipo e a data. A carta de correção não cancela nada — ela conserta redação, e fica guardada aqui do mesmo jeito."
+  },
+  {
+   "texto": "A guarda que importa: nota cancelada não entra em lote de criação de fatura. Ela existiu, e o sistema lembra disso — mas ninguém deve nada por ela."
+  }
+ ],
+ "fecho": "O evento chega por ZIP ou solto, o sistema acha a nota pela chave de acesso, marca a situação como Cancelada, preenche data, protocolo e motivo, e guarda o XML do evento anexado. Nota cancelada não entra em lote de criação de fatura. Carta de correção não cancela nada, e fica guardada em Eventos da NFe.",
+ "youtube": "",
+ "quiz": [
+  {
+   "pergunta": "Como o sistema sabe qual nota o evento cancela?",
+   "opcoes": [
+    "Pelo número da DANFE",
+    "Pela chave de acesso que vem dentro do evento",
+    "Pelo nome do arquivo",
+    "Pelo CNPJ do emitente"
+   ],
+   "comentarios": [
+    "O número sozinho se repete entre emitentes.",
+    "É a chave que identifica a nota no mundo.",
+    "O nome do arquivo não vale nada.",
+    "O CNPJ não basta: o emitente tem muitas notas."
+   ],
+   "correta": 1
+  },
+  {
+   "pergunta": "O que acontece se o cancelamento chegar antes da nota, no mesmo ZIP?",
+   "opcoes": [
+    "O evento é descartado",
+    "As notas entram primeiro e os eventos são aplicados depois",
+    "A importação falha",
+    "A nota nunca fica cancelada"
+   ],
+   "comentarios": [
+    "Ele é guardado, não descartado.",
+    "A importação é em duas passadas, exatamente por isso.",
+    "Não falha.",
+    "Se o evento vier sozinho, ele espera a nota."
+   ],
+   "correta": 1
+  },
+  {
+   "pergunta": "A carta de correção cancela a nota?",
+   "opcoes": [
+    "Sim",
+    "Não: ela conserta redação e fica guardada como evento",
+    "Só se for a segunda carta",
+    "Só para notas de entrada"
+   ],
+   "comentarios": [
+    "Ela não cancela nada.",
+    "E é parte do arquivo fiscal que o contador guarda.",
+    "A sequência não muda a natureza dela.",
+    "A direção também não."
+   ],
+   "correta": 1
+  }
+ ]
+}

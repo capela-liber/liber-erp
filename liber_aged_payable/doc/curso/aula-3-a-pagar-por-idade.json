@@ -1,0 +1,74 @@
+{
+ "curso": "Curso Financeiro: a receber, a pagar e os painéis",
+ "aula": 3,
+ "titulo": "Contas a pagar por idade",
+ "abertura": "Esta aula é a gêmea do outro lado do razão: o que a casa deve, por fornecedor, nas mesmas faixas.",
+ "fecho": "As duas telas juntas respondem a pergunta do mês: o que entra cobre o que sai, e quando.",
+ "youtube": "https://www.youtube.com/watch?v=a0k7UeDcf3U",
+ "quiz": [
+  {
+   "pergunta": "A tela de contas a pagar por idade organiza por quê?",
+   "opcoes": [
+    "Por fornecedor, nas mesmas faixas de atraso",
+    "Por conta contábil",
+    "Por diário",
+    "Por centro de custo"
+   ],
+   "comentarios": [
+    "É a gêmea da anterior, do outro lado.",
+    "A conta é o meio, não a leitura.",
+    "Diário é organização interna.",
+    "Centro de custo é do orçamento."
+   ],
+   "correta": 0
+  },
+  {
+   "pergunta": "Que duas perguntas ela responde?",
+   "opcoes": [
+    "Quanto vendemos e para quem",
+    "O que vence esta semana, e o que já venceu e ninguém viu",
+    "Qual o lucro do mês",
+    "Quem pagou adiantado"
+   ],
+   "comentarios": [
+    "Venda é outro relatório.",
+    "É o uso diário da tela.",
+    "Lucro é da DRE.",
+    "Adiantamento é caso raro."
+   ],
+   "correta": 1
+  },
+  {
+   "pergunta": "Juntando a receber e a pagar, a pergunta do mês é qual?",
+   "opcoes": [
+    "Quem é o maior cliente",
+    "Qual conta tem mais lançamentos",
+    "O que entra cobre o que sai, e quando",
+    "Quanto imposto vamos pagar"
+   ],
+   "comentarios": [
+    "Tamanho de cliente é outro assunto.",
+    "Não interessa para o caixa.",
+    "É a pergunta de caixa, e as duas telas juntas a respondem.",
+    "Imposto é do fiscal."
+   ],
+   "correta": 2
+  },
+  {
+   "pergunta": "As faixas das duas telas são as mesmas?",
+   "opcoes": [
+    "Não: a pagar tem faixas menores",
+    "Sim, de propósito: é o que permite comparar os dois lados",
+    "Não: a pagar conta em meses",
+    "Só quando a empresa é a mesma"
+   ],
+   "comentarios": [
+    "São iguais.",
+    "Comparar exige a mesma régua.",
+    "Conta em dias, como a outra.",
+    "Vale para qualquer empresa."
+   ],
+   "correta": 1
+  }
+ ]
+}

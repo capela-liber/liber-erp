@@ -1,0 +1,74 @@
+{
+ "curso": "Curso Feiras II: vender, fechar e voltar",
+ "aula": 2,
+ "titulo": "O fechamento diário",
+ "abertura": "Esta aula fecha um dia da feira: Trazer a mesa, corrigir para baixo o que vendeu, ler a coluna No caixa, e Fechar o dia.",
+ "fecho": "Vendido é abertura mais reposição menos contagem; a contagem vem da mesa pelo botão; contagem maior é recusada; com o PDV o fechamento é conferência. A próxima aula é o caixa.",
+ "youtube": "https://www.youtube.com/watch?v=UCs67pwLELQ",
+ "quiz": [
+  {
+   "pergunta": "Como o sistema sabe o que vendeu no dia?",
+   "opcoes": [
+    "Deduz: saldo na abertura, mais reposição do dia, menos a contagem do fim",
+    "Copia do dia anterior",
+    "Lê o extrato da maquininha",
+    "Pergunta ao operador, título a título"
+   ],
+   "comentarios": [
+    "Por isso se digita a contagem, não a venda.",
+    "Cada dia é contado.",
+    "A maquininha não sabe o que foi vendido.",
+    "Não pergunta."
+   ],
+   "correta": 0
+  },
+  {
+   "pergunta": "O que Trazer a mesa faz?",
+   "opcoes": [
+    "Preenche a contagem com tudo o que deveria estar lá, já igual ao esperado",
+    "Abre o caixa",
+    "Apaga a contagem",
+    "Manda a reposição"
+   ],
+   "comentarios": [
+    "Você corrige para baixo o que vendeu.",
+    "Caixa é outro.",
+    "Preenche.",
+    "Reposição é outro botão."
+   ],
+   "correta": 0
+  },
+  {
+   "pergunta": "A contagem deu maior que o esperado. O que acontece?",
+   "opcoes": [
+    "Vira perda",
+    "Vira venda negativa",
+    "É aceita e o estoque sobe",
+    "É recusada: ou a reposição não foi lançada, ou a contagem errou"
+   ],
+   "comentarios": [
+    "Não é perda.",
+    "Não existe venda negativa.",
+    "Não sobe.",
+    "Fechar assim inventaria estoque que nunca saiu do armazém."
+   ],
+   "correta": 3
+  },
+  {
+   "pergunta": "Com o caixa do PDV instalado, o que o fechamento diário passa a ser?",
+   "opcoes": [
+    "O fechamento do caixa",
+    "A fonte da venda",
+    "A conferência da venda: a diferença entre a contagem e o que o caixa registrou é o que se quer ver",
+    "Um relatório sem efeito"
+   ],
+   "comentarios": [
+    "O caixa fecha no PDV.",
+    "A fonte passa a ser o caixa.",
+    "Venda não lançada, extravio.",
+    "Tem efeito no estoque."
+   ],
+   "correta": 2
+  }
+ ]
+}

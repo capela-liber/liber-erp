@@ -1,0 +1,74 @@
+{
+ "curso": "Curso de Atendimento ao cliente",
+ "aula": 2,
+ "titulo": "De onde vem um chamado",
+ "abertura": "Esta aula segue o caminho do e-mail: a caixa comercial que vira alias de uma equipe, e o chamado que nasce na coluna Novo com a mensagem do cliente no histórico.",
+ "fecho": "Uma equipe por caixa, o alias que recebe, membros que enxergam, e o chamado AT que nasce sem dono, com o e-mail guardado. A próxima aula é a triagem.",
+ "youtube": "https://www.youtube.com/watch?v=kZUXRAXtwKs",
+ "quiz": [
+  {
+   "pergunta": "O que é o alias de uma equipe?",
+   "opcoes": [
+    "O nome curto da equipe no quadro",
+    "O e-mail do líder",
+    "Um apelido do cliente",
+    "O endereço de e-mail cujo conteúdo vira chamado dessa equipe, na empresa dela"
+   ],
+   "comentarios": [
+    "O nome é outro campo.",
+    "O líder é uma pessoa; o alias é a caixa.",
+    "Cliente não tem alias.",
+    "comercial arroba edlab ponto press é o alias da Comercial Edlab."
+   ],
+   "correta": 3
+  },
+  {
+   "pergunta": "Um assistente que não é membro de uma equipe:",
+   "opcoes": [
+    "Vê tudo, como o gerente",
+    "Vê, mas não edita",
+    "Não enxerga os chamados dela",
+    "Vê só os urgentes"
+   ],
+   "comentarios": [
+    "Só o gerente vê tudo.",
+    "Não vê.",
+    "A regra é \"own teams\"; o gerente vê todas.",
+    "Não vê nenhum."
+   ],
+   "correta": 2
+  },
+  {
+   "pergunta": "Como o chamado sabe quem é o cliente?",
+   "opcoes": [
+    "Casa o remetente do e-mail com o cadastro, e guarda o e-mail de origem",
+    "Pelo assunto do e-mail",
+    "Pelo CNPJ no corpo",
+    "O atendente digita sempre"
+   ],
+   "comentarios": [
+    "Se não casar, o atendente escolhe o cliente na ficha.",
+    "O assunto vira o título.",
+    "CNPJ não entra nesse casamento.",
+    "Só quando o remetente não casa."
+   ],
+   "correta": 0
+  },
+  {
+   "pergunta": "O campo Tipo do chamado muda o fluxo?",
+   "opcoes": [
+    "Sim: muda o SLA",
+    "Sim: muda a equipe",
+    "Sim: cada tipo tem colunas próprias",
+    "Não: diz qual documento a conversa vai gerar"
+   ],
+   "comentarios": [
+    "O SLA é da equipe e da prioridade.",
+    "A equipe vem do alias.",
+    "As colunas são as mesmas.",
+    "Consignação, venda, envio, fiscal."
+   ],
+   "correta": 3
+  }
+ ]
+}

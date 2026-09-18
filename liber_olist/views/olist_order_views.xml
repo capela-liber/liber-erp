@@ -21,9 +21,16 @@
                             string="Ler pedidos do Olist" display="always"
                             class="btn-primary"
                             help="Traz a listagem de pedidos do Olist para esta tela. Dez chamadas para mil pedidos, só leitura."/>
+                    <!-- "só leitura" era MENTIRA neste texto até 16/09/2026: o
+                         método regrava os itens do espelho (unlink + create).
+                         O rótulo diz "ler" e a ajuda dizia "só leitura", então
+                         o erro de permissão que aparecia na tela ("você não
+                         tem permissão para excluir") não fazia sentido nenhum
+                         para quem clicou. Dizer o que o botão faz é metade do
+                         conserto; a outra metade é o direito, no ACL. -->
                     <button name="action_read_detail" type="object"
                             string="Ler detalhe"
-                            help="Busca no Olist o canal, os itens e o cliente das linhas selecionadas. Uma chamada por linha, só leitura."/>
+                            help="Pergunta ao Olist o canal, os itens e o cliente das linhas selecionadas, e REGRAVA os itens do espelho com o que vier. O casamento livro-a-produto feito à mão é preservado."/>
                     <button name="action_import_selected" type="object"
                             string="Importar para o Odoo"
                             help="Cria o pedido no Odoo para as linhas selecionadas. Escreve aqui, nunca no Olist."/>
@@ -455,6 +462,31 @@
                     <button name="action_import_selected" type="object"
                             string="Despachar" class="btn-primary"
                             help="Um clique registra tudo: venda, entrega concluída na caixa Marketplaces, fatura do XML e recebimento. Se o XML da nota ainda não estiver aqui, ele é buscado na hora."/>
+                    <!-- O cron das notas varre de duas em duas horas e não dá
+                         conta: quem está na fila vê "Sem XML" e não tem o que
+                         fazer senão esperar. Este botão é a mão no lugar do
+                         relógio — pergunta ao Olist pela nota DESTE pedido, que
+                         já sabe o id dela, em vez da varredura da conta inteira.
+
+                         `action_fetch_xml` existia no modelo desde sempre e não
+                         estava em view nenhuma: o "caminho direto que faltava"
+                         foi escrito e nunca ganhou botão.
+
+                         NÃO apaga nada: arquiva o XML (dedupe por chave de
+                         acesso, rodar duas vezes não duplica) e adota o órfão
+                         que já estivesse no painel. Depois do Despachar de
+                         propósito, para não mover a ação principal do lugar. -->
+                    <button name="action_fetch_xml" type="object"
+                            string="Buscar o XML"
+                            help="Pergunta ao Olist pela nota das linhas selecionadas e a arquiva, sem esperar o cron. Uma chamada por linha. Não altera o pedido nem os itens."/>
+                    <!-- A outra metade da mesma pergunta: "Nota emitida, XML
+                         não arquivado" se resolve com o botão acima, mas o
+                         pedido que chegou sem canal, sem itens ou sem cliente
+                         se resolve aqui. Quem está na fila precisa dos dois
+                         sem trocar de tela. -->
+                    <button name="action_read_detail" type="object"
+                            string="Ler detalhe"
+                            help="Pergunta ao Olist o canal, os itens e o cliente das linhas selecionadas, e REGRAVA os itens do espelho com o que vier. O casamento livro-a-produto feito à mão é preservado."/>
                 </header>
                 <field name="data_pedido"/>
                 <field name="numero"/>

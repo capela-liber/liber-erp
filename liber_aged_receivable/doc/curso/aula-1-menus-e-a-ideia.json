@@ -1,0 +1,74 @@
+{
+ "curso": "Curso Financeiro: a receber, a pagar e os painéis",
+ "aula": 1,
+ "titulo": "O que há em cada menu, e a ideia",
+ "abertura": "Esta aula é o mapa: as três telas por idade, onde as faturas continuam, e as três coisas do mês que o curso também cobre.",
+ "fecho": "Cobrar não é ler a lista de faturas: é olhar a carteira por idade. As próximas aulas abrem uma tela de cada vez.",
+ "youtube": "https://www.youtube.com/watch?v=kTTXAKwpo18",
+ "quiz": [
+  {
+   "pergunta": "A ideia central do curso é qual?",
+   "opcoes": [
+    "Cobrar é ler a lista de faturas do mês",
+    "Cobrar é olhar a carteira por idade: quem deve há quanto tempo",
+    "Cobrar é emitir segunda via",
+    "Cobrar é conferir o extrato"
+   ],
+   "comentarios": [
+    "A lista não diz há quanto tempo cada um deve.",
+    "A idade é o que separa o atraso novo do dinheiro velho.",
+    "Segunda via é consequência, não método.",
+    "O extrato é outro assunto, do curso seguinte."
+   ],
+   "correta": 1
+  },
+  {
+   "pergunta": "Onde ficam as três telas por idade?",
+   "opcoes": [
+    "Em Clientes",
+    "Em Configuração",
+    "Em Relatórios",
+    "No Painel"
+   ],
+   "comentarios": [
+    "Clientes tem as faturas.",
+    "Configuração cadastra.",
+    "Relatórios: a receber, a pagar e o histórico.",
+    "O painel é outro."
+   ],
+   "correta": 2
+  },
+  {
+   "pergunta": "O curso substitui a lista de faturas?",
+   "opcoes": [
+    "Sim, a lista sai do menu",
+    "Sim, vira só leitura",
+    "Não: dá outra maneira de olhar para as mesmas faturas",
+    "Não, porque são dados diferentes"
+   ],
+   "comentarios": [
+    "Ela continua onde sempre esteve.",
+    "Nada vira só leitura.",
+    "São as mesmas faturas, vistas por idade.",
+    "São os mesmos dados."
+   ],
+   "correta": 2
+  },
+  {
+   "pergunta": "Quais são as três coisas do mês que o curso cobre além da idade?",
+   "opcoes": [
+    "Em pagamento, o espelho entre empresas e a planilha brasileira",
+    "Boleto, cheque e cartão",
+    "Balanço, DRE e razão",
+    "Extrato, conciliação e fechamento"
+   ],
+   "comentarios": [
+    "São as três últimas aulas.",
+    "Nenhum dos três está aqui.",
+    "São relatórios contábeis, não estes.",
+    "São do curso seguinte, o Financeiro interno."
+   ],
+   "correta": 0
+  }
+ ]
+}

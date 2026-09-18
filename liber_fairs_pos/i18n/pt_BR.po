@@ -220,7 +220,8 @@ msgid "fair_id"
 msgstr ""
 
 #. module: liber_fairs_pos
-#: model:ir.model.fields,field_description:liber_fairs_pos.field_event_fair_cashier__name
+#: model:ir.model.fields,field_description:liber_fairs_pos.field_event_fair_cashier__partner_id
+#: model:ir.model.fields,field_description:liber_fairs_pos.field_pos_config__fair_cashier_id
 msgid "Operator"
 msgstr "Operador"
 
@@ -531,3 +532,8 @@ msgstr "Gerar as contas que faltam"
 #: model:ir.model.fields,field_description:liber_fairs_pos.field_event_fair__bills_pending
 msgid "Bills missing"
 msgstr "Contas a gerar"
+
+#. module: liber_fairs_pos
+#: model_terms:ir.ui.view,arch_db:liber_fairs_pos.view_event_fair_form_pos
+msgid "Somebody had their numbers filled in after the event closed. This creates only the bills that are missing."
+msgstr "Alguém teve os números preenchidos depois de o evento fechar. Isto cria só as contas que faltam."

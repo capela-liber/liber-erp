@@ -1,0 +1,74 @@
+{
+ "curso": "Curso Royalties II: apuração, pagamento e prestação de contas",
+ "aula": 8,
+ "titulo": "Entre empresas: configurar",
+ "abertura": "Esta aula prepara o entre-empresas: as Definições da detentora e as da vendedora, uma vez por ano.",
+ "fecho": "Detentora: empresas-fonte, margem, produto, diário e conta. Vendedora: diário de compras e conta do espelho. As contas ficam no produto porque é venda de serviço.",
+ "youtube": "",
+ "quiz": [
+  {
+   "pergunta": "O que é a empresa-fonte?",
+   "opcoes": [
+    "A irmã que vende o livro cujo direito é da detentora",
+    "A que detém o direito",
+    "A gráfica",
+    "O distribuidor"
+   ],
+   "comentarios": [
+    "É dela que se cobra.",
+    "A detentora é a que configura.",
+    "Não.",
+    "Não."
+   ],
+   "correta": 0
+  },
+  {
+   "pergunta": "Para que serve a margem?",
+   "opcoes": [
+    "Para o autor receber mais",
+    "Para o imposto",
+    "Para o frete",
+    "Para a detentora cobrar da irmã o royalty mais uma margem"
+   ],
+   "comentarios": [
+    "O autor recebe o royalty.",
+    "Não.",
+    "Não.",
+    "É o preço do serviço entre empresas."
+   ],
+   "correta": 3
+  },
+  {
+   "pergunta": "O que a vendedora configura?",
+   "opcoes": [
+    "Nada",
+    "O produto",
+    "O diário de compras e a conta em que a fatura espelho cai",
+    "As faixas"
+   ],
+   "comentarios": [
+    "Configura, sim.",
+    "O produto é da detentora.",
+    "É do lado dela que o espelho entra.",
+    "Faixas são do contrato."
+   ],
+   "correta": 2
+  },
+  {
+   "pergunta": "Por que as contas contábeis ficam no produto?",
+   "opcoes": [
+    "Por costume",
+    "Porque fatura entre empresas é venda de serviço, e o produto carrega a conta dos dois lados",
+    "Porque o Odoo exige",
+    "Não ficam"
+   ],
+   "comentarios": [
+    "Há razão.",
+    "Um produto, duas contas: receita de um lado, despesa do outro.",
+    "É desenho nosso.",
+    "Ficam."
+   ],
+   "correta": 1
+  }
+ ]
+}

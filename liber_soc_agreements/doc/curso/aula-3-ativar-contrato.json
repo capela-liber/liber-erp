@@ -1,0 +1,78 @@
+{
+ "curso": "Curso de Consignação I",
+ "aula": 3,
+ "titulo": "Ativar: nasce a prateleira",
+ "abertura": "Um contrato em rascunho não move nada. Ativar é o clique que cria a prateleira do cliente, um local de estoque com o nome da livraria.",
+ "fecho": "Ativar de novo um contrato já ativo não cria segunda prateleira: a operação é segura de repetir. Na próxima aula, suspender, reativar e encerrar.",
+ "youtube": "https://www.youtube.com/watch?v=tlvkDtIoJSM",
+ "quiz": [
+  {
+   "pergunta": "O que o botão Ativar cria?",
+   "opcoes": [
+    "A prateleira do cliente: um local de estoque com o nome da livraria",
+    "Uma fatura",
+    "Um pedido de venda",
+    "Uma campanha"
+   ],
+   "comentarios": [
+    "Fora do armazém, na raiz CO.",
+    "Fatura vem do acerto.",
+    "O Pedido C nasce da operação.",
+    "Campanhas são independentes do contrato."
+   ],
+   "correta": 0
+  },
+  {
+   "pergunta": "Onde fica a prateleira em relação ao armazém?",
+   "opcoes": [
+    "Em cada loja da rede",
+    "Fora do armazém, na raiz CO",
+    "No estoque da livraria",
+    "Dentro do armazém, como uma estante"
+   ],
+   "comentarios": [
+    "É uma por contrato.",
+    "Por isso o estoque consignado é separado.",
+    "A livraria não tem estoque no sistema.",
+    "Está fora; o inventário do armazém não a conta."
+   ],
+   "correta": 1
+  },
+  {
+   "pergunta": "Ativar duas vezes o mesmo contrato:",
+   "opcoes": [
+    "Cria duas prateleiras",
+    "Dá erro e cancela o contrato",
+    "Duplica o contrato",
+    "Não faz nada de novo"
+   ],
+   "comentarios": [
+    "A operação é segura de repetir.",
+    "Nada é cancelado.",
+    "Um contrato por cliente.",
+    "Idempotente por desenho."
+   ],
+   "correta": 3
+  },
+  {
+   "pergunta": "O que muda na ficha do cliente quando o contrato é ativado?",
+   "opcoes": [
+    "O cliente vira fornecedor",
+    "Ganha a marca Permite Consignação e aponta para a prateleira",
+    "Nada",
+    "O canal de vendas é trocado"
+   ],
+   "comentarios": [
+    "Consignação não muda o tipo do contato.",
+    "É como a ficha e o contrato se ligam.",
+    "Ela ganha a marca e a prateleira.",
+    "O canal continua o da ficha."
+   ],
+   "correta": 1
+  }
+ ],
+ "youtube_anterior": [
+  "https://www.youtube.com/watch?v=N2zjplPdpus"
+ ],
+ "youtube_quadro": "2912x2080"
+}

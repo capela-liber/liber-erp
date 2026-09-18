@@ -1,0 +1,74 @@
+{
+ "curso": "Curso Feiras II: vender, fechar e voltar",
+ "aula": 1,
+ "titulo": "O que há em cada menu: o evento em andamento",
+ "abertura": "Bem-vindo ao curso Feiras II: vender, fechar e voltar. O curso um montou e levou; este é a feira na praça. Esta aula é o mapa: o que o evento em andamento tem no alto, nas abas e nos menus.",
+ "fecho": "Caixa, Nota fiscal e Retorno no alto; Transferências, Perdas, Fechamentos e Pedidos do PDV nos botões; Caixas, Fechamentos diários, Comissões e Custos nas abas. A próxima aula fecha o dia.",
+ "youtube": "https://www.youtube.com/watch?v=I0iHBcTIc_c",
+ "quiz": [
+  {
+   "pergunta": "Que botões o evento na praça tem no alto?",
+   "opcoes": [
+    "Faturar e Cobrar",
+    "Caixa, Nota fiscal e Retorno",
+    "Novo e Apagar",
+    "Planejar e Despachar"
+   ],
+   "comentarios": [
+    "Feira não fatura.",
+    "Planejar e Despachar já ficaram para trás.",
+    "Apagar é do gerente, na lista.",
+    "São da feira ainda em rascunho."
+   ],
+   "correta": 1
+  },
+  {
+   "pergunta": "O que o botão Fechamentos abre?",
+   "opcoes": [
+    "A conta da equipe",
+    "O caixa do PDV",
+    "As notas fiscais",
+    "A lista dos dias do evento, com o vendido e o estado de cada um"
+   ],
+   "comentarios": [
+    "Comissões é aba.",
+    "Caixa é outro botão.",
+    "Notas é outro.",
+    "Um por dia, nascidos no Planejar."
+   ],
+   "correta": 3
+  },
+  {
+   "pergunta": "Quem vê as abas Comissões e Custos?",
+   "opcoes": [
+    "A equipe interna; atendente e supervisor não as veem",
+    "Todo mundo da feira",
+    "Só quem está na praça",
+    "Só o financeiro"
+   ],
+   "comentarios": [
+    "Elas carregam quanto cada um vai receber.",
+    "Quem está na praça não vê.",
+    "É o contrário.",
+    "O gerente de feiras vê."
+   ],
+   "correta": 0
+  },
+  {
+   "pergunta": "Quais são os três menus do dia a dia da praça?",
+   "opcoes": [
+    "Vendas, Faturas e Pagamentos",
+    "Calendário, Eventos e Modelos",
+    "Grade, Caixas e Custos",
+    "Fechamentos diários, Perdas e Recebimentos"
+   ],
+   "comentarios": [
+    "Não são menus daqui.",
+    "Esses são de quem monta.",
+    "São abas.",
+    "Contar a mesa, explicar o que faltou, conferir o que chegou."
+   ],
+   "correta": 3
+  }
+ ]
+}

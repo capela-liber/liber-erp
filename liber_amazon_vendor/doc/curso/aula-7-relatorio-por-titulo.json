@@ -1,0 +1,74 @@
+{
+ "curso": "Curso Amazon Vendor Central",
+ "aula": 7,
+ "titulo": "O relatório por título, e o relógio",
+ "abertura": "Última aula: o que a Amazon pede de cada livro, e quanto tempo o ciclo leva — do pedido ao fechamento dela.",
+ "fecho": "O relatório por título diz o que vale a pena manter no catálogo dela; os Agendamentos dizem o que falta despachar e o que já atrasou. Fim do curso.",
+ "youtube": "https://www.youtube.com/watch?v=5q8LNY43IlU",
+ "quiz": [
+  {
+   "pergunta": "O que o rótulo curto das linhas junta?",
+   "opcoes": [
+    "O nome inteiro da Amazon",
+    "O código interno",
+    "O ISBN e as primeiras palavras do nome",
+    "O ASIN e o preço"
+   ],
+   "comentarios": [
+    "É o que se evita.",
+    "O código é nosso.",
+    "O nome da Amazon é longo demais para um eixo.",
+    "Preço não entra no rótulo."
+   ],
+   "correta": 2
+  },
+  {
+   "pergunta": "Que pergunta o relatório por título responde?",
+   "opcoes": [
+    "O que a Amazon pede de cada livro, e quanto",
+    "Quanto estoque há de cada livro",
+    "Quanto cada livro custou",
+    "Quanto cada livro rendeu de margem"
+   ],
+   "comentarios": [
+    "É o que diz o que vale manter no catálogo dela.",
+    "Estoque é outra tela.",
+    "Custo é da casa.",
+    "Margem é do financeiro."
+   ],
+   "correta": 0
+  },
+  {
+   "pergunta": "O que a coluna Dias até o prazo mostra?",
+   "opcoes": [
+    "Quantos dias a Amazon levou para fechar",
+    "Quantos dias faltam para a data de entrega, negativo quando já passou",
+    "Quantos dias de estoque restam",
+    "Quantos dias desde o pedido"
+   ],
+   "comentarios": [
+    "Isso é Dias até fechar.",
+    "Vazia para pedido que a Amazon já fechou.",
+    "Estoque não entra.",
+    "Não é a idade do pedido."
+   ],
+   "correta": 1
+  },
+  {
+   "pergunta": "O que Dias até fechar mede?",
+   "opcoes": [
+    "O prazo de pagamento",
+    "O prazo que ela concedeu",
+    "Do pedido ao momento em que a Amazon o encerrou",
+    "O tempo de produção"
+   ],
+   "comentarios": [
+    "Pagamento é do financeiro.",
+    "O concedido é outra coluna.",
+    "É o mais perto de um prazo de entrega que a API entrega.",
+    "Produção é da gráfica."
+   ],
+   "correta": 2
+  }
+ ]
+}

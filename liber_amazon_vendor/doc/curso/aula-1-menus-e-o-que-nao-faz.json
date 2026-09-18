@@ -1,0 +1,74 @@
+{
+ "curso": "Curso Amazon Vendor Central",
+ "aula": 1,
+ "titulo": "O que há em cada menu, e o que o módulo não faz",
+ "abertura": "Bem-vindo ao curso da Amazon Vendor Central. A inversão que organiza tudo: no Vendor Central a Amazon é a compradora. O que a interface dela chama de pedido de compra, do nosso lado é venda — e por isso o que sai daqui é cotação.",
+ "fecho": "Pedidos, Agendamentos, Relatório e Configuração; e um módulo que só lê: confirmar, avisar embarque e faturar por EDI são de gente com prazo correndo. A próxima aula é a configuração.",
+ "youtube": "https://www.youtube.com/watch?v=ewzHzbGqcKY",
+ "quiz": [
+  {
+   "pergunta": "No Vendor Central, quem compra?",
+   "opcoes": [
+    "O leitor final",
+    "Ninguém: é consignação",
+    "Nós compramos da Amazon",
+    "A Amazon: o pedido dela é venda nossa"
+   ],
+   "comentarios": [
+    "O leitor compra da Amazon.",
+    "Não é consignação.",
+    "É o contrário.",
+    "Trocar isso inverteria estoque e faturamento."
+   ],
+   "correta": 3
+  },
+  {
+   "pergunta": "O que o módulo produz a partir de um pedido da Amazon?",
+   "opcoes": [
+    "Um pedido de compra",
+    "Uma cotação de venda",
+    "Uma transferência",
+    "Uma fatura"
+   ],
+   "comentarios": [
+    "Inverteria o fluxo.",
+    "Nunca um pedido de compra.",
+    "A transferência vem do pedido.",
+    "A fatura vem depois, do pedido."
+   ],
+   "correta": 1
+  },
+  {
+   "pergunta": "O que o módulo NÃO faz, de propósito?",
+   "opcoes": [
+    "Gerar cotação",
+    "Ler os pedidos",
+    "Confirmar pedido, avisar embarque, imprimir etiqueta e faturar por EDI",
+    "Casar os ISBNs"
+   ],
+   "comentarios": [
+    "Gera, sim.",
+    "Lê, sim.",
+    "Isso tem prazo da Amazon e é de gente olhando o relógio.",
+    "Casa, sim."
+   ],
+   "correta": 2
+  },
+  {
+   "pergunta": "O que a camada de API deste módulo pode escrever na Amazon?",
+   "opcoes": [
+    "Só a confirmação do pedido",
+    "Só o aviso de embarque",
+    "Nada: não há caminho de escrita, e um teste guarda isso",
+    "Tudo o que a SP-API aceita"
+   ],
+   "comentarios": [
+    "Nem isso.",
+    "Nem isso.",
+    "Para a Amazon, este módulo só lê.",
+    "Nada."
+   ],
+   "correta": 2
+  }
+ ]
+}

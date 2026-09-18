@@ -1,0 +1,74 @@
+{
+ "curso": "Curso Royalties II: apuração, pagamento e prestação de contas",
+ "aula": 3,
+ "titulo": "Apurar os royalties das vendas",
+ "abertura": "Esta aula apura: Preencher Linhas de Royalties lê as vendas pagas das obras contratadas e lança na conta de cada favorecido, pela faixa do acumulado.",
+ "fecho": "Só venda paga gera royalty; cada venda é apurada uma vez; e a faixa é a do acumulado de exemplares. Pode-se rodar toda semana.",
+ "youtube": "https://www.youtube.com/watch?v=gAidpWbdRC0",
+ "quiz": [
+  {
+   "pergunta": "Que venda gera royalty?",
+   "opcoes": [
+    "Toda fatura emitida",
+    "Só a venda à vista",
+    "Só a venda de balcão",
+    "Só a fatura paga"
+   ],
+   "comentarios": [
+    "Em aberto não conta.",
+    "Prazo não importa; pagamento sim.",
+    "Qualquer canal, desde que paga.",
+    "O autor recebe sobre o que entrou."
+   ],
+   "correta": 3
+  },
+  {
+   "pergunta": "Rodar Preencher Linhas duas vezes faz o quê?",
+   "opcoes": [
+    "Nada de novo: cada venda é apurada uma vez",
+    "Duplica",
+    "Apaga a anterior",
+    "Recalcula tudo"
+   ],
+   "comentarios": [
+    "É o que permite apurar toda semana.",
+    "Não duplica.",
+    "Nada é apagado.",
+    "Só o que faltava entra."
+   ],
+   "correta": 0
+  },
+  {
+   "pergunta": "Como se escolhe o percentual de uma venda?",
+   "opcoes": [
+    "Pelo preço",
+    "Pelo mês",
+    "Pela faixa do acumulado de exemplares da obra",
+    "Pelo cliente"
+   ],
+   "comentarios": [
+    "O preço entra no valor, não na faixa.",
+    "Não é por mês.",
+    "Dez até 3.000, doze até 5.000, e assim por diante.",
+    "Não é por cliente."
+   ],
+   "correta": 2
+  },
+  {
+   "pergunta": "Onde se vê o que a apuração lançou?",
+   "opcoes": [
+    "No pedido de venda",
+    "No botão Contas Analíticas do contrato",
+    "No extrato bancário",
+    "Na ficha do livro"
+   ],
+   "comentarios": [
+    "O pedido não sabe de royalty.",
+    "Um lançamento por venda, com faixa e valor.",
+    "Banco é outro assunto.",
+    "O livro mostra o contrato, não os lançamentos."
+   ],
+   "correta": 1
+  }
+ ]
+}

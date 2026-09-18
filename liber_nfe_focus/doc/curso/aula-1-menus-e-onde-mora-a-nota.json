@@ -1,0 +1,106 @@
+{
+ "curso": "Curso NF-e: emitir",
+ "aula": 1,
+ "titulo": "O que há em cada menu, e onde mora a nota",
+ "abertura": "A nota fiscal não tem aplicativo próprio no sistema, e isso é a primeira coisa a aprender. Ela mora dentro da fatura, em Faturamento, e o que existe além dela são três lugares de apoio: a lista de Remessas, as Operações fiscais e a ficha da empresa emitente.",
+ "passos": [
+  {
+   "texto": "O caminho começa na tela inicial, entre os aplicativos."
+  },
+  {
+   "texto": "Faturamento. A nota fiscal não tem aplicativo próprio: ela mora dentro da fatura, que é onde a venda já estava."
+  },
+  {
+   "texto": "Clientes, Faturas. É esta lista o ponto de partida de toda nota que a casa emite."
+  },
+  {
+   "texto": "Duas colunas aqui são do módulo de nota: o número da NFe, que é diferente do número da fatura, e o status na SEFAZ. São elas que respondem, sem abrir nada, se a nota saiu."
+  },
+  {
+   "texto": "Dentro da fatura, a aba NFe. Aqui está o que a SEFAZ respondeu, a operação fiscal, o transporte e os volumes."
+  },
+  {
+   "texto": "E no alto, os verbos: emitir, consultar, corrigir e cancelar. Quatro botões, e nenhum formulário de nota para preencher."
+  },
+  {
+   "texto": "Ainda em Clientes, Remessas: as notas que não cobram nada — consignação, bonificação, feira. Elas são o assunto da última aula."
+  },
+  {
+   "texto": "Em Configuração, Operações fiscais: a lista do que a casa faz sair, que é de onde nasce o CFOP de cada nota."
+  },
+  {
+   "texto": "E o quarto lugar é a ficha da empresa, em Definições, Usuários e Empresas, Empresas. Ela é tela de administrador: o Financeiro a lê, quem a preenche é quem administra o sistema."
+  },
+  {
+   "texto": "Quatro lugares, então: a fatura, a aba NFe, as Operações fiscais e a ficha da empresa. O resto do curso é o que se preenche em cada um."
+  }
+ ],
+ "fecho": "Quatro lugares: a fatura, a aba NFe dentro dela, as Operações fiscais em Configuração e a ficha da empresa. A ficha da empresa é tela de administrador — o Financeiro a lê. As próximas aulas preenchem cada um deles.",
+ "youtube": "",
+ "quiz": [
+  {
+   "pergunta": "Onde se emite uma NF-e no sistema?",
+   "opcoes": [
+    "Num aplicativo próprio de NF-e",
+    "Dentro da fatura de cliente, em Faturamento",
+    "Na tela do pedido de venda",
+    "No painel de XMLs"
+   ],
+   "comentarios": [
+    "Não existe esse aplicativo: a nota nasce da fatura.",
+    "A fatura lançada é o ponto de partida de toda nota.",
+    "O pedido origina a fatura, mas não emite nota.",
+    "O painel guarda XMLs recebidos e emitidos; não emite."
+   ],
+   "correta": 1
+  },
+  {
+   "pergunta": "Para que serve o menu Remessas, em Clientes?",
+   "opcoes": [
+    "Para as notas que ninguém paga — consignação, bonificação, feira",
+    "Para as entregas do depósito",
+    "Para as notas canceladas",
+    "Para as faturas em atraso"
+   ],
+   "comentarios": [
+    "Nota fiscal de movimento sem cobrança, num lugar só.",
+    "Entrega é Inventário; remessa é nota fiscal.",
+    "Cancelada continua na lista de faturas.",
+    "Atraso é assunto do a receber."
+   ],
+   "correta": 0
+  },
+  {
+   "pergunta": "Quais são as duas colunas que o módulo acrescenta à lista de faturas?",
+   "opcoes": [
+    "Peso e volumes",
+    "CFOP e NCM",
+    "Número da NFe e status na SEFAZ",
+    "Chave de acesso e protocolo"
+   ],
+   "comentarios": [
+    "Esses ficam na aba NFe da fatura.",
+    "Também moram na fatura e no produto.",
+    "São eles que respondem, sem abrir nada, se a nota saiu — e o número da NFe não é o número da fatura.",
+    "A chave só aparece dentro da fatura."
+   ],
+   "correta": 2
+  },
+  {
+   "pergunta": "Onde ficam as Operações fiscais?",
+   "opcoes": [
+    "Em Faturamento, Configuração",
+    "Na ficha de cada produto",
+    "Em Definições, Técnico",
+    "Dentro da aba NFe da fatura"
+   ],
+   "comentarios": [
+    "É de lá que nasce o CFOP de cada nota.",
+    "O produto tem NCM, não operação.",
+    "Não é tela técnica: é configuração contábil.",
+    "A aba mostra a operação escolhida, não a lista."
+   ],
+   "correta": 0
+  }
+ ]
+}

@@ -1,0 +1,74 @@
+{
+ "curso": "Curso Amazon Vendor Central",
+ "aula": 5,
+ "titulo": "Gerar a cotação",
+ "abertura": "Esta aula transforma o espelho em documento: o pedido aberto, com as linhas casadas, vira cotação de venda no cliente da unidade.",
+ "fecho": "Criar cotação faz um pedido de venda em rascunho, com o canal Amazon e o preço combinado; um pedido, uma cotação; pedido fechado não vira nada. A próxima aula é a divergência.",
+ "youtube": "https://www.youtube.com/watch?v=68Esbq3KWLg",
+ "quiz": [
+  {
+   "pergunta": "Para quem a cotação é feita?",
+   "opcoes": [
+    "Para a Amazon genérica",
+    "Para a conta da casa",
+    "Para o endereço de entrega",
+    "Para o cliente da unidade compradora"
+   ],
+   "comentarios": [
+    "A unidade resolve quem é.",
+    "A conta é nossa.",
+    "A entrega é o destino, não o cliente.",
+    "É dele que vêm os dados fiscais da fatura."
+   ],
+   "correta": 3
+  },
+  {
+   "pergunta": "Em que estado a cotação nasce?",
+   "opcoes": [
+    "Confirmada",
+    "Faturada",
+    "Cancelada",
+    "Rascunho, como qualquer cotação da casa"
+   ],
+   "comentarios": [
+    "Confirmar é decisão de gente.",
+    "Faturar vem depois.",
+    "Não nasce cancelada.",
+    "Daí em diante é venda como outra qualquer."
+   ],
+   "correta": 3
+  },
+  {
+   "pergunta": "O botão pode gerar uma segunda cotação para o mesmo pedido?",
+   "opcoes": [
+    "Sim, quantas quiser",
+    "Não: um pedido, uma cotação",
+    "Sim, se o valor mudar",
+    "Sim, uma por linha"
+   ],
+   "comentarios": [
+    "Só uma.",
+    "O que muda depois é assunto da divergência.",
+    "Mudança vira aviso.",
+    "É por pedido."
+   ],
+   "correta": 1
+  },
+  {
+   "pergunta": "Um pedido que a Amazon já fechou vira cotação?",
+   "opcoes": [
+    "Sim, mas só em rascunho",
+    "Não: não há janela aberta para vender contra",
+    "Sim, com aviso",
+    "Sim, se tiver linhas casadas"
+   ],
+   "comentarios": [
+    "Não gera.",
+    "Fechado é fechado.",
+    "Não gera.",
+    "Casar não basta."
+   ],
+   "correta": 1
+  }
+ ]
+}

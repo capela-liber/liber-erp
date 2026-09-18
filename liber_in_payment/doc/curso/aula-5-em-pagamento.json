@@ -1,0 +1,74 @@
+{
+ "curso": "Curso Financeiro: a receber, a pagar e os painéis",
+ "aula": 5,
+ "titulo": "O estado Em pagamento",
+ "abertura": "Esta aula é o dinheiro que saiu e ainda não bateu: por que a fatura fica Em pagamento em vez de Paga, e o interruptor por empresa.",
+ "fecho": "Em pagamento quer dizer alguém disse que pagou e o extrato não confirmou. Só a conciliação bancária fecha a fatura. Casa que não concilia deixa o interruptor desligado.",
+ "youtube": "https://www.youtube.com/watch?v=Vk8Ebz2iehY",
+ "quiz": [
+  {
+   "pergunta": "Uma fatura com pagamento registrado fica em que estado?",
+   "opcoes": [
+    "Paga, imediatamente",
+    "Em pagamento, até o extrato conciliar",
+    "Em rascunho",
+    "Vencida"
+   ],
+   "comentarios": [
+    "Só depois que o banco confirma.",
+    "É o que o módulo faz.",
+    "Rascunho é antes de lançar.",
+    "Vencimento é outra coisa."
+   ],
+   "correta": 1
+  },
+  {
+   "pergunta": "Por que não marcar como Paga na hora?",
+   "opcoes": [
+    "Por causa do imposto",
+    "Porque o cliente pode estornar",
+    "Porque um pagamento digitado por engano sumiria da cobrança e ninguém o procuraria mais",
+    "Por exigência do contador"
+   ],
+   "comentarios": [
+    "Imposto não muda com isso.",
+    "O estorno é raro e tem caminho próprio.",
+    "É o risco real: o caixa da casa passa a mentir.",
+    "É decisão da casa, não exigência."
+   ],
+   "correta": 2
+  },
+  {
+   "pergunta": "O que faz a fatura passar de Em pagamento para Paga?",
+   "opcoes": [
+    "A conciliação do extrato bancário casar a linha",
+    "O prazo de três dias",
+    "O gerente aprovar",
+    "A emissão do recibo"
+   ],
+   "comentarios": [
+    "É o banco quem confirma, e a conciliação é onde isso acontece.",
+    "Não há prazo automático.",
+    "Não há aprovação.",
+    "Recibo não concilia nada."
+   ],
+   "correta": 0
+  },
+  {
+   "pergunta": "Uma empresa que não concilia extrato deve ligar o interruptor?",
+   "opcoes": [
+    "Sim, sempre",
+    "Não: sem conciliação, tudo ficaria Em pagamento para sempre",
+    "Sim, mas só no fim do ano",
+    "Tanto faz"
+   ],
+   "comentarios": [
+    "Ligar sem conciliar trava todas as faturas.",
+    "O interruptor é por empresa exatamente por isso.",
+    "Não há essa regra.",
+    "Faz diferença, e grande."
+   ],
+   "correta": 1
+  }
+ ]
+}

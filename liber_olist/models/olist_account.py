@@ -110,6 +110,10 @@ class OlistAccount(models.Model):
              "Use um diário PRÓPRIO do marketplace, não a conta bancária: o "
              "dinheiro está com o Olist até o repasse cair no banco, e é a "
              "reconciliação desse diário contra o repasse que revela as taxas.\n"
+             "O diário precisa liquidar na PRÓPRIA conta (a conta de "
+             "transitória do método de pagamento igual à conta padrão do "
+             "diário): é o que faz a fatura nascer Paga em vez de ficar "
+             "\"Em pagamento\" para sempre.\n"
              "Vazio: nada é lançado, e a fatura fica em aberto.")
     invoice_auto_post = fields.Boolean(
         string="Lançar a fatura ao criar", default=True,
@@ -180,6 +184,70 @@ class OlistAccount(models.Model):
                     "qual conta se escreve, então ela precisa apontar para uma "
                     "só.",
                     account.company_id.display_name))
+
+    @api.constrains('payment_journal_id')
+    def _check_payment_journal_settles_on_its_own_account(self):
+        """O diário do marketplace tem de liquidar na própria conta.
+
+        Com uma conta transitória ("Outstanding Receipts") diferente da conta
+        padrão do diário, o núcleo do Odoo considera o recebimento NÃO
+        conferido enquanto ninguém o casar com um extrato bancário — e o
+        extrato nunca vem, porque o dinheiro está com o Olist e não no banco.
+        A fatura então fica "Em pagamento" para sempre, e o financeiro passa a
+        cobrar quem já pagou: foi exatamente a queixa de 11/09/2026.
+
+        Quando a conta transitória É a conta padrão do diário (e ela é de tipo
+        caixa), o núcleo trata o recebimento como conferido na hora
+        (`_compute_reconciliation_status`: "Allow user managing payments
+        without any statement lines by using the bank account directly") e a
+        fatura nasce Paga. O saldo continua parado na conta do gateway até o
+        repasse cair — que é o que se queria desde o começo.
+
+        Não corrigimos o diário sozinhos de propósito: ele pode ser
+        compartilhado, e mexer na conta transitória de um diário bancário de
+        verdade quebraria a conciliação dele. Quem escolhe o diário arruma o
+        diário.
+        """
+        for account in self:
+            diario = account.payment_journal_id
+            if not diario:
+                continue
+            padrao = diario.default_account_id
+            if not padrao:
+                raise ValidationError(_(
+                    "O diário %s não tem conta padrão. Sem ela o recebimento "
+                    "do marketplace não tem onde pousar: defina a conta do "
+                    "gateway no diário antes de escolhê-lo aqui.",
+                    diario.display_name))
+            # `browse` de um id falso devolve um registro vazio: filtrar aqui
+            # deixa o caso "sem conta transitória" com mensagem própria, em vez
+            # de sair como "liquida em , ".
+            transitorias = (diario._get_journal_inbound_outstanding_payment_accounts()
+                            .filtered(lambda a: a.id))
+            if not transitorias:
+                raise ValidationError(_(
+                    "O diário %(diario)s não tem conta de destino nos "
+                    "pagamentos recebidos. O Odoo recusa lançar o recebimento "
+                    "sem ela, e a fatura do marketplace ficaria em aberto.\n\n"
+                    "Conserto: em Contabilidade > Configuração > Diários, abra "
+                    "%(diario)s, aba Pagamentos recebidos, e ponha "
+                    "%(padrao)s como conta de destino.",
+                    diario=diario.display_name, padrao=padrao.display_name))
+            fora = transitorias - padrao
+            if fora:
+                raise ValidationError(_(
+                    "O diário %(diario)s liquida em %(fora)s, e não na sua "
+                    "própria conta %(padrao)s.\n\n"
+                    "Assim a fatura do marketplace fica \"Em pagamento\" para "
+                    "sempre: o Odoo espera um extrato bancário para conferir o "
+                    "recebimento, e extrato não virá — o dinheiro está com o "
+                    "Olist até o repasse.\n\n"
+                    "Conserto: em Contabilidade > Configuração > Diários, abra "
+                    "%(diario)s, aba Pagamentos recebidos, e ponha "
+                    "%(padrao)s como conta de destino.",
+                    diario=diario.display_name,
+                    fora=", ".join(fora.mapped('display_name')),
+                    padrao=padrao.display_name))
 
     def _banco_neutralizado(self):
         return self.env['ir.config_parameter'].sudo().get_param(

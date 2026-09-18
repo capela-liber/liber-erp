@@ -1,0 +1,74 @@
+{
+ "curso": "Curso Royalties II: apuração, pagamento e prestação de contas",
+ "aula": 4,
+ "titulo": "A data de corte e as Dívidas de Royalties",
+ "abertura": "Esta aula é a régua: a Data do Último Pagamento em cada linha, e o relatório que diz a quem se deve e quanto.",
+ "fecho": "Até a data de corte está quitado; depois dela é dívida. Só o administrador a edita. E o pivô responde a pergunta do mês.",
+ "youtube": "https://www.youtube.com/watch?v=9CaclF-m1ak",
+ "quiz": [
+  {
+   "pergunta": "O que a Data do Último Pagamento separa?",
+   "opcoes": [
+    "O quitado do devido",
+    "Válido de vencido",
+    "Venda de devolução",
+    "Autor de tradutor"
+   ],
+   "comentarios": [
+    "Antes dela, pago; depois, dívida.",
+    "É do contrato, não da linha.",
+    "Não é isso.",
+    "Não é isso."
+   ],
+   "correta": 0
+  },
+  {
+   "pergunta": "Quem edita a data de corte?",
+   "opcoes": [
+    "Qualquer usuário",
+    "O autor",
+    "Só o administrador de contratos",
+    "Ninguém: é automática"
+   ],
+   "comentarios": [
+    "Mexer nela muda dívida.",
+    "O autor não entra.",
+    "É por isso que é do gerente.",
+    "Avança ao pagar, mas o gerente pode corrigir."
+   ],
+   "correta": 2
+  },
+  {
+   "pergunta": "O pivô de Dívidas mostra o quê?",
+   "opcoes": [
+    "Vendas por loja",
+    "Provisionado, pago e saldo por favorecido",
+    "Estoque por obra",
+    "Contratos por estado"
+   ],
+   "comentarios": [
+    "Venda é outro relatório.",
+    "Saldo é o que se deve hoje.",
+    "Estoque é do depósito.",
+    "Estado é da lista de contratos."
+   ],
+   "correta": 1
+  },
+  {
+   "pergunta": "Qual é a pergunta do mês que ele responde?",
+   "opcoes": [
+    "Quanto vendemos",
+    "Quantos contratos vencem",
+    "Qual livro gira mais",
+    "A quem devemos, e quanto"
+   ],
+   "comentarios": [
+    "É do comercial.",
+    "É do curso anterior.",
+    "É do comercial.",
+    "É o Financeiro perguntando."
+   ],
+   "correta": 3
+  }
+ ]
+}

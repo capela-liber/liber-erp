@@ -1,0 +1,74 @@
+{
+ "curso": "Curso Royalties I: contratos de direitos autorais",
+ "aula": 6,
+ "titulo": "Reatribuir em lote; o contrato no contato e no livro",
+ "abertura": "Esta aula fecha o curso: trocar o responsável de vários contratos de uma vez, e achar o contrato a partir do favorecido e a partir do livro.",
+ "fecho": "Reatribuir é ação de lista, para quando alguém sai; e o contrato aparece onde se procura por ele — na ficha do favorecido e na ficha do livro. Fim do curso.",
+ "youtube": "https://www.youtube.com/watch?v=jLSDG7nB_fo",
+ "quiz": [
+  {
+   "pergunta": "Alguém saiu da casa e cuidava de vinte contratos. O que se faz?",
+   "opcoes": [
+    "Abre-se um por um",
+    "Apagam-se os contratos",
+    "Seleciona-se na lista e usa-se Ação, Reatribuir Responsável",
+    "Espera-se o vencimento"
+   ],
+   "comentarios": [
+    "Vinte cliques a mais.",
+    "Nunca.",
+    "É uma ação de lote, e qualquer usuário do app pode.",
+    "O lembrete iria para ninguém."
+   ],
+   "correta": 2
+  },
+  {
+   "pergunta": "Onde mais o contrato aparece?",
+   "opcoes": [
+    "Na ficha do favorecido e na ficha do livro, com botão e aba",
+    "Só em Contratos",
+    "No Financeiro",
+    "No site"
+   ],
+   "comentarios": [
+    "Quem procura pelo autor ou pelo livro acha sem ir ao app.",
+    "Aparece em três lugares.",
+    "O Financeiro vê as faturas, não o contrato.",
+    "Não vai ao site."
+   ],
+   "correta": 0
+  },
+  {
+   "pergunta": "Um livro sem contrato paga royalty?",
+   "opcoes": [
+    "Sim, pelo padrão da casa",
+    "Só se for traduzido",
+    "Só no primeiro ano",
+    "Não: sem linha de royalty não há o que apurar"
+   ],
+   "comentarios": [
+    "Não há padrão.",
+    "Tradução também exige linha.",
+    "Não há prazo.",
+    "A linha é a condição; sem ela a apuração não vê o livro."
+   ],
+   "correta": 3
+  },
+  {
+   "pergunta": "Qual a frase que resume o curso?",
+   "opcoes": [
+    "O contrato é um arquivo",
+    "O contrato é um documento com ciclo de vida, e quem redige não é quem valida",
+    "O contrato é do Financeiro",
+    "O contrato é opcional"
+   ],
+   "comentarios": [
+    "É mais que arquivo: tem estado.",
+    "Minuta, válido, vencido, renovado; Editorial, Jurídico, Direção.",
+    "O Financeiro entra na apuração.",
+    "Sem contrato não há royalty."
+   ],
+   "correta": 1
+  }
+ ]
+}

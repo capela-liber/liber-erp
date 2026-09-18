@@ -1,0 +1,74 @@
+{
+ "curso": "Curso Financeiro: a receber, a pagar e os painéis",
+ "aula": 2,
+ "titulo": "Contas a receber por idade",
+ "abertura": "Esta aula abre a carteira: as faixas de atraso, o salto para as faturas do cliente, as linhas sem cliente e a soma por rede.",
+ "fecho": "A leitura é da direita para a esquerda; o número é clicável; linha sem cliente é conserto, não cobrança; e a rede soma numa linha só quando o grupo está preenchido.",
+ "youtube": "https://www.youtube.com/watch?v=0SWEkoC3N8A",
+ "quiz": [
+  {
+   "pergunta": "Quais são as faixas da tela?",
+   "opcoes": [
+    "Mensal, trimestral e anual",
+    "A vencer, 1-30, 31-60, 61-90, 91-120 e mais de 120 dias",
+    "Por vendedor",
+    "Por forma de pagamento"
+   ],
+   "comentarios": [
+    "Não é por período contábil.",
+    "É o atraso medido em dias desde o vencimento.",
+    "Vendedor é outro corte.",
+    "Forma de pagamento não entra aqui."
+   ],
+   "correta": 1
+  },
+  {
+   "pergunta": "Por que ler da direita para a esquerda?",
+   "opcoes": [
+    "Porque o relatório é em árabe",
+    "Porque a última coluna é a maior",
+    "Porque as colunas da direita são o dinheiro mais velho, e dinheiro velho raramente volta inteiro",
+    "Porque a esquerda ainda não venceu e não interessa"
+   ],
+   "comentarios": [
+    "Nada disso.",
+    "Nem sempre é a maior.",
+    "É onde mora o risco real da carteira.",
+    "A vencer interessa, sim: é o que se evita deixar vencer."
+   ],
+   "correta": 2
+  },
+  {
+   "pergunta": "Clicar num número da tela faz o quê?",
+   "opcoes": [
+    "Abre as faturas daquele cliente naquela faixa",
+    "Emite um boleto",
+    "Exporta a planilha",
+    "Marca a dívida como perdida"
+   ],
+   "comentarios": [
+    "É daí que sai a ligação de cobrança.",
+    "Não emite nada.",
+    "Exportar é outro botão.",
+    "Nada é baixado por clique."
+   ],
+   "correta": 0
+  },
+  {
+   "pergunta": "Uma linha sem cliente quer dizer o quê?",
+   "opcoes": [
+    "Que o cliente foi apagado",
+    "Que é um lançamento na conta de clientes sem parceiro preenchido: é conserto, não cobrança",
+    "Que a fatura é de outra empresa",
+    "Que o valor é zero"
+   ],
+   "comentarios": [
+    "O cadastro não some assim.",
+    "Alguém não preencheu o parceiro, e ninguém pode cobrar um branco.",
+    "Empresa é outro filtro.",
+    "O valor costuma não ser zero."
+   ],
+   "correta": 1
+  }
+ ]
+}

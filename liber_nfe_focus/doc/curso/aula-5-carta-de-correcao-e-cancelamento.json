@@ -1,0 +1,103 @@
+{
+ "curso": "Curso NF-e: emitir",
+ "aula": 5,
+ "titulo": "Carta de correção e cancelamento",
+ "abertura": "Nota autorizada não se edita: ela existe na SEFAZ, e o que se faz é registrar um evento sobre ela. São dois, e cada um cabe num caso: a carta de correção conserta redação, o cancelamento desfaz a nota inteira.",
+ "passos": [
+  {
+   "texto": "O caminho começa na tela inicial, entre os aplicativos."
+  },
+  {
+   "texto": "Faturamento. Esta aula é o conserto: carta de correção e cancelamento."
+  },
+  {
+   "texto": "Clientes, Faturas."
+  },
+  {
+   "texto": "Uma nota autorizada. Daqui em diante ela não se edita: existe na SEFAZ, e o que se faz é registrar um evento sobre ela."
+  },
+  {
+   "texto": "Dois eventos, e dois botões. Carta de Correção conserta redação; Cancelar NFe desfaz a nota inteira."
+  },
+  {
+   "texto": "A carta de correção serve para erro de REDAÇÃO — o nome do produto trocado, a observação errada, o endereço mal escrito. O texto tem mínimo de quinze caracteres, por exigência da SEFAZ."
+  },
+  {
+   "texto": "O que a carta NÃO conserta: valor, imposto, data de emissão, remetente e destinatário. Errou nisso, a nota se cancela e se emite outra — não há atalho."
+  },
+  {
+   "texto": "O cancelamento tem prazo: vinte e quatro horas na regra geral da SEFAZ, e só enquanto a mercadoria não circulou. Passou disso, o caminho é a nota de devolução — que é a próxima aula."
+  },
+  {
+   "texto": "E tudo fica registrado: a última mensagem que a SEFAZ devolveu, no fim da aba, e o histórico da fatura logo abaixo, com a chave, o número, o protocolo e os dois documentos anexados. A carta de correção, quando houver, entra num quadro próprio aqui."
+  }
+ ],
+ "fecho": "Carta de correção para erro de redação, com quinze caracteres no mínimo. Cancelamento dentro do prazo, e só enquanto a mercadoria não circulou. Valor, imposto, data de emissão, remetente e destinatário não se corrigem por carta: a nota errada se cancela e se emite outra. Passado o prazo, o caminho é a devolução.",
+ "youtube": "",
+ "quiz": [
+  {
+   "pergunta": "O que a carta de correção conserta?",
+   "opcoes": [
+    "O valor da nota",
+    "O imposto",
+    "Erro de redação: descrição do produto, dados de transporte, informações complementares",
+    "O destinatário"
+   ],
+   "comentarios": [
+    "Valor não se corrige por carta.",
+    "Imposto tampouco.",
+    "É para isso que ela existe — e a própria janela diz o que não cabe nela.",
+    "Trocar o destinatário é emitir outra nota."
+   ],
+   "correta": 2
+  },
+  {
+   "pergunta": "Qual o tamanho mínimo do texto da carta de correção?",
+   "opcoes": [
+    "Não há mínimo",
+    "15 caracteres",
+    "100 caracteres",
+    "1000 caracteres"
+   ],
+   "comentarios": [
+    "A SEFAZ exige um mínimo.",
+    "Quinze é o piso, mil é o teto.",
+    "Não é esse o piso.",
+    "Mil é o limite máximo."
+   ],
+   "correta": 1
+  },
+  {
+   "pergunta": "Quando o cancelamento não cabe mais?",
+   "opcoes": [
+    "Depois do prazo, ou se a mercadoria já circulou",
+    "Depois de a fatura ser paga",
+    "Depois de uma carta de correção",
+    "Nunca: sempre cabe"
+   ],
+   "comentarios": [
+    "Passado o prazo, ou circulada a mercadoria, o caminho é a nota de devolução.",
+    "Pagamento não tem a ver com a nota fiscal.",
+    "A carta não impede o cancelamento.",
+    "Cancelar tem prazo."
+   ],
+   "correta": 0
+  },
+  {
+   "pergunta": "Onde ficam registradas as cartas de correção emitidas?",
+   "opcoes": [
+    "Em nenhum lugar: só na SEFAZ",
+    "Na aba NFe da própria fatura, com número e data",
+    "Num relatório mensal",
+    "No painel de XMLs"
+   ],
+   "comentarios": [
+    "O sistema guarda o que emitiu.",
+    "Junto com a última mensagem que a SEFAZ devolveu.",
+    "Não há relatório à parte.",
+    "O painel é dos XMLs de nota, não das cartas."
+   ],
+   "correta": 1
+  }
+ ]
+}

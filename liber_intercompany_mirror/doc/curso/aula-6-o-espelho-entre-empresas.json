@@ -1,0 +1,74 @@
+{
+ "curso": "Curso Financeiro: a receber, a pagar e os painéis",
+ "aula": 6,
+ "titulo": "O espelho entre empresas",
+ "abertura": "Esta aula liga as irmãs: a fatura de uma é a conta a pagar da outra, e dois botões levam de um lado ao outro.",
+ "fecho": "Espelho e Origem são o mesmo negócio visto das duas empresas. Os botões mostram, não criam: quem cria o par é a rotina entre empresas.",
+ "youtube": "https://www.youtube.com/watch?v=HJG1MIeGhrk",
+ "quiz": [
+  {
+   "pergunta": "Uma venda de uma empresa da casa para a irmã gera o quê?",
+   "opcoes": [
+    "Só uma fatura",
+    "Uma fatura de um lado e uma conta a pagar do outro",
+    "Um lançamento contábil sem documento",
+    "Nada: é transferência interna"
+   ],
+   "comentarios": [
+    "Cada empresa tem seu razão.",
+    "São dois documentos, um por empresa.",
+    "Há documentos dos dois lados.",
+    "É venda de verdade entre pessoas jurídicas."
+   ],
+   "correta": 1
+  },
+  {
+   "pergunta": "O botão Espelho faz o quê?",
+   "opcoes": [
+    "Cria a conta a pagar na irmã",
+    "Duplica a fatura",
+    "Abre o documento correspondente na irmã",
+    "Concilia os dois"
+   ],
+   "comentarios": [
+    "Ele não cria nada.",
+    "Não duplica.",
+    "Só mostra o par, sem procurar.",
+    "Conciliar é outra tela."
+   ],
+   "correta": 2
+  },
+  {
+   "pergunta": "Quando o botão não aparece?",
+   "opcoes": [
+    "Quando o valor é alto",
+    "Quando não há espelho: venda para fora da casa, ou documento sem par",
+    "Quando o usuário é assistente",
+    "Quando a fatura está paga"
+   ],
+   "comentarios": [
+    "Valor não importa.",
+    "Sem par não há o que mostrar.",
+    "Não depende do perfil.",
+    "Pago continua tendo espelho."
+   ],
+   "correta": 1
+  },
+  {
+   "pergunta": "Quem cria o par entre as empresas?",
+   "opcoes": [
+    "A rotina entre empresas, com a regra de fatura e conta do Grupo econômico",
+    "O botão Espelho",
+    "O contador, à mão, todo mês",
+    "O robô da conciliação"
+   ],
+   "comentarios": [
+    "Os botões só mostram o que a rotina criou.",
+    "O botão não escreve.",
+    "À mão seria trabalho e erro.",
+    "A conciliação é do extrato."
+   ],
+   "correta": 0
+  }
+ ]
+}

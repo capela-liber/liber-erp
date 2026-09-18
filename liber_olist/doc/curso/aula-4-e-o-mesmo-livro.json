@@ -1,0 +1,74 @@
+{
+ "curso": "Curso Marketplaces via Olist",
+ "aula": 4,
+ "titulo": "É o mesmo livro?",
+ "abertura": "Esta aula é o casamento entre o catálogo de lá e o cadastro da casa: por ISBN, o que fazer quando não casa, e quem decide.",
+ "fecho": "ISBN é a chave; sugerir por título propõe e alguém confirma; corrigir o ISBN no Olist é o caminho de volta; e o espelho continua espelho. A próxima aula mapeia os canais.",
+ "youtube": "https://www.youtube.com/watch?v=gXRBym_grOA",
+ "quiz": [
+  {
+   "pergunta": "Qual é a chave do casamento?",
+   "opcoes": [
+    "O código interno do Olist",
+    "O ISBN, que no Odoo é o código de barras",
+    "O preço",
+    "O nome do título"
+   ],
+   "comentarios": [
+    "O código de lá não existe aqui.",
+    "É a única chave que não depende de como o título foi escrito.",
+    "Preço muda.",
+    "Nome varia demais."
+   ],
+   "correta": 1
+  },
+  {
+   "pergunta": "Uma reedição com ISBN novo aparece como quê?",
+   "opcoes": [
+    "Produto duplicado no cadastro",
+    "Anúncio desativado",
+    "Linha sem produto, que a sugestão por título costuma achar",
+    "Pedido bloqueado"
+   ],
+   "comentarios": [
+    "Não duplica cadastro.",
+    "O anúncio segue ativo.",
+    "A sugestão acha; quem decide é gente.",
+    "O pedido é outro assunto."
+   ],
+   "correta": 2
+  },
+  {
+   "pergunta": "O que Corrigir ISBN no Olist faz?",
+   "opcoes": [
+    "Apaga o anúncio",
+    "Cria um produto novo",
+    "Reescreve o código do anúncio lá, e por isso só funciona fora do somente leitura",
+    "Corrige o código de barras do produto aqui"
+   ],
+   "comentarios": [
+    "Não apaga nada.",
+    "Não cria produto.",
+    "É o caminho de volta, quando o erro está lá.",
+    "O cadastro daqui se corrige aqui."
+   ],
+   "correta": 2
+  },
+  {
+   "pergunta": "Ler catálogo do Olist muda o cadastro da casa?",
+   "opcoes": [
+    "Sim, cria os produtos que faltam",
+    "Sim, atualiza preços e nomes",
+    "Sim, apaga os que saíram de lá",
+    "Não: refaz o espelho, e o espelho é espelho"
+   ],
+   "comentarios": [
+    "Só espelha.",
+    "Não toca no cadastro.",
+    "Nada é apagado.",
+    "O que muda o cadastro é decisão de gente."
+   ],
+   "correta": 3
+  }
+ ]
+}

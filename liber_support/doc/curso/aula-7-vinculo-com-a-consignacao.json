@@ -1,0 +1,74 @@
+{
+ "curso": "Curso de Atendimento ao cliente",
+ "aula": 7,
+ "titulo": "O chamado vinculado à consignação",
+ "abertura": "Esta aula é o vínculo com a consignação: o campo CO no chamado, o botão Última CO, a resposta com o mapa anexo, e o botão Atendimento na operação.",
+ "fecho": "Última CO liga à operação mais recente do cliente; Mapa responde com o PDF da operação; o botão CO abre a operação, e ela conta seus chamados. A última aula transforma a conversa em acerto.",
+ "youtube": "https://www.youtube.com/watch?v=VWVgP3-Y6JQ",
+ "quiz": [
+  {
+   "pergunta": "O que o botão Última CO faz?",
+   "opcoes": [
+    "Envia o mapa",
+    "Cria uma operação nova",
+    "Abre a lista de todas as operações",
+    "Liga o chamado à operação de consignação mais recente do cliente"
+   ],
+   "comentarios": [
+    "Mapa é outro botão.",
+    "Não cria.",
+    "Escolhe a mais recente.",
+    "Um clique em vez de procurar na lista."
+   ],
+   "correta": 3
+  },
+  {
+   "pergunta": "O que o botão Mapa anexa à resposta?",
+   "opcoes": [
+    "A lista de todos os chamados",
+    "O PDF do mapa da operação vinculada, o mesmo do curso de Consignação",
+    "A nota fiscal",
+    "O contrato"
+   ],
+   "comentarios": [
+    "Não.",
+    "A proposta do mês, sem sair do chamado.",
+    "Nota é do fiscal.",
+    "Contrato não viaja."
+   ],
+   "correta": 1
+  },
+  {
+   "pergunta": "O chamado não tem CO e o cliente nunca consignou. O que Última CO faz?",
+   "opcoes": [
+    "Nada, em silêncio",
+    "Cria o contrato",
+    "Avisa que o cliente não tem consignação",
+    "Liga a uma operação de outro cliente"
+   ],
+   "comentarios": [
+    "Avisa.",
+    "Não cria.",
+    "Contrato é decisão do gerente.",
+    "Nunca."
+   ],
+   "correta": 2
+  },
+  {
+   "pergunta": "Onde a operação de consignação mostra os chamados dela?",
+   "opcoes": [
+    "Na aba Notas",
+    "No mapa em PDF",
+    "No botão Atendimento, no alto da operação",
+    "Não mostra"
+   ],
+   "comentarios": [
+    "Notas são internas.",
+    "O PDF vai ao cliente.",
+    "Conversa e documento a um clique um do outro.",
+    "Mostra."
+   ],
+   "correta": 2
+  }
+ ]
+}

@@ -1,0 +1,74 @@
+{
+ "curso": "Curso Feiras I: montar e levar",
+ "aula": 7,
+ "titulo": "O que a casa decide uma vez, e o desconto da feira",
+ "abertura": "Três escolhas não mudam de feira para feira e por isso moram nas Definições; as posições fiscais ficam ao lado das outras configurações de nota; e o desconto da feira é um número do evento, não um botão.",
+ "fecho": "Plano analítico, serviço que paga a equipe e responsável, no Inventário; posições fiscais nas Definições gerais; o desconto do evento vira a lista de preços dos caixas. A última aula é a reposição.",
+ "youtube": "https://www.youtube.com/watch?v=uFbEuc2wgiI",
+ "quiz": [
+  {
+   "pergunta": "Onde ficam as três escolhas que valem para todo evento?",
+   "opcoes": [
+    "No Ponto de Venda",
+    "Em cada feira, na aba Custos",
+    "No cadastro do produto",
+    "Em Inventário, Configuração, Definições, bloco Eventos"
+   ],
+   "comentarios": [
+    "O PDV recebe o preço.",
+    "A aba Custos lê o resultado.",
+    "Produto não tem isso.",
+    "Se ficassem em cada evento seriam digitadas erradas mais cedo ou mais tarde."
+   ],
+   "correta": 3
+  },
+  {
+   "pergunta": "Para que serve o Plano analítico dos eventos?",
+   "opcoes": [
+    "Para numerar as feiras",
+    "Para escalar a equipe",
+    "Para calcular o desconto",
+    "É onde nasce o analítico de cada evento, que junta o que custou e o que deu"
+   ],
+   "comentarios": [
+    "O número é série própria.",
+    "Equipe é a aba Caixas.",
+    "Desconto é do evento.",
+    "O analítico nasce sozinho no Planejar."
+   ],
+   "correta": 3
+  },
+  {
+   "pergunta": "O desconto da feira é digitado onde?",
+   "opcoes": [
+    "No caixa, a cada venda",
+    "No produto",
+    "No cadastro do evento; vira a lista de preços dos caixas dele",
+    "No contrato do cliente"
+   ],
+   "comentarios": [
+    "O operador não digita desconto.",
+    "Produto tem preço cheio.",
+    "Ele não é um botão para alguém apertar: é o preço.",
+    "Feira não tem contrato."
+   ],
+   "correta": 2
+  },
+  {
+   "pergunta": "Mudou o desconto com um caixa em operação. O que acontece?",
+   "opcoes": [
+    "Nenhum muda até a próxima feira",
+    "O caixa aberto só recebe o número novo depois de fechar; os outros já vendem com o preço novo",
+    "Todos mudam na hora",
+    "O caixa aberto é fechado à força"
+   ],
+   "comentarios": [
+    "Os fechados mudam.",
+    "O Ponto de Venda não deixa mexer em caixa em operação, e faz bem.",
+    "O aberto espera fechar.",
+    "Ninguém é fechado à força."
+   ],
+   "correta": 1
+  }
+ ]
+}

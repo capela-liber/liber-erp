@@ -1,0 +1,74 @@
+{
+ "curso": "Curso de Consignação III",
+ "aula": 4,
+ "titulo": "Bonificação e feira não são consignação",
+ "abertura": "Bonificação dá o livro; feira leva e traz; consignação deixa e acerta. Cada uma sai com o seu CFOP e a sua posição fiscal, e nenhuma delas fatura.",
+ "fecho": "O CFOP decide o documento, o documento decide se fatura, e só o acerto fatura. Na próxima aula, a auditoria.",
+ "youtube": "https://www.youtube.com/watch?v=zbnb_gz502A",
+ "quiz": [
+  {
+   "pergunta": "CFOP 5910 na tabela de Efeitos de CFOP está:",
+   "opcoes": [
+    "Como remessa",
+    "Sem efeito: livro dado não está em prateleira",
+    "Como venda",
+    "Como devolução"
+   ],
+   "comentarios": [
+    "Não põe livro em prateleira nenhuma.",
+    "Bonificação não é consignação.",
+    "Nunca vira receita.",
+    "Não."
+   ],
+   "correta": 1
+  },
+  {
+   "pergunta": "Por que a remessa de feira (5914) conta como remessa para a auditoria?",
+   "opcoes": [
+    "Porque feira é consignação",
+    "Porque, na prática, essas notas põem livro na prateleira do cliente",
+    "Por erro",
+    "Não conta"
+   ],
+   "comentarios": [
+    "Não é, mas na prática o livro vai para a prateleira e muitas vezes não volta.",
+    "Por isso a tabela é editável.",
+    "É decisão registrada.",
+    "Conta como remessa."
+   ],
+   "correta": 1
+  },
+  {
+   "pergunta": "Onde fica o CFOP de bonificação?",
+   "opcoes": [
+    "Nas Definições de Consignação",
+    "Nas Definições de Bonificações, com a posição fiscal da nota de remessa",
+    "No produto",
+    "No contrato"
+   ],
+   "comentarios": [
+    "Fica nas Definições de Bonificações.",
+    "Com a baixa automática, como a de consignação.",
+    "Não.",
+    "Não há contrato na bonificação."
+   ],
+   "correta": 1
+  },
+  {
+   "pergunta": "Qual dessas operações fatura?",
+   "opcoes": [
+    "Bonificação",
+    "Feira",
+    "Remessa de consignação",
+    "Nenhuma delas: só o acerto"
+   ],
+   "comentarios": [
+    "Nunca.",
+    "Viaja e volta.",
+    "Só a remessa, não.",
+    "O acerto é a venda S."
+   ],
+   "correta": 3
+  }
+ ]
+}

@@ -1,0 +1,74 @@
+{
+ "curso": "Curso Feiras I: montar e levar",
+ "aula": 6,
+ "titulo": "Calendário e o número do evento",
+ "abertura": "Esta aula é a agenda das feiras e o número que cada evento recebe: por que o calendário mostra o evento e não a logística, e por que o número é EV e não E.",
+ "fecho": "O calendário mostra o evento, colorido por canal; o número EV é série própria, disparador do que vem depois, e vai para o analítico; e uma feira vende por uma empresa só, embora leve títulos de qualquer selo. A próxima aula são as Definições.",
+ "youtube": "https://www.youtube.com/watch?v=_aWIj6NocAc",
+ "quiz": [
+  {
+   "pergunta": "Por que o calendário não pinta a janela de envio e retorno?",
+   "opcoes": [
+    "Porque a feira pareceria durar onze dias quando dura quatro; a janela logística mora nos campos",
+    "Porque a logística é de outro aplicativo",
+    "Porque o envio não tem data",
+    "Porque o calendário não aceita períodos"
+   ],
+   "comentarios": [
+    "Quem procura uma feira procura o fim de semana dela.",
+    "A logística está aqui.",
+    "Tem data, nos campos.",
+    "Aceita; é decisão."
+   ],
+   "correta": 0
+  },
+  {
+   "pergunta": "O que a cor do evento no calendário representa?",
+   "opcoes": [
+    "A empresa",
+    "O canal de vendas",
+    "O estado da feira",
+    "O responsável"
+   ],
+   "comentarios": [
+    "Empresa não é cor.",
+    "A feira aparece nos relatórios ao lado da Amazon e da loja própria.",
+    "O estado está na lista.",
+    "Responsável é filtro."
+   ],
+   "correta": 1
+  },
+  {
+   "pergunta": "Por que o número é EV/2026/00001 e não E00001?",
+   "opcoes": [
+    "Porque o Odoo exige barras",
+    "Por estética",
+    "Um E com cinco dígitos se confunde com os pedidos B e C, e evento não é pedido",
+    "Porque o ano é obrigatório em toda série"
+   ],
+   "comentarios": [
+    "Não exige.",
+    "É clareza, não estética.",
+    "Evento é o disparador do que vem depois, como a CO da consignação.",
+    "Não é obrigatório."
+   ],
+   "correta": 2
+  },
+  {
+   "pergunta": "Uma feira da Edlab leva títulos do selo Hedra. Pode?",
+   "opcoes": [
+    "Pode: a feira fixa a empresa que vende, não o selo dos títulos",
+    "Só com uma segunda localização de feira",
+    "Pode, mas a nota sai no nome do outro selo",
+    "Não pode: cada selo exige a sua feira"
+   ],
+   "comentarios": [
+    "O que não cabe numa feira é vender por duas empresas ao mesmo tempo.",
+    "A localização é uma só, da empresa que vende.",
+    "A nota é sempre da empresa da feira.",
+    "Selo é marca; empresa é quem emite a nota."
+   ],
+   "correta": 0
+  }
+ ]
+}

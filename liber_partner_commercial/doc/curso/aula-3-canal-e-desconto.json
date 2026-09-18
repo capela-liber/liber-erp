@@ -1,0 +1,74 @@
+{
+ "curso": "Curso Comercial: clientes, canal e painel",
+ "aula": 3,
+ "titulo": "O canal nos documentos e o desconto na linha",
+ "abertura": "Esta aula abre um pedido e mostra dois campos que o resto da casa lê: o Canal de Vendas, em Outras informações, e o Desconto na linha.",
+ "fecho": "O desconto fica à vista na linha porque três coisas o leem: royalty, venda especial e o desconto declarado na NF-e. E numa cotação nova o canal é sugerido pelo vendedor, não pela ficha: confira. A próxima aula sobe da loja para a rede.",
+ "youtube": "https://www.youtube.com/watch?v=XR115c9w2CI",
+ "quiz": [
+  {
+   "pergunta": "Onde fica o Canal de Vendas dentro do pedido?",
+   "opcoes": [
+    "Na aba Outras informações",
+    "Na aba Construtor de cotações",
+    "No cabeçalho, ao lado do cliente",
+    "Na aba Linhas do pedido"
+   ],
+   "comentarios": [
+    "Junto do vendedor, na seção Vendas da aba.",
+    "O construtor é do PDF da cotação.",
+    "O cabeçalho tem cliente, data e lista de preços.",
+    "As linhas trazem produto, quantidade e desconto."
+   ],
+   "correta": 0
+  },
+  {
+   "pergunta": "Por que o desconto fica num campo próprio, e não embutido no preço?",
+   "opcoes": [
+    "Porque o cliente pede para ver",
+    "Porque o Odoo obriga",
+    "Porque royalty, venda especial e o desconto da NF-e leem esse campo",
+    "Porque o preço unitário não aceita centavos"
+   ],
+   "comentarios": [
+    "O cliente vê no PDF de qualquer jeito.",
+    "O Odoo por padrão deixa desligado; a casa liga.",
+    "Com o desconto embutido, os três saem errados em silêncio.",
+    "O preço aceita centavos."
+   ],
+   "correta": 2
+  },
+  {
+   "pergunta": "Numa cotação nova, de onde o Odoo sugere o canal?",
+   "opcoes": [
+    "Do último pedido do cliente",
+    "Do produto",
+    "Da ficha do cliente",
+    "Do vendedor que está criando"
+   ],
+   "comentarios": [
+    "O pedido anterior não é consultado.",
+    "Produto não tem canal.",
+    "A ficha é o padrão da casa, mas o Odoo 19 não a lê ao criar.",
+    "É a regra do Odoo 19; por isso se confere antes de confirmar."
+   ],
+   "correta": 3
+  },
+  {
+   "pergunta": "No consignado, quem preenche o canal do acerto?",
+   "opcoes": [
+    "O vendedor, à mão",
+    "O contrato de consignação",
+    "O cliente, no portal",
+    "A nota fiscal de remessa"
+   ],
+   "comentarios": [
+    "Não é preciso digitar.",
+    "O contrato manda; o cadastro é o padrão de onde ele nasce.",
+    "O portal não mexe em canal.",
+    "A nota não escreve no acerto."
+   ],
+   "correta": 1
+  }
+ ]
+}

@@ -79,7 +79,11 @@ class ResConfigSettings(models.TransientModel):
             'amazon_import_days_back': account.import_days_back or 7,
             'amazon_last_import_date': account.last_import_date or False,
             'amazon_credentials_set': bool(account and account.refresh_token),
-            'amazon_unit_count': self.env['liber.amazon.unit'].search_count(
+            # sudo, como a conta: quem abre as Definições é administrador do
+            # sistema, e nem todo administrador tem o papel da Amazon -- sem
+            # isto a página inteira de Definições morria em "Erro de acesso"
+            # para ele (14/09/2026).
+            'amazon_unit_count': self.env['liber.amazon.unit'].sudo().search_count(
                 [('account_id', '=', account.id)]) if account else 0,
             'amazon_cron_active': bool(cron and cron.active),
             # Deliberadamente ausentes: 'amazon_client_id',

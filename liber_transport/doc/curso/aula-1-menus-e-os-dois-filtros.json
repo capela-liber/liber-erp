@@ -1,0 +1,74 @@
+{
+ "curso": "Curso Expedição: transportadora, coleta e DANFE",
+ "aula": 1,
+ "titulo": "O que há em cada menu, e os dois filtros",
+ "abertura": "Esta aula é o mapa do depósito: onde ficam as entregas, onde ficam as solicitações de coleta, e os dois filtros que dividem o dia em pode viajar e ainda espera nota.",
+ "fecho": "O menu é curto de propósito: Entregas, Solicitações de coleta, e dois filtros. O cadastro fica na Configuração, que é da próxima aula.",
+ "youtube": "https://www.youtube.com/watch?v=OVHtY8aVxo8",
+ "quiz": [
+  {
+   "pergunta": "Onde ficam as entregas do dia?",
+   "opcoes": [
+    "No Faturamento, em Notas",
+    "Em Relatórios, Estoque",
+    "Em Operações, Entregas",
+    "Em Compras, Recebimentos"
+   ],
+   "comentarios": [
+    "A expedição não abre o Faturamento — é a tese do curso.",
+    "Relatórios mede, não despacha.",
+    "É a fila do depósito, e é onde este curso passa a maior parte do tempo.",
+    "Recebimento é o que chega, não o que sai."
+   ],
+   "correta": 2
+  },
+  {
+   "pergunta": "O que o filtro Com nota fiscal mostra?",
+   "opcoes": [
+    "As transferências de clientes com inscrição estadual",
+    "As transferências com transportadora escolhida",
+    "As transferências cuja nota já foi autorizada",
+    "As transferências já entregues"
+   ],
+   "comentarios": [
+    "A inscrição é do cadastro, não do filtro.",
+    "Transportadora é outra coluna.",
+    "É a fila do que pode sair hoje: sem nota autorizada a caixa não viaja.",
+    "Entregue é outro estado."
+   ],
+   "correta": 2
+  },
+  {
+   "pergunta": "E o filtro Sem nota fiscal, para que serve?",
+   "opcoes": [
+    "Para cobrar o faturamento do que está embalado e parado",
+    "Para cancelar as entregas",
+    "Para pedir coleta em lote",
+    "Para conferir o peso dos livros"
+   ],
+   "comentarios": [
+    "Separar sem nota é caixa parada na doca: a lista é a cobrança.",
+    "Cancelar é outra coisa, e não se faz por filtro.",
+    "A coleta se pede em Ações, com as linhas marcadas.",
+    "O peso está na ficha da transferência."
+   ],
+   "correta": 0
+  },
+  {
+   "pergunta": "Por que o assistente do depósito não vê a Configuração?",
+   "opcoes": [
+    "Porque o módulo não tem configuração",
+    "Porque a configuração fica no site",
+    "Porque ela só aparece depois da primeira coleta",
+    "Porque cadastrar transportadora é do gerente, e o menu segue o papel"
+   ],
+   "comentarios": [
+    "Tem: métodos de entrega, texto do e-mail, tipos de embalagem.",
+    "Não fica.",
+    "Não é assim que o menu funciona.",
+    "Os papéis mandam no menu: quem despacha despacha, quem cadastra cadastra."
+   ],
+   "correta": 3
+  }
+ ]
+}

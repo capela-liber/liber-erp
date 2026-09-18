@@ -1,0 +1,74 @@
+{
+ "curso": "Curso Comercial: clientes, canal e painel",
+ "aula": 2,
+ "titulo": "O canal na ficha do cliente",
+ "abertura": "Esta aula abre a ficha de uma livraria e preenche o Canal de Vendas: onde fica o campo, o que ele significa na casa, e onde se arruma a lista dos canais.",
+ "fecho": "Canal é o que o cliente é, não a equipe de quem vende; fica na aba Vendas e Compras da ficha, por empresa; e a lista dos canais se edita como grade em Configuração. A próxima aula segue o canal para dentro do pedido.",
+ "youtube": "https://www.youtube.com/watch?v=ZwO00YjQP88",
+ "quiz": [
+  {
+   "pergunta": "Em que aba da ficha do cliente fica o Canal de Vendas?",
+   "opcoes": [
+    "Faturamento",
+    "Contatos",
+    "Vendas e Compras",
+    "Notas"
+   ],
+   "comentarios": [
+    "Faturamento traz contas bancárias e contábeis.",
+    "Contatos são os endereços e as pessoas da empresa.",
+    "É onde ficam o vendedor e o canal.",
+    "Notas são anotações internas."
+   ],
+   "correta": 2
+  },
+  {
+   "pergunta": "O que é um canal de vendas na casa?",
+   "opcoes": [
+    "O que o cliente é: livraria independente, rede, distribuidora, site, governo",
+    "O meio de pagamento do cliente",
+    "A equipe de vendedores que atende uma região",
+    "O departamento da editora"
+   ],
+   "comentarios": [
+    "Canal é recorte de clientela.",
+    "Pagamento é outra coisa.",
+    "Equipe por território é a divisão do Odoo padrão, que a casa não usa.",
+    "Departamento não entra na divisão comercial."
+   ],
+   "correta": 0
+  },
+  {
+   "pergunta": "O canal na ficha é por empresa. O que isso quer dizer?",
+   "opcoes": [
+    "Cada empresa tem uma lista de canais própria",
+    "Só o administrador da empresa pode mudar",
+    "O mesmo cliente pode ter canal diferente em cada editora do grupo",
+    "O canal muda sozinho quando a empresa muda"
+   ],
+   "comentarios": [
+    "A lista de canais é uma só, sem empresa.",
+    "Quem edita a ficha edita o canal.",
+    "O campo é company dependent.",
+    "Nada muda sozinho: é cadastro."
+   ],
+   "correta": 2
+  },
+  {
+   "pergunta": "Por que a lista de canais tem um registro por nome, sem empresa?",
+   "opcoes": [
+    "Canal duplicado por empresa faz toda tela agrupada mostrar a mesma linha duas vezes",
+    "Porque o nome é chave fiscal",
+    "Porque o Odoo não permite empresa no canal",
+    "Porque só existe uma empresa"
+   ],
+   "comentarios": [
+    "Agrupar é agrupar por registro.",
+    "Canal não tem nada de fiscal.",
+    "O Odoo permite; a casa é que decidiu não usar.",
+    "O grupo tem mais de uma editora."
+   ],
+   "correta": 0
+  }
+ ]
+}

@@ -25,7 +25,7 @@
                      achou; isso é resposta. -->
                 <button name="action_view_bills" type="object"
                         class="oe_stat_button" icon="fa-line-chart"
-                        groups="liber_fairs.group_fair_manager"
+                        groups="liber_fairs.group_fair_planner"
                         invisible="not pos_order_count and not bill_ids">
                     <!-- SEM `string=`: o rótulo vem do próprio campo, que
                          já tem tradução. Escrito aqui, ele viraria um termo
@@ -121,7 +121,7 @@
                      lança aqui, e o analítico do evento vai junto. Mesmo
                      dono das comissões: quem planeja. -->
                 <page string="Costs" name="costs"
-                      groups="liber_fairs.group_fair_manager">
+                      groups="liber_fairs.group_fair_planner">
                     <div class="mb-2">
                         <button name="action_add_cost" type="object"
                                 string="Add a cost" class="btn-secondary"

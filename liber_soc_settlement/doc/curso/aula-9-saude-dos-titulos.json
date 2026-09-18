@@ -1,0 +1,74 @@
+{
+ "curso": "Curso de Consignação II",
+ "aula": 9,
+ "titulo": "A saúde de cada título",
+ "abertura": "Ok, Atenção, Crítico, Sem retorno: uma etiqueta por título, pelos dias desde o último acerto naquele cliente. Nesta aula, onde ela aparece e como se lê.",
+ "fecho": "A mesma régua na operação e no relatório Na Prateleira, atualizada toda manhã. Na última aula, os relatórios.",
+ "youtube": "https://www.youtube.com/watch?v=j1NLeWevcGc",
+ "quiz": [
+  {
+   "pergunta": "Um título nunca foi acertado neste cliente. Desde quando conta a sua saúde?",
+   "opcoes": [
+    "Desde a ativação do contrato",
+    "Não conta: só conta a partir do primeiro acerto",
+    "Desde a última venda do título em qualquer cliente",
+    "Desde que chegou à prateleira, senão o encalhe pareceria novidade"
+   ],
+   "comentarios": [
+    "É por título, não por contrato.",
+    "Conta desde a chegada.",
+    "É por cliente, não pela editora inteira.",
+    "O relógio começa na chegada."
+   ],
+   "correta": 3
+  },
+  {
+   "pergunta": "Onde os limiares Ok, Atenção e Crítico são definidos?",
+   "opcoes": [
+    "Em cada contrato de consignação",
+    "No canal de vendas",
+    "No cadastro de cada título",
+    "Em Definições, no bloco Situação dos títulos consignados"
+   ],
+   "comentarios": [
+    "O contrato não tem limiares.",
+    "Não é por canal.",
+    "Não é por título.",
+    "Valem para todos os clientes."
+   ],
+   "correta": 3
+  },
+  {
+   "pergunta": "Um título está há 70 dias sem acerto. Com os limiares padrão de 45, 60 e 120, qual é a situação?",
+   "opcoes": [
+    "Atenção: entre 45 e 90",
+    "Sem retorno: acima de 60",
+    "Ok: vai até 90 dias",
+    "Crítico: entre 60 e 120 dias"
+   ],
+   "comentarios": [
+    "Atenção vai até 60.",
+    "Sem retorno é acima de 120.",
+    "Ok vai até 45.",
+    "Passou de Atenção e ainda não é Sem retorno."
+   ],
+   "correta": 3
+  },
+  {
+   "pergunta": "Para que serve a etiqueta de situação na hora do acerto?",
+   "opcoes": [
+    "Para decidir o que insistir e o que puxar de volta",
+    "Para bloquear a reposição dos títulos críticos",
+    "Para ordenar as linhas do mapa",
+    "Para calcular o preço da linha"
+   ],
+   "comentarios": [
+    "É o sinal do encalhe.",
+    "Não bloqueia nada; informa.",
+    "A ordem é do mapa; a etiqueta é a decisão.",
+    "Preço vem do contrato."
+   ],
+   "correta": 0
+  }
+ ]
+}

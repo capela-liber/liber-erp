@@ -164,6 +164,15 @@ class TestNfePicking(TransactionCase):
             'res_id': move.id,
         })
 
+    def _anexa_carta(self, move, numero):
+        return self.env['ir.attachment'].create({
+            'name': '%s-carta-correcao-%d.pdf' % (move.focus_ref, numero),
+            'datas': base64.b64encode(pdf_minimo('CC-e %d' % numero)),
+            'mimetype': 'application/pdf',
+            'res_model': 'account.move',
+            'res_id': move.id,
+        })
+
     def _anexos_do_picking(self, picking):
         return self.env['ir.attachment'].search([
             ('res_model', '=', 'stock.picking'),
@@ -190,6 +199,39 @@ class TestNfePicking(TransactionCase):
         nova = picking.message_ids[:len(picking.message_ids) - mensagens_antes]
         self.assertTrue(any(m.attachment_ids for m in nova),
                         "a mensagem do chatter tem de carregar o PDF")
+
+    def test_carta_de_correcao_chega_ao_picking_uma_vez(self):
+        """A carta corrige o que o DANFE diz; a logística a vê ao lado dele.
+        Duas cartas, dois anexos com número; a consulta repetida não dobra."""
+        so, move = self._pedido_faturado()
+        self._anexa_danfe(move)
+        self._anexa_carta(move, 1)
+        self._anexa_carta(move, 2)
+        picking = so.picking_ids[0]
+        antes = len(picking.message_ids)
+
+        move._liber_danfe_para_pickings()
+        move._liber_cartas_para_pickings()
+        move._liber_cartas_para_pickings()  # o cron repete o gancho
+
+        nomes = sorted(self._anexos_do_picking(picking).mapped('name'))
+        self.assertEqual(nomes, sorted([
+            '%s.pdf' % move.focus_ref,
+            '%s-carta-correcao-1.pdf' % move.focus_ref,
+            '%s-carta-correcao-2.pdf' % move.focus_ref]))
+        novas = picking.message_ids[:len(picking.message_ids) - antes]
+        self.assertEqual(len(novas), 3, "DANFE + duas cartas, sem repetição")
+        self.assertTrue(any('nº 2' in (m.body or '') for m in novas))
+
+    def test_sem_carta_nao_ha_o_que_levar(self):
+        so, move = self._pedido_faturado()
+        picking = so.picking_ids[0]
+        antes = len(picking.message_ids)
+
+        move._liber_cartas_para_pickings()
+
+        self.assertFalse(self._anexos_do_picking(picking))
+        self.assertEqual(len(picking.message_ids), antes)
 
     def test_propagacao_e_idempotente(self):
         so, move = self._pedido_faturado()

@@ -1,0 +1,74 @@
+{
+ "curso": "Curso Amazon Vendor Central",
+ "aula": 4,
+ "titulo": "O casamento com o cadastro",
+ "abertura": "Esta aula resolve a linha que não casou: o ISBN contra o código de barras, as duas saídas, e o vínculo manual que a releitura não desfaz.",
+ "fecho": "ISBN é a chave; a linha sem produto não impede a importação, e sim a cotação; escolha manual fica travada. A próxima aula gera a cotação.",
+ "youtube": "https://www.youtube.com/watch?v=MiTKbHb6bD0",
+ "quiz": [
+  {
+   "pergunta": "Contra o que o ISBN da linha é casado?",
+   "opcoes": [
+    "Contra o nome do título",
+    "Contra o código de barras do produto",
+    "Contra a referência interna",
+    "Contra o ASIN"
+   ],
+   "comentarios": [
+    "Nome varia.",
+    "É a única chave que atravessa os dois catálogos.",
+    "A referência é nossa.",
+    "O ASIN é só da Amazon."
+   ],
+   "correta": 1
+  },
+  {
+   "pergunta": "Uma linha sem produto impede o quê?",
+   "opcoes": [
+    "A cotação; a importação acontece de qualquer jeito",
+    "Nada",
+    "A leitura do pedido",
+    "A importação"
+   ],
+   "comentarios": [
+    "Não dá para vender o que não se sabe o que é.",
+    "Impede a cotação.",
+    "A leitura já aconteceu.",
+    "A importação acontece."
+   ],
+   "correta": 0
+  },
+  {
+   "pergunta": "Quais são as duas saídas para uma linha sem produto?",
+   "opcoes": [
+    "Criar um produto novo sempre",
+    "Cancelar na Amazon",
+    "Pôr o ISBN no código de barras do livro certo, ou escolher o produto na linha",
+    "Apagar a linha ou o pedido"
+   ],
+   "comentarios": [
+    "Só se o título for mesmo novo.",
+    "Não se escreve na Amazon.",
+    "A segunda é o vínculo manual.",
+    "Nada se apaga."
+   ],
+   "correta": 2
+  },
+  {
+   "pergunta": "O que acontece com o vínculo escolhido à mão na próxima releitura?",
+   "opcoes": [
+    "É refeito pelo ISBN",
+    "É apagado",
+    "Vira sugestão",
+    "Fica travado: a releitura não o desfaz"
+   ],
+   "comentarios": [
+    "Não é refeito.",
+    "Não é apagado.",
+    "É decisão, não sugestão.",
+    "É o que separa decisão humana de casamento automático."
+   ],
+   "correta": 3
+  }
+ ]
+}

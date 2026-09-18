@@ -1,0 +1,103 @@
+{
+ "curso": "Curso NF-e: emitir",
+ "aula": 7,
+ "titulo": "Notas de remessa",
+ "abertura": "Há notas que ninguém paga. Consignação é estoque nosso na prateleira do outro; bonificação é doação; feira é mercadoria que vai e volta. A nota precisa existir, porque o Brasil cobra nota de todo movimento — mas não há dívida nenhuma, e o sistema não pode fingir que há.",
+ "passos": [
+  {
+   "texto": "O caminho começa na tela inicial, entre os aplicativos."
+  },
+  {
+   "texto": "Faturamento. Esta última aula é a nota que ninguém paga: a remessa."
+  },
+  {
+   "texto": "Clientes, Remessas. Uma lista só, separada das faturas, para tudo que se movimenta sem cobrar: consignação, bonificação, feira."
+  },
+  {
+   "texto": "As colunas dizem de onde cada remessa veio — a origem — e qual é o documento que a coordenou. O número da NFe está aqui também: remessa é nota como qualquer outra, e sai numerada da SEFAZ."
+  },
+  {
+   "texto": "Uma remessa aberta. Repare no número: ela não é INV, é REM. Diário próprio, e não o de vendas — é isso que a tira da receita."
+  },
+  {
+   "texto": "E ela já nasce quitada, sem ninguém registrar pagamento. A posição fiscal da remessa manda baixar o a receber contra uma conta espelho no instante em que a nota é confirmada."
+  },
+  {
+   "texto": "O motivo é que não há dívida nenhuma. Consignação é estoque nosso na prateleira do outro; bonificação é doação. A nota precisa existir, porque o Brasil cobra nota de todo movimento — mas ninguém deve nada."
+  },
+  {
+   "texto": "A configuração mora na posição fiscal: baixa automática ligada, e a conta contra a qual se baixa. Trocar a posição fiscal de uma remessa por uma de venda é o erro que o módulo fecha na porta — a nota sairia sem imposto e virava receita."
+  },
+  {
+   "texto": "É este o curso: a nota nasce da fatura, três cadastros dizem o que sai, a operação fiscal dá o CFOP, e a emissão tem dois tempos. Fim do curso."
+  }
+ ],
+ "fecho": "Diário próprio, que tira a remessa da receita; posição fiscal com baixa automática, que quita o a receber no instante em que a nota é confirmada; e uma lista só, em Clientes, Remessas, com a origem de cada uma. Trocar a posição fiscal de uma remessa por uma de venda é a porta que o módulo fecha: a nota sairia sem imposto e viraria receita. Fim do curso.",
+ "youtube": "",
+ "quiz": [
+  {
+   "pergunta": "O que faz de um diário um diário de remessa?",
+   "opcoes": [
+    "O código começar por REM",
+    "Uma marca no diário, que diz que os documentos ali são notas que nunca geram pagamento",
+    "O tipo ser \"diverso\"",
+    "Não ter conta bancária"
+   ],
+   "comentarios": [
+    "O código ajuda a ler, mas não é ele que decide.",
+    "É essa marca que separa a remessa da fatura e a tira da receita.",
+    "O diário de remessa é de venda.",
+    "Nenhum diário de venda tem conta bancária obrigatória."
+   ],
+   "correta": 1
+  },
+  {
+   "pergunta": "Por que a remessa nasce quitada?",
+   "opcoes": [
+    "Porque alguém registra o pagamento na hora",
+    "Porque o valor é zero",
+    "Porque a posição fiscal manda baixar o a receber contra uma conta espelho ao confirmar",
+    "Porque o cliente paga adiantado"
+   ],
+   "comentarios": [
+    "Ninguém registra nada: é automático.",
+    "O valor existe — é valor de estoque.",
+    "A contrapartida é auditável, e o resultado é \"pago\" sem que nada tenha sido devido.",
+    "Não há pagamento nenhum."
+   ],
+   "correta": 2
+  },
+  {
+   "pergunta": "Por que a nota de remessa não leva conta bancária?",
+   "opcoes": [
+    "Porque a empresa não tem conta",
+    "Porque o banco recusaria",
+    "Porque declarar a conta em que se recebe é declarar uma cobrança que não existe",
+    "Porque o Odoo não deixa"
+   ],
+   "comentarios": [
+    "A empresa tem conta; a nota é que não a leva.",
+    "O banco não entra na história.",
+    "Ninguém vai pagar nada nessa nota.",
+    "O Odoo, de fábrica, carimba a conta em toda fatura de cliente — e é justamente isso que o módulo desfaz aqui."
+   ],
+   "correta": 2
+  },
+  {
+   "pergunta": "Uma fatura no diário de vendas com a posição fiscal da consignação: o que acontece?",
+   "opcoes": [
+    "Nada: é uma combinação válida",
+    "O sistema recusa, ao confirmar e por regra de integridade",
+    "O sistema corrige o diário sozinho",
+    "A nota sai e o contador ajusta depois"
+   ],
+   "comentarios": [
+    "Lida de um lado só, parece certa — e por isso é perigosa.",
+    "A NF-e sairia como remessa, sem imposto, e a nota contaria como receita no diário de vendas.",
+    "Ele não adivinha qual dos dois lados está errado.",
+    "É exatamente esse conserto tardio que a porta evita."
+   ],
+   "correta": 1
+  }
+ ]
+}

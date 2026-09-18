@@ -1,0 +1,78 @@
+{
+ "curso": "Curso de Consignação II",
+ "aula": 2,
+ "titulo": "Gerar as operações do mês",
+ "abertura": "Todo mês, uma operação por cliente. Ninguém abre uma a uma: o assistente Gerar Operações mostra o alcance antes de fazer qualquer coisa.",
+ "fecho": "Uma operação por consignação aberta, atribuída ao responsável do contrato, todas na coluna A Fazer. Na próxima aula, executar uma delas.",
+ "youtube": "https://www.youtube.com/watch?v=4U4iB5qavXo",
+ "quiz": [
+  {
+   "pergunta": "O que o assistente Gerar Operações mostra antes do botão Confirmar?",
+   "opcoes": [
+    "Três números: consignações abertas, as que já têm rascunho e as que vai criar",
+    "A lista dos títulos que vão para cada mapa",
+    "O faturamento previsto do mês, cliente a cliente",
+    "Nada: ele cria as operações assim que é aberto"
+   ],
+   "comentarios": [
+    "Só depois de ver o alcance é que se confirma.",
+    "Os títulos entram no mapa de cada operação, depois.",
+    "Faturamento só existe depois dos acertos.",
+    "Ele mostra o alcance antes, e só cria no Confirmar."
+   ],
+   "correta": 0
+  },
+  {
+   "pergunta": "Um cliente ainda tem um rascunho aberto no quadro. O que o assistente faz com ele?",
+   "opcoes": [
+    "Apaga o rascunho antigo e cria um novo",
+    "Cria uma segunda operação e deixa as duas abertas",
+    "Pula o cliente, para não abrir duas rodadas ao mesmo tempo",
+    "Reenvia o mapa do rascunho antigo ao cliente"
+   ],
+   "comentarios": [
+    "Nada é apagado pelo assistente.",
+    "Duas rodadas abertas confundiriam o mapa; ele pula.",
+    "Um rascunho aberto é uma rodada em curso.",
+    "O assistente cria operações; o envio é da outra rotina."
+   ],
+   "correta": 2
+  },
+  {
+   "pergunta": "Um rascunho ficou estacionado numa coluna recolhida, como Feito. O que acontece na próxima rodada?",
+   "opcoes": [
+    "O rascunho é reaberto e volta para A Fazer",
+    "Bloqueia a criação até alguém tirar o rascunho de lá",
+    "Não bloqueia: coluna recolhida é assunto encerrado, e o assistente cria uma operação nova",
+    "O assistente dá erro e pede para cancelar o rascunho"
+   ],
+   "comentarios": [
+    "Ele fica onde está; nasce outra operação.",
+    "Só rascunho em coluna aberta segura a rodada.",
+    "Para o sistema, recolhida é concluída.",
+    "Não há erro; a coluna recolhida resolve."
+   ],
+   "correta": 2
+  },
+  {
+   "pergunta": "A quem a operação gerada é atribuída?",
+   "opcoes": [
+    "Ao gerente comercial, sempre",
+    "Ao responsável do contrato, o líder da equipe, e o campo continua editável",
+    "A quem clicou em Confirmar no assistente",
+    "A ninguém, até que alguém se atribua no quadro"
+   ],
+   "comentarios": [
+    "Depende do contrato de cada cliente.",
+    "O responsável se resolve pelo contrato.",
+    "Quem roda a rotina não vira dono de todas as operações.",
+    "Sempre nasce com responsável."
+   ],
+   "correta": 1
+  }
+ ],
+ "youtube_anterior": [
+  "https://www.youtube.com/watch?v=U4Oz70gmL7Y"
+ ],
+ "youtube_quadro": "2912x2080"
+}

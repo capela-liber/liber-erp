@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Liber — ERP open source para editoras brasileiras</title>
-<meta name="description" content="Liber é o primeiro software de gestão totalmente open source feito para editoras brasileiras: consignação, direitos autorais, NF-e, Metabooks e tudo o que o Odoo oferece.">
+<meta name="description" content="Liber é o primeiro software de gestão totalmente open source feito para editoras brasileiras: consignação, direitos autorais, NF-e, catálogo por ISBN e tudo o que o Odoo oferece.">
 <link rel="icon" type="image/png" href="logo.png">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -264,14 +264,11 @@
   <div class="wrap">
     <a class="brand" href="#"><img src="logo.png" alt="">liber<span>.</span></a>
     <nav class="main">
-      <a href="#consignacao">Consignação</a>
-      <a href="#direitos">Direitos autorais</a>
-      <a href="#metadados">Metadados</a>
-      <a href="#amazon">Amazon</a>
-      <a href="#impressao">Dropship</a>
-      <a href="#odoo">Odoo</a>
-      <a href="#quem-somos">Quem somos</a>
+      <a href="#open">Demo</a>
+      <a href="https://github.com/capela-liber/liber-erp" rel="noopener">Código</a>
+      <a href="#treinamento">Treinamento</a>
       <a href="docs/index.html">Manuais</a>
+      <a href="#quem-somos">Quem somos</a>
       <a href="#faq">Dúvidas</a>
     </nav>
   </div>
@@ -287,6 +284,7 @@
       <div class="cta-row">
         <a class="cta" href="#consignacao">Conheça as funcionalidades</a>
         <a class="cta ghost" href="#open">100% código aberto</a>
+        <a class="cta ghost" href="/slides">Aprenda pelos cursos</a>
       </div>
     </div>
     <img class="hero-logo" src="logo.png" alt="Logo do Liber">
@@ -377,6 +375,8 @@
   </div>
 </section>
 
+<!-- Metabooks: destaque removido da vitrine (16/09/2026) — não falamos mais da
+     marca aqui. O módulo, o manual e o código seguem como estão.
 <section class="feature" id="metadados">
   <div class="wrap">
     <div class="text">
@@ -396,6 +396,7 @@
     </figure>
   </div>
 </section>
+-->
 
 <section class="feature flip" id="xml">
   <div class="wrap">
@@ -632,6 +633,28 @@
   </div>
 </section>
 
+<section class="feature" id="treinamento">
+  <div class="wrap">
+    <div class="text">
+      <p class="kicker">Treinamento aberto</p>
+      <h2>Aprenda o Liber vendo a tela, não lendo o manual</h2>
+      <p>Cada módulo tem um curso em vídeo gravado na tela real, no perfil de quem opera:
+      aulas de um a três minutos, com narração, o roteiro escrito e um quiz por aula.
+      São os mesmos cursos que a equipe da EdLab faz — <strong>abertos a qualquer pessoa,
+      sem cadastro</strong>.</p>
+      <ul>
+        <li><strong>Consignação</strong> em três cursos: acordos e remessas, acerto e cobrança, fiscal e auditoria.</li>
+        <li><strong>Comercial, atendimento e expedição</strong>: do cadastro do cliente à coleta na doca.</li>
+        <li><strong>Financeiro e orçamento</strong>: cobrar pela idade, o espelho entre empresas, o realizado que entra sozinho.</li>
+        <li><strong>Feiras, Olist e Amazon</strong>: o evento na praça e os marketplaces sem levar o livro-razão junto.</li>
+      </ul>
+      <div class="cta-row">
+        <a class="cta" href="/slides">Ver os cursos</a>
+      </div>
+    </div>
+  </div>
+</section>
+
 <section class="faq" id="faq">
   <div class="wrap">
     <p class="kicker">Dúvidas frequentes</p>
@@ -706,7 +729,9 @@
           <tr><td>Royalties, contratos, prestação de contas</td><td><code>liber_copyright_contracts</code> e os complementos de pagamento, IRRF e relatórios</td></tr>
           <tr><td>Consignação, acerto, puxadas</td><td><code>liber_soc_agreements</code>, <code>liber_soc_moves</code>, <code>liber_soc_settlement</code></td></tr>
           <tr><td>Notas fiscais: importar da SEFAZ, emitir</td><td><code>liber_nfe_xml</code>, <code>liber_nfe_focus</code></td></tr>
+          <!-- Catálogo por ISBN: fora da vitrine em 16/09/2026 (ver acima).
           <tr><td>Catálogo e metadados por ISBN</td><td><code>liber_metabooks_integration</code></td></tr>
+          -->
           <tr><td>Pedidos da Amazon (Vendor Central)</td><td><code>liber_amazon_vendor</code></td></tr>
           <tr><td>Arquivos no Dropbox, Drive ou GitHub</td><td><code>liber_dropbox</code>, <code>liber_gdrive</code>, <code>liber_github</code></td></tr>
         </table>
@@ -891,8 +916,8 @@
           <li><strong>Implantação, migração e suporte</strong>, se você contratar um parceiro. É
           trabalho de gente, e é o custo real de um ERP em qualquer cenário.</li>
           <li><strong>Serviços de terceiros que você escolher ligar</strong> — certificado
-          digital A1 (para falar com a SEFAZ), Focus NFe (emissão), Metabooks/MVB (metadados de
-          catálogo). Cada um tem preço próprio, cobrado pelo fornecedor, e nenhum é obrigatório:
+          digital A1 (para falar com a SEFAZ), Focus NFe (emissão), provedores de metadados de
+          catálogo. Cada um tem preço próprio, cobrado pelo fornecedor, e nenhum é obrigatório:
           o módulo correspondente simplesmente não se instala.</li>
           <li><strong>Odoo Enterprise</strong>, se um dia você quiser.</li>
         </ul>
@@ -954,7 +979,7 @@
         <p>No servidor que é seu ou que você contratou. Não há serviço nosso no meio do caminho:
         o Liber é código que roda na sua máquina, não um sistema que a gente hospeda.</p>
         <p>As únicas conexões que saem são as integrações que você mesmo ligar — SEFAZ, Focus,
-        Metabooks, Dropbox, Drive, GitHub — cada uma com credencial sua, configurada por você, e
+        Dropbox, Drive, GitHub — cada uma com credencial sua, configurada por você, e
         desligável.</p>
       </div>
     </details>

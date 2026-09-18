@@ -1,0 +1,74 @@
+{
+ "curso": "Curso de Consignação III",
+ "aula": 5,
+ "titulo": "Auditar um cliente",
+ "abertura": "O dia a dia mantém o mapa aos poucos; a auditoria faz o caminho inverso: pega todas as notas de consignação importadas de um cliente e refaz a conta do zero, por título.",
+ "fecho": "Esperado contra mapa, com os avisos de qualidade antes de aceitar. Na última aula, resolver as divergências e ajustar.",
+ "youtube": "https://www.youtube.com/watch?v=j_CQJJxj5xo",
+ "quiz": [
+  {
+   "pergunta": "Como se calcula o esperado de um título?",
+   "opcoes": [
+    "Abertura mais remessas, menos vendas efetivadas, menos devoluções",
+    "Só as remessas",
+    "Remessas menos devoluções",
+    "Mapa mais vendas"
+   ],
+   "comentarios": [
+    "Notas canceladas ficam de fora.",
+    "Remessa é só a entrada.",
+    "Faltou subtrair as vendas efetivadas.",
+    "O mapa é o outro lado da conta."
+   ],
+   "correta": 0
+  },
+  {
+   "pergunta": "Diferença negativa (esperado menor que o mapa) significa:",
+   "opcoes": [
+    "Perda ou quebra",
+    "Nada",
+    "Erro de CFOP sempre",
+    "O mapa mostra mais livros do que o fiscal justifica"
+   ],
+   "comentarios": [
+    "Negativa é o contrário: o mapa tem mais do que o fiscal.",
+    "Toda diferença pede decisão.",
+    "Pode ser, mas não sempre.",
+    "Pode ser nota que não entrou."
+   ],
+   "correta": 3
+  },
+  {
+   "pergunta": "A auditoria reprocessa os arquivos XML?",
+   "opcoes": [
+    "Não: se falta nota, o problema está na importação, e ela aponta",
+    "Só se o gerente pedir",
+    "Só os cancelados",
+    "Sim, a cada cálculo"
+   ],
+   "comentarios": [
+    "A solução também está na importação.",
+    "Nunca reprocessa.",
+    "Cancelados ficam de fora.",
+    "Nunca: lê as notas já importadas e interpretadas."
+   ],
+   "correta": 0
+  },
+  {
+   "pergunta": "Um item de nota que não achou produto no catálogo:",
+   "opcoes": [
+    "Cancela a auditoria",
+    "Não é contado, e um aviso pede para corrigir o catálogo e recalcular",
+    "É contado como o produto mais parecido",
+    "Vira ajuste"
+   ],
+   "comentarios": [
+    "A auditoria segue com aviso.",
+    "Itens não casados.",
+    "Não é contado.",
+    "Só linhas resolvidas viram ajuste."
+   ],
+   "correta": 1
+  }
+ ]
+}

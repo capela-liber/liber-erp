@@ -27,6 +27,7 @@ class AccountMove(models.Model):
         try:
             if self.focus_status == 'autorizado':
                 self._liber_danfe_para_pickings()
+                self._liber_cartas_para_pickings()
             elif self.focus_status == 'cancelado':
                 self._liber_avisar_cancelamento_nos_pickings()
         except Exception:
@@ -377,6 +378,43 @@ class AccountMove(models.Model):
             picking.message_post(
                 body=corpo, attachment_ids=copia.ids,
                 subtype_xmlid='mail.mt_note')
+
+    def _liber_cartas_para_pickings(self):
+        """Posta o PDF de cada carta de correção no chatter das transferências.
+
+        A carta corrige o que o DANFE diz -- transportadora, volumes, dados
+        do endereço -- e é a logística, olhando a transferência, quem precisa
+        vê-la ao lado do DANFE que ela corrige. Cada carta é um anexo com o
+        seu número; a última substitui as anteriores, e a mensagem diz isso.
+        Mesma idempotência do DANFE: o nome do anexo na transferência é a
+        marca de que a mensagem já foi postada.
+        """
+        self.ensure_one()
+        cartas = self._focus_anexos_de_carta()
+        if not cartas:
+            return
+        pickings = self._liber_pickings_da_nota()
+        for picking in pickings:
+            for carta in cartas:
+                if self.env['ir.attachment'].search_count([
+                        ('res_model', '=', 'stock.picking'),
+                        ('res_id', '=', picking.id),
+                        ('name', '=', carta.name)]):
+                    continue
+                copia = carta.copy(
+                    {'res_model': 'stock.picking', 'res_id': picking.id})
+                numero = carta.name.rsplit('-', 1)[-1].replace('.pdf', '')
+                corpo = Markup(_(
+                    "<p><b>Carta de correção nº %(numero)s da NFe nº "
+                    "%(nfe)s</b> — o PDF segue anexo.</p>"
+                    "<p>Ela corrige o que o DANFE desta transferência diz e "
+                    "substitui as cartas anteriores. Viaja junto com ele.</p>"
+                )) % {
+                    'numero': numero if numero.isdigit() else '?',
+                    'nfe': self.focus_numero or '?'}
+                picking.message_post(
+                    body=corpo, attachment_ids=copia.ids,
+                    subtype_xmlid='mail.mt_note')
 
     def _liber_avisar_cancelamento_nos_pickings(self):
         """Avisa no chatter que a DANFE anexada deixou de valer.

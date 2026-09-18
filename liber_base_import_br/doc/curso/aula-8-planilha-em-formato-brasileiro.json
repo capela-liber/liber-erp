@@ -1,0 +1,74 @@
+{
+ "curso": "Curso Financeiro: a receber, a pagar e os painéis",
+ "aula": 8,
+ "titulo": "Importar planilha em formato brasileiro",
+ "abertura": "Esta aula é a planilha do jeito que o Brasil escreve: vírgula decimal e data em dia, mês, ano, importadas como estão.",
+ "fecho": "A regra é a da casa inteira: o arquivo entra como o contador escreveu. Quem se adapta é o sistema.",
+ "youtube": "https://www.youtube.com/watch?v=Jq3BnEyxPcA",
+ "quiz": [
+  {
+   "pergunta": "Qual era o tropeço da importação?",
+   "opcoes": [
+    "O tamanho do arquivo",
+    "A vírgula decimal e a data em dia, mês, ano",
+    "O acento nos nomes",
+    "O número de colunas"
+   ],
+   "comentarios": [
+    "Tamanho não era o problema.",
+    "São as duas convenções brasileiras.",
+    "Acento já funcionava.",
+    "Colunas não são o caso."
+   ],
+   "correta": 1
+  },
+  {
+   "pergunta": "Sem o módulo, 59,90 poderia virar o quê?",
+   "opcoes": [
+    "Cinquenta e nove mil e noventa",
+    "Zero",
+    "Cinquenta e nove",
+    "Erro de importação"
+   ],
+   "comentarios": [
+    "A vírgula lida como separador de milhar muda a ordem de grandeza.",
+    "Não zera.",
+    "Não trunca.",
+    "Pior que erro: entra errado e ninguém vê."
+   ],
+   "correta": 0
+  },
+  {
+   "pergunta": "E 05/03/2026, lido do jeito errado?",
+   "opcoes": [
+    "Vira 3 de maio em vez de 5 de março",
+    "Vira 2026 de março",
+    "Não é lida",
+    "Vira hoje"
+   ],
+   "comentarios": [
+    "Dia e mês trocados: é o erro clássico, e passa despercebido até o dia 13.",
+    "Não faz sentido.",
+    "É lida, e errado.",
+    "Não vira hoje."
+   ],
+   "correta": 0
+  },
+  {
+   "pergunta": "Qual a regra da casa nesse assunto?",
+   "opcoes": [
+    "Converter a planilha antes de importar",
+    "Pedir o arquivo em inglês ao contador",
+    "O arquivo entra como o contador escreveu: quem se adapta é o sistema",
+    "Digitar à mão"
+   ],
+   "comentarios": [
+    "Converter à mão é onde o erro nasce.",
+    "O contador escreve em português.",
+    "É a regra, e o módulo existe para cumpri-la.",
+    "Digitar é pior ainda."
+   ],
+   "correta": 2
+  }
+ ]
+}

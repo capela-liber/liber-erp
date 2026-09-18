@@ -1,0 +1,74 @@
+{
+ "curso": "Curso Feiras II: vender, fechar e voltar",
+ "aula": 6,
+ "titulo": "A nota da volta, e o Retorno",
+ "abertura": "Esta aula é a volta: a nota de crédito que anula a da ida, o botão Retorno que fecha tudo no clique, e a segunda perna, do armazém, em Recebimentos.",
+ "fecho": "A nota da volta sai no Retorno e viaja com as caixas; o Retorno esvazia a mesa, fecha os caixas, lacra os dias e encerra o evento; o armazém confere depois, e o que falta vira perda a explicar. A próxima aula é a conta da equipe.",
+ "youtube": "https://www.youtube.com/watch?v=wzBf2qaDPBs",
+ "quiz": [
+  {
+   "pergunta": "Quando a nota da volta sai?",
+   "opcoes": [
+    "No dia seguinte, pelo cron",
+    "No mesmo clique do Retorno, porque ela viaja com as caixas",
+    "Junto com a nota da ida",
+    "Quando o armazém confere a chegada"
+   ],
+   "comentarios": [
+    "Não é cron.",
+    "Nota que só saísse na chegada deixaria o caminhão rodar sem documento.",
+    "A ida é outra nota.",
+    "Chegar é tarde."
+   ],
+   "correta": 1
+  },
+  {
+   "pergunta": "Que tipo de documento é a nota da volta?",
+   "opcoes": [
+    "Uma segunda remessa",
+    "Uma venda",
+    "Uma devolução de cliente",
+    "Uma nota de crédito que anula a da ida e referencia a chave dela"
+   ],
+   "comentarios": [
+    "É o contrário da remessa.",
+    "Não é venda.",
+    "A editora não é cliente de si mesma.",
+    "A mercadoria saiu e voltou; nada mudou de dono."
+   ],
+   "correta": 3
+  },
+  {
+   "pergunta": "O que o botão Retorno faz num clique?",
+   "opcoes": [
+    "Só emite a nota",
+    "Só cria uma transferência para o depósito validar",
+    "Esvazia a mesa, fecha os caixas, lacra os dias, encerra o evento e prepara as contas da equipe",
+    "Só fecha os caixas"
+   ],
+   "comentarios": [
+    "Emite e faz o resto.",
+    "Um meio-termo deixava a feira sem fechar.",
+    "É o gesto de quem já embalou, com a van na porta.",
+    "Fecha e faz o resto."
+   ],
+   "correta": 2
+  },
+  {
+   "pergunta": "O armazém contou dois a menos do que a nota da volta declarou. Onde isso aparece?",
+   "opcoes": [
+    "No fechamento do último dia",
+    "Em lugar nenhum",
+    "Na nota da volta, corrigida",
+    "Em Perdas, como Não voltou, a explicar, com os exemplares visíveis no trânsito"
+   ],
+   "comentarios": [
+    "O dia já está lacrado.",
+    "Aparece.",
+    "A nota não se reescreve.",
+    "A conferência do retorno é onde essa conversa acontece."
+   ],
+   "correta": 3
+  }
+ ]
+}

@@ -1,0 +1,586 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* liber_budget
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-09-13 14:00+0000\n"
+"PO-Revision-Date: 2026-09-13 14:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: pt_BR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+
+#. module: liber_budget
+#: model_terms:ir.ui.view,arch_db:liber_budget.budget_position_view_list
+msgid "# Accounts"
+msgstr "# Contas"
+
+#. module: liber_budget
+#: code:addons/liber_budget/models/budget_analytic.py:0
+msgid "%s (revision)"
+msgstr "%s (revisão)"
+
+#. module: liber_budget
+#: model:ir.model.fields,field_description:liber_budget.field_budget_pnl_report__account_id
+#: model_terms:ir.ui.view,arch_db:liber_budget.pnl_report_view_search
+msgid "Account"
+msgstr "Conta"
+
+#. module: liber_budget
+#: model:ir.model.fields,field_description:liber_budget.field_budget_position__account_count
+msgid "Account Count"
+msgstr "Contas"
+
+#. module: liber_budget
+#: model:ir.model.fields,field_description:liber_budget.field_budget_pnl_report__group_id
+#: model_terms:ir.ui.view,arch_db:liber_budget.pnl_report_view_search
+msgid "Account Group"
+msgstr "Grupo de contas"
+
+#. module: liber_budget
+#: model:ir.model.fields,field_description:liber_budget.field_budget_pnl_report__account_type
+#: model_terms:ir.ui.view,arch_db:liber_budget.pnl_report_view_search
+msgid "Account Type"
+msgstr "Tipo de conta"
+
+#. module: liber_budget
+#: model:ir.model.fields,field_description:liber_budget.field_budget_position__account_ids
+msgid "Accounts"
+msgstr "Contas"
+
+#. module: liber_budget
+#: model:ir.model.fields,help:liber_budget.field_budget_line__programmed_amount
+msgid "All entered journal items in the period (DRAFT + POSTED). Includes the practical amount."
+msgstr "Todos os itens de diário lançados no período (RASCUNHO + LANÇADO). Inclui o realizado."
+
+#. module: liber_budget
+#: model:ir.model.fields,field_description:liber_budget.field_budget_analytic__company_ids
+msgid "Also Consolidate"
+msgstr "Consolidar também"
+
+#. module: liber_budget
+#: model:ir.model.fields,field_description:liber_budget.field_budget_pnl_report__amount
+#: model_terms:ir.ui.view,arch_db:liber_budget.pnl_report_view_list
+msgid "Amount"
+msgstr "Valor"
+
+#. module: liber_budget
+#: model:ir.model.fields,field_description:liber_budget.field_budget_line__auto_account_id
+#: model:ir.model.fields,field_description:liber_budget.field_budget_report__account_id
+#: model_terms:ir.ui.view,arch_db:liber_budget.budget_analytic_view_form
+msgid "Analytic Account"
+msgstr "Conta analítica"
+
+#. module: liber_budget
+#: code:addons/liber_budget/models/budget_line.py:0
+msgid "Analytic Items"
+msgstr "Itens analíticos"
+
+#. module: liber_budget
+#: model:ir.model.fields,help:liber_budget.field_budget_pnl_report__amount
+msgid "Balance with the P&L sign: income positive, expense negative. The grand total is the net result."
+msgstr "Saldo com o sinal do resultado: receita positiva, despesa negativa. O total geral é o resultado líquido."
+
+#. module: liber_budget
+#: model:ir.model,name:liber_budget.model_budget_analytic
+#: model:ir.model.fields,field_description:liber_budget.field_budget_line__budget_analytic_id
+#: model:ir.model.fields,field_description:liber_budget.field_budget_report__budget_analytic_id
+#: model_terms:ir.ui.view,arch_db:liber_budget.budget_report_view_search
+msgid "Budget"
+msgstr "Orçamento"
+
+#. module: liber_budget
+#: model:ir.actions.act_window,name:liber_budget.budget_report_action
+#: model:ir.model,name:liber_budget.model_budget_report
+#: model:ir.ui.menu,name:liber_budget.menu_budget_report
+#: model_terms:ir.ui.view,arch_db:liber_budget.budget_report_view_graph
+#: model_terms:ir.ui.view,arch_db:liber_budget.budget_report_view_list
+#: model_terms:ir.ui.view,arch_db:liber_budget.budget_report_view_pivot
+msgid "Budget Analysis"
+msgstr "Análise do orçamento"
+
+#. module: liber_budget
+#: model:ir.model,name:liber_budget.model_budget_group
+msgid "Budget Group"
+msgstr "Grupo de orçamentos"
+
+#. module: liber_budget
+#: model:ir.actions.act_window,name:liber_budget.budget_group_action
+#: model:ir.ui.menu,name:liber_budget.menu_budget_group
+msgid "Budget Groups"
+msgstr "Grupos de orçamentos"
+
+#. module: liber_budget
+#: model:ir.model,name:liber_budget.model_budget_line
+#: model:ir.model.fields,field_description:liber_budget.field_budget_report__budget_line_id
+msgid "Budget Line"
+msgstr "Linha do orçamento"
+
+#. module: liber_budget
+#: model:ir.model.fields,field_description:liber_budget.field_budget_analytic__budget_line_ids
+#: model_terms:ir.ui.view,arch_db:liber_budget.budget_analytic_view_form
+msgid "Budget Lines"
+msgstr "Linhas do orçamento"
+
+#. module: liber_budget
+#: code:addons/liber_budget/models/budget_analytic.py:0
+msgid "Budget Revision"
+msgstr "Revisão do orçamento"
+
+#. module: liber_budget
+#: model:ir.model,name:liber_budget.model_budget_tag
+msgid "Budget Tag"
+msgstr "Etiqueta de orçamento"
+
+#. module: liber_budget
+#: model:ir.actions.act_window,name:liber_budget.budget_tag_action
+#: model:ir.ui.menu,name:liber_budget.menu_budget_tag
+msgid "Budget Tags"
+msgstr "Etiquetas de orçamento"
+
+#. module: liber_budget
+#: model:res.groups,name:liber_budget.group_budget_manager
+msgid "Budget: Manager"
+msgstr "Orçamento: Gerente"
+
+#. module: liber_budget
+#: model:res.groups,name:liber_budget.group_budget_user
+msgid "Budget: User"
+msgstr "Orçamento: Usuário"
+
+#. module: liber_budget
+#: model:ir.model,name:liber_budget.model_budget_position
+#: model:ir.model.fields,field_description:liber_budget.field_budget_line__position_id
+#: model:ir.model.fields,field_description:liber_budget.field_budget_report__position_id
+#: model_terms:ir.ui.view,arch_db:liber_budget.budget_report_view_search
+msgid "Budgetary Position"
+msgstr "Posição orçamentária"
+
+#. module: liber_budget
+#: model:ir.actions.act_window,name:liber_budget.budget_position_action
+#: model:ir.ui.menu,name:liber_budget.menu_budget_position
+msgid "Budgetary Positions"
+msgstr "Posições orçamentárias"
+
+#. module: liber_budget
+#: model:ir.actions.act_window,name:liber_budget.budget_analytic_action
+#: model:ir.ui.menu,name:liber_budget.menu_budget_analytic
+#: model:ir.ui.menu,name:liber_budget.menu_budget_root
+msgid "Budgets"
+msgstr "Orçamentos"
+
+#. module: liber_budget
+#: model_terms:ir.ui.view,arch_db:liber_budget.budget_analytic_view_form
+msgid "Cancel"
+msgstr "Cancelar"
+
+#. module: liber_budget
+#: model:ir.model.fields.selection,name:liber_budget.selection__budget_analytic__state__canceled
+msgid "Canceled"
+msgstr "Cancelado"
+
+#. module: liber_budget
+#: model:ir.model.fields,field_description:liber_budget.field_budget_pnl_report__code
+msgid "Code"
+msgstr "Código"
+
+#. module: liber_budget
+#: model:ir.model.fields,field_description:liber_budget.field_budget_tag__color
+msgid "Color"
+msgstr "Cor"
+
+#. module: liber_budget
+#: model:ir.model.fields,field_description:liber_budget.field_budget_analytic__company_id
+#: model:ir.model.fields,field_description:liber_budget.field_budget_group__company_id
+#: model:ir.model.fields,field_description:liber_budget.field_budget_line__company_id
+#: model:ir.model.fields,field_description:liber_budget.field_budget_pnl_report__company_id
+#: model:ir.model.fields,field_description:liber_budget.field_budget_position__company_id
+#: model:ir.model.fields,field_description:liber_budget.field_budget_report__company_id
+msgid "Company"
+msgstr "Empresa"
+
+#. module: liber_budget
+#: model:ir.ui.menu,name:liber_budget.menu_budget_config
+msgid "Configuration"
+msgstr "Configuração"
+
+#. module: liber_budget
+#: model_terms:ir.ui.view,arch_db:liber_budget.budget_analytic_view_form
+msgid "Confirm"
+msgstr "Confirmar"
+
+#. module: liber_budget
+#: model:ir.model.fields,field_description:liber_budget.field_budget_analytic__company_names
+msgid "Consolidated From"
+msgstr "Consolidado de"
+
+#. module: liber_budget
+#: model_terms:ir.ui.view,arch_db:liber_budget.pnl_report_view_search
+msgid "Cost of Revenue"
+msgstr "Custo da receita"
+
+#. module: liber_budget
+#: model_terms:ir.actions.act_window,help:liber_budget.budget_group_action
+msgid "Create a budget group"
+msgstr "Criar um grupo de orçamentos"
+
+#. module: liber_budget
+#: model_terms:ir.actions.act_window,help:liber_budget.budget_tag_action
+msgid "Create a budget tag"
+msgstr "Criar uma etiqueta de orçamento"
+
+#. module: liber_budget
+#: model_terms:ir.actions.act_window,help:liber_budget.budget_position_action
+msgid "Create a budgetary position"
+msgstr "Criar uma posição orçamentária"
+
+#. module: liber_budget
+#: model_terms:ir.actions.act_window,help:liber_budget.budget_analytic_action
+msgid "Create your first budget"
+msgstr "Crie o seu primeiro orçamento"
+
+#. module: liber_budget
+#: model:ir.model.fields,field_description:liber_budget.field_budget_line__currency_id
+#: model:ir.model.fields,field_description:liber_budget.field_budget_pnl_report__currency_id
+#: model:ir.model.fields,field_description:liber_budget.field_budget_report__currency_id
+msgid "Currency"
+msgstr "Moeda"
+
+#. module: liber_budget
+#: model:ir.model.fields,field_description:liber_budget.field_budget_pnl_report__date
+#: model_terms:ir.ui.view,arch_db:liber_budget.pnl_report_view_search
+msgid "Date"
+msgstr "Data"
+
+#. module: liber_budget
+#: model:ir.model.fields,field_description:liber_budget.field_budget_line__x_plan3_id
+msgid "Departments"
+msgstr "Departamentos"
+
+#. module: liber_budget
+#: model:ir.model.fields.selection,name:liber_budget.selection__budget_analytic__state__done
+msgid "Done"
+msgstr "Concluído"
+
+#. module: liber_budget
+#: model:ir.model.fields.selection,name:liber_budget.selection__budget_analytic__state__draft
+#: model:ir.model.fields.selection,name:liber_budget.selection__budget_pnl_report__state__draft
+#: model_terms:ir.ui.view,arch_db:liber_budget.budget_analytic_view_search
+msgid "Draft"
+msgstr "Rascunho"
+
+#. module: liber_budget
+#: model_terms:ir.ui.view,arch_db:liber_budget.pnl_report_view_search
+msgid "Draft Entries"
+msgstr "Lançamentos em rascunho"
+
+#. module: liber_budget
+#: model:ir.model.fields,field_description:liber_budget.field_budget_analytic__date_to
+#: model:ir.model.fields,field_description:liber_budget.field_budget_line__date_to
+#: model:ir.model.fields,field_description:liber_budget.field_budget_report__date_to
+msgid "End Date"
+msgstr "Data final"
+
+#. module: liber_budget
+#: model_terms:ir.ui.view,arch_db:liber_budget.pnl_report_view_search
+msgid "Expenses"
+msgstr "Despesas"
+
+#. module: liber_budget
+#: model:ir.model.fields,help:liber_budget.field_budget_position__account_ids
+msgid "General ledger accounts whose journal items feed this position."
+msgstr "Contas do razão cujos itens de diário alimentam esta posição."
+
+#. module: liber_budget
+#: model:ir.model.fields,field_description:liber_budget.field_budget_analytic__group_id
+#: model:ir.model.fields,field_description:liber_budget.field_budget_report__group_id
+#: model_terms:ir.ui.view,arch_db:liber_budget.budget_analytic_view_search
+#: model_terms:ir.ui.view,arch_db:liber_budget.budget_report_view_search
+msgid "Group"
+msgstr "Grupo"
+
+#. module: liber_budget
+#: model:ir.model.fields,help:liber_budget.field_budget_pnl_report__group_id
+msgid "Group of the chart of accounts that matches the account code prefix. Empty while no account groups are configured."
+msgstr "Grupo do plano de contas que casa com o prefixo do código da conta. Fica vazio enquanto não houver grupos configurados."
+
+#. module: liber_budget
+#: model:ir.model.fields,field_description:liber_budget.field_budget_analytic__activity_exception_icon
+msgid "Icon"
+msgstr "Ícone"
+
+#. module: liber_budget
+#: model:ir.model.fields,help:liber_budget.field_budget_line__position_id
+msgid "If set, actuals come from the General Ledger accounts of this position (works retroactively). Otherwise, from analytic lines."
+msgstr "Preenchida, o realizado vem das contas do razão desta posição (e vale para períodos passados). Vazia, vem das linhas analíticas."
+
+#. module: liber_budget
+#: model_terms:ir.ui.view,arch_db:liber_budget.pnl_report_view_search
+msgid "Income"
+msgstr "Receita"
+
+#. module: liber_budget
+#: model:ir.model.fields,field_description:liber_budget.field_budget_line__x_plan4_id
+msgid "Internal"
+msgstr "Interno"
+
+#. module: liber_budget
+#: model:ir.model.fields,field_description:liber_budget.field_budget_pnl_report__journal_id
+#: model_terms:ir.ui.view,arch_db:liber_budget.pnl_report_view_search
+msgid "Journal"
+msgstr "Diário"
+
+#. module: liber_budget
+#: model:ir.model.fields,field_description:liber_budget.field_budget_pnl_report__move_id
+msgid "Journal Entry"
+msgstr "Lançamento de diário"
+
+#. module: liber_budget
+#: code:addons/liber_budget/models/budget_line.py:0
+msgid "Journal Items"
+msgstr "Itens de diário"
+
+#. module: liber_budget
+#: model_terms:ir.ui.view,arch_db:liber_budget.budget_analytic_view_form
+msgid "Mark as Done"
+msgstr "Marcar como concluído"
+
+#. module: liber_budget
+#: model_terms:ir.ui.view,arch_db:liber_budget.pnl_report_view_search
+msgid "Month"
+msgstr "Mês"
+
+#. module: liber_budget
+#: model_terms:ir.ui.view,arch_db:liber_budget.budget_analytic_view_search
+msgid "My Budgets"
+msgstr "Meus orçamentos"
+
+#. module: liber_budget
+#: model:ir.model.fields,field_description:liber_budget.field_budget_analytic__name
+#: model:ir.model.fields,field_description:liber_budget.field_budget_group__name
+#: model:ir.model.fields,field_description:liber_budget.field_budget_position__name
+#: model:ir.model.fields,field_description:liber_budget.field_budget_tag__name
+msgid "Name"
+msgstr "Nome"
+
+#. module: liber_budget
+#: model:ir.model.fields,help:liber_budget.field_budget_analytic__company_names
+msgid "Names of the companies whose entries feed the Practical column."
+msgstr "Nomes das empresas cujos lançamentos alimentam a coluna Realizado."
+
+#. module: liber_budget
+#: model_terms:ir.ui.view,arch_db:liber_budget.budget_analytic_view_form
+msgid "New Revision"
+msgstr "Nova revisão"
+
+#. module: liber_budget
+#: model_terms:ir.actions.act_window,help:liber_budget.pnl_report_action
+msgid "No journal item in a P&amp;L account yet"
+msgstr "Ainda não há item de diário em conta de resultado"
+
+#. module: liber_budget
+#: model:ir.model.fields.selection,name:liber_budget.selection__budget_analytic__state__confirmed
+#: model_terms:ir.ui.view,arch_db:liber_budget.budget_analytic_view_search
+msgid "Open"
+msgstr "Aberto"
+
+#. module: liber_budget
+#: model:ir.model.fields,help:liber_budget.field_budget_analytic__company_ids
+msgid "Other companies whose entries also feed the Practical column. This budget's own company is always included."
+msgstr "Outras empresas cujos lançamentos também alimentam a coluna Realizado. A empresa do próprio orçamento entra sempre."
+
+#. module: liber_budget
+#: model:ir.model.fields,field_description:liber_budget.field_budget_pnl_report__partner_id
+#: model_terms:ir.ui.view,arch_db:liber_budget.pnl_report_view_search
+msgid "Partner"
+msgstr "Parceiro"
+
+#. module: liber_budget
+#: model:ir.model.fields,field_description:liber_budget.field_budget_line__budget_amount
+#: model:ir.model.fields,field_description:liber_budget.field_budget_report__planned
+#: model_terms:ir.ui.view,arch_db:liber_budget.budget_analytic_view_form
+#: model_terms:ir.ui.view,arch_db:liber_budget.budget_report_view_list
+msgid "Planned"
+msgstr "Previsto"
+
+#. module: liber_budget
+#: model:ir.model.fields.selection,name:liber_budget.selection__budget_pnl_report__state__posted
+msgid "Posted"
+msgstr "Lançado"
+
+#. module: liber_budget
+#: model_terms:ir.ui.view,arch_db:liber_budget.pnl_report_view_search
+msgid "Posted Entries"
+msgstr "Lançamentos lançados"
+
+#. module: liber_budget
+#: model:ir.model.fields,field_description:liber_budget.field_budget_line__practical_amount
+#: model:ir.model.fields,field_description:liber_budget.field_budget_report__practical
+#: model_terms:ir.ui.view,arch_db:liber_budget.budget_analytic_view_form
+#: model_terms:ir.ui.view,arch_db:liber_budget.budget_report_view_list
+msgid "Practical"
+msgstr "Realizado"
+
+#. module: liber_budget
+#: model:ir.model.fields,field_description:liber_budget.field_budget_line__practical_percentage
+msgid "Practical (%)"
+msgstr "Realizado (%)"
+
+#. module: liber_budget
+#: model:ir.actions.act_window,name:liber_budget.pnl_report_action
+#: model:ir.model,name:liber_budget.model_budget_pnl_report
+#: model:ir.ui.menu,name:liber_budget.menu_budget_pnl_report
+#: model_terms:ir.ui.view,arch_db:liber_budget.pnl_report_view_graph
+#: model_terms:ir.ui.view,arch_db:liber_budget.pnl_report_view_list
+#: model_terms:ir.ui.view,arch_db:liber_budget.pnl_report_view_pivot
+msgid "Profit & Loss"
+msgstr "Demonstração do resultado"
+
+#. module: liber_budget
+#: model:ir.model.fields,field_description:liber_budget.field_budget_line__programmed_amount
+#: model:ir.model.fields,field_description:liber_budget.field_budget_report__programmed
+#: model_terms:ir.ui.view,arch_db:liber_budget.budget_analytic_view_form
+#: model_terms:ir.ui.view,arch_db:liber_budget.budget_report_view_list
+msgid "Programmed"
+msgstr "Programado"
+
+#. module: liber_budget
+#: model:ir.model.fields,field_description:liber_budget.field_budget_line__account_id
+msgid "Project Account"
+msgstr "Conta de projeto"
+
+#. module: liber_budget
+#: model:ir.model.fields,help:liber_budget.field_budget_line__practical_amount
+msgid "Realized amount from POSTED entries (and manual analytic lines)."
+msgstr "Valor realizado a partir dos lançamentos LANÇADOS (e das linhas analíticas feitas à mão)."
+
+#. module: liber_budget
+#: model:ir.ui.menu,name:liber_budget.menu_budget_reporting
+msgid "Reporting"
+msgstr "Relatórios"
+
+#. module: liber_budget
+#: model_terms:ir.ui.view,arch_db:liber_budget.budget_analytic_view_form
+msgid "Reset to Draft"
+msgstr "Voltar a rascunho"
+
+#. module: liber_budget
+#: model:ir.model.fields,field_description:liber_budget.field_budget_analytic__user_id
+msgid "Responsible"
+msgstr "Responsável"
+
+#. module: liber_budget
+#: model:ir.model.fields,field_description:liber_budget.field_budget_analytic__activity_user_id
+msgid "Responsible User"
+msgstr "Usuário responsável"
+
+#. module: liber_budget
+#: model:ir.model.fields.selection,name:liber_budget.selection__budget_analytic__state__revised
+msgid "Revised"
+msgstr "Revisado"
+
+#. module: liber_budget
+#: model:ir.model.fields,field_description:liber_budget.field_budget_analytic__revision_count
+msgid "Revision Count"
+msgstr "Revisões"
+
+#. module: liber_budget
+#: model:ir.model.fields,field_description:liber_budget.field_budget_analytic__parent_id
+msgid "Revision Of"
+msgstr "Revisão de"
+
+#. module: liber_budget
+#: code:addons/liber_budget/models/budget_analytic.py:0
+#: model:ir.model.fields,field_description:liber_budget.field_budget_analytic__children_ids
+#: model_terms:ir.ui.view,arch_db:liber_budget.budget_analytic_view_form
+msgid "Revisions"
+msgstr "Revisões"
+
+#. module: liber_budget
+#: model:ir.model.fields,field_description:liber_budget.field_budget_line__sequence
+msgid "Sequence"
+msgstr "Sequência"
+
+#. module: liber_budget
+#: code:addons/liber_budget/models/budget_line.py:0
+msgid "Set a Budgetary Position or at least one analytic account on the budget line."
+msgstr "Informe uma posição orçamentária ou ao menos uma conta analítica na linha do orçamento."
+
+#. module: liber_budget
+#: model:ir.model.fields,field_description:liber_budget.field_budget_analytic__date_from
+#: model:ir.model.fields,field_description:liber_budget.field_budget_line__date_from
+#: model:ir.model.fields,field_description:liber_budget.field_budget_report__date_from
+msgid "Start Date"
+msgstr "Data inicial"
+
+#. module: liber_budget
+#: model:ir.model.fields,field_description:liber_budget.field_budget_analytic__state
+#: model:ir.model.fields,field_description:liber_budget.field_budget_pnl_report__state
+#: model_terms:ir.ui.view,arch_db:liber_budget.budget_analytic_view_search
+msgid "Status"
+msgstr "Situação"
+
+#. module: liber_budget
+#: model:ir.model.fields,field_description:liber_budget.field_budget_analytic__tag_ids
+msgid "Tags"
+msgstr "Etiquetas"
+
+#. module: liber_budget
+#: model:ir.model.fields,help:liber_budget.field_budget_pnl_report__account_type
+msgid "The account type, as the Odoo chart defines it. Only the six P&L types occur here. Careful: the stored value carries an ordering prefix ('1_income', not 'income') so the statement reads top-down -- use the Income / Cost of Revenue / Expenses filters instead of writing the raw value in a domain."
+msgstr "O tipo de conta, como o plano do Odoo o define. Só os seis tipos de resultado aparecem aqui. Atenção: o valor gravado carrega um prefixo de ordenação ('1_income', não 'income') para a demonstração ser lida de cima para baixo -- use os filtros Receita / Custo da receita / Despesas em vez de escrever o valor cru num domínio."
+
+#. module: liber_budget
+#: code:addons/liber_budget/models/budget_analytic.py:0
+msgid "The end date cannot be earlier than the start date."
+msgstr "A data final não pode ser anterior à data inicial."
+
+#. module: liber_budget
+#: model:ir.model.fields,field_description:liber_budget.field_budget_line__theoritical_amount
+#: model:ir.model.fields,field_description:liber_budget.field_budget_report__theoretical
+#: model_terms:ir.ui.view,arch_db:liber_budget.budget_analytic_view_form
+#: model_terms:ir.ui.view,arch_db:liber_budget.budget_report_view_list
+msgid "Theoretical"
+msgstr "Teórico"
+
+#. module: liber_budget
+#: model:ir.model.fields,field_description:liber_budget.field_budget_line__theoritical_percentage
+msgid "Theoretical (%)"
+msgstr "Teórico (%)"
+
+#. module: liber_budget
+#: model_terms:ir.ui.view,arch_db:liber_budget.budget_analytic_view_form
+msgid "View"
+msgstr "Ver"
+
+#. module: liber_budget
+#: model_terms:ir.ui.view,arch_db:liber_budget.budget_analytic_view_form
+msgid "View Journal Items"
+msgstr "Ver itens de diário"
+
+#. module: liber_budget
+#: code:addons/liber_budget/models/budget_analytic.py:0
+msgid "You can only delete budgets in Draft or Canceled state."
+msgstr "Só se apaga orçamento em rascunho ou cancelado."
+
+#. module: liber_budget
+#: code:addons/liber_budget/models/budget_analytic.py:0
+msgid "You cannot create a recursive budget revision."
+msgstr "Não se pode criar uma revisão de orçamento que aponte para si mesma."
+
+#. module: liber_budget
+#: model_terms:ir.ui.view,arch_db:liber_budget.budget_analytic_view_form
+msgid "e.g. 2026 Marketing Budget"
+msgstr "ex.: Orçamento de Marketing 2026"
+
+#. module: liber_budget
+#: model_terms:ir.ui.view,arch_db:liber_budget.budget_position_view_form
+msgid "e.g. Funcionarios"
+msgstr "ex.: Funcionários"
