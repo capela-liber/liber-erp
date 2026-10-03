@@ -4,7 +4,7 @@
  "titulo": "O que há em cada menu, e os três papéis",
  "abertura": "Esta aula é o mapa do Direito autoral: Contratos, Favorecidos, Contas Analíticas, Relatórios e Faturas — e por que o Editorial não vê Configurações.",
  "fecho": "Três papéis, três grupos: quem redige (Editorial), quem valida (Jurídico) e quem configura (Direção). O menu de cada um é o do seu papel.",
- "youtube": "https://www.youtube.com/watch?v=6fMTDwgLF4k",
+ "youtube": "https://www.youtube.com/watch?v=1fJQ2oX3gU0",
  "quiz": [
   {
    "pergunta": "Como o app se chama na tela inicial?",
@@ -70,5 +70,9 @@
    ],
    "correta": 0
   }
- ]
+ ],
+ "youtube_anterior": [
+  "https://www.youtube.com/watch?v=6fMTDwgLF4k"
+ ],
+ "youtube_quadro": "2912x2080"
 }

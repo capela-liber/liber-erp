@@ -7,6 +7,8 @@ import requests
 from odoo import _
 from odoo.exceptions import UserError
 
+from odoo.addons.liber_cloud_files.exceptions import CloudFileGone
+
 from odoo.addons.liber_cloud_files.services.provider import wants_thumbnail
 
 _logger = logging.getLogger(__name__)
@@ -61,7 +63,17 @@ class DropboxClient:
         self._access_token = resp.json()['access_token']
         return self._access_token
 
-    def _call(self, endpoint, payload=None):
+    @staticmethod
+    def _raise_if_gone(resp, gone):
+        # Dropbox says "not there" as a 409 whose summary starts with
+        # path/not_found; only meaningful when a single file was asked.
+        if gone and resp.status_code == 409 \
+                and 'path/not_found' in resp.text:
+            raise CloudFileGone(_(
+                "%s is no longer in Dropbox: it was deleted, renamed or "
+                "moved after the last sync.", gone))
+
+    def _call(self, endpoint, payload=None, gone=None):
         """POST to an RPC endpoint (api.dropboxapi.com)."""
         try:
             resp = requests.post(
@@ -72,6 +84,7 @@ class DropboxClient:
                 timeout=TIMEOUT)
         except requests.RequestException as exc:
             raise UserError(_("Could not reach Dropbox: %s", exc)) from exc
+        self._raise_if_gone(resp, gone)
         if resp.status_code != 200:
             raise UserError(_(
                 "Dropbox call %(endpoint)s failed (HTTP %(code)s): %(body)s",
@@ -79,7 +92,7 @@ class DropboxClient:
                 body=resp.text[:500]))
         return resp.json()
 
-    def _content_call(self, endpoint, arg, data=None, raw=False):
+    def _content_call(self, endpoint, arg, data=None, raw=False, gone=None):
         """POST to a content endpoint (content.dropboxapi.com)."""
         try:
             resp = requests.post(
@@ -91,6 +104,7 @@ class DropboxClient:
                 timeout=TIMEOUT)
         except requests.RequestException as exc:
             raise UserError(_("Could not reach Dropbox: %s", exc)) from exc
+        self._raise_if_gone(resp, gone)
         if resp.status_code != 200:
             raise UserError(_(
                 "Dropbox call %(endpoint)s failed (HTTP %(code)s): %(body)s",
@@ -152,13 +166,13 @@ class DropboxClient:
     def temporary_link(self, file):
         """A direct download URL that Dropbox expires after four hours."""
         return self._call('/files/get_temporary_link',
-                          {'path': file.path})['link']
+                          {'path': file.path}, gone=file.path)['link']
 
     def download(self, file):
         # Only reached if temporary_link() is bypassed; kept for the
         # contract's completeness.
         return self._content_call('/files/download', {'path': file.path},
-                                  raw=True)
+                                  raw=True, gone=file.path)
 
     def upload(self, folder, filename, data):
         """Upload bytes, never overwriting silently (autorename)."""

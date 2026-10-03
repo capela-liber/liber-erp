@@ -4,7 +4,7 @@
  "titulo": "Cadastrar a transportadora e dizer qual o cliente usa",
  "abertura": "Esta aula cadastra as duas pontas: a transportadora, que é uma empresa como outra qualquer, e a linha na ficha do cliente que diz com quem ele recebe.",
  "fecho": "A transportadora é empresa, com endereço, inscrição estadual e e-mail; o cliente aponta para ela na ficha. Feito isso, ninguém digita transportadora de novo.",
- "youtube": "https://www.youtube.com/watch?v=Fd3ZOfcN69k",
+ "youtube": "https://www.youtube.com/watch?v=TLMWBoOHV20",
  "quiz": [
   {
    "pergunta": "A transportadora, no sistema, é o quê?",
@@ -70,5 +70,9 @@
    ],
    "correta": 3
   }
- ]
+ ],
+ "youtube_anterior": [
+  "https://www.youtube.com/watch?v=Fd3ZOfcN69k"
+ ],
+ "youtube_quadro": "2912x2080"
 }

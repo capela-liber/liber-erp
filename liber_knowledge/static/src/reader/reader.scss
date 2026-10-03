@@ -1,0 +1,111 @@
+// The Manuals reader: the tree of the Liber site on the left, the page on the
+// right. Colors come from the theme variables, so dark mode follows along;
+// the manual body itself carries the inline styles of the site.
+
+.o_liber_reader {
+    background-color: $o-view-background-color;
+
+    .o_liber_home {
+        white-space: nowrap;
+    }
+
+    .o_liber_tree {
+        width: 290px;
+        flex: 0 0 290px;
+        font-size: 0.95rem;
+    }
+
+    .o_liber_node_row {
+        border-radius: 6px;
+        margin: 1px 6px;
+        padding-top: 3px;
+        padding-bottom: 3px;
+        &:hover {
+            background-color: rgba($o-action, 0.07);
+        }
+        &.o_liber_active {
+            background-color: rgba($o-action, 0.14);
+            .o_liber_node_name {
+                color: $o-action;
+            }
+        }
+    }
+
+    .o_liber_node_name {
+        color: $o-main-text-color;
+        text-decoration: none;
+        padding-left: 2px;
+    }
+
+    .o_liber_caret,
+    .o_liber_leaf {
+        color: $o-gray-500;
+        width: 18px;
+        text-align: center;
+    }
+
+    .o_liber_page {
+        max-width: 920px;
+        margin: 0 auto;
+        padding: 24px 32px 64px;
+    }
+
+    .o_liber_title {
+        font-size: 1.9rem;
+        margin-bottom: 6px;
+    }
+
+    .o_liber_section {
+        font-size: 1.2rem;
+        margin: 18px 0 10px;
+    }
+
+    .o_liber_cards {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+        gap: 10px;
+    }
+
+    .o_liber_card {
+        display: flex;
+        align-items: center;
+        padding: 12px 14px;
+        border: 1px solid $border-color;
+        border-radius: 10px;
+        color: $o-main-text-color;
+        text-decoration: none;
+        &:hover {
+            border-color: $o-action;
+            color: $o-action;
+        }
+    }
+
+    .o_liber_hit {
+        padding: 10px 0;
+        border-bottom: 1px solid $border-color;
+    }
+
+    .o_liber_content img {
+        max-width: 100%;
+        height: auto;
+    }
+}
+
+// Phone: the tree goes on top, short, and the page gets the rest.
+@include media-breakpoint-down(md) {
+    .o_liber_reader {
+        .o_liber_body {
+            flex-direction: column;
+        }
+        .o_liber_tree {
+            width: 100%;
+            flex: 0 0 auto;
+            max-height: 35vh;
+            border-right: 0 !important;
+            border-bottom: 1px solid $border-color;
+        }
+        .o_liber_page {
+            padding: 16px 16px 48px;
+        }
+    }
+}

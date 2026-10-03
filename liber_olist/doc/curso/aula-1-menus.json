@@ -4,7 +4,7 @@
  "titulo": "O que há em cada menu",
  "abertura": "Bem-vindo ao curso de Marketplaces via Olist. A ideia que organiza tudo: o Olist é adaptador, não razão. O livro da casa é o Odoo; o Olist é uma das fontes que o alimentam, como um XML enviado à mão. Esta aula é o mapa dos menus.",
  "fecho": "Despachar, Pedidos, Produtos, Fora do Olist, Estoque, Relatório e Configurações. A próxima aula abre a conta e o que ela guarda.",
- "youtube": "https://www.youtube.com/watch?v=-E6gbe7Dz4c",
+ "youtube": "https://www.youtube.com/watch?v=vP4aqkqcHK0",
  "quiz": [
   {
    "pergunta": "O que o Olist é, no desenho da casa?",
@@ -70,5 +70,9 @@
    ],
    "correta": 1
   }
- ]
+ ],
+ "youtube_anterior": [
+  "https://www.youtube.com/watch?v=-E6gbe7Dz4c"
+ ],
+ "youtube_quadro": "2912x2080"
 }

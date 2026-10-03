@@ -4,7 +4,7 @@
  "titulo": "O canal nos documentos e o desconto na linha",
  "abertura": "Esta aula abre um pedido e mostra dois campos que o resto da casa lê: o Canal de Vendas, em Outras informações, e o Desconto na linha.",
  "fecho": "O desconto fica à vista na linha porque três coisas o leem: royalty, venda especial e o desconto declarado na NF-e. E numa cotação nova o canal é sugerido pelo vendedor, não pela ficha: confira. A próxima aula sobe da loja para a rede.",
- "youtube": "https://www.youtube.com/watch?v=XR115c9w2CI",
+ "youtube": "https://www.youtube.com/watch?v=7NwLsJHv9mU",
  "quiz": [
   {
    "pergunta": "Onde fica o Canal de Vendas dentro do pedido?",
@@ -70,5 +70,9 @@
    ],
    "correta": 1
   }
- ]
+ ],
+ "youtube_anterior": [
+  "https://www.youtube.com/watch?v=XR115c9w2CI"
+ ],
+ "youtube_quadro": "2912x2080"
 }

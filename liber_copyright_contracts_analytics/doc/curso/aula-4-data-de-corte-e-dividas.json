@@ -4,7 +4,7 @@
  "titulo": "A data de corte e as Dívidas de Royalties",
  "abertura": "Esta aula é a régua: a Data do Último Pagamento em cada linha, e o relatório que diz a quem se deve e quanto.",
  "fecho": "Até a data de corte está quitado; depois dela é dívida. Só o administrador a edita. E o pivô responde a pergunta do mês.",
- "youtube": "https://www.youtube.com/watch?v=9CaclF-m1ak",
+ "youtube": "https://www.youtube.com/watch?v=kIh16SGXa58",
  "quiz": [
   {
    "pergunta": "O que a Data do Último Pagamento separa?",
@@ -70,5 +70,9 @@
    ],
    "correta": 3
   }
- ]
+ ],
+ "youtube_anterior": [
+  "https://www.youtube.com/watch?v=9CaclF-m1ak"
+ ],
+ "youtube_quadro": "2912x2080"
 }

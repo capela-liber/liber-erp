@@ -4,7 +4,7 @@
  "titulo": "As perdas",
  "abertura": "Esta aula é o que não voltou e não foi vendido: onde as perdas nascem, os motivos, o custo congelado, e quem paga.",
  "fecho": "A falta nasce como pergunta, a explicar; o motivo escolhe o destino; o custo é o do registro; só o que sumiu sob a guarda da equipe entra no rateio. A próxima aula é a nota da volta.",
- "youtube": "https://www.youtube.com/watch?v=92hgUw321mM",
+ "youtube": "https://www.youtube.com/watch?v=LSb0BDELq7M",
  "quiz": [
   {
    "pergunta": "Como uma perda nasce?",
@@ -70,5 +70,9 @@
    ],
    "correta": 1
   }
- ]
+ ],
+ "youtube_anterior": [
+  "https://www.youtube.com/watch?v=92hgUw321mM"
+ ],
+ "youtube_quadro": "2912x2080"
 }

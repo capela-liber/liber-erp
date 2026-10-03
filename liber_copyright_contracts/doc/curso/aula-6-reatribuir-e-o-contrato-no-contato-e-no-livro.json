@@ -4,7 +4,7 @@
  "titulo": "Reatribuir em lote; o contrato no contato e no livro",
  "abertura": "Esta aula fecha o curso: trocar o responsável de vários contratos de uma vez, e achar o contrato a partir do favorecido e a partir do livro.",
  "fecho": "Reatribuir é ação de lista, para quando alguém sai; e o contrato aparece onde se procura por ele — na ficha do favorecido e na ficha do livro. Fim do curso.",
- "youtube": "https://www.youtube.com/watch?v=jLSDG7nB_fo",
+ "youtube": "https://www.youtube.com/watch?v=trX_juQMqP8",
  "quiz": [
   {
    "pergunta": "Alguém saiu da casa e cuidava de vinte contratos. O que se faz?",
@@ -70,5 +70,9 @@
    ],
    "correta": 1
   }
- ]
+ ],
+ "youtube_anterior": [
+  "https://www.youtube.com/watch?v=jLSDG7nB_fo"
+ ],
+ "youtube_quadro": "2912x2080"
 }

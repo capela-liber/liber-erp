@@ -1,11 +1,16 @@
 # -*- coding: utf-8 -*-
 import base64
+from datetime import datetime
 from urllib.parse import quote
+
+import pytz
 
 import requests
 
 from odoo import _
 from odoo.exceptions import UserError
+
+from odoo.addons.liber_cloud_files.exceptions import CloudFileGone
 
 API_URL = 'https://api.github.com'
 GIT_URL = 'https://github.com'
@@ -33,6 +38,7 @@ class GitHubClient:
 
     def __init__(self, account):
         self._token = account.github_token
+        self._tz = account.env.user.tz or 'UTC'
         if not self._token:
             raise UserError(_(
                 "The GitHub account of %s is not configured. Fill in the "
@@ -42,7 +48,10 @@ class GitHubClient:
     # ------------------------------------------------------------------
     # plumbing
     # ------------------------------------------------------------------
-    def _request(self, method, path, *, raw=False, ok=(200, 201), **kwargs):
+    def _request(self, method, path, *, raw=False, ok=(200, 201),
+                 gone=None, **kwargs):
+        """`gone`, when given, is the (repo, branch, path) of a single
+        file: a 404 on it is then asked what it means -- see _gone()."""
         headers = kwargs.pop('headers', {})
         headers.setdefault('Accept', 'application/vnd.github+json')
         headers['Authorization'] = f'Bearer {self._token}'
@@ -52,6 +61,8 @@ class GitHubClient:
                 timeout=TIMEOUT, **kwargs)
         except requests.RequestException as exc:
             raise UserError(_("Could not reach GitHub: %s", exc)) from exc
+        if resp.status_code == 404 and gone:
+            self._gone(*gone)
         if resp.status_code not in ok:
             raise UserError(_(
                 "GitHub call %(path)s failed (HTTP %(code)s): %(body)s",
@@ -133,12 +144,56 @@ class GitHubClient:
     def download(self, file):
         repo = self._repo(file.folder_id)
         branch = self._branch(file.folder_id)
+        path = self._file_repo_path(file)
         blob = self._request(
-            'GET', f'/repos/{repo}/contents/{quote(self._file_repo_path(file))}',
+            'GET', f'/repos/{repo}/contents/{quote(path)}',
             params={'ref': branch},
-            headers={'Accept': 'application/vnd.github.raw'}, raw=True)
+            headers={'Accept': 'application/vnd.github.raw'}, raw=True,
+            gone=(repo, branch, path))
         pointer = self._lfs_pointer(blob)
         return self._lfs_fetch(repo, *pointer) if pointer else blob
+
+    def _gone(self, repo, branch, path):
+        """Tell a file that left the repository from a repository out of
+        reach. GitHub answers 404 for both, and a token that lost the
+        repository must not archive every file someone tries to open:
+        so the repository is asked first, and its own error, if any, is
+        the one raised. Then the last commit on the path says how the
+        file went -- the deletion, or the rename that took it away."""
+        self._request('GET', f'/repos/{repo}')
+        detail = ''
+        try:
+            commits = self._request(
+                'GET', f'/repos/{repo}/commits',
+                params={'path': path, 'sha': branch, 'per_page': 1})
+        except UserError:
+            commits = []
+        if commits:
+            last = commits[0]
+            commit = last.get('commit') or {}
+            who = (last.get('author') or {}).get('login') \
+                or (commit.get('author') or {}).get('name') or '?'
+            detail = _(
+                'Last change on that path: "%(message)s", by %(who)s on '
+                '%(when)s.',
+                message=(commit.get('message') or '').splitlines()[0]
+                if commit.get('message') else '',
+                who=who,
+                when=self._local_time((commit.get('author') or {}).get('date')))
+        raise CloudFileGone(_(
+            "%(path)s is no longer in %(repo)s (branch %(branch)s): it was "
+            "deleted, renamed or moved after the last sync.",
+            path=path, repo=repo, branch=branch), detail=detail)
+
+    def _local_time(self, stamp):
+        # '2026-09-29T18:16:09Z' -> '29/09/2026 15:16' in the user's zone
+        try:
+            moment = datetime.strptime(stamp, '%Y-%m-%dT%H:%M:%SZ')
+        except (TypeError, ValueError):
+            return stamp or '?'
+        zone = pytz.timezone(getattr(self, '_tz', None) or 'UTC')
+        return pytz.utc.localize(moment).astimezone(zone).strftime(
+            '%d/%m/%Y %H:%M')
 
     @staticmethod
     def _lfs_pointer(blob):

@@ -119,29 +119,37 @@ class TestBudgetReportPrint(TransactionCase):
         self.assertIn(posicao_vazia.name, html)
         self.assertIn('Sem contas do razão configuradas.', html)
 
-    def test_pratico_percent_sai_formatado_nao_cru(self):
-        """Regressão: o widget 'percentage' não existe no QWeb de relatório
-        (só no cliente web) -- t-field imprimia o float cru, tipo
-        '0.9117149725', em vez de '91.17%'."""
+    def test_primeira_secao_traz_programado_no_lugar_do_percentual(self):
+        """A sexta coluna da primeira tabela é o Programado, em dinheiro. Era
+        'Realizado (%)', que repetia em porcentagem o que as duas colunas ao
+        lado já diziam em reais, e não somava no rodapé."""
         b = self._budget()
         line = self.env['budget.line'].create({
             'budget_analytic_id': b.id, 'position_id': self.position.id,
             'budget_amount': -1000})
-        move = self.env['account.move'].create({
+        self.env['account.move'].create({
             'move_type': 'entry', 'journal_id': self.journal.id, 'date': '2020-06-01',
             'line_ids': [
                 Command.create({'account_id': self.exp_account.id, 'debit': 800, 'credit': 0}),
                 Command.create({'account_id': self.cash_account.id, 'debit': 0, 'credit': 800}),
             ],
+        }).action_post()
+        self.env['account.move'].create({  # rascunho: entra só no Programado
+            'move_type': 'entry', 'journal_id': self.journal.id, 'date': '2020-06-02',
+            'line_ids': [
+                Command.create({'account_id': self.exp_account.id, 'debit': 300, 'credit': 0}),
+                Command.create({'account_id': self.cash_account.id, 'debit': 0, 'credit': 300}),
+            ],
         })
-        move.action_post()
         line.invalidate_recordset()
-        self.assertAlmostEqual(line.practical_percentage, 0.8, places=2)
+        self.assertAlmostEqual(line.programmed_amount, -1100.0, places=2)
 
         html, _tipo = self.env['ir.actions.report']._render_qweb_html(REPORT, [b.id])
         html = html.decode()
 
-        self.assertIn('80.00%', html)
+        self.assertIn('Programado', html)
+        self.assertRegex(html, r'1[.,]100[.,]00', "o Programado não apareceu na primeira tabela")
+        self.assertNotIn('Realizado (%)', html, "a coluna de porcentagem devia ter saído")
 
     def test_conta_da_posicao_mostra_o_proprio_realizado(self):
         """O que foi pedido: a linha da conta (sub) também mostra valor --

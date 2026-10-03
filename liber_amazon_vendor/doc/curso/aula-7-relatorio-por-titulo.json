@@ -4,7 +4,7 @@
  "titulo": "O relatório por título, e o relógio",
  "abertura": "Última aula: o que a Amazon pede de cada livro, e quanto tempo o ciclo leva — do pedido ao fechamento dela.",
  "fecho": "O relatório por título diz o que vale a pena manter no catálogo dela; os Agendamentos dizem o que falta despachar e o que já atrasou. Fim do curso.",
- "youtube": "https://www.youtube.com/watch?v=5q8LNY43IlU",
+ "youtube": "https://www.youtube.com/watch?v=w7zXcN819-4",
  "quiz": [
   {
    "pergunta": "O que o rótulo curto das linhas junta?",
@@ -70,5 +70,9 @@
    ],
    "correta": 2
   }
- ]
+ ],
+ "youtube_anterior": [
+  "https://www.youtube.com/watch?v=5q8LNY43IlU"
+ ],
+ "youtube_quadro": "2912x2080"
 }

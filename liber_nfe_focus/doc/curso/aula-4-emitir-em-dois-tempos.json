@@ -45,7 +45,7 @@
   }
  ],
  "fecho": "Fatura lançada, transporte preenchido, Emitir NFe, Consultar SEFAZ. Volta a chave de quarenta e quatro dígitos, o número, a série, o protocolo — e a DANFE com o XML, anexados na fatura. Uma rotina pergunta sozinha de dez em dez minutos; o botão é para quem não quer esperar.",
- "youtube": "",
+ "youtube": "https://www.youtube.com/watch?v=dsFPdGd7e0o",
  "quiz": [
   {
    "pergunta": "Por que o botão Emitir NFe não aparece numa fatura em rascunho?",
@@ -111,5 +111,6 @@
    ],
    "correta": 2
   }
- ]
+ ],
+ "youtube_quadro": "2912x2080"
 }

@@ -4,7 +4,7 @@
  "titulo": "Montar a grade",
  "abertura": "Esta aula monta a grade da feira: os títulos que vão e quantos de cada, sem digitar título a título. As colunas do armazém, o assistente Somar títulos, e o mínimo de mesa.",
  "fecho": "Só o planejado se digita; o resto sai dos movimentos. Somar títulos descreve a prateleira, Buscar traz, você ajusta e soma. A próxima aula pergunta ao catálogo.",
- "youtube": "https://www.youtube.com/watch?v=-ujcgA-OfzQ",
+ "youtube": "https://www.youtube.com/watch?v=wOI_gGWtYkc",
  "quiz": [
   {
    "pergunta": "Na grade, que colunas se digitam?",
@@ -70,5 +70,9 @@
    ],
    "correta": 1
   }
- ]
+ ],
+ "youtube_anterior": [
+  "https://www.youtube.com/watch?v=-ujcgA-OfzQ"
+ ],
+ "youtube_quadro": "2912x2080"
 }

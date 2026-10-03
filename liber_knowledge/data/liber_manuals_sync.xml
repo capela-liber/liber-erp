@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Not noupdate: runs on install and on every -u, so a manual changed on
+         the site reaches the wiki with the next update of this module. -->
+    <function model="document.page" name="_liber_sync_manuals"/>
+    <function model="document.page" name="_liber_app_name"/>
+</odoo>

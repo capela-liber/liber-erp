@@ -4,7 +4,7 @@
  "titulo": "A venda desce pronta",
  "abertura": "Esta aula segue um pedido do Olist até virar documento da casa: ler o detalhe, importar, e a saída que a logística valida.",
  "fecho": "Ler pedidos traz a lista, Ler detalhe completa, Importar cria o pedido de venda com canal, cliente e nota; e a fila Despachar entrega ao depósito. A última aula é o que dá errado.",
- "youtube": "https://www.youtube.com/watch?v=fYYcvjfjnzU",
+ "youtube": "https://www.youtube.com/watch?v=FPBQk1ywgTw",
  "quiz": [
   {
    "pergunta": "Por que um pedido precisa do detalhe antes de importar?",
@@ -70,5 +70,9 @@
    ],
    "correta": 0
   }
- ]
+ ],
+ "youtube_anterior": [
+  "https://www.youtube.com/watch?v=fYYcvjfjnzU"
+ ],
+ "youtube_quadro": "2912x2080"
 }

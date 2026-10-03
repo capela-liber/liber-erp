@@ -1,0 +1,170 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* liber_knowledge
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0-20260630\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-09-25 15:28+0000\n"
+"PO-Revision-Date: 2026-09-25 15:28+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: liber_knowledge
+#. odoo-python
+#: code:addons/liber_knowledge/models/document_page.py:0
+msgid "%(created)s created, %(updated)s updated, %(unchanged)s unchanged."
+msgstr "%(created)s criados, %(updated)s atualizados, %(unchanged)s sem mudança."
+
+#. module: liber_knowledge
+#. odoo-javascript
+#: code:addons/liber_knowledge/static/src/reader/reader.xml:0
+msgid "Clear"
+msgstr "Limpar"
+
+#. module: liber_knowledge
+#. odoo-python
+#: code:addons/liber_knowledge/models/document_page.py:0
+msgid "Could not read the Liber manuals catalog: %s"
+msgstr "Não foi possível ler o catálogo dos manuais do Liber: %s"
+
+#. module: liber_knowledge
+#: model:ir.model.fields,field_description:liber_knowledge.field_document_page__display_name
+msgid "Display Name"
+msgstr "Nome Exibido"
+
+#. module: liber_knowledge
+#: model:ir.model,name:liber_knowledge.model_document_page
+msgid "Document Page"
+msgstr "Página"
+
+#. module: liber_knowledge
+#. odoo-javascript
+#: code:addons/liber_knowledge/static/src/reader/reader.xml:0
+msgid "Edit"
+msgstr "Editar"
+
+#. module: liber_knowledge
+#: model:ir.model.fields,field_description:liber_knowledge.field_document_page__id
+msgid "ID"
+msgstr ""
+
+#. module: liber_knowledge
+#. odoo-python
+#: code:addons/liber_knowledge/models/document_page.py:0
+msgid "Kept as edited here: %s"
+msgstr "Mantidos como editados aqui: %s"
+
+#. module: liber_knowledge
+#: model:ir.model.fields,field_description:liber_knowledge.field_document_page__liber_manual_slug
+msgid "Liber Manual"
+msgstr "Manual do Liber"
+
+#. module: liber_knowledge
+#: model:ir.model.fields,field_description:liber_knowledge.field_document_page__liber_manual_hash
+msgid "Liber Manual Hash"
+msgstr "Assinatura do manual do Liber"
+
+#. module: liber_knowledge
+#. odoo-javascript
+#: code:addons/liber_knowledge/static/src/reader/reader.xml:0
+msgid "Liber manual ·"
+msgstr "Manual do Liber ·"
+
+#. module: liber_knowledge
+#. odoo-python
+#: code:addons/liber_knowledge/models/document_page.py:0
+msgid "Liber manuals"
+msgstr "Manuais do Liber"
+
+#. module: liber_knowledge
+#. odoo-python
+#: code:addons/liber_knowledge/models/document_page.py:0
+msgid "Manual file missing: %s"
+msgstr "Arquivo do manual não encontrado: %s"
+
+#. module: liber_knowledge
+#: model:ir.model.fields,help:liber_knowledge.field_document_page__liber_manual_slug
+msgid ""
+"Manual of the Liber site this page is copied from. While set, the page is "
+"refreshed whenever the manual changes, unless someone edited it here."
+msgstr "Manual do site do Liber de onde esta página é copiada. Enquanto preenchido, a página é atualizada quando o manual muda, a menos que alguém a tenha editado aqui."
+
+#. module: liber_knowledge
+#. odoo-javascript
+#: code:addons/liber_knowledge/static/src/reader/reader.xml:0
+#: model:ir.actions.client,name:liber_knowledge.action_liber_reader
+#: model:ir.ui.menu,name:liber_knowledge.menu_liber_reader
+msgid "Manuals"
+msgstr "Manuais"
+
+#. module: liber_knowledge
+#. odoo-javascript
+#: code:addons/liber_knowledge/static/src/reader/reader.xml:0
+msgid "New page"
+msgstr "Nova página"
+
+#. module: liber_knowledge
+#. odoo-javascript
+#: code:addons/liber_knowledge/static/src/reader/reader.js:0
+msgid "No page matches this search."
+msgstr "Nenhuma página encontrada para esta busca."
+
+#. module: liber_knowledge
+#. odoo-python
+#: code:addons/liber_knowledge/models/document_page.py:0
+msgid "Only a Knowledge manager can update the Liber manuals."
+msgstr "Só um gerente do Conhecimento pode atualizar os manuais do Liber."
+
+#. module: liber_knowledge
+#: model:ir.model.fields,help:liber_knowledge.field_document_page__liber_sequence
+msgid "Order in the Manuals reader; ties are broken by title."
+msgstr "Ordem na tela Manuais; no empate, vale o título."
+
+#. module: liber_knowledge
+#. odoo-javascript
+#: code:addons/liber_knowledge/static/src/reader/reader.xml:0
+msgid "Pick a manual on the left, or search above."
+msgstr "Escolha um manual à esquerda, ou busque acima."
+
+#. module: liber_knowledge
+#. odoo-javascript
+#: code:addons/liber_knowledge/static/src/reader/reader.xml:0
+msgid "Results"
+msgstr "Resultados"
+
+#. module: liber_knowledge
+#. odoo-javascript
+#: code:addons/liber_knowledge/static/src/reader/reader.xml:0
+msgid "Search the manuals…"
+msgstr "Buscar nos manuais…"
+
+#. module: liber_knowledge
+#: model:ir.model.fields,field_description:liber_knowledge.field_document_page__liber_sequence
+msgid "Sequence"
+msgstr "Sequência"
+
+#. module: liber_knowledge
+#. odoo-python
+#: code:addons/liber_knowledge/models/document_page.py:0
+msgid ""
+"The Liber manuals were not found: the liber_site module must be in the "
+"addons path (it does not need to be installed)."
+msgstr "Os manuais do Liber não foram encontrados: o módulo liber_site precisa estar no addons_path (não precisa estar instalado)."
+
+#. module: liber_knowledge
+#. odoo-javascript
+#: code:addons/liber_knowledge/static/src/reader/reader.xml:0
+msgid "This category is still empty."
+msgstr "Esta categoria ainda está vazia."
+
+#. module: liber_knowledge
+#: model:ir.actions.server,name:liber_knowledge.action_liber_sync_manuals
+#: model:ir.ui.menu,name:liber_knowledge.menu_liber_sync_manuals
+msgid "Update Liber manuals"
+msgstr "Atualizar manuais do Liber"

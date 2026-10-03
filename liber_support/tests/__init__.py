@@ -4,3 +4,5 @@ from . import test_sla
 from . import test_security
 from . import test_settings
 from . import test_ponte_liber_roles
+from . import test_empresa_segue_equipe
+from . import test_tour_repasse

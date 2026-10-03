@@ -4,7 +4,7 @@
  "titulo": "O que há em cada menu, e o que o módulo não faz",
  "abertura": "Bem-vindo ao curso da Amazon Vendor Central. A inversão que organiza tudo: no Vendor Central a Amazon é a compradora. O que a interface dela chama de pedido de compra, do nosso lado é venda — e por isso o que sai daqui é cotação.",
  "fecho": "Pedidos, Agendamentos, Relatório e Configuração; e um módulo que só lê: confirmar, avisar embarque e faturar por EDI são de gente com prazo correndo. A próxima aula é a configuração.",
- "youtube": "https://www.youtube.com/watch?v=ewzHzbGqcKY",
+ "youtube": "https://www.youtube.com/watch?v=oyqhWA7sYsU",
  "quiz": [
   {
    "pergunta": "No Vendor Central, quem compra?",
@@ -70,5 +70,9 @@
    ],
    "correta": 2
   }
- ]
+ ],
+ "youtube_anterior": [
+  "https://www.youtube.com/watch?v=ewzHzbGqcKY"
+ ],
+ "youtube_quadro": "2912x2080"
 }

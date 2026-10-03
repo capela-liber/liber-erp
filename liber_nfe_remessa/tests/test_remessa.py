@@ -80,6 +80,22 @@ class TestNotaRemessa(TransactionCase):
             lambda l: l.account_id.account_type == 'asset_receivable')
         self.assertTrue(all(term.mapped('reconciled')))
 
+    def test_zero_note_posts_without_settlement(self):
+        """A nota de valor zero já nasce quitada: não há o que baixar.
+
+        O Olist emite bonificação com o livro a R$ 0,00 no XML (pedido 1222,
+        25/09/2026). A linha a receber nasce zerada, e o Odoo a dá como
+        `reconciled` -- o `reconcile()` da baixa recusava com "já estão
+        reconciliados" e derrubava a importação inteira.
+        """
+        note = self._note()
+        note.invoice_line_ids.price_unit = 0.0
+        note.action_post()
+        self.assertEqual(note.state, 'posted')
+        self.assertFalse(note.remessa_settle_move_id,
+                         "uma baixa de zero é um lançamento sem fato")
+        self.assertEqual(note.amount_residual, 0.0)
+
     def test_remessa_journal_without_auto_paid_refuses(self):
         """A remessa that asks for payment is a contradiction -- say so.
 

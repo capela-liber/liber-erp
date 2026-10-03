@@ -117,7 +117,8 @@ class TestAgedPayable(TransactionCase):
         """)
         razao = self.env.cr.fetchone()[0] or 0.0
         self.env.cr.execute(
-            'SELECT ROUND(SUM(amount_total), 2) FROM liber_aged_payable')
+            "SELECT ROUND(SUM(amount_total), 2) FROM liber_aged_payable "
+            "WHERE move_state = 'posted'")
         relatorio = self.env.cr.fetchone()[0] or 0.0
         # o sinal: o relatório mostra a dívida positiva, o razão a guarda
         # negativa. É a inversão do SELECT, e é ela que se prova aqui.

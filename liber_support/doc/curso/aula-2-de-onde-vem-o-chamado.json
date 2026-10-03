@@ -4,7 +4,7 @@
  "titulo": "De onde vem um chamado",
  "abertura": "Esta aula segue o caminho do e-mail: a caixa comercial que vira alias de uma equipe, e o chamado que nasce na coluna Novo com a mensagem do cliente no histórico.",
  "fecho": "Uma equipe por caixa, o alias que recebe, membros que enxergam, e o chamado AT que nasce sem dono, com o e-mail guardado. A próxima aula é a triagem.",
- "youtube": "https://www.youtube.com/watch?v=kZUXRAXtwKs",
+ "youtube": "https://www.youtube.com/watch?v=uXq_rc8kbyo",
  "quiz": [
   {
    "pergunta": "O que é o alias de uma equipe?",
@@ -70,5 +70,9 @@
    ],
    "correta": 3
   }
- ]
+ ],
+ "youtube_anterior": [
+  "https://www.youtube.com/watch?v=kZUXRAXtwKs"
+ ],
+ "youtube_quadro": "2912x2080"
 }

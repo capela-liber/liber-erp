@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<script>
+/* Servido por /liber_site/static/docs/, este arquivo vem com uma semana de
+   cache e o docs.js sem versão -- e o índice monta a lista a partir dele. Foi
+   assim que a emissão de NF-e e o manual da Amazon ficaram invisíveis: o
+   catálogo em cache era anterior aos dois. A rota /liber/docs/ serve o mesmo
+   arquivo sem cache e com ?v=<mtime> nos assets. Quem chegar pelo caminho
+   antigo (favorito, link velho, resultado de busca) vai para lá antes de a
+   página montar qualquer coisa. */
+(function () {
+  var antigo = "/liber_site/static/docs/";
+  if (location.pathname.indexOf(antigo) === 0) {
+    location.replace("/liber/docs/" + location.pathname.slice(antigo.length) +
+                     location.search + location.hash);
+  }
+})();
+</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Subtarefas pela estrela — Manuais do Liber</title>
+<link rel="icon" type="image/png" href="../logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;600;700&display=swap">
+<link rel="stylesheet" href="docs.css">
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="../index.html"><img src="../logo.png" alt="">liber<span>.</span></a>
+    <span class="doc-tag">Manuais</span>
+    <nav><a href="index.html">Índice</a><a href="../index.html">Site</a></nav>
+  </div>
+</header>
+<div class="wrap">
+  <div class="layout">
+    <aside class="sidebar" id="sidebar"></aside>
+    <article class="doc">
+      <div class="breadcrumb"><a href="index.html">Manuais</a><span class="sep">›</span>Gestão<span class="sep">›</span>Subtarefas pela estrela</div>
+      <h1>Subtarefas pela estrela</h1>
+      <p class="lead">Marcar a estrela num card monta a pauta dele: cada card-modelo do projeto com a mesma estrela vira uma subtarefa, já com responsável e coluna. Trocar a estrela troca a pauta, sem apagar o trabalho feito.</p>
+
+      <h2 id="visao-geral">Visão geral</h2>
+      <p>Um lançamento pequeno pede um post nas redes; um lançamento médio pede evento em livraria e release para a imprensa; um grande pede tudo isso e a feira. Em vez de lembrar a lista toda vez, o projeto guarda os <strong>cards-modelo</strong>, cada um marcado com a estrela da campanha a que pertence. A estrela que se dá ao card é o tamanho da campanha:</p>
+      <ul>
+        <li><strong>★ Média</strong> — entram os modelos ★.</li>
+        <li><strong>★★ Alta</strong> — entram os modelos ★★.</li>
+        <li><strong>★★★ Urgente</strong> — entram os modelos ★★★.</li>
+      </ul>
+      <p>Cada modelo vira <strong>uma</strong> subtarefa, com o nome, os responsáveis, a coluna, os marcadores e a descrição que ele tem. Se o modelo tiver subtarefas dentro, elas vêm junto, como subtarefas da subtarefa: o que o modelo mostra é o que o card recebe.</p>
+
+      <h2 id="ligar">Ligar no projeto</h2>
+      <p>É uma opção de cada projeto, como as Tarefas recorrentes. Em <span class="menupath">Projeto<i>‣</i>Definições<i>‣</i>Gerenciamento de tarefas</span>, marque <strong>Subtarefas por prioridade</strong>. Aparece o link <strong>Modelos de tarefa</strong>.</p>
+      <figure class="shot"><img src="img/doc-liber_project_priority_template-opcao.png" alt="Aba Definições do projeto com a opção Subtarefas por prioridade marcada, abaixo de Marcos, e o link Modelos de tarefa"><figcaption>A opção mora ao lado das Tarefas recorrentes. Desmarcada, as estrelas do projeto não fazem nada além do que sempre fizeram.</figcaption></figure>
+
+      <h2 id="modelos">Os cards-modelo</h2>
+      <p>O link abre a lista dos modelos <em>deste</em> projeto — cada projeto tem os seus, e um não vê os do outro. Em <strong>Novo</strong>, crie o card como qualquer tarefa: título, responsáveis, a coluna em que a subtarefa deve nascer, e a estrela da campanha. Coloque quantos modelos quiser; dois modelos com ★★ dão duas subtarefas, na ordem da lista (arraste pela alça para reordenar).</p>
+      <h3>Nascer em outro board</h3>
+      <p>O campo <strong>Projeto</strong> do card-modelo diz onde a subtarefa nasce, e a <strong>coluna</strong> é a desse projeto. Para a arte nascer no quadro do Design, abra o modelo e troque o Projeto para o Design, escolhendo a coluna de lá. O modelo continua na lista da Editoria — é a estrela da Editoria que o dispara; o formulário dele mostra isso em <em>Estrela no projeto</em>. Na lista, a coluna <em>Nasce no projeto</em> mostra o destino de cada um.</p>
+      <figure class="shot"><img src="img/doc-liber_project_priority_template-modelos.png" alt="Lista Modelos de tarefa do projeto com as colunas Estrelas, Título, Responsáveis e Coluna"><figcaption>Cada linha é uma subtarefa em potencial. Aqui, um card ★★ recebe <em>Evento em livraria</em> e <em>Release para a imprensa</em>; um card ★, só o <em>Post nas redes</em>. A <em>Arte das peças</em>, ★★★, nasce no board do Design.</figcaption></figure>
+      <div class="callout"><span class="title">Nota</span><p>Um card comum também vira modelo pelo menu de ações, em <strong>Converter em modelo</strong>. Se ele já tinha estrela, as subtarefas que a estrela lhe deu e que ninguém mexeu saem na conversão: o modelo leva só o que é dele.</p></div>
+
+      <h2 id="estrela">Dar e trocar a estrela</h2>
+      <p>Marque a estrela no card, no quadro ou no formulário. As subtarefas aparecem na aba <strong>Subtarefas</strong>, e o chatter registra numa nota o que entrou.</p>
+      <figure class="shot"><img src="img/doc-liber_project_priority_template-subtarefas.png" alt="Card com duas estrelas, a aba Subtarefas com Evento em livraria e Release para a imprensa, e as notas no chatter"><figcaption>O card passou de ★ para ★★: o <em>Post nas redes</em>, que ninguém tinha mexido, saiu; entraram os dois modelos ★★. As notas no chatter contam cada passo.</figcaption></figure>
+      <p>A estrela manda na pauta, com uma regra para proteger o trabalho:</p>
+      <ul>
+        <li><strong>Trocar a estrela</strong> tira as subtarefas da estrela anterior <em>que ninguém mexeu</em> e põe as da nova.</li>
+        <li><strong>Tirar a estrela</strong> tira as intocadas.</li>
+        <li><strong>Subtarefa mexida fica.</strong> Conta como mexida qualquer alteração (nome, responsável, coluna, prazo, descrição), um comentário no chatter, ou uma subtarefa nova criada dentro dela. Vale para o bloco inteiro: se uma subtarefa de dentro foi mexida, a de cima fica também. A nota diz quais ficaram.</li>
+        <li><strong>Subtarefa feita à mão</strong> nunca sai, e não impede a estrela de trazer as dos modelos.</li>
+        <li>Um modelo cuja subtarefa já está no card não é copiado de novo.</li>
+      </ul>
+      <p>Se a estrela não tiver nenhum modelo no projeto, nada é criado e a nota diz isso — com o caminho para marcar a estrela num card-modelo.</p>
+
+      <h2 id="tarefa-mae">Achar a subtarefa pela tarefa-mãe</h2>
+      <p>Uma subtarefa pode ser levada a outro board — a arte, para o projeto do Design. Lá, o card dela mostra o nome da tarefa-mãe logo abaixo do título. Para achar todas as que vieram de um mesmo card, a busca das tarefas, em qualquer board, tem <strong>Tarefa-mãe</strong>:</p>
+      <ul>
+        <li><strong>Buscar:</strong> digite o nome do card e escolha <em>Buscar Tarefa-mãe</em>. Ficam só as subtarefas dele.</li>
+        <li><strong>Agrupar:</strong> em <span class="menupath">Busca<i>‣</i>Agrupar por<i>‣</i>Tarefa-mãe</span>, o quadro mostra uma coluna por card de origem.</li>
+      </ul>
+      <p>Vale para qualquer subtarefa, gerada pela estrela ou criada à mão. Por isso não é preciso pôr o nome da mãe no título: ele ficaria velho no dia em que a mãe fosse renomeada.</p>
+
+      <h2 id="limites">O que fica de fora</h2>
+      <ul>
+        <li>Só o card de primeiro nível dispara: subtarefa com estrela não gera subtarefas.</li>
+        <li>O prazo não é calculado: a subtarefa nasce com o prazo que o modelo tiver (normalmente nenhum).</li>
+      </ul>
+
+      <nav class="pager" id="pager"></nav>
+    </article>
+  </div>
+</div>
+<script src="docs.js"></script>
+</body>
+</html>

@@ -134,8 +134,13 @@ class AccountMove(models.Model):
             raise UserError(_(
                 "Fiscal position %s has Auto Invoice Paid but no counterpart "
                 "account.", fpos.display_name))
+        # Só o que ainda está em aberto. A nota de valor zero (o Olist emite
+        # bonificação com o livro a R$ 0,00) já nasce com a linha a receber
+        # `reconciled`, e o `reconcile()` a recusava ("já estão
+        # reconciliados") -- derrubando a importação do pedido inteiro.
         term_lines = self.line_ids.filtered(
-            lambda l: l.account_id.account_type == 'asset_receivable')
+            lambda l: l.account_id.account_type == 'asset_receivable'
+            and not l.reconciled)
         if not term_lines:
             return
         counter = fpos.auto_invoice_paid_account_id

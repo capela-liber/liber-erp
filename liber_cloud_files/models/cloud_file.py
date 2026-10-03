@@ -3,6 +3,8 @@ from datetime import timedelta
 
 from odoo import api, fields, models, _
 
+from ..exceptions import CloudFileGone
+
 
 class LiberCloudFile(models.Model):
     """A file a storage holds; Odoo keeps the metadata and opens the doors.
@@ -13,7 +15,12 @@ class LiberCloudFile(models.Model):
     for it, because a shared link is the one thing that escapes the gate.
     """
     _name = 'liber.cloud.file'
+    _inherit = ['mail.thread', 'mail.activity.mixin']
     _description = 'Cloud File'
+    # Talking about a file is not editing it: whoever sees it may comment,
+    # e-mail and schedule activities on it. The record itself stays
+    # sync-owned, and its write rule (the folder's write ACL) is untouched.
+    _mail_post_access = 'read'
     _order = 'name'
     _check_company_auto = True
 
@@ -66,15 +73,68 @@ class LiberCloudFile(models.Model):
              "file again renews the deadline.")
     active = fields.Boolean(default=True)
 
+    def message_subscribe(self, partner_ids=None, subtype_ids=None):
+        """Following is talking, not editing: the core asks write to add
+        someone else as follower -- which an activity assigned to a
+        colleague does -- and a reader must be able to hand a task over.
+        The read gate is checked here, as the user, before the sudo."""
+        self.check_access('read')
+        return super(LiberCloudFile, self.sudo()).message_subscribe(
+            partner_ids=partner_ids, subtype_ids=subtype_ids)
+
     def action_download(self):
         """Open the file: direct provider link when one exists, else
         streamed through Odoo -- the ACL is checked at the door either way."""
         self.ensure_one()
         self.folder_id._ensure_access('read')
-        link = self.folder_id._client().temporary_link(self)
+        try:
+            link = self.folder_id._client().temporary_link(self)
+        except CloudFileGone as gone:
+            # Returned, not raised: raising would roll the archive back.
+            self._mark_gone(gone)
+            return {
+                'type': 'ir.actions.client',
+                'tag': 'display_notification',
+                'params': {
+                    'type': 'danger',
+                    'title': _("This file is no longer in the storage"),
+                    'message': self._gone_message(gone),
+                    'sticky': True,
+                    'next': {'type': 'ir.actions.client',
+                             'tag': 'soft_reload'},
+                },
+            }
         if not link:
             link = '/liber_cloud/download/%d' % self.id
         return {'type': 'ir.actions.act_url', 'url': link, 'target': 'new'}
+
+    def _gone_message(self, gone):
+        self.ensure_one()
+        message = _(
+            "%(name)s was deleted, renamed or moved in %(provider)s after "
+            "the last sync. The record has been archived; syncing the "
+            "folder %(folder)s brings in its new name, if it has one.",
+            name=self.name, provider=self._provider_label(),
+            folder=self.folder_id.name)
+        return '%s %s' % (message, gone.detail) if gone.detail else message
+
+    def _provider_label(self):
+        self.ensure_one()
+        return dict(self._fields['provider']._description_selection(
+            self.env)).get(self.provider, self.provider)
+
+    def _mark_gone(self, gone):
+        """Do now what the next sync would: archive the mirror of a file
+        the storage no longer has -- and say why, on the file itself.
+
+        Sudo because a reader may be the one who finds out; the gate was
+        already checked on the way in, as that reader.
+        """
+        for record in self.sudo().filtered('active'):
+            record.message_post(
+                body=record._gone_message(gone),
+                subtype_xmlid='mail.mt_note')
+            record.active = False
 
     def action_share(self):
         """Create (or renew) the shared link and sign the ledger."""

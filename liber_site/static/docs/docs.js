@@ -69,6 +69,7 @@ var DOCS = [
     { slug: "liber_aged_payable", title: "Contas a pagar por idade", desc: "A gêmea do outro lado do razão: o que a casa deve, por fornecedor e por faixa." },
     { slug: "liber_receivables_dashboard", title: "Histórico dos recebíveis", desc: "A foto mensal da carteira por faixa de atraso: o relatório de idade sabe hoje, este sabe março." },
     { slug: "liber_intercompany_mirror", title: "O espelho entre empresas", desc: "O documento que a empresa irmã ganhou, a um clique — e o caminho de volta." },
+    { slug: "liber_project_priority_template", title: "Subtarefas pela estrela", desc: "A estrela do card monta a pauta: cada card-modelo com a mesma estrela vira uma subtarefa, e trocar a estrela não apaga trabalho feito." },
     { slug: "liber_roles", title: "Papéis de acesso", desc: "Perfis prontos por área e a conta de visitante somente-leitura." },
   ]},
   { area: "Ferramentas", desc: "Consertos pequenos que valem para o sistema inteiro — e que se sente falta justamente quando ninguém os vê.", items: [

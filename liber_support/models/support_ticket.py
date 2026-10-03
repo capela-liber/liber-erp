@@ -174,6 +174,14 @@ class SupportTicket(models.Model):
         return tickets
 
     def write(self, vals):
+        # Trocar a Equipe troca a empresa: o chamado que chegou na edlab e
+        # foi repassado para a n-1 precisa passar a ser visto pela n-1 (a
+        # ir.rule do ticket filtra por company_id). Só quando o chamador
+        # não decidiu a empresa na mesma escrita.
+        if vals.get('team_id') and 'company_id' not in vals:
+            team = self.env['liber.support.team'].browse(vals['team_id'])
+            if team.company_id:
+                vals = dict(vals, company_id=team.company_id.id)
         stage_before = {t.id: t.stage_id for t in self}
         res = super().write(vals)
         if 'stage_id' in vals:
@@ -215,6 +223,13 @@ class SupportTicket(models.Model):
             self._sla_start()
             self._update_sla_state()
         return res
+
+    @api.onchange('team_id')
+    def _onchange_team_id_company(self):
+        """A tela mostra a empresa nova antes de salvar — quem repassa o
+        chamado vê para onde ele vai."""
+        if self.team_id:
+            self.company_id = self.team_id.company_id
 
     # ------------------------------------------------------------------
     # SLA engine

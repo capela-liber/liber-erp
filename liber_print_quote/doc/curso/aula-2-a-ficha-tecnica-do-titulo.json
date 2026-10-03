@@ -42,5 +42,6 @@
   }
  ],
  "fecho": "Nada na ficha é obrigatório, e é por isso que ela merece atenção: o que falta no cadastro falta no PDF, e a gráfica devolve a cotação como pergunta. A exceção é o ISBN: sem ele no código de barras, o sistema não sabe que a linha é livro e a ficha não viaja.",
- "youtube": ""
+ "youtube": "https://www.youtube.com/watch?v=zH2lCxca7_I",
+ "youtube_quadro": "2912x2080"
 }

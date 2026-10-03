@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- The reading screen: tree on the left, the manual on the right. -->
+    <record id="action_liber_reader" model="ir.actions.client">
+        <field name="name">Manuals</field>
+        <field name="tag">liber_knowledge.reader</field>
+        <field name="path">manuais</field>
+    </record>
+
+    <!-- First item of the Knowledge app, so opening the app opens the reader. -->
+    <menuitem id="menu_liber_reader"
+              name="Manuals"
+              parent="document_knowledge.menu_document_root"
+              action="action_liber_reader"
+              sequence="1"/>
+
+    <!-- The raw OCA screens (page list, browse) stay for editors; a reader
+         only needs the reading screen. -->
+    <record id="document_page.menu_wiki" model="ir.ui.menu">
+        <field name="group_ids" eval="[(6, 0, [ref('document_page.group_document_editor')])]"/>
+    </record>
+    <record id="document_page.menu_browse_content" model="ir.ui.menu">
+        <field name="group_ids" eval="[(6, 0, [ref('document_page.group_document_editor')])]"/>
+    </record>
+</odoo>

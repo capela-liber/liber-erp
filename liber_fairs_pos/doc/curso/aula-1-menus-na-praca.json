@@ -4,7 +4,7 @@
  "titulo": "O que há em cada menu: o evento em andamento",
  "abertura": "Bem-vindo ao curso Feiras II: vender, fechar e voltar. O curso um montou e levou; este é a feira na praça. Esta aula é o mapa: o que o evento em andamento tem no alto, nas abas e nos menus.",
  "fecho": "Caixa, Nota fiscal e Retorno no alto; Transferências, Perdas, Fechamentos e Pedidos do PDV nos botões; Caixas, Fechamentos diários, Comissões e Custos nas abas. A próxima aula fecha o dia.",
- "youtube": "https://www.youtube.com/watch?v=I0iHBcTIc_c",
+ "youtube": "https://www.youtube.com/watch?v=MFXGY_NlMKw",
  "quiz": [
   {
    "pergunta": "Que botões o evento na praça tem no alto?",
@@ -70,5 +70,9 @@
    ],
    "correta": 3
   }
- ]
+ ],
+ "youtube_anterior": [
+  "https://www.youtube.com/watch?v=I0iHBcTIc_c"
+ ],
+ "youtube_quadro": "2912x2080"
 }

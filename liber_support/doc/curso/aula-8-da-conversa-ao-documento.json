@@ -4,7 +4,7 @@
  "titulo": "Da conversa ao documento",
  "abertura": "Última aula: a conversa vira acerto. O assistente Importar lê o e-mail do cliente, propõe as linhas com o casamento no catálogo, e cria a operação de consignação em rascunho. O mesmo assistente existe do lado da operação.",
  "fecho": "Importar lê e-mail, planilha, PDF com texto e XML; propõe linhas com confiança; Aplicar como decide a coluna; Criar gera a operação ligada ao chamado. Fim do curso de Atendimento.",
- "youtube": "https://www.youtube.com/watch?v=j0FK_z-8vvE",
+ "youtube": "https://www.youtube.com/watch?v=L5xx_lbq7MI",
  "quiz": [
   {
    "pergunta": "De onde o assistente Importar tira o texto?",
@@ -70,5 +70,9 @@
    ],
    "correta": 2
   }
- ]
+ ],
+ "youtube_anterior": [
+  "https://www.youtube.com/watch?v=j0FK_z-8vvE"
+ ],
+ "youtube_quadro": "2912x2080"
 }

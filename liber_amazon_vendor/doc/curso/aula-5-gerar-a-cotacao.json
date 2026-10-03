@@ -4,7 +4,7 @@
  "titulo": "Gerar a cotação",
  "abertura": "Esta aula transforma o espelho em documento: o pedido aberto, com as linhas casadas, vira cotação de venda no cliente da unidade.",
  "fecho": "Criar cotação faz um pedido de venda em rascunho, com o canal Amazon e o preço combinado; um pedido, uma cotação; pedido fechado não vira nada. A próxima aula é a divergência.",
- "youtube": "https://www.youtube.com/watch?v=68Esbq3KWLg",
+ "youtube": "https://www.youtube.com/watch?v=Sso1vzf4QHM",
  "quiz": [
   {
    "pergunta": "Para quem a cotação é feita?",
@@ -70,5 +70,9 @@
    ],
    "correta": 1
   }
- ]
+ ],
+ "youtube_anterior": [
+  "https://www.youtube.com/watch?v=68Esbq3KWLg"
+ ],
+ "youtube_quadro": "2912x2080"
 }

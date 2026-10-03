@@ -4,7 +4,7 @@
  "titulo": "Quem garante que chegou, e o lacre",
  "abertura": "Esta aula é a estrada: entre o armazém e a mesa a caixa pode não chegar. As duas pernas da ida, a conferência em Recebimentos, a coluna A caminho, e o lacre dos dias no Retorno.",
  "fecho": "O armazém valida a saída, a praça confere a chegada; o que falta fica no trânsito e vira perda a explicar; A caminho não conta como disponível; o Retorno lacra os dias. A próxima aula é a nota da ida.",
- "youtube": "https://www.youtube.com/watch?v=V7DATTCgsCg",
+ "youtube": "https://www.youtube.com/watch?v=9Po4vi3plEM",
  "quiz": [
   {
    "pergunta": "Depois que o depósito despacha, onde estão os livros até a praça conferir?",
@@ -70,5 +70,9 @@
    ],
    "correta": 2
   }
- ]
+ ],
+ "youtube_anterior": [
+  "https://www.youtube.com/watch?v=V7DATTCgsCg"
+ ],
+ "youtube_quadro": "2912x2080"
 }

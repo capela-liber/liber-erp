@@ -227,7 +227,14 @@
         <field name="name">Consignment Map</field>
         <field name="model_id" ref="model_consignment_settlement"/>
         <field name="subject">Mapa de Consignação - {{ object.name }}</field>
-        <field name="email_from">{{ (object.company_id.email_formatted or user.email_formatted) }}</field>
+        <!-- O remetente é uma PESSOA: o nome de quem foi escolhido nas
+             Configurações, sobre o endereço da casa. O porquê de não ir o
+             endereço pessoal está em `_map_email_from` — o provedor reescreve
+             o que não está autorizado, e a pessoa se perderia no caminho. -->
+        <field name="email_from">{{ object._map_email_from() }}</field>
+        <!-- E a resposta volta para a OPERAÇÃO, não para a caixa da pessoa:
+             na CO ela tem dono, prazo e fila. Ver `_map_reply_to`. -->
+        <field name="reply_to">{{ object._map_reply_to() }}</field>
         <field name="partner_to">{{ ','.join(str(i) for i in object.map_recipient_ids.ids) }}</field>
         <!-- Honour partner_to; without this Odoo defaults to the customer only,
              e manda o mapa para a caixa geral da livraria em vez do contato de
@@ -253,7 +260,16 @@
                    querendo <strong>devolver</strong> o que não girou ou
                    <strong>repor</strong> o que vendeu, basta
                    <strong>responder este e-mail</strong>.</p>
-                <p>Atenciosamente,<br/><t t-out="object.company_id.name or ''"/></p>
+                <!-- Assina quem manda: no disparo automático, o Líder de
+                     Equipe do Canal de Vendas desta CO; em qualquer clique
+                     humano (botão, lote, compositor, wizard RUN), quem está
+                     logado agora, mesma regra de `_map_email_from`. -->
+                <t t-set="assinante"
+                   t-value="object.team_id.user_id if ctx.get('mapa_automatico') else user"/>
+                <p>Atenciosamente,<br/>
+                   <t t-if="assinante"
+                      ><t t-out="assinante.name or ''"/><br/></t
+                   ><t t-out="object.company_id.name or ''"/></p>
                 <p t-if="ctx.get('mapa_automatico')"
                    style="color:#888; font-size:11px; border-top:1px solid #eee; padding-top:8px;">
                    Esta é uma mensagem automática do envio mensal do mapa de

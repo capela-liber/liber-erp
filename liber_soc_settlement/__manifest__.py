@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     'name': 'Consignment - Settlement',
-    'version': '19.0.2.16.0',
+    'version': '19.0.2.25.0',
     'summary': 'Consignment settlement: turn what the customer sold into a real sale',
     'description': """
 Consignment settlement (SOC redesign).
@@ -30,6 +30,7 @@ sold.
         'data/ir_cron_shelf_age.xml',
         'data/ir_cron_overdue.xml',
         'data/ir_cron_shelf_map.xml',
+        'data/ir_cron_map_run_queue.xml',
         'report/consignment_map_report.xml',
         'report/consignment_order_mail.xml',
         'report/consignment_return_report.xml',

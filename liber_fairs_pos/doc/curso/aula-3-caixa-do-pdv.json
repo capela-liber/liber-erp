@@ -4,7 +4,7 @@
  "titulo": "O caixa do PDV na feira",
  "abertura": "Esta aula abre o balcão: um caixa por pessoa da equipe, vendendo o estoque que está na mesa, com a capa de cada título, o de-por do desconto e a quantidade que resta.",
  "fecho": "O caixa nasce apontado para a localização da feira; o balcão mostra só a grade; o movimento nasce carimbado como venda da feira; funciona sem rede. A próxima aula é o dinheiro.",
- "youtube": "https://www.youtube.com/watch?v=TCF6e2v1ITE",
+ "youtube": "https://www.youtube.com/watch?v=SyMwlWWF_4c",
  "quiz": [
   {
    "pergunta": "Que estoque o caixa da feira vende?",
@@ -70,5 +70,9 @@
    ],
    "correta": 1
   }
- ]
+ ],
+ "youtube_anterior": [
+  "https://www.youtube.com/watch?v=TCF6e2v1ITE"
+ ],
+ "youtube_quadro": "2912x2080"
 }

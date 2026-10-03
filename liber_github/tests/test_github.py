@@ -6,6 +6,7 @@ from unittest.mock import patch
 from odoo.exceptions import UserError
 from odoo.tests import TransactionCase, tagged
 
+from odoo.addons.liber_cloud_files.exceptions import CloudFileGone
 from odoo.addons.liber_github.services import github_api
 from odoo.addons.liber_github.services.github_api import GitHubClient
 
@@ -71,6 +72,21 @@ class TestGitHub(TransactionCase):
             self.assertEqual([e['path'] for e in entries],
                              ['/originais/livro-a.pdf'],
                              "Non-recursive stops at the first level.")
+
+    def test_sync_mirrors_silently(self):
+        """The mirror is bookkeeping: no "created" note and no follower
+        on the files it brings in -- the chatter is left to people."""
+        entries = [{'name': 'livro-a.pdf', 'path': '/originais/livro-a.pdf',
+                    'external_id': 's1', 'size': 10, 'rev': 's1',
+                    'content_hash': 's1'}]
+        with patch.object(GitHubClient, '__init__', _client_stub), \
+             patch.object(GitHubClient, 'list_folder', return_value=entries):
+            self.folder.action_sync()
+        mirrored = self.env['liber.cloud.file'].search(
+            [('folder_id', '=', self.folder.id)])
+        self.assertEqual(mirrored.mapped('name'), ['livro-a.pdf'])
+        self.assertFalse(mirrored.message_ids)
+        self.assertFalse(mirrored.message_follower_ids)
 
     def test_root_maps_the_whole_repository(self):
         """Path '/' is the repository root: no prefix filters the tree,
@@ -238,3 +254,73 @@ class TestGitHubLFS(TransactionCase):
              self.assertRaises(UserError) as caught:
             _lfs_client()._lfs_fetch('edlab/acervo', OID, 1724435)
         self.assertIn('quota', str(caught.exception))
+
+
+def _fake_github(routes):
+    """requests.request stand-in: answer by path, 404 for anything else."""
+    def request(method, url, **kwargs):
+        path = url.split('api.github.com', 1)[1]
+        status, payload = routes.get(path, (404, {'message': 'Not Found'}))
+        resp = _Resp(status=status, payload=payload,
+                     content=b'x' if payload is not None else b'')
+        resp.text = str(payload)
+        return resp
+    return request
+
+
+@tagged('post_install', '-at_install')
+class TestGitHubGone(TransactionCase):
+    """30/09/2026: the capa do Kaapor was renamed in the repository, the
+    mirror still pointed at the old path, and the reader got GitHub's raw
+    404 inside an "Unprocessable Entity" page. A file that left must say
+    so -- and a repository out of reach must not pass for one."""
+
+    FILE = '/repos/edlab/acervo/contents/HEDRA/KAAPOR_AVES_CAPA.pdf'
+
+    def _client(self):
+        client = _lfs_client()
+        client._tz = 'America/Sao_Paulo'
+        return client
+
+    def test_a_file_that_left_is_gone_and_says_how(self):
+        routes = {
+            '/repos/edlab/acervo': (200, {'default_branch': 'main'}),
+            '/repos/edlab/acervo/commits': (200, [{
+                'author': {'login': 'editora-hedra'},
+                'commit': {'message': 'Delete HEDRA/KAAPOR_AVES_CAPA.pdf\n\nx',
+                           'author': {'date': '2026-09-29T21:16:09Z'}}}]),
+        }
+        with patch.object(github_api.requests, 'request',
+                          side_effect=_fake_github(routes)), \
+             self.assertRaises(CloudFileGone) as caught:
+            self._client()._request(
+                'GET', self.FILE, raw=True,
+                gone=('edlab/acervo', 'main', 'HEDRA/KAAPOR_AVES_CAPA.pdf'))
+        self.assertIn('HEDRA/KAAPOR_AVES_CAPA.pdf', str(caught.exception))
+        detail = caught.exception.detail
+        self.assertIn('Delete HEDRA/KAAPOR_AVES_CAPA.pdf', detail)
+        self.assertIn('editora-hedra', detail)
+        self.assertIn('29/09/2026 18:16', detail, "In the user's time zone.")
+
+    def test_gone_without_history_still_says_gone(self):
+        routes = {'/repos/edlab/acervo': (200, {}),
+                  '/repos/edlab/acervo/commits': (200, [])}
+        with patch.object(github_api.requests, 'request',
+                          side_effect=_fake_github(routes)), \
+             self.assertRaises(CloudFileGone) as caught:
+            self._client()._request(
+                'GET', self.FILE, raw=True,
+                gone=('edlab/acervo', 'main', 'HEDRA/KAAPOR_AVES_CAPA.pdf'))
+        self.assertEqual(caught.exception.detail, '')
+
+    def test_repository_out_of_reach_is_not_a_gone_file(self):
+        """GitHub says 404 for a repository the token lost, too: that is
+        an access problem, and must not archive what it touches."""
+        with patch.object(github_api.requests, 'request',
+                          side_effect=_fake_github({})), \
+             self.assertRaises(UserError) as caught:
+            self._client()._request(
+                'GET', self.FILE, raw=True,
+                gone=('edlab/acervo', 'main', 'HEDRA/KAAPOR_AVES_CAPA.pdf'))
+        self.assertNotIsInstance(caught.exception, CloudFileGone)
+        self.assertIn('/repos/edlab/acervo', str(caught.exception))

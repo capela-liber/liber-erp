@@ -4,7 +4,7 @@
  "titulo": "O que há em cada menu",
  "abertura": "Bem-vindo ao curso Comercial. Ele é sobre o cadastro do cliente, que alimenta a consignação, os royalties e a nota fiscal, e sobre o painel de Vendas, a primeira tela do comercial de manhã. Esta aula é o mapa: o que há em cada menu de Vendas e de Painéis.",
  "fecho": "Vendas tem Pedidos, A faturar, Produtos, Notas fiscais, Relatórios e Configuração; Painéis tem o painel de Vendas. A próxima aula abre a ficha do cliente e o campo Canal de Vendas.",
- "youtube": "https://www.youtube.com/watch?v=7VR2_ZljNFo",
+ "youtube": "https://www.youtube.com/watch?v=YQKTwdpoSHM",
  "quiz": [
   {
    "pergunta": "Onde fica o cadastro dos clientes dentro de Vendas?",
@@ -70,5 +70,9 @@
    ],
    "correta": 0
   }
- ]
+ ],
+ "youtube_anterior": [
+  "https://www.youtube.com/watch?v=7VR2_ZljNFo"
+ ],
+ "youtube_quadro": "2912x2080"
 }

@@ -140,6 +140,42 @@ class CloudGateCase(TransactionCase):
             self.env.invalidate_all()
             self.folder.with_user(user)._ensure_access('write')
 
+    # ------------------------------------------------------------------
+    # talking about a file is not editing it
+    # ------------------------------------------------------------------
+    def test_reader_comments_on_a_file_it_cannot_edit(self):
+        """Seeing the file is enough to comment on it (_mail_post_access);
+        the write rule on the record itself does not move."""
+        message = self._as(self.reader).message_post(
+            body='Esta capa é a versão final?', message_type='comment',
+            subtype_xmlid='mail.mt_comment')
+        self.assertEqual(message.author_id, self.reader.partner_id)
+        self.assertIn(message, self.file.message_ids)
+        with self.assertRaises(AccessError):
+            self._as(self.reader).write({'name': 'renamed by reader'})
+
+    def test_reader_schedules_an_activity_on_the_file(self):
+        activity = self._as(self.reader).activity_schedule(
+            'mail.mail_activity_data_todo', summary='Conferir a capa',
+            user_id=self.writer.id)
+        self.assertEqual(activity.res_id, self.file.id)
+        self.assertEqual(activity.user_id, self.writer)
+        self.assertIn(self.writer.partner_id,
+                      self.file.message_partner_ids,
+                      "The assignee follows the file, as anywhere else.")
+
+    def test_stranger_cannot_comment(self):
+        """No read, no voice: the post access follows the read gate."""
+        stranger = new_test_user(
+            self.env, '%s_stranger' % self.PROVIDER,
+            groups='base.group_user,%s.group_liber_%s_user' % (
+                self.MODULE, self.PROVIDER))
+        with self.assertRaises(AccessError):
+            self._as(stranger).message_post(body='de fora')
+        with self.assertRaises(AccessError):
+            self._as(stranger).message_subscribe(
+                partner_ids=stranger.partner_id.ids)
+
     # A test for the Upload button agreeing with the gate belongs here too,
     # and is deliberately absent: `can_upload` is still uncommitted work on
     # the wizard, and a suite that reaches for a field its own commit does

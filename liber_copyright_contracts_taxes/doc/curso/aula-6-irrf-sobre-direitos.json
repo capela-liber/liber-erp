@@ -4,7 +4,7 @@
  "titulo": "IRRF sobre direitos autorais",
  "abertura": "Esta aula é o imposto: o Modo de IRRF no favorecido, a linha negativa na fatura, e a acumuladora para a Receita.",
  "fecho": "Pessoa física retém pela tabela; pessoa jurídica é isenta. O retido acumula numa fatura para a Receita Federal, com dia para recolher.",
- "youtube": "https://www.youtube.com/watch?v=z2uHJO_2auU",
+ "youtube": "https://www.youtube.com/watch?v=i2EJE0xn-2w",
  "quiz": [
   {
    "pergunta": "Onde se decide se há retenção?",
@@ -70,5 +70,9 @@
    ],
    "correta": 0
   }
- ]
+ ],
+ "youtube_anterior": [
+  "https://www.youtube.com/watch?v=z2uHJO_2auU"
+ ],
+ "youtube_quadro": "2912x2080"
 }

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- What the download door answers when the storage no longer has the
+         file: said plainly, with the way back, instead of the provider's
+         raw 404. Self-contained on purpose: it opens in a tab of its own. -->
+    <template id="cloud_file_gone" name="Cloud file gone">
+        <html>
+            <head>
+                <meta charset="utf-8"/>
+                <meta name="viewport" content="width=device-width, initial-scale=1"/>
+                <title t-esc="file.name"/>
+                <style>
+                    body { font-family: system-ui, sans-serif; background: #f6f6f8; color: #222; margin: 0; }
+                    main { max-width: 640px; margin: 10vh auto; padding: 32px; background: #fff; border-radius: 8px; box-shadow: 0 1px 4px rgba(0, 0, 0, .08); }
+                    h1 { font-size: 1.4rem; margin: 0 0 8px; }
+                    .name { font-family: ui-monospace, monospace; background: #f1f1f4; padding: 2px 6px; border-radius: 4px; }
+                    .detail { color: #555; border-left: 3px solid #d0d0d8; padding-left: 12px; }
+                    a.btn { display: inline-block; margin: 16px 12px 0 0; padding: 8px 14px; border-radius: 4px; background: #714b67; color: #fff; text-decoration: none; }
+                    a.btn.alt { background: #e7e9ed; color: #222; }
+                </style>
+            </head>
+            <body>
+                <main>
+                    <h1>This file is no longer in <t t-esc="provider"/></h1>
+                    <p><span class="name" t-esc="file.name"/> was deleted, renamed or moved in the storage after the last sync, so there is nothing to open.</p>
+                    <p t-if="detail" class="detail" t-esc="detail"/>
+                    <p>The record has been archived, with a note on its chatter. If the file got a new name, syncing the folder brings it in.</p>
+                    <a class="btn" t-attf-href="/odoo/liber.cloud.folder/#{file.folder_id.id}">Open the folder <t t-esc="file.folder_id.name"/></a>
+                    <a class="btn alt" t-attf-href="/odoo/liber.cloud.file/#{file.id}">Back to the file</a>
+                </main>
+            </body>
+        </html>
+    </template>
+
+</odoo>

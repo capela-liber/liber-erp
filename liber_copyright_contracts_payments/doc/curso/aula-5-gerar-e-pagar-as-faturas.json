@@ -4,7 +4,7 @@
  "titulo": "Gerar e pagar as faturas dos autores",
  "abertura": "Esta aula cobra o saldo: Gerar Faturas de Royalties faz uma conta a pagar por favorecido, e o Financeiro a paga como paga qualquer fornecedor.",
  "fecho": "Uma fatura por favorecido; quem já tem fatura aberta não ganha outra; pagar avança a data de corte.",
- "youtube": "https://www.youtube.com/watch?v=CkmLY6BLDFo",
+ "youtube": "https://www.youtube.com/watch?v=x8wlCEieuDc",
  "quiz": [
   {
    "pergunta": "Gerar Faturas faz quantas?",
@@ -70,5 +70,9 @@
    ],
    "correta": 2
   }
- ]
+ ],
+ "youtube_anterior": [
+  "https://www.youtube.com/watch?v=CkmLY6BLDFo"
+ ],
+ "youtube_quadro": "2912x2080"
 }

@@ -4,7 +4,7 @@
  "titulo": "Emitir a nota de remessa de um Pedido C",
  "abertura": "Um Pedido C não fatura, mas precisa de nota fiscal para a mercadoria viajar. Nesta aula, o botão Criar nota e a nota de remessa que nasce dele.",
  "fecho": "Nota de remessa, série REM, posição fiscal de consignação, baixada automaticamente. Na próxima aula, o que não é consignação.",
- "youtube": "https://www.youtube.com/watch?v=ak0WpIIjnVg",
+ "youtube": "https://www.youtube.com/watch?v=mNYLnJjPiIc",
  "quiz": [
   {
    "pergunta": "Por que o Pedido C não tem Criar fatura?",
@@ -70,5 +70,9 @@
    ],
    "correta": 0
   }
- ]
+ ],
+ "youtube_anterior": [
+  "https://www.youtube.com/watch?v=ak0WpIIjnVg"
+ ],
+ "youtube_quadro": "2912x2080"
 }

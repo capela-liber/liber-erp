@@ -4,7 +4,7 @@
  "titulo": "Análise",
  "abertura": "Esta aula é o relatório: o previsto contra o realizado solto para cruzar, e a demonstração do resultado ao lado.",
  "fecho": "Uma mede o plano, a outra mede o fato. Juntas respondem se o ano está indo como a casa combinou.",
- "youtube": "https://www.youtube.com/watch?v=ArQPVUj4g48",
+ "youtube": "https://www.youtube.com/watch?v=a6gp6cU396U",
  "quiz": [
   {
    "pergunta": "O que a Análise do orçamento permite que a lista não permite?",
@@ -70,5 +70,9 @@
    ],
    "correta": 1
   }
- ]
+ ],
+ "youtube_anterior": [
+  "https://www.youtube.com/watch?v=ArQPVUj4g48"
+ ],
+ "youtube_quadro": "2912x2080"
 }

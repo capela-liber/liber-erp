@@ -4,7 +4,7 @@
  "titulo": "O que há em cada menu, e a ideia",
  "abertura": "Esta aula é o mapa: as três telas por idade, onde as faturas continuam, e as três coisas do mês que o curso também cobre.",
  "fecho": "Cobrar não é ler a lista de faturas: é olhar a carteira por idade. As próximas aulas abrem uma tela de cada vez.",
- "youtube": "https://www.youtube.com/watch?v=kTTXAKwpo18",
+ "youtube": "https://www.youtube.com/watch?v=73LcOLeblL0",
  "quiz": [
   {
    "pergunta": "A ideia central do curso é qual?",
@@ -70,5 +70,9 @@
    ],
    "correta": 0
   }
- ]
+ ],
+ "youtube_anterior": [
+  "https://www.youtube.com/watch?v=kTTXAKwpo18"
+ ],
+ "youtube_quadro": "2912x2080"
 }

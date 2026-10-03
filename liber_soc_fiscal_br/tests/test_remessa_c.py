@@ -17,6 +17,14 @@ class TestRemessaC(TransactionCase):
     def setUpClass(cls):
         super().setUpClass()
         cls.company = cls.env.company
+        # O diário de remessa nasce no primeiro uso; um que já exista no
+        # banco de testes chegaria com a conta de outro mapa e provaria
+        # outra coisa. Arquivado, sai da busca e o fixture parte do zero.
+        for velho in cls.env["account.journal"].search([
+                ("company_id", "=", cls.company.id),
+                ("is_remessa", "=", True)]):
+            # O código é único por empresa: o arquivado cede o REM-C ao novo.
+            velho.write({"active": False, "code": ("Z%d" % velho.id)[:5]})
         cls.warehouse = cls.env["stock.warehouse"].search(
             [("company_id", "=", cls.company.id)], limit=1)
         cls.product = cls.env["product.product"].create({

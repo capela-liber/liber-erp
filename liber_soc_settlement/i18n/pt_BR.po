@@ -2611,3 +2611,119 @@ msgstr ""
 #: code:addons/liber_soc_settlement/models/consignment_agreement.py:0
 msgid " and %s more"
 msgstr " e mais %s"
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_res_company__map_sender_id
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_res_config_settings__map_sender_id
+msgid "Map Sender"
+msgstr "Remetente do Mapa"
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,help:liber_soc_settlement.field_res_company__map_sender_id
+#: model:ir.model.fields,help:liber_soc_settlement.field_res_config_settings__map_sender_id
+msgid ""
+"Whose name the consignment map e-mail goes out under. The customer sees this "
+"person as the sender and the signature; the address stays the company's, and "
+"replies still come back to the operation. Empty sends it in the company's "
+"name, as before."
+msgstr "Em nome de quem sai o e-mail do mapa de consignação. O cliente vê esta pessoa como remetente e na assinatura; o endereço continua sendo o da empresa, e as respostas seguem voltando para a operação. Vazio manda em nome da empresa, como antes."
+
+#. module: liber_soc_settlement
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.res_config_settings_view_form_soc
+msgid "Map sender"
+msgstr "Remetente do mapa"
+
+#. module: liber_soc_settlement
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.res_config_settings_view_form_soc
+msgid ""
+"Whose name the map e-mail goes out under — customers answer a person, not a "
+"robot. The address stays the company's (the mail provider rewrites anything "
+"else) and replies still come back to the operation. Empty sends it in the "
+"company's name."
+msgstr "Em nome de quem sai o e-mail do mapa — cliente responde a gente, não a robô. O endereço continua sendo o da empresa (o provedor reescreve qualquer outro) e as respostas seguem voltando para a operação. Vazio manda em nome da empresa."
+
+#. module: liber_soc_settlement
+#. odoo-python
+#: code:addons/liber_soc_settlement/wizards/map_run_wizard.py:0
+#, python-format
+msgid ""
+"%s map(s) queued. This runs in the background and can take a while -- no "
+"need to wait here."
+msgstr ""
+"%s mapa(s) na fila. Isso roda em segundo plano e pode demorar — não precisa "
+"esperar aqui."
+
+#. module: liber_soc_settlement
+#. odoo-python
+#: code:addons/liber_soc_settlement/models/consignment_template.py:0
+#, python-format
+msgid "Customers of %s"
+msgstr "Clientes de %s"
+
+#. module: liber_soc_settlement
+#. odoo-python
+#: code:addons/liber_soc_settlement/models/consignment_settlement.py:0
+#, python-format
+msgid "No campaign is running on this customer's channel (%s)."
+msgstr "Nenhuma campanha em curso no canal deste cliente (%s)."
+
+#. module: liber_soc_settlement
+#. odoo-python
+#: code:addons/liber_soc_settlement/models/consignment_settlement.py:0
+msgid "no channel on the agreement"
+msgstr "contrato sem canal"
+
+#. module: liber_soc_settlement
+#. odoo-python
+#: code:addons/liber_soc_settlement/models/consignment_settlement.py:0
+#, python-format
+msgid ""
+"%(co)s cannot be cancelled: it was already run, so the shelf was debited and"
+" the sale exists. Cancelling would undo the paperwork and leave the stock "
+"movement standing. Correct it with a new operation, or with a stock audit "
+"adjustment."
+msgstr ""
+"%(co)s não pode ser cancelado: já foi executado, então a prateleira foi "
+"debitada e a venda existe. Cancelar desfaria a papelada e deixaria o "
+"movimento de estoque de pé. Corrija com uma nova operação ou com um ajuste "
+"de auditoria de estoque."
+
+#. module: liber_soc_settlement
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.view_consignment_settlement_form
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.view_generate_wizard_form
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.view_map_run_wizard_form
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.view_run_noshelf_wizard_form
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.view_run_overstock_wizard_form
+msgid "Cancel"
+msgstr "Cancelar"
+
+#. module: liber_soc_settlement
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.view_consignment_move_search_dunning
+msgid "Returns with a message you haven't read yet."
+msgstr "Devoluções com mensagem do cliente ainda não lida por você."
+
+#. module: liber_soc_settlement
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.view_coverage_search
+msgid "Coverage"
+msgstr "Cobertura"
+
+#. module: liber_soc_settlement
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.view_shelf_inventory_pivot
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.view_shelf_inventory_search
+msgid "Inventory"
+msgstr "Inventário"
+
+#. module: liber_soc_settlement
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.view_shelf_inventory_search
+msgid "Location"
+msgstr "Local"
+
+#. module: liber_soc_settlement
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.view_shortfall_list
+msgid "Inbound"
+msgstr "A caminho"
+
+#. module: liber_soc_settlement
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.view_shortfall_search
+msgid "Nature"
+msgstr "Natureza"

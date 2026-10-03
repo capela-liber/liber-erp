@@ -173,7 +173,12 @@ class LiberCloudFolder(models.Model):
         The mirror is metadata only -- name, size, revision -- so syncing
         is cheap and no byte is duplicated into Odoo (thumbnails aside).
         """
-        File = self.env['liber.cloud.file'].sudo()
+        # The mirror is bookkeeping, not news: a thousand files appearing
+        # must not leave a thousand "created" notes, nor subscribe the
+        # superuser to every one of them.
+        File = self.env['liber.cloud.file'].sudo().with_context(
+            mail_create_nolog=True, mail_create_nosubscribe=True,
+            mail_notrack=True)
         for folder in self:
             folder._ensure_access('read')
             client = folder._client()

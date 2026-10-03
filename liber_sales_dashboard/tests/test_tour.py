@@ -87,6 +87,12 @@ class TestSalesDashboardTour(HttpCase):
         self.assertEqual(cartao, 150.0 + 999.0,
                          "sem período, o recorte pega a velha também: é o filtro que a tira")
 
+        # Notas que o banco de testes já tenha no período entrariam no grupo
+        # do mês e no rodapé da lista; saem da janela do painel, não do banco.
+        self.env["nfe.xml.panel"].search(
+            list(pivo["domain"])
+            + [("partner_id", "not in", (ligada | solta | sem | velha).ids)]
+        ).write({"file_create_date": fields.Date.subtract(self.hoje, years=3)})
         gerente = self.env["res.users"].with_context(no_reset_password=True).create({
             "name": "Gerente de Vendas do Tour", "login": "gerente_tour",
             "password": "gerente_tour", "lang": "en_US",

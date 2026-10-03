@@ -4,7 +4,7 @@
  "titulo": "Bonificação e feira não são consignação",
  "abertura": "Bonificação dá o livro; feira leva e traz; consignação deixa e acerta. Cada uma sai com o seu CFOP e a sua posição fiscal, e nenhuma delas fatura.",
  "fecho": "O CFOP decide o documento, o documento decide se fatura, e só o acerto fatura. Na próxima aula, a auditoria.",
- "youtube": "https://www.youtube.com/watch?v=zbnb_gz502A",
+ "youtube": "https://www.youtube.com/watch?v=_AQX1Zd2oZE",
  "quiz": [
   {
    "pergunta": "CFOP 5910 na tabela de Efeitos de CFOP está:",
@@ -70,5 +70,9 @@
    ],
    "correta": 3
   }
- ]
+ ],
+ "youtube_anterior": [
+  "https://www.youtube.com/watch?v=zbnb_gz502A"
+ ],
+ "youtube_quadro": "2912x2080"
 }

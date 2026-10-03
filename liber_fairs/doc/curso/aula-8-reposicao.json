@@ -4,7 +4,7 @@
  "titulo": "Reposição durante o evento",
  "abertura": "Um título vende no sábado e falta no domingo. Esta aula é a reposição no meio da feira: pedida no fechamento do dia, sugerida pelo mínimo de mesa, descontando o que já está a caminho.",
  "fecho": "Repor é mínimo menos sobra menos a caminho, sugestão e não ordem; Mandar reposição sai a qualquer hora; a grade sobe e sai a diferença contra a mesma localização. Fim do curso Feiras I.",
- "youtube": "https://www.youtube.com/watch?v=8M8Imp6ECGA",
+ "youtube": "https://www.youtube.com/watch?v=eTkJmsVgS_E",
  "quiz": [
   {
    "pergunta": "Onde se pede a reposição?",
@@ -70,5 +70,9 @@
    ],
    "correta": 2
   }
- ]
+ ],
+ "youtube_anterior": [
+  "https://www.youtube.com/watch?v=8M8Imp6ECGA"
+ ],
+ "youtube_quadro": "2912x2080"
 }

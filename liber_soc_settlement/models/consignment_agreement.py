@@ -27,6 +27,28 @@ class ConsignmentAgreement(models.Model):
              "e-mailed to this customer. Guards the monthly schedule against "
              "sending twice.")
 
+    # TENTATIVA NÃO É ENVIO, e é por não haver como dizer isso que o cron
+    # entrava em laço (medido no staging em 21/09/2026).
+    #
+    # `map_last_sent_date` só é gravado quando o mapa SAIU. Cliente sem contato
+    # de Acertos com e-mail nunca era carimbado, então voltava na fila da
+    # rodada seguinte, e da seguinte: como o `remaining` é contado contra uma
+    # fila que não encolhe, o cron nunca reportava zero e o executor o chamava
+    # de novo na hora, indefinidamente. Com orçamento esgotado -- que é o
+    # estado normal a partir da segunda chamada do ciclo -- cada rodada
+    # processa UM item, e se esse item é insolúvel a leva nunca passa dele.
+    # No staging: 26 minutos de laço, 268 contratos na fila, zero mapas.
+    #
+    # Este carimbo é a resposta: marca quem o disparo do mês já ATENDEU, tenha
+    # o mapa saído ou não. Quem foi atendido sai da fila do mês; a notícia de
+    # que faltou cadastro vai pela tarefa e pelo resumo do canal, que é onde se
+    # conserta, e não por uma retentativa que não tem como dar certo sozinha.
+    map_last_attempt_date = fields.Date(
+        string='Last Map Attempt', readonly=True, copy=False,
+        help="When the monthly schedule last HANDLED this agreement, whether "
+             "or not a map went out. Keeps an agreement with no recipient "
+             "from being retried on every cron round.")
+
     def _compute_settlement_count(self):
         groups = self.env['consignment.settlement']._read_group(
             [('agreement_id', 'in', self.ids)], ['agreement_id'], ['__count'])
@@ -215,8 +237,11 @@ class ConsignmentAgreement(models.Model):
         # livraria é o que este desenho veio substituir.
         if not template or not any(p.email for p in self._map_recipients()):
             return self.env['consignment.settlement']
+        co_automatico = co.with_context(mapa_automatico=automatico)
         template.with_company(self.company_id).with_context(
-            mapa_automatico=automatico).send_mail(co.id, force_send=False)
+            mapa_automatico=automatico).send_mail(
+                co.id, force_send=False,
+                email_values=co_automatico._map_email_values())
         self.sudo().map_last_sent_date = fields.Date.context_today(self)
         return co
 
@@ -357,6 +382,11 @@ class ConsignmentAgreement(models.Model):
             '|', ('date_end', '=', False), ('date_end', '>=', today),
             '|', ('map_last_sent_date', '=', False),
                  ('map_last_sent_date', '<', primeiro_do_mes),
+            # E quem o disparo já ATENDEU este mês também sai -- inclusive quem
+            # ficou sem mapa por falta de destinatário. Ver o comentário do
+            # campo: sem esta linha o insolúvel trava a fila para sempre.
+            '|', ('map_last_attempt_date', '=', False),
+                 ('map_last_attempt_date', '<', primeiro_do_mes),
         ])
 
     @api.model
@@ -426,7 +456,13 @@ class ConsignmentAgreement(models.Model):
         for indice, agr in enumerate(contratos, 1):
             if agr.on_shelf_qty <= 0:
                 # Prateleira vazia não tem operação nem mapa. A MESMA regra do
-                # Gerar operações, e não uma cópia dela.
+                # Gerar operações, e não uma cópia dela. Mas ATENDIDO ele foi:
+                # sem o carimbo, a prateleira vazia volta em toda rodada e, se
+                # a fila inteira for de prateleira vazia, nenhum
+                # `_commit_progress` chega a ser chamado dentro do laço e o
+                # executor fica com a declaração inicial, acima de zero, para
+                # sempre.
+                agr._stamp_map_attempt(today)
                 continue
             try:
                 # Savepoint, não rollback: um cliente com cadastro torto não
@@ -444,7 +480,12 @@ class ConsignmentAgreement(models.Model):
                 _logger.exception(
                     "Mapa de consignação: falha em %s (%s)",
                     agr.name, agr.partner_id.display_name)
-                continue
+            # FORA do savepoint, e depois do `except`, de propósito: o carimbo
+            # tem de sobreviver ao rollback do contrato que estourou. Dentro do
+            # bloco ele seria desfeito junto, o contrato voltaria à fila na
+            # rodada seguinte e estouraria de novo -- o mesmo laço, agora por
+            # exceção em vez de por falta de e-mail.
+            agr._stamp_map_attempt(today)
             if sob_cron and Cron._commit_progress(
                     1, remaining=len(contratos) - indice) <= 0:
                 # Acabou o orçamento DESTA rodada, não a leva. Como sobrou fila,
@@ -460,6 +501,13 @@ class ConsignmentAgreement(models.Model):
         # leva de 264 é cortada pelo orçamento em várias rodadas seguidas, e um
         # aviso por rodada encheria o canal de pedaço.
         if not interrompido:
+            # O resumo lista quem ficou sem mapa POR FALTA DE DESTINATÁRIO, e
+            # `ficaram_de_fora` é a única fonte que sabe disso: perguntar ao
+            # banco quem foi atendido sem ter recebido mapa traria junto a
+            # prateleira vazia, que também é carimbada e não é problema
+            # nenhum. O preço é o resumo enxergar só a rodada que fechou a
+            # fila -- sobras das rodadas anteriores não entram nele, e a
+            # notícia de cada uma continua indo pela tarefa do comercial.
             self._post_dispatch_summary(
                 self.search_count([('map_last_sent_date', '=', today)]),
                 ficaram_de_fora)
@@ -467,6 +515,18 @@ class ConsignmentAgreement(models.Model):
             "Mapa de consignação: %s mapa(s) enfileirado(s), %s tarefa(s) de "
             "cadastro sem e-mail.", enviados, sem_email)
         return enviados
+
+    def _stamp_map_attempt(self, today):
+        """Marca que o disparo do mês ATENDEU este contrato.
+
+        Separado de `map_last_sent_date` porque as duas perguntas são
+        diferentes: "recebeu o mapa?" e "o disparo já passou por aqui?". A
+        segunda é a que tira da fila, e é a única que vale para quem não tinha
+        destinatário -- carimbar o envio nesse caso seria mentir no dado que a
+        tela mostra ao comercial.
+        """
+        self.ensure_one()
+        self.sudo().map_last_attempt_date = today
 
     @api.model
     def _post_dispatch_summary(self, enviados, ficaram_de_fora):

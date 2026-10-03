@@ -1,10 +1,17 @@
 # -*- coding: utf-8 -*-
+import base64
+import csv
+import io
+import logging
 from collections import defaultdict
 from dateutil.relativedelta import relativedelta
 from markupsafe import Markup
 
 from odoo import api, fields, models, _
 from odoo.exceptions import UserError, ValidationError
+from odoo.tools import email_normalize, formataddr
+
+_logger = logging.getLogger(__name__)
 
 
 class ConsignmentSettlement(models.Model):
@@ -77,6 +84,15 @@ class ConsignmentSettlement(models.Model):
         ('done', 'Finalized'),
         ('cancel', 'Cancelled'),
     ], string='Status', default='draft', required=True, tracking=True)
+    # O wizard RUN não manda mais na hora do clique -- centenas de PDFs
+    # travariam o navegador de quem clicou minutos a fio. Ele só carimba
+    # "pedi o envio" aqui, e o cron de fundo (`_cron_process_map_run_queue`)
+    # é quem manda de verdade e limpa o carimbo, tentativa tenha dado certo
+    # ou não -- um item torto não pode prender a fila para sempre.
+    map_run_requested_at = fields.Datetime(
+        string='Map Run Requested', readonly=True, copy=False,
+        help="When the 'Send Consignment Maps' (RUN) wizard queued this "
+             "operation. Cleared once the background job processes it.")
     amount_total = fields.Monetary(
         string='Sold Amount', compute='_compute_amount_total', store=True)
     note = fields.Text(string='Notes')
@@ -899,6 +915,178 @@ class ConsignmentSettlement(models.Model):
                 gente = acordo._settlement_contacts()
             co.map_recipient_ids = gente | acordo.report_contact_ids
 
+    # ------------------------------------------------------------------
+    # De quem o mapa vem, e para onde a resposta volta
+    # ------------------------------------------------------------------
+    def _map_email_from(self):
+        """O NOME de quem manda, sobre o ENDEREÇO da casa.
+
+        "Quem manda" depende de QUEM apertou o botão, e não é sempre a mesma
+        pessoa: no disparo automático (`mapa_automatico` no contexto, gravado
+        por `_send_monthly_map`) é o Líder de Equipe (`team_id.user_id`) do
+        Canal de Vendas desta CO; em qualquer clique humano -- botão do
+        contrato, lote do menu Ações, compositor, wizard RUN -- é quem está
+        logado agora (`self.env.user`). Assinar todo mundo com um nome fixo
+        das Configurações, mesmo quando foi outra pessoa que clicou, é o que
+        confundiu o cliente em 22/09/2026 (CO/2026/05748 saiu como "Gabriel
+        Godoy" tendo sido outra pessoa a mandar) -- e um remetente ÚNICO para
+        a casa inteira não dizia nada sobre qual time cuida daquele cliente.
+        Decisão de 23/09/2026: trocado o campo fixo (`res.company.
+        map_sender_id`, removido) pelo líder do time do próprio canal.
+
+        Livraria responde a gente, não a robô -- mas o endereço não pode ser o
+        pessoal. O Gmail da casa reescreve o remetente quando o endereço não
+        está autorizado naquela conta, e `edlab.press`, onde moram quatro das
+        seis empresas, não tem curinga: `maria@edlab.press` chegaria ao cliente
+        como `odoo@hedra.com.br`, justamente apagando a pessoa que se queria
+        mostrar. O nome sobre o endereço da casa não é reescrito por ninguém.
+
+        Sem time ou sem líder no time, nada muda: sai como sempre saiu, em
+        nome da empresa.
+        """
+        self.ensure_one()
+        padrao = (self.company_id.email_formatted
+                  or self.env.user.email_formatted)
+        pessoa = self._map_sender()
+        endereco = email_normalize(self.company_id.email or '')
+        if not pessoa or not endereco:
+            return padrao
+        return formataddr((pessoa.name, endereco))
+
+    def _map_sender(self):
+        """Quem manda: Líder de Equipe no automático, quem clicou no manual.
+
+        Mesma regra usada por `_map_email_from` (o NOME) e por
+        `_map_author_id` (o AUTOR da mensagem no chatter) -- um lugar só
+        para não desalinhar as duas coisas de novo.
+        """
+        self.ensure_one()
+        automatico = bool(self.env.context.get('mapa_automatico'))
+        return self.team_id.user_id if automatico else self.env.user
+
+    def _map_author_id(self):
+        """O PARCEIRO de quem assina, para o CHATTER mostrar a pessoa certa.
+
+        `email_from` aqui é sempre um endereço da CASA (`_map_email_from`),
+        nunca o pessoal -- e é exatamente por isso que o Odoo, tentando casar
+        esse endereço a um parceiro para decidir o autor da mensagem
+        (`mail.thread._message_compute_author`), nunca acha ninguém e cai
+        num autor genérico. O corpo saía assinado certo; o chatter continuava
+        mostrando o robô do executor por baixo -- achado ao vivo em
+        23/09/2026, nos três caminhos de envio (automático, lote/wizard e o
+        próprio disparo mensal). Passar o `author_id` pronto, no mesmo
+        `email_values` que já carrega o CSV, tira a decisão desse casamento
+        por e-mail.
+
+        Sem pessoa resolvida (`_map_sender` vazio -- time sem líder), o
+        AUTOR ainda não pode ser o executor: cai no parceiro da própria
+        EMPRESA, nunca vazio. "Sem líder, nada muda: sai em nome da
+        empresa" valia para a carta; o chatter continuava mostrando o robô
+        por baixo de uma carta assinada "Edlab Press" -- incômodo relatado
+        ao vivo em 23/09/2026, com um segundo exemplo depois do primeiro
+        conserto (aquele resolveu só quando HAVIA líder).
+        """
+        self.ensure_one()
+        pessoa = self._map_sender()
+        parceiro = pessoa.partner_id if pessoa else self.company_id.partner_id
+        return parceiro.id if parceiro else False
+
+    def _map_email_values(self):
+        """Os overrides que TODO caminho de envio do mapa aplica por cima do
+        que o `mail.template` monta sozinho: o CSV (quando há linha) e o
+        autor certo do chatter (quando há pessoa resolvida). Um lugar só,
+        para os quatro pontos de disparo (mensal, botão, lote, fila do
+        wizard) nunca divergirem de novo.
+        """
+        self.ensure_one()
+        valores = {}
+        anexo = self._map_csv_attachment()
+        if anexo:
+            valores['attachment_ids'] = [(4, anexo.id)]
+        autor = self._map_author_id()
+        if autor:
+            valores['author_id'] = autor
+        return valores or None
+
+    def _map_reply_to(self):
+        """A resposta volta para a OPERAÇÃO, não para a caixa da pessoa.
+
+        É o desenho do módulo: o mapa sai da CO para que a resposta do cliente
+        caia onde há dono, prazo e fila. Pôr a pessoa aqui seria mais humano e
+        pior -- a resposta sumiria numa caixa individual, sem registro na CO e
+        sem ninguém para cobrir a ausência dela.
+
+        Quem sabe montar este endereço é o próprio `mail.thread`, que já
+        resolve alias e domínio da empresa; o catchall fica como rede.
+        """
+        self.ensure_one()
+        valores = self._notify_get_reply_to(default=self._map_email_from())
+        return valores.get(self.id) or self.company_id.catchall_formatted
+
+    def _map_csv_rows(self):
+        """Uma linha por título da prateleira, na MESMA conta que o PDF faz.
+
+        Não existe campo próprio para o subtotal da prateleira -- o PDF
+        (`report_consignment_map`, tabela "Mapa da prateleira") também calcula
+        na hora, `qty_on_shelf * price_unit * (1 - discount/100)`. Duas contas
+        diferentes para o mesmo número confundiriam quem cruza CSV com PDF.
+        """
+        self.ensure_one()
+        linhas = []
+        for linha in self.line_ids:
+            subtotal = (linha.qty_on_shelf * linha.price_unit
+                        * (1 - (linha.discount or 0) / 100.0))
+            linhas.append([
+                linha.product_id.product_tmpl_id._metabooks_gtin(),
+                linha.product_id.name,
+                linha.qty_on_shelf,
+                linha.price_unit,
+                linha.discount,
+                subtotal,
+                linha.days_since_settlement if linha.shelf_status else '',
+            ])
+        return linhas
+
+    def _map_csv(self):
+        """O mapa da prateleira em bytes, ou False sem linha nenhuma."""
+        self.ensure_one()
+        linhas = self._map_csv_rows()
+        if not linhas:
+            return False
+        buffer = io.StringIO()
+        # Ponto e vírgula e BOM: mesmo padrão do liber_print_quote -- é o que o
+        # Excel em português lê sem perguntar nada (senão "Título" chega
+        # "TÃ­tulo").
+        escritor = csv.writer(buffer, delimiter=';',
+                               quoting=csv.QUOTE_MINIMAL, lineterminator='\r\n')
+        escritor.writerow([_('ISBN'), _('Título'), _('Em prateleira'),
+                            _('Preço unit.'), _('Desc.%'), _('Subtotal'),
+                            _('Dias sem acerto')])
+        escritor.writerows(linhas)
+        return buffer.getvalue().encode('utf-8-sig')
+
+    def _map_csv_attachment(self):
+        """Cria (ou refaz) o anexo do CSV nesta CO. Um por CO, sempre atual:
+        entre um envio e outro a prateleira muda, e CSV velho é pior que
+        nenhum."""
+        self.ensure_one()
+        dados = self._map_csv()
+        if not dados:
+            return self.env['ir.attachment']
+        nome = _("Mapa de Consignação %s.csv") % (self.name or '').replace('/', '-')
+        antigos = self.env['ir.attachment'].search([
+            ('res_model', '=', 'consignment.settlement'), ('res_id', '=', self.id),
+            ('name', '=', nome), ('mimetype', '=', 'text/csv'),
+        ])
+        antigos.unlink()
+        return self.env['ir.attachment'].create({
+            'name': nome,
+            'datas': base64.b64encode(dados),
+            'mimetype': 'text/csv',
+            'res_model': 'consignment.settlement',
+            'res_id': self.id,
+        })
+
     def action_send_map(self):
         """Open the email composer to send the consignment map PDF to the
         customer and the contract's report recipients (report_contact_ids)."""
@@ -932,7 +1120,8 @@ class ConsignmentSettlement(models.Model):
             if not template or not any(r.email for r in recipients):
                 skipped |= co
                 continue
-            template.send_mail(co.id, force_send=False)
+            template.send_mail(
+                co.id, force_send=False, email_values=co._map_email_values())
             sent += 1
         message = _('%s map(s) queued for sending.') % sent
         if skipped:
@@ -948,6 +1137,68 @@ class ConsignmentSettlement(models.Model):
                 'sticky': bool(skipped),
             },
         }
+
+    @api.model
+    def _cron_process_map_run_queue(self):
+        """Manda de verdade o que o wizard RUN só carimbou.
+
+        Mesmo desenho do disparo mensal (`consignment.agreement.
+        _cron_send_monthly_maps`): savepoint por item -- um cadastro torto
+        não pode prender quem vem atrás --, e o carimbo (aqui,
+        `map_run_requested_at`) sai FORA do savepoint e depois do `except`,
+        senão o item que estoura volta para a fila e estoura de nada no
+        próximo ciclo.
+
+        E MESMA ASSINATURA do disparo mensal (`mapa_automatico=True`, Líder
+        de Equipe do canal): quem manda de VERDADE aqui é o cron, não quem
+        clicou no wizard -- `self.env.user` seria o OdooBot que executa o
+        job, e foi assim que um envio de teste saiu assinado "OdooBot" em
+        vez de uma pessoa (achado ao vivo, 23/09/2026). O clique só pediu;
+        o envio é automático, então assina como automático.
+
+        Declara o tamanho da fila via `_commit_progress`, e só quando há de
+        fato um cron por trás (`ir_cron_progress_id` no contexto) -- rodar
+        isto do `odoo shell` para ensaiar não deve commitar sozinho.
+        """
+        fila = self.sudo().search([('map_run_requested_at', '!=', False)])
+        Cron = self.env['ir.cron']
+        sob_cron = bool(self.env.context.get('ir_cron_progress_id'))
+        if sob_cron:
+            Cron._commit_progress(remaining=len(fila))
+        template = self.env.ref(
+            'liber_soc_settlement.mail_template_consignment_map',
+            raise_if_not_found=False)
+        if template:
+            template = template.with_context(mapa_automatico=True)
+        enviados = 0
+        for indice, co in enumerate(fila, 1):
+            try:
+                with self.env.cr.savepoint():
+                    # RELÊ A PRATELEIRA, sempre -- mesma regra do
+                    # `_settlement_for_map()` do disparo mensal. Sem isto, a
+                    # CO carimbada pelo clique mas nunca repopulada mandava
+                    # com `line_ids` vazio: o PDF saía com a tabela em
+                    # branco (sem erro, por isso passou despercebido) e o
+                    # CSV nem chegava a ser criado (`_map_csv` devolve
+                    # `False` sem linha nenhuma). Achado ao vivo em
+                    # 23/09/2026.
+                    co.action_populate_from_shelf()
+                    destinatarios = co.partner_id | co.agreement_id.report_contact_ids
+                    if template and any(r.email for r in destinatarios):
+                        template.send_mail(
+                            co.id, force_send=False,
+                            email_values=co.with_context(
+                                mapa_automatico=True)._map_email_values())
+                        enviados += 1
+            except Exception:
+                _logger.exception(
+                    "Fila do wizard de mapa: falha em %s (%s)",
+                    co.name, co.partner_id.display_name)
+            co.sudo().map_run_requested_at = False
+            if sob_cron and Cron._commit_progress(
+                    processed=1, remaining=len(fila) - indice):
+                break
+        return enviados
 
 
 class ConsignmentSettlementLine(models.Model):

@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+    <t t-name="liber_knowledge.ReaderNode">
+        <li class="o_liber_node">
+            <div t-attf-class="o_liber_node_row d-flex align-items-center {{ props.selectedId === props.node.id ? 'o_liber_active' : '' }}"
+                 t-attf-style="padding-left: {{ 8 + props.depth * 14 }}px;">
+                <button t-if="isCategory" class="btn btn-link p-0 o_liber_caret" t-on-click="() => props.onToggle(props.node)"
+                        t-att-aria-label="isOpen ? 'Collapse' : 'Expand'">
+                    <i t-attf-class="fa fa-fw {{ isOpen ? 'fa-caret-down' : 'fa-caret-right' }}"/>
+                </button>
+                <i t-else="" class="fa fa-fw fa-file-text-o o_liber_leaf" aria-hidden="true"/>
+                <a href="#" t-attf-class="o_liber_node_name flex-grow-1 text-truncate {{ isCategory ? 'fw-bold' : '' }}"
+                   t-att-data-page-id="props.node.id"
+                   t-on-click.prevent="() => props.onSelect(props.node)" t-esc="props.node.name"/>
+            </div>
+            <ul t-if="isCategory and isOpen and props.node.children.length" class="list-unstyled mb-0">
+                <t t-foreach="props.node.children" t-as="child" t-key="child.id">
+                    <ReaderNode node="child" selectedId="props.selectedId" expanded="props.expanded"
+                                onSelect="props.onSelect" onToggle="props.onToggle" depth="props.depth + 1"/>
+                </t>
+            </ul>
+        </li>
+    </t>
+
+    <t t-name="liber_knowledge.Reader">
+        <div class="o_action o_liber_reader d-flex flex-column h-100">
+            <div class="o_liber_bar d-flex align-items-center gap-2 px-3 py-2 border-bottom">
+                <a href="#" class="o_liber_home fw-bold text-reset text-decoration-none me-2" t-on-click.prevent="goHome">
+                    <i class="fa fa-book me-1" aria-hidden="true"/>Manuals
+                </a>
+                <div class="o_liber_search input-group input-group-sm flex-grow-1">
+                    <span class="input-group-text"><i class="fa fa-search" aria-hidden="true"/></span>
+                    <input type="search" class="form-control o_liber_search_input" placeholder="Search the manuals…"
+                           t-att-value="state.query" t-on-input="onSearchInput"/>
+                    <button t-if="state.query" class="btn btn-outline-secondary" t-on-click="clearSearch" aria-label="Clear">
+                        <i class="fa fa-times" aria-hidden="true"/>
+                    </button>
+                </div>
+                <t t-if="state.page">
+                    <button t-if="state.page.can_create" class="btn btn-secondary btn-sm o_liber_new" t-on-click="newPage">
+                        <i class="fa fa-plus me-1" aria-hidden="true"/>New page
+                    </button>
+                    <button t-if="state.page.can_edit and state.page.type === 'content'" class="btn btn-primary btn-sm o_liber_edit" t-on-click="openEditor">
+                        <i class="fa fa-pencil me-1" aria-hidden="true"/>Edit
+                    </button>
+                </t>
+            </div>
+
+            <div class="o_liber_body d-flex flex-grow-1 overflow-hidden">
+                <nav class="o_liber_tree border-end overflow-auto py-2">
+                    <ul class="list-unstyled mb-0">
+                        <t t-foreach="state.tree" t-as="node" t-key="node.id">
+                            <ReaderNode node="node" selectedId="state.page ? state.page.id : false" expanded="state.expanded"
+                                        onSelect.bind="onSelect" onToggle.bind="onToggle" depth="0"/>
+                        </t>
+                    </ul>
+                </nav>
+
+                <main class="o_liber_pane flex-grow-1 overflow-auto" t-ref="content" t-on-click="onContentClick">
+                    <div class="o_liber_page">
+                        <!-- search results -->
+                        <t t-if="state.results">
+                            <h2 class="o_liber_title">Results</h2>
+                            <p t-if="!state.results.length" class="text-muted" t-esc="emptyText"/>
+                            <div t-foreach="state.results" t-as="hit" t-key="hit.id" class="o_liber_hit">
+                                <a href="#" class="fw-bold" t-on-click.prevent="() => this.loadPage(hit.id)" t-esc="hit.name"/>
+                                <span class="text-muted small ms-2" t-esc="hit.area"/>
+                                <div t-if="hit.snippet" class="small text-muted" t-esc="hit.snippet"/>
+                            </div>
+                        </t>
+
+                        <!-- a page or a category -->
+                        <t t-elif="state.page">
+                            <div class="o_liber_crumbs small text-muted mb-1">
+                                <t t-foreach="state.page.path" t-as="step" t-key="step.id">
+                                    <a href="#" class="text-muted" t-on-click.prevent="() => this.loadPage(step.id)" t-esc="step.name"/>
+                                    <span class="mx-1">/</span>
+                                </t>
+                            </div>
+                            <h1 class="o_liber_title" t-esc="state.page.name"/>
+                            <t t-if="state.page.type === 'content'">
+                                <div class="o_liber_meta small text-muted mb-3">
+                                    <t t-if="state.page.from_site"><i class="fa fa-globe me-1" aria-hidden="true"/>Liber manual · </t>
+                                    <t t-if="state.page.last_user"><t t-esc="state.page.last_user"/> · </t>
+                                    <t t-esc="lastDate"/>
+                                </div>
+                                <div class="o_liber_content" t-out="state.page.content"/>
+                            </t>
+                            <div t-else="" class="o_liber_cards">
+                                <p t-if="!state.page.children.length" class="text-muted">This category is still empty.</p>
+                                <a t-foreach="state.page.children" t-as="child" t-key="child.id" href="#"
+                                   class="o_liber_card" t-on-click.prevent="() => this.loadPage(child.id)">
+                                    <i t-attf-class="fa {{ child.type === 'category' ? 'fa-folder-o' : 'fa-file-text-o' }} me-2" aria-hidden="true"/>
+                                    <span t-esc="child.name"/>
+                                    <span t-if="child.type === 'category'" class="text-muted small ms-auto" t-esc="child.count"/>
+                                </a>
+                            </div>
+                        </t>
+
+                        <!-- landing: the map -->
+                        <t t-elif="!state.loading">
+                            <h1 class="o_liber_title">Manuals</h1>
+                            <p class="text-muted">Pick a manual on the left, or search above.</p>
+                            <section t-foreach="state.tree" t-as="root" t-key="root.id" class="mb-4">
+                                <h2 class="o_liber_section" t-esc="root.name"/>
+                                <p t-if="!root.children.length" class="text-muted">This category is still empty.</p>
+                                <div class="o_liber_cards">
+                                    <a t-foreach="root.children" t-as="child" t-key="child.id" href="#"
+                                       class="o_liber_card" t-on-click.prevent="() => this.loadPage(child.id)">
+                                        <i t-attf-class="fa {{ child.type === 'category' ? 'fa-folder-o' : 'fa-file-text-o' }} me-2" aria-hidden="true"/>
+                                        <span t-esc="child.name"/>
+                                        <span t-if="child.children.length" class="text-muted small ms-auto" t-esc="child.children.length"/>
+                                    </a>
+                                </div>
+                            </section>
+                        </t>
+                    </div>
+                </main>
+            </div>
+        </div>
+    </t>
+
+</templates>

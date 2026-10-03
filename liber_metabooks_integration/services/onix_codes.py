@@ -123,6 +123,10 @@ FINISH_BY_FIELD = {
     "metabooks_has_belly_band": DETAIL_BELLY_BAND,
 }
 
+# Metabooks `productType` que é arquivo, não objeto: sem caixa, sem prateleira,
+# sem estoque. O resto (pbook, nonbook: jogos, calendários, pôsteres) é físico.
+DIGITAL_BOOK_TYPES = ("ebook", "abook")
+
 # E1xx: e-publication file formats.
 EBOOK_FORMAT = {
     "E101": "EPUB",

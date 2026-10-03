@@ -4,7 +4,7 @@
  "titulo": "O canal na ficha do cliente",
  "abertura": "Esta aula abre a ficha de uma livraria e preenche o Canal de Vendas: onde fica o campo, o que ele significa na casa, e onde se arruma a lista dos canais.",
  "fecho": "Canal é o que o cliente é, não a equipe de quem vende; fica na aba Vendas e Compras da ficha, por empresa; e a lista dos canais se edita como grade em Configuração. A próxima aula segue o canal para dentro do pedido.",
- "youtube": "https://www.youtube.com/watch?v=ZwO00YjQP88",
+ "youtube": "https://www.youtube.com/watch?v=7O-vfcTzp2o",
  "quiz": [
   {
    "pergunta": "Em que aba da ficha do cliente fica o Canal de Vendas?",
@@ -70,5 +70,9 @@
    ],
    "correta": 0
   }
- ]
+ ],
+ "youtube_anterior": [
+  "https://www.youtube.com/watch?v=ZwO00YjQP88"
+ ],
+ "youtube_quadro": "2912x2080"
 }

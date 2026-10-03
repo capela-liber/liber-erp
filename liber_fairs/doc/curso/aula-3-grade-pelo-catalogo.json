@@ -4,7 +4,7 @@
  "titulo": "A grade pelo catálogo",
  "abertura": "Onde existe o catálogo da Metabooks, a grade se monta melhor: por assunto Thema e por época de publicação. E os modelos de grade guardam a curadoria que se repete.",
  "fecho": "Thema desce pelo galho; a janela de publicação separa lançamento de fundo; Aplicar soma ou substitui sem apagar o despachado; Guardar como modelo pode registrar o que realmente foi. A próxima aula é a estrada.",
- "youtube": "https://www.youtube.com/watch?v=4uksVteUnl0",
+ "youtube": "https://www.youtube.com/watch?v=dBLCzpzeb-k",
  "quiz": [
   {
    "pergunta": "O que o assunto Thema acrescenta que selo e coleção não dizem?",
@@ -70,5 +70,9 @@
    ],
    "correta": 0
   }
- ]
+ ],
+ "youtube_anterior": [
+  "https://www.youtube.com/watch?v=4uksVteUnl0"
+ ],
+ "youtube_quadro": "2912x2080"
 }

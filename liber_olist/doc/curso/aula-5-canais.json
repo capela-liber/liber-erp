@@ -4,7 +4,7 @@
  "titulo": "O canal de lá, o canal da casa",
  "abertura": "Esta aula mapeia cada canal do Olist num canal de vendas da casa, que é o que faz a venda de marketplace aparecer nos relatórios ao lado das outras.",
  "fecho": "Mercado Livre, Amazon, loja própria: mapear é dizer qual é qual; canal sem mapear não trava nada, só empobrece o relatório. A próxima aula lê o painel.",
- "youtube": "https://www.youtube.com/watch?v=5X3T0WlKBAA",
+ "youtube": "https://www.youtube.com/watch?v=R94SeWd2Sm8",
  "quiz": [
   {
    "pergunta": "O que é mapear um canal?",
@@ -70,5 +70,9 @@
    ],
    "correta": 2
   }
- ]
+ ],
+ "youtube_anterior": [
+  "https://www.youtube.com/watch?v=5X3T0WlKBAA"
+ ],
+ "youtube_quadro": "2912x2080"
 }

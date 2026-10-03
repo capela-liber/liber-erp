@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     'name': 'Liber Sales Dashboard',
-    'version': '19.0.1.1.0',
+    'version': '19.0.1.2.0',
     'summary': 'The Sales dashboard reads two clocks: the order and the fiscal note',
     'description': """
 A publishing house sells twice: once when the order is taken (the commercial
@@ -21,6 +21,10 @@ no second "Sales" in the sidebar):
 * sold by orders and sold by notes, stacked by sales channel;
 * the month-by-month tables, and the core's top quotations, top orders, top
   customers and top teams;
+* two pies in the gap under the month tables: value sold and products sold,
+  each sliced by sales channel. They follow the "Sales channel" filter, so
+  picking which channels count is one click, and no channel is named in the
+  dashboard;
 * a click on any card or chart opens the list it was computed from, with the
   dashboard period carried along.
 

@@ -31,6 +31,14 @@
                         <field name="attachment_id"/>
                         <field name="xlsx_file" filename="xlsx_filename"/>
                         <field name="xlsx_filename" invisible="1"/>
+                        <!-- `force_save`: a releitura que os preenche roda
+                             NA TELA, e campo só de leitura não vai no
+                             salvamento sem isto. Sem ele o pedido saía com
+                             preço de capa (27/09/2026, pego pelo tour). -->
+                        <field name="report_period" force_save="1"
+                               invisible="not report_period"/>
+                        <field name="report_company_id" force_save="1"
+                               invisible="not report_period"/>
                     </group>
                 </group>
                 <!-- O aviso mora FORA do <group>. Dentro dele, o compilador
@@ -56,11 +64,22 @@
                     map — no second CO is created.
                 </div>
                 <div class="alert alert-info" role="status"
-                     invisible="default_dest != 'sale'">
+                     invisible="default_dest != 'sale' or report_period">
                     Creates a <b>sale order</b> and no CO. Cover price of the
                     product, with the <b>customer's pricelist</b> — the price
                     written in the e-mail is ignored, and the consignment
                     agreement is not read.
+                </div>
+                <!-- `role="note"` distingue este aviso do da venda comum para
+                     o tour, sem casar pelo texto (que é traduzível). -->
+                <div class="alert alert-success" role="note"
+                     invisible="not report_period">
+                    <b>Bookwire sales report.</b> Creates a sale order with the <b>net amount the publisher receives</b> for each title, as in the report — no pricelist, no discount. The order adds up to the report to the cent.
+                </div>
+                <div class="alert alert-warning" role="alert"
+                     invisible="not report_alert">
+                    <field name="report_alert" readonly="1" nolabel="1"
+                           force_save="1"/>
                 </div>
                 <!-- A conferência do XML: as duas pontas da NFe contra o
                      CNPJ do parceiro. Vermelho porque errar acerto é caro;
@@ -80,14 +99,18 @@
                      for preciso reler. -->
                 <field name="line_ids">
                     <list editable="bottom">
-                        <field name="label_source"/>
-                        <field name="confidence" widget="badge"
+                        <field name="label_source" force_save="1"/>
+                        <field name="confidence" widget="badge" force_save="1"
                                decoration-success="confidence == 'exact'"
                                decoration-info="confidence == 'good'"
                                decoration-warning="confidence == 'weak'"
                                decoration-danger="confidence == 'none'"/>
                         <field name="product_id"/>
                         <field name="qty"/>
+                        <field name="price_unit"
+                               column_invisible="not parent.report_period"/>
+                        <field name="note" force_save="1"
+                               column_invisible="not parent.report_period"/>
                         <!-- Na venda o destino não existe: o pedido leva
                              produto, quantidade e preço, e nada de
                              prateleira. Esconder a coluna evita a pergunta

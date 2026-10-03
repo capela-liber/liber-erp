@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     'name': 'GitHub Files',
-    'version': '19.0.0.4.0',
+    'version': '19.0.0.6.0',
     'summary': 'The GitHub shelf on the Cloud Files chassis',
     'description': """
 GitHub is the shelf, Odoo is the gate.
@@ -27,6 +27,11 @@ pierce the gate.
         'views/cloud_folder_views.xml',
         'views/liber_github_menus.xml',
     ],
+    'assets': {
+        'web.assets_backend': [
+            'liber_github/static/src/js/cloud_file_chatter_tour.js',
+        ],
+    },
     'installable': True,
     'application': True,
     'license': 'AGPL-3',

@@ -4,7 +4,7 @@
  "titulo": "Calendário e o número do evento",
  "abertura": "Esta aula é a agenda das feiras e o número que cada evento recebe: por que o calendário mostra o evento e não a logística, e por que o número é EV e não E.",
  "fecho": "O calendário mostra o evento, colorido por canal; o número EV é série própria, disparador do que vem depois, e vai para o analítico; e uma feira vende por uma empresa só, embora leve títulos de qualquer selo. A próxima aula são as Definições.",
- "youtube": "https://www.youtube.com/watch?v=_aWIj6NocAc",
+ "youtube": "https://www.youtube.com/watch?v=oArrykOHGeE",
  "quiz": [
   {
    "pergunta": "Por que o calendário não pinta a janela de envio e retorno?",
@@ -70,5 +70,9 @@
    ],
    "correta": 0
   }
- ]
+ ],
+ "youtube_anterior": [
+  "https://www.youtube.com/watch?v=_aWIj6NocAc"
+ ],
+ "youtube_quadro": "2912x2080"
 }

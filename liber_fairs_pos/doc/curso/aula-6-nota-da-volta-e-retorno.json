@@ -4,7 +4,7 @@
  "titulo": "A nota da volta, e o Retorno",
  "abertura": "Esta aula é a volta: a nota de crédito que anula a da ida, o botão Retorno que fecha tudo no clique, e a segunda perna, do armazém, em Recebimentos.",
  "fecho": "A nota da volta sai no Retorno e viaja com as caixas; o Retorno esvazia a mesa, fecha os caixas, lacra os dias e encerra o evento; o armazém confere depois, e o que falta vira perda a explicar. A próxima aula é a conta da equipe.",
- "youtube": "https://www.youtube.com/watch?v=wzBf2qaDPBs",
+ "youtube": "https://www.youtube.com/watch?v=eAlEBMcyrkM",
  "quiz": [
   {
    "pergunta": "Quando a nota da volta sai?",
@@ -70,5 +70,9 @@
    ],
    "correta": 3
   }
- ]
+ ],
+ "youtube_anterior": [
+  "https://www.youtube.com/watch?v=wzBf2qaDPBs"
+ ],
+ "youtube_quadro": "2912x2080"
 }

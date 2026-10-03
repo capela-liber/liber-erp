@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     'name': 'Liber Support - Consignment Bridge',
-    'version': '19.0.0.5.0',
+    'version': '19.0.0.6.0',
     'summary': 'Links support tickets to the CO (consignment settlement) '
                'and answers with the consignment map',
     'description': """
@@ -17,6 +17,9 @@ Este módulo acrescenta ao chamado:
   XML de NFe — passando a poder ser aberto DA CO, para o atendimento
   **ativo**: parte-se da operação da livraria e a resposta dela volta para
   dentro daquela mesma CO, somando na linha do título que já está no mapa;
+* o **relatório mensal da Bookwire** (27/09/2026): o ZIP que chega por
+  e-mail vira pedido de venda pelo mesmo botão "Importar", com o líquido de
+  cada título como preço, o total fechado ao centavo e a empresa da editora;
 * o botão **"Responder com o mapa"**: anexa o PDF do mapa de consignação
   do parceiro (o relatório do ``liber_soc_settlement``) a uma resposta.
   Com 99% do atendimento sendo consignação, essa macro é provavelmente
@@ -38,6 +41,7 @@ menos campos.
             'liber_support_soc/static/src/js/venda_wizard_tour.js',
             'liber_support_soc/static/src/js/ficha_vinculada_tour.js',
             'liber_support_soc/static/src/js/import_na_co_tour.js',
+            'liber_support_soc/static/src/js/bookwire_venda_tour.js',
         ],
     },
     'installable': True,

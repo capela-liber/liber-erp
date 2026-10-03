@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     'name': 'Cloud Files (base)',
-    'version': '19.0.0.3.0',
+    'version': '19.0.0.5.0',
     'summary': 'The chassis under Dropbox, Google Drive and GitHub: '
                'per-folder ACLs, sharing ledger, links and tags',
     'description': """
@@ -20,7 +20,7 @@ that live in different tools get different doors to the same discipline.
 """,
     'author': 'EdLab Press',
     'category': 'Productivity/Documents',
-    'depends': ['base_setup', 'product'],
+    'depends': ['base_setup', 'mail', 'product'],
     'external_dependencies': {'python': ['requests']},
     'data': [
         'security/liber_cloud_security.xml',
@@ -28,6 +28,7 @@ that live in different tools get different doors to the same discipline.
         'data/liber_cloud_cron.xml',
         'views/cloud_account_views.xml',
         'views/cloud_file_views.xml',
+        'views/cloud_file_gone_templates.xml',
         'wizard/cloud_upload_views.xml',
         'views/cloud_folder_views.xml',
         'views/cloud_tag_views.xml',

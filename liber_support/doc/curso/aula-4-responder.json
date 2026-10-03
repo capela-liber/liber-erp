@@ -4,7 +4,7 @@
  "titulo": "Responder ao cliente",
  "abertura": "Esta aula é responder: dentro do chamado, pelo histórico. Dois botões com dois destinos, os anexos, e o estágio que pausa o relógio quando a bola está com o cliente.",
  "fecho": "Enviar mensagem sai por e-mail e carimba a primeira resposta; Nota de Registro fica interna; Aguardando cliente pausa a solução. A próxima aula são os dois relógios do SLA.",
- "youtube": "https://www.youtube.com/watch?v=1bHp7Wvtcuo",
+ "youtube": "https://www.youtube.com/watch?v=6DO-y7uu9aw",
  "quiz": [
   {
    "pergunta": "Qual a diferença entre Enviar mensagem e Nota de Registro?",
@@ -70,5 +70,9 @@
    ],
    "correta": 2
   }
- ]
+ ],
+ "youtube_anterior": [
+  "https://www.youtube.com/watch?v=1bHp7Wvtcuo"
+ ],
+ "youtube_quadro": "2912x2080"
 }

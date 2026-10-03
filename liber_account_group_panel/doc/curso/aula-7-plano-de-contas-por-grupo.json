@@ -4,7 +4,7 @@
  "titulo": "Plano de contas por grupo",
  "abertura": "Esta aula troca o hábito do prefixo pelo grupo: filtrar o plano pela árvore contábil em vez dos dois primeiros dígitos do código.",
  "fecho": "Procurar pelo prefixo funciona enquanto o plano é o da casa. Por grupo, a pergunta fica certa mesmo quando o código não parece.",
- "youtube": "https://www.youtube.com/watch?v=KDlLhIj9cKA",
+ "youtube": "https://www.youtube.com/watch?v=vO_NnWHpTBo",
  "quiz": [
   {
    "pergunta": "Como se costuma procurar contas no plano?",
@@ -70,5 +70,9 @@
    ],
    "correta": 1
   }
- ]
+ ],
+ "youtube_anterior": [
+  "https://www.youtube.com/watch?v=KDlLhIj9cKA"
+ ],
+ "youtube_quadro": "2912x2080"
 }

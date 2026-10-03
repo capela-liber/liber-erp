@@ -5,6 +5,8 @@ from unittest.mock import patch
 from odoo.exceptions import UserError
 from odoo.tests import TransactionCase, tagged
 
+from odoo.addons.liber_cloud_files.exceptions import CloudFileGone
+from odoo.addons.liber_gdrive.services import gdrive_api
 from odoo.addons.liber_gdrive.services.gdrive_api import GDriveClient
 
 
@@ -93,3 +95,22 @@ class TestGDrive(TransactionCase):
             action = record.action_download()
         self.assertEqual(action['url'],
                          '/liber_cloud/download/%d' % record.id)
+
+    def test_404_on_download_is_gone_and_404_elsewhere_is_not(self):
+        class _Resp:
+            status_code = 404
+            text = 'File not found'
+            content = b''
+        record = self.env['liber.cloud.file'].create({
+            'folder_id': self.folder.id, 'name': 'balanco.pdf',
+            'path': '/Financeiro/balanco.pdf', 'external_id': 'F1'})
+        with patch.object(GDriveClient, '__init__', _client_stub), \
+             patch.object(GDriveClient, '_token', return_value='t'), \
+             patch.object(gdrive_api.requests, 'request',
+                          return_value=_Resp()):
+            with self.assertRaises(CloudFileGone) as caught:
+                GDriveClient(None).download(record)
+            self.assertIn('balanco.pdf', str(caught.exception))
+            with self.assertRaises(UserError) as caught:
+                GDriveClient(None)._request('GET', 'https://x/files')
+            self.assertNotIsInstance(caught.exception, CloudFileGone)

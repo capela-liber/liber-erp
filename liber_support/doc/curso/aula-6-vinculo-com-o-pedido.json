@@ -4,7 +4,7 @@
  "titulo": "O vínculo com o pedido",
  "abertura": "Esta aula liga o chamado ao documento de que a conversa trata: o pedido de venda. Um chamado, um documento, e o caminho de ida e volta entre os dois.",
  "fecho": "Tipo Venda mostra o campo Pedido; o botão do alto abre o pedido; o pedido conta seus chamados e abre um novo já vinculado. A próxima aula é o mesmo vínculo com a consignação.",
- "youtube": "https://www.youtube.com/watch?v=S1hN6EWLkKs",
+ "youtube": "https://www.youtube.com/watch?v=6UG_35eeULs",
  "quiz": [
   {
    "pergunta": "Quando o campo Pedido de venda aparece no chamado?",
@@ -70,5 +70,9 @@
    ],
    "correta": 2
   }
- ]
+ ],
+ "youtube_anterior": [
+  "https://www.youtube.com/watch?v=S1hN6EWLkKs"
+ ],
+ "youtube_quadro": "2912x2080"
 }

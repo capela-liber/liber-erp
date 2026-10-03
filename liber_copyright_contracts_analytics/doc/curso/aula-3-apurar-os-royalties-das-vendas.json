@@ -4,7 +4,7 @@
  "titulo": "Apurar os royalties das vendas",
  "abertura": "Esta aula apura: Preencher Linhas de Royalties lê as vendas pagas das obras contratadas e lança na conta de cada favorecido, pela faixa do acumulado.",
  "fecho": "Só venda paga gera royalty; cada venda é apurada uma vez; e a faixa é a do acumulado de exemplares. Pode-se rodar toda semana.",
- "youtube": "https://www.youtube.com/watch?v=gAidpWbdRC0",
+ "youtube": "https://www.youtube.com/watch?v=k7TWna756YQ",
  "quiz": [
   {
    "pergunta": "Que venda gera royalty?",
@@ -70,5 +70,9 @@
    ],
    "correta": 1
   }
- ]
+ ],
+ "youtube_anterior": [
+  "https://www.youtube.com/watch?v=gAidpWbdRC0"
+ ],
+ "youtube_quadro": "2912x2080"
 }

@@ -4,7 +4,7 @@
  "titulo": "O balcão de cada um, comissões e diárias",
  "abertura": "Esta aula é a conta da equipe: comissão sobre o que cada caixa vendeu, diárias, e o rateio da perda que a mesa comeu.",
  "fecho": "Vendido, Comissão, Diárias, Rateio da perda, A pagar e Ainda devido; a perda rateia igual porque a mesa é guarda coletiva; conta a pagar nunca é negativa. A próxima aula é o resultado do evento.",
- "youtube": "https://www.youtube.com/watch?v=l2bUz0egx_c",
+ "youtube": "https://www.youtube.com/watch?v=cMPhVBMahaM",
  "quiz": [
   {
    "pergunta": "Sobre o que a comissão de cada pessoa é calculada?",
@@ -70,5 +70,9 @@
    ],
    "correta": 1
   }
- ]
+ ],
+ "youtube_anterior": [
+  "https://www.youtube.com/watch?v=l2bUz0egx_c"
+ ],
+ "youtube_quadro": "2912x2080"
 }

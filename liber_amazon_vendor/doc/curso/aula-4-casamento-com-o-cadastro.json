@@ -4,7 +4,7 @@
  "titulo": "O casamento com o cadastro",
  "abertura": "Esta aula resolve a linha que não casou: o ISBN contra o código de barras, as duas saídas, e o vínculo manual que a releitura não desfaz.",
  "fecho": "ISBN é a chave; a linha sem produto não impede a importação, e sim a cotação; escolha manual fica travada. A próxima aula gera a cotação.",
- "youtube": "https://www.youtube.com/watch?v=MiTKbHb6bD0",
+ "youtube": "https://www.youtube.com/watch?v=cK0cfA4-J80",
  "quiz": [
   {
    "pergunta": "Contra o que o ISBN da linha é casado?",
@@ -70,5 +70,9 @@
    ],
    "correta": 3
   }
- ]
+ ],
+ "youtube_anterior": [
+  "https://www.youtube.com/watch?v=MiTKbHb6bD0"
+ ],
+ "youtube_quadro": "2912x2080"
 }

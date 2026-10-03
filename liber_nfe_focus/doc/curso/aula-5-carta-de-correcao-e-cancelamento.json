@@ -33,7 +33,7 @@
   }
  ],
  "fecho": "Carta de correção para erro de redação, com quinze caracteres no mínimo. Cancelamento dentro do prazo, e só enquanto a mercadoria não circulou. Valor, imposto, data de emissão, remetente e destinatário não se corrigem por carta: a nota errada se cancela e se emite outra. Passado o prazo, o caminho é a devolução.",
- "youtube": "",
+ "youtube": "https://www.youtube.com/watch?v=4RJ6AsbqSnA",
  "quiz": [
   {
    "pergunta": "O que a carta de correção conserta?",
@@ -99,5 +99,6 @@
    ],
    "correta": 1
   }
- ]
+ ],
+ "youtube_quadro": "2912x2080"
 }

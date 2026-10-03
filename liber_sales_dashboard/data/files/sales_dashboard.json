@@ -579,6 +579,140 @@
        }
       }
      }
+    },
+    {
+     "id": "c2a70000-0000-4000-8000-000000000014",
+     "tag": "chart",
+     "col": 0,
+     "row": 0,
+     "offset": {
+      "x": 0,
+      "y": 1522
+     },
+     "width": 620,
+     "height": 420,
+     "data": {
+      "type": "odoo_pie",
+      "title": {
+       "text": "Valor vendido por canal",
+       "color": "#434343",
+       "bold": true
+      },
+      "background": "#FFFFFF",
+      "legendPosition": "right",
+      "metaData": {
+       "groupBy": [
+        "team_id"
+       ],
+       "measure": "price_subtotal",
+       "order": null,
+       "resModel": "sale.report",
+       "mode": "pie",
+       "cumulatedStart": false
+      },
+      "searchParams": {
+       "comparison": null,
+       "context": {},
+       "domain": [
+        [
+         "state",
+         "in",
+         [
+          "sale",
+          "done"
+         ]
+        ]
+       ],
+       "groupBy": [
+        "team_id"
+       ],
+       "orderBy": []
+      },
+      "dataSets": [],
+      "chartId": "c2a70000-0000-4000-8000-000000000014",
+      "fieldMatching": {
+       "f2a70000-0000-4000-8000-000000000001": {
+        "chain": "order_date",
+        "type": "date",
+        "offset": 0
+       },
+       "f2a70000-0000-4000-8000-000000000002": {
+        "chain": "partner_id",
+        "type": "many2one"
+       },
+       "f2a70000-0000-4000-8000-000000000003": {
+        "chain": "team_id",
+        "type": "many2one"
+       }
+      }
+     }
+    },
+    {
+     "id": "c2a70000-0000-4000-8000-000000000015",
+     "tag": "chart",
+     "col": 0,
+     "row": 0,
+     "offset": {
+      "x": 660,
+      "y": 1522
+     },
+     "width": 620,
+     "height": 420,
+     "data": {
+      "type": "odoo_pie",
+      "title": {
+       "text": "Produtos vendidos por canal",
+       "color": "#434343",
+       "bold": true
+      },
+      "background": "#FFFFFF",
+      "legendPosition": "right",
+      "metaData": {
+       "groupBy": [
+        "team_id"
+       ],
+       "measure": "product_uom_qty",
+       "order": null,
+       "resModel": "sale.report",
+       "mode": "pie",
+       "cumulatedStart": false
+      },
+      "searchParams": {
+       "comparison": null,
+       "context": {},
+       "domain": [
+        [
+         "state",
+         "in",
+         [
+          "sale",
+          "done"
+         ]
+        ]
+       ],
+       "groupBy": [
+        "team_id"
+       ],
+       "orderBy": []
+      },
+      "dataSets": [],
+      "chartId": "c2a70000-0000-4000-8000-000000000015",
+      "fieldMatching": {
+       "f2a70000-0000-4000-8000-000000000001": {
+        "chain": "order_date",
+        "type": "date",
+        "offset": 0
+       },
+       "f2a70000-0000-4000-8000-000000000002": {
+        "chain": "partner_id",
+        "type": "many2one"
+       },
+       "f2a70000-0000-4000-8000-000000000003": {
+        "chain": "team_id",
+        "type": "many2one"
+       }
+      }
+     }
     }
    ],
    "tables": [],
@@ -1339,6 +1473,8 @@
   "c2a70000-0000-4000-8000-000000000024": "liber_sales_dashboard.menu_notas_sem_pedido",
   "c2a70000-0000-4000-8000-000000000013": "liber_sales_dashboard.menu_notas_de_venda",
   "c2a70000-0000-4000-8000-000000000011": "sale.menu_reporting_sales",
-  "c2a70000-0000-4000-8000-000000000012": "liber_sales_dashboard.menu_notas_de_venda"
+  "c2a70000-0000-4000-8000-000000000012": "liber_sales_dashboard.menu_notas_de_venda",
+  "c2a70000-0000-4000-8000-000000000014": "sale.menu_reporting_sales",
+  "c2a70000-0000-4000-8000-000000000015": "sale.menu_reporting_sales"
  }
 }

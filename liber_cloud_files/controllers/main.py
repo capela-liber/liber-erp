@@ -6,6 +6,8 @@ from werkzeug.exceptions import NotFound
 from odoo import http
 from odoo.http import request
 
+from ..exceptions import CloudFileGone
+
 
 class LiberCloudController(http.Controller):
     """The streaming door, for providers without temporary links.
@@ -24,7 +26,17 @@ class LiberCloudController(http.Controller):
             raise NotFound()
         record.check_access('read')          # ACL + record rules, as user
         record.folder_id._ensure_access('read')  # the folder gate, again
-        data = record.folder_id._client().download(record)
+        try:
+            data = record.folder_id._client().download(record)
+        except CloudFileGone as gone:
+            # A page, not an error: an exception here would roll back the
+            # archive and show the provider's raw answer instead.
+            record._mark_gone(gone)
+            return request.render('liber_cloud_files.cloud_file_gone', {
+                'file': record,
+                'provider': record._provider_label(),
+                'detail': gone.detail,
+            }, status=404)
         mimetype = mimetypes.guess_type(record.name)[0] \
             or 'application/octet-stream'
         return request.make_response(data, headers=[

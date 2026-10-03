@@ -4,7 +4,7 @@
  "titulo": "O painel Produto e o Top 50",
  "abertura": "Última aula: o painel Produto, que corta o gráfico nos cinquenta mais vendidos e escreve o título sem o ISBN, e as tabelas de principais clientes e canais no pé do painel de Vendas.",
  "fecho": "Cinquenta primeiros, ordenados antes do corte; título em vez de ISBN; e as tabelas de principais no pé do painel de Vendas. O mapa por UF ainda não tem cartão no painel. Fim do curso Comercial.",
- "youtube": "https://www.youtube.com/watch?v=jAz12Ccvkdw",
+ "youtube": "https://www.youtube.com/watch?v=W4RkxkSVHkI",
  "quiz": [
   {
    "pergunta": "Por que o gráfico do painel Produto corta em cinquenta?",
@@ -70,5 +70,9 @@
    ],
    "correta": 1
   }
- ]
+ ],
+ "youtube_anterior": [
+  "https://www.youtube.com/watch?v=jAz12Ccvkdw"
+ ],
+ "youtube_quadro": "2912x2080"
 }

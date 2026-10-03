@@ -4,7 +4,7 @@
  "titulo": "O espelho entre empresas",
  "abertura": "Esta aula liga as irmãs: a fatura de uma é a conta a pagar da outra, e dois botões levam de um lado ao outro.",
  "fecho": "Espelho e Origem são o mesmo negócio visto das duas empresas. Os botões mostram, não criam: quem cria o par é a rotina entre empresas.",
- "youtube": "https://www.youtube.com/watch?v=HJG1MIeGhrk",
+ "youtube": "https://www.youtube.com/watch?v=Dx_85yMSbmE",
  "quiz": [
   {
    "pergunta": "Uma venda de uma empresa da casa para a irmã gera o quê?",
@@ -70,5 +70,9 @@
    ],
    "correta": 0
   }
- ]
+ ],
+ "youtube_anterior": [
+  "https://www.youtube.com/watch?v=HJG1MIeGhrk"
+ ],
+ "youtube_quadro": "2912x2080"
 }

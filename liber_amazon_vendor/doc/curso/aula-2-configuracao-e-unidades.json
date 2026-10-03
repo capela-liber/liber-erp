@@ -4,7 +4,7 @@
  "titulo": "Configuração e as unidades da Amazon",
  "abertura": "Esta aula abre a conta e as unidades: onde ficam as credenciais, o que é a janela de releitura, e por que um código como GRU8 precisa virar um contato.",
  "fecho": "Uma conta por conta do Vendor Central, credenciais no banco, janela de dias para trás; e as unidades, que dizem quem é cada código nos nossos contatos. A próxima aula importa os pedidos.",
- "youtube": "https://www.youtube.com/watch?v=gCq5719HQuM",
+ "youtube": "https://www.youtube.com/watch?v=kW5xrU5OTiY",
  "quiz": [
   {
    "pergunta": "O que o pedido traz para identificar quem comprou?",
@@ -70,5 +70,9 @@
    ],
    "correta": 3
   }
- ]
+ ],
+ "youtube_anterior": [
+  "https://www.youtube.com/watch?v=gCq5719HQuM"
+ ],
+ "youtube_quadro": "2912x2080"
 }

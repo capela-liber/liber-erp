@@ -4,7 +4,7 @@
  "titulo": "Importar planilha em formato brasileiro",
  "abertura": "Esta aula é a planilha do jeito que o Brasil escreve: vírgula decimal e data em dia, mês, ano, importadas como estão.",
  "fecho": "A regra é a da casa inteira: o arquivo entra como o contador escreveu. Quem se adapta é o sistema.",
- "youtube": "https://www.youtube.com/watch?v=Jq3BnEyxPcA",
+ "youtube": "https://www.youtube.com/watch?v=0uSqdON-xAI",
  "quiz": [
   {
    "pergunta": "Qual era o tropeço da importação?",
@@ -70,5 +70,9 @@
    ],
    "correta": 2
   }
- ]
+ ],
+ "youtube_anterior": [
+  "https://www.youtube.com/watch?v=Jq3BnEyxPcA"
+ ],
+ "youtube_quadro": "2912x2080"
 }

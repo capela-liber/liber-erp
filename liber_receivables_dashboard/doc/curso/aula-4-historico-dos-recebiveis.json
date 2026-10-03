@@ -4,7 +4,7 @@
  "titulo": "Histórico dos recebíveis",
  "abertura": "Esta aula é a foto mensal: quando é tirada, o que conta como carteira e o que o gráfico por faixa responde.",
  "fecho": "A foto não recalcula o passado. Se a faixa de mais de 120 cresce mês a mês, a cobrança está perdendo — e é para ver isso que a tela existe.",
- "youtube": "https://www.youtube.com/watch?v=ROfgrbEFGSY",
+ "youtube": "https://www.youtube.com/watch?v=toE52fbNmyM",
  "quiz": [
   {
    "pergunta": "O que é cada registro do histórico?",
@@ -70,5 +70,9 @@
    ],
    "correta": 1
   }
- ]
+ ],
+ "youtube_anterior": [
+  "https://www.youtube.com/watch?v=ROfgrbEFGSY"
+ ],
+ "youtube_quadro": "2912x2080"
 }

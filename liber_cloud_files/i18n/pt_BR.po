@@ -6,14 +6,23 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0-20260630\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-22 15:43+0000\n"
-"PO-Revision-Date: 2026-07-22 15:43+0000\n"
+"POT-Creation-Date: 2026-09-30 21:17+0000\n"
+"PO-Revision-Date: 2026-09-30 21:17+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
+
+#. module: liber_cloud_files
+#. odoo-python
+#: code:addons/liber_cloud_files/models/cloud_file.py:0
+msgid ""
+"%(name)s was deleted, renamed or moved in %(provider)s after the last sync. "
+"The record has been archived; syncing the folder %(folder)s brings in its "
+"new name, if it has one."
+msgstr "%(name)s foi apagado, renomeado ou movido no %(provider)s depois da última sincronização. O registro foi arquivado; sincronizar a pasta %(folder)s traz o nome novo, se houver."
 
 #. module: liber_cloud_files
 #. odoo-python
@@ -47,8 +56,13 @@ msgid ""
 "A shared link may open outside Odoo's gate — check the provider's manual. "
 "Create it?"
 msgstr ""
-"Um link compartilhado pode abrir fora da porteira do Odoo — confira o "
-"manual do provedor. Criar mesmo assim?"
+"Um link compartilhado pode abrir fora da porteira do Odoo — confira o manual"
+" do provedor. Criar mesmo assim?"
+
+#. module: liber_cloud_files
+#: model:ir.model.fields,field_description:liber_cloud_files.field_liber_cloud_file__message_needaction
+msgid "Action Needed"
+msgstr "Requer ação"
 
 #. module: liber_cloud_files
 #: model:ir.model.fields,field_description:liber_cloud_files.field_liber_cloud_account__active
@@ -59,10 +73,40 @@ msgid "Active"
 msgstr "Ativo"
 
 #. module: liber_cloud_files
+#: model:ir.model.fields,field_description:liber_cloud_files.field_liber_cloud_file__activity_ids
+msgid "Activities"
+msgstr "Atividades"
+
+#. module: liber_cloud_files
+#: model:ir.model.fields,field_description:liber_cloud_files.field_liber_cloud_file__activity_exception_decoration
+msgid "Activity Exception Decoration"
+msgstr "Decoração de atividade excepcional"
+
+#. module: liber_cloud_files
+#: model:ir.model.fields,field_description:liber_cloud_files.field_liber_cloud_file__activity_state
+msgid "Activity State"
+msgstr "Status da atividade"
+
+#. module: liber_cloud_files
+#: model:ir.model.fields,field_description:liber_cloud_files.field_liber_cloud_file__activity_type_icon
+msgid "Activity Type Icon"
+msgstr "Ícone do tipo de atividade"
+
+#. module: liber_cloud_files
+#: model:ir.model.fields,field_description:liber_cloud_files.field_liber_cloud_file__message_attachment_count
+msgid "Attachment Count"
+msgstr "Total de anexos"
+
+#. module: liber_cloud_files
 #. odoo-python
 #: code:addons/liber_cloud_files/models/cloud_account.py:0
 msgid "Authenticated as %(name)s (%(email)s)."
 msgstr "Autenticado como %(name)s (%(email)s)."
+
+#. module: liber_cloud_files
+#: model_terms:ir.ui.view,arch_db:liber_cloud_files.cloud_file_gone
+msgid "Back to the file"
+msgstr "Voltar ao arquivo"
 
 #. module: liber_cloud_files
 #: model:ir.model.fields,field_description:liber_cloud_files.field_liber_cloud_folder__can_upload
@@ -134,7 +178,8 @@ msgstr "Empresa"
 #. odoo-python
 #: code:addons/liber_cloud_files/models/cloud_folder.py:0
 msgid "Company %(company)s has no %(provider)s account configured yet."
-msgstr "A empresa %(company)s ainda não tem conta de %(provider)s configurada."
+msgstr ""
+"A empresa %(company)s ainda não tem conta de %(provider)s configurada."
 
 #. module: liber_cloud_files
 #. odoo-python
@@ -206,15 +251,15 @@ msgstr "Nome exibido"
 #. module: liber_cloud_files
 #: model:ir.model.fields,help:liber_cloud_files.field_liber_cloud_folder__path
 msgid ""
-"Display path from the account root, starting with '/' and without a "
-"trailing one; '/' alone maps the root itself. For providers addressed by ID "
-"(Drive) or by repository (GitHub) this is the human name; the machine "
-"identity goes in the External ID."
+"Display path from the account root, starting with '/' and without a trailing"
+" one; '/' alone maps the root itself. For providers addressed by ID (Drive) "
+"or by repository (GitHub) this is the human name; the machine identity goes "
+"in the External ID."
 msgstr ""
-"Caminho de exibição a partir da raiz da conta, começando com '/' e sem "
-"barra no fim; '/' sozinho mapeia a própria raiz. Nos provedores endereçados "
-"por ID (Drive) ou por repositório (GitHub) este é o nome humano; a "
-"identidade de máquina vai no ID externo."
+"Caminho de exibição a partir da raiz da conta, começando com '/' e sem barra"
+" no fim; '/' sozinho mapeia a própria raiz. Nos provedores endereçados por "
+"ID (Drive) ou por repositório (GitHub) este é o nome humano; a identidade de"
+" máquina vai no ID externo."
 
 #. module: liber_cloud_files
 #: model_terms:ir.ui.view,arch_db:liber_cloud_files.view_liber_cloud_file_form
@@ -257,37 +302,20 @@ msgstr "Total de arquivos"
 
 #. module: liber_cloud_files
 #: model:ir.actions.act_window,name:liber_cloud_files.action_liber_cloud_file
+#: model:ir.model.fields,field_description:liber_cloud_files.field_liber_cloud_upload__attachment_ids
 #: model_terms:ir.ui.view,arch_db:liber_cloud_files.product_template_form_liber_cloud
 #: model_terms:ir.ui.view,arch_db:liber_cloud_files.view_liber_cloud_folder_form
 #: model_terms:ir.ui.view,arch_db:liber_cloud_files.view_liber_cloud_folder_list
+#: model_terms:ir.ui.view,arch_db:liber_cloud_files.view_liber_cloud_upload_form
 #: model_terms:ir.ui.view,arch_db:liber_cloud_files.view_partner_form_liber_cloud
 msgid "Files"
 msgstr "Arquivos"
 
 #. module: liber_cloud_files
-#: model:ir.model.fields,field_description:liber_cloud_files.field_liber_cloud_upload__allowed_folder_ids
-msgid "Folders You May Fill"
-msgstr "Pastas que você pode abastecer"
-
-#. module: liber_cloud_files
-#: model:ir.model.fields,help:liber_cloud_files.field_liber_cloud_upload__attachment_ids
-msgid ""
-"One file or many: each travels to the folder on its own, and Odoo keeps no "
-"copy once they are sent."
-msgstr ""
-"Um arquivo ou vários: cada um viaja para a pasta por conta própria, e o Odoo "
-"não guarda cópia depois do envio."
-
-#. module: liber_cloud_files
-#. odoo-python
-#: code:addons/liber_cloud_files/wizard/cloud_upload.py:0
-msgid "Pick at least one file to send."
-msgstr "Escolha ao menos um arquivo para enviar."
-
-#. module: liber_cloud_files
 #: model_terms:ir.actions.act_window,help:liber_cloud_files.action_liber_cloud_file
 msgid "Files appear when a folder you have access to is synced."
-msgstr "Os arquivos aparecem quando uma pasta a que você tem acesso é sincronizada."
+msgstr ""
+"Os arquivos aparecem quando uma pasta a que você tem acesso é sincronizada."
 
 #. module: liber_cloud_files
 #: model:ir.model.fields,field_description:liber_cloud_files.field_liber_cloud_file__folder_id
@@ -295,6 +323,26 @@ msgstr "Os arquivos aparecem quando uma pasta a que você tem acesso é sincroni
 #: model_terms:ir.ui.view,arch_db:liber_cloud_files.view_liber_cloud_file_search
 msgid "Folder"
 msgstr "Pasta"
+
+#. module: liber_cloud_files
+#: model:ir.model.fields,field_description:liber_cloud_files.field_liber_cloud_upload__allowed_folder_ids
+msgid "Folders You May Fill"
+msgstr "Pastas que você pode abastecer"
+
+#. module: liber_cloud_files
+#: model:ir.model.fields,field_description:liber_cloud_files.field_liber_cloud_file__message_follower_ids
+msgid "Followers"
+msgstr "Seguidores"
+
+#. module: liber_cloud_files
+#: model:ir.model.fields,field_description:liber_cloud_files.field_liber_cloud_file__message_partner_ids
+msgid "Followers (Partners)"
+msgstr "Seguidores (usuários)"
+
+#. module: liber_cloud_files
+#: model:ir.model.fields,help:liber_cloud_files.field_liber_cloud_file__activity_type_icon
+msgid "Font awesome icon e.g. fa-tasks"
+msgstr "Ícone do Font Awesome. Ex.: fa-tasks"
 
 #. module: liber_cloud_files
 #: model:ir.model.fields,help:liber_cloud_files.field_liber_cloud_folder__write_group_ids
@@ -311,8 +359,13 @@ msgid ""
 "Groups that see this folder and download its files. Leave empty to keep the "
 "folder visible to managers only."
 msgstr ""
-"Grupos que veem esta pasta e baixam seus arquivos. Deixe vazio para manter "
-"a pasta visível apenas para os gerentes."
+"Grupos que veem esta pasta e baixam seus arquivos. Deixe vazio para manter a"
+" pasta visível apenas para os gerentes."
+
+#. module: liber_cloud_files
+#: model:ir.model.fields,field_description:liber_cloud_files.field_liber_cloud_file__has_message
+msgid "Has Message"
+msgstr "Tem uma mensagem"
 
 #. module: liber_cloud_files
 #: model:ir.model.fields,field_description:liber_cloud_files.field_liber_cloud_account__id
@@ -327,9 +380,34 @@ msgid "ID"
 msgstr "ID"
 
 #. module: liber_cloud_files
+#: model:ir.model.fields,field_description:liber_cloud_files.field_liber_cloud_file__activity_exception_icon
+msgid "Icon"
+msgstr "Ícone"
+
+#. module: liber_cloud_files
+#: model:ir.model.fields,help:liber_cloud_files.field_liber_cloud_file__activity_exception_icon
+msgid "Icon to indicate an exception activity."
+msgstr "Ícone para indicar uma atividade excepcional."
+
+#. module: liber_cloud_files
+#: model:ir.model.fields,help:liber_cloud_files.field_liber_cloud_file__message_needaction
+msgid "If checked, new messages require your attention."
+msgstr "Se marcado, novas mensagens solicitarão sua atenção."
+
+#. module: liber_cloud_files
+#: model:ir.model.fields,help:liber_cloud_files.field_liber_cloud_file__message_has_error
+msgid "If checked, some messages have a delivery error."
+msgstr "Se marcado, algumas mensagens têm um erro de entrega."
+
+#. module: liber_cloud_files
 #: model:ir.model.fields,field_description:liber_cloud_files.field_liber_cloud_folder__recursive
 msgid "Include Subfolders"
 msgstr "Incluir subpastas"
+
+#. module: liber_cloud_files
+#: model:ir.model.fields,field_description:liber_cloud_files.field_liber_cloud_file__message_is_follower
+msgid "Is Follower"
+msgstr "É um seguidor"
 
 #. module: liber_cloud_files
 #: model:ir.model.fields,field_description:liber_cloud_files.field_liber_cloud_file__client_modified
@@ -370,11 +448,46 @@ msgid "Manager (any provider)"
 msgstr "Gerente (qualquer provedor)"
 
 #. module: liber_cloud_files
+#: model:ir.model.fields,field_description:liber_cloud_files.field_liber_cloud_file__message_has_error
+msgid "Message Delivery error"
+msgstr "Erro na entrega da mensagem"
+
+#. module: liber_cloud_files
+#: model:ir.model.fields,field_description:liber_cloud_files.field_liber_cloud_file__message_ids
+msgid "Messages"
+msgstr "Mensagens"
+
+#. module: liber_cloud_files
+#: model:ir.model.fields,field_description:liber_cloud_files.field_liber_cloud_file__my_activity_date_deadline
+msgid "My Activity Deadline"
+msgstr "Prazo da minha atividade"
+
+#. module: liber_cloud_files
 #: model:ir.model.fields,field_description:liber_cloud_files.field_liber_cloud_file__name
 #: model:ir.model.fields,field_description:liber_cloud_files.field_liber_cloud_folder__name
 #: model:ir.model.fields,field_description:liber_cloud_files.field_liber_cloud_tag__name
 msgid "Name"
 msgstr "Nome"
+
+#. module: liber_cloud_files
+#: model:ir.model.fields,field_description:liber_cloud_files.field_liber_cloud_file__activity_calendar_event_id
+msgid "Next Activity Calendar Event"
+msgstr "Próximo evento do calendário de atividades"
+
+#. module: liber_cloud_files
+#: model:ir.model.fields,field_description:liber_cloud_files.field_liber_cloud_file__activity_date_deadline
+msgid "Next Activity Deadline"
+msgstr "Prazo da próxima atividade"
+
+#. module: liber_cloud_files
+#: model:ir.model.fields,field_description:liber_cloud_files.field_liber_cloud_file__activity_summary
+msgid "Next Activity Summary"
+msgstr "Resumo da próxima atividade"
+
+#. module: liber_cloud_files
+#: model:ir.model.fields,field_description:liber_cloud_files.field_liber_cloud_file__activity_type_id
+msgid "Next Activity Type"
+msgstr "Tipo da próxima atividade"
 
 #. module: liber_cloud_files
 #: model_terms:ir.actions.act_window,help:liber_cloud_files.action_liber_cloud_file
@@ -387,15 +500,55 @@ msgid "Not Linked Yet"
 msgstr "Ainda sem vínculo"
 
 #. module: liber_cloud_files
+#: model:ir.model.fields,field_description:liber_cloud_files.field_liber_cloud_file__message_needaction_counter
+msgid "Number of Actions"
+msgstr "Número de ações"
+
+#. module: liber_cloud_files
+#: model:ir.model.fields,field_description:liber_cloud_files.field_liber_cloud_file__message_has_error_counter
+msgid "Number of errors"
+msgstr "Número de erros"
+
+#. module: liber_cloud_files
+#: model:ir.model.fields,help:liber_cloud_files.field_liber_cloud_file__message_needaction_counter
+msgid "Number of messages requiring action"
+msgstr "Número de mensagens que requerem ação"
+
+#. module: liber_cloud_files
+#: model:ir.model.fields,help:liber_cloud_files.field_liber_cloud_file__message_has_error_counter
+msgid "Number of messages with delivery error"
+msgstr "Número de mensagens com erro de entrega"
+
+#. module: liber_cloud_files
+#: model:ir.model.fields,help:liber_cloud_files.field_liber_cloud_upload__attachment_ids
+msgid ""
+"One file or many: each travels to the folder on its own, and Odoo keeps no "
+"copy once they are sent."
+msgstr ""
+"Um arquivo ou vários: cada um viaja para a pasta por conta própria, e o Odoo"
+" não guarda cópia depois do envio."
+
+#. module: liber_cloud_files
 #: model_terms:ir.ui.view,arch_db:liber_cloud_files.view_liber_cloud_file_form
 msgid "Open Shared Link"
 msgstr "Abrir link compartilhado"
+
+#. module: liber_cloud_files
+#: model_terms:ir.ui.view,arch_db:liber_cloud_files.cloud_file_gone
+msgid "Open the folder"
+msgstr "Abrir a pasta"
 
 #. module: liber_cloud_files
 #: model:ir.model.fields,field_description:liber_cloud_files.field_liber_cloud_file__path
 #: model:ir.model.fields,field_description:liber_cloud_files.field_liber_cloud_folder__path
 msgid "Path"
 msgstr "Caminho"
+
+#. module: liber_cloud_files
+#. odoo-python
+#: code:addons/liber_cloud_files/wizard/cloud_upload.py:0
+msgid "Pick at least one file to send."
+msgstr "Escolha ao menos um arquivo para enviar."
 
 #. module: liber_cloud_files
 #: model:ir.model,name:liber_cloud_files.model_product_template
@@ -413,9 +566,19 @@ msgid "Provider"
 msgstr "Provedor"
 
 #. module: liber_cloud_files
+#: model:ir.model.fields,field_description:liber_cloud_files.field_liber_cloud_file__rating_ids
+msgid "Ratings"
+msgstr "Avaliações"
+
+#. module: liber_cloud_files
 #: model:ir.model.fields,field_description:liber_cloud_files.field_liber_cloud_folder__read_group_ids
 msgid "Read Access"
 msgstr "Leitura"
+
+#. module: liber_cloud_files
+#: model:ir.model.fields,field_description:liber_cloud_files.field_liber_cloud_file__activity_user_id
+msgid "Responsible User"
+msgstr "Usuário responsável"
 
 #. module: liber_cloud_files
 #: model:ir.model.fields,field_description:liber_cloud_files.field_liber_cloud_file__rev
@@ -482,8 +645,17 @@ msgid ""
 "Small preview rendered by the provider during sync; the only bytes of the "
 "file that ever enter Odoo."
 msgstr ""
-"Prévia pequena gerada pelo provedor durante a sincronização; os únicos "
-"bytes do arquivo que chegam a entrar no Odoo."
+"Prévia pequena gerada pelo provedor durante a sincronização; os únicos bytes"
+" do arquivo que chegam a entrar no Odoo."
+
+#. module: liber_cloud_files
+#: model:ir.model.fields,help:liber_cloud_files.field_liber_cloud_file__activity_state
+msgid ""
+"Status based on activities\n"
+"Overdue: Due date is already passed\n"
+"Today: Activity date is today\n"
+"Planned: Future activities."
+msgstr "Status baseado em atividades\nAtrasado: data de vencimento já passou\nHoje: data da atividade é hoje\nPlanejado: atividades futuras."
 
 #. module: liber_cloud_files
 #: model_terms:ir.ui.view,arch_db:liber_cloud_files.view_liber_cloud_folder_form
@@ -497,9 +669,9 @@ msgid ""
 "subfolder that is mapped on its own is skipped: its own (usually stricter) "
 "groups stay in charge."
 msgstr ""
-"A sincronização espelha também cada subpasta, sob os grupos de acesso "
-"desta pasta. Uma subpasta mapeada por conta própria fica de fora: quem "
-"manda são os grupos dela, em geral mais estritos."
+"A sincronização espelha também cada subpasta, sob os grupos de acesso desta "
+"pasta. Uma subpasta mapeada por conta própria fica de fora: quem manda são "
+"os grupos dela, em geral mais estritos."
 
 #. module: liber_cloud_files
 #: model_terms:ir.ui.view,arch_db:liber_cloud_files.view_liber_cloud_file_search
@@ -542,8 +714,8 @@ msgid ""
 "The provider kills the link at this moment; sharing the file again renews "
 "the deadline."
 msgstr ""
-"O provedor mata o link neste momento; compartilhar o arquivo de novo "
-"renova o prazo."
+"O provedor mata o link neste momento; compartilhar o arquivo de novo renova "
+"o prazo."
 
 #. module: liber_cloud_files
 #: model:ir.model.fields,help:liber_cloud_files.field_liber_cloud_file__content_hash
@@ -551,8 +723,8 @@ msgid ""
 "The provider's own content fingerprint; equal hashes mean equal content "
 "within the same provider."
 msgstr ""
-"A impressão digital do conteúdo, feita pelo próprio provedor; hashes "
-"iguais significam conteúdo igual dentro do mesmo provedor."
+"A impressão digital do conteúdo, feita pelo próprio provedor; hashes iguais "
+"significam conteúdo igual dentro do mesmo provedor."
 
 #. module: liber_cloud_files
 #: model:ir.model.fields,help:liber_cloud_files.field_liber_cloud_file__shared_link
@@ -561,8 +733,8 @@ msgid ""
 "public for Dropbox and Drive, restricted to the repository's members for "
 "GitHub."
 msgstr ""
-"O link compartilhado do provedor. Para quem ele abre depende do provedor "
-"-- público no Dropbox e no Drive, restrito aos membros do repositório no "
+"O link compartilhado do provedor. Para quem ele abre depende do provedor -- "
+"público no Dropbox e no Drive, restrito aos membros do repositório no "
 "GitHub."
 
 #. module: liber_cloud_files
@@ -572,8 +744,15 @@ msgid ""
 "the GitHub owner/repo. Providers that resolve by path leave it empty."
 msgstr ""
 "A identidade do lado do provedor quando o caminho não basta: o ID da pasta "
-"do Drive, o owner/repositório do GitHub. Provedores que resolvem por "
-"caminho deixam vazio."
+"do Drive, o owner/repositório do GitHub. Provedores que resolvem por caminho"
+" deixam vazio."
+
+#. module: liber_cloud_files
+#: model_terms:ir.ui.view,arch_db:liber_cloud_files.cloud_file_gone
+msgid ""
+"The record has been archived, with a note on its chatter. If the file got a "
+"new name, syncing the folder brings it in."
+msgstr "O registro foi arquivado, com uma nota no histórico. Se o arquivo ganhou nome novo, sincronizar a pasta o traz."
 
 #. module: liber_cloud_files
 #: model:ir.model.fields,help:liber_cloud_files.field_liber_cloud_file__product_tmpl_id
@@ -589,6 +768,17 @@ msgid "This company already has an account for this provider."
 msgstr "Esta empresa já tem uma conta deste provedor."
 
 #. module: liber_cloud_files
+#: model_terms:ir.ui.view,arch_db:liber_cloud_files.cloud_file_gone
+msgid "This file is no longer in"
+msgstr "Este arquivo não está mais no"
+
+#. module: liber_cloud_files
+#. odoo-python
+#: code:addons/liber_cloud_files/models/cloud_file.py:0
+msgid "This file is no longer in the storage"
+msgstr "Este arquivo não está mais no armazenamento"
+
+#. module: liber_cloud_files
 #: model:ir.model.constraint,message:liber_cloud_files.constraint_liber_cloud_folder_path_uniq
 msgid "This folder is already mapped for this company."
 msgstr "Esta pasta já está mapeada para esta empresa."
@@ -602,6 +792,11 @@ msgstr "Esta tag já existe."
 #: model:ir.model.fields,field_description:liber_cloud_files.field_liber_cloud_file__thumbnail
 msgid "Thumbnail"
 msgstr "Miniatura"
+
+#. module: liber_cloud_files
+#: model:ir.model.fields,help:liber_cloud_files.field_liber_cloud_file__activity_exception_decoration
+msgid "Type of the exception activity on record."
+msgstr "Tipo de atividade de exceção registrada."
 
 #. module: liber_cloud_files
 #: model:ir.actions.act_window,name:liber_cloud_files.action_liber_cloud_upload
@@ -623,13 +818,13 @@ msgstr "Usuário (qualquer provedor)"
 #. module: liber_cloud_files
 #: model:ir.model.fields,help:liber_cloud_files.field_liber_cloud_folder__can_upload
 msgid ""
-"Whether the person looking holds this folder's write ACL. It decides "
-"whether the Upload button is offered here at all: a button that always "
-"answers 'you may not' is worse than no button."
+"Whether the person looking holds this folder's write ACL. It decides whether"
+" the Upload button is offered here at all: a button that always answers 'you"
+" may not' is worse than no button."
 msgstr ""
-"Se quem está olhando tem o direito de escrita desta pasta. É isto que "
-"decide se o botão Enviar sequer aparece aqui: um botão que responde "
-"sempre \"você não pode\" é pior do que botão nenhum."
+"Se quem está olhando tem o direito de escrita desta pasta. É isto que decide"
+" se o botão Enviar sequer aparece aqui: um botão que responde sempre \"você "
+"não pode\" é pior do que botão nenhum."
 
 #. module: liber_cloud_files
 #: model:ir.model.fields,help:liber_cloud_files.field_liber_cloud_file__provider
@@ -637,16 +832,16 @@ msgstr ""
 msgid ""
 "Which storage holds this folder. Provider modules add their entry here."
 msgstr ""
-"Qual armazenamento guarda esta pasta. Os módulos de provedor acrescentam "
-"sua entrada aqui."
+"Qual armazenamento guarda esta pasta. Os módulos de provedor acrescentam sua"
+" entrada aqui."
 
 #. module: liber_cloud_files
 #: model:ir.model.fields,help:liber_cloud_files.field_liber_cloud_account__provider
 msgid ""
 "Which storage this credential opens. Provider modules add their entry here."
 msgstr ""
-"Qual armazenamento esta credencial abre. Os módulos de provedor "
-"acrescentam sua entrada aqui."
+"Qual armazenamento esta credencial abre. Os módulos de provedor acrescentam "
+"sua entrada aqui."
 
 #. module: liber_cloud_files
 #: model:ir.model.fields,field_description:liber_cloud_files.field_liber_cloud_folder__write_group_ids
@@ -668,5 +863,11 @@ msgid ""
 msgstr ""
 "Você não tem nenhuma pasta para onde enviar arquivos. O envio é\n"
 "                    liberado pasta a pasta: peça a um administrador para\n"
-"                    incluir você no grupo de escrita da pasta de que "
-"precisa."
+"                    incluir você no grupo de escrita da pasta de que precisa."
+
+#. module: liber_cloud_files
+#: model_terms:ir.ui.view,arch_db:liber_cloud_files.cloud_file_gone
+msgid ""
+"was deleted, renamed or moved in the storage after the last sync, so there "
+"is nothing to open."
+msgstr "foi apagado, renomeado ou movido no armazenamento depois da última sincronização, e não há o que abrir."

@@ -4,7 +4,7 @@
  "titulo": "Quando a Amazon muda o pedido",
  "abertura": "Esta aula mostra o que acontece quando a Amazon muda um pedido que já virou cotação: o aviso que aparece e o documento que ninguém reescreve.",
  "fecho": "A releitura vê a diferença e escreve o aviso; nenhuma linha da cotação é tocada; resolver é decisão comercial, e o aviso se limpa com um botão. A próxima aula é o relatório.",
- "youtube": "https://www.youtube.com/watch?v=0B91UlCw5uc",
+ "youtube": "https://www.youtube.com/watch?v=YV4_qHj0CaQ",
  "quiz": [
   {
    "pergunta": "A Amazon reduziu a quantidade de um pedido já cotado. O que o módulo faz?",
@@ -70,5 +70,9 @@
    ],
    "correta": 2
   }
- ]
+ ],
+ "youtube_anterior": [
+  "https://www.youtube.com/watch?v=0B91UlCw5uc"
+ ],
+ "youtube_quadro": "2912x2080"
 }

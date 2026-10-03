@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_wiki_form_liber_manual" model="ir.ui.view">
+        <field name="name">document.page.form.liber.manual</field>
+        <field name="model">document.page</field>
+        <field name="inherit_id" ref="document_page.view_wiki_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='parent_id']" position="after">
+                <field name="liber_manual_slug" invisible="not liber_manual_slug" groups="document_page.group_document_manager"/>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- The OCA search starts with the revision summary, so typing the name
+         of a manual and pressing Enter finds nothing. Title-or-content goes
+         first; the summary moves to the end. -->
+    <record id="view_wiki_filter_liber" model="ir.ui.view">
+        <field name="name">document.page.search.liber</field>
+        <field name="model">document.page</field>
+        <field name="inherit_id" ref="document_page.view_wiki_filter"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='content_uid']" position="after">
+                <xpath expr="//field[@name='draft_summary']" position="move"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="action_liber_sync_manuals" model="ir.actions.server">
+        <field name="name">Update Liber manuals</field>
+        <field name="model_id" ref="document_page.model_document_page"/>
+        <field name="state">code</field>
+        <field name="code">action = model.action_liber_sync_manuals()</field>
+        <field name="group_ids" eval="[(4, ref('document_page.group_document_manager'))]"/>
+    </record>
+
+    <menuitem id="menu_liber_sync_manuals"
+              name="Update Liber manuals"
+              parent="document_knowledge.menu_document_configuration"
+              action="action_liber_sync_manuals"
+              groups="document_page.group_document_manager"
+              sequence="10"/>
+</odoo>

@@ -27,6 +27,9 @@ class TestIntercompanyRoyalties(TransactionCase):
         )
         cls.env.user.company_ids |= cls.company_el
         cls.company_he.contract_interco_source_company_ids = cls.company_el
+        # O banco de testes pode ter um markup gravado nas Definições; os
+        # valores esperados abaixo são o royalty exato.
+        cls.company_he.contract_interco_markup = 0.0
 
         cls.author = cls.env["res.partner"].create({"name": "Machado de Assis"})
         cls.customer = cls.env["res.partner"].create({"name": "Livraria Cliente"})

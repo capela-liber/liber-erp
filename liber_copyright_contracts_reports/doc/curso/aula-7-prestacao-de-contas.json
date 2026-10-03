@@ -4,7 +4,7 @@
  "titulo": "Prestação de contas",
  "abertura": "Esta aula presta contas ao autor: o assistente por favorecido, a data final, o PDF com vendas, faixa, royalty, adiantamentos e saldo, e o envio por e-mail.",
  "fecho": "A prestação de contas é por favorecido, do último acerto até a data escolhida. Imprimir gera; Enviar manda. Vendas especiais aparecem à parte.",
- "youtube": "",
+ "youtube": "https://www.youtube.com/watch?v=2tNRPtJyTb4",
  "quiz": [
   {
    "pergunta": "De onde sai a prestação de contas?",
@@ -70,5 +70,6 @@
    ],
    "correta": 2
   }
- ]
+ ],
+ "youtube_quadro": "2912x2080"
 }

@@ -4,7 +4,7 @@
  "titulo": "O chamado vinculado à consignação",
  "abertura": "Esta aula é o vínculo com a consignação: o campo CO no chamado, o botão Última CO, a resposta com o mapa anexo, e o botão Atendimento na operação.",
  "fecho": "Última CO liga à operação mais recente do cliente; Mapa responde com o PDF da operação; o botão CO abre a operação, e ela conta seus chamados. A última aula transforma a conversa em acerto.",
- "youtube": "https://www.youtube.com/watch?v=VWVgP3-Y6JQ",
+ "youtube": "https://www.youtube.com/watch?v=EImnimnfKh8",
  "quiz": [
   {
    "pergunta": "O que o botão Última CO faz?",
@@ -70,5 +70,9 @@
    ],
    "correta": 2
   }
- ]
+ ],
+ "youtube_anterior": [
+  "https://www.youtube.com/watch?v=VWVgP3-Y6JQ"
+ ],
+ "youtube_quadro": "2912x2080"
 }

@@ -4,7 +4,7 @@
  "titulo": "Ligar a integração",
  "abertura": "Esta aula abre a conta do Olist: onde o token vive, o que a margem de segurança faz, e o que significa uma conta em somente leitura.",
  "fecho": "Uma conta por conta do Olist, presa a uma empresa; token no banco; somente leitura para ensaiar; margem de segurança para não prometer o que não há. A próxima aula compara os estoques.",
- "youtube": "https://www.youtube.com/watch?v=ksnrUerHBTM",
+ "youtube": "https://www.youtube.com/watch?v=Yhw9n3kJO6Y",
  "quiz": [
   {
    "pergunta": "Onde fica o token da conta?",
@@ -70,5 +70,9 @@
    ],
    "correta": 1
   }
- ]
+ ],
+ "youtube_anterior": [
+  "https://www.youtube.com/watch?v=ksnrUerHBTM"
+ ],
+ "youtube_quadro": "2912x2080"
 }

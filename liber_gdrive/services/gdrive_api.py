@@ -8,6 +8,8 @@ import requests
 from odoo import _
 from odoo.exceptions import UserError
 
+from odoo.addons.liber_cloud_files.exceptions import CloudFileGone
+
 from odoo.addons.liber_cloud_files.services.provider import wants_thumbnail
 
 _logger = logging.getLogger(__name__)
@@ -65,7 +67,7 @@ class GDriveClient:
         self._access_token = resp.json()['access_token']
         return self._access_token
 
-    def _request(self, method, url, *, raw=False, **kwargs):
+    def _request(self, method, url, *, raw=False, gone=None, **kwargs):
         headers = kwargs.pop('headers', {})
         headers['Authorization'] = f'Bearer {self._token()}'
         try:
@@ -74,6 +76,13 @@ class GDriveClient:
         except requests.RequestException as exc:
             raise UserError(
                 _("Could not reach Google Drive: %s", exc)) from exc
+        if resp.status_code == 404 and gone:
+            # Drive answers 404 both for a deleted file and for one no
+            # longer shared with the account: gone, either way, for us.
+            raise CloudFileGone(_(
+                "%s is no longer in Google Drive, or no longer shared with "
+                "the account: it was deleted or moved out of reach after "
+                "the last sync.", gone))
         if resp.status_code not in (200, 204):
             raise UserError(_(
                 "Google Drive call failed (HTTP %(code)s): %(body)s",
@@ -155,7 +164,7 @@ class GDriveClient:
     def download(self, file):
         return self._request(
             'GET', f'{API_URL}/files/{file.external_id}',
-            params={'alt': 'media'}, raw=True)
+            params={'alt': 'media'}, raw=True, gone=file.name)
 
     def upload(self, folder, filename, data):
         """Upload bytes, never overwriting silently.

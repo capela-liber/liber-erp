@@ -4,7 +4,7 @@
  "titulo": "Auditar um cliente",
  "abertura": "O dia a dia mantém o mapa aos poucos; a auditoria faz o caminho inverso: pega todas as notas de consignação importadas de um cliente e refaz a conta do zero, por título.",
  "fecho": "Esperado contra mapa, com os avisos de qualidade antes de aceitar. Na última aula, resolver as divergências e ajustar.",
- "youtube": "https://www.youtube.com/watch?v=j_CQJJxj5xo",
+ "youtube": "https://www.youtube.com/watch?v=absXr8zgQak",
  "quiz": [
   {
    "pergunta": "Como se calcula o esperado de um título?",
@@ -70,5 +70,9 @@
    ],
    "correta": 1
   }
- ]
+ ],
+ "youtube_anterior": [
+  "https://www.youtube.com/watch?v=j_CQJJxj5xo"
+ ],
+ "youtube_quadro": "2912x2080"
 }

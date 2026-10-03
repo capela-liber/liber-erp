@@ -4,7 +4,7 @@
  "titulo": "O dinheiro do balcão",
  "abertura": "Esta aula segue o dinheiro: os pedidos do PDV, cada venda com valor e forma de pagamento; as sessões de cada caixa; e o que o caixa exige para fechar.",
  "fecho": "Pedidos do PDV por dia e por balcão; dinheiro, cartão e pix como formas de pagamento; o caixa só fecha com conta de receita nos títulos e a conta de recebível nas Definições. A próxima aula são as perdas.",
- "youtube": "https://www.youtube.com/watch?v=utWnbe5a3rA",
+ "youtube": "https://www.youtube.com/watch?v=usPLWvGHy6o",
  "quiz": [
   {
    "pergunta": "Onde se vê cada venda do balcão?",
@@ -70,5 +70,9 @@
    ],
    "correta": 1
   }
- ]
+ ],
+ "youtube_anterior": [
+  "https://www.youtube.com/watch?v=utWnbe5a3rA"
+ ],
+ "youtube_quadro": "2912x2080"
 }

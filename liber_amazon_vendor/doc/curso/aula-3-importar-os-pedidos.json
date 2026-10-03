@@ -4,7 +4,7 @@
  "titulo": "Importar os pedidos",
  "abertura": "Esta aula importa: o botão, a janela de datas, e a lista que nasce — com o estado que a Amazon deu e o estado que é nosso.",
  "fecho": "A importação relê a janela inteira; a lista mostra linhas, sem produto e valor; estado da Amazon é dela, estado nosso é Importado ou Cotação gerada. A próxima aula resolve o que não casou.",
- "youtube": "https://www.youtube.com/watch?v=QojO26V_fTc",
+ "youtube": "https://www.youtube.com/watch?v=bQollsnhem8",
  "quiz": [
   {
    "pergunta": "O que o assistente de importação pergunta?",
@@ -70,5 +70,9 @@
    ],
    "correta": 1
   }
- ]
+ ],
+ "youtube_anterior": [
+  "https://www.youtube.com/watch?v=QojO26V_fTc"
+ ],
+ "youtube_quadro": "2912x2080"
 }

@@ -4,7 +4,7 @@
  "titulo": "Criar um orçamento",
  "abertura": "Esta aula monta o orçamento: o período no cabeçalho, uma linha por posição com o previsto, e a confirmação que o tira do exercício.",
  "fecho": "O período é do cabeçalho e as linhas o herdam — orçamento mensal é um orçamento por mês. Confirmado, ele passa a valer; e só se apaga rascunho ou cancelado.",
- "youtube": "https://www.youtube.com/watch?v=QN5AwP_oBlQ",
+ "youtube": "https://www.youtube.com/watch?v=5V2QV4Wwd_M",
  "quiz": [
   {
    "pergunta": "Onde fica o período do orçamento?",
@@ -70,5 +70,9 @@
    ],
    "correta": 1
   }
- ]
+ ],
+ "youtube_anterior": [
+  "https://www.youtube.com/watch?v=QN5AwP_oBlQ"
+ ],
+ "youtube_quadro": "2912x2080"
 }

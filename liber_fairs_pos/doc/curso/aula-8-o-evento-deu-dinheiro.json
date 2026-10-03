@@ -4,7 +4,7 @@
  "titulo": "O evento deu dinheiro?",
  "abertura": "Esta aula é a aba Custos: as contas da equipe que caem sozinhas, Somar um custo, Gerar as contas a pagar, e os quatro números que dizem se a feira se pagou.",
  "fecho": "Vendido no caixa, Custo dos livros vendidos, Custou, Sobrou; cada documento leva o analítico do evento; a aba é da equipe interna. A última aula é a equipe do evento.",
- "youtube": "https://www.youtube.com/watch?v=gG6I0l_dgD0",
+ "youtube": "https://www.youtube.com/watch?v=KL3IlMKPZjE",
  "quiz": [
   {
    "pergunta": "O que cai sozinho na aba Custos quando o evento volta?",
@@ -70,5 +70,9 @@
    ],
    "correta": 3
   }
- ]
+ ],
+ "youtube_anterior": [
+  "https://www.youtube.com/watch?v=gG6I0l_dgD0"
+ ],
+ "youtube_quadro": "2912x2080"
 }

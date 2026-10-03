@@ -294,11 +294,6 @@ class MetabooksConnector(models.AbstractModel):
             [("code", "=", str(code).strip().upper())], limit=1)
         return country.id or False
 
-    # Metabooks product types that are DIGITAL: no box, no shelf, no stock.
-    # Everything else (pbook, nonbook: games, calendars, posters) is a physical
-    # object and must be storable.
-    _DIGITAL_TYPES = ("ebook", "abook")
-
     @classmethod
     def _is_storable_type(cls, product_type):
         """A physical book must be storable, or it can never have stock.
@@ -310,7 +305,16 @@ class MetabooksConnector(models.AbstractModel):
         titles were silently invisible to replenishment.
         """
         return bool(product_type) and str(product_type).strip().lower() \
-            not in cls._DIGITAL_TYPES
+            not in onix_codes.DIGITAL_BOOK_TYPES
+
+    @classmethod
+    def _product_type(cls, product_type):
+        """Digital é serviço; o resto é mercadoria -- ver
+        `product.template._metabooks_digital_e_servico`."""
+        if product_type and str(product_type).strip().lower() \
+                in onix_codes.DIGITAL_BOOK_TYPES:
+            return "service"
+        return "consu"
 
     def _house_invoice_policy(self):
         """The invoicing policy every synced title must land on.
@@ -323,7 +327,7 @@ class MetabooksConnector(models.AbstractModel):
                 self.filtered(lambda t: t.type == 'consu'
                               or not t.invoice_policy).invoice_policy = 'order'
 
-        Every upsert here writes `type: 'consu'`, so until 18/08/2026 the sync
+        Every upsert of a physical book writes `type: 'consu'`, so until 18/08/2026 the sync
         reset the policy on every run -- by accident, through a core `depends`,
         with nothing in this module saying so. The house standard happens to be
         the same value the core picks, which is exactly why it went unnoticed
@@ -852,7 +856,7 @@ class MetabooksConnector(models.AbstractModel):
             "edition": edition.get("editionStatement") or (
                 str(edition.get("editionNumber")) if edition.get("editionNumber") else False),
             "metabooks_product_type": self._ensure_book_type(data.get("productType")),
-            "type": "consu",
+            "type": self._product_type(data.get("productType")),
             "is_storable": self._is_storable_type(data.get("productType")),
             "book_auther_ids": [(6, 0, authors)] if authors else False,
         }
@@ -913,7 +917,7 @@ class MetabooksConnector(models.AbstractModel):
             "metabooks_last_updatedate": self._parse_date(item.get("lastModifiedDate")),
             "edition": str(item.get("edition")) if item.get("edition") else False,
             "metabooks_product_type": self._ensure_book_type(item.get("productType")),
-            "type": "consu",
+            "type": self._product_type(item.get("productType")),
             "is_storable": self._is_storable_type(item.get("productType")),
             "book_auther_ids": [(6, 0, authors)] if authors else False,
         }
@@ -950,7 +954,10 @@ class MetabooksConnector(models.AbstractModel):
 
         # A ficha sai na política de faturamento da casa, dito aqui e não
         # herdado do compute do core -- ver `_house_invoice_policy`.
-        vals["invoice_policy"] = self._house_invoice_policy()
+        # Digital não tem entrega: fatura-se o pedido, qualquer que seja o
+        # interruptor -- ver `_metabooks_digital_e_servico`.
+        vals["invoice_policy"] = ("order" if vals.get("type") == "service"
+                                  else self._house_invoice_policy())
 
         category = self._ensure_category(
             parsed.get("selo"), parsed.get("collection"))

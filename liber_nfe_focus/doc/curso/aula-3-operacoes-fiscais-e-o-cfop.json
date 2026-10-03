@@ -33,7 +33,7 @@
   }
  ],
  "fecho": "Uma linha por operação, e não duas. Dentro do estado a saída leva cinco, para outro estado leva seis; a entrada leva um ou dois. Quem escolhe a posição fiscal na fatura já escolheu o CFOP, sem digitar código nenhum — e a exportação é a exceção, porque lá o código significa outra coisa e se escreve à mão.",
- "youtube": "",
+ "youtube": "https://www.youtube.com/watch?v=LQ11uHIfBuU",
  "quiz": [
   {
    "pergunta": "Por que as operações fiscais têm três dígitos e não quatro?",
@@ -99,5 +99,6 @@
    ],
    "correta": 1
   }
- ]
+ ],
+ "youtube_quadro": "2912x2080"
 }

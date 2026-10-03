@@ -4,7 +4,7 @@
  "titulo": "O que há em cada menu, e os dois filtros",
  "abertura": "Esta aula é o mapa do depósito: onde ficam as entregas, onde ficam as solicitações de coleta, e os dois filtros que dividem o dia em pode viajar e ainda espera nota.",
  "fecho": "O menu é curto de propósito: Entregas, Solicitações de coleta, e dois filtros. O cadastro fica na Configuração, que é da próxima aula.",
- "youtube": "https://www.youtube.com/watch?v=OVHtY8aVxo8",
+ "youtube": "https://www.youtube.com/watch?v=p664jc1kB2M",
  "quiz": [
   {
    "pergunta": "Onde ficam as entregas do dia?",
@@ -70,5 +70,9 @@
    ],
    "correta": 3
   }
- ]
+ ],
+ "youtube_anterior": [
+  "https://www.youtube.com/watch?v=OVHtY8aVxo8"
+ ],
+ "youtube_quadro": "2912x2080"
 }

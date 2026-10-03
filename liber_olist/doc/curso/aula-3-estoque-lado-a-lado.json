@@ -4,7 +4,7 @@
  "titulo": "O estoque, lado a lado",
  "abertura": "Esta aula compara os dois estoques: o que a casa tem e o que o anúncio mostra. E o botão que escreve o saldo da casa lá.",
  "fecho": "De um lado o armazém menos a margem, do outro o anúncio; a mais é promessa que não se cumpre, a menos é venda que não se faz; e Fora do Olist é a pergunta pelo avesso. A próxima aula é o casamento dos títulos.",
- "youtube": "https://www.youtube.com/watch?v=kt-ME1RdhmI",
+ "youtube": "https://www.youtube.com/watch?v=ccL0h2pGyS8",
  "quiz": [
   {
    "pergunta": "Que saldo a casa manda para o Olist?",
@@ -70,5 +70,9 @@
    ],
    "correta": 1
   }
- ]
+ ],
+ "youtube_anterior": [
+  "https://www.youtube.com/watch?v=kt-ME1RdhmI"
+ ],
+ "youtube_quadro": "2912x2080"
 }

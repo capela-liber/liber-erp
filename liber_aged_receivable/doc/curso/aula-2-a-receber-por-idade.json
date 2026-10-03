@@ -4,7 +4,7 @@
  "titulo": "Contas a receber por idade",
  "abertura": "Esta aula abre a carteira: as faixas de atraso, o salto para as faturas do cliente, as linhas sem cliente e a soma por rede.",
  "fecho": "A leitura é da direita para a esquerda; o número é clicável; linha sem cliente é conserto, não cobrança; e a rede soma numa linha só quando o grupo está preenchido.",
- "youtube": "https://www.youtube.com/watch?v=0SWEkoC3N8A",
+ "youtube": "https://www.youtube.com/watch?v=ubTbUglHSFI",
  "quiz": [
   {
    "pergunta": "Quais são as faixas da tela?",
@@ -70,5 +70,9 @@
    ],
    "correta": 1
   }
- ]
+ ],
+ "youtube_anterior": [
+  "https://www.youtube.com/watch?v=0SWEkoC3N8A"
+ ],
+ "youtube_quadro": "2912x2080"
 }

@@ -4,7 +4,7 @@
  "titulo": "É o mesmo livro?",
  "abertura": "Esta aula é o casamento entre o catálogo de lá e o cadastro da casa: por ISBN, o que fazer quando não casa, e quem decide.",
  "fecho": "ISBN é a chave; sugerir por título propõe e alguém confirma; corrigir o ISBN no Olist é o caminho de volta; e o espelho continua espelho. A próxima aula mapeia os canais.",
- "youtube": "https://www.youtube.com/watch?v=gXRBym_grOA",
+ "youtube": "https://www.youtube.com/watch?v=nrdF5ObGi2Y",
  "quiz": [
   {
    "pergunta": "Qual é a chave do casamento?",
@@ -70,5 +70,9 @@
    ],
    "correta": 3
   }
- ]
+ ],
+ "youtube_anterior": [
+  "https://www.youtube.com/watch?v=gXRBym_grOA"
+ ],
+ "youtube_quadro": "2912x2080"
 }

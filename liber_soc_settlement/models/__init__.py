@@ -13,3 +13,4 @@ from . import product_template
 from . import consignment_template
 from . import consignment_coverage
 from . import sale_order
+from . import mail_compose_message

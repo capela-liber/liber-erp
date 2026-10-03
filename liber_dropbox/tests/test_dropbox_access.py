@@ -10,6 +10,8 @@ from unittest.mock import patch
 from odoo.exceptions import AccessError, UserError
 from odoo.tests import TransactionCase, new_test_user, tagged
 
+from odoo.addons.liber_cloud_files.exceptions import CloudFileGone
+from odoo.addons.liber_dropbox.services import dropbox_api
 from odoo.addons.liber_dropbox.services.dropbox_api import DropboxClient
 
 
@@ -335,3 +337,36 @@ class TestDropboxAccess(TransactionCase):
             'provider': 'dropbox', 'company_id': company2.id})
         self.assertEqual(folder2._account(), account2)
         self.assertEqual(self.folder_open._account(), self.account)
+
+    # ------------------------------------------------------------------
+    # a file that left Dropbox after the last sync
+    # ------------------------------------------------------------------
+    def test_not_found_is_gone(self):
+        class _Resp:
+            status_code = 409
+            text = '{"error_summary": "path/not_found/.."}'
+        with patch.object(DropboxClient, '__init__', _client_stub), \
+             patch.object(DropboxClient, '_token', return_value='t'), \
+             patch.object(dropbox_api.requests, 'post', return_value=_Resp()), \
+             self.assertRaises(CloudFileGone):
+            DropboxClient(None).temporary_link(self.file_open)
+
+    def test_download_button_on_a_gone_file_says_so_and_archives(self):
+        gone = CloudFileGone('/Editorial/Covers/cover.pdf is no longer here')
+        with patch.object(DropboxClient, '__init__', _client_stub), \
+             patch.object(DropboxClient, 'temporary_link', side_effect=gone):
+            action = self.file_open.with_user(self.reader).action_download()
+        self.assertEqual(action['tag'], 'display_notification')
+        self.assertEqual(action['params']['type'], 'danger')
+        self.assertIn('cover.pdf', action['params']['message'])
+        self.assertFalse(self.file_open.active)
+        self.assertTrue(self.file_open.message_ids.filtered(
+            lambda m: 'cover.pdf' in m.body))
+
+    def test_other_dropbox_errors_keep_the_record(self):
+        with patch.object(DropboxClient, '__init__', _client_stub), \
+             patch.object(DropboxClient, 'temporary_link',
+                          side_effect=UserError('Dropbox is down')), \
+             self.assertRaises(UserError):
+            self.file_open.with_user(self.reader).action_download()
+        self.assertTrue(self.file_open.active)

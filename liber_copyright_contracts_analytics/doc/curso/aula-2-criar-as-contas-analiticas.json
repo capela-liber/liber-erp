@@ -4,7 +4,7 @@
  "titulo": "Criar as contas analíticas",
  "abertura": "Esta aula prepara o terreno: o assistente que cria uma conta por linha do contrato, com o nome montado, e o adiantamento como crédito de abertura.",
  "fecho": "Trabalho de uma vez por contrato. Sem conta, a apuração recusa em vez de lançar no lugar errado.",
- "youtube": "https://www.youtube.com/watch?v=1pqF4zcS1YY",
+ "youtube": "https://www.youtube.com/watch?v=tD8KIezU5n0",
  "quiz": [
   {
    "pergunta": "O que o assistente cria?",
@@ -70,5 +70,9 @@
    ],
    "correta": 2
   }
- ]
+ ],
+ "youtube_anterior": [
+  "https://www.youtube.com/watch?v=1pqF4zcS1YY"
+ ],
+ "youtube_quadro": "2912x2080"
 }

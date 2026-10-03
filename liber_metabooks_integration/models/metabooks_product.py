@@ -147,6 +147,54 @@ class MetabooksProduct(models.Model):
     # fiscal_classification_id = fields.Many2one(
     #     'account.ncm', string=u"Classificação Fiscal (NCM)")
 
+    @api.model_create_multi
+    def create(self, vals_list):
+        products = super().create(vals_list)
+        products._metabooks_digital_e_servico()
+        return products
+
+    def write(self, vals):
+        res = super().write(vals)
+        if {'is_storable', 'type', 'invoice_policy',
+                'metabooks_product_type'}.intersection(vals):
+            self._metabooks_digital_e_servico()
+        return res
+
+    def _metabooks_is_digital(self):
+        self.ensure_one()
+        return self.metabooks_product_type.name in onix_codes.DIGITAL_BOOK_TYPES
+
+    def _metabooks_digital_e_servico(self):
+        """Ebook e audiobook são serviço: sem caixa, sem prateleira, sem entrega.
+
+        Não basta desligar o estoque. No Odoo 19 toda mercadoria (`consu`),
+        estocável ou não, abre entrega quando o pedido é confirmado -- o
+        `sale_stock` olha só o `type` --, e o extrato mensal da Bookwire vira
+        pedido de venda para entrar em Vendas > Relatórios. Como mercadoria,
+        cada pedido deixaria uma entrega de arquivo esperando validação.
+
+        A regra mora no produto, e não só no conector, porque o conector não é
+        o único a escrever aqui: a migração do 15, o `08_consignment` e o import
+        do XML da NFe ligam o estoque por conta própria (em 27/09/2026 eram 112
+        fichas digitais estocáveis). Corrige em vez de recusar: um lote misto
+        não pode cair por causa de um ebook no meio.
+
+        E fatura-se o que foi pedido (`order`), seja qual for o interruptor da
+        casa: sem entrega, `delivery` deixaria `qty_delivered` em zero e o
+        pedido da Bookwire nunca ficaria pronto para faturar. Em 27/09/2026 o
+        interruptor do `dev` estava em `delivery`.
+
+        A NFe não muda: ela lê as linhas da fatura pelo `display_type`, não
+        pelo tipo do produto.
+        """
+        digitais = self.filtered(
+            lambda t: (t.type != 'service' or t.is_storable
+                       or t.invoice_policy != 'order')
+            and t._metabooks_is_digital())
+        if digitais:
+            digitais.write({'type': 'service', 'is_storable': False,
+                            'invoice_policy': 'order'})
+
     @api.depends('metabooks_page_count', 'metabooks_front_matter_pages',
                  'metabooks_back_matter_pages')
     def _compute_metabooks_total_page_count(self):

@@ -4,7 +4,7 @@
  "titulo": "O que acontece ao confirmar uma venda",
  "abertura": "Esta aula é o que o sistema faz sozinho: o comercial confirma o pedido, a entrega nasce, e já nasce com a transportadora do cliente. E os dois números que o depósito preenche.",
  "fecho": "A transportadora desce do cadastro na confirmação; as caixas quem conta é quem embala; o peso vem dos livros, em gramas. Trocar a transportadora aqui vale só para esta viagem.",
- "youtube": "https://www.youtube.com/watch?v=7h_fkkQe5Dg",
+ "youtube": "https://www.youtube.com/watch?v=1DmVAA6cohs",
  "quiz": [
   {
    "pergunta": "De onde vem a transportadora da entrega?",
@@ -70,5 +70,9 @@
    ],
    "correta": 2
   }
- ]
+ ],
+ "youtube_anterior": [
+  "https://www.youtube.com/watch?v=7h_fkkQe5Dg"
+ ],
+ "youtube_quadro": "2912x2080"
 }

@@ -19,7 +19,7 @@ Module Info.
     'license': 'AGPL-3',
     'post_init_hook': 'traduzir_os_rotulos',
     'category': 'Uncategorized',
-    'version': '19.0.1.14.0',
+    'version': '19.0.1.17.0',
     # Original v15 deps (kept for reference):
     # 'depends': ['base','stock','isbn_integration','br_account','account_accountant',
     #             'ean_creator','hedra_vendor_price_list_discount','website_sale', 'product'],

@@ -4,7 +4,7 @@
  "titulo": "O que há em cada menu, e a ideia",
  "abertura": "Esta aula é o mapa: a lista dos orçamentos, os dois relatórios e a configuração — e a ideia que sustenta o módulo.",
  "fecho": "O previsto se digita uma vez; o realizado entra sozinho, do razão. Monta-se uma vez por ano e acompanha-se uma vez por mês.",
- "youtube": "https://www.youtube.com/watch?v=W0yFhcRFRQY",
+ "youtube": "https://www.youtube.com/watch?v=9qgae-SLmYM",
  "quiz": [
   {
    "pergunta": "A ideia central do módulo é qual?",
@@ -70,5 +70,9 @@
    ],
    "correta": 2
   }
- ]
+ ],
+ "youtube_anterior": [
+  "https://www.youtube.com/watch?v=W0yFhcRFRQY"
+ ],
+ "youtube_quadro": "2912x2080"
 }

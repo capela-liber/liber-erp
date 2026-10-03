@@ -4,7 +4,7 @@
  "titulo": "O fechamento diário",
  "abertura": "Esta aula fecha um dia da feira: Trazer a mesa, corrigir para baixo o que vendeu, ler a coluna No caixa, e Fechar o dia.",
  "fecho": "Vendido é abertura mais reposição menos contagem; a contagem vem da mesa pelo botão; contagem maior é recusada; com o PDV o fechamento é conferência. A próxima aula é o caixa.",
- "youtube": "https://www.youtube.com/watch?v=UCs67pwLELQ",
+ "youtube": "https://www.youtube.com/watch?v=oLBdu0qzUYc",
  "quiz": [
   {
    "pergunta": "Como o sistema sabe o que vendeu no dia?",
@@ -70,5 +70,9 @@
    ],
    "correta": 2
   }
- ]
+ ],
+ "youtube_anterior": [
+  "https://www.youtube.com/watch?v=UCs67pwLELQ"
+ ],
+ "youtube_quadro": "2912x2080"
 }

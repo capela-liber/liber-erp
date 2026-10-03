@@ -4,7 +4,7 @@
  "titulo": "A equipe do evento e quem faz o quê",
  "abertura": "Última aula: a equipe do evento na aba Caixas, os dois perfis, o acesso temporário, e quem, na casa, faz o quê nas feiras.",
  "fecho": "Atendente vende e confere; Supervisor resolve o que só a praça resolve, sem planejar nem combinar remuneração; Sem conta trabalha o balcão sem entrar no sistema; o acesso vai e volta com o evento. Fim do curso Feiras II.",
- "youtube": "https://www.youtube.com/watch?v=Q3Kp5OVTda4",
+ "youtube": "https://www.youtube.com/watch?v=Ix2RH-Q-FeQ",
  "quiz": [
   {
    "pergunta": "O que a Atendente pode fazer?",
@@ -70,5 +70,9 @@
    ],
    "correta": 3
   }
- ]
+ ],
+ "youtube_anterior": [
+  "https://www.youtube.com/watch?v=Q3Kp5OVTda4"
+ ],
+ "youtube_quadro": "2912x2080"
 }

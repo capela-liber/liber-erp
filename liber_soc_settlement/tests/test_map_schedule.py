@@ -610,6 +610,359 @@ class TestMapSchedule(TransactionCase):
             'vai sair por cima do título' % papel.margin_top)
 
     # -- a configuração -----------------------------------------------------
+    # -- de quem o mapa vem -------------------------------------------------
+    #
+    # "Os clientes preferem pessoas a robôs" (22/09/2026). O mapa saía em nome
+    # da empresa; passou a sair em nome de quem a casa escolhesse nas
+    # Configurações (um campo único, para a casa inteira). Em 23/09/2026 esse
+    # campo foi removido: o automático passa a assinar com o **Líder de
+    # Equipe do Canal de Vendas** da própria CO (`team_id.user_id`) -- um
+    # remetente único não dizia qual time cuida daquele cliente, e times
+    # diferentes têm líderes diferentes. O endereço continua NÃO acompanhando
+    # a pessoa, e isso é infraestrutura: o provedor reescreve remetente não
+    # autorizado, e o endereço pessoal chegaria ao cliente trocado -- apagando
+    # justamente a pessoa.
+
+    def _com_remetente(self, nome='Maria Silva',
+                       email='maria.silva@teste.com.br'):
+        """Um canal de vendas com líder, e esse líder com e-mail PRÓPRIO.
+
+        O e-mail próprio existe na fixture de propósito: é ele que não pode
+        aparecer no remetente. Devolve (pessoa, time) -- quem usa ainda
+        precisa ligar `agr.team_id` ao time devolvido, porque o remetente
+        automático é por CANAL, não mais um campo único da casa.
+        """
+        pessoa = self.env['res.users'].create({
+            'name': nome, 'login': email, 'email': email})
+        time = self.env['crm.team'].create({
+            'name': 'Canal de %s' % nome, 'user_id': pessoa.id})
+        self.company.email = 'casa@teste.com.br'
+        return pessoa, time
+
+    def test_o_remetente_e_o_lider_do_time(self):
+        """O cliente vê o nome do líder do SEU canal na caixa de entrada."""
+        pessoa, time = self._com_remetente()
+        agr = self._agreement('Livraria do Remetente')
+        agr.team_id = time.id
+
+        co = agr._send_monthly_map()
+
+        remetente = self._mails(co).email_from
+        self.assertIn(pessoa.name, remetente,
+                      'o mapa continua saindo em nome do robô')
+        self.assertIn('casa@teste.com.br', remetente,
+                      'o remetente tem de usar o endereço da casa')
+
+    def test_o_autor_do_chatter_e_o_lider_do_time(self):
+        """A CARTA e o CHATTER têm de concordar sobre quem mandou.
+
+        `email_from` aqui é sempre o endereço da casa (nunca o pessoal), e o
+        Odoo resolve o autor da mensagem tentando casar esse endereço a um
+        parceiro -- como nunca casa (é o endereço da CASA, não da pessoa), o
+        autor caía sempre no executor do envio (o robô, num cron de
+        verdade), mesmo com o corpo assinado certo. Achado ao vivo em
+        23/09/2026."""
+        pessoa, time = self._com_remetente()
+        agr = self._agreement('Livraria do Autor')
+        agr.team_id = time.id
+
+        co = agr._send_monthly_map()
+
+        self.assertEqual(self._mails(co).author_id, pessoa.partner_id,
+                         'o chatter não mostra o líder do time como autor')
+
+    def test_o_endereco_pessoal_nao_vai_no_remetente(self):
+        """A GUARDA da decisão: vai o nome, nunca o endereço pessoal.
+
+        Endereço fora do domínio autorizado é reescrito pelo provedor (medido
+        na virada do e-mail, 09/08/2026: o Odoo manda como `odoo@edlab.press` e
+        chega como `odoo@hedra.com.br`). Pôr o pessoal aqui faria a pessoa
+        sumir no caminho, que é o oposto do que se quer.
+        """
+        pessoa, time = self._com_remetente()
+        agr = self._agreement('Livraria do Remetente')
+        agr.team_id = time.id
+
+        co = agr._send_monthly_map()
+
+        self.assertNotIn(pessoa.email, self._mails(co).email_from,
+                         'o endereço pessoal foi para o remetente e será '
+                         'reescrito pelo provedor')
+
+    def test_sem_time_ou_sem_lider_nada_muda(self):
+        """Sem canal (ou canal sem líder), comportamento de sempre: em nome
+        da casa -- não é mais uma configuração para esvaziar, é a ausência de
+        canal/líder na própria CO."""
+        agr = self._agreement('Livraria sem Time')
+        agr.team_id = False
+
+        co = agr._send_monthly_map()
+
+        self.assertEqual(self._mails(co).email_from,
+                         self.company.email_formatted or self.env.user.email_formatted)
+
+    def test_sem_lider_o_autor_e_a_empresa_nunca_o_executor(self):
+        """"Sem líder, nada muda" valia para a CARTA -- mas o chatter
+        continuava mostrando o robô que executa o cron por baixo de uma
+        carta assinada "Edlab Press". Incômodo relatado ao vivo em
+        23/09/2026, depois do primeiro conserto (que só cobria o caso COM
+        líder). O autor cai no parceiro da EMPRESA, nunca vazio."""
+        agr = self._agreement('Livraria sem Líder Nenhum')
+        agr.team_id = False
+
+        co = agr._send_monthly_map()
+
+        self.assertEqual(self._mails(co).author_id, self.company.partner_id,
+                         'sem líder, o chatter tem de mostrar a empresa, '
+                         'não o robô que executa o cron')
+
+    def test_a_resposta_volta_para_a_operacao(self):
+        """Pessoa no remetente, operação no Reply-To.
+
+        A resposta do cliente não pode cair na caixa individual: na CO ela tem
+        dono, prazo e fila, e alguém cobre a ausência de quem assinou.
+        """
+        pessoa, time = self._com_remetente()
+        agr = self._agreement('Livraria da Resposta')
+        agr.team_id = time.id
+
+        co = agr._send_monthly_map()
+
+        responder_para = self._mails(co).reply_to or ''
+        self.assertNotIn(
+            pessoa.email, responder_para,
+            'a resposta do cliente foi parar na caixa pessoal, fora da CO')
+
+    def test_a_assinatura_traz_o_nome_do_lider(self):
+        """Quem assina o corpo é a mesma pessoa do remetente -- carta de gente
+        não termina só com o nome da editora."""
+        pessoa, time = self._com_remetente()
+        agr = self._agreement('Livraria da Assinatura')
+        agr.team_id = time.id
+
+        co = agr._send_monthly_map()
+
+        corpo = self._mails(co).body_html or ''
+        self.assertIn(pessoa.name, corpo, 'o corpo não foi assinado')
+        self.assertIn(self.company.name, corpo,
+                      'a empresa sumiu da assinatura')
+
+    def test_dois_canais_assinam_com_lideres_diferentes(self):
+        """A razão de existir da mudança: times diferentes, líderes
+        diferentes -- não faz sentido um remetente único para a casa."""
+        pessoa_a, time_a = self._com_remetente(
+            nome='Líder A', email='lider.a@teste.com.br')
+        pessoa_b, time_b = self._com_remetente(
+            nome='Líder B', email='lider.b@teste.com.br')
+        agr_a = self._agreement('Livraria do Canal A')
+        agr_a.team_id = time_a.id
+        agr_b = self._agreement('Livraria do Canal B')
+        agr_b.team_id = time_b.id
+
+        co_a = agr_a._send_monthly_map()
+        co_b = agr_b._send_monthly_map()
+
+        self.assertIn(pessoa_a.name, self._mails(co_a).email_from)
+        self.assertIn(pessoa_b.name, self._mails(co_b).email_from)
+
+    # -- quem assina o clique manual é quem clicou, não o líder do time ------
+    #
+    # 22/09/2026: CO/2026/05748 saiu assinada "Gabriel Godoy" (o remetente
+    # automático, então um campo único das Configurações) tendo sido OUTRA
+    # pessoa a mandar pelo botão do contrato. O automático virou o Líder de
+    # Equipe do canal (23/09/2026); o clique humano continua assinando com
+    # `self.env.user`, mesmo quando o canal do cliente tem líder configurado.
+
+    def test_o_clique_humano_assina_com_quem_clicou(self):
+        """Mesmo com Líder de Equipe configurado no canal do cliente, o
+        clique manual assina com quem clicou -- o líder só entra no
+        automático."""
+        lider, time = self._com_remetente(nome='Maria Silva',
+                                          email='maria.silva@teste.com.br')
+        quem_clicou = self.env['res.users'].create({
+            'name': 'Sérgio Vendas', 'login': 'sergio.clique@teste.com',
+            'group_ids': [(6, 0, [
+                self.env.ref('base.group_user').id,
+                self.env.ref('liber_soc_agreements.group_soc_user').id])]})
+        agr = self._agreement('Livraria do Clique Humano')
+        agr.team_id = time.id
+
+        agr.with_user(quem_clicou).action_send_consignment_map()
+
+        mail = self._mails(self._cos(agr))
+        self.assertIn('Sérgio Vendas', mail.email_from,
+                      'o clique manual não assinou com quem clicou')
+        self.assertNotIn('Maria Silva', mail.email_from,
+                         'o clique manual assinou com o líder do time')
+        self.assertIn('Sérgio Vendas', mail.body_html,
+                      'o corpo do e-mail não assinou com quem clicou')
+        self.assertEqual(mail.author_id, quem_clicou.partner_id,
+                         'o chatter não mostra quem clicou como autor')
+
+    def test_clique_manual_sem_time_ainda_assina_com_quem_clicou(self):
+        """O clique manual não depende de o cliente ter canal/líder: mesmo
+        sem time nenhum, quem manda continua sendo quem clicou -- não
+        "ninguém"."""
+        quem_clicou = self.env['res.users'].create({
+            'name': 'Renata Comercial', 'login': 'renata.clique@teste.com',
+            'group_ids': [(6, 0, [
+                self.env.ref('base.group_user').id,
+                self.env.ref('liber_soc_agreements.group_soc_user').id])]})
+        agr = self._agreement('Livraria sem Time')
+        agr.team_id = False
+
+        agr.with_user(quem_clicou).action_send_consignment_map()
+
+        mail = self._mails(self._cos(agr))
+        self.assertIn('Renata Comercial', mail.email_from)
+
+    # -- o insolúvel não pode prender a fila --------------------------------
+    #
+    # Esta seção nasceu de um laço medido no staging em 21/09/2026: com o
+    # interruptor ligado e NENHUM dos 268 contratos com contato de Acertos com
+    # e-mail, o cron girou das 20:21 às 20:47 UTC sem parar, `remaining` cravado
+    # em 263, e mandou zero mapa. O carimbo de envio só cai no sucesso, então o
+    # insolúvel voltava à fila em toda rodada e a leva nunca passava dele.
+
+    def _roda_sem_orcamento(self, rodadas=6):
+        """Finge o executor no pior caso: orçamento zerado desde a primeira
+        chamada.
+
+        Não é caso exótico, é o normal: `cron_end_time` é fixado UMA vez por
+        job (`start_time + MIN_TIME_PER_JOB`, 10s) enquanto o executor chama o
+        trabalho no mínimo 10 vezes. Gastos os 10s iniciais, toda chamada
+        seguinte recebe zero -- processa um item e volta.
+        """
+        Agreement = self.env['consignment.agreement']
+        Cron = self.env['ir.cron']
+        original = type(Cron)._commit_progress
+
+        def sem_orcamento(self_cron, processed=0, *, remaining=None,
+                          deactivate=False):
+            return 0.0
+
+        type(Cron)._commit_progress = sem_orcamento
+        try:
+            for _rodada in range(rodadas):
+                Agreement.with_context(
+                    ir_cron_progress_id=1)._cron_send_monthly_maps()
+        finally:
+            type(Cron)._commit_progress = original
+
+    def test_o_insoluvel_nao_prende_o_cron_em_laco(self):
+        """O contrato sem destinatário não pode barrar quem vem atrás.
+
+        É O TESTE DO DEFEITO. Sem o carimbo de tentativa, a rodada sem
+        orçamento processa sempre o PRIMEIRO da fila; se ele é insolúvel, ele
+        continua na fila, e a rodada seguinte processa o mesmo -- para sempre.
+        A livraria de trás nunca recebe.
+        """
+        hoje = self._hoje_e_o_dia()
+        sem = self._agreement('Livraria Sem Acertos', email=False)
+        com = self._agreement('Livraria Com Acertos')
+
+        self._roda_sem_orcamento()
+
+        self.assertEqual(
+            com.map_last_sent_date, hoje,
+            'a livraria de trás nunca recebeu: o insolúvel prendeu a fila')
+        self.assertFalse(
+            sem.map_last_sent_date,
+            'quem não tem para quem mandar não pode constar como enviado')
+        self.assertNotIn(
+            sem, self._elegiveis_em(hoje),
+            'o insolúvel voltou para a fila e o cron nunca vai reportar zero')
+        self.assertNotIn(com, self._elegiveis_em(hoje))
+
+    def test_sem_destinatario_sai_da_fila_do_mes(self):
+        """Atendido é atendido, mesmo sem mapa: sai da fila até o mês virar.
+
+        A notícia de que faltou cadastro vai pela tarefa e pelo resumo do
+        canal, que é onde se conserta -- não por uma retentativa diária que não
+        tem como dar certo sozinha.
+        """
+        hoje = self._hoje_e_o_dia()
+        agr = self._agreement('Livraria Sem Acertos', email=False)
+
+        self.env['consignment.agreement']._cron_send_monthly_maps()
+
+        self.assertEqual(agr.map_last_attempt_date, hoje)
+        self.assertFalse(agr.map_last_sent_date)
+        self.assertNotIn(agr, self._elegiveis_em(hoje))
+        self.assertTrue(
+            self._tarefas(agr), 'sem mapa, a tarefa é a única notícia')
+
+    def test_o_mes_seguinte_tenta_de_novo_o_sem_cadastro(self):
+        """Sair da fila é DO MÊS, não para sempre: virado o mês, tenta-se de
+        novo -- o cadastro pode ter sido consertado."""
+        hoje = self._hoje_e_o_dia()
+        agr = self._agreement('Livraria Sem Acertos', email=False)
+        self.env['consignment.agreement']._cron_send_monthly_maps()
+        self.assertNotIn(agr, self._elegiveis_em(hoje))
+
+        agr.sudo().map_last_attempt_date = hoje - timedelta(days=40)
+        self.assertIn(agr, self._elegiveis_em(hoje))
+
+    def test_prateleira_vazia_tambem_sai_da_fila(self):
+        """Prateleira vazia não abre operação, mas foi ATENDIDA.
+
+        Sem o carimbo ela volta em toda rodada; e se a fila inteira for de
+        prateleira vazia, nenhum `_commit_progress` chega a ser chamado dentro
+        do laço, o executor fica com a declaração inicial acima de zero e o
+        cron roda em falso sem processar nada.
+        """
+        hoje = self._hoje_e_o_dia()
+        agr = self._agreement('Livraria Sem Prateleira', com_estoque=0)
+
+        self.env['consignment.agreement']._cron_send_monthly_maps()
+
+        self.assertEqual(agr.map_last_attempt_date, hoje)
+        self.assertFalse(agr.map_last_sent_date)
+        self.assertFalse(self._cos(agr), 'prateleira vazia não abre operação')
+        self.assertNotIn(agr, self._elegiveis_em(hoje))
+
+    def test_contrato_que_estoura_e_carimbado(self):
+        """O CASO DE ERRO: o que estoura também sai da fila.
+
+        O carimbo mora FORA do savepoint e depois do `except` justamente por
+        isto: dentro do bloco ele seria desfeito junto com o rollback, o
+        contrato voltaria à fila e estouraria de novo -- o mesmo laço, agora
+        por exceção em vez de por falta de e-mail.
+        """
+        hoje = self._hoje_e_o_dia()
+        agr = self._agreement('Livraria Que Estoura')
+        Agreement = type(self.env['consignment.agreement'])
+        original = Agreement._send_monthly_map
+
+        def estoura(self_agr, automatico=True):
+            raise ValueError('cadastro torto')
+
+        Agreement._send_monthly_map = estoura
+        try:
+            self.env['consignment.agreement']._cron_send_monthly_maps()
+        finally:
+            Agreement._send_monthly_map = original
+
+        self.assertEqual(
+            agr.map_last_attempt_date, hoje,
+            'o contrato que estourou ficou na fila e vai estourar de novo')
+        self.assertFalse(agr.map_last_sent_date)
+        self.assertNotIn(agr, self._elegiveis_em(hoje))
+
+    def test_o_carimbo_de_tentativa_nao_mente_sobre_o_envio(self):
+        """Quem recebeu tem os dois carimbos; quem não recebeu, só o da
+        tentativa. A tela do comercial lê o do envio, e ele não pode mentir."""
+        hoje = self._hoje_e_o_dia()
+        recebeu = self._agreement('Livraria Que Recebe')
+        nao_recebeu = self._agreement('Livraria Sem Acertos', email=False)
+
+        self.env['consignment.agreement']._cron_send_monthly_maps()
+
+        self.assertEqual(recebeu.map_last_sent_date, hoje)
+        self.assertEqual(recebeu.map_last_attempt_date, hoje)
+        self.assertFalse(nao_recebeu.map_last_sent_date)
+        self.assertEqual(nao_recebeu.map_last_attempt_date, hoje)
+
     def test_dia_invalido_e_recusado(self):
         Settings = self.env['res.config.settings']
         with self.assertRaises(ValidationError):

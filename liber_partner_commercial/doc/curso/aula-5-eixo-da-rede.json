@@ -4,7 +4,7 @@
  "titulo": "Onde o eixo da rede aparece",
  "abertura": "Esta aula mostra onde a rede vira eixo: na Análise de vendas, no painel de Notas de venda e no filtro dos Clientes.",
  "fecho": "A rede agrupa pedidos e notas nos relatórios; o que continua por loja é a cobrança, o contrato e a prateleira. As próximas aulas são o painel de Vendas.",
- "youtube": "https://www.youtube.com/watch?v=NeLNPXfFFHI",
+ "youtube": "https://www.youtube.com/watch?v=VjycbchueS8",
  "quiz": [
   {
    "pergunta": "Como ver quanto se vendeu para a rede inteira?",
@@ -70,5 +70,9 @@
    ],
    "correta": 0
   }
- ]
+ ],
+ "youtube_anterior": [
+  "https://www.youtube.com/watch?v=NeLNPXfFFHI"
+ ],
+ "youtube_quadro": "2912x2080"
 }

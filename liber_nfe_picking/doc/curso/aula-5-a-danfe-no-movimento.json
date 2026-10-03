@@ -4,7 +4,7 @@
  "titulo": "A DANFE no movimento",
  "abertura": "Esta aula é a nota chegando sozinha ao depósito: como ela acha a transferência, onde o PDF aparece, e o que acontece se ela for cancelada depois.",
  "fecho": "A nota não se anexa à mão: autorizada, ela acha a transferência pelo pedido e carimba, com o PDF no histórico. Cancelada, avisa uma vez.",
- "youtube": "https://www.youtube.com/watch?v=iL6r8kHYInI",
+ "youtube": "https://www.youtube.com/watch?v=A3aTQRU5nuM",
  "quiz": [
   {
    "pergunta": "Como a nota acha a transferência dela?",
@@ -70,5 +70,9 @@
    ],
    "correta": 0
   }
- ]
+ ],
+ "youtube_anterior": [
+  "https://www.youtube.com/watch?v=iL6r8kHYInI"
+ ],
+ "youtube_quadro": "2912x2080"
 }

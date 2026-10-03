@@ -30,7 +30,7 @@
   }
  ],
  "fecho": "O que muda na devolução é o cadastro da nota, não o jeito de emitir: a nota de origem preenchida, e uma operação fiscal de ENTRADA, mesmo sendo nós a emitir. Sem a referência, o módulo barra antes de mandar: a SEFAZ não saberia o que está sendo devolvido.",
- "youtube": "",
+ "youtube": "https://www.youtube.com/watch?v=W7TuC76bYG4",
  "quiz": [
   {
    "pergunta": "Que documento é uma devolução de venda no sistema?",
@@ -96,5 +96,6 @@
    ],
    "correta": 1
   }
- ]
+ ],
+ "youtube_quadro": "2912x2080"
 }

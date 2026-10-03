@@ -4,7 +4,7 @@
  "titulo": "A saúde de cada título",
  "abertura": "Ok, Atenção, Crítico, Sem retorno: uma etiqueta por título, pelos dias desde o último acerto naquele cliente. Nesta aula, onde ela aparece e como se lê.",
  "fecho": "A mesma régua na operação e no relatório Na Prateleira, atualizada toda manhã. Na última aula, os relatórios.",
- "youtube": "https://www.youtube.com/watch?v=j1NLeWevcGc",
+ "youtube": "https://www.youtube.com/watch?v=gXxmZWoSTrM",
  "quiz": [
   {
    "pergunta": "Um título nunca foi acertado neste cliente. Desde quando conta a sua saúde?",
@@ -70,5 +70,9 @@
    ],
    "correta": 0
   }
- ]
+ ],
+ "youtube_anterior": [
+  "https://www.youtube.com/watch?v=j1NLeWevcGc"
+ ],
+ "youtube_quadro": "2912x2080"
 }

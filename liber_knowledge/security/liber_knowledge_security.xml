@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Every internal user reads the wiki. The OCA gives the reader group
+         only to the admin; here it rides on base.group_user, which portal
+         and public users can never have, so the wiki stays internal. -->
+    <record id="base.group_user" model="res.groups">
+        <field name="implied_ids" eval="[(4, ref('document_knowledge.group_document_user'))]"/>
+    </record>
+
+    <!-- Whoever administers the settings also manages the wiki. -->
+    <record id="base.group_system" model="res.groups">
+        <field name="implied_ids" eval="[(4, ref('document_page.group_document_manager'))]"/>
+    </record>
+</odoo>

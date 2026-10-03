@@ -4,7 +4,7 @@
  "titulo": "Entre empresas: apurar, cobrar, e o que não acontece",
  "abertura": "Esta aula fecha o curso: a venda da irmã entra na apuração com a Empresa de Origem, a fatura acumuladora cresce, lançá-la cria o espelho — e o que o módulo não faz.",
  "fecho": "O autor recebe da detentora; a irmã deve à detentora. Venda própria não cobra, rodar duas vezes não duplica, cancelar devolve. Fim do curso.",
- "youtube": "",
+ "youtube": "https://www.youtube.com/watch?v=Pz-lrxVecYI",
  "quiz": [
   {
    "pergunta": "A irmã vendeu o livro. De quem o autor recebe?",
@@ -70,5 +70,6 @@
    ],
    "correta": 0
   }
- ]
+ ],
+ "youtube_quadro": "2912x2080"
 }

@@ -4,7 +4,7 @@
  "titulo": "O CFOP decide o documento",
  "abertura": "Bem-vindo ao curso três de Consignação. Este é o que fica por baixo dos fluxos: o fiscal, a contabilidade e a auditoria. Três operações tiram livros do armazém sem vender e não são a mesma coisa; é o CFOP que diz qual documento cada uma gera.",
  "fecho": "Consignação, bonificação e feira saem por CFOPs próprios, e só o acerto fatura. Nas próximas aulas, os blocos das Definições campo a campo, a nota de remessa, e a auditoria.",
- "youtube": "https://www.youtube.com/watch?v=g8aZYff095I",
+ "youtube": "https://www.youtube.com/watch?v=CaWAvrzJYT4",
  "quiz": [
   {
    "pergunta": "Qual CFOP marca uma remessa em consignação?",
@@ -70,5 +70,9 @@
    ],
    "correta": 2
   }
- ]
+ ],
+ "youtube_anterior": [
+  "https://www.youtube.com/watch?v=g8aZYff095I"
+ ],
+ "youtube_quadro": "2912x2080"
 }

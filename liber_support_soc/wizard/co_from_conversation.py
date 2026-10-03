@@ -30,7 +30,7 @@ from markupsafe import Markup
 from odoo import api, fields, models, _
 from odoo.exceptions import UserError, ValidationError
 
-from ..models import co_parser
+from ..models import bookwire_report, co_parser
 
 _logger = logging.getLogger(__name__)
 
@@ -116,6 +116,22 @@ class CoFromConversation(models.Model):
     # delas, a tela grita. Aviso forte + confirmação explícita, não
     # bloqueio — há caso legítimo (filial emitindo pela matriz).
     cnpj_alert = fields.Char(readonly=True)
+    # O relatório mensal da Bookwire (27/09/2026). Quando o anexo é ele, o
+    # preço de cada linha é o LÍQUIDO que a Bookwire paga, e não o de capa:
+    # é uma prestação de contas, não um pedido que o cliente escreveu.
+    report_period = fields.Char(
+        string='Bookwire report', readonly=True,
+        help="Month (MM/YYYY) of the Bookwire sales report read from the "
+             "attachment. Prices are then the publisher's net amount from "
+             "the report.")
+    report_alert = fields.Char(
+        readonly=True,
+        help="Titles of the report whose product is still a storable good: "
+             "confirming the order would open a delivery for them.")
+    report_company_id = fields.Many2one(
+        'res.company', string='Publisher', readonly=True,
+        help="The house company named in the report. The order is created "
+             "in it, whatever the company of the ticket.")
     cnpj_override = fields.Boolean(
         string='Create anyway — I checked the CNPJ mismatch',
         help="The NFe XML names two parties and the partner above is "
@@ -170,7 +186,33 @@ class CoFromConversation(models.Model):
         records._check_anchor()
         return records
 
+    @staticmethod
+    def _sem_linhas_virtuais(vals):
+        """Tira do salvamento as ordens sobre linhas que só existiram na tela.
+
+        Escolher o arquivo relê a grade NA TELA (`_onchange_source_file`), e
+        as linhas novas nascem com id `virtual_N`. Quando a releitura roda
+        duas vezes seguidas, a segunda descarta as linhas da primeira -- e o
+        cliente web devolve, no salvamento, um "apague virtual_N" para uma
+        linha que nunca foi ao banco. O Postgres recusa o id em texto e o
+        assistente inteiro caía (staging, chamado 2129, 27/09/2026:
+        `invalid input syntax for type integer: "virtual_602"`).
+
+        Apagar ou alterar o que nunca existiu não tem efeito a perder: só se
+        descarta o comando. Criar (0) e as linhas reais passam intactas."""
+        comandos = vals.get('line_ids')
+        if not isinstance(comandos, list):
+            return vals
+        limpos = [c for c in comandos
+                  if not (isinstance(c, (list, tuple)) and len(c) > 1
+                          and c[0] in (1, 2, 3)
+                          and isinstance(c[1], str))]
+        if len(limpos) == len(comandos):
+            return vals
+        return dict(vals, line_ids=limpos)
+
     def write(self, vals):
+        vals = self._sem_linhas_virtuais(vals)
         res = super().write(vals)
         # O que o related fazia sozinho: corrigir o cliente aqui corrige o
         # do chamado. Na CO não se escreve de volta — lá o cliente é a
@@ -286,6 +328,87 @@ class CoFromConversation(models.Model):
             }))
         self.line_ids = commands
 
+    def _build_report_lines(self, report):
+        """As linhas do relatório da Bookwire, já com preço e sem palpite.
+
+        Casa só por ISBN -- no código de barras, e depois na referência
+        interna, onde o legado guardou o ISBN de muita ficha --: é a chave do
+        relatório, e um título digital casado pelo nome cairia no livro
+        impresso de mesmo título.
+
+        Produto que ainda é mercadoria sai como "Conferir": a Bookwire só
+        vende arquivo, e confirmar o pedido abriria entrega para ele. Não
+        bloqueia -- corrigir o cadastro é trabalho de catálogo, não do
+        faturamento do mês --, mas avisa em cima da grade."""
+        products = self._all_products()
+        # Índice montado uma vez: filtrar o catálogo inteiro por linha levava
+        # ~9 s por releitura no staging, com 115 linhas.
+        por_barcode, por_ref = {}, {}
+        for p in products:
+            if p.barcode:
+                por_barcode.setdefault(p.barcode, p)
+            if p.default_code:
+                por_ref.setdefault(p.default_code, p)
+        commands = [(5, 0, 0)]
+        mercadorias = set()
+        for linha in bookwire_report.linhas_do_pedido(report['titulos']):
+            isbn = linha['isbn']
+            product = (por_barcode.get(isbn) or por_ref.get(isbn)
+                       or self.env['product.product'])
+            if product and product.type == 'consu':
+                mercadorias.add(isbn)
+            commands.append((0, 0, {
+                'label_source': '%s %s' % (isbn, linha['titulo']),
+                'product_id': product.id or False,
+                'qty': linha['qty'],
+                'price_unit': linha['preco'],
+                'note': linha['nota'] or False,
+                'confidence': ('none' if not product
+                               else 'weak' if product.type == 'consu'
+                               else 'exact'),
+                'dest': 'sold',
+            }))
+        self.line_ids = commands
+        self.default_dest = 'sale'
+        self.report_period = report['periodo'] or '?'
+        self.report_company_id = self._report_company(report['editora'])
+        if mercadorias:
+            self.report_alert = _(
+                "%(count)s title(s) of the report are still storable goods "
+                "in the catalogue (marked \"Check!\"): confirming the order "
+                "opens a delivery for them. Make them ebook/audiobook on the "
+                "product.", count=len(mercadorias))
+        if not self.partner_id:
+            # O e-mail chega encaminhado de dentro da casa ("Fwd:"), e o
+            # chamado nasce sem cliente. Se o anexo é o relatório da
+            # Bookwire, o cliente é a Bookwire -- não há o que perguntar.
+            self.partner_id = self._report_partner()
+
+    @staticmethod
+    def _norm_company(name):
+        name = re.sub(r"[-–—.,;:()'\"]", ' ', (name or '').lower())
+        name = re.sub(r'\b(ltda|me|eireli|s a|sa|epp)\b', ' ', name)
+        return re.sub(r'\s+', ' ', name).strip()
+
+    def _report_partner(self):
+        """O contato da Bookwire, se houver um só."""
+        hits = self.env['res.partner'].search(
+            [('name', 'ilike', 'bookwire'), ('parent_id', '=', False),
+             ('is_company', '=', True)], limit=2)
+        return hits if len(hits) == 1 else self.env['res.partner']
+
+    def _report_company(self, publisher):
+        """A empresa da casa que o relatório nomeia ('Editora Hedra LTDA'
+        -> Editora Hedra). Só com um casamento sem dúvida; senão, nenhuma, e
+        o pedido fica na empresa do chamado."""
+        alvo = self._norm_company(publisher)
+        if not alvo:
+            return self.env['res.company']
+        empresas = self.env['res.company'].sudo().search([])
+        hits = empresas.filtered(
+            lambda c: self._norm_company(c.name) == alvo)
+        return hits if len(hits) == 1 else self.env['res.company']
+
     def _source_files(self):
         """(nome, bytes) de cada arquivo preenchido. O binário do upload
         pode chegar impróprio no onchange (o cliente web manda o tamanho,
@@ -310,6 +433,14 @@ class CoFromConversation(models.Model):
         exata, e somar duplicaria item. Sem XML (ou com XML vazio ou
         quebrado), vale a soma antiga: arquivo + texto bruto."""
         self.ensure_one()
+        self.report_period = False
+        self.report_company_id = False
+        self.report_alert = False
+        for name, raw in self._source_files():
+            texto = bookwire_report.ler(name, raw)
+            if texto:
+                self._build_report_lines(bookwire_report.interpretar(texto))
+                return
         xml_parts, other_parts = [], []
         for name, raw in self._source_files():
             if co_parser.is_nfe_xml(name, raw):
@@ -430,8 +561,9 @@ class CoFromConversation(models.Model):
             attachment = self.env['ir.attachment'].search(
                 [('res_model', '=', record._name),
                  ('res_id', '=', record.id),
-                 '|', '|', ('name', '=ilike', '%.xlsx'),
+                 '|', '|', '|', ('name', '=ilike', '%.xlsx'),
                  ('name', '=ilike', '%.csv'),
+                 ('name', '=ilike', '%.zip'),
                  ('name', '=ilike', '%.pdf')],
                 order='id desc', limit=1)
         return source, attachment
@@ -485,6 +617,8 @@ class CoFromConversation(models.Model):
         com regra de desconto, `price_unit` fica o preço de capa e o abatimento
         aparece na coluna de desconto -- exatamente o que a tela promete.
         """
+        if self.report_period:
+            return self._report_order_values(anchor, lines)
         return {
             'partner_id': self.partner_id.id,
             'company_id': anchor.company_id.id,
@@ -495,6 +629,38 @@ class CoFromConversation(models.Model):
             }) for line in lines],
         }
 
+    def _report_order_values(self, anchor, lines):
+        """O pedido do relatório da Bookwire: preço do relatório, desconto
+        zero, empresa da editora, canal do cliente.
+
+        Aqui o preço escrito VENCE, ao contrário da venda comum: não é o
+        cliente dizendo quanto quer pagar, é a Bookwire prestando contas do
+        que já vendeu. A lista de preço não tem o que dizer.
+
+        A equipe vem do contato NA EMPRESA do pedido -- é campo por empresa
+        (`liber_partner_commercial`), e é assim que o filtro "Canal de vendas"
+        do painel acha o digital. `client_order_ref` segue a convenção que as
+        notas da Bookwire já usavam: `Period:MM/AAAA`."""
+        company = self.report_company_id or anchor.company_id
+        partner = self.partner_id.with_company(company)
+        values = {
+            'partner_id': partner.id,
+            'company_id': company.id,
+            'origin': anchor.name,
+            'client_order_ref': 'Period:%s' % self.report_period,
+            'order_line': [(0, 0, dict({
+                'product_id': line.product_id.id,
+                'product_uom_qty': line.qty,
+                'price_unit': line.price_unit,
+                'discount': 0.0,
+            }, **({'name': '%s\n%s' % (line.product_id.display_name,
+                                          line.note)}
+                  if line.note else {}))) for line in lines],
+        }
+        if 'team_id' in partner._fields and partner.team_id:
+            values['team_id'] = partner.team_id.id
+        return values
+
     def _action_create_sale(self, anchor, lines):
         """A opção Venda: um pedido, nenhuma CO.
 
@@ -503,7 +669,20 @@ class CoFromConversation(models.Model):
         escrito: `sale_order_id` da CO é o pedido do acerto, gerado pelo
         `action_run`, e escrevê-lo aqui faria a CO apontar para uma venda
         firme como se fosse a sua apuração."""
-        order = self.env['sale.order'].create(
+        if self.report_period:
+            faltam = self.line_ids.filtered(lambda l: not l.product_id)
+            if faltam:
+                # Linha sem produto some do pedido, e o pedido deixaria de
+                # somar o que a Bookwire paga. Melhor parar e dizer quais.
+                raise UserError(_(
+                    "The Bookwire report has %(count)s line(s) with no "
+                    "product in the house — the order would not add up to "
+                    "the report. Pick the product on each line, or fix the "
+                    "ISBN on the product:\n%(isbns)s",
+                    count=len(faltam),
+                    isbns='\n'.join(faltam.mapped('label_source'))))
+        order = self.env['sale.order'].with_company(
+            self.report_company_id or anchor.company_id).create(
             self._sale_order_values(anchor, lines))
         if anchor._name == 'liber.support.ticket':
             anchor.sale_order_id = order
@@ -516,8 +695,18 @@ class CoFromConversation(models.Model):
         # Odoo usa nas suas próprias anotações, e o `Markup` é o que impede o
         # `message_post` de escapá-lo (o nome do cliente e a lista continuam
         # escapados, por virem pelo `%`).
-        anchor.message_post(
-            body=Markup(_(
+        if self.report_period:
+            body = Markup(_(
+                'Sale order %(link)s drafted from the Bookwire report '
+                '%(period)s: %(count)s line(s), %(total)s — the net amount '
+                'of the report.')) % {
+                    'link': order._get_html_link(),
+                    'period': self.report_period,
+                    'count': len(lines),
+                    'total': order.amount_untaxed,
+                }
+        else:
+            body = Markup(_(
                 'Sale order %(link)s drafted from this conversation: '
                 '%(count)s line(s), cover price with the customer\'s '
                 'pricelist (%(pricelist)s).')) % {
@@ -525,8 +714,9 @@ class CoFromConversation(models.Model):
                     'count': len(lines),
                     'pricelist': (order.pricelist_id.display_name
                                   or _('none')),
-                },
-            message_type='comment', subtype_xmlid='mail.mt_note')
+                }
+        anchor.message_post(
+            body=body, message_type='comment', subtype_xmlid='mail.mt_note')
         # E a volta: o pedido guarda a CO só no `origin`, que é texto solto.
         # Quem cai nele por uma busca não tem como voltar à operação que o
         # gerou sem procurar o número à mão.
@@ -651,6 +841,10 @@ class CoFromConversationLine(models.Model):
         'product.product', string='Product',
         domain=[('sale_ok', '=', True)])
     qty = fields.Integer(string='Qty', default=1)
+    # Só o relatório da Bookwire traz preço; nas outras fontes fica vazio e o
+    # pedido usa a lista do cliente.
+    price_unit = fields.Float(string='Unit Price', digits='Product Price')
+    note = fields.Char(string='Note', readonly=True)
     dest = fields.Selection([
         ('sold', 'Settle (sold)'),
         ('return', 'Return'),

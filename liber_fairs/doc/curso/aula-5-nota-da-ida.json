@@ -4,7 +4,7 @@
  "titulo": "A nota da ida",
  "abertura": "Livro na estrada sem nota é livro apreendido. Esta aula é a nota de simples remessa: para exposição ou feira, emitida para a própria editora, uma por carga.",
  "fecho": "Simples remessa, CFOP de feira, destinatário a própria editora; nasce baixada, declara o despachado; uma carga, uma nota. A próxima aula é o calendário e o número.",
- "youtube": "https://www.youtube.com/watch?v=_jRUNGrUqp8",
+ "youtube": "https://www.youtube.com/watch?v=WUtI_QK_mcw",
  "quiz": [
   {
    "pergunta": "Quem é o destinatário da nota de remessa da feira?",
@@ -70,5 +70,9 @@
    ],
    "correta": 1
   }
- ]
+ ],
+ "youtube_anterior": [
+  "https://www.youtube.com/watch?v=_jRUNGrUqp8"
+ ],
+ "youtube_quadro": "2912x2080"
 }

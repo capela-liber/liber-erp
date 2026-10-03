@@ -36,7 +36,7 @@
   }
  ],
  "fecho": "Quatro lugares: a fatura, a aba NFe dentro dela, as Operações fiscais em Configuração e a ficha da empresa. A ficha da empresa é tela de administrador — o Financeiro a lê. As próximas aulas preenchem cada um deles.",
- "youtube": "",
+ "youtube": "https://www.youtube.com/watch?v=q14_ck4ZY6E",
  "quiz": [
   {
    "pergunta": "Onde se emite uma NF-e no sistema?",
@@ -102,5 +102,6 @@
    ],
    "correta": 0
   }
- ]
+ ],
+ "youtube_quadro": "2912x2080"
 }

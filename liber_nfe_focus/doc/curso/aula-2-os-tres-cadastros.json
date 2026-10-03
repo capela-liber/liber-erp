@@ -45,7 +45,7 @@
   }
  ],
  "fecho": "Empresa, cliente e produto. O indicador de IE do cliente é o campo que mais derruba nota: contribuinte tem inscrição estadual e ela viaja; isento de inscrição não tem; não contribuinte é o consumidor final. E a SEFAZ confere tudo contra o cadastro — os dois CNPJs contra a Receita Federal, a IE contra o cadastro estadual. Por isso o cliente deste curso é uma empresa do grupo, e não uma livraria inventada.",
- "youtube": "",
+ "youtube": "https://www.youtube.com/watch?v=OZ3BP_4QT20",
  "quiz": [
   {
    "pergunta": "O token da Focus aparece na ficha da empresa para quem não administra o sistema?",
@@ -111,5 +111,6 @@
    ],
    "correta": 2
   }
- ]
+ ],
+ "youtube_quadro": "2912x2080"
 }

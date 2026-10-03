@@ -4,7 +4,7 @@
  "titulo": "O que há em cada menu, e a escada",
  "abertura": "Bem-vindo ao curso Feiras I: montar e levar. Feira não é venda: é uma remessa temporária. O livro sai, fica dias sob a guarda de outra pessoa, vende em parte, e volta incompleto. Esta aula é o mapa do aplicativo Eventos e a escada que toda feira sobe.",
  "fecho": "Calendário, Eventos, Fechamentos diários, Modelos de grade, Perdas e Recebimentos; e a escada Rascunho, Planejado, Enviado, Retornado, um botão por degrau. A próxima aula monta a grade.",
- "youtube": "https://www.youtube.com/watch?v=gfcR9m4rQN4",
+ "youtube": "https://www.youtube.com/watch?v=GvVk3_WaLGg",
  "quiz": [
   {
    "pergunta": "Por que uma feira não passa pelo fluxo de venda comum?",
@@ -70,5 +70,9 @@
    ],
    "correta": 1
   }
- ]
+ ],
+ "youtube_anterior": [
+  "https://www.youtube.com/watch?v=gfcR9m4rQN4"
+ ],
+ "youtube_quadro": "2912x2080"
 }

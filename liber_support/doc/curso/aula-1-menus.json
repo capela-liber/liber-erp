@@ -4,7 +4,7 @@
  "titulo": "O que há em cada menu",
  "abertura": "Bem-vindo ao curso de Atendimento ao cliente. O e-mail que o cliente manda para a caixa comercial vira um chamado com dono, prazo e documento atrás; o comercial vive nessa tela. Esta aula é o mapa: o quadro, a lista e a Configuração.",
  "fecho": "Quadro por estágio, lista com filtros, e Configuração com equipes, estágios, etiquetas e definições. A próxima aula mostra de onde vem um chamado.",
- "youtube": "https://www.youtube.com/watch?v=AvCG4Mz4N6U",
+ "youtube": "https://www.youtube.com/watch?v=g5ex8w2R1CU",
  "quiz": [
   {
    "pergunta": "O que é cada coluna do quadro de Atendimento?",
@@ -70,5 +70,9 @@
    ],
    "correta": 2
   }
- ]
+ ],
+ "youtube_anterior": [
+  "https://www.youtube.com/watch?v=AvCG4Mz4N6U"
+ ],
+ "youtube_quadro": "2912x2080"
 }

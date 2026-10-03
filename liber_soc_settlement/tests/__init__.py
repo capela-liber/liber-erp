@@ -9,3 +9,5 @@ from . import test_populate_merge
 from . import test_map_schedule
 from . import test_tour_mapa_avulso
 from . import test_disparo_destinatarios
+from . import test_map_csv
+from . import test_map_run_wizard

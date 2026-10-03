@@ -4,7 +4,7 @@
  "titulo": "Pedir a coleta",
  "abertura": "Esta aula manda a transportadora vir buscar: seleciona-se as entregas na lista, o assistente agrupa por transportadora, e cada uma recebe seu e-mail e seu lote.",
  "fecho": "A coleta se pede da lista e sai agrupada por transportadora, uma solicitação para cada, com número COL e as caixas e o peso somados. Quem ficou sem transportadora aparece no aviso amarelo.",
- "youtube": "https://www.youtube.com/watch?v=2RDP27VXR9s",
+ "youtube": "https://www.youtube.com/watch?v=it2j8UR8OKY",
  "quiz": [
   {
    "pergunta": "Como se pede a coleta?",
@@ -70,5 +70,9 @@
    ],
    "correta": 1
   }
- ]
+ ],
+ "youtube_anterior": [
+  "https://www.youtube.com/watch?v=2RDP27VXR9s"
+ ],
+ "youtube_quadro": "2912x2080"
 }

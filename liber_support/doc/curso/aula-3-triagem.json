@@ -4,7 +4,7 @@
  "titulo": "A triagem no quadro",
  "abertura": "Esta aula é a triagem: o que se faz com o que está em Novo. Três gestos: mover de coluna, marcar prioridade e atribuir.",
  "fecho": "Arrastar muda o estágio; a estrela encurta os prazos; Assumir dá dono ao chamado, e sem dono o prazo estoura em silêncio. A próxima aula é responder.",
- "youtube": "https://www.youtube.com/watch?v=u15Xy3bV5Uw",
+ "youtube": "https://www.youtube.com/watch?v=JiVlGhXLT8o",
  "quiz": [
   {
    "pergunta": "O que acontece ao arrastar um cartão de Novo para Em andamento?",
@@ -70,5 +70,9 @@
    ],
    "correta": 3
   }
- ]
+ ],
+ "youtube_anterior": [
+  "https://www.youtube.com/watch?v=u15Xy3bV5Uw"
+ ],
+ "youtube_quadro": "2912x2080"
 }

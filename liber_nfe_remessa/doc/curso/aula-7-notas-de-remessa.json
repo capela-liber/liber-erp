@@ -33,7 +33,7 @@
   }
  ],
  "fecho": "Diário próprio, que tira a remessa da receita; posição fiscal com baixa automática, que quita o a receber no instante em que a nota é confirmada; e uma lista só, em Clientes, Remessas, com a origem de cada uma. Trocar a posição fiscal de uma remessa por uma de venda é a porta que o módulo fecha: a nota sairia sem imposto e viraria receita. Fim do curso.",
- "youtube": "",
+ "youtube": "https://www.youtube.com/watch?v=kGOwFXFMLIE",
  "quiz": [
   {
    "pergunta": "O que faz de um diário um diário de remessa?",
@@ -99,5 +99,6 @@
    ],
    "correta": 1
   }
- ]
+ ],
+ "youtube_quadro": "2912x2080"
 }

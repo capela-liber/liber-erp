@@ -4,7 +4,7 @@
  "titulo": "Quando algo não sai como esperado",
  "abertura": "Última aula: os erros comuns, onde eles ficam escritos, e o que nunca se conserta pelo lado do Olist.",
  "fecho": "Cancelado entra cancelado; sem detalhe espera leitura; livro não localizado se resolve no espelho do catálogo; e o que é do livro da casa se acerta aqui. Fim do curso.",
- "youtube": "https://www.youtube.com/watch?v=IlmW-Tqc168",
+ "youtube": "https://www.youtube.com/watch?v=9uUodeNDjow",
  "quiz": [
   {
    "pergunta": "Um pedido cancelado no Olist:",
@@ -70,5 +70,9 @@
    ],
    "correta": 1
   }
- ]
+ ],
+ "youtube_anterior": [
+  "https://www.youtube.com/watch?v=IlmW-Tqc168"
+ ],
+ "youtube_quadro": "2912x2080"
 }

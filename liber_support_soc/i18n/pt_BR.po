@@ -6,14 +6,45 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0-20260630\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-10 16:38+0000\n"
+"POT-Creation-Date: 2026-09-27 13:15+0000\n"
 "PO-Revision-Date: 2026-08-10 16:38+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
+
+#. module: liber_support_soc
+#. odoo-python
+#: code:addons/liber_support_soc/wizard/co_from_conversation.py:0
+msgid "%(count)s line(s) imported into this consignment."
+msgstr "%(count)s linha(s) importada(s) para esta consignação."
+
+#. module: liber_support_soc
+#. odoo-python
+#: code:addons/liber_support_soc/wizard/co_from_conversation.py:0
+msgid "%(count)s title(s) of the report are still storable goods in the catalogue (marked \"Check!\"): confirming the order opens a delivery for them. Make them ebook/audiobook on the product."
+msgstr "%(count)s título(s) do relatório ainda são mercadoria estocável no catálogo (marcados \"Conferir!\"): confirmar o pedido abre entrega para eles. Torne-os ebook/audiolivro no produto."
+
+#. module: liber_support_soc
+#. odoo-python
+#: code:addons/liber_support_soc/wizard/co_from_conversation.py:0
+msgid "%(name)s is not a draft any more: it was already run, and adding lines to it would change an operation the customer has already been given. Open a new consignment."
+msgstr "%(name)s não está mais em rascunho: já foi executada, e somar linhas nela mudaria uma operação que o cliente já recebeu. Abra uma nova consignação."
+
+#. module: liber_support_soc
+#. odoo-python
+#: code:addons/liber_support_soc/models/consignment_settlement.py:0
+msgid "%(name)s is not a draft any more: it was already run. Open a new consignment to import into."
+msgstr "%(name)s não está mais em rascunho: já foi executada. Abra uma nova consignação para importar."
+
+#. module: liber_support_soc
+#. odoo-python
+#: code:addons/liber_support_soc/wizard/co_from_conversation.py:0
+msgid "%(partner)s has no CNPJ on file, so the NFe XML (parties: %(docs)s) could not be checked against it."
+msgstr "%(partner)s não tem CNPJ na ficha, então o XML da NFe (pontas: %(docs)s) não pôde ser conferido contra ele."
 
 #. module: liber_support_soc
 #. odoo-python
@@ -22,19 +53,30 @@ msgid "%s has no consignment yet."
 msgstr "%s ainda não tem consignação."
 
 #. module: liber_support_soc
-#: model_terms:ir.ui.view,arch_db:liber_support_soc.view_support_ticket_form_soc
-msgid "<span class=\"o_stat_text\">CO</span>"
-msgstr "<span class=\"o_stat_text\">CO</span>"
+#: model_terms:ir.ui.view,arch_db:liber_support_soc.view_co_from_conversation_form
+msgid "<b>Bookwire sales report.</b> Creates a sale order with the <b>net amount the publisher receives</b> for each title, as in the report — no pricelist, no discount. The order adds up to the report to the cent."
+msgstr "<b>Relatório de vendas da Bookwire.</b> Cria um pedido de venda com o <b>líquido que a editora recebe</b> por título, como no relatório — sem lista de preço, sem desconto. O pedido soma o relatório ao centavo."
 
 #. module: liber_support_soc
-#: model:ir.model.fields,help:liber_support_soc.field_liber_support_co_wizard__attachment_id
-msgid "A .xlsx or .csv that came with the conversation."
-msgstr "Um .xlsx ou .csv que veio com a conversa."
+#: model_terms:ir.ui.view,arch_db:liber_support_soc.view_support_ticket_form_soc
+msgid "<span class=\"o_stat_text\">Consignment</span>"
+msgstr "<span class=\"o_stat_text\">Consignação</span>"
+
+#. module: liber_support_soc
+#. odoo-python
+#: code:addons/liber_support_soc/wizard/co_from_conversation.py:0
+msgid "A draft belongs either to a support ticket or to a consignment — never to both, never to neither."
+msgstr "Um rascunho pertence a um chamado ou a uma consignação — nunca aos dois, nunca a nenhum."
 
 #. module: liber_support_soc
 #: model:ir.model.fields,field_description:liber_support_soc.field_liber_support_ticket__agreement_id
 msgid "Agreement"
 msgstr "Acordo"
+
+#. module: liber_support_soc
+#: model:ir.model.fields,help:liber_support_soc.field_liber_support_co_wizard__attachment_id
+msgid "An NFe .xml, .xlsx, .csv or system-generated PDF that came with the conversation. Picking a file re-reads the lines. An NFe XML is the best source — exact ISBN and quantity — and, when present, the e-mail text is not read on top of it. Scanned PDFs (photos) have no text layer and come out empty."
+msgstr "Um .xml de NFe, .xlsx, .csv ou PDF gerado por sistema que veio com a conversa. Escolher um arquivo relê as linhas. O XML de NFe é a melhor fonte — ISBN e quantidade exatos — e, quando presente, o texto do e-mail não é lido por cima dele. PDF escaneado (foto) não tem camada de texto e sai vazio."
 
 #. module: liber_support_soc
 #: model:ir.model.fields,field_description:liber_support_soc.field_liber_support_co_wizard__default_dest
@@ -48,23 +90,24 @@ msgstr "Como veio"
 
 #. module: liber_support_soc
 #: model_terms:ir.ui.view,arch_db:liber_support_soc.view_support_ticket_form_soc
-msgid ""
-"Attach the partner's consignment map (what they hold on the shelf) to a "
-"reply."
-msgstr ""
-"Anexa o mapa de consignação do parceiro (o que ele tem em campo) à resposta."
+msgid "Attach the partner's consignment map (what they hold on the shelf) to a reply."
+msgstr "Anexa o mapa de consignação do parceiro (o que ele tem em campo) à resposta."
 
 #. module: liber_support_soc
 #: model:ir.model.fields,field_description:liber_support_soc.field_liber_support_co_wizard__attachment_id
-msgid "Attached spreadsheet"
-msgstr "Planilha anexa"
+msgid "Attached file"
+msgstr "Arquivo anexo"
 
 #. module: liber_support_soc
-#: model:ir.model.fields,help:liber_support_soc.field_liber_support_co_wizard__partner_id
-msgid ""
-"Auto-linked only when the sender email is unique in the base — a duplicated "
-"email matching the wrong partner is worse than no match."
-msgstr "Vinculado automaticamente só quando o e-mail do remetente é único na base — duplicado casando o parceiro errado é pior que não casar."
+#: model:ir.model.fields,field_description:liber_support_soc.field_liber_support_co_wizard__report_period
+msgid "Bookwire report"
+msgstr "Relatório Bookwire"
+
+#. module: liber_support_soc
+#. odoo-python
+#: code:addons/liber_support_soc/wizard/co_from_conversation.py:0
+msgid "CNPJ mismatch: %(partner)s (%(vat)s) is neither the issuer nor the recipient of this NFe XML (parties: %(docs)s). Check the file and the partner before creating anything."
+msgstr "CNPJ divergente: %(partner)s (%(vat)s) não é nem o emitente nem o destinatário deste XML de NFe (pontas: %(docs)s). Confira o arquivo e o parceiro antes de criar qualquer coisa."
 
 #. module: liber_support_soc
 #. odoo-python
@@ -88,13 +131,18 @@ msgid "Closing keeps the draft; reopen the ticket button to come back to it."
 msgstr "Fechar guarda o rascunho; reabra pelo botão do chamado para voltar."
 
 #. module: liber_support_soc
+#: model:ir.model.fields,field_description:liber_support_soc.field_liber_support_co_wizard__cnpj_alert
+msgid "Cnpj Alert"
+msgstr "Alerta de CNPJ"
+
+#. module: liber_support_soc
 #: model:ir.model,name:liber_support_soc.model_consignment_settlement
 msgid "Consignment"
 msgstr "Consignação"
 
 #. module: liber_support_soc
-#: model:ir.model.fields,field_description:liber_support_soc.field_liber_support_ticket__settlement_id
 #: model:ir.model.fields,field_description:liber_support_soc.field_liber_support_co_wizard__settlement_id
+#: model:ir.model.fields,field_description:liber_support_soc.field_liber_support_ticket__settlement_id
 msgid "Consignment (CO)"
 msgstr "Consignação (CO)"
 
@@ -110,6 +158,11 @@ msgid "Create"
 msgstr "Criar"
 
 #. module: liber_support_soc
+#: model:ir.model.fields,field_description:liber_support_soc.field_liber_support_co_wizard__cnpj_override
+msgid "Create anyway — I checked the CNPJ mismatch"
+msgstr "Criar mesmo assim — conferi a divergência de CNPJ"
+
+#. module: liber_support_soc
 #: model:ir.model.fields,field_description:liber_support_soc.field_liber_support_co_wizard__create_uid
 #: model:ir.model.fields,field_description:liber_support_soc.field_liber_support_co_wizard_line__create_uid
 msgid "Created by"
@@ -120,6 +173,19 @@ msgstr "Criado por"
 #: model:ir.model.fields,field_description:liber_support_soc.field_liber_support_co_wizard_line__create_date
 msgid "Created on"
 msgstr "Criado em"
+
+#. module: liber_support_soc
+#: model_terms:ir.ui.view,arch_db:liber_support_soc.view_co_from_conversation_form
+msgid ""
+"Creates a <b>sale order</b> and no CO. Cover price of the\n"
+"                    product, with the <b>customer's pricelist</b> — the price\n"
+"                    written in the e-mail is ignored, and the consignment\n"
+"                    agreement is not read."
+msgstr ""
+"Cria um <b>pedido de venda</b> e nenhuma CO. Preço de capa do\n"
+"                    produto, com a <b>lista de preço do cliente</b> — o preço\n"
+"                    escrito no e-mail é ignorado, e o acordo de consignação\n"
+"                    não entra."
 
 #. module: liber_support_soc
 #: model:ir.model.fields,field_description:liber_support_soc.field_liber_support_co_wizard_line__dest
@@ -135,11 +201,15 @@ msgid "Display Name"
 msgstr "Nome exibido"
 
 #. module: liber_support_soc
+#. odoo-python
+#: code:addons/liber_support_soc/wizard/co_from_conversation.py:0
+msgid "Drafted from %(link)s."
+msgstr "Criado em rascunho a partir de %(link)s."
+
+#. module: liber_support_soc
 #: model:ir.model.fields,help:liber_support_soc.field_liber_support_co_wizard__default_dest
-msgid ""
-"Every proposed line gets this destination; change a single line on the grid "
-"for exceptions."
-msgstr "Toda linha proposta recebe este destino; mude linhas individuais na grade para exceções."
+msgid "Every proposed line gets this destination; change a single line on the grid for exceptions. 'Sale' is the odd one: it creates a plain sale order and no consignment settlement."
+msgstr "Toda linha proposta recebe este destino; mude uma linha na grade para as exceções. 'Venda' é a diferente: cria um pedido de venda comum e nenhuma CO."
 
 #. module: liber_support_soc
 #: model:ir.model.fields.selection,name:liber_support_soc.selection__liber_support_co_wizard_line__confidence__exact
@@ -162,13 +232,19 @@ msgstr "Bom"
 #: model:ir.model.fields,field_description:liber_support_soc.field_liber_support_co_wizard_line__id
 #: model:ir.model.fields,field_description:liber_support_soc.field_liber_support_ticket__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: liber_support_soc
-#: model_terms:ir.ui.view,arch_db:liber_support_soc.view_support_ticket_form_soc
 #: model_terms:ir.ui.view,arch_db:liber_support_soc.view_consignment_settlement_form_support
+#: model_terms:ir.ui.view,arch_db:liber_support_soc.view_support_ticket_form_soc
 msgid "Import"
 msgstr "Importar"
+
+#. module: liber_support_soc
+#. odoo-python
+#: code:addons/liber_support_soc/wizard/co_from_conversation.py:0
+msgid "Import lines into this consignment"
+msgstr "Importar linhas para esta consignação"
 
 #. module: liber_support_soc
 #: model_terms:ir.ui.view,arch_db:liber_support_soc.view_support_ticket_form_soc
@@ -194,12 +270,6 @@ msgid "Link a partner first — the CO comes from them."
 msgstr "Vincule um parceiro primeiro — a CO vem dele."
 
 #. module: liber_support_soc
-#. odoo-python
-#: code:addons/liber_support_soc/wizard/co_from_conversation.py:0
-msgid "Link a partner to the ticket first — a CO needs its customer."
-msgstr "Vincule um parceiro ao chamado primeiro — a CO precisa do cliente."
-
-#. module: liber_support_soc
 #: model_terms:ir.ui.view,arch_db:liber_support_soc.view_support_ticket_form_soc
 msgid "Map"
 msgstr "Mapa"
@@ -210,13 +280,15 @@ msgid "Match"
 msgstr "Confiança"
 
 #. module: liber_support_soc
+#: model:ir.model.fields,help:liber_support_soc.field_liber_support_co_wizard__report_period
+msgid "Month (MM/YYYY) of the Bookwire sales report read from the attachment. Prices are then the publisher's net amount from the report."
+msgstr "Mês (MM/AAAA) do relatório de vendas da Bookwire lido do anexo. Os preços passam a ser o líquido da editora no relatório."
+
+#. module: liber_support_soc
 #. odoo-python
 #: code:addons/liber_support_soc/models/support_ticket.py:0
-msgid ""
-"No consignment found for this ticket: link a CO or a partner that has one."
-msgstr ""
-"Nenhuma consignação encontrada para este chamado: vincule uma CO ou um "
-"parceiro que tenha uma."
+msgid "No consignment found for this ticket: link a CO or a partner that has one."
+msgstr "Nenhuma consignação encontrada para este chamado: vincule uma CO ou um parceiro que tenha uma."
 
 #. module: liber_support_soc
 #. odoo-python
@@ -228,6 +300,16 @@ msgstr "Nenhuma linha aproveitável: toda linha precisa de produto e quantidade.
 #: model:ir.model.fields.selection,name:liber_support_soc.selection__liber_support_co_wizard_line__confidence__none
 msgid "Not found"
 msgstr "Não achado"
+
+#. module: liber_support_soc
+#: model:ir.model.fields,field_description:liber_support_soc.field_liber_support_co_wizard_line__note
+msgid "Note"
+msgstr "Observação"
+
+#. module: liber_support_soc
+#: model:ir.model.constraint,message:liber_support_soc.constraint_liber_support_co_wizard_settlement_uniq
+msgid "One draft per consignment — reopen it instead."
+msgstr "Um rascunho por consignação — reabra o que existe."
 
 #. module: liber_support_soc
 #: model:ir.model.constraint,message:liber_support_soc.constraint_liber_support_co_wizard_ticket_uniq
@@ -251,10 +333,13 @@ msgid "Or upload a file"
 msgstr "Ou envie um arquivo"
 
 #. module: liber_support_soc
+#: model_terms:ir.ui.view,arch_db:liber_support_soc.view_consignment_settlement_form_support
+msgid "Parse an e-mail, a pasted Excel range, a spreadsheet, a PDF or an NFe XML into lines, check them, and add them to this consignment."
+msgstr "Transforma um e-mail, um trecho colado do Excel, uma planilha, um PDF ou um XML de NFe em linhas, para conferir e somar a esta consignação."
+
+#. module: liber_support_soc
 #: model_terms:ir.ui.view,arch_db:liber_support_soc.view_support_ticket_form_soc
-msgid ""
-"Parse the conversation (or pasted text / Excel) into settlement lines, check"
-" them, and draft the CO."
+msgid "Parse the conversation (or pasted text / Excel) into settlement lines, check them, and draft the CO."
 msgstr "Lê a conversa (ou texto colado / Excel), propõe as linhas do acerto para conferência e cria a CO em rascunho."
 
 #. module: liber_support_soc
@@ -269,9 +354,7 @@ msgstr "Cole aqui — texto livre ou direto do Excel (um título por linha)…"
 
 #. module: liber_support_soc
 #: model:ir.model.fields,help:liber_support_soc.field_liber_support_co_wizard__source_text
-msgid ""
-"Pre-filled with the customer's emails. Paste here freely — including "
-"straight from Excel (tab-separated works)."
+msgid "Pre-filled with the customer's emails. Paste here freely — including straight from Excel (tab-separated works)."
 msgstr "Pré-preenchido com os e-mails do cliente. Cole aqui à vontade — inclusive direto do Excel (separado por tab funciona)."
 
 #. module: liber_support_soc
@@ -290,6 +373,11 @@ msgid "Proposed Lines"
 msgstr "Linhas propostas"
 
 #. module: liber_support_soc
+#: model:ir.model.fields,field_description:liber_support_soc.field_liber_support_co_wizard__report_company_id
+msgid "Publisher"
+msgstr "Editora"
+
+#. module: liber_support_soc
 #: model:ir.model.fields,field_description:liber_support_soc.field_liber_support_co_wizard_line__qty
 msgid "Qty"
 msgstr "Qtd"
@@ -306,12 +394,8 @@ msgstr "Reler"
 
 #. module: liber_support_soc
 #: model_terms:ir.ui.view,arch_db:liber_support_soc.view_co_from_conversation_form
-msgid ""
-"Re-reading rebuilds every proposed line and discards manual edits on them. "
-"Continue?"
-msgstr ""
-"Reler refaz todas as linhas propostas e descarta as edições manuais. "
-"Continuar?"
+msgid "Re-reading rebuilds every proposed line and discards manual edits on them. Continue?"
+msgstr "Reler refaz todas as linhas propostas e descarta as edições manuais. Continuar?"
 
 #. module: liber_support_soc
 #: model:ir.model.fields.selection,name:liber_support_soc.selection__liber_support_co_wizard__default_dest__replenish
@@ -320,10 +404,32 @@ msgid "Replenish"
 msgstr "Reposição"
 
 #. module: liber_support_soc
+#: model:ir.model.fields,field_description:liber_support_soc.field_liber_support_co_wizard__report_alert
+msgid "Report Alert"
+msgstr "Alerta do relatório"
+
+#. module: liber_support_soc
 #: model:ir.model.fields.selection,name:liber_support_soc.selection__liber_support_co_wizard__default_dest__return
 #: model:ir.model.fields.selection,name:liber_support_soc.selection__liber_support_co_wizard_line__dest__return
 msgid "Return"
 msgstr "Devolução"
+
+#. module: liber_support_soc
+#: model:ir.model.fields.selection,name:liber_support_soc.selection__liber_support_co_wizard__default_dest__sale
+msgid "Sale"
+msgstr "Venda"
+
+#. module: liber_support_soc
+#. odoo-python
+#: code:addons/liber_support_soc/wizard/co_from_conversation.py:0
+msgid "Sale order %(link)s drafted from the Bookwire report %(period)s: %(count)s line(s), %(total)s — the net amount of the report."
+msgstr "Pedido de venda %(link)s criado em rascunho a partir do relatório Bookwire %(period)s: %(count)s linha(s), %(total)s — o líquido do relatório."
+
+#. module: liber_support_soc
+#. odoo-python
+#: code:addons/liber_support_soc/wizard/co_from_conversation.py:0
+msgid "Sale order %(link)s drafted from this conversation: %(count)s line(s), cover price with the customer's pricelist (%(pricelist)s)."
+msgstr "Pedido de venda %(link)s criado em rascunho desta conversa: %(count)s linha(s), a preço de capa com a lista do cliente (%(pricelist)s)."
 
 #. module: liber_support_soc
 #: model:ir.model.fields.selection,name:liber_support_soc.selection__liber_support_co_wizard__default_dest__sold
@@ -333,10 +439,18 @@ msgstr "Acerto"
 
 #. module: liber_support_soc
 #: model:ir.model.fields,help:liber_support_soc.field_liber_support_co_wizard_line__dest
-msgid ""
-"Sold feeds the settlement (qty_reported); Return recalls stock from the "
-"shelf (qty_return); Replenish resends to refill the shelf (qty_replenish)."
+msgid "Sold feeds the settlement (qty_reported); Return recalls stock from the shelf (qty_return); Replenish resends to refill the shelf (qty_replenish)."
 msgstr "Acerto alimenta a apuração (qty_reported); Devolução recolhe da prateleira (qty_return); Reposição reenvia para reabastecer (qty_replenish)."
+
+#. module: liber_support_soc
+#: model:ir.model.fields,field_description:liber_support_soc.field_liber_support_co_wizard__source_model
+msgid "Source Model"
+msgstr "Modelo de origem"
+
+#. module: liber_support_soc
+#: model:ir.model.fields,field_description:liber_support_soc.field_liber_support_co_wizard__source_res_id
+msgid "Source Res"
+msgstr "Registro de origem"
 
 #. module: liber_support_soc
 #: model_terms:ir.ui.view,arch_db:liber_support_soc.view_consignment_settlement_form_support
@@ -359,156 +473,22 @@ msgid "Support Tickets"
 msgstr "Chamados de atendimento"
 
 #. module: liber_support_soc
+#. odoo-python
+#: code:addons/liber_support_soc/wizard/co_from_conversation.py:0
+msgid ""
+"The Bookwire report has %(count)s line(s) with no product in the house — the order would not add up to the report. Pick the product on each line, or fix the ISBN on the product:\n"
+"%(isbns)s"
+msgstr "O relatório da Bookwire tem %(count)s linha(s) sem produto na casa — o pedido não somaria o relatório. Escolha o produto em cada linha, ou corrija o ISBN no produto:\n%(isbns)s"
+
+#. module: liber_support_soc
 #: model:ir.model.fields,help:liber_support_soc.field_liber_support_ticket__settlement_id
 msgid "The CO this conversation is about."
 msgstr "A CO de que trata esta conversa."
 
 #. module: liber_support_soc
-#: model:ir.model.fields,help:liber_support_soc.field_liber_support_ticket__agreement_id
-msgid ""
-"The consignment agreement (AC/), when the subject is the contract itself."
-msgstr "O acordo de consignação (AC/), quando o assunto é o próprio contrato."
-
-#. module: liber_support_soc
-#: model:ir.model.fields,field_description:liber_support_soc.field_liber_support_co_wizard__ticket_id
-msgid "Ticket"
-msgstr "Chamado"
-
-#. module: liber_support_soc
-#: model:ir.model.fields,help:liber_support_soc.field_liber_support_co_wizard_line__label_source
-msgid "What the conversation actually said."
-msgstr "O que a conversa disse, literalmente."
-
-#. module: liber_support_soc
-#: model:ir.model.fields,field_description:liber_support_soc.field_liber_support_co_wizard_line__wizard_id
-msgid "Wizard"
-msgstr "Assistente"
-
-#. module: liber_support_soc
-#: model:ir.model.fields,field_description:liber_support_soc.field_liber_support_co_wizard__xlsx_filename
-msgid "Xlsx Filename"
-msgstr "Nome do arquivo"
-
-#. module: liber_support_soc
-#: model:ir.model.fields,field_description:liber_support_soc.field_liber_support_co_wizard__attachment_id
-msgid "Attached file"
-msgstr "Arquivo anexo"
-
-#. module: liber_support_soc
-#: model:ir.model.fields,help:liber_support_soc.field_liber_support_co_wizard__attachment_id
-msgid ""
-"A .xlsx, .csv or system-generated PDF that came with the conversation. "
-"Scanned PDFs (photos) have no text layer and come out empty."
-msgstr "Um .xlsx, .csv ou PDF gerado por sistema que veio com a conversa. PDF escaneado (foto) não tem camada de texto e sai vazio."
-
-#. module: liber_support_soc
-#: model:ir.model.fields.selection,name:liber_support_soc.selection__liber_support_co_wizard__default_dest__sale
-msgid "Sale"
-msgstr "Venda"
-
-#. module: liber_support_soc
-#. odoo-python
-#: code:addons/liber_support_soc/wizard/co_from_conversation.py:0
-msgid ""
-"This conversation has no customer yet. Fill in the customer above — it is "
-"saved on the ticket too — and then create the %(documento)s."
-msgstr ""
-"Esta conversa ainda não tem cliente. Preencha o Parceiro aí em cima — ele é "
-"gravado também no chamado — e depois crie o %(documento)s."
-
-#. module: liber_support_soc
-#. odoo-python
-#: code:addons/liber_support_soc/wizard/co_from_conversation.py:0
-msgid "sale order"
-msgstr "pedido de venda"
-
-#. module: liber_support_soc
-#. odoo-python
-#: code:addons/liber_support_soc/wizard/co_from_conversation.py:0
-msgid "consignment settlement (CO)"
-msgstr "acerto de consignação (CO)"
-
-#. module: liber_support_soc
-#: model_terms:ir.ui.view,arch_db:liber_support_soc.view_co_from_conversation_form
-msgid ""
-"This conversation has no <b>customer</b> yet. Fill in the\n"
-"                    partner above — it is saved on the ticket too — before\n"
-"                    creating the document."
-msgstr ""
-"Esta conversa ainda não tem <b>cliente</b>. Preencha o\n"
-"                    Parceiro aí em cima — ele é gravado também no chamado —\n"
-"                    antes de criar o documento."
-
-#. module: liber_support_soc
-#: model_terms:ir.ui.view,arch_db:liber_support_soc.view_co_from_conversation_form
-msgid ""
-"Creates a <b>sale order</b> and no CO. Cover price of the\n"
-"                    product, with the <b>customer's pricelist</b> — the price\n"
-"                    written in the e-mail is ignored, and the consignment\n"
-"                    agreement is not read."
-msgstr ""
-"Cria um <b>pedido de venda</b> e nenhuma CO. Preço de capa do\n"
-"                    produto, com a <b>lista de preço do cliente</b> — o preço\n"
-"                    escrito no e-mail é ignorado, e o acordo de consignação\n"
-"                    não entra."
-
-#. module: liber_support_soc
-#: model:ir.model.fields,help:liber_support_soc.field_liber_support_co_wizard__partner_id
-msgid "The customer of this conversation. Setting it here also sets it on the ticket."
-msgstr "O cliente desta conversa. Preencher aqui grava também no chamado."
-
-#. module: liber_support_soc
-#: model:ir.model.fields,help:liber_support_soc.field_liber_support_co_wizard__attachment_id
-msgid ""
-"An NFe .xml, .xlsx, .csv or system-generated PDF that came with the "
-"conversation. Picking a file re-reads the lines. An NFe XML is the best "
-"source — exact ISBN and quantity — and, when present, the e-mail text is "
-"not read on top of it. Scanned PDFs (photos) have no text layer and come "
-"out empty."
-msgstr ""
-"Um .xml de NFe, .xlsx, .csv ou PDF gerado por sistema que veio com a "
-"conversa. Escolher um arquivo relê as linhas. O XML de NFe é a melhor "
-"fonte — ISBN e quantidade exatos — e, quando presente, o texto do e-mail "
-"não é lido por cima dele. PDF escaneado (foto) não tem camada de texto e "
-"sai vazio."
-
-#. module: liber_support_soc
-#: model:ir.model.fields,field_description:liber_support_soc.field_liber_support_co_wizard__cnpj_override
-msgid "Create anyway — I checked the CNPJ mismatch"
-msgstr "Criar mesmo assim — conferi a divergência de CNPJ"
-
-#. module: liber_support_soc
 #: model:ir.model.fields,help:liber_support_soc.field_liber_support_co_wizard__cnpj_override
-msgid ""
-"The NFe XML names two parties and the partner above is neither of them. "
-"Tick to confirm this is intentional (e.g. a branch issuing under the head "
-"office)."
-msgstr ""
-"O XML da NFe nomeia duas pontas e o parceiro acima não é nenhuma delas. "
-"Marque para confirmar que é intencional (ex.: filial emitindo pela "
-"matriz)."
-
-#. module: liber_support_soc
-#. odoo-python
-#: code:addons/liber_support_soc/wizard/co_from_conversation.py:0
-msgid ""
-"%(partner)s has no CNPJ on file, so the NFe XML (parties: %(docs)s) could "
-"not be checked against it."
-msgstr ""
-"%(partner)s não tem CNPJ na ficha, então o XML da NFe (pontas: %(docs)s) "
-"não pôde ser conferido contra ele."
-
-#. module: liber_support_soc
-#. odoo-python
-#: code:addons/liber_support_soc/wizard/co_from_conversation.py:0
-msgid ""
-"CNPJ mismatch: %(partner)s (%(vat)s) is neither the issuer nor the "
-"recipient of this NFe XML (parties: %(docs)s). Check the file and the "
-"partner before creating anything."
-msgstr ""
-"CNPJ divergente: %(partner)s (%(vat)s) não é nem o emitente nem o "
-"destinatário deste XML de NFe (pontas: %(docs)s). Confira o arquivo e o "
-"parceiro antes de criar qualquer coisa."
+msgid "The NFe XML names two parties and the partner above is neither of them. Tick to confirm this is intentional (e.g. a branch issuing under the head office)."
+msgstr "O XML da NFe nomeia duas pontas e o parceiro acima não é nenhuma delas. Marque para confirmar que é intencional (ex.: filial emitindo pela matriz)."
 
 #. module: liber_support_soc
 #. odoo-python
@@ -525,74 +505,6 @@ msgstr ""
 "Se for intencional, marque \"Criar mesmo assim\" e crie de novo."
 
 #. module: liber_support_soc
-#: model:ir.model.fields,help:liber_support_soc.field_liber_support_co_wizard__settlement_id
-msgid ""
-"When the draft was opened from a consignment, the imported lines land in "
-"THIS operation."
-msgstr ""
-"Quando o rascunho foi aberto de uma consignação, as linhas importadas caem "
-"NESTA operação."
-
-#. module: liber_support_soc
-#. odoo-python
-#: code:addons/liber_support_soc/wizard/co_from_conversation.py:0
-msgid "Import lines into this consignment"
-msgstr "Importar linhas para esta consignação"
-
-#. module: liber_support_soc
-#. odoo-python
-#: code:addons/liber_support_soc/wizard/co_from_conversation.py:0
-msgid "%(count)s line(s) imported into this consignment."
-msgstr "%(count)s linha(s) importada(s) para esta consignação."
-
-#. module: liber_support_soc
-#. odoo-python
-#: code:addons/liber_support_soc/wizard/co_from_conversation.py:0
-msgid ""
-"A draft belongs either to a support ticket or to a consignment — never to "
-"both, never to neither."
-msgstr ""
-"Um rascunho pertence a um chamado ou a uma consignação — nunca aos dois, "
-"nunca a nenhum."
-
-#. module: liber_support_soc
-#. odoo-python
-#: code:addons/liber_support_soc/wizard/co_from_conversation.py:0
-msgid ""
-"%(name)s is not a draft any more: it was already run, and adding lines to it "
-"would change an operation the customer has already been given. Open a new "
-"consignment."
-msgstr ""
-"%(name)s não está mais em rascunho: já foi executada, e somar linhas nela "
-"mudaria uma operação que o cliente já recebeu. Abra uma nova consignação."
-
-#. module: liber_support_soc
-#. odoo-python
-#: code:addons/liber_support_soc/models/consignment_settlement.py:0
-msgid ""
-"%(name)s is not a draft any more: it was already run. Open a new "
-"consignment to import into."
-msgstr ""
-"%(name)s não está mais em rascunho: já foi executada. Abra uma nova "
-"consignação para importar."
-
-#. module: liber_support_soc
-#: model:ir.model.constraint,message:liber_support_soc.constraint_liber_support_co_wizard_settlement_uniq
-msgid "One draft per consignment — reopen it instead."
-msgstr "Um rascunho por consignação — reabra o que existe."
-
-#. module: liber_support_soc
-#: model_terms:ir.ui.view,arch_db:liber_support_soc.view_consignment_settlement_form_support
-msgid ""
-"Parse an e-mail, a pasted Excel range, a\n"
-"spreadsheet, a PDF or an NFe XML into lines, check them, and add them to this\n"
-"consignment."
-msgstr ""
-"Lê um e-mail, uma colagem do Excel, uma\n"
-"planilha, um PDF ou um XML de NFe como linhas, confere e as soma nesta\n"
-"consignação."
-
-#. module: liber_support_soc
 #: model_terms:ir.ui.view,arch_db:liber_support_soc.view_co_from_conversation_form
 msgid ""
 "The checked lines are <b>added to this consignment</b>,\n"
@@ -604,22 +516,86 @@ msgstr ""
 "                    mapa — nenhuma segunda CO é criada."
 
 #. module: liber_support_soc
-#. odoo-python
-#: code:addons/liber_support_soc/wizard/co_from_conversation.py:0
+#: model:ir.model.fields,help:liber_support_soc.field_liber_support_ticket__agreement_id
+msgid "The consignment agreement (AC/), when the subject is the contract itself."
+msgstr "O acordo de consignação (AC/), quando o assunto é o próprio contrato."
+
+#. module: liber_support_soc
+#: model:ir.model.fields,help:liber_support_soc.field_liber_support_co_wizard__partner_id
+msgid "The customer of this conversation. Setting it here also sets it on the ticket."
+msgstr "O cliente desta conversa. Preencher aqui grava também no chamado."
+
+#. module: liber_support_soc
+#: model:ir.model.fields,help:liber_support_soc.field_liber_support_co_wizard__report_company_id
+msgid "The house company named in the report. The order is created in it, whatever the company of the ticket."
+msgstr "A empresa da casa nomeada no relatório. O pedido nasce nela, qualquer que seja a empresa do chamado."
+
+#. module: liber_support_soc
+#: model_terms:ir.ui.view,arch_db:liber_support_soc.view_co_from_conversation_form
 msgid ""
-"Sale order %(link)s drafted from this conversation: %(count)s line(s), cover "
-"price with the customer's pricelist (%(pricelist)s)."
+"This conversation has no <b>customer</b> yet. Fill in the\n"
+"                    partner above — it is saved on the ticket too — before\n"
+"                    creating the document."
 msgstr ""
-"Pedido de venda %(link)s criado em rascunho desta conversa: %(count)s "
-"linha(s), a preço de capa com a lista do cliente (%(pricelist)s)."
+"Esta conversa ainda não tem <b>cliente</b>. Preencha o\n"
+"                    Parceiro aí em cima — ele é gravado também no chamado —\n"
+"                    antes de criar o documento."
 
 #. module: liber_support_soc
 #. odoo-python
 #: code:addons/liber_support_soc/wizard/co_from_conversation.py:0
-msgid "Drafted from %(link)s."
-msgstr "Criado em rascunho a partir de %(link)s."
+msgid "This conversation has no customer yet. Fill in the customer above — it is saved on the ticket too — and then create the %(documento)s."
+msgstr "Esta conversa ainda não tem cliente. Preencha o Parceiro aí em cima — ele é gravado também no chamado — e depois crie o %(documento)s."
 
 #. module: liber_support_soc
-#: model_terms:ir.ui.view,arch_db:liber_support_soc.view_support_ticket_form_soc
-msgid "Consignment"
-msgstr "Consignação"
+#: model:ir.model.fields,field_description:liber_support_soc.field_liber_support_co_wizard__ticket_id
+msgid "Ticket"
+msgstr "Chamado"
+
+#. module: liber_support_soc
+#: model:ir.model.fields,help:liber_support_soc.field_liber_support_co_wizard__report_alert
+msgid "Titles of the report whose product is still a storable good: confirming the order would open a delivery for them."
+msgstr "Títulos do relatório cujo produto ainda é mercadoria estocável: confirmar o pedido abriria entrega para eles."
+
+#. module: liber_support_soc
+#: model:ir.model.fields,field_description:liber_support_soc.field_liber_support_co_wizard_line__price_unit
+msgid "Unit Price"
+msgstr "Preço unitário"
+
+#. module: liber_support_soc
+#: model:ir.model.fields,help:liber_support_soc.field_liber_support_co_wizard_line__label_source
+msgid "What the conversation actually said."
+msgstr "O que a conversa disse, literalmente."
+
+#. module: liber_support_soc
+#: model:ir.model.fields,help:liber_support_soc.field_liber_support_co_wizard__settlement_id
+msgid "When the draft was opened from a consignment, the imported lines land in THIS operation."
+msgstr "Quando o rascunho foi aberto de uma consignação, as linhas importadas caem NESTA operação."
+
+#. module: liber_support_soc
+#: model:ir.model.fields,field_description:liber_support_soc.field_liber_support_co_wizard_line__wizard_id
+msgid "Wizard"
+msgstr "Assistente"
+
+#. module: liber_support_soc
+#: model:ir.model.fields,field_description:liber_support_soc.field_liber_support_co_wizard__xlsx_filename
+msgid "Xlsx Filename"
+msgstr "Nome do arquivo"
+
+#. module: liber_support_soc
+#. odoo-python
+#: code:addons/liber_support_soc/wizard/co_from_conversation.py:0
+msgid "consignment settlement (CO)"
+msgstr "acerto de consignação (CO)"
+
+#. module: liber_support_soc
+#. odoo-python
+#: code:addons/liber_support_soc/wizard/co_from_conversation.py:0
+msgid "none"
+msgstr "nenhuma"
+
+#. module: liber_support_soc
+#. odoo-python
+#: code:addons/liber_support_soc/wizard/co_from_conversation.py:0
+msgid "sale order"
+msgstr "pedido de venda"

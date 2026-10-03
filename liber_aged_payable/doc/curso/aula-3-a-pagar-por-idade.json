@@ -4,7 +4,7 @@
  "titulo": "Contas a pagar por idade",
  "abertura": "Esta aula é a gêmea do outro lado do razão: o que a casa deve, por fornecedor, nas mesmas faixas.",
  "fecho": "As duas telas juntas respondem a pergunta do mês: o que entra cobre o que sai, e quando.",
- "youtube": "https://www.youtube.com/watch?v=a0k7UeDcf3U",
+ "youtube": "https://www.youtube.com/watch?v=pyN9kQiWh0E",
  "quiz": [
   {
    "pergunta": "A tela de contas a pagar por idade organiza por quê?",
@@ -70,5 +70,9 @@
    ],
    "correta": 1
   }
- ]
+ ],
+ "youtube_anterior": [
+  "https://www.youtube.com/watch?v=a0k7UeDcf3U"
+ ],
+ "youtube_quadro": "2912x2080"
 }

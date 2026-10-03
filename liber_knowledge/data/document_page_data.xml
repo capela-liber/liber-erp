@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <!-- Page names are content, not interface: they are written in
+         Portuguese and are not translated. -->
+    <record id="page_liber_manuals" model="document.page">
+        <field name="name">Manuais do Liber</field>
+        <field name="type">category</field>
+        <field name="company_id" eval="False"/>
+    </record>
+    <record id="page_internal_manuals" model="document.page">
+        <field name="name">Manuais internos</field>
+        <field name="type">category</field>
+        <field name="company_id" eval="False"/>
+    </record>
+    <record id="page_faq" model="document.page">
+        <field name="name">Perguntas frequentes</field>
+        <field name="type">category</field>
+        <field name="company_id" eval="False"/>
+    </record>
+</odoo>

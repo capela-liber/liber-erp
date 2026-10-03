@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     'name': 'Liber Support',
-    'version': '19.0.0.2.0',
+    'version': '19.0.0.3.0',
     'summary': 'Commercial support desk: email in, kanban triage, basic SLA, '
                'order link',
     'description': """
@@ -54,6 +54,11 @@ O que NÃO faz (de propósito)
         # por último: a ponte precisa dos grupos daqui já carregados
         'data/liber_roles_bridge.xml',
     ],
+    'assets': {
+        'web.assets_backend': [
+            'liber_support/static/src/js/repasse_tour.js',
+        ],
+    },
     'installable': True,
     'application': True,
     # Família liber_ (ERP do selo), decisão de 10/08/2026: o balcão de

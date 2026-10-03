@@ -4,7 +4,7 @@
  "titulo": "Grupo econômico: a rede acima da loja",
  "abertura": "Esta aula cadastra a rede de livrarias acima das lojas: o grupo econômico, as raízes de CNPJ que filiam as lojas sozinhas, e a razão social na ficha.",
  "fecho": "Cada loja continua um CNPJ com contrato, prateleira e nota próprios; a rede é o eixo de leitura, sugerido pela raiz do CNPJ e sempre editável. A próxima aula mostra onde esse eixo aparece.",
- "youtube": "https://www.youtube.com/watch?v=Y3IZqP7LNs4",
+ "youtube": "https://www.youtube.com/watch?v=fvngR8zMaDw",
  "quiz": [
   {
    "pergunta": "O que identifica a entidade legal no CNPJ?",
@@ -70,5 +70,9 @@
    ],
    "correta": 2
   }
- ]
+ ],
+ "youtube_anterior": [
+  "https://www.youtube.com/watch?v=Y3IZqP7LNs4"
+ ],
+ "youtube_quadro": "2912x2080"
 }

@@ -4,7 +4,7 @@
  "titulo": "Os três blocos, campo a campo",
  "abertura": "Tudo fica em Consignação, Configuração, Configurações, e só o administrador do sistema vê. Nesta aula, os blocos de contabilidade, fiscal e operações de estoque, e o que cada campo controla.",
  "fecho": "Conta própria para o consignado, uma posição fiscal por operação, tipos de operação separados do armazém. Na próxima aula, a nota de remessa de um Pedido C.",
- "youtube": "https://www.youtube.com/watch?v=W4jJhjk-nFY",
+ "youtube": "https://www.youtube.com/watch?v=DkusounKieM",
  "quiz": [
   {
    "pergunta": "Uma remessa (armazém para prateleira) faz o quê na contabilidade?",
@@ -70,5 +70,9 @@
    ],
    "correta": 3
   }
- ]
+ ],
+ "youtube_anterior": [
+  "https://www.youtube.com/watch?v=W4jJhjk-nFY"
+ ],
+ "youtube_quadro": "2912x2080"
 }

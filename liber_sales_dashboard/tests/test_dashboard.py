@@ -316,3 +316,50 @@ class TestSalesDashboard(TransactionCase):
         self.assertTrue(self.env.ref("liber_sales_dashboard.menu_notas_sem_pedido").parent_id
                         .parent_id == self.env.ref("sale.sale_menu_root"),
                         "a lista mora em Vendas, onde o gerente chega")
+
+    # -- as pizzas por canal -----------------------------------------------
+    def _pizzas(self):
+        return {f["data"]["title"]["text"]: f for f in self.planilha["sheets"][0]["figures"]
+                if f["data"]["type"] == "odoo_pie"}
+
+    def test_as_duas_pizzas_somam_valor_e_produtos_por_canal(self):
+        """Valor e quantidade, cada um fatiado pelo canal de venda, com o mesmo
+        recorte do gráfico de barras: pedido confirmado, não cotação."""
+        pizzas = self._pizzas()
+        self.assertEqual(set(pizzas), {"Valor vendido por canal",
+                                       "Produtos vendidos por canal"})
+        barras = self._grafico("Vendido pelos pedidos")
+        for titulo, medida in (("Valor vendido por canal", "price_subtotal"),
+                               ("Produtos vendidos por canal", "product_uom_qty")):
+            dados = pizzas[titulo]["data"]
+            self.assertEqual(dados["metaData"]["resModel"], "sale.report")
+            self.assertEqual(dados["metaData"]["measure"], medida)
+            self.assertEqual(dados["metaData"]["groupBy"], ["team_id"])
+            self.assertEqual(dados["searchParams"]["domain"],
+                             barras["searchParams"]["domain"])
+            self.assertIn(medida, self.env["sale.report"]._fields)
+
+    def test_os_tres_filtros_movem_as_pizzas(self):
+        """Escolher ou tirar canais no filtro "Canal de vendas" tem de mexer
+        nas pizzas como mexe no resto -- é assim que se deixa um canal de fora."""
+        filtros = {f["id"] for f in self.planilha["globalFilters"]}
+        for pizza in self._pizzas().values():
+            self.assertEqual(set(pizza["data"]["fieldMatching"]), filtros)
+
+    def test_o_painel_nao_cita_canal_nenhum_pelo_nome(self):
+        """Canal de venda é cadastro de quem usa. O painel vai para qualquer
+        casa, então nenhum nome de canal pode estar escrito nele."""
+        texto = json.dumps(self.planilha, ensure_ascii=False).lower()
+        for nome in ("governo", "livrarias", "marketplace", "distribuidoras"):
+            self.assertNotIn(nome, texto, "o painel cita o canal %r" % nome)
+
+    def test_a_pizza_nao_cobre_o_que_vem_depois_dela(self):
+        """As pizzas ocupam o buraco entre as tabelas mensais e as 'Principais
+        ...': não podem passar da linha onde a próxima seção começa."""
+        planilha = self.planilha["sheets"][0]
+        altura = lambda linha: planilha["rows"].get(str(linha), {}).get("size", 23)
+        inicio_proxima_secao = sum(altura(i) for i in range(84))  # linha 85 (índice 84)
+        for pizza in self._pizzas().values():
+            fim = pizza["offset"]["y"] + pizza["height"]
+            self.assertLessEqual(fim, inicio_proxima_secao,
+                                 "a pizza cobre o título de 'Principais cotações'")

@@ -4,7 +4,7 @@
  "titulo": "Preferências e os três grupos",
  "abertura": "Esta aula é da Direção: o menu Configurações, as tabelas de IRRF e os três grupos do app — e o que as Preferências guardam, mesmo que hoje só o administrador do sistema as abra.",
  "fecho": "Uma janela de dias, uma vez, para a base toda — e três grupos que separam redigir, validar e configurar. Feito isso, ninguém volta aqui por meses.",
- "youtube": "https://www.youtube.com/watch?v=PMv_Gbsdz5g",
+ "youtube": "https://www.youtube.com/watch?v=PvdsjT-oWUU",
  "quiz": [
   {
    "pergunta": "O que a janela do lembrete define?",
@@ -70,5 +70,9 @@
    ],
    "correta": 2
   }
- ]
+ ],
+ "youtube_anterior": [
+  "https://www.youtube.com/watch?v=PMv_Gbsdz5g"
+ ],
+ "youtube_quadro": "2912x2080"
 }

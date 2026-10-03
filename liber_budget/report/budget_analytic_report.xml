@@ -2,7 +2,7 @@
 <odoo>
 
     <!-- Paisagem: a tabela tem 6 colunas (posição, conta, previsto, teórico,
-         realizado, realizado %) e o retrato apertava os valores. Mesmos
+         realizado, programado) e o retrato apertava os valores. Mesmos
          números do paperformat_euro (o A4 padrão da casa), só a orientação
          muda. -->
     <record id="paperformat_budget_analytic" model="report.paperformat">
@@ -59,18 +59,20 @@
                                     <th style="text-align:right; padding:6px 10px; font-weight:600;">Previsto</th>
                                     <th style="text-align:right; padding:6px 10px; font-weight:600;">Teórico</th>
                                     <th style="text-align:right; padding:6px 10px; font-weight:600;">Realizado</th>
-                                    <th style="text-align:right; padding:6px 10px; font-weight:600;">Realizado (%)</th>
+                                    <th style="text-align:right; padding:6px 10px; font-weight:600;">Programado</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <t t-set="total_budget" t-value="0"/>
                                 <t t-set="total_theoritical" t-value="0"/>
                                 <t t-set="total_practical" t-value="0"/>
+                                <t t-set="total_programmed" t-value="0"/>
                                 <tr t-foreach="doc.budget_line_ids" t-as="line"
                                     t-att-style="'border-bottom:1px solid #e6e6e6; background-color:' + ('#f7f9fa' if line_index % 2 else '#ffffff') + ';'">
                                     <t t-set="total_budget" t-value="total_budget + line.budget_amount"/>
                                     <t t-set="total_theoritical" t-value="total_theoritical + line.theoritical_amount"/>
                                     <t t-set="total_practical" t-value="total_practical + line.practical_amount"/>
+                                    <t t-set="total_programmed" t-value="total_programmed + line.programmed_amount"/>
                                     <td style="padding:6px 10px;"><span t-field="line.position_id"/></td>
                                     <td style="padding:6px 10px;"><span t-field="line.account_id"/></td>
                                     <td style="text-align:right; padding:6px 10px;">
@@ -86,12 +88,8 @@
                                               t-options="{'widget': 'monetary', 'display_currency': line.currency_id}"/>
                                     </td>
                                     <td style="text-align:right; padding:6px 10px;">
-                                        <!-- Não existe conversor 'percentage' no QWeb de relatório (widget só
-                                             existe no cliente web): t-field imprimia o float cru, tipo
-                                             "0.8889". Formata-se a mão, com .format(): o QWeb colapsa um
-                                             "%%" em "%" ao compilar o t-out, e '%.2f%%' % (...) virava
-                                             '%.2f%' % (...): incomplete format. -->
-                                        <span t-out="'{:.2f}%'.format(line.practical_percentage * 100)"/>
+                                        <span t-field="line.programmed_amount"
+                                              t-options="{'widget': 'monetary', 'display_currency': line.currency_id}"/>
                                     </td>
                                 </tr>
                             </tbody>
@@ -110,7 +108,10 @@
                                         <span t-out="total_practical"
                                               t-options="{'widget': 'monetary', 'display_currency': doc.company_id.currency_id}"/>
                                     </td>
-                                    <td/>
+                                    <td style="text-align:right; padding:8px 10px;">
+                                        <span t-out="total_programmed"
+                                              t-options="{'widget': 'monetary', 'display_currency': doc.company_id.currency_id}"/>
+                                    </td>
                                 </tr>
                             </tfoot>
                         </table>

@@ -4,7 +4,7 @@
  "titulo": "O que a casa decide uma vez, e o desconto da feira",
  "abertura": "Três escolhas não mudam de feira para feira e por isso moram nas Definições; as posições fiscais ficam ao lado das outras configurações de nota; e o desconto da feira é um número do evento, não um botão.",
  "fecho": "Plano analítico, serviço que paga a equipe e responsável, no Inventário; posições fiscais nas Definições gerais; o desconto do evento vira a lista de preços dos caixas. A última aula é a reposição.",
- "youtube": "https://www.youtube.com/watch?v=uFbEuc2wgiI",
+ "youtube": "https://www.youtube.com/watch?v=Qc5y0J-cUyg",
  "quiz": [
   {
    "pergunta": "Onde ficam as três escolhas que valem para todo evento?",
@@ -70,5 +70,9 @@
    ],
    "correta": 1
   }
- ]
+ ],
+ "youtube_anterior": [
+  "https://www.youtube.com/watch?v=uFbEuc2wgiI"
+ ],
+ "youtube_quadro": "2912x2080"
 }

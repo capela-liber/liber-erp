@@ -6,14 +6,22 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0-20260630\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-22 15:43+0000\n"
-"PO-Revision-Date: 2026-07-22 15:43+0000\n"
+"POT-Creation-Date: 2026-09-30 21:17+0000\n"
+"PO-Revision-Date: 2026-09-30 21:17+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
+
+#. module: liber_gdrive
+#. odoo-python
+#: code:addons/liber_gdrive/services/gdrive_api.py:0
+msgid ""
+"%s is no longer in Google Drive, or no longer shared with the account: it "
+"was deleted or moved out of reach after the last sync."
+msgstr "%s não está mais no Google Drive, ou deixou de estar compartilhado com a conta: foi apagado ou saiu do alcance depois da última sincronização."
 
 #. module: liber_gdrive
 #: model:ir.actions.act_window,name:liber_gdrive.action_liber_gdrive_account
@@ -77,8 +85,8 @@ msgid ""
 "Drive folders are addressed by ID: open the folder in the browser and copy "
 "the ID from its URL into the folder's External ID field."
 msgstr ""
-"As pastas do Drive são endereçadas por ID: abra a pasta no navegador e "
-"copie o ID da URL dela para o campo ID externo da pasta."
+"As pastas do Drive são endereçadas por ID: abra a pasta no navegador e copie"
+" o ID da URL dela para o campo ID externo da pasta."
 
 #. module: liber_gdrive
 #: model:ir.actions.act_window,name:liber_gdrive.action_liber_gdrive_file
@@ -89,7 +97,9 @@ msgstr "Arquivos"
 #. module: liber_gdrive
 #: model_terms:ir.actions.act_window,help:liber_gdrive.action_liber_gdrive_file
 msgid "Files appear when a Drive folder you have access to is synced."
-msgstr "Os arquivos aparecem quando uma pasta do Drive a que você tem acesso é sincronizada."
+msgstr ""
+"Os arquivos aparecem quando uma pasta do Drive a que você tem acesso é "
+"sincronizada."
 
 #. module: liber_gdrive
 #: model:ir.actions.act_window,name:liber_gdrive.action_liber_gdrive_folder
@@ -101,14 +111,9 @@ msgstr "Pastas"
 #: model:ir.model.fields.selection,name:liber_gdrive.selection__liber_cloud_account__provider__gdrive
 #: model:ir.model.fields.selection,name:liber_gdrive.selection__liber_cloud_folder__provider__gdrive
 #: model:ir.model.fields.selection,name:liber_gdrive.selection__liber_cloud_upload__provider__gdrive
+#: model:res.groups.privilege,name:liber_gdrive.privilege_liber_gdrive
 msgid "Google Drive"
 msgstr "Google Drive"
-
-#. module: liber_gdrive
-#: model:ir.module.category,name:liber_gdrive.module_category_liber_gdrive
-#: model:res.groups.privilege,name:liber_gdrive.privilege_liber_gdrive
-msgid "Google Drive Files"
-msgstr "Arquivos do Google Drive"
 
 #. module: liber_gdrive
 #. odoo-python
@@ -136,8 +141,8 @@ msgid ""
 "Long-lived token from the one-time OAuth authorization of the company's "
 "Google account; see the module's NOTES.md."
 msgstr ""
-"Token de longa vida vindo da autorização OAuth feita uma única vez na "
-"conta Google da empresa; veja o NOTES.md do módulo."
+"Token de longa vida vindo da autorização OAuth feita uma única vez na conta "
+"Google da empresa; veja o NOTES.md do módulo."
 
 #. module: liber_gdrive
 #: model:res.groups,name:liber_gdrive.group_liber_gdrive_manager
@@ -188,9 +193,9 @@ msgid ""
 "client secret and refresh token (see the module's NOTES.md for the one-time "
 "setup)."
 msgstr ""
-"A conta Google Drive de %s não está configurada. Preencha o ID do cliente, "
-"o segredo do cliente e o token de atualização (veja no NOTES.md do módulo "
-"a configuração que se faz uma vez só)."
+"A conta Google Drive de %s não está configurada. Preencha o ID do cliente, o"
+" segredo do cliente e o token de atualização (veja no NOTES.md do módulo a "
+"configuração que se faz uma vez só)."
 
 #. module: liber_gdrive
 #. odoo-python
@@ -200,8 +205,8 @@ msgid ""
 "Upgrade the plan, or set the period to 0 on the account to create links that"
 " never expire."
 msgstr ""
-"Esta edição do Google Workspace não permite links com data de validade. "
-"Suba o plano, ou ponha o período em 0 na conta para criar links que nunca "
+"Esta edição do Google Workspace não permite links com data de validade. Suba"
+" o plano, ou ponha o período em 0 na conta para criar links que nunca "
 "expiram."
 
 #. module: liber_gdrive
@@ -229,13 +234,13 @@ msgstr "Usuário"
 msgid ""
 "Which storage holds this folder. Provider modules add their entry here."
 msgstr ""
-"Qual armazenamento guarda esta pasta. Os módulos de provedor acrescentam "
-"sua entrada aqui."
+"Qual armazenamento guarda esta pasta. Os módulos de provedor acrescentam sua"
+" entrada aqui."
 
 #. module: liber_gdrive
 #: model:ir.model.fields,help:liber_gdrive.field_liber_cloud_account__provider
 msgid ""
 "Which storage this credential opens. Provider modules add their entry here."
 msgstr ""
-"Qual armazenamento esta credencial abre. Os módulos de provedor "
-"acrescentam sua entrada aqui."
+"Qual armazenamento esta credencial abre. Os módulos de provedor acrescentam "
+"sua entrada aqui."

@@ -4,7 +4,7 @@
  "titulo": "Painel de Vendas: filtros e listas de notas",
  "abertura": "Esta aula mexe no painel: o período, o filtro por cliente e por canal, o clique que abre a lista de origem, e os três filtros das Notas de venda.",
  "fecho": "O painel abre nos doze meses fechados; o período move tudo; cada número tem uma lista atrás; e as Notas de venda se separam em sem fatura, fatura sem pedido e presa a pedido. A última aula é o Top 50 do painel Produto.",
- "youtube": "https://www.youtube.com/watch?v=1AHUX_3XQW0",
+ "youtube": "https://www.youtube.com/watch?v=wt6dABPYkA8",
  "quiz": [
   {
    "pergunta": "Que período o painel abre por padrão?",
@@ -70,5 +70,9 @@
    ],
    "correta": 3
   }
- ]
+ ],
+ "youtube_anterior": [
+  "https://www.youtube.com/watch?v=1AHUX_3XQW0"
+ ],
+ "youtube_quadro": "2912x2080"
 }
