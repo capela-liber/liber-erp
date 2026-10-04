@@ -8,6 +8,8 @@ o contado -- lança a mesma venda de novo, e a mesa fica negativa.
 """
 from datetime import date, datetime, time, timedelta
 
+from odoo import fields
+
 from odoo.exceptions import UserError
 from odoo.tests import TransactionCase, tagged
 
@@ -33,7 +35,8 @@ class TestCaixaDaFeira(TransactionCase):
         """Feira planejada, despachada e CONFERIDA: a mesa existe de fato."""
         fair = self.env['event.fair'].create({
             'name': 'Feira do Balcão',
-            'date_start': date(2026, 9, 20), 'date_end': date(2026, 9, 20),
+            'date_start': fields.Date.context_today(self.env.user),
+            'date_end': fields.Date.context_today(self.env.user),
             'company_id': self.company.id,
             'line_ids': [(0, 0, {
                 'product_id': self.livro.id, 'qty_planned': qty})]})
@@ -165,7 +168,8 @@ class TestCaixaDaFeira(TransactionCase):
     def test_the_register_does_not_open_for_a_draft_fair(self):
         fair = self.env['event.fair'].create({
             'name': 'Feira só no papel',
-            'date_start': date(2026, 9, 20), 'date_end': date(2026, 9, 20),
+            'date_start': fields.Date.context_today(self.env.user),
+            'date_end': fields.Date.context_today(self.env.user),
             'company_id': self.company.id,
             'line_ids': [(0, 0, {
                 'product_id': self.livro.id, 'qty_planned': 5})]})
