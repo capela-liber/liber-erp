@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- A porta do aluno. O app eLearning do core é do grupo Officer (quem
+         edita cursos); quem só assiste não o vê na home. Este menu raiz é
+         aberto de propósito: sem grupo, aparece para todo usuário interno, e
+         a ação sai do cliente web para /slides na MESMA aba — target="new"
+         vira pop-up bloqueado no Chrome headless e derruba o click_all. -->
+    <record id="action_courses" model="ir.actions.act_url">
+        <field name="name">Training</field>
+        <field name="url">/slides</field>
+        <field name="target">self</field>
+    </record>
+
+    <menuitem id="menu_training_root"
+              name="Training"
+              action="action_courses"
+              web_icon="website_slides,static/description/icon.png"
+              sequence="5"/>
+</odoo>
