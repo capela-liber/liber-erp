@@ -15,8 +15,8 @@ company's CNPJ.
 """,
     'author': "EdLab",
     'category': 'Accounting',
-    'version': '19.0.16.8.0',
-    'license': 'LGPL-3',
+    'version': '19.0.16.8.1',
+    'license': 'AGPL-3',
     # `liber_metabooks_integration` porque a casa decidiu (17/08/2026) o que é o
     # CATÁLOGO: livro Metabooks do tipo pbook. Sem ele, "o que é nosso e ainda
     # não está no Olist" trazia 3.632 registros no staging -- serviços

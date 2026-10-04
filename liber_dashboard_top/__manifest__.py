@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     'name': 'Liber Dashboard Top (os primeiros do gráfico)',
-    'version': '19.0.1.0.0',
+    'version': '19.0.1.0.1',
     'summary': 'Gráfico Odoo com limite de grupos, e o painel Produtos mostrando só os 50 mais vendidos, pelo título',
     'description': """
 O painel Produtos (Painéis > Vendas > Produtos) desenha "Melhores vendedores por
@@ -82,5 +82,5 @@ esses seguem inteiros. O melhor vendido continua sendo o melhor de todos.
         ],
     },
     'installable': True,
-    'license': 'LGPL-3',
+    'license': 'AGPL-3',
 }

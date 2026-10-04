@@ -13,7 +13,7 @@ para todo usuário interno — menu raiz sem grupo, ação de URL para /slides n
 mesma aba. Não cria curso, não muda o eLearning, não mexe em quem vê o quê.
 """,
     'author': 'EdLab',
-    'license': 'LGPL-3',
+    'license': 'AGPL-3',
     'category': 'Website/eLearning',
     'depends': ['web', 'website_slides'],
     'data': [

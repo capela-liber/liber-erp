@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     'name': 'Liber Geo Brasil (o mapa que a casa usa)',
-    'version': '19.0.1.2.0',
+    'version': '19.0.1.2.1',
     'summary': 'Região "Brasil (UF)" nos gráficos geo, e o dashboard de Vendas por UF e por quantidade',
     'description': """
 O mapa-múndi não diz nada para quem vende no Brasil. O card "Top Countries" do
@@ -96,5 +96,5 @@ que se pediu ao trocar o mundo pelo país.
         ],
     },
     'installable': True,
-    'license': 'LGPL-3',
+    'license': 'AGPL-3',
 }
