@@ -18,8 +18,11 @@
                        t-ref="input" t-att-placeholder="hint" t-on-keydown="onKeydown"
                        autocomplete="off" autocapitalize="off" spellcheck="false"/>
 
-                <div t-if="state.camera" class="o_liber_scan_video my-2">
-                    <video t-ref="video" playsinline="true" muted="true"/>
+                <!-- Sempre no DOM, só escondido: com t-if o <video> nascia depois
+                     do clique, chegava null ao ZXing, e ele criava um vídeo
+                     próprio fora da tela: câmera ligada, quadro preto. -->
+                <div class="o_liber_scan_video my-2" t-att-class="{'d-none': !state.camera}">
+                    <video t-ref="video" playsinline="true" muted="true" autoplay="true"/>
                 </div>
 
                 <div t-if="state.message"

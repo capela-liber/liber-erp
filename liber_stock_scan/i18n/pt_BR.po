@@ -180,6 +180,12 @@ msgstr "Câmera indisponível: %s"
 
 #. module: liber_stock_scan
 #. odoo-javascript
+#: code:addons/liber_stock_scan/static/src/scan/scan.js:0
+msgid "the video area is missing"
+msgstr "a área do vídeo não está na tela"
+
+#. module: liber_stock_scan
+#. odoo-javascript
 #: code:addons/liber_stock_scan/static/src/scan/scan.xml:0
 msgid "Stop camera"
 msgstr "Parar a câmera"

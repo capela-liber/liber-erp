@@ -37,7 +37,7 @@ do armazém, nunca a raiz, nunca a prateleira de consignação de um cliente.
 """,
     'author': 'EdLab Press',
     'category': 'Inventory',
-    'version': '19.0.1.0.0',
+    'version': '19.0.1.0.1',
     'license': 'AGPL-3',
     'depends': ['liber_stock_shelves'],
     'data': [

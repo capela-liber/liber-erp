@@ -194,10 +194,14 @@ export class ShelfScan extends Component {
             await loadJS(ZXING);
             const ZX = window.ZXing;
             this.reader = new ZX.BrowserMultiFormatReader();
+            const video = this.videoRef.el;
+            // Sem o elemento, o ZXing cria um <video> solto e a câmera lê
+            // por baixo de um quadro preto: melhor recusar e dizer.
+            if (!video) {
+                throw new Error(_t("the video area is missing"));
+            }
             this.state.camera = true;
-            // O <video> só existe depois do render com camera = true.
-            await Promise.resolve();
-            await this.reader.decodeFromVideoDevice(undefined, this.videoRef.el, (result) => {
+            await this.reader.decodeFromVideoDevice(undefined, video, (result) => {
                 if (!result) {
                     return;
                 }
