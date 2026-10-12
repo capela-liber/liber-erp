@@ -3,7 +3,7 @@
 Módulos [Odoo 19 Community](https://github.com/odoo/odoo) para editoras: consignação
 (SOC), direitos autorais, feiras, emissão de NF-e e documentos fiscais a partir do
 XML, marketplaces (Olist, Amazon Vendor), painéis de vendas e recebíveis, atendimento
-comercial, arquivos na nuvem — e os manuais e cursos que explicam tudo isso.
+comercial, estoque endereçado, arquivos na nuvem — e os manuais e cursos que explicam tudo isso.
 
 Nasceram da operação de uma editora brasileira e são publicados aqui na esperança de
 que sirvam a outras. Não há versão paga, plano de suporte nem roadmap comercial —
@@ -11,7 +11,7 @@ veja `SUPPORT.md` para onde perguntar.
 
 ## Ver funcionando
 
-A vitrine em **[liber.edlab.press](https://liber.edlab.press)** roda estes 48 módulos
+A vitrine em **[liber.edlab.press](https://liber.edlab.press)** roda estes 52 módulos
 com dados de demonstração. O menu **Demo** explica como entrar com a conta de
 demonstração, que vê tudo e **não grava nada**. Lá dentro:
 
@@ -52,6 +52,7 @@ uma issue por frente e uma "visão geral" por período.
 | `liber_copyright_contracts_reports` | Prestação de contas enviada ao autor (PDF + e-mail) |
 | `liber_copyright_contracts_taxes` | Retenção de IRRF sobre o pagamento de royalties |
 | `liber_copyright_contracts_intercompany` | Cobra da empresa irmã os royalties apurados sobre as vendas dela |
+| `liber_copyright_contracts_cloud` | O contrato aponta para os seus documentos no Dropbox, Drive ou GitHub |
 
 ### Feiras
 
@@ -102,6 +103,14 @@ e volta incompleto — e o que não volta ganha nome.
 | `liber_account_group_panel` | Plano de contas filtrado por grupo de contas |
 | `liber_intercompany_mirror` | Ver e abrir o documento espelho criado na empresa irmã |
 | `liber_base_import_br` | Planilhas com `59,90` e `05/03/2026` importam como estão escritas |
+
+### Estoque endereçado
+
+| Módulo | O que faz |
+|---|---|
+| `liber_stock_shelves` | A prateleira volta à tela, e o livro passa a poder mudar de prateleira |
+| `liber_stock_scan` | Bipe a prateleira, bipe os livros, bipe a prateleira nova: a transferência interna nasce validada |
+| `liber_stock_count` | A contagem física é de quem está no depósito; mudar a quantidade em mãos é do administrador do Inventário |
 
 ### Atendimento
 
