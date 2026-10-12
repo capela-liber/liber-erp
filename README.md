@@ -11,7 +11,7 @@ veja `SUPPORT.md` para onde perguntar.
 
 ## Ver funcionando
 
-A vitrine em **[liber.edlab.press](https://liber.edlab.press)** roda estes 52 módulos
+A vitrine em **[liber.edlab.press](https://liber.edlab.press)** roda estes 53 módulos
 com dados de demonstração. O menu **Demo** explica como entrar com a conta de
 demonstração, que vê tudo e **não grava nada**. Lá dentro:
 
@@ -53,6 +53,7 @@ uma issue por frente e uma "visão geral" por período.
 | `liber_copyright_contracts_taxes` | Retenção de IRRF sobre o pagamento de royalties |
 | `liber_copyright_contracts_intercompany` | Cobra da empresa irmã os royalties apurados sobre as vendas dela |
 | `liber_copyright_contracts_cloud` | O contrato aponta para os seus documentos no Dropbox, Drive ou GitHub |
+| `liber_copyright_contracts_legacy` | Vendas anteriores ao sistema entram nas faixas e nos royalties, corrigidas por índice de preço |
 
 ### Feiras
 
