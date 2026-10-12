@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- O Inventário físico do core oferece "Aplicar" (na linha e no
+         cabeçalho) e "Aplicar tudo" a Inventário > Usuário. Aqui os três
+         passam a ser do administrador. "Limpar", "Solicitar uma contagem" e
+         "Realocar" já eram dele no core; a coluna "Contado", o "Definir como
+         a quantidade em mãos" e o "Limpar" da própria linha continuam de
+         quem conta. A trava de verdade é no ORM (models/stock_quant.py):
+         esta view só evita oferecer um botão que vai ser recusado. -->
+    <record id="view_stock_quant_tree_inventory_editable_count" model="ir.ui.view">
+        <field name="name">stock.quant.inventory.list.editable.liber_stock_count</field>
+        <field name="model">stock.quant</field>
+        <field name="inherit_id" ref="stock.view_stock_quant_tree_inventory_editable"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header/button[@name='action_apply_all']" position="attributes">
+                <attribute name="groups">stock.group_stock_manager</attribute>
+            </xpath>
+            <xpath expr="//header/button[@name='stock.action_stock_inventory_adjustement_name']" position="attributes">
+                <attribute name="groups">stock.group_stock_manager</attribute>
+            </xpath>
+            <xpath expr="//button[@name='action_apply_inventory']" position="attributes">
+                <attribute name="groups">stock.group_stock_manager</attribute>
+            </xpath>
+        </field>
+    </record>
+</odoo>

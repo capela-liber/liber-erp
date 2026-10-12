@@ -1,0 +1,182 @@
+<!-- GERADO por scripts/gen_module_descriptions.py a partir de
+     liber_site/static/docs/liber_stock_shelves.html -- não edite aqui.
+     O Odoo mostra este arquivo em Apps > Module Info. -->
+<div class="oe_container liber_manual" style="max-width:900px;margin:0 auto;padding:8px 4px 24px;color:#251d2b;background:transparent;font:15px/1.7 Inter,'Segoe UI',system-ui,sans-serif;"><h1 style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:32px;line-height:1.2;letter-spacing:-.015em;margin:0 0 10px;color:#251d2b;">Prateleiras e transferências internas</h1>
+      <p class="lead" style="font-size:17.5px;color:#5d5266;margin:0 0 26px;max-width:62ch;">O depósito é endereçado: cada livro tem a sua prateleira, e o sistema sabe qual.
+      Este manual mostra onde a prateleira aparece, como mover livros de uma prateleira para outra
+      — um título por vez, ou várias linhas de uma só vez — e o erro mais fácil de cometer no caminho.</p>
+
+      <h2 id="prateleira" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">O que é uma prateleira?</h2>
+      <p style="margin:0 0 12px;">É um <strong style="color:#251d2b;">local</strong> do Inventário, filho do estoque do armazém. O estoque da Edlab é
+      <span class="field" style="font-weight:600;color:#251d2b;">EL-VG/Stock</span>; a prateleira 196 é <span class="field" style="font-weight:600;color:#251d2b;">EL-VG/Stock/EL-000196</span>.
+      Na n-1 o prefixo é <span class="field" style="font-weight:600;color:#251d2b;">N1-</span>. O número tem zeros à esquerda de propósito: em
+      ordem alfabética ele já é a ordem do passeio de quem separa.</p>
+      <figure class="shot" style="margin:20px 0 24px;">
+        <img src="img/doc-liber_stock_shelves-prateleira.png" alt="Ficha do local EL-000196, filho de EL-VG/Stock, tipo Interno" style="max-width:100%;display:block;margin:0 auto;border-radius:12px;border:1px solid #e5dbee;">
+        <figcaption style="font-size:13px;color:#5d5266;margin-top:10px;text-align:center;">A prateleira é um local comum do Odoo: o nome é o código, e o
+        <span class="field" style="font-weight:600;color:#251d2b;">Local principal</span> é o estoque do armazém.</figcaption>
+      </figure>
+      <div class="callout" style="border:1px solid #e5dbee;border-left:4px solid #6e2f91;border-radius:10px;background:#f1eaf6;padding:14px 18px;margin:0 0 16px;">A raiz <span class="field" style="font-weight:600;color:#251d2b;">EL-VG/Stock</span> também guarda livros — os que ainda não
+      foram endereçados. Ela não é uma prateleira: é o armazém inteiro, com todas as prateleiras dentro.
+      Isso importa na hora de transferir (veja <a href="#raiz" style="color:#6e2f91;">a armadilha da raiz</a>).</div>
+
+      <h2 id="onde-vejo" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">Onde vejo em que prateleira está um livro?</h2>
+      <p style="margin:0 0 12px;">Na ficha do livro, o botão <span class="field" style="font-weight:600;color:#251d2b;">Em mãos</span> abre a lista por
+      <span class="field" style="font-weight:600;color:#251d2b;">Local</span>: uma linha por prateleira, com a quantidade de cada uma.</p>
+      <figure class="shot" style="margin:20px 0 24px;">
+        <img src="img/doc-liber_stock_shelves-em-maos.png" alt="Lista Em mãos do título Coletivos: duas prateleiras, EL-000196 com 74 e EL-000171 com 30" style="max-width:100%;display:block;margin:0 auto;border-radius:12px;border:1px solid #e5dbee;">
+        <figcaption style="font-size:13px;color:#5d5266;margin-top:10px;text-align:center;">O mesmo título em duas prateleiras. O total é a soma; quem separa precisa da linha.</figcaption>
+      </figure>
+      <p style="margin:0 0 12px;">Outros dois lugares mostram a mesma coisa de outro ângulo:</p>
+      <div class="tablewrap" style="overflow-x:auto;margin:0 0 16px;"><table style="border-collapse:collapse;width:100%;margin:0 0 16px;font-size:14px;">
+        <tr><th style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;background:#f1eaf6;font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:13.5px;">Tela</th><th style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;background:#f1eaf6;font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:13.5px;">Para quê</th></tr>
+        <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;"><span class="menupath" style="display:inline-block;background:#f1eaf6;border:1px solid #e5dbee;border-radius:6px;padding:1px 8px;font-size:13.5px;color:#251d2b;white-space:nowrap;">Inventário<i style="font-style:normal;color:#6e2f91;margin:0 4px;font-weight:700;">‣</i>Operações<i style="font-style:normal;color:#6e2f91;margin:0 4px;font-weight:700;">‣</i>Inventário físico</span></td>
+            <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Todas as linhas de estoque, com a coluna <span class="field" style="font-weight:600;color:#251d2b;">Local</span>. Filtre por
+                <span class="field" style="font-weight:600;color:#251d2b;">Local</span> para ver o que há numa prateleira, ou agrupe por produto
+                para ver em quantas prateleiras um título está.</td></tr>
+        <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;"><span class="menupath" style="display:inline-block;background:#f1eaf6;border:1px solid #e5dbee;border-radius:6px;padding:1px 8px;font-size:13.5px;color:#251d2b;white-space:nowrap;">Inventário<i style="font-style:normal;color:#6e2f91;margin:0 4px;font-weight:700;">‣</i>Configuração<i style="font-style:normal;color:#6e2f91;margin:0 4px;font-weight:700;">‣</i>Locais</span></td>
+            <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">A lista das prateleiras (só para o administrador do Inventário). Na ficha de cada uma, o
+                botão <span class="field" style="font-weight:600;color:#251d2b;">Produtos</span> abre o que está lá.</td></tr>
+      </table></div>
+
+      <h2 id="transferir" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">Como movo livros de uma prateleira para outra?</h2>
+      <p style="margin:0 0 12px;">Com uma <strong style="color:#251d2b;">transferência interna</strong>. É um movimento como os outros, só que de um local
+      do armazém para outro local do mesmo armazém — e fica no histórico do livro como qualquer entrega.</p>
+      <ol class="steps" style="margin:0 0 16px 22px;padding:0;">
+        <li style="margin:0 0 7px;">Abra <span class="menupath" style="display:inline-block;background:#f1eaf6;border:1px solid #e5dbee;border-radius:6px;padding:1px 8px;font-size:13.5px;color:#251d2b;white-space:nowrap;">Inventário<i style="font-style:normal;color:#6e2f91;margin:0 4px;font-weight:700;">‣</i>Operações<i style="font-style:normal;color:#6e2f91;margin:0 4px;font-weight:700;">‣</i>Transferências<i style="font-style:normal;color:#6e2f91;margin:0 4px;font-weight:700;">‣</i>Interno</span> e clique
+            em <span class="field" style="font-weight:600;color:#251d2b;">Novo</span>.</li>
+        <li style="margin:0 0 7px;">Em <span class="field" style="font-weight:600;color:#251d2b;">Local de origem</span>, escolha a <strong style="color:#251d2b;">prateleira de onde sai</strong> —
+            digite o código (<span class="field" style="font-weight:600;color:#251d2b;">EL-000196</span>) e escolha na lista. Em
+            <span class="field" style="font-weight:600;color:#251d2b;">Local de destino</span>, a prateleira para onde vai.</li>
+        <li style="margin:0 0 7px;">Na aba <span class="menupath" style="display:inline-block;background:#f1eaf6;border:1px solid #e5dbee;border-radius:6px;padding:1px 8px;font-size:13.5px;color:#251d2b;white-space:nowrap;">Operações</span>, adicione o livro e a quantidade.</li>
+        <li style="margin:0 0 7px;">Clique em <span class="field" style="font-weight:600;color:#251d2b;">Validar</span>. A lista <span class="field" style="font-weight:600;color:#251d2b;">Em mãos</span> do livro
+            muda na hora: menos na origem, mais no destino.</li>
+      </ol>
+      <figure class="shot" style="margin:20px 0 24px;">
+        <img src="img/doc-liber_stock_shelves-transferencia-interna.png" alt="Transferência interna EL-VG/INT/00001 pronta: de EL-000196 para EL-000171, 10 exemplares de Coletivos" style="max-width:100%;display:block;margin:0 auto;border-radius:12px;border:1px solid #e5dbee;">
+        <figcaption style="font-size:13px;color:#5d5266;margin-top:10px;text-align:center;">Uma transferência interna pronta para validar: origem e destino são prateleiras, e
+        a linha diz quantos vão.</figcaption>
+      </figure>
+      <div class="callout warn" id="raiz" style="border:1px solid #e5dbee;border-left:4px solid #6e2f91;border-radius:10px;padding:14px 18px;margin:0 0 16px;border-left-color:#b3831a;background:#faf3e3;border-color:#eddfba;"><strong style="color:#251d2b;">A armadilha da raiz.</strong> O campo
+      <span class="field" style="font-weight:600;color:#251d2b;">Local de origem</span> nasce preenchido com <span class="field" style="font-weight:600;color:#251d2b;">EL-VG/Stock</span>, a raiz.
+      Deixe-o assim e o Odoo entende "de qualquer lugar do armazém": ele procura o livro em todas as
+      prateleiras, pega da que recebeu primeiro — muitas vezes a própria prateleira de destino — e prepara um
+      movimento <em>dela para ela mesma</em>. Pelo mesmo motivo ele aceita uma quantidade maior que a da raiz:
+      está contando as prateleiras todas. <strong style="color:#251d2b;">Troque a origem pela prateleira</strong> antes de adicionar
+      a linha. Dois avisos ajudam: a coluna <span class="field" style="font-weight:600;color:#251d2b;">Separar de</span> na própria linha mostra de
+      qual prateleira a reserva vai tirar, e, se mesmo assim origem e destino ficarem iguais, o
+      <span class="field" style="font-weight:600;color:#251d2b;">Validar</span> é recusado com a mensagem "Nada se move" — nada é gravado.</div>
+      <div class="callout" style="border:1px solid #e5dbee;border-left:4px solid #6e2f91;border-radius:10px;background:#f1eaf6;padding:14px 18px;margin:0 0 16px;"><strong style="color:#251d2b;">Por que a raiz "tem" mais do que tem.</strong> Para o Odoo,
+      <span class="field" style="font-weight:600;color:#251d2b;">EL-VG/Stock</span> na origem não é o chão da raiz: é o armazém inteiro, com todas
+      as prateleiras dentro. Por isso a transferência diz "Disponível" com 24 na raiz e 25 pedidos, e
+      <span class="field" style="font-weight:600;color:#251d2b;">Separar de</span> aponta para uma prateleira que você não escolheu. Se validar, o
+      movimento é real, dessa prateleira para o destino — nada sai do nada. Para tirar de uma prateleira
+      certa, escreva a prateleira na origem; para tirar só do chão da raiz, escolha a linha da raiz em
+      <span class="field" style="font-weight:600;color:#251d2b;">Detalhes</span> ‣ <span class="field" style="font-weight:600;color:#251d2b;">Separar de</span>.</div>
+      <div class="callout warn" style="border:1px solid #e5dbee;border-left:4px solid #6e2f91;border-radius:10px;padding:14px 18px;margin:0 0 16px;border-left-color:#b3831a;background:#faf3e3;border-color:#eddfba;"><strong style="color:#251d2b;">Só prateleiras do armazém.</strong> A lista de origem e de destino da
+      transferência interna mostra apenas as prateleiras do próprio armazém. A prateleira de consignação de um
+      cliente (<span class="field" style="font-weight:600;color:#251d2b;">CO/…</span>) e o local de ajuste não aparecem, e uma transferência apontada
+      para eles por outro caminho é recusada ao validar: livro só vai para a prateleira do cliente pelo
+      Pedido C, e só volta pelo retorno da consignação.</div>
+      <p style="margin:0 0 12px;">Se a prateleira de origem tem menos do que você pediu, a transferência fica em
+      <span class="field" style="font-weight:600;color:#251d2b;">Aguardando</span> e o botão <span class="field" style="font-weight:600;color:#251d2b;">Validar</span> oferece mover o que há.
+      Não há como tirar de uma prateleira o que não está nela.</p>
+
+      <h2 id="realocar" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">Como movo várias linhas de uma vez?</h2>
+      <p style="margin:0 0 12px;">Com <span class="field" style="font-weight:600;color:#251d2b;">Realocar</span>, que é do administrador do Inventário. Serve para esvaziar uma
+      prateleira, juntar um título que se espalhou, ou endereçar de uma vez o que está na raiz.</p>
+      <ol class="steps" style="margin:0 0 16px 22px;padding:0;">
+        <li style="margin:0 0 7px;">Abra <span class="menupath" style="display:inline-block;background:#f1eaf6;border:1px solid #e5dbee;border-radius:6px;padding:1px 8px;font-size:13.5px;color:#251d2b;white-space:nowrap;">Inventário<i style="font-style:normal;color:#6e2f91;margin:0 4px;font-weight:700;">‣</i>Operações<i style="font-style:normal;color:#6e2f91;margin:0 4px;font-weight:700;">‣</i>Inventário físico</span> e filtre pelo
+            <span class="field" style="font-weight:600;color:#251d2b;">Local</span> ou pelo produto.</li>
+        <li style="margin:0 0 7px;">Marque as linhas que vão mudar de lugar.</li>
+        <li style="margin:0 0 7px;">Em <span class="menupath" style="display:inline-block;background:#f1eaf6;border:1px solid #e5dbee;border-radius:6px;padding:1px 8px;font-size:13.5px;color:#251d2b;white-space:nowrap;">Ações</span>, clique em <span class="field" style="font-weight:600;color:#251d2b;">Realocar</span>; escolha o
+            <span class="field" style="font-weight:600;color:#251d2b;">Local de destino</span> e escreva o motivo.</li>
+        <li style="margin:0 0 7px;"><span class="field" style="font-weight:600;color:#251d2b;">Confirmar</span>. Cada linha vira um movimento validado, com o motivo no histórico.</li>
+      </ol>
+      <figure class="shot" style="margin:20px 0 24px;">
+        <img src="img/doc-liber_stock_shelves-realocar.png" alt="Janela Realocar sobre duas linhas marcadas do Inventário físico: Para local e Motivo da realocação" style="max-width:100%;display:block;margin:0 auto;border-radius:12px;border:1px solid #e5dbee;">
+        <figcaption style="font-size:13px;color:#5d5266;margin-top:10px;text-align:center;">Duas linhas marcadas, um destino, um motivo. O movimento é imediato — não há
+        transferência para validar depois.</figcaption>
+      </figure>
+
+      <h2 id="visao-geral" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">Onde acompanho as transferências internas?</h2>
+      <p style="margin:0 0 12px;">No painel <span class="menupath" style="display:inline-block;background:#f1eaf6;border:1px solid #e5dbee;border-radius:6px;padding:1px 8px;font-size:13.5px;color:#251d2b;white-space:nowrap;">Inventário<i style="font-style:normal;color:#6e2f91;margin:0 4px;font-weight:700;">‣</i>Visão geral</span>, o cartão
+      <span class="field" style="font-weight:600;color:#251d2b;">Transferências internas</span> conta o que está a processar, ao lado dos
+      Recebimentos e das Entregas. Clique no botão para abrir a fila.</p>
+      <figure class="shot" style="margin:20px 0 24px;">
+        <img src="img/doc-liber_stock_shelves-visao-geral.png" alt="Visão geral do Inventário com o cartão Transferências internas: 1 a processar" style="max-width:100%;display:block;margin:0 auto;border-radius:12px;border:1px solid #e5dbee;">
+        <figcaption style="font-size:13px;color:#5d5266;margin-top:10px;text-align:center;">O cartão existe porque o ajuste "Locais de armazenamento" está ligado; sem ele o
+        Odoo o esconde e arquiva o tipo de operação.</figcaption>
+      </figure>
+
+      <h2 id="raiz-endereco" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">Como endereço o que ainda está na raiz?</h2>
+      <p style="margin:0 0 12px;">Parte do estoque veio da migração sem prateleira, parado em <span class="field" style="font-weight:600;color:#251d2b;">EL-VG/Stock</span>.
+      O jeito seguro é <span class="field" style="font-weight:600;color:#251d2b;">Realocar</span>: no <span class="menupath" style="display:inline-block;background:#f1eaf6;border:1px solid #e5dbee;border-radius:6px;padding:1px 8px;font-size:13.5px;color:#251d2b;white-space:nowrap;">Inventário físico</span>,
+      filtre <span class="field" style="font-weight:600;color:#251d2b;">Local</span> = <span class="field" style="font-weight:600;color:#251d2b;">EL-VG/Stock</span> (a raiz exata, sem as
+      filhas), marque as linhas e mande para a prateleira certa. A realocação parte da linha marcada, então
+      sai mesmo da raiz.</p>
+      <div class="callout warn" style="border:1px solid #e5dbee;border-left:4px solid #6e2f91;border-radius:10px;padding:14px 18px;margin:0 0 16px;border-left-color:#b3831a;background:#faf3e3;border-color:#eddfba;">Por transferência interna com a raiz na origem <strong style="color:#251d2b;">não</strong> funciona
+      como parece: a raiz na origem é "o armazém inteiro", e o Odoo pode separar de uma prateleira em vez
+      do chão. Se precisar mesmo, abra <span class="field" style="font-weight:600;color:#251d2b;">Detalhes</span> na linha e escolha em
+      <span class="field" style="font-weight:600;color:#251d2b;">Separar de</span> a linha cujo local é a raiz <span class="field" style="font-weight:600;color:#251d2b;">EL-VG/Stock</span>,
+      sem prateleira no fim.</div>
+      <h2 id="quem-pode" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">Quem pode o quê</h2>
+      <div class="tablewrap" style="overflow-x:auto;margin:0 0 16px;"><table style="border-collapse:collapse;width:100%;margin:0 0 16px;font-size:14px;">
+        <tr><th style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;background:#f1eaf6;font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:13.5px;">Perfil</th><th style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;background:#f1eaf6;font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:13.5px;">Vê a prateleira</th><th style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;background:#f1eaf6;font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:13.5px;">Transferência interna</th><th style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;background:#f1eaf6;font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:13.5px;">Realocar</th><th style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;background:#f1eaf6;font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:13.5px;">Cadastra prateleira</th></tr>
+        <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Logística, Assistente</td><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">sim</td><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">sim</td><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">—</td><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">—</td></tr>
+        <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Logística, Gerente e Direção</td><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">sim</td><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">sim</td><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">sim</td><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">sim</td></tr>
+        <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Comercial, Gerente</td><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">sim</td><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">sim</td><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">—</td><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">—</td></tr>
+        <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Demais usuários internos</td><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">sim, onde já liam estoque</td><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">—</td><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">—</td><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">—</td></tr>
+      </table></div>
+
+      <h2 id="problemas" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">Quando algo não sai como esperado</h2>
+      <div class="tablewrap" style="overflow-x:auto;margin:0 0 16px;"><table style="border-collapse:collapse;width:100%;margin:0 0 16px;font-size:14px;">
+        <tr><th style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;background:#f1eaf6;font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:13.5px;">O que aparece</th><th style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;background:#f1eaf6;font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:13.5px;">Por quê</th><th style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;background:#f1eaf6;font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:13.5px;">O que fazer</th></tr>
+        <tr>
+          <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">"Nada se move: … sai de EL-000043 e volta para EL-000043"</td>
+          <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">A origem ficou na raiz <span class="field" style="font-weight:600;color:#251d2b;">EL-VG/Stock</span>, e a reserva caiu na própria
+              prateleira de destino. O Odoo recusou validar.</td>
+          <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Troque o <span class="field" style="font-weight:600;color:#251d2b;">Local de origem</span> pela prateleira de onde o livro sai e valide
+              de novo. Se o livro está mesmo na raiz, abra <span class="field" style="font-weight:600;color:#251d2b;">Detalhes</span> e escolha em
+              <span class="field" style="font-weight:600;color:#251d2b;">Separar de</span> a linha da raiz.</td>
+        </tr>
+        <tr>
+          <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">"… não é prateleira de Vila Guilherme"</td>
+          <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">A origem ou o destino é um local de fora do armazém — uma prateleira de consignação, por
+              exemplo.</td>
+          <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Transferência interna é entre prateleiras do armazém. Para a prateleira do cliente, o caminho é
+              o Pedido C.</td>
+        </tr>
+        <tr>
+          <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;"><span class="field" style="font-weight:600;color:#251d2b;">Realocar</span> não está no menu Ações</td>
+          <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Só o administrador do Inventário realoca.</td>
+          <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Use a transferência interna, ou peça ao gerente da Logística.</td>
+        </tr>
+        <tr>
+          <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">A transferência não mostra <span class="field" style="font-weight:600;color:#251d2b;">Local de origem</span> nem <span class="field" style="font-weight:600;color:#251d2b;">Local de destino</span></td>
+          <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">O ajuste "Locais de armazenamento" está desligado nessa base — foi assim que ela chegou da migração.</td>
+          <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">É o que este módulo liga. Fale com a administração do sistema.</td>
+        </tr>
+        <tr>
+          <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">A transferência fica em <span class="field" style="font-weight:600;color:#251d2b;">Aguardando</span></td>
+          <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">A prateleira de origem tem menos do que a linha pede.</td>
+          <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Confira o <span class="field" style="font-weight:600;color:#251d2b;">Em mãos</span> do livro: ou a quantidade está errada, ou a prateleira.</td>
+        </tr>
+      </table></div>
+
+      <h2 id="nao-fazer" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">O que não fazer</h2>
+      <ul style="margin:0 0 14px 22px;padding:0;">
+        <li style="margin:0 0 7px;"><strong style="color:#251d2b;">Não mude de prateleira pelo Ajuste de inventário</strong> (a coluna <span class="field" style="font-weight:600;color:#251d2b;">Contado</span>).
+            Isso grava uma perda numa prateleira e um achado na outra — dois ajustes, sem a transferência que
+            explica. Mover é transferência interna ou Realocar.</li>
+        <li style="margin:0 0 7px;"><strong style="color:#251d2b;">Não deixe a raiz na origem</strong> de uma transferência entre prateleiras. Veja
+            <a href="#raiz" style="color:#6e2f91;">a armadilha da raiz</a>.</li>
+        <li style="margin:0 0 7px;"><strong style="color:#251d2b;">Não tente levar livro à prateleira de um cliente por transferência interna.</strong>
+            O sistema não oferece e não aceita: é o Pedido C que faz isso, com remessa e acerto.</li>
+        <li style="margin:0 0 7px;"><strong style="color:#251d2b;">Não crie prateleira fora do padrão.</strong> O nome é o código com seis dígitos
+            (<span class="field" style="font-weight:600;color:#251d2b;">EL-000414</span>), e o local principal é o estoque do armazém. Fora disso a
+            ordem do passeio quebra.</li>
+      </ul>
+
+      <div class="callout" style="border:1px solid #e5dbee;border-left:4px solid #6e2f91;border-radius:10px;background:#f1eaf6;padding:14px 18px;margin:0 0 16px;">Dúvida sobre acesso ou empresa: fale com a administração do sistema.
+      Toda transferência interna fica no histórico do livro, com data, origem e destino.</div><p style="margin:28px 0 0;padding-top:14px;border-top:1px solid #e5dbee;font-size:13px;color:#5d5266;">Manual completo, com busca e as demais páginas: <a href="/liber_site/static/docs/liber_stock_shelves.html" target="_blank" rel="noopener" style="color:#6e2f91;">Prateleiras e transferências internas</a>.</p></div>

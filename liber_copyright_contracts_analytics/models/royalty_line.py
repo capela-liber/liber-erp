@@ -134,7 +134,10 @@ class EdlabContractRoyaltyLine(models.Model):
                 out_of_term |= outside
                 invoice_lines -= outside
                 in_term_seen += len(invoice_lines)
-            cumulative = 0.0
+            # The running total opens where other layers say the work
+            # already stood (e.g. the legacy base: copies sold before this
+            # system). Core has nothing to add, so it opens at zero.
+            cumulative = royalty._edlab_initial_cumulative_qty()
             for line in invoice_lines:
                 cumulative += line.quantity
                 if AnalyticLine.search_count(
@@ -329,6 +332,14 @@ class EdlabContractRoyaltyLine(models.Model):
             ("account_id", "=", self.analytic_account_id.id),
             ("edlab_source_move_line_id", "!=", False),
         ]
+
+    def _edlab_initial_cumulative_qty(self):
+        """Copies of this work sold BEFORE the invoices the engine reads,
+        opening the running total that selects the tier. Extension hook:
+        the legacy-sales layer adds the copies of the pre-Odoo base here.
+        Core knows of none, hence 0."""
+        self.ensure_one()
+        return 0.0
 
     def _royalty_percentage_for_qty(self, quantity):
         """Return the tier percentage matching `quantity` (own-invoice rule).

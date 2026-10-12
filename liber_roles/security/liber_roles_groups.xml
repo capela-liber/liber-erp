@@ -571,6 +571,7 @@
             (4, ref('liber_github.group_liber_github_user')),
             (4, ref('liber_metabooks_integration.metabooks_manager_group')),
             (4, ref('purchase.group_purchase_user')),
+            (4, ref('stock.group_stock_user')),
             (3, ref('sales_team.group_sale_manager')),
             (3, ref('stock.group_stock_manager')),
             (3, ref('project.group_project_user')),
@@ -578,7 +579,7 @@
             (3, ref('liber_soc_agreements.group_soc_manager')),
             (3, ref('liber_budget.group_budget_manager')),
         ]"/>
-        <field name="comment">Conta de demonstração pública: abre em leitura toda tela que tem manual publicado — consignação, direitos autorais e seus royalties, fiscal, catálogo, orçamento, marketplaces e os arquivos na nuvem — mais Vendas e eCommerce, que são a vitrine. O que fica fora é configuração, que é de administrador. Escreve só no chatter; a trava de escrita é no ORM, não no menu.</field>
+        <field name="comment">Conta de demonstração pública: abre em leitura toda tela que tem manual publicado — consignação, direitos autorais e seus royalties, fiscal, catálogo, orçamento, marketplaces, estoque endereçado (prateleiras, bipagem, contagem) e os arquivos na nuvem — mais Vendas e eCommerce, que são a vitrine. O que fica fora é configuração, que é de administrador. Escreve só no chatter; a trava de escrita é no ORM, não no menu.</field>
     </record>
 
 </odoo>

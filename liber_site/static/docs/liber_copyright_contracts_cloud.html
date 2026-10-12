@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<script>
+/* Servido por /liber_site/static/docs/, este arquivo vem com uma semana de
+   cache e o docs.js sem versão -- e o índice monta a lista a partir dele. Foi
+   assim que a emissão de NF-e e o manual da Amazon ficaram invisíveis: o
+   catálogo em cache era anterior aos dois. A rota /liber/docs/ serve o mesmo
+   arquivo sem cache e com ?v=<mtime> nos assets. Quem chegar pelo caminho
+   antigo (favorito, link velho, resultado de busca) vai para lá antes de a
+   página montar qualquer coisa. */
+(function () {
+  var antigo = "/liber_site/static/docs/";
+  if (location.pathname.indexOf(antigo) === 0) {
+    location.replace("/liber/docs/" + location.pathname.slice(antigo.length) +
+                     location.search + location.hash);
+  }
+})();
+</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Documentos do contrato — Manuais do Liber</title>
+<link rel="icon" type="image/png" href="../logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;600;700&display=swap">
+<link rel="stylesheet" href="docs.css">
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="../index.html"><img src="../logo.png" alt="">liber<span>.</span></a>
+    <span class="doc-tag">Manuais</span>
+    <nav><a href="index.html">Índice</a><a href="../index.html">Site</a></nav>
+  </div>
+</header>
+<div class="wrap">
+  <div class="layout">
+    <aside class="sidebar" id="sidebar"></aside>
+    <article class="doc">
+      <div class="breadcrumb"><a href="index.html">Manuais</a><span class="sep">›</span>Direitos autorais<span class="sep">›</span>Documentos do contrato</div>
+      <h1>Documentos do contrato</h1>
+      <p class="lead">Ligue cada contrato aos seus documentos — o contrato assinado, aditivos, renovações, distratos — onde quer que a editora os guarde: Dropbox, Google Drive ou GitHub.</p>
+
+      <h2 id="visao-geral">Visão geral</h2>
+      <p>Os documentos continuam no armazenamento da editora; o Odoo guarda só o vínculo. O módulo se apoia no <a href="liber_cloud_files.html">Cloud Files</a>, que já espelha as pastas mapeadas e controla quem pode abrir o quê:</p>
+      <ul>
+        <li>O contrato ganha a aba <strong>Documentos</strong>, com um ou vários arquivos, um deles marcado como <strong>principal</strong>.</li>
+        <li>O nome do arquivo principal preenche a <span class="field">Localização</span> do contrato, que deixa de ser digitada à mão.</li>
+        <li>O botão <strong>Abrir documento</strong>, no cabeçalho, abre o principal.</li>
+      </ul>
+
+      <h2 id="configuracao">Configuração</h2>
+      <ol class="steps">
+        <li>Mapeie a pasta no provedor, se ainda não estiver: <span class="menupath">Dropbox<i>‣</i>Configuração<i>‣</i>Pastas</span> (ou Google Drive, ou GitHub), e sincronize-a. Mapear pastas é tarefa do administrador.</li>
+        <li>Acesse <span class="menupath">Configurações<i>‣</i>Direitos Autorais</span>, bloco <strong>Documentos</strong>.</li>
+        <li>Em <span class="field">Armazenamento</span>, escolha onde a casa guarda os contratos: GitHub, Google Drive ou Dropbox.</li>
+        <li>Em <span class="field">Pastas dos documentos de contrato</span>, escolha uma ou mais pastas mapeadas nesse armazenamento. Trocar o armazenamento tira da lista as pastas do anterior.</li>
+        <li>Salve. A escolha vale por empresa.</li>
+      </ol>
+
+      <h2 id="vincular">Vincular documentos</h2>
+      <p><strong>Um a um:</strong> no contrato, aba <strong>Documentos</strong>, clique em <strong>Adicionar linha</strong>, escolha o <span class="field">Arquivo</span> (só aparecem os das pastas configuradas) e, se quiser, uma <span class="field">Observação</span> como "Aditivo 2024". O primeiro documento vira o principal; marcar outro como principal desmarca o anterior.</p>
+      <p><strong>Em lote, pelo nome:</strong> quando a Localização já traz o nome do PDF — como a importação da planilha de contratos deixou —, selecione os contratos na lista e use <strong>Ação ‣ Vincular documentos pelo nome</strong>.</p>
+      <ul>
+        <li>A comparação ignora maiúsculas, acentos e a extensão.</li>
+        <li>Uma Localização com vários arquivos separados por ponto e vírgula vincula cada um; o primeiro vira o principal.</li>
+        <li>Se houver dois arquivos com o mesmo nome nas pastas, nada é vinculado para aquele nome: o sistema não adivinha.</li>
+        <li>Rodar de novo não duplica nada. A mensagem final diz quantos foram vinculados, quantos já estavam e quantos nomes não acharam arquivo.</li>
+      </ul>
+
+      <h2 id="conferencia">Conferir antes de aposentar a Localização</h2>
+      <p>Com os documentos vinculados, a <span class="field">Localização</span> perde a função. Antes de deixá-la de lado, confira que todo arquivo que ela cita virou documento: na lista de contratos, o filtro <strong>Localização sem documento</strong> mostra os contratos em que algum nome da Localização não tem documento vinculado, e o campo de mesmo nome, no contrato, diz quais nomes faltam. Quando o filtro zerar, a aba Documentos guarda tudo o que a Localização dizia. O filtro <strong>Sem documento</strong> mostra os contratos ainda sem nenhum.</p>
+
+      <h2 id="acesso">Quem vê e quem abre</h2>
+      <p>Todo usuário de contratos vê a lista de documentos (nome, provedor, observação). <strong>Abrir</strong> passa pelo portão da pasta no Cloud Files: só quem tem leitura na pasta abre o arquivo; os outros recebem uma mensagem de acesso negado. Assim, um contrato numa pasta restrita continua listado para todos, mas só abre para quem deve.</p>
+
+      <h2 id="faq">Perguntas frequentes</h2>
+      <p><strong>O seletor de arquivo vem vazio.</strong> Nenhuma pasta foi escolhida em Configurações, ou a pasta escolhida ainda não foi sincronizada.</p>
+      <p><strong>O vínculo pelo nome não achou quase nada.</strong> Os PDFs provavelmente estão numa pasta que não foi escolhida em Configurações ou que não foi sincronizada. Confira o nome exato do arquivo no provedor contra a Localização.</p>
+      <p><strong>Renomeei o arquivo no Dropbox.</strong> Na próxima sincronização da pasta, o Cloud Files arquiva o espelho antigo e traz o novo nome; vincule o novo arquivo ao contrato.</p>
+
+      <div class="seealso">
+        <span class="title">Veja também</span>
+        <ul>
+          <li><a href="liber_copyright_contracts.html">Contratos de direitos autorais</a> — o módulo base da suíte.</li>
+          <li><a href="liber_cloud_files.html">Cloud Files</a> — as pastas, o portão de acesso e os provedores.</li>
+        </ul>
+      </div>
+
+      <nav class="pager" id="pager"></nav>
+    </article>
+  </div>
+</div>
+<script src="docs.js"></script>
+</body>
+</html>

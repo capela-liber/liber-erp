@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     'name': 'Copyright Contracts',
-    'version': '19.0.1.1.0',
+    'version': '19.0.1.2.0',
     'summary': 'Copyright contract management (beneficiaries, works and tiered royalties)',
     'description': """
 Copyright contract management for a publishing house.

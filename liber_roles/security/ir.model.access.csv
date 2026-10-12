@@ -18,3 +18,5 @@ access_purchase_order_editorial,purchase.order leitura p/ editorial (tiragem e g
 access_purchase_order_line_editorial,purchase.order.line leitura p/ editorial,purchase.model_purchase_order_line,group_editorial_assistente,1,0,0,0
 access_stock_picking_editorial,stock.picking leitura p/ editorial (o PO abre a transferência no botão inteligente),stock.model_stock_picking,group_editorial_assistente,1,0,0,0
 access_stock_move_editorial,stock.move leitura p/ editorial (a linha da transferência que o PO puxa),stock.model_stock_move,group_editorial_assistente,1,0,0,0
+access_link_tracker_marketing,link.tracker escrita p/ marketing (encurta link em /r; o core só dá leitura ao usuário interno),link_tracker.model_link_tracker,group_marketing_assistente,1,1,1,0
+access_link_tracker_editorial,link.tracker escrita p/ editorial (encurta link em /r; 08/10/2026),link_tracker.model_link_tracker,group_editorial_assistente,1,1,1,0

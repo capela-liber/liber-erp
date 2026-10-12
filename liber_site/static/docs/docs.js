@@ -15,6 +15,7 @@ var DOCS = [
     { slug: "liber_copyright_contracts", title: "Contratos de direitos autorais", desc: "Contratos com beneficiários, obras, vigência e renovação." },
     { slug: "liber_copyright_contracts_analytics", title: "Cálculo de royalties", desc: "Faixas de exemplares, base de cálculo e adiantamentos." },
     { slug: "liber_copyright_contracts_taxes", title: "IRRF sobre direitos", desc: "Retenção pela tabela progressiva e o redutor da Lei 15.270/2025." },
+    { slug: "liber_copyright_contracts_cloud", title: "Documentos do contrato", desc: "O contrato ligado aos seus PDFs no Dropbox, Google Drive ou GitHub." },
     { slug: "liber_copyright_contracts_intercompany", title: "Cessão de uso entre empresas", desc: "A empresa que vende reembolsa a que detém os contratos, com fatura e espelho." },
     { slug: "liber_copyright_contracts_payments", title: "Pagamento de royalties", desc: "Direitos em aberto viram fatura de fornecedor por beneficiário." },
     { slug: "liber_copyright_contracts_reports", title: "Prestação de contas", desc: "O extrato do autor em PDF, pronto para enviar." },
@@ -44,6 +45,9 @@ var DOCS = [
   { area: "Logística", desc: "Do depósito à porta do cliente — a transportadora de cada um, os volumes da nota e a coleta pedida em lote.", items: [
     { slug: "liber_transport", title: "Transportadora e coleta", desc: "A transportadora do cliente na entrega, caixas e peso para a nota, e o pedido de coleta por e-mail." },
     { slug: "liber_nfe_picking", title: "DANFE na transferência", desc: "O documento que viaja com a caixa aparece onde a caixa é embalada, e sai em lote para a expedição." },
+    { slug: "liber_stock_shelves", title: "Prateleiras e transferências internas", desc: "Onde a prateleira de cada livro aparece, como mover livros entre prateleiras, e a armadilha da raiz do armazém." },
+    { slug: "liber_stock_scan", title: "Bipagem entre prateleiras", desc: "Bipe a prateleira, bipe os livros, bipe a prateleira nova: a transferência interna nasce validada, pelo leitor ou pela câmera." },
+    { slug: "liber_stock_count", title: "Inventário físico: contar e ajustar", desc: "Quem está no depósito conta; o gerente revisa a diferença e aplica. Pedir a contagem, contar prateleira a prateleira, e por que só o gerente muda a quantidade em mãos." },
   ]},
   { area: "Arquivos", desc: "O acervo da editora nas nuvens, com o Odoo de porteiro — mesma disciplina em três estantes.", items: [
     { slug: "liber_cloud_files", title: "O chassi dos arquivos", desc: "A disciplina que as três estantes herdam: conta por empresa, pasta com dono, e o porteiro na frente." },

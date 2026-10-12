@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_contract_document_user,edlab.contract.document.user,model_edlab_contract_document,liber_copyright_contracts.group_contract_user,1,1,1,1
+access_contract_document_manager,edlab.contract.document.manager,model_edlab_contract_document,liber_copyright_contracts.group_contract_manager,1,1,1,1

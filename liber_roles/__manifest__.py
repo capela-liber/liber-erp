@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     'name': 'Liber Roles (as funções da casa)',
-    'version': '19.0.2.14.0',
+    'version': '19.0.2.16.0',
     'summary': 'Perfis por função: departamento + nível, embrulhando os grupos do Odoo',
     'description': """
 Os "perfis" nativos do Odoo são recortes por aplicativo (Vendas: Usuário,
@@ -69,6 +69,9 @@ menu, então vale também para RPC e URL colada. Ver models/ir_model_access.py.
         'purchase',
         # o menu do rastreio de links (utm) é aberto para o Marketing
         'utm',
+        # o encurtador em si (`/r/<código>`, 08/10/2026): o item de menu e o
+        # ACL de escrita do Marketing e do Editorial referenciam o módulo
+        'link_tracker',
         # o Painel do controller financeiro (11/08/2026): o grupo
         # spreadsheet_dashboard.group_dashboard_manager mora aqui
         'spreadsheet_dashboard',
@@ -115,6 +118,7 @@ menu, então vale também para RPC e URL colada. Ver models/ir_model_access.py.
             'liber_roles/static/src/js/comercial_devolucao_tour.js',
             'liber_roles/static/src/js/comercial_contrato_tour.js',
             'liber_roles/static/src/js/comercial_nota_remessa_tour.js',
+            'liber_roles/static/src/js/editorial_link_curto_tour.js',
         ],
     },
     'installable': True,

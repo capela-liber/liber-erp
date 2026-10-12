@@ -336,6 +336,10 @@ class TestVisitante(TransactionCase):
         Enquanto a demo o escondia, o manual falava de uma tela que ela não
         tinha.
 
+        INVENTÁRIO SAIU em 12/10/2026, pela mesma porta: o estoque endereçado
+        (liber_stock_shelves, liber_stock_scan, liber_stock_count) entrou no
+        produto, com manual publicado, e mora dentro dele.
+
         Fica a lição para o guarda derivado: ele compara MENUS declarados por
         módulo, e um módulo que só estende a tela de outro app não declara
         menu nenhum -- escapa por construção. Módulo assim tem de ser lembrado
@@ -343,8 +347,7 @@ class TestVisitante(TransactionCase):
         """
         dados = self.as_visitor['ir.ui.menu'].load_menus(False)
         visiveis = {int(k) for k in dados if str(k).isdigit()}
-        for rotulo, xmlid in (('Inventário', 'stock.menu_stock_root'),
-                              ('Projeto', 'project.menu_main_pm')):
+        for rotulo, xmlid in (('Projeto', 'project.menu_main_pm'),):
             menu = self.env.ref(xmlid, raise_if_not_found=False)
             if menu:
                 self.assertNotIn(
@@ -371,6 +374,35 @@ class TestVisitante(TransactionCase):
             'Compras hospeda a ficha técnica do liber_print_quote, que tem '
             'manual publicado: escondê-la deixa o manual falando de uma tela '
             'que a demonstração não mostra')
+
+    def test_visitante_ve_o_inventario_porque_ele_hospeda_o_estoque_enderecado(self):
+        """O par do teste de Compras, para o Inventário (12/10/2026).
+
+        A prateleira, a bipagem e a contagem têm manual publicado e moram
+        no app Inventário. Se os três saírem do produto, este teste cai e o
+        Inventário volta para a lista de apps escondidos.
+        """
+        if not self.env['ir.module.module'].search_count([
+                ('name', 'in', ('liber_stock_shelves', 'liber_stock_scan',
+                                'liber_stock_count')),
+                ('state', '=', 'installed')]):
+            self.skipTest('estoque endereçado não instalado nesta base')
+        menu = self.env.ref('stock.menu_stock_root', raise_if_not_found=False)
+        if not menu:
+            self.skipTest('app de Inventário ausente')
+        self.assertIn(
+            menu.id, self._menus_visiveis(self.visitor),
+            'o Inventário hospeda prateleiras, bipagem e contagem, que têm '
+            'manual publicado: escondê-lo deixa o manual falando de uma tela '
+            'que a demonstração não mostra')
+
+    def test_visitante_nao_reconta_o_estoque(self):
+        """Ver o Inventário não é mexer nele: a escrita segue travada."""
+        with self.assertRaises(AccessError):
+            self.as_visitor['stock.quant'].create({
+                'product_id': self.env['product.product'].search([], limit=1).id,
+                'location_id': self.env.ref('stock.stock_location_stock').id,
+                'inventory_quantity': 1})
 
     # ------------------------------------------------------------ não grava
     def test_visitante_nao_emite_pedido(self):

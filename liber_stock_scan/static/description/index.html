@@ -1,0 +1,77 @@
+<!-- GERADO por scripts/gen_module_descriptions.py a partir de
+     liber_site/static/docs/liber_stock_scan.html -- não edite aqui.
+     O Odoo mostra este arquivo em Apps > Module Info. -->
+<div class="oe_container liber_manual" style="max-width:900px;margin:0 auto;padding:8px 4px 24px;color:#251d2b;background:transparent;font:15px/1.7 Inter,'Segoe UI',system-ui,sans-serif;"><h1 style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:32px;line-height:1.2;letter-spacing:-.015em;margin:0 0 10px;color:#251d2b;">Bipagem entre prateleiras</h1>
+      <p class="lead" style="font-size:17.5px;color:#5d5266;margin:0 0 26px;max-width:62ch;">Mover livros de uma prateleira para outra com o leitor na mão, na ordem em que o corpo
+      faz: de onde, o quê, para onde. Três bipes e a transferência interna nasce validada — sem
+      autocompletar, sem digitar quantidade.</p>
+
+      <h2 id="onde" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">Onde fica?</h2>
+      <p style="margin:0 0 12px;">Em <span class="menupath" style="display:inline-block;background:#f1eaf6;border:1px solid #e5dbee;border-radius:6px;padding:1px 8px;font-size:13.5px;color:#251d2b;white-space:nowrap;">Inventário<i style="font-style:normal;color:#6e2f91;margin:0 4px;font-weight:700;">‣</i>Operações<i style="font-style:normal;color:#6e2f91;margin:0 4px;font-weight:700;">‣</i>Bipagem</span>. É uma tela com um campo só, sempre
+      em foco: o que entra nele decide o passo. Funciona com leitor de mão (USB ou Bluetooth, no modo
+      teclado, que digita o código e dá Enter) e com a câmera do celular.</p>
+      <figure class="shot" style="margin:20px 0 24px;">
+        <img src="img/doc-liber_stock_scan-tela.png" alt="A tela Bipagem vazia: campo em foco e os três passos Origem, Livros, Destino" style="max-width:100%;display:block;margin:0 auto;border-radius:12px;border:1px solid #e5dbee;">
+        <figcaption style="font-size:13px;color:#5d5266;margin-top:10px;text-align:center;">Um campo e três passos. O passo aceso é o que o próximo bipe preenche.</figcaption>
+      </figure>
+
+      <h2 id="como" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">Como movo livros?</h2>
+      <ol class="steps" style="margin:0 0 16px 22px;padding:0;">
+        <li style="margin:0 0 7px;"><strong style="color:#251d2b;">Bipe a prateleira de origem</strong> — a etiqueta da prateleira de onde os livros saem
+            (<span class="field" style="font-weight:600;color:#251d2b;">EL-000196</span>). Bipar outra prateleira antes de qualquer livro troca a origem.</li>
+        <li style="margin:0 0 7px;"><strong style="color:#251d2b;">Bipe os livros, um a um</strong> — pelo ISBN da contracapa. O mesmo livro de novo soma um
+            na mesma linha; entre parênteses, quantos há dele naquela prateleira. Livro que não está na
+            prateleira de origem é recusado na hora, com a lista de onde ele está.</li>
+        <li style="margin:0 0 7px;"><strong style="color:#251d2b;">Bipe a prateleira de destino</strong> — e pronto: a transferência interna é criada, reservada
+            e validada no mesmo bipe. A tela diz o número dela e volta ao passo 1.</li>
+      </ol>
+      <figure class="shot" style="margin:20px 0 24px;">
+        <img src="img/doc-liber_stock_scan-livros.png" alt="Bipagem com a origem EL-000196 aberta, dois exemplares de Coletivos na linha, e a recusa de um livro que está em EL-000043" style="max-width:100%;display:block;margin:0 auto;border-radius:12px;border:1px solid #e5dbee;">
+        <figcaption style="font-size:13px;color:#5d5266;margin-top:10px;text-align:center;">Origem aberta, dois bipes do mesmo título, e a recusa em vermelho: o livro bipado por
+        engano está na EL-000043 e na raiz, não aqui.</figcaption>
+      </figure>
+      <p style="margin:0 0 12px;">Dois botões para errar sem medo: <span class="field" style="font-weight:600;color:#251d2b;">Desfazer o último</span> tira o último bipe, e
+      <span class="field" style="font-weight:600;color:#251d2b;">Recomeçar</span> limpa tudo sem gravar nada. Nada é gravado antes do bipe do destino.</p>
+
+      <h2 id="camera" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">E pela câmera do celular?</h2>
+      <p style="margin:0 0 12px;">Clique em <span class="field" style="font-weight:600;color:#251d2b;">Ler com a câmera</span>, aponte para a etiqueta ou para o ISBN; cada leitura
+      é um bipe, e a mesma leitura repetida em sequência conta uma vez só. A câmera só abre em endereço
+      seguro (https), que é como o sistema é servido fora da casa.</p>
+
+      <h2 id="etiquetas" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">De onde vêm as etiquetas das prateleiras?</h2>
+      <p style="margin:0 0 12px;">Toda prateleira tem o próprio código como código de barras (<span class="field" style="font-weight:600;color:#251d2b;">EL-000196</span>), dado
+      na instalação e a cada prateleira nova. Para imprimir, em
+      <span class="menupath" style="display:inline-block;background:#f1eaf6;border:1px solid #e5dbee;border-radius:6px;padding:1px 8px;font-size:13.5px;color:#251d2b;white-space:nowrap;">Inventário<i style="font-style:normal;color:#6e2f91;margin:0 4px;font-weight:700;">‣</i>Configuração<i style="font-style:normal;color:#6e2f91;margin:0 4px;font-weight:700;">‣</i>Locais</span> marque as prateleiras e use
+      <span class="menupath" style="display:inline-block;background:#f1eaf6;border:1px solid #e5dbee;border-radius:6px;padding:1px 8px;font-size:13.5px;color:#251d2b;white-space:nowrap;">Imprimir<i style="font-style:normal;color:#6e2f91;margin:0 4px;font-weight:700;">‣</i>Etiquetas de local</span>. A etiqueta antiga, com o nome completo
+      (<span class="field" style="font-weight:600;color:#251d2b;">EL-VG/Stock/EL-000196</span>), também é aceita.</p>
+
+      <h2 id="regras" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">O que a bipagem não deixa fazer</h2>
+      <div class="tablewrap" style="overflow-x:auto;margin:0 0 16px;"><table style="border-collapse:collapse;width:100%;margin:0 0 16px;font-size:14px;">
+        <tr><th style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;background:#f1eaf6;font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:13.5px;">O que aparece</th><th style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;background:#f1eaf6;font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:13.5px;">Por quê</th><th style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;background:#f1eaf6;font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:13.5px;">O que fazer</th></tr>
+        <tr>
+          <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">"… não é prateleira do armazém"</td>
+          <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">O código é da raiz, de um local de vista ou da prateleira de consignação de um cliente.</td>
+          <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Bipe uma prateleira do armazém. Livro para a prateleira do cliente vai pelo Pedido C.</td>
+        </tr>
+        <tr>
+          <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">"… não está em EL-000196. Está em: …"</td>
+          <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">O livro não está na prateleira de origem aberta.</td>
+          <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Ou o livro, ou a origem está errada. A mensagem diz onde ele está.</td>
+        </tr>
+        <tr>
+          <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">"… só há N em …"</td>
+          <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Você bipou mais exemplares do que a prateleira tem.</td>
+          <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Confira a contagem na prateleira; se faltar no sistema, é inventário, não transferência.</td>
+        </tr>
+        <tr>
+          <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">"Código desconhecido"</td>
+          <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Nem prateleira, nem livro cadastrado com esse ISBN.</td>
+          <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Confira a etiqueta. Livro sem ISBN no cadastro precisa do Editorial.</td>
+        </tr>
+      </table></div>
+      <p style="margin:0 0 12px;">A transferência que a bipagem cria passa pelas mesmas regras da transferência interna comum —
+      veja <a href="/liber_site/static/docs/liber_stock_shelves.html" target="_blank" rel="noopener" style="color:#6e2f91;">Prateleiras e transferências internas</a>. A origem é sempre uma
+      prateleira exata, nunca a raiz, então a armadilha da raiz não existe aqui.</p>
+
+      <div class="callout" style="border:1px solid #e5dbee;border-left:4px solid #6e2f91;border-radius:10px;background:#f1eaf6;padding:14px 18px;margin:0 0 16px;">Dúvida sobre acesso ou empresa: fale com a administração do sistema.
+      Toda transferência bipada fica no histórico do livro, com "Bipagem" como documento de origem.</div><p style="margin:28px 0 0;padding-top:14px;border-top:1px solid #e5dbee;font-size:13px;color:#5d5266;">Manual completo, com busca e as demais páginas: <a href="/liber_site/static/docs/liber_stock_scan.html" target="_blank" rel="noopener" style="color:#6e2f91;">Bipagem entre prateleiras</a>.</p></div>

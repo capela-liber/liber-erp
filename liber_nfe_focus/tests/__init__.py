@@ -13,3 +13,4 @@ from . import test_painel_da_casa
 from . import test_nome_fiscal
 from . import test_neutralize
 from . import test_colunas_nota
+from . import test_formulario_empresa

@@ -2,42 +2,72 @@
 <odoo>
 
     <!-- ==================================================================
-         O RASTREIO DE LINKS É DO MARKETING (11/08/2026).
+         O RASTREIO DE LINKS É DO MARKETING (11/08/2026) — E, DESDE
+         08/10/2026, O ENCURTADOR TAMBÉM É DO EDITORIAL.
 
-         Situação antes desta linha, conferida no banco: o Link Tracker não
-         tem grupo próprio no Odoo. Os menus dele — `Link Tracker`, `UTMs`,
-         `Campanhas`, `Meios`, `Origens` — são travados em `base.group_no_one`,
-         que é o modo debug. Ou seja: a ferramenta existia e **ninguém** a
-         via, marketing inclusive.
+         Situação antes da primeira linha, conferida no banco: o Link Tracker
+         não tem grupo próprio no Odoo. Os menus dele — `Link Tracker`,
+         `UTMs`, `Campanhas`, `Meios`, `Origens` — são travados em
+         `base.group_no_one`, que é o modo debug. Ou seja: a ferramenta
+         existia e **ninguém** a via, marketing inclusive.
 
-         Aqui se abre a porta para o Marketing, nos dois níveis. O assistente
-         basta: o gerente o implica.
+         O QUE SE ABRE, E PARA QUEM. A raiz do app e o item `Link Tracker`
+         (a lista onde se encurta um link em `/r/<código>`) abrem para o
+         Marketing E para o Editorial, no nível assistente — o gerente de
+         cada um o implica. As UTMs (campanha, meio, origem) seguem SÓ do
+         Marketing: campanha é assunto dele; o Editorial encurta o link do
+         livro e pronto.
 
-         O QUE ESTA LINHA NÃO FAZ, e é preciso dizer para ninguém ler "só do
-         marketing" e concluir mais do que está escrito. O ACL do core dá
-         `link.tracker` em leitura, escrita e criação a `base.group_user` —
-         a todo usuário interno da casa. Isto é uma porta de MENU, não uma
-         trava de ORM: quem colar a URL certa continua chegando lá.
+         O EDITORIAL ENTROU EM 08/10/2026 porque a casa pediu: "o editorial
+         assistente e gerente precisa estar habilitado a encurtar um link em
+         edlab.press/r. Hoje apenas o Paulo". E ao abrir a porta apareceu o
+         que a porta de 11/08 escondia, e o cabeçalho antigo deste arquivo
+         dizia errado:
 
-         Estreitar o ACL foi considerado e NÃO foi feito, por um motivo
-         concreto: quem cria link tracker não é só gente, é o
-         `mail_render_mixin` do próprio core, ao renderizar um e-mail com
-         link rastreado. Trocar `base.group_user` pelo grupo do Marketing
-         quebraria o envio de e-mail de quem não é do Marketing, e o erro
-         apareceria longe daqui, no meio de um disparo. Se a casa quiser
-         mesmo a trava, o caminho é declarar um grupo de rastreio no core
-         override e mover o ACL inteiro — decisão maior que uma linha de menu,
-         e que merece estar no `_mds/PERFIS.md` antes de estar aqui.
+         1. O item `link_tracker.link_tracker_menu_main` — a lista em si —
+            ficou em `base.group_no_one`. Só a raiz e as UTMs tinham sido
+            abertas, então clicar em "Link Tracker" levava às Campanhas, e
+            a lista de links continuava atrás do modo debug.
+
+         2. PORTA DE MENU NÃO É DIREITO. No Odoo 19 o ACL do core dá
+            `link.tracker` ao usuário interno só em LEITURA (o cabeçalho
+            antigo afirmava "leitura, escrita e criação", e isso não é
+            verdade no 19). Criar é do Editor e designer do site (ACL do
+            `website_links`) e do administrador. O Marketing/Gerente
+            criava por carona do `group_website_designer`; o
+            Marketing/Assistente e todo o Editorial só liam. Daí o "só o
+            Paulo". O direito de escrever mora agora no
+            `ir.model.access.csv` deste módulo, nos dois departamentos, sem
+            unlink: link já distribuído (e-mail, QR code) não se apaga por
+            engano.
+
+         O receio de 11/08 — estreitar o ACL quebraria o envio de e-mail,
+         porque o core cria link tracker ao renderizar — não se aplica a
+         CONCEDER: aqui só se soma. E no 19 o core cria os códigos com
+         `sudo()` de qualquer forma.
 
          `(6, 0, [...])` e não `(4, ...)`: aqui se SUBSTITUI o
-         `base.group_no_one`, senão o menu continuaria escondido atrás do modo
-         debug e a linha não teria efeito nenhum.
+         `base.group_no_one`, senão o menu continuaria escondido atrás do
+         modo debug e a linha não teria efeito nenhum.
          ================================================================== -->
 
     <record id="utm.menu_link_tracker_root" model="ir.ui.menu">
-        <field name="group_ids" eval="[(6, 0, [ref('liber_roles.group_marketing_assistente')])]"/>
+        <field name="group_ids" eval="[(6, 0, [
+            ref('liber_roles.group_marketing_assistente'),
+            ref('liber_roles.group_editorial_assistente'),
+        ])]"/>
     </record>
 
+    <!-- A lista de links, onde se encurta. Nasce em modo debug no
+         `link_tracker`, e o arquivo de 11/08 não a abria. -->
+    <record id="link_tracker.link_tracker_menu_main" model="ir.ui.menu">
+        <field name="group_ids" eval="[(6, 0, [
+            ref('liber_roles.group_marketing_assistente'),
+            ref('liber_roles.group_editorial_assistente'),
+        ])]"/>
+    </record>
+
+    <!-- As UTMs seguem só do Marketing. -->
     <record id="utm.marketing_utm" model="ir.ui.menu">
         <field name="group_ids" eval="[(6, 0, [ref('liber_roles.group_marketing_assistente')])]"/>
     </record>

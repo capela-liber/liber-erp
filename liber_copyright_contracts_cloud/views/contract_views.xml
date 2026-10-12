@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_edlab_contract_form_cloud" model="ir.ui.view">
+        <field name="name">edlab.contract.form.cloud</field>
+        <field name="model">edlab.contract</field>
+        <field name="inherit_id" ref="liber_copyright_contracts.view_edlab_contract_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header" position="inside">
+                <button name="action_open_main_document" type="object"
+                        string="Open Document" icon="fa-file-pdf-o"
+                        invisible="not main_document_id"/>
+            </xpath>
+            <xpath expr="//field[@name='location']" position="attributes">
+                <attribute name="readonly">main_document_id</attribute>
+            </xpath>
+            <xpath expr="//field[@name='location']" position="after">
+                <field name="location_missing" decoration-danger="location_missing"
+                       invisible="not location_missing"/>
+            </xpath>
+            <xpath expr="//notebook/page[@name='royalties']" position="after">
+                <page string="Documents" name="documents">
+                    <field name="main_document_id" invisible="1"/>
+                    <field name="allowed_cloud_folder_ids" invisible="1"/>
+                    <field name="document_ids">
+                        <list>
+                            <field name="sequence" widget="handle"/>
+                            <field name="is_main"/>
+                            <field name="name"/>
+                            <field name="provider"/>
+                            <field name="path" optional="hide"/>
+                            <field name="note" optional="show"/>
+                            <button name="action_open" type="object" icon="fa-external-link"
+                                    title="Open"/>
+                        </list>
+                        <form>
+                            <group>
+                                <field name="file_id"
+                                       domain="[('folder_id', 'in', parent.allowed_cloud_folder_ids or [])]"
+                                       options="{'no_create': True}"/>
+                                <field name="is_main"/>
+                                <field name="note"/>
+                            </group>
+                        </form>
+                    </field>
+                    <p class="text-muted" invisible="allowed_cloud_folder_ids">
+                        No folder chosen for contract documents yet: Settings &gt; Copyright &gt; Documents.
+                    </p>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_edlab_contract_search_cloud" model="ir.ui.view">
+        <field name="name">edlab.contract.search.cloud</field>
+        <field name="model">edlab.contract</field>
+        <field name="inherit_id" ref="liber_copyright_contracts.view_edlab_contract_search"/>
+        <field name="arch" type="xml">
+            <xpath expr="//filter[@name='auto_renew']" position="after">
+                <separator/>
+                <filter name="location_missing" string="Location without document"
+                        domain="[('location_missing', '!=', False)]"/>
+                <filter name="without_document" string="Without document"
+                        domain="[('document_ids', '=', False)]"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

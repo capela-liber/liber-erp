@@ -1,0 +1,209 @@
+<!-- GERADO por scripts/gen_module_descriptions.py a partir de
+     liber_site/static/docs/liber_stock_count.html -- não edite aqui.
+     O Odoo mostra este arquivo em Apps > Module Info. -->
+<div class="oe_container liber_manual" style="max-width:900px;margin:0 auto;padding:8px 4px 24px;color:#251d2b;background:transparent;font:15px/1.7 Inter,'Segoe UI',system-ui,sans-serif;"><h1 style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:32px;line-height:1.2;letter-spacing:-.015em;margin:0 0 10px;color:#251d2b;">Inventário físico: contar e ajustar</h1>
+      <p class="lead" style="font-size:17.5px;color:#5d5266;margin:0 0 26px;max-width:62ch;">O inventário é feito em dois gestos, por duas pessoas. Quem está no depósito
+      <strong style="color:#251d2b;">conta</strong>: vai à prateleira e escreve quantos exemplares há de cada título. O gerente
+      <strong style="color:#251d2b;">aplica</strong>: revisa a diferença entre o contado e o que o sistema esperava, e só então a
+      quantidade em mãos muda. Este manual mostra as duas metades — e por que a segunda é só do gerente.</p>
+
+      <h2 id="contar-nao-e-ajustar" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">Contar não é ajustar</h2>
+      <p style="margin:0 0 12px;">A tela <span class="menupath" style="display:inline-block;background:#f1eaf6;border:1px solid #e5dbee;border-radius:6px;padding:1px 8px;font-size:13.5px;color:#251d2b;white-space:nowrap;">Inventário<i style="font-style:normal;color:#6e2f91;margin:0 4px;font-weight:700;">‣</i>Operações<i style="font-style:normal;color:#6e2f91;margin:0 4px;font-weight:700;">‣</i>Inventário físico</span> tem uma linha por
+      título em cada prateleira, e duas colunas que importam:</p>
+      <div class="tablewrap" style="overflow-x:auto;margin:0 0 16px;"><table style="border-collapse:collapse;width:100%;margin:0 0 16px;font-size:14px;">
+        <tr><th style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;background:#f1eaf6;font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:13.5px;">Coluna</th><th style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;background:#f1eaf6;font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:13.5px;">O que é</th><th style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;background:#f1eaf6;font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:13.5px;">Quem escreve</th></tr>
+        <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;"><span class="field" style="font-weight:600;color:#251d2b;">Em mãos</span></td>
+            <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">O que o sistema acha que há na prateleira — a soma de tudo o que entrou e saiu por
+                transferências validadas.</td>
+            <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Ninguém. Ela muda por movimento.</td></tr>
+        <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;"><span class="field" style="font-weight:600;color:#251d2b;">Contado</span></td>
+            <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">O que a pessoa achou na prateleira. Fica em branco até alguém contar.</td>
+            <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Quem conta: o assistente.</td></tr>
+        <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;"><span class="field" style="font-weight:600;color:#251d2b;">Diferença</span></td>
+            <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Contado menos Em mãos. Negativa quando falta livro, positiva quando sobra.</td>
+            <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Ninguém. É a conta das duas.</td></tr>
+      </table></div>
+      <p style="margin:0 0 12px;">Preencher <span class="field" style="font-weight:600;color:#251d2b;">Contado</span> não mexe no estoque: é um registro à espera. O que mexe é o
+      botão <span class="field" style="font-weight:600;color:#251d2b;">Aplicar</span>, que transforma a diferença num <strong style="color:#251d2b;">movimento de ajuste</strong>:
+      a quantidade em mãos passa a ser a contada, e o livro que faltava vai para "Perda de inventário",
+      com data, prateleira e quem aplicou no histórico. Esse clique é o que muda o número que o
+      comercial, o acerto de consignação e o financeiro leem — e por isso é só do gerente.</p>
+      <div class="tablewrap" style="overflow-x:auto;margin:0 0 16px;"><table style="border-collapse:collapse;width:100%;margin:0 0 16px;font-size:14px;">
+        <tr><th style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;background:#f1eaf6;font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:13.5px;">Gesto</th><th style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;background:#f1eaf6;font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:13.5px;">Assistente</th><th style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;background:#f1eaf6;font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:13.5px;">Gerente</th></tr>
+        <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Pedir uma contagem (<span class="field" style="font-weight:600;color:#251d2b;">Solicitar uma contagem</span>)</td><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">—</td><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">sim</td></tr>
+        <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Imprimir a <span class="field" style="font-weight:600;color:#251d2b;">Folha de contagem</span></td><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">sim</td><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">sim</td></tr>
+        <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Preencher <span class="field" style="font-weight:600;color:#251d2b;">Contado</span>, linha a linha ou pela folha</td><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">sim</td><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">sim</td></tr>
+        <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Criar linha para livro que estava na prateleira e não na lista</td><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">sim</td><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">sim</td></tr>
+        <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Limpar a própria contagem antes de aplicada</td><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">sim</td><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">sim</td></tr>
+        <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;"><span class="field" style="font-weight:600;color:#251d2b;">Aplicar</span>, <span class="field" style="font-weight:600;color:#251d2b;">Aplicar tudo</span>, resolver um conflito</td><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">—</td><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">sim</td></tr>
+        <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Mudar <span class="field" style="font-weight:600;color:#251d2b;">Quantidade em mãos</span> na ficha do livro</td><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">—</td><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">sim</td></tr>
+        <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;"><span class="field" style="font-weight:600;color:#251d2b;">Definir como 0</span>, <span class="field" style="font-weight:600;color:#251d2b;">Realocar</span>, apagar linha</td><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">—</td><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">sim</td></tr>
+      </table></div>
+
+      <h2 id="pedir" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">Como o gerente pede uma contagem</h2>
+      <p style="margin:0 0 12px;">O inventário começa pelo gerente: ele escolhe o que se conta e quem conta. Pode ser uma
+      prateleira, um título em todas as prateleiras, ou o depósito inteiro — o Odoo não tem "abrir um
+      inventário"; tem linhas com uma data e um responsável.</p>
+      <ol class="steps" style="margin:0 0 16px 22px;padding:0;">
+        <li style="margin:0 0 7px;">Abra <span class="menupath" style="display:inline-block;background:#f1eaf6;border:1px solid #e5dbee;border-radius:6px;padding:1px 8px;font-size:13.5px;color:#251d2b;white-space:nowrap;">Inventário<i style="font-style:normal;color:#6e2f91;margin:0 4px;font-weight:700;">‣</i>Operações<i style="font-style:normal;color:#6e2f91;margin:0 4px;font-weight:700;">‣</i>Inventário físico</span>. Agrupe por
+            <span class="field" style="font-weight:600;color:#251d2b;">Local</span> e abra o grupo da prateleira, ou filtre pelo código dela
+            (<span class="field" style="font-weight:600;color:#251d2b;">EL-000196</span>) ou pelo produto. Marque as linhas que vão ser contadas; para a
+            prateleira inteira, a caixa do cabeçalho.</li>
+        <li style="margin:0 0 7px;">Clique em <span class="field" style="font-weight:600;color:#251d2b;">Solicitar uma contagem</span>. Em <span class="field" style="font-weight:600;color:#251d2b;">Atribuir a</span>,
+            escolha quem vai contar; na data agendada (o campo ainda aparece em inglês, <em>Scheduled at</em>), o dia.
+            Deixe <span class="field" style="font-weight:600;color:#251d2b;">Atribuir a</span> vazio para a contagem ficar aberta a qualquer um da equipe.</li>
+        <li style="margin:0 0 7px;"><span class="field" style="font-weight:600;color:#251d2b;">Confirmar</span>. As linhas ganham a data e o nome, e passam a aparecer no
+            filtro <span class="field" style="font-weight:600;color:#251d2b;">Minhas contagens</span> de quem foi escolhido.</li>
+        <li style="margin:0 0 7px;">Se a contagem for de papel, marque as linhas de novo e imprima a
+            <span class="field" style="font-weight:600;color:#251d2b;">Folha de contagem</span> (menu <span class="field" style="font-weight:600;color:#251d2b;">Imprimir</span>). Ela sai com
+            uma coluna em branco para escrever.</li>
+      </ol>
+      <figure class="shot" style="margin:20px 0 24px;">
+        <img src="img/doc-liber_stock_count-solicitar.png" alt="Inventário físico com as linhas da prateleira EL-000101 marcadas e a janela Solicitar uma contagem aberta: Atribuir a, Agendado" style="max-width:100%;display:block;margin:0 auto;border-radius:12px;border:1px solid #e5dbee;">
+        <figcaption style="font-size:13px;color:#5d5266;margin-top:10px;text-align:center;">O grupo da prateleira aberto, as duas linhas marcadas, uma pessoa, uma data. A contagem
+        pedida aparece no <span class="field" style="font-weight:600;color:#251d2b;">Minhas contagens</span> dela.</figcaption>
+      </figure>
+      <div class="callout" style="border:1px solid #e5dbee;border-left:4px solid #6e2f91;border-radius:10px;background:#f1eaf6;padding:14px 18px;margin:0 0 16px;">A janela traz também a opção de mostrar a <strong style="color:#251d2b;">quantidade esperada</strong>
+      (<em>Show Expected Quantity</em>) na folha impressa. Desligada, quem conta não vê o número do sistema — e conta de verdade em vez de conferir.
+      É uma escolha para a casa inteira, não para aquela contagem.</div>
+
+      <h2 id="contar" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">Como o assistente conta</h2>
+      <ol class="steps" style="margin:0 0 16px 22px;padding:0;">
+        <li style="margin:0 0 7px;">Abra <span class="menupath" style="display:inline-block;background:#f1eaf6;border:1px solid #e5dbee;border-radius:6px;padding:1px 8px;font-size:13.5px;color:#251d2b;white-space:nowrap;">Inventário<i style="font-style:normal;color:#6e2f91;margin:0 4px;font-weight:700;">‣</i>Operações<i style="font-style:normal;color:#6e2f91;margin:0 4px;font-weight:700;">‣</i>Inventário físico</span>. O filtro
+            <span class="field" style="font-weight:600;color:#251d2b;">Minhas contagens</span> já vem ligado: só o que foi pedido a você. Para ver
+            o que está no prazo, acrescente <span class="field" style="font-weight:600;color:#251d2b;">A ser contado</span>.</li>
+        <li style="margin:0 0 7px;">Vá <strong style="color:#251d2b;">prateleira por prateleira</strong>: agrupe por <span class="field" style="font-weight:600;color:#251d2b;">Local</span> ou filtre pelo
+            código. A ordem crescente do código é a ordem do passeio no depósito.</li>
+        <li style="margin:0 0 7px;">Na prateleira, conte cada título e escreva o número na coluna <span class="field" style="font-weight:600;color:#251d2b;">Contado</span>.
+            Zero também é contagem: um título que não está mais lá recebe <strong style="color:#251d2b;">0</strong>, não fica em
+            branco.</li>
+        <li style="margin:0 0 7px;">Quando a contagem bate com o esperado, não precisa digitar: marque a linha e use
+            <span class="menupath" style="display:inline-block;background:#f1eaf6;border:1px solid #e5dbee;border-radius:6px;padding:1px 8px;font-size:13.5px;color:#251d2b;white-space:nowrap;">Ações<i style="font-style:normal;color:#6e2f91;margin:0 4px;font-weight:700;">‣</i>Definir como a quantidade em mãos</span>, que copia
+            <span class="field" style="font-weight:600;color:#251d2b;">Em mãos</span> para <span class="field" style="font-weight:600;color:#251d2b;">Contado</span>.</li>
+        <li style="margin:0 0 7px;">Achou na prateleira um livro que não está na lista? Clique em <span class="field" style="font-weight:600;color:#251d2b;">Novo</span>, escolha
+            o <span class="field" style="font-weight:600;color:#251d2b;">Local</span> (a prateleira), o <span class="field" style="font-weight:600;color:#251d2b;">Produto</span> e escreva o
+            <span class="field" style="font-weight:600;color:#251d2b;">Contado</span>. A linha nasce com Em mãos zero e a diferença positiva — e também
+            espera o gerente.</li>
+        <li style="margin:0 0 7px;">Clique em salvar. A coluna <span class="field" style="font-weight:600;color:#251d2b;">Diferença</span> aparece, e a linha fica marcada como
+            pendente de aplicação. Errou? <span class="field" style="font-weight:600;color:#251d2b;">Limpar</span> na própria linha apaga a sua contagem
+            e nada mais.</li>
+      </ol>
+      <figure class="shot" style="margin:20px 0 24px;">
+        <img src="img/doc-liber_stock_count-assistente.png" alt="Inventário físico no perfil do assistente: filtro Minhas contagens, duas linhas contadas com a Diferença, e nenhum botão Aplicar" style="max-width:100%;display:block;margin:0 auto;border-radius:12px;border:1px solid #e5dbee;">
+        <figcaption style="font-size:13px;color:#5d5266;margin-top:10px;text-align:center;">A tela de quem conta: <span class="field" style="font-weight:600;color:#251d2b;">Contado</span> preenchido, <span class="field" style="font-weight:600;color:#251d2b;">Diferença</span>
+        calculada, e nenhum <span class="field" style="font-weight:600;color:#251d2b;">Aplicar</span> à vista. O estoque ainda não mudou.</figcaption>
+      </figure>
+      <div class="callout warn" style="border:1px solid #e5dbee;border-left:4px solid #6e2f91;border-radius:10px;padding:14px 18px;margin:0 0 16px;border-left-color:#b3831a;background:#faf3e3;border-color:#eddfba;"><strong style="color:#251d2b;">Contagem não é mudança de prateleira.</strong> Se o livro está em outra
+      prateleira, não escreva 0 numa e o total na outra: isso vira uma perda numa e um achado na outra,
+      sem o movimento que explica. Mova-o pela
+      <a href="/liber_site/static/docs/liber_stock_shelves.html#transferir" target="_blank" rel="noopener" style="color:#6e2f91;">transferência interna</a> ou pela
+      <a href="/liber_site/static/docs/liber_stock_scan.html" target="_blank" rel="noopener" style="color:#6e2f91;">bipagem</a>, e conte depois.</div>
+
+      <h2 id="aplicar" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">Como o gerente aplica</h2>
+      <ol class="steps" style="margin:0 0 16px 22px;padding:0;">
+        <li style="margin:0 0 7px;">No <span class="menupath" style="display:inline-block;background:#f1eaf6;border:1px solid #e5dbee;border-radius:6px;padding:1px 8px;font-size:13.5px;color:#251d2b;white-space:nowrap;">Inventário físico</span>, ligue o filtro <span class="field" style="font-weight:600;color:#251d2b;">A ser aplicado</span>:
+            são as linhas que alguém contou e ainda não foram aplicadas, com a
+            <span class="field" style="font-weight:600;color:#251d2b;">Diferença</span> à mostra e quem contou na coluna <span class="field" style="font-weight:600;color:#251d2b;">Usuário</span>.</li>
+        <li style="margin:0 0 7px;">Revise as diferenças grandes antes de clicar. Uma diferença de dezenas num título que acabou de ser
+            separado costuma ser contagem antes da transferência, não livro sumido:
+            <span class="field" style="font-weight:600;color:#251d2b;">Histórico</span> na linha mostra os últimos movimentos daquela prateleira.</li>
+        <li style="margin:0 0 7px;">Para aplicar uma linha, clique em <span class="field" style="font-weight:600;color:#251d2b;">Aplicar</span> nela mesma. Para aplicar várias,
+            marque-as e clique em <span class="field" style="font-weight:600;color:#251d2b;">Aplicar</span> no cabeçalho; para aplicar tudo o que está
+            contado na lista filtrada, <span class="field" style="font-weight:600;color:#251d2b;">Aplicar tudo</span>.</li>
+        <li style="margin:0 0 7px;">Escreva o <span class="field" style="font-weight:600;color:#251d2b;">Motivo do inventário</span> ("Inventário de outubro", "Contagem da
+            prateleira 196") e confirme em <span class="field" style="font-weight:600;color:#251d2b;">Atualizar quantidades</span>. O motivo é o nome do
+            movimento no histórico de cada livro.</li>
+      </ol>
+      <figure class="shot" style="margin:20px 0 24px;">
+        <img src="img/doc-liber_stock_count-gerente.png" alt="Inventário físico no perfil do gerente, filtro A ser aplicado: linhas com Diferença, botão Aplicar em cada uma e Aplicar tudo no cabeçalho" style="max-width:100%;display:block;margin:0 auto;border-radius:12px;border:1px solid #e5dbee;">
+        <figcaption style="font-size:13px;color:#5d5266;margin-top:10px;text-align:center;">A mesma lista, vista pelo gerente: <span class="field" style="font-weight:600;color:#251d2b;">Aplicar</span> em cada linha e
+        <span class="field" style="font-weight:600;color:#251d2b;">Aplicar tudo</span> no cabeçalho.</figcaption>
+      </figure>
+      <figure class="shot" style="margin:20px 0 24px;">
+        <img src="img/doc-liber_stock_count-motivo.png" alt="Janela Inventário físico com o campo Motivo do inventário e a data, e o botão Atualizar quantidades" style="max-width:100%;display:block;margin:0 auto;border-radius:12px;border:1px solid #e5dbee;">
+        <figcaption style="font-size:13px;color:#5d5266;margin-top:10px;text-align:center;">O motivo vira o nome do movimento. Seis meses depois, é ele que explica por que o
+        número mudou.</figcaption>
+      </figure>
+      <div class="callout" style="border:1px solid #e5dbee;border-left:4px solid #6e2f91;border-radius:10px;background:#f1eaf6;padding:14px 18px;margin:0 0 16px;"><strong style="color:#251d2b;">Conflito.</strong> Se o livro se moveu depois de contado (uma entrega saiu da
+      prateleira entre a contagem e o clique), a linha fica em <span class="field" style="font-weight:600;color:#251d2b;">Conflitos</span> e o
+      <span class="field" style="font-weight:600;color:#251d2b;">Aplicar</span> abre uma caixa com duas saídas: <span class="field" style="font-weight:600;color:#251d2b;">Manter a quantidade
+      contada</span> (o número da pessoa vale, e o movimento de depois é somado por cima) ou
+      <span class="field" style="font-weight:600;color:#251d2b;">Manter diferença</span> (vale a diferença que ela encontrou, aplicada ao saldo de agora).
+      Na dúvida, peça uma recontagem.</div>
+
+      <h2 id="por-que" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">Por que só o gerente aplica</h2>
+      <p style="margin:0 0 12px;">No Odoo de fábrica, quem conta também aplica: o grupo "Inventário: Usuário" vê os botões
+      <span class="field" style="font-weight:600;color:#251d2b;">Aplicar</span> e <span class="field" style="font-weight:600;color:#251d2b;">Aplicar tudo</span>. O Liber fecha isso em dois
+      lugares, porque um botão escondido não fecha nada: a tela deixa de oferecer os botões ao assistente, e o
+      sistema recusa o ajuste por qualquer porta — a linha, o cabeçalho, a ficha do produto, uma chamada
+      de fora — quando quem pede não é administrador do Inventário. A contagem recusada não se perde:
+      fica na coluna <span class="field" style="font-weight:600;color:#251d2b;">Contado</span>, esperando.</p>
+      <div class="callout" style="border:1px solid #e5dbee;border-left:4px solid #6e2f91;border-radius:10px;background:#f1eaf6;padding:14px 18px;margin:0 0 16px;">Se aparecer <em>"Só um administrador do Inventário aplica um ajuste de estoque e muda a
+      quantidade em mãos. A sua contagem está guardada na coluna Contado: peça ao gerente do depósito que a
+      revise e aplique."</em>, está tudo certo: você contou, e o resto é do gerente.</div>
+
+      <h2 id="quem-pode" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">Quem pode o quê</h2>
+      <div class="tablewrap" style="overflow-x:auto;margin:0 0 16px;"><table style="border-collapse:collapse;width:100%;margin:0 0 16px;font-size:14px;">
+        <tr><th style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;background:#f1eaf6;font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:13.5px;">Perfil</th><th style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;background:#f1eaf6;font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:13.5px;">Conta</th><th style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;background:#f1eaf6;font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:13.5px;">Pede contagem</th><th style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;background:#f1eaf6;font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:13.5px;">Aplica</th><th style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;background:#f1eaf6;font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:13.5px;">Em mãos na ficha</th></tr>
+        <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Logística, Assistente</td><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">sim</td><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">—</td><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">—</td><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">lê</td></tr>
+        <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Logística, Gerente e Direção</td><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">sim</td><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">sim</td><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">sim</td><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">edita</td></tr>
+        <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Comercial, Gerente</td><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">sim</td><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">—</td><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">—</td><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">lê</td></tr>
+        <tr><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Demais usuários internos</td><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">—</td><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">—</td><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">—</td><td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">lê, onde já liam estoque</td></tr>
+      </table></div>
+
+      <h2 id="problemas" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">Quando algo não sai como esperado</h2>
+      <div class="tablewrap" style="overflow-x:auto;margin:0 0 16px;"><table style="border-collapse:collapse;width:100%;margin:0 0 16px;font-size:14px;">
+        <tr><th style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;background:#f1eaf6;font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:13.5px;">O que aparece</th><th style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;background:#f1eaf6;font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:13.5px;">Por quê</th><th style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;background:#f1eaf6;font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:13.5px;">O que fazer</th></tr>
+        <tr>
+          <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">"Só um administrador do Inventário aplica um ajuste de estoque…"</td>
+          <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Você não é gerente da Logística. A contagem ficou gravada.</td>
+          <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Avise o gerente: a linha está no filtro <span class="field" style="font-weight:600;color:#251d2b;">A ser aplicado</span> dele.</td>
+        </tr>
+        <tr>
+          <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">A lista abre vazia para mim</td>
+          <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">O filtro <span class="field" style="font-weight:600;color:#251d2b;">Minhas contagens</span> vem ligado, e ninguém lhe pediu contagem.</td>
+          <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Tire o filtro para ver tudo, ou peça ao gerente que atribua a contagem a você.</td>
+        </tr>
+        <tr>
+          <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Não vejo o botão <span class="field" style="font-weight:600;color:#251d2b;">Aplicar</span> nem <span class="field" style="font-weight:600;color:#251d2b;">Aplicar tudo</span></td>
+          <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">São do gerente. A tela não os mostra a quem conta.</td>
+          <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Nada a fazer: contar é o seu trabalho; o resto é dele.</td>
+        </tr>
+        <tr>
+          <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">"Quantidades já definidas"</td>
+          <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Você usou <span class="field" style="font-weight:600;color:#251d2b;">Definir como a quantidade em mãos</span> numa linha que já tinha
+              contagem.</td>
+          <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;"><span class="field" style="font-weight:600;color:#251d2b;">Cancelar</span> mantém a contagem que existia; <span class="field" style="font-weight:600;color:#251d2b;">Continuar</span>
+              substitui pela quantidade em mãos.</td>
+        </tr>
+        <tr>
+          <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">A linha está em <span class="field" style="font-weight:600;color:#251d2b;">Conflitos</span></td>
+          <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Houve movimento na prateleira depois da contagem.</td>
+          <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">O gerente decide na caixa de conflito, ou pede recontagem.</td>
+        </tr>
+        <tr>
+          <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Marquei um produto como estocável e deu erro de acesso</td>
+          <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Tornar estocável um produto que já teve movimentos zera o estoque dele — é um ajuste de
+              inventário, e passa pela mesma trava.</td>
+          <td style="border:1px solid #e5dbee;padding:8px 12px;text-align:left;vertical-align:top;">Peça ao gerente da Logística.</td>
+        </tr>
+      </table></div>
+
+      <h2 id="nao-fazer" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">O que não fazer</h2>
+      <ul style="margin:0 0 14px 22px;padding:0;">
+        <li style="margin:0 0 7px;"><strong style="color:#251d2b;">Não use a contagem para mover livro de prateleira.</strong> Zero numa e o total na outra
+            são duas perdas disfarçadas. Mover é transferência interna ou bipagem.</li>
+        <li style="margin:0 0 7px;"><strong style="color:#251d2b;">Não deixe em branco o que não encontrou.</strong> Em branco é "não contei"; 0 é "contei e não
+            há". A diferença aparece no acerto de consignação e no financeiro.</li>
+        <li style="margin:0 0 7px;"><strong style="color:#251d2b;">Não conte prateleira com separação em andamento.</strong> O livro que está na caixa e ainda
+            não saiu no sistema vira conflito. Conte antes da separação ou depois da validação.</li>
+        <li style="margin:0 0 7px;"><strong style="color:#251d2b;">Não ajuste pela ficha do livro.</strong> O campo <span class="field" style="font-weight:600;color:#251d2b;">Quantidade em mãos</span>
+            da ficha grava o ajuste na raiz do armazém (<span class="field" style="font-weight:600;color:#251d2b;">EL-VG/Stock</span>), não na prateleira:
+            a prateleira continua com o número antigo e a raiz ganha o novo. Ajuste é no Inventário físico, na
+            linha da prateleira.</li>
+        <li style="margin:0 0 7px;"><strong style="color:#251d2b;">Não aplique sem motivo.</strong> "Inventário físico" é o que o Odoo escreve sozinho; "Inventário
+            de outubro, prateleiras 100–199" é o que alguém vai agradecer em março.</li>
+      </ul>
+
+      <div class="callout" style="border:1px solid #e5dbee;border-left:4px solid #6e2f91;border-radius:10px;background:#f1eaf6;padding:14px 18px;margin:0 0 16px;">Dúvida sobre acesso ou empresa: fale com a administração do sistema.
+      Todo ajuste aplicado fica no histórico do livro, com data, prateleira, motivo e quem aplicou.</div><p style="margin:28px 0 0;padding-top:14px;border-top:1px solid #e5dbee;font-size:13px;color:#5d5266;">Manual completo, com busca e as demais páginas: <a href="/liber_site/static/docs/liber_stock_count.html" target="_blank" rel="noopener" style="color:#6e2f91;">Inventário físico: contar e ajustar</a>.</p></div>

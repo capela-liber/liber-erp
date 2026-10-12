@@ -77,6 +77,11 @@ msgid "Auto-Renewable"
 msgstr "Renovável automaticamente"
 
 #. module: liber_copyright_contracts
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts.view_edlab_contract_search
+msgid "No Beneficiary"
+msgstr "Sem beneficiário"
+
+#. module: liber_copyright_contracts
 #. odoo-python
 #: code:addons/liber_copyright_contracts/models/contract.py:0
 msgid "Automatically renewed until %s."

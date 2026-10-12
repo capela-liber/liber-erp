@@ -1,0 +1,315 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* liber_copyright_contracts_cloud
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0-20260630\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-10-09 21:29+0000\n"
+"PO-Revision-Date: 2026-10-09 19:52+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: pt_BR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#. module: liber_copyright_contracts_cloud
+#. odoo-python
+#: code:addons/liber_copyright_contracts_cloud/models/contract.py:0
+msgid ""
+"%(linked)s file(s) linked, %(already)s already linked, %(missing)s name(s) "
+"without a matching file, %(ambiguous)s with several files of the same name."
+msgstr ""
+"%(linked)s arquivo(s) vinculado(s), %(already)s já vinculado(s), %(missing)s "
+"nome(s) sem arquivo correspondente, %(ambiguous)s com vários arquivos de "
+"mesmo nome."
+
+#. module: liber_copyright_contracts_cloud
+#. odoo-python
+#: code:addons/liber_copyright_contracts_cloud/models/contract_document.py:0
+msgid "A contract has one main document; %s has more."
+msgstr "Um contrato tem um documento principal só; %s tem mais de um."
+
+#. module: liber_copyright_contracts_cloud
+#: model:ir.model.fields,field_description:liber_copyright_contracts_cloud.field_edlab_contract__allowed_cloud_folder_ids
+msgid "Allowed Cloud Folder"
+msgstr "Pastas permitidas"
+
+#. module: liber_copyright_contracts_cloud
+#. odoo-python
+#: code:addons/liber_copyright_contracts_cloud/models/contract.py:0
+msgid ""
+"Choose the folders that hold contract documents first (Settings > Copyright "
+"> Documents)."
+msgstr ""
+"Escolha primeiro as pastas que guardam os documentos de contrato "
+"(Configurações > Direitos Autorais > Documentos)."
+
+#. module: liber_copyright_contracts_cloud
+#: model:ir.model,name:liber_copyright_contracts_cloud.model_res_company
+msgid "Companies"
+msgstr "Empresas"
+
+#. module: liber_copyright_contracts_cloud
+#: model:ir.model.fields,field_description:liber_copyright_contracts_cloud.field_edlab_contract_document__company_id
+msgid "Company"
+msgstr "Empresa"
+
+#. module: liber_copyright_contracts_cloud
+#: model:ir.model,name:liber_copyright_contracts_cloud.model_res_config_settings
+msgid "Config Settings"
+msgstr "Definições de configuração"
+
+#. module: liber_copyright_contracts_cloud
+#: model:ir.model.fields,field_description:liber_copyright_contracts_cloud.field_edlab_contract_document__contract_id
+msgid "Contract"
+msgstr "Contrato"
+
+#. module: liber_copyright_contracts_cloud
+#: model:ir.model.fields,field_description:liber_copyright_contracts_cloud.field_res_company__contract_cloud_folder_ids
+#: model:ir.model.fields,field_description:liber_copyright_contracts_cloud.field_res_config_settings__contract_cloud_folder_ids
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_cloud.res_config_settings_view_form_cloud
+msgid "Contract document folders"
+msgstr "Pastas dos documentos de contrato"
+
+#. module: liber_copyright_contracts_cloud
+#. odoo-python
+#: code:addons/liber_copyright_contracts_cloud/models/contract.py:0
+msgid "Contract documents"
+msgstr "Documentos de contrato"
+
+#. module: liber_copyright_contracts_cloud
+#: model:ir.model.fields,field_description:liber_copyright_contracts_cloud.field_res_company__contract_cloud_provider
+#: model:ir.model.fields,field_description:liber_copyright_contracts_cloud.field_res_config_settings__contract_cloud_provider
+msgid "Contract documents storage"
+msgstr "Armazenamento dos documentos de contrato"
+
+#. module: liber_copyright_contracts_cloud
+#: model:ir.model,name:liber_copyright_contracts_cloud.model_edlab_contract
+msgid "Copyright Contract"
+msgstr "Contrato de direitos autorais"
+
+#. module: liber_copyright_contracts_cloud
+#: model:ir.model,name:liber_copyright_contracts_cloud.model_edlab_contract_document
+msgid "Copyright Contract Document"
+msgstr "Documento de contrato de direitos autorais"
+
+#. module: liber_copyright_contracts_cloud
+#: model:ir.model.fields,field_description:liber_copyright_contracts_cloud.field_edlab_contract_document__create_uid
+msgid "Created by"
+msgstr "Criado por"
+
+#. module: liber_copyright_contracts_cloud
+#: model:ir.model.fields,field_description:liber_copyright_contracts_cloud.field_edlab_contract_document__create_date
+msgid "Created on"
+msgstr "Criado em"
+
+#. module: liber_copyright_contracts_cloud
+#: model:ir.model.fields,field_description:liber_copyright_contracts_cloud.field_edlab_contract__display_name
+#: model:ir.model.fields,field_description:liber_copyright_contracts_cloud.field_edlab_contract_document__display_name
+#: model:ir.model.fields,field_description:liber_copyright_contracts_cloud.field_res_company__display_name
+#: model:ir.model.fields,field_description:liber_copyright_contracts_cloud.field_res_config_settings__display_name
+msgid "Display Name"
+msgstr "Nome exibido"
+
+#. module: liber_copyright_contracts_cloud
+#: model:ir.model.fields,field_description:liber_copyright_contracts_cloud.field_edlab_contract__document_count
+msgid "Document Count"
+msgstr "Documentos"
+
+#. module: liber_copyright_contracts_cloud
+#: model:ir.model.fields,field_description:liber_copyright_contracts_cloud.field_edlab_contract__document_ids
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_cloud.res_config_settings_view_form_cloud
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_cloud.view_edlab_contract_form_cloud
+msgid "Documents"
+msgstr "Documentos"
+
+#. module: liber_copyright_contracts_cloud
+#: model:ir.model.fields,field_description:liber_copyright_contracts_cloud.field_edlab_contract_document__file_id
+msgid "File"
+msgstr "Arquivo"
+
+#. module: liber_copyright_contracts_cloud
+#: model:ir.model.fields,help:liber_copyright_contracts_cloud.field_edlab_contract__location_missing
+msgid ""
+"File names the Location lists that are not linked as a document yet. Empty "
+"means the Documents tab holds everything the Location says."
+msgstr ""
+"Nomes de arquivo que a Localização cita e que ainda não estão vinculados "
+"como documento. Vazio quer dizer que a aba Documentos já tem tudo o que a "
+"Localização diz."
+
+#. module: liber_copyright_contracts_cloud
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_cloud.res_config_settings_view_form_cloud
+msgid ""
+"Folders mapped in that storage (Cloud Files) that hold the contracts. A "
+"contract's document picker only offers files from them."
+msgstr ""
+"Pastas mapeadas nesse armazenamento (Cloud Files) que guardam os contratos. "
+"O seletor de documento do contrato só oferece arquivos delas."
+
+#. module: liber_copyright_contracts_cloud
+#: model:ir.model.fields,field_description:liber_copyright_contracts_cloud.field_edlab_contract__id
+#: model:ir.model.fields,field_description:liber_copyright_contracts_cloud.field_edlab_contract_document__id
+#: model:ir.model.fields,field_description:liber_copyright_contracts_cloud.field_res_company__id
+#: model:ir.model.fields,field_description:liber_copyright_contracts_cloud.field_res_config_settings__id
+msgid "ID"
+msgstr "ID"
+
+#. module: liber_copyright_contracts_cloud
+#: model:ir.model.fields,help:liber_copyright_contracts_cloud.field_edlab_contract__allowed_cloud_folder_ids
+msgid ""
+"Ids of the folders Settings chose for contract documents; the document "
+"picker's domain."
+msgstr ""
+"Ids das pastas escolhidas em Configurações para os documentos de contrato; o "
+"filtro do seletor de documento."
+
+#. module: liber_copyright_contracts_cloud
+#: model:ir.model.fields,field_description:liber_copyright_contracts_cloud.field_edlab_contract_document__write_uid
+msgid "Last Updated by"
+msgstr "Última atualização por"
+
+#. module: liber_copyright_contracts_cloud
+#: model:ir.model.fields,field_description:liber_copyright_contracts_cloud.field_edlab_contract_document__write_date
+msgid "Last Updated on"
+msgstr "Última atualização em"
+
+#. module: liber_copyright_contracts_cloud
+#: model:ir.actions.server,name:liber_copyright_contracts_cloud.action_link_documents_by_name
+msgid "Link documents by name"
+msgstr "Vincular documentos pelo nome"
+
+#. module: liber_copyright_contracts_cloud
+#: model:ir.model.fields,field_description:liber_copyright_contracts_cloud.field_edlab_contract__location_missing
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_cloud.view_edlab_contract_search_cloud
+msgid "Location without document"
+msgstr "Localização sem documento"
+
+#. module: liber_copyright_contracts_cloud
+#: model:ir.model.fields,field_description:liber_copyright_contracts_cloud.field_edlab_contract_document__is_main
+msgid "Main"
+msgstr "Principal"
+
+#. module: liber_copyright_contracts_cloud
+#: model:ir.model.fields,field_description:liber_copyright_contracts_cloud.field_edlab_contract__main_document_id
+msgid "Main document"
+msgstr "Documento principal"
+
+#. module: liber_copyright_contracts_cloud
+#: model:ir.model.fields,help:liber_copyright_contracts_cloud.field_res_company__contract_cloud_folder_ids
+#: model:ir.model.fields,help:liber_copyright_contracts_cloud.field_res_config_settings__contract_cloud_folder_ids
+msgid ""
+"Mapped Cloud Files folders that hold the contracts' documents. A contract's "
+"document picker only offers files from these folders."
+msgstr ""
+"Pastas mapeadas no Cloud Files que guardam os documentos dos contratos. O "
+"seletor de documento do contrato só oferece arquivos dessas pastas."
+
+#. module: liber_copyright_contracts_cloud
+#: model:ir.model.fields,field_description:liber_copyright_contracts_cloud.field_edlab_contract_document__name
+msgid "Name"
+msgstr "Nome"
+
+#. module: liber_copyright_contracts_cloud
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_cloud.view_edlab_contract_form_cloud
+msgid ""
+"No folder chosen for contract documents yet: Settings &gt; Copyright &gt; "
+"Documents."
+msgstr ""
+"Nenhuma pasta escolhida para os documentos de contrato: Configurações &gt; "
+"Direitos Autorais &gt; Documentos."
+
+#. module: liber_copyright_contracts_cloud
+#: model:ir.model.fields,field_description:liber_copyright_contracts_cloud.field_edlab_contract_document__note
+msgid "Note"
+msgstr "Observação"
+
+#. module: liber_copyright_contracts_cloud
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_cloud.view_edlab_contract_form_cloud
+msgid "Open"
+msgstr "Abrir"
+
+#. module: liber_copyright_contracts_cloud
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_cloud.view_edlab_contract_form_cloud
+msgid "Open Document"
+msgstr "Abrir documento"
+
+#. module: liber_copyright_contracts_cloud
+#: model:ir.model.fields,field_description:liber_copyright_contracts_cloud.field_edlab_contract_document__path
+msgid "Path"
+msgstr "Caminho"
+
+#. module: liber_copyright_contracts_cloud
+#: model:ir.model.fields,field_description:liber_copyright_contracts_cloud.field_edlab_contract_document__provider
+msgid "Provider"
+msgstr "Provedor"
+
+#. module: liber_copyright_contracts_cloud
+#. odoo-python
+#: code:addons/liber_copyright_contracts_cloud/models/contract.py:0
+msgid "Search this field only as set or not set."
+msgstr "Este campo só se pesquisa como preenchido ou vazio."
+
+#. module: liber_copyright_contracts_cloud
+#: model:ir.model.fields,field_description:liber_copyright_contracts_cloud.field_edlab_contract_document__sequence
+msgid "Sequence"
+msgstr "Sequência"
+
+#. module: liber_copyright_contracts_cloud
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_cloud.res_config_settings_view_form_cloud
+msgid "Storage"
+msgstr "Armazenamento"
+
+#. module: liber_copyright_contracts_cloud
+#: model:ir.model.fields,help:liber_copyright_contracts_cloud.field_edlab_contract_document__is_main
+msgid ""
+"The contract itself, as opposed to amendments and annexes. Its file name is "
+"the contract's Location."
+msgstr ""
+"O contrato propriamente dito, e não aditivos e anexos. O nome do arquivo "
+"dele é a Localização do contrato."
+
+#. module: liber_copyright_contracts_cloud
+#: model:ir.model.fields,help:liber_copyright_contracts_cloud.field_edlab_contract_document__file_id
+msgid "The document, as Cloud Files mirrors it."
+msgstr "O documento, como o Cloud Files o espelha."
+
+#. module: liber_copyright_contracts_cloud
+#. odoo-python
+#: code:addons/liber_copyright_contracts_cloud/models/contract.py:0
+msgid "This contract has no document linked yet."
+msgstr "Este contrato ainda não tem documento vinculado."
+
+#. module: liber_copyright_contracts_cloud
+#: model:ir.model.constraint,message:liber_copyright_contracts_cloud.constraint_edlab_contract_document_contract_file_uniq
+msgid "This file is already linked to the contract."
+msgstr "Este arquivo já está vinculado ao contrato."
+
+#. module: liber_copyright_contracts_cloud
+#: model:ir.model.fields,help:liber_copyright_contracts_cloud.field_edlab_contract_document__note
+msgid "What this document is: amendment, renewal..."
+msgstr "O que é este documento: aditivo, renovação..."
+
+#. module: liber_copyright_contracts_cloud
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_cloud.res_config_settings_view_form_cloud
+msgid "Where the house keeps its contracts: GitHub, Google Drive or Dropbox."
+msgstr "Onde a casa guarda os contratos: GitHub, Google Drive ou Dropbox."
+
+#. module: liber_copyright_contracts_cloud
+#: model:ir.model.fields,help:liber_copyright_contracts_cloud.field_res_company__contract_cloud_provider
+#: model:ir.model.fields,help:liber_copyright_contracts_cloud.field_res_config_settings__contract_cloud_provider
+msgid ""
+"Where the house keeps its contracts: GitHub, Google Drive or Dropbox. "
+"Narrows the folders below to that storage."
+msgstr ""
+"Onde a casa guarda os contratos: GitHub, Google Drive ou Dropbox. Restringe "
+"as pastas abaixo a esse armazenamento."
+
+#. module: liber_copyright_contracts_cloud
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_cloud.view_edlab_contract_search_cloud
+msgid "Without document"
+msgstr "Sem documento"

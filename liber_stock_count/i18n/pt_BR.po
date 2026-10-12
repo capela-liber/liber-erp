@@ -1,0 +1,29 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* liber_stock_count
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-10-08 20:00+0000\n"
+"PO-Revision-Date: 2026-10-08 20:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: pt_BR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#. module: liber_stock_count
+#. odoo-python
+#: code:addons/liber_stock_count/models/stock_quant.py:0
+msgid ""
+"Only an Inventory administrator can apply an inventory adjustment and change"
+" the quantity on hand. Your count is kept in the Counted column: ask the "
+"warehouse manager to review and apply it."
+msgstr ""
+"Só um administrador do Inventário aplica um ajuste de estoque e muda a "
+"quantidade em mãos. A sua contagem está guardada na coluna Contado: peça ao "
+"gerente do depósito que a revise e aplique."

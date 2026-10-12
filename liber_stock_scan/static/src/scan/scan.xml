@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+    <t t-name="liber_stock_scan.Scan">
+        <div class="o_liber_scan o_action">
+            <div class="o_liber_scan_wrap">
+                <div class="o_liber_scan_head d-flex align-items-center gap-2">
+                    <h1 class="m-0 flex-grow-1">Scan</h1>
+                    <button class="btn btn-secondary o_liber_scan_camera" t-on-click="toggleCamera">
+                        <i class="fa fa-camera me-1"/>
+                        <t t-if="state.camera">Stop camera</t>
+                        <t t-else="">Read with the camera</t>
+                    </button>
+                    <button class="btn btn-link o_liber_scan_reset" t-on-click="reset">Start over</button>
+                </div>
+
+                <input type="text" class="form-control form-control-lg o_liber_scan_input"
+                       t-ref="input" t-att-placeholder="hint" t-on-keydown="onKeydown"
+                       autocomplete="off" autocapitalize="off" spellcheck="false"/>
+
+                <div t-if="state.camera" class="o_liber_scan_video my-2">
+                    <video t-ref="video" playsinline="true" muted="true"/>
+                </div>
+
+                <div t-if="state.message"
+                     t-attf-class="o_liber_scan_message alert {{ state.messageKind === 'error' ? 'alert-danger' : 'alert-success' }} py-2 my-2"
+                     t-esc="state.message"/>
+
+                <div t-attf-class="o_liber_scan_step {{ step === 'origin' ? 'o_current' : '' }}">
+                    <span class="o_liber_scan_label">Origin</span>
+                    <span t-if="state.origin" class="o_liber_scan_origin fw-bold" t-esc="state.origin.name"/>
+                    <span t-else="" class="text-muted">scan the shelf…</span>
+                </div>
+
+                <div t-attf-class="o_liber_scan_step {{ step === 'books' ? 'o_current' : '' }}">
+                    <span class="o_liber_scan_label">Books</span>
+                    <span t-if="!state.lines.length" class="text-muted">scan the books…</span>
+                    <table t-else="" class="table table-sm o_liber_scan_lines mb-1">
+                        <tbody>
+                            <tr t-foreach="state.lines" t-as="line" t-key="line.product_id" class="o_liber_scan_line">
+                                <td class="o_liber_scan_name" t-esc="line.name"/>
+                                <td class="text-end o_liber_scan_qty fw-bold" t-esc="line.qty"/>
+                                <td class="text-end text-muted o_liber_scan_onhand">(<t t-esc="line.on_hand"/>)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div t-if="state.lines.length" class="d-flex align-items-center gap-3">
+                        <span class="o_liber_scan_total">Total: <b t-esc="total"/></span>
+                        <button class="btn btn-link p-0 o_liber_scan_undo" t-on-click="undo">
+                            <i class="fa fa-undo me-1"/>Undo last
+                        </button>
+                    </div>
+                </div>
+
+                <div t-attf-class="o_liber_scan_step {{ step === 'dest' ? 'o_current' : '' }}">
+                    <span class="o_liber_scan_label">Destination</span>
+                    <span class="text-muted">scan the destination shelf to finish</span>
+                </div>
+
+                <div t-if="state.last" class="o_liber_scan_done alert alert-success mt-3">
+                    <b t-esc="state.last.name"/>: <t t-esc="state.last.qty"/> from <t t-esc="state.last.origin"/> to <t t-esc="state.last.dest"/>.
+                </div>
+            </div>
+        </div>
+    </t>
+
+</templates>

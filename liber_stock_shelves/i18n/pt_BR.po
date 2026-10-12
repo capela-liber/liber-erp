@@ -1,0 +1,107 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* liber_stock_shelves
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-10-08 18:00+0000\n"
+"PO-Revision-Date: 2026-10-08 18:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: pt_BR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#. module: liber_stock_shelves
+#. odoo-python
+#: code:addons/liber_stock_shelves/models/stock_move_line.py:0
+msgid ""
+"Nothing would move: %(qty)s x %(product)s is picked from %(location)s and "
+"stored back to %(location)s.\n"
+"\n"
+"Set the shelf the books leave from as the Source Location, or open Details "
+"on the line and pick the stock of the warehouse root in \"Pick From\"."
+msgstr ""
+"Nada se move: %(qty)s x %(product)s sai de %(location)s e volta para "
+"%(location)s.\n"
+"\n"
+"Ponha no Local de origem a prateleira de onde os livros saem, ou abra "
+"Detalhes na linha e escolha em \"Separar de\" o estoque da raiz do armazém."
+
+#. module: liber_stock_shelves
+#. odoo-python
+#: code:addons/liber_stock_shelves/models/stock_picking.py:0
+msgid ""
+"%(location)s is not a shelf of %(warehouse)s. An internal transfer moves "
+"books between shelves of the warehouse; consignment shelves and other "
+"locations are reached by their own operations."
+msgstr ""
+"%(location)s não é prateleira de %(warehouse)s. A transferência interna move "
+"livros entre prateleiras do armazém; a prateleira de consignação e os outros "
+"locais têm as suas próprias operações."
+
+#. module: liber_stock_shelves
+#. odoo-python
+#: code:addons/liber_stock_shelves/models/stock_quant_relocate.py:0
+msgid ""
+"%(location)s is not a warehouse shelf. Relocate moves books between shelves "
+"of the warehouse; consignment shelves are reached by their own operations."
+msgstr ""
+"%(location)s não é prateleira do armazém. Realocar move livros entre "
+"prateleiras do armazém; a prateleira de consignação tem as suas próprias "
+"operações."
+
+#. module: liber_stock_shelves
+#: model:ir.model.fields,field_description:liber_stock_shelves.field_stock_move__shelf_from
+msgid "Pick From"
+msgstr "Separar de"
+
+#. module: liber_stock_shelves
+#: model:ir.model.fields,help:liber_stock_shelves.field_stock_move__shelf_from
+msgid ""
+"The locations the reservation picks from. On an internal transfer, if this "
+"is the destination shelf, nothing will move: set the source shelf in the "
+"Source Location."
+msgstr ""
+"Os locais de onde a reserva separa. Na transferência interna, se for a "
+"prateleira de destino, nada vai se mover: ponha a prateleira de origem no "
+"Local de origem."
+
+#. module: liber_stock_shelves
+#: model:ir.model.fields,field_description:liber_stock_shelves.field_stock_picking__is_shelf_transfer
+msgid "Is Shelf Transfer"
+msgstr "É transferência entre prateleiras"
+
+#. module: liber_stock_shelves
+#: model:ir.model.fields,help:liber_stock_shelves.field_stock_picking__is_shelf_transfer
+msgid "Internal transfer of the warehouse itself (shelf to shelf)."
+msgstr "Transferência interna do próprio armazém (prateleira a prateleira)."
+
+#. module: liber_stock_shelves
+#: model:ir.model.fields,field_description:liber_stock_shelves.field_stock_picking__shelf_warehouse_id
+msgid "Shelf Warehouse"
+msgstr "Armazém das prateleiras"
+
+#. module: liber_stock_shelves
+#: model:ir.model,name:liber_stock_shelves.model_stock_move
+msgid "Stock Move"
+msgstr "Movimentação de estoque"
+
+#. module: liber_stock_shelves
+#: model:ir.model,name:liber_stock_shelves.model_stock_move_line
+msgid "Product Moves (Stock Move Line)"
+msgstr "Movimentações de produto (linha de movimentação)"
+
+#. module: liber_stock_shelves
+#: model:ir.model,name:liber_stock_shelves.model_stock_picking
+msgid "Transfer"
+msgstr "Transferência"
+
+#. module: liber_stock_shelves
+#: model:ir.model,name:liber_stock_shelves.model_stock_quant_relocate
+msgid "Stock Quantity Relocation"
+msgstr "Realocação de estoque"

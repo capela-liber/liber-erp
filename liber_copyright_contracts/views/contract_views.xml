@@ -193,6 +193,11 @@
                 <filter name="cancelled" string="Cancelled" domain="[('state', '=', 'cancelled')]"/>
                 <separator/>
                 <filter name="auto_renew" string="Auto-Renewable" domain="[('auto_renew', '=', True)]"/>
+                <!-- Filtro PROVISÓRIO (06/10/2026): a planilha "DA / Gestão de
+                     Contratos" lista contratos sem dizer quem é o beneficiário.
+                     Eles entram no Odoo sem linha de royalty e ficam aqui até
+                     alguém preencher à mão. Quando a fila zerar, o filtro pode sair. -->
+                <filter name="no_beneficiary" string="No Beneficiary" domain="[('partner_ids', '=', False)]"/>
                 <filter name="expiring_soon" string="Expiring (3 months)"
                         domain="[('state', 'in', ('valid', 'renewed')), ('expiration_date', '&gt;=', context_today().strftime('%Y-%m-%d')), ('expiration_date', '&lt;=', (context_today() + relativedelta(months=3)).strftime('%Y-%m-%d'))]"/>
                 <group>

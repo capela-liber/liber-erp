@@ -1,0 +1,51 @@
+<!-- GERADO por scripts/gen_module_descriptions.py a partir de
+     liber_site/static/docs/liber_copyright_contracts_cloud.html -- não edite aqui.
+     O Odoo mostra este arquivo em Apps > Module Info. -->
+<div class="oe_container liber_manual" style="max-width:900px;margin:0 auto;padding:8px 4px 24px;color:#251d2b;background:transparent;font:15px/1.7 Inter,'Segoe UI',system-ui,sans-serif;"><h1 style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:32px;line-height:1.2;letter-spacing:-.015em;margin:0 0 10px;color:#251d2b;">Documentos do contrato</h1>
+      <p class="lead" style="font-size:17.5px;color:#5d5266;margin:0 0 26px;max-width:62ch;">Ligue cada contrato aos seus documentos — o contrato assinado, aditivos, renovações, distratos — onde quer que a editora os guarde: Dropbox, Google Drive ou GitHub.</p>
+
+      <h2 id="visao-geral" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">Visão geral</h2>
+      <p style="margin:0 0 12px;">Os documentos continuam no armazenamento da editora; o Odoo guarda só o vínculo. O módulo se apoia no <a href="/liber_site/static/docs/liber_cloud_files.html" target="_blank" rel="noopener" style="color:#6e2f91;">Cloud Files</a>, que já espelha as pastas mapeadas e controla quem pode abrir o quê:</p>
+      <ul style="margin:0 0 14px 22px;padding:0;">
+        <li style="margin:0 0 7px;">O contrato ganha a aba <strong style="color:#251d2b;">Documentos</strong>, com um ou vários arquivos, um deles marcado como <strong style="color:#251d2b;">principal</strong>.</li>
+        <li style="margin:0 0 7px;">O nome do arquivo principal preenche a <span class="field" style="font-weight:600;color:#251d2b;">Localização</span> do contrato, que deixa de ser digitada à mão.</li>
+        <li style="margin:0 0 7px;">O botão <strong style="color:#251d2b;">Abrir documento</strong>, no cabeçalho, abre o principal.</li>
+      </ul>
+
+      <h2 id="configuracao" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">Configuração</h2>
+      <ol class="steps" style="margin:0 0 16px 22px;padding:0;">
+        <li style="margin:0 0 7px;">Mapeie a pasta no provedor, se ainda não estiver: <span class="menupath" style="display:inline-block;background:#f1eaf6;border:1px solid #e5dbee;border-radius:6px;padding:1px 8px;font-size:13.5px;color:#251d2b;white-space:nowrap;">Dropbox<i style="font-style:normal;color:#6e2f91;margin:0 4px;font-weight:700;">‣</i>Configuração<i style="font-style:normal;color:#6e2f91;margin:0 4px;font-weight:700;">‣</i>Pastas</span> (ou Google Drive, ou GitHub), e sincronize-a. Mapear pastas é tarefa do administrador.</li>
+        <li style="margin:0 0 7px;">Acesse <span class="menupath" style="display:inline-block;background:#f1eaf6;border:1px solid #e5dbee;border-radius:6px;padding:1px 8px;font-size:13.5px;color:#251d2b;white-space:nowrap;">Configurações<i style="font-style:normal;color:#6e2f91;margin:0 4px;font-weight:700;">‣</i>Direitos Autorais</span>, bloco <strong style="color:#251d2b;">Documentos</strong>.</li>
+        <li style="margin:0 0 7px;">Em <span class="field" style="font-weight:600;color:#251d2b;">Armazenamento</span>, escolha onde a casa guarda os contratos: GitHub, Google Drive ou Dropbox.</li>
+        <li style="margin:0 0 7px;">Em <span class="field" style="font-weight:600;color:#251d2b;">Pastas dos documentos de contrato</span>, escolha uma ou mais pastas mapeadas nesse armazenamento. Trocar o armazenamento tira da lista as pastas do anterior.</li>
+        <li style="margin:0 0 7px;">Salve. A escolha vale por empresa.</li>
+      </ol>
+
+      <h2 id="vincular" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">Vincular documentos</h2>
+      <p style="margin:0 0 12px;"><strong style="color:#251d2b;">Um a um:</strong> no contrato, aba <strong style="color:#251d2b;">Documentos</strong>, clique em <strong style="color:#251d2b;">Adicionar linha</strong>, escolha o <span class="field" style="font-weight:600;color:#251d2b;">Arquivo</span> (só aparecem os das pastas configuradas) e, se quiser, uma <span class="field" style="font-weight:600;color:#251d2b;">Observação</span> como "Aditivo 2024". O primeiro documento vira o principal; marcar outro como principal desmarca o anterior.</p>
+      <p style="margin:0 0 12px;"><strong style="color:#251d2b;">Em lote, pelo nome:</strong> quando a Localização já traz o nome do PDF — como a importação da planilha de contratos deixou —, selecione os contratos na lista e use <strong style="color:#251d2b;">Ação ‣ Vincular documentos pelo nome</strong>.</p>
+      <ul style="margin:0 0 14px 22px;padding:0;">
+        <li style="margin:0 0 7px;">A comparação ignora maiúsculas, acentos e a extensão.</li>
+        <li style="margin:0 0 7px;">Uma Localização com vários arquivos separados por ponto e vírgula vincula cada um; o primeiro vira o principal.</li>
+        <li style="margin:0 0 7px;">Se houver dois arquivos com o mesmo nome nas pastas, nada é vinculado para aquele nome: o sistema não adivinha.</li>
+        <li style="margin:0 0 7px;">Rodar de novo não duplica nada. A mensagem final diz quantos foram vinculados, quantos já estavam e quantos nomes não acharam arquivo.</li>
+      </ul>
+
+      <h2 id="conferencia" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">Conferir antes de aposentar a Localização</h2>
+      <p style="margin:0 0 12px;">Com os documentos vinculados, a <span class="field" style="font-weight:600;color:#251d2b;">Localização</span> perde a função. Antes de deixá-la de lado, confira que todo arquivo que ela cita virou documento: na lista de contratos, o filtro <strong style="color:#251d2b;">Localização sem documento</strong> mostra os contratos em que algum nome da Localização não tem documento vinculado, e o campo de mesmo nome, no contrato, diz quais nomes faltam. Quando o filtro zerar, a aba Documentos guarda tudo o que a Localização dizia. O filtro <strong style="color:#251d2b;">Sem documento</strong> mostra os contratos ainda sem nenhum.</p>
+
+      <h2 id="acesso" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">Quem vê e quem abre</h2>
+      <p style="margin:0 0 12px;">Todo usuário de contratos vê a lista de documentos (nome, provedor, observação). <strong style="color:#251d2b;">Abrir</strong> passa pelo portão da pasta no Cloud Files: só quem tem leitura na pasta abre o arquivo; os outros recebem uma mensagem de acesso negado. Assim, um contrato numa pasta restrita continua listado para todos, mas só abre para quem deve.</p>
+
+      <h2 id="faq" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">Perguntas frequentes</h2>
+      <p style="margin:0 0 12px;"><strong style="color:#251d2b;">O seletor de arquivo vem vazio.</strong> Nenhuma pasta foi escolhida em Configurações, ou a pasta escolhida ainda não foi sincronizada.</p>
+      <p style="margin:0 0 12px;"><strong style="color:#251d2b;">O vínculo pelo nome não achou quase nada.</strong> Os PDFs provavelmente estão numa pasta que não foi escolhida em Configurações ou que não foi sincronizada. Confira o nome exato do arquivo no provedor contra a Localização.</p>
+      <p style="margin:0 0 12px;"><strong style="color:#251d2b;">Renomeei o arquivo no Dropbox.</strong> Na próxima sincronização da pasta, o Cloud Files arquiva o espelho antigo e traz o novo nome; vincule o novo arquivo ao contrato.</p>
+
+      <div class="seealso" style="border:1px solid #e5dbee;border-radius:12px;background:#f1eaf6;padding:16px 20px;margin:32px 0 0;">
+        <span class="title" style="font-weight:700;font-size:12px;letter-spacing:.08em;text-transform:uppercase;display:block;margin:0 0 4px;color:#5d5266;">Veja também</span>
+        <ul style="margin:0 0 14px 22px;padding:0;">
+          <li style="margin:0 0 7px;"><a href="/liber_site/static/docs/liber_copyright_contracts.html" target="_blank" rel="noopener" style="color:#6e2f91;">Contratos de direitos autorais</a> — o módulo base da suíte.</li>
+          <li style="margin:0 0 7px;"><a href="/liber_site/static/docs/liber_cloud_files.html" target="_blank" rel="noopener" style="color:#6e2f91;">Cloud Files</a> — as pastas, o portão de acesso e os provedores.</li>
+        </ul>
+      </div><p style="margin:28px 0 0;padding-top:14px;border-top:1px solid #e5dbee;font-size:13px;color:#5d5266;">Manual completo, com busca e as demais páginas: <a href="/liber_site/static/docs/liber_copyright_contracts_cloud.html" target="_blank" rel="noopener" style="color:#6e2f91;">Documentos do contrato</a>.</p></div>

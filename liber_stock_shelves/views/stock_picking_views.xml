@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_picking_form_shelf_from" model="ir.ui.view">
+        <field name="name">stock.picking.form.shelves</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form"/>
+        <field name="arch" type="xml">
+            <!-- Na transferência do armazém, origem e destino são prateleiras
+                 DESTE armazém: a lista deixa de oferecer CO/<cliente>, o
+                 ajuste de consignação e os locais de vista. Os demais tipos
+                 (entrega, recebimento, COM/IN...) seguem com o domínio do
+                 core. A constraint em stock_picking.py cobre o que a lista
+                 não cobre (importação, RPC). -->
+            <xpath expr="//field[@name='picking_type_id']" position="after">
+                <field name="is_shelf_transfer" invisible="1"/>
+                <field name="shelf_warehouse_id" invisible="1"/>
+            </xpath>
+            <xpath expr="//field[@name='location_id'][@options]" position="attributes">
+                <attribute name="domain">is_shelf_transfer and [('usage', '=', 'internal'), ('warehouse_id', '=', shelf_warehouse_id)] or []</attribute>
+            </xpath>
+            <xpath expr="//field[@name='location_dest_id'][@options]" position="attributes">
+                <attribute name="domain">is_shelf_transfer and [('usage', '=', 'internal'), ('warehouse_id', '=', shelf_warehouse_id)] or []</attribute>
+            </xpath>
+            <!-- A coluna "Separar de" só na transferência interna: é onde a
+                 origem do cabeçalho (a raiz) e a prateleira reservada
+                 divergem sem aviso. -->
+            <xpath expr="//field[@name='move_ids']/list/field[@name='product_uom_qty']" position="before">
+                <field name="shelf_from" column_invisible="parent.picking_type_code != 'internal' or parent.state in ('draft', 'done', 'cancel')" readonly="1"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

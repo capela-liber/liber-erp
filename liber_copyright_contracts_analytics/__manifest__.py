@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     'name': 'Copyright Contracts - Analytics',
-    'version': '19.0.1.5.0',
+    'version': '19.0.1.6.0',
     'summary': 'Analytic accounts and payment tracking for copyright contracts',
     'description': """
 Analytics layer for copyright contracts.

@@ -12,7 +12,7 @@ URLs das páginas (site publicado ou instância local):
 - Local: `http://localhost:8069/liber_site/static/docs/<página>`
 - Índice: `http://localhost:8069/liber_site/static/docs/index.html`
 
-Total de capturas: 61 · Feitas: marque a caixa ao concluir.
+Total de capturas: 72 · Feitas: marque a caixa ao concluir.
 
 > As capturas saem sem humano na frente: `scripts/capturar_manual.py` autentica por
 > JSON-RPC, empresta o cookie da sessão a um Chrome headless e fotografa a URL no
@@ -335,6 +335,58 @@ Página: `/liber_site/static/docs/liber_transport.html`
   - O que capturar: Solicitação COL/ com as entregas da Transpo e o e-mail enviado no histórico
   - Legenda no manual: O lote COL/ com as entregas de uma transportadora: o e-mail enviado mora no histórico, e a Data combinada e o Protocolo guardam a resposta.
 
+
+## Prateleiras e transferências internas — `liber_stock_shelves.html`
+
+Página: `/liber_site/static/docs/liber_stock_shelves.html`
+
+- [x] **`doc-liber_stock_shelves-prateleira.png`**
+  - O que capturar: Ficha do local EL-VG/Stock/EL-000196 (Inventário ‣ Configuração ‣ Locais), tipo Interno, local principal EL-VG/Stock
+  - Legenda no manual: A prateleira é um local comum do Odoo: o nome é o código, e o Local principal é o estoque do armazém.
+- [x] **`doc-liber_stock_shelves-em-maos.png`**
+  - O que capturar: Ficha de um livro que está em duas prateleiras ‣ botão Em mãos: lista por Local com a quantidade de cada prateleira
+  - Legenda no manual: O mesmo título em duas prateleiras. O total é a soma; quem separa precisa da linha.
+- [x] **`doc-liber_stock_shelves-transferencia-interna.png`**
+  - O que capturar: Transferência interna (EL-VG/INT/) em Pronto, com Local de origem e Local de destino em prateleiras e uma linha de produto
+  - Legenda no manual: Uma transferência interna pronta para validar: origem e destino são prateleiras, e a linha diz quantos vão.
+- [x] **`doc-liber_stock_shelves-realocar.png`**
+  - O que capturar: Inventário físico com duas linhas marcadas e a janela Realocar aberta (Para local, Motivo da realocação)
+  - Legenda no manual: Duas linhas marcadas, um destino, um motivo. O movimento é imediato — não há transferência para validar depois.
+- [x] **`doc-liber_stock_shelves-visao-geral.png`**
+  - O que capturar: Inventário ‣ Visão geral com o cartão Transferências internas ao lado de Recebimentos
+  - Legenda no manual: O cartão existe porque o ajuste "Locais de armazenamento" está ligado; sem ele o Odoo o esconde e arquiva o tipo de operação.
+
+## Inventário físico: contar e ajustar — `liber_stock_count.html`
+
+Página: `/liber_site/static/docs/liber_stock_count.html`
+
+Cena: `scripts/seed_stock_count_demo.py` no `testing` (prateleiras EL-000101 e
+EL-000102 sob WH/Stock; contagem pedida a `video_logistica`, duas linhas contadas).
+O assistente fotografa como `video_logistica`; o gerente, como `admin`.
+
+- [x] **`doc-liber_stock_count-assistente.png`**
+  - O que capturar: Inventário físico logado como Logística/Assistente, filtro Minhas contagens: as três linhas de EL-000101, duas com Contado e Diferença, nenhum botão Aplicar
+  - Legenda no manual: A tela de quem conta: Contado preenchido, Diferença calculada, e nenhum Aplicar à vista. O estoque ainda não mudou.
+- [x] **`doc-liber_stock_count-solicitar.png`**
+  - O que capturar: Inventário físico como admin agrupado por Local, grupo WH/Stock/EL-000102 aberto e suas linhas marcadas, janela Solicitar uma contagem aberta (Atribuir a, Scheduled at) — capturar_manual.py --clicar (o link Em mãos da ficha abre o relatório de Locais, que não tem o botão)
+  - Legenda no manual: Uma prateleira marcada, uma pessoa, uma data. A contagem pedida aparece no Minhas contagens dela.
+- [x] **`doc-liber_stock_count-gerente.png`**
+  - O que capturar: Inventário físico como admin, filtro A ser aplicado: as linhas contadas com Diferença, botão Aplicar em cada uma e Aplicar tudo no cabeçalho
+  - Legenda no manual: A mesma lista, vista pelo gerente: Aplicar em cada linha e Aplicar tudo no cabeçalho.
+- [x] **`doc-liber_stock_count-motivo.png`**
+  - O que capturar: Depois de Aplicar tudo: a janela Inventário físico com Motivo do inventário e a data, botão Atualizar quantidades
+  - Legenda no manual: O motivo vira o nome do movimento. Seis meses depois, é ele que explica por que o número mudou.
+
+## Bipagem entre prateleiras — `liber_stock_scan.html`
+
+Página: `/liber_site/static/docs/liber_stock_scan.html`
+
+- [x] **`doc-liber_stock_scan-tela.png`**
+  - O que capturar: Inventário ‣ Operações ‣ Bipagem, vazia: o campo em foco e os três passos
+  - Legenda no manual: Um campo e três passos. O passo aceso é o que o próximo bipe preenche.
+- [x] **`doc-liber_stock_scan-livros.png`**
+  - O que capturar: A tela depois de bipar a origem e duas vezes o mesmo livro, com a recusa de um livro que está em outra prateleira (capturar_manual.py --digitar)
+  - Legenda no manual: Origem aberta, dois bipes do mesmo título, e a recusa em vermelho: o livro bipado por engano está na EL-000043 e na raiz, não aqui.
 
 ## Painel de Vendas — `liber_sales_dashboard.html`
 

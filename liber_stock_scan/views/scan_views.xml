@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_scan" model="ir.actions.client">
+        <field name="name">Scan</field>
+        <field name="tag">liber_stock_scan.scan</field>
+        <field name="path">bipagem</field>
+    </record>
+
+    <!-- Em Operações, logo depois de Transferências: é de onde a
+         transferência interna sai; quem opera o depósito já tem o grupo. -->
+    <menuitem id="menu_scan"
+              name="Scan"
+              parent="stock.menu_stock_warehouse_mgmt"
+              action="action_scan"
+              groups="stock.group_stock_user"
+              sequence="2"/>
+</odoo>

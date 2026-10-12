@@ -1,0 +1,257 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* liber_stock_scan
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-10-08 19:00+0000\n"
+"PO-Revision-Date: 2026-10-08 19:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: pt_BR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#. module: liber_stock_scan
+#: model:ir.actions.client,name:liber_stock_scan.action_scan
+#: model:ir.ui.menu,name:liber_stock_scan.menu_scan
+#. odoo-javascript
+#: code:addons/liber_stock_scan/static/src/scan/scan.xml:0
+msgid "Scan"
+msgstr "Bipagem"
+
+#. module: liber_stock_scan
+#. odoo-python
+#: code:addons/liber_stock_scan/models/shelf_scan.py:0
+msgid "Scan"
+msgstr "Bipagem"
+
+#. module: liber_stock_scan
+#: model:ir.model,name:liber_stock_scan.model_liber_shelf_scan
+msgid "Shelf Scan Service"
+msgstr "Serviço de bipagem de prateleiras"
+
+#. module: liber_stock_scan
+#: model:ir.model,name:liber_stock_scan.model_stock_location
+msgid "Inventory Locations"
+msgstr "Locais de estoque"
+
+#. module: liber_stock_scan
+#. odoo-python
+#: code:addons/liber_stock_scan/models/shelf_scan.py:0
+msgid "%(location)s is not a warehouse shelf."
+msgstr "%(location)s não é prateleira do armazém."
+
+#. module: liber_stock_scan
+#. odoo-python
+#: code:addons/liber_stock_scan/models/shelf_scan.py:0
+msgid "nowhere in this warehouse"
+msgstr "em nenhuma prateleira deste armazém"
+
+#. module: liber_stock_scan
+#. odoo-python
+#: code:addons/liber_stock_scan/models/shelf_scan.py:0
+msgid "%(product)s is not on %(shelf)s. It is on: %(where)s."
+msgstr "%(product)s não está em %(shelf)s. Está em: %(where)s."
+
+#. module: liber_stock_scan
+#. odoo-python
+#: code:addons/liber_stock_scan/models/shelf_scan.py:0
+msgid "Unknown code: %(code)s"
+msgstr "Código desconhecido: %(code)s"
+
+#. module: liber_stock_scan
+#. odoo-python
+#: code:addons/liber_stock_scan/models/shelf_scan.py:0
+msgid "No books were scanned."
+msgstr "Nenhum livro foi bipado."
+
+#. module: liber_stock_scan
+#. odoo-python
+#: code:addons/liber_stock_scan/models/shelf_scan.py:0
+msgid "Origin and destination must be warehouse shelves."
+msgstr "Origem e destino têm de ser prateleiras do armazém."
+
+#. module: liber_stock_scan
+#. odoo-python
+#: code:addons/liber_stock_scan/models/shelf_scan.py:0
+msgid "Origin and destination are the same shelf."
+msgstr "Origem e destino são a mesma prateleira."
+
+#. module: liber_stock_scan
+#. odoo-python
+#: code:addons/liber_stock_scan/models/shelf_scan.py:0
+msgid "%(dest)s is not a shelf of %(warehouse)s."
+msgstr "%(dest)s não é prateleira de %(warehouse)s."
+
+#. module: liber_stock_scan
+#. odoo-python
+#: code:addons/liber_stock_scan/models/shelf_scan.py:0
+msgid "Internal transfers are not active on %(warehouse)s."
+msgstr "A transferência interna não está ativa em %(warehouse)s."
+
+#. module: liber_stock_scan
+#. odoo-python
+#: code:addons/liber_stock_scan/models/shelf_scan.py:0
+msgid "%(product)s: %(have)d of %(want)d on %(shelf)s"
+msgstr "%(product)s: %(have)d de %(want)d em %(shelf)s"
+
+#. module: liber_stock_scan
+#. odoo-python
+#: code:addons/liber_stock_scan/models/shelf_scan.py:0
+msgid "Not enough on the shelf -- %(detail)s"
+msgstr "Não há o bastante na prateleira: %(detail)s"
+
+#. module: liber_stock_scan
+#. odoo-python
+#: code:addons/liber_stock_scan/models/shelf_scan.py:0
+msgid "The transfer did not validate (%(state)s)."
+msgstr "A transferência não validou (%(state)s)."
+
+#. module: liber_stock_scan
+#. odoo-javascript
+#: code:addons/liber_stock_scan/static/src/scan/scan.js:0
+msgid "Scan the shelf the books leave from"
+msgstr "Bipe a prateleira de onde os livros saem"
+
+#. module: liber_stock_scan
+#. odoo-javascript
+#: code:addons/liber_stock_scan/static/src/scan/scan.js:0
+msgid "Scan the books, one by one"
+msgstr "Bipe os livros, um a um"
+
+#. module: liber_stock_scan
+#. odoo-javascript
+#: code:addons/liber_stock_scan/static/src/scan/scan.js:0
+msgid "Scan more books, or the destination shelf to finish"
+msgstr "Bipe mais livros, ou a prateleira de destino para fechar"
+
+#. module: liber_stock_scan
+#. odoo-javascript
+#: code:addons/liber_stock_scan/static/src/scan/scan.js:0
+msgid "Origin: %s"
+msgstr "Origem: %s"
+
+#. module: liber_stock_scan
+#. odoo-javascript
+#: code:addons/liber_stock_scan/static/src/scan/scan.js:0
+msgid "%s is the origin shelf; scan the destination shelf."
+msgstr "%s é a prateleira de origem; bipe a prateleira de destino."
+
+#. module: liber_stock_scan
+#. odoo-javascript
+#: code:addons/liber_stock_scan/static/src/scan/scan.js:0
+msgid "Scan the origin shelf first."
+msgstr "Bipe primeiro a prateleira de origem."
+
+#. module: liber_stock_scan
+#. odoo-javascript
+#: code:addons/liber_stock_scan/static/src/scan/scan.js:0
+msgid "%(product)s: only %(qty)s on %(shelf)s."
+msgstr "%(product)s: só há %(qty)s em %(shelf)s."
+
+#. module: liber_stock_scan
+#. odoo-javascript
+#: code:addons/liber_stock_scan/static/src/scan/scan.js:0
+msgid "%(product)s: %(qty)s"
+msgstr "%(product)s: %(qty)s"
+
+#. module: liber_stock_scan
+#. odoo-javascript
+#: code:addons/liber_stock_scan/static/src/scan/scan.js:0
+msgid "%(name)s done: %(qty)s from %(origin)s to %(dest)s."
+msgstr "%(name)s concluída: %(qty)s de %(origin)s para %(dest)s."
+
+#. module: liber_stock_scan
+#. odoo-javascript
+#: code:addons/liber_stock_scan/static/src/scan/scan.js:0
+msgid "Undone: %s"
+msgstr "Desfeito: %s"
+
+#. module: liber_stock_scan
+#. odoo-javascript
+#: code:addons/liber_stock_scan/static/src/scan/scan.js:0
+msgid "Camera unavailable: %s"
+msgstr "Câmera indisponível: %s"
+
+#. module: liber_stock_scan
+#. odoo-javascript
+#: code:addons/liber_stock_scan/static/src/scan/scan.xml:0
+msgid "Stop camera"
+msgstr "Parar a câmera"
+
+#. module: liber_stock_scan
+#. odoo-javascript
+#: code:addons/liber_stock_scan/static/src/scan/scan.xml:0
+msgid "Read with the camera"
+msgstr "Ler com a câmera"
+
+#. module: liber_stock_scan
+#. odoo-javascript
+#: code:addons/liber_stock_scan/static/src/scan/scan.xml:0
+msgid "Start over"
+msgstr "Recomeçar"
+
+#. module: liber_stock_scan
+#. odoo-javascript
+#: code:addons/liber_stock_scan/static/src/scan/scan.xml:0
+msgid "Origin"
+msgstr "Origem"
+
+#. module: liber_stock_scan
+#. odoo-javascript
+#: code:addons/liber_stock_scan/static/src/scan/scan.xml:0
+msgid "scan the shelf…"
+msgstr "bipe a prateleira…"
+
+#. module: liber_stock_scan
+#. odoo-javascript
+#: code:addons/liber_stock_scan/static/src/scan/scan.xml:0
+msgid "Books"
+msgstr "Livros"
+
+#. module: liber_stock_scan
+#. odoo-javascript
+#: code:addons/liber_stock_scan/static/src/scan/scan.xml:0
+msgid "scan the books…"
+msgstr "bipe os livros…"
+
+#. module: liber_stock_scan
+#. odoo-javascript
+#: code:addons/liber_stock_scan/static/src/scan/scan.xml:0
+msgid "Total:"
+msgstr "Total:"
+
+#. module: liber_stock_scan
+#. odoo-javascript
+#: code:addons/liber_stock_scan/static/src/scan/scan.xml:0
+msgid "Undo last"
+msgstr "Desfazer o último"
+
+#. module: liber_stock_scan
+#. odoo-javascript
+#: code:addons/liber_stock_scan/static/src/scan/scan.xml:0
+msgid "Destination"
+msgstr "Destino"
+
+#. module: liber_stock_scan
+#. odoo-javascript
+#: code:addons/liber_stock_scan/static/src/scan/scan.xml:0
+msgid "scan the destination shelf to finish"
+msgstr "bipe a prateleira de destino para fechar"
+
+#. module: liber_stock_scan
+#. odoo-javascript
+#: code:addons/liber_stock_scan/static/src/scan/scan.xml:0
+msgid "from"
+msgstr "de"
+
+#. module: liber_stock_scan
+#. odoo-javascript
+#: code:addons/liber_stock_scan/static/src/scan/scan.xml:0
+msgid "to"
+msgstr "para"

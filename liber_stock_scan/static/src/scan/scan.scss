@@ -1,0 +1,16 @@
+.o_liber_scan {
+    overflow: auto;
+    .o_liber_scan_wrap { max-width: 720px; margin: 0 auto; padding: 16px; }
+    .o_liber_scan_input { font-size: 1.4rem; margin-top: 12px; }
+    .o_liber_scan_step {
+        margin-top: 18px; padding: 10px 14px; border-left: 4px solid #ddd;
+        &.o_current { border-left-color: #714b67; background: #faf6f9; }
+    }
+    .o_liber_scan_label {
+        display: block; font-size: .75rem; letter-spacing: .08em;
+        text-transform: uppercase; color: #777; margin-bottom: 4px;
+    }
+    .o_liber_scan_origin { font-size: 1.3rem; }
+    .o_liber_scan_lines td { vertical-align: middle; }
+    .o_liber_scan_video video { width: 100%; max-height: 320px; background: #000; border-radius: 6px; }
+}

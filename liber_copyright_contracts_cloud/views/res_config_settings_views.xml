@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="res_config_settings_view_form_cloud" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.copyright.cloud</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="liber_copyright_contracts.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//app[@name='liber_copyright_contracts']" position="inside">
+                <block title="Documents" name="copyright_documents_block">
+                    <setting string="Storage"
+                             help="Where the house keeps its contracts: GitHub, Google Drive or Dropbox.">
+                        <field name="contract_cloud_provider"/>
+                    </setting>
+                    <setting string="Contract document folders"
+                             help="Folders mapped in that storage (Cloud Files) that hold the contracts. A contract's document picker only offers files from them.">
+                        <field name="contract_cloud_folder_ids" widget="many2many_tags"
+                               domain="[('provider', '=', contract_cloud_provider)] if contract_cloud_provider else []"
+                               options="{'no_create': True}"/>
+                    </setting>
+                </block>
+            </xpath>
+        </field>
+    </record>
+</odoo>

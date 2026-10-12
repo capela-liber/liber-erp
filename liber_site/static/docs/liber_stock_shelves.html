@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<script>
+/* Servido por /liber_site/static/docs/, este arquivo vem com uma semana de
+   cache e o docs.js sem versão -- e o índice monta a lista a partir dele. Foi
+   assim que a emissão de NF-e e o manual da Amazon ficaram invisíveis: o
+   catálogo em cache era anterior aos dois. A rota /liber/docs/ serve o mesmo
+   arquivo sem cache e com ?v=<mtime> nos assets. Quem chegar pelo caminho
+   antigo (favorito, link velho, resultado de busca) vai para lá antes de a
+   página montar qualquer coisa. */
+(function () {
+  var antigo = "/liber_site/static/docs/";
+  if (location.pathname.indexOf(antigo) === 0) {
+    location.replace("/liber/docs/" + location.pathname.slice(antigo.length) +
+                     location.search + location.hash);
+  }
+})();
+</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Prateleiras e transferências internas — Manuais do Liber</title>
+<link rel="icon" type="image/png" href="../logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;600;700&display=swap">
+<link rel="stylesheet" href="docs.css">
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="../index.html"><img src="../logo.png" alt="">liber<span>.</span></a>
+    <span class="doc-tag">Manuais</span>
+    <nav><a href="index.html">Índice</a><a href="../index.html">Site</a></nav>
+  </div>
+</header>
+<div class="wrap">
+  <div class="layout">
+    <aside class="sidebar" id="sidebar"></aside>
+    <article class="doc">
+      <div class="breadcrumb"><a href="index.html">Manuais</a><span class="sep">›</span>Logística<span class="sep">›</span>Prateleiras e transferências internas</div>
+      <h1>Prateleiras e transferências internas</h1>
+      <p class="lead">O depósito é endereçado: cada livro tem a sua prateleira, e o sistema sabe qual.
+      Este manual mostra onde a prateleira aparece, como mover livros de uma prateleira para outra
+      — um título por vez, ou várias linhas de uma só vez — e o erro mais fácil de cometer no caminho.</p>
+
+      <h2 id="prateleira">O que é uma prateleira?</h2>
+      <p>É um <strong>local</strong> do Inventário, filho do estoque do armazém. O estoque da Edlab é
+      <span class="field">EL-VG/Stock</span>; a prateleira 196 é <span class="field">EL-VG/Stock/EL-000196</span>.
+      Na n-1 o prefixo é <span class="field">N1-</span>. O número tem zeros à esquerda de propósito: em
+      ordem alfabética ele já é a ordem do passeio de quem separa.</p>
+      <figure class="shot">
+        <img src="img/doc-liber_stock_shelves-prateleira.png"
+             alt="Ficha do local EL-000196, filho de EL-VG/Stock, tipo Interno">
+        <figcaption>A prateleira é um local comum do Odoo: o nome é o código, e o
+        <span class="field">Local principal</span> é o estoque do armazém.</figcaption>
+      </figure>
+      <div class="callout">A raiz <span class="field">EL-VG/Stock</span> também guarda livros — os que ainda não
+      foram endereçados. Ela não é uma prateleira: é o armazém inteiro, com todas as prateleiras dentro.
+      Isso importa na hora de transferir (veja <a href="#raiz">a armadilha da raiz</a>).</div>
+
+      <h2 id="onde-vejo">Onde vejo em que prateleira está um livro?</h2>
+      <p>Na ficha do livro, o botão <span class="field">Em mãos</span> abre a lista por
+      <span class="field">Local</span>: uma linha por prateleira, com a quantidade de cada uma.</p>
+      <figure class="shot">
+        <img src="img/doc-liber_stock_shelves-em-maos.png"
+             alt="Lista Em mãos do título Coletivos: duas prateleiras, EL-000196 com 74 e EL-000171 com 30">
+        <figcaption>O mesmo título em duas prateleiras. O total é a soma; quem separa precisa da linha.</figcaption>
+      </figure>
+      <p>Outros dois lugares mostram a mesma coisa de outro ângulo:</p>
+      <div class="tablewrap"><table>
+        <tr><th>Tela</th><th>Para quê</th></tr>
+        <tr><td><span class="menupath">Inventário<i>‣</i>Operações<i>‣</i>Inventário físico</span></td>
+            <td>Todas as linhas de estoque, com a coluna <span class="field">Local</span>. Filtre por
+                <span class="field">Local</span> para ver o que há numa prateleira, ou agrupe por produto
+                para ver em quantas prateleiras um título está.</td></tr>
+        <tr><td><span class="menupath">Inventário<i>‣</i>Configuração<i>‣</i>Locais</span></td>
+            <td>A lista das prateleiras (só para o administrador do Inventário). Na ficha de cada uma, o
+                botão <span class="field">Produtos</span> abre o que está lá.</td></tr>
+      </table></div>
+
+      <h2 id="transferir">Como movo livros de uma prateleira para outra?</h2>
+      <p>Com uma <strong>transferência interna</strong>. É um movimento como os outros, só que de um local
+      do armazém para outro local do mesmo armazém — e fica no histórico do livro como qualquer entrega.</p>
+      <ol class="steps">
+        <li>Abra <span class="menupath">Inventário<i>‣</i>Operações<i>‣</i>Transferências<i>‣</i>Interno</span> e clique
+            em <span class="field">Novo</span>.</li>
+        <li>Em <span class="field">Local de origem</span>, escolha a <strong>prateleira de onde sai</strong> —
+            digite o código (<span class="field">EL-000196</span>) e escolha na lista. Em
+            <span class="field">Local de destino</span>, a prateleira para onde vai.</li>
+        <li>Na aba <span class="menupath">Operações</span>, adicione o livro e a quantidade.</li>
+        <li>Clique em <span class="field">Validar</span>. A lista <span class="field">Em mãos</span> do livro
+            muda na hora: menos na origem, mais no destino.</li>
+      </ol>
+      <figure class="shot">
+        <img src="img/doc-liber_stock_shelves-transferencia-interna.png"
+             alt="Transferência interna EL-VG/INT/00001 pronta: de EL-000196 para EL-000171, 10 exemplares de Coletivos">
+        <figcaption>Uma transferência interna pronta para validar: origem e destino são prateleiras, e
+        a linha diz quantos vão.</figcaption>
+      </figure>
+      <div class="callout warn" id="raiz"><strong>A armadilha da raiz.</strong> O campo
+      <span class="field">Local de origem</span> nasce preenchido com <span class="field">EL-VG/Stock</span>, a raiz.
+      Deixe-o assim e o Odoo entende "de qualquer lugar do armazém": ele procura o livro em todas as
+      prateleiras, pega da que recebeu primeiro — muitas vezes a própria prateleira de destino — e prepara um
+      movimento <em>dela para ela mesma</em>. Pelo mesmo motivo ele aceita uma quantidade maior que a da raiz:
+      está contando as prateleiras todas. <strong>Troque a origem pela prateleira</strong> antes de adicionar
+      a linha. Dois avisos ajudam: a coluna <span class="field">Separar de</span> na própria linha mostra de
+      qual prateleira a reserva vai tirar, e, se mesmo assim origem e destino ficarem iguais, o
+      <span class="field">Validar</span> é recusado com a mensagem "Nada se move" — nada é gravado.</div>
+      <div class="callout"><strong>Por que a raiz "tem" mais do que tem.</strong> Para o Odoo,
+      <span class="field">EL-VG/Stock</span> na origem não é o chão da raiz: é o armazém inteiro, com todas
+      as prateleiras dentro. Por isso a transferência diz "Disponível" com 24 na raiz e 25 pedidos, e
+      <span class="field">Separar de</span> aponta para uma prateleira que você não escolheu. Se validar, o
+      movimento é real, dessa prateleira para o destino — nada sai do nada. Para tirar de uma prateleira
+      certa, escreva a prateleira na origem; para tirar só do chão da raiz, escolha a linha da raiz em
+      <span class="field">Detalhes</span> ‣ <span class="field">Separar de</span>.</div>
+      <div class="callout warn"><strong>Só prateleiras do armazém.</strong> A lista de origem e de destino da
+      transferência interna mostra apenas as prateleiras do próprio armazém. A prateleira de consignação de um
+      cliente (<span class="field">CO/…</span>) e o local de ajuste não aparecem, e uma transferência apontada
+      para eles por outro caminho é recusada ao validar: livro só vai para a prateleira do cliente pelo
+      Pedido C, e só volta pelo retorno da consignação.</div>
+      <p>Se a prateleira de origem tem menos do que você pediu, a transferência fica em
+      <span class="field">Aguardando</span> e o botão <span class="field">Validar</span> oferece mover o que há.
+      Não há como tirar de uma prateleira o que não está nela.</p>
+
+      <h2 id="realocar">Como movo várias linhas de uma vez?</h2>
+      <p>Com <span class="field">Realocar</span>, que é do administrador do Inventário. Serve para esvaziar uma
+      prateleira, juntar um título que se espalhou, ou endereçar de uma vez o que está na raiz.</p>
+      <ol class="steps">
+        <li>Abra <span class="menupath">Inventário<i>‣</i>Operações<i>‣</i>Inventário físico</span> e filtre pelo
+            <span class="field">Local</span> ou pelo produto.</li>
+        <li>Marque as linhas que vão mudar de lugar.</li>
+        <li>Em <span class="menupath">Ações</span>, clique em <span class="field">Realocar</span>; escolha o
+            <span class="field">Local de destino</span> e escreva o motivo.</li>
+        <li><span class="field">Confirmar</span>. Cada linha vira um movimento validado, com o motivo no histórico.</li>
+      </ol>
+      <figure class="shot">
+        <img src="img/doc-liber_stock_shelves-realocar.png"
+             alt="Janela Realocar sobre duas linhas marcadas do Inventário físico: Para local e Motivo da realocação">
+        <figcaption>Duas linhas marcadas, um destino, um motivo. O movimento é imediato — não há
+        transferência para validar depois.</figcaption>
+      </figure>
+
+      <h2 id="visao-geral">Onde acompanho as transferências internas?</h2>
+      <p>No painel <span class="menupath">Inventário<i>‣</i>Visão geral</span>, o cartão
+      <span class="field">Transferências internas</span> conta o que está a processar, ao lado dos
+      Recebimentos e das Entregas. Clique no botão para abrir a fila.</p>
+      <figure class="shot">
+        <img src="img/doc-liber_stock_shelves-visao-geral.png"
+             alt="Visão geral do Inventário com o cartão Transferências internas: 1 a processar">
+        <figcaption>O cartão existe porque o ajuste "Locais de armazenamento" está ligado; sem ele o
+        Odoo o esconde e arquiva o tipo de operação.</figcaption>
+      </figure>
+
+      <h2 id="raiz-endereco">Como endereço o que ainda está na raiz?</h2>
+      <p>Parte do estoque veio da migração sem prateleira, parado em <span class="field">EL-VG/Stock</span>.
+      O jeito seguro é <span class="field">Realocar</span>: no <span class="menupath">Inventário físico</span>,
+      filtre <span class="field">Local</span> = <span class="field">EL-VG/Stock</span> (a raiz exata, sem as
+      filhas), marque as linhas e mande para a prateleira certa. A realocação parte da linha marcada, então
+      sai mesmo da raiz.</p>
+      <div class="callout warn">Por transferência interna com a raiz na origem <strong>não</strong> funciona
+      como parece: a raiz na origem é "o armazém inteiro", e o Odoo pode separar de uma prateleira em vez
+      do chão. Se precisar mesmo, abra <span class="field">Detalhes</span> na linha e escolha em
+      <span class="field">Separar de</span> a linha cujo local é a raiz <span class="field">EL-VG/Stock</span>,
+      sem prateleira no fim.</div>
+      <h2 id="quem-pode">Quem pode o quê</h2>
+      <div class="tablewrap"><table>
+        <tr><th>Perfil</th><th>Vê a prateleira</th><th>Transferência interna</th><th>Realocar</th><th>Cadastra prateleira</th></tr>
+        <tr><td>Logística, Assistente</td><td>sim</td><td>sim</td><td>—</td><td>—</td></tr>
+        <tr><td>Logística, Gerente e Direção</td><td>sim</td><td>sim</td><td>sim</td><td>sim</td></tr>
+        <tr><td>Comercial, Gerente</td><td>sim</td><td>sim</td><td>—</td><td>—</td></tr>
+        <tr><td>Demais usuários internos</td><td>sim, onde já liam estoque</td><td>—</td><td>—</td><td>—</td></tr>
+      </table></div>
+
+      <h2 id="problemas">Quando algo não sai como esperado</h2>
+      <div class="tablewrap"><table>
+        <tr><th>O que aparece</th><th>Por quê</th><th>O que fazer</th></tr>
+        <tr>
+          <td>"Nada se move: … sai de EL-000043 e volta para EL-000043"</td>
+          <td>A origem ficou na raiz <span class="field">EL-VG/Stock</span>, e a reserva caiu na própria
+              prateleira de destino. O Odoo recusou validar.</td>
+          <td>Troque o <span class="field">Local de origem</span> pela prateleira de onde o livro sai e valide
+              de novo. Se o livro está mesmo na raiz, abra <span class="field">Detalhes</span> e escolha em
+              <span class="field">Separar de</span> a linha da raiz.</td>
+        </tr>
+        <tr>
+          <td>"… não é prateleira de Vila Guilherme"</td>
+          <td>A origem ou o destino é um local de fora do armazém — uma prateleira de consignação, por
+              exemplo.</td>
+          <td>Transferência interna é entre prateleiras do armazém. Para a prateleira do cliente, o caminho é
+              o Pedido C.</td>
+        </tr>
+        <tr>
+          <td><span class="field">Realocar</span> não está no menu Ações</td>
+          <td>Só o administrador do Inventário realoca.</td>
+          <td>Use a transferência interna, ou peça ao gerente da Logística.</td>
+        </tr>
+        <tr>
+          <td>A transferência não mostra <span class="field">Local de origem</span> nem <span class="field">Local de destino</span></td>
+          <td>O ajuste "Locais de armazenamento" está desligado nessa base — foi assim que ela chegou da migração.</td>
+          <td>É o que este módulo liga. Fale com a administração do sistema.</td>
+        </tr>
+        <tr>
+          <td>A transferência fica em <span class="field">Aguardando</span></td>
+          <td>A prateleira de origem tem menos do que a linha pede.</td>
+          <td>Confira o <span class="field">Em mãos</span> do livro: ou a quantidade está errada, ou a prateleira.</td>
+        </tr>
+      </table></div>
+
+      <h2 id="nao-fazer">O que não fazer</h2>
+      <ul>
+        <li><strong>Não mude de prateleira pelo Ajuste de inventário</strong> (a coluna <span class="field">Contado</span>).
+            Isso grava uma perda numa prateleira e um achado na outra — dois ajustes, sem a transferência que
+            explica. Mover é transferência interna ou Realocar.</li>
+        <li><strong>Não deixe a raiz na origem</strong> de uma transferência entre prateleiras. Veja
+            <a href="#raiz">a armadilha da raiz</a>.</li>
+        <li><strong>Não tente levar livro à prateleira de um cliente por transferência interna.</strong>
+            O sistema não oferece e não aceita: é o Pedido C que faz isso, com remessa e acerto.</li>
+        <li><strong>Não crie prateleira fora do padrão.</strong> O nome é o código com seis dígitos
+            (<span class="field">EL-000414</span>), e o local principal é o estoque do armazém. Fora disso a
+            ordem do passeio quebra.</li>
+      </ul>
+
+      <div class="callout">Dúvida sobre acesso ou empresa: fale com a administração do sistema.
+      Toda transferência interna fica no histórico do livro, com data, origem e destino.</div>
+
+      <nav class="pager" id="pager"></nav>
+    </article>
+  </div>
+</div>
+<script src="docs.js"></script>
+</body>
+</html>

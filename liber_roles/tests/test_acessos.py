@@ -1139,28 +1139,94 @@ class TestAcessos(TransactionCase):
                 'o assistente de %s aprova despesa, e aprovar é de quem chefia'
                 % dep)
 
-    def test_o_rastreio_de_links_e_do_marketing(self):
-        """"Link tracker é só para marketing" — 11/08/2026, nos dois níveis.
+    def test_o_encurtador_de_links_e_do_marketing_e_do_editorial(self):
+        """"Link tracker é só para marketing" (11/08/2026) — e "o editorial
+        assistente e gerente precisa estar habilitado a encurtar um link em
+        edlab.press/r" (08/10/2026). Nos dois níveis dos dois.
 
-        Antes desta régua o menu era travado em `base.group_no_one`, o modo
-        debug: a ferramenta existia e NINGUÉM a via, marketing inclusive.
+        Antes da primeira régua o menu era travado em `base.group_no_one`, o
+        modo debug: a ferramenta existia e NINGUÉM a via, marketing inclusive.
 
-        A asserção é sobre o menu de propósito, porque é só isso que a linha
-        promete. O ACL do core dá `link.tracker` a todo usuário interno, e
-        estreitá-lo quebraria o envio de e-mail de quem não é do Marketing —
-        o `mail_render_mixin` cria link tracker ao renderizar. O porquê está
-        no cabeçalho de security/menu_link_tracker.xml.
+        Dois menus, de propósito: a raiz do app e o ITEM `Link Tracker`, que
+        é a lista onde se encurta. O arquivo de 11/08 abria só a raiz e as
+        UTMs; clicar em "Link Tracker" levava às Campanhas, e a lista em si
+        continuava atrás do modo debug. Foi a entrada do Editorial que contou.
         """
+        for dep in ('marketing', 'editorial'):
+            for nivel in ('assistente', 'gerente'):
+                chave = '%s_%s' % (dep, nivel)
+                self._assert_menu(chave, 'utm.menu_link_tracker_root',
+                                  'Link Tracker (raiz)', visivel=True)
+                self._assert_menu(chave, 'link_tracker.link_tracker_menu_main',
+                                  'Link Tracker (a lista)', visivel=True)
+
+    def test_as_utms_continuam_so_do_marketing(self):
+        """O Editorial encurta o link do livro; campanha, meio e origem são
+        assunto do Marketing. A porta das UTMs não se moveu em 08/10."""
         for nivel in ('assistente', 'gerente'):
-            self._assert_menu('marketing_%s' % nivel,
-                              'utm.menu_link_tracker_root',
-                              'Link Tracker', visivel=True)
+            self._assert_menu('marketing_%s' % nivel, 'utm.marketing_utm',
+                              'UTMs', visivel=True)
+            self._assert_menu('editorial_%s' % nivel, 'utm.marketing_utm',
+                              'UTMs', visivel=False)
 
     def test_o_rastreio_de_links_nao_e_de_mais_ninguem(self):
         """O outro lado da régua, que é o que a torna uma régua."""
-        for dep in ('comercial', 'logistica', 'financeiro', 'editorial',
-                    'juridico'):
+        for dep in ('comercial', 'logistica', 'financeiro', 'juridico'):
             for nivel in ('assistente', 'gerente'):
                 self._assert_menu('%s_%s' % (dep, nivel),
                                   'utm.menu_link_tracker_root',
                                   'Link Tracker', visivel=False)
+
+    def _encurta(self, chave, url):
+        """Cria um link curto como o usuário. O título vai preenchido de
+        propósito: sem ele o core sai buscar o da página por HTTP."""
+        env = self.env(user=self.usuario[chave].id, su=False)
+        return env['link.tracker'].create({
+            'url': url, 'title': 'Livro de %s' % chave})
+
+    def test_quem_ve_o_encurtador_encurta(self):
+        """Porta de menu não é direito. O ACL do core, no 19, dá
+        `link.tracker` ao usuário interno só em LEITURA; criar era do Editor e
+        designer do site e do administrador — daí o "hoje apenas o Paulo".
+        O direito de escrever mora no ir.model.access.csv deste módulo.
+
+        Prova-se o caminho inteiro, não só o `create`: o código curto (o que
+        vira `/r/<código>`) nasce num modelo que o usuário NÃO escreve, e o
+        core o cria com sudo — se um dia deixar de criar, o link nasce sem
+        endereço e este teste é quem reclama.
+        """
+        for n, chave in enumerate(('marketing_assistente', 'marketing_gerente',
+                                   'editorial_assistente', 'editorial_gerente')):
+            self.env.invalidate_all()
+            link = self._encurta(chave, 'https://edlab.press/livro-%d' % n)
+            self.assertTrue(link.id, '%s não encurtou o link' % chave)
+            self.assertTrue(
+                link.link_code_ids,
+                'o link de %s nasceu sem código curto: o /r/ não resolve'
+                % chave)
+            self.assertIn('/r/', link.short_url)
+            link.write({'title': 'Livro de %s (revisto)' % chave})
+            self.assertEqual(link.title, 'Livro de %s (revisto)' % chave)
+
+    def test_encurtar_nao_e_apagar(self):
+        """Link já distribuído (e-mail, QR code) não se apaga por engano: a
+        concessão é leitura, escrita e criação, sem unlink. Apagar segue do
+        administrador."""
+        link = self._encurta('editorial_assistente',
+                             'https://edlab.press/livro-que-fica')
+        self.env.invalidate_all()
+        with self.assertRaises(AccessError, msg=(
+                'o assistente editorial apaga link curto, e o código já '
+                'pode estar impresso num QR code')):
+            link.unlink()
+
+    def test_quem_nao_ve_o_encurtador_nao_encurta(self):
+        """A régua pelo lado do ORM: quem não tem a porta também não tem o
+        direito — URL colada não encurta."""
+        for dep in ('comercial', 'logistica', 'financeiro', 'juridico'):
+            for nivel in ('assistente', 'gerente'):
+                chave = '%s_%s' % (dep, nivel)
+                self.env.invalidate_all()
+                with self.assertRaises(AccessError, msg=(
+                        '%s encurtou um link sem ter o encurtador' % chave)):
+                    self._encurta(chave, 'https://edlab.press/%s' % chave)

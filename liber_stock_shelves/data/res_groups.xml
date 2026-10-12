@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- "Locais de armazenamento" (Inventário > Configuração > Definições) é
+         uma aresta de grupo: a caixinha marcada faz o Usuário interno implicar
+         `stock.group_stock_multi_locations`, e é esse grupo que libera De/Para
+         na transferência, a coluna Localização e o menu de Locais. A migração
+         15->19 trouxe as prateleiras e deixou a aresta para trás. Aqui ela é
+         código: `noupdate="0"`, de propósito, para o `-u` repor o que a tela
+         desfizer. -->
+    <record id="base.group_user" model="res.groups">
+        <field name="implied_ids" eval="[(4, ref('stock.group_stock_multi_locations'))]"/>
+    </record>
+</odoo>

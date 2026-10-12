@@ -5,7 +5,12 @@
         <field name="model">res.company</field>
         <field name="inherit_id" ref="base.view_company_form"/>
         <field name="arch" type="xml">
-            <xpath expr="//sheet" position="inside">
+            <!-- Uma aba própria, e não um bloco no fim da folha: solto depois
+                 do caderno, o bloco aparecia embaixo de QUALQUER aba aberta e,
+                 com "Direitos Autorais" aberta, parecia configuração dela
+                 (09/10/2026). -->
+            <xpath expr="//notebook" position="inside">
+                <page string="NFe" name="focus_nfe_page">
                 <group string="NFe — Focus NFe" name="focus_nfe">
                     <group string="Credenciais">
                         <field name="focus_ambiente" widget="radio"/>
@@ -43,6 +48,7 @@
                                 help="Cria um imposto de alíquota zero por CFOP configurado. É por eles que a posição fiscal entrega o CFOP à nota."/>
                     </group>
                 </group>
+                </page>
             </xpath>
         </field>
     </record>

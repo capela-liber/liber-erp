@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<script>
+/* Servido por /liber_site/static/docs/, este arquivo vem com uma semana de
+   cache e o docs.js sem versão -- e o índice monta a lista a partir dele. Foi
+   assim que a emissão de NF-e e o manual da Amazon ficaram invisíveis: o
+   catálogo em cache era anterior aos dois. A rota /liber/docs/ serve o mesmo
+   arquivo sem cache e com ?v=<mtime> nos assets. Quem chegar pelo caminho
+   antigo (favorito, link velho, resultado de busca) vai para lá antes de a
+   página montar qualquer coisa. */
+(function () {
+  var antigo = "/liber_site/static/docs/";
+  if (location.pathname.indexOf(antigo) === 0) {
+    location.replace("/liber/docs/" + location.pathname.slice(antigo.length) +
+                     location.search + location.hash);
+  }
+})();
+</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Inventário físico: contar e ajustar — Manuais do Liber</title>
+<link rel="icon" type="image/png" href="../logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;600;700&display=swap">
+<link rel="stylesheet" href="docs.css">
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="../index.html"><img src="../logo.png" alt="">liber<span>.</span></a>
+    <span class="doc-tag">Manuais</span>
+    <nav><a href="index.html">Índice</a><a href="../index.html">Site</a></nav>
+  </div>
+</header>
+<div class="wrap">
+  <div class="layout">
+    <aside class="sidebar" id="sidebar"></aside>
+    <article class="doc">
+      <div class="breadcrumb"><a href="index.html">Manuais</a><span class="sep">›</span>Logística<span class="sep">›</span>Inventário físico: contar e ajustar</div>
+      <h1>Inventário físico: contar e ajustar</h1>
+      <p class="lead">O inventário é feito em dois gestos, por duas pessoas. Quem está no depósito
+      <strong>conta</strong>: vai à prateleira e escreve quantos exemplares há de cada título. O gerente
+      <strong>aplica</strong>: revisa a diferença entre o contado e o que o sistema esperava, e só então a
+      quantidade em mãos muda. Este manual mostra as duas metades — e por que a segunda é só do gerente.</p>
+
+      <h2 id="contar-nao-e-ajustar">Contar não é ajustar</h2>
+      <p>A tela <span class="menupath">Inventário<i>‣</i>Operações<i>‣</i>Inventário físico</span> tem uma linha por
+      título em cada prateleira, e duas colunas que importam:</p>
+      <div class="tablewrap"><table>
+        <tr><th>Coluna</th><th>O que é</th><th>Quem escreve</th></tr>
+        <tr><td><span class="field">Em mãos</span></td>
+            <td>O que o sistema acha que há na prateleira — a soma de tudo o que entrou e saiu por
+                transferências validadas.</td>
+            <td>Ninguém. Ela muda por movimento.</td></tr>
+        <tr><td><span class="field">Contado</span></td>
+            <td>O que a pessoa achou na prateleira. Fica em branco até alguém contar.</td>
+            <td>Quem conta: o assistente.</td></tr>
+        <tr><td><span class="field">Diferença</span></td>
+            <td>Contado menos Em mãos. Negativa quando falta livro, positiva quando sobra.</td>
+            <td>Ninguém. É a conta das duas.</td></tr>
+      </table></div>
+      <p>Preencher <span class="field">Contado</span> não mexe no estoque: é um registro à espera. O que mexe é o
+      botão <span class="field">Aplicar</span>, que transforma a diferença num <strong>movimento de ajuste</strong>:
+      a quantidade em mãos passa a ser a contada, e o livro que faltava vai para "Perda de inventário",
+      com data, prateleira e quem aplicou no histórico. Esse clique é o que muda o número que o
+      comercial, o acerto de consignação e o financeiro leem — e por isso é só do gerente.</p>
+      <div class="tablewrap"><table>
+        <tr><th>Gesto</th><th>Assistente</th><th>Gerente</th></tr>
+        <tr><td>Pedir uma contagem (<span class="field">Solicitar uma contagem</span>)</td><td>—</td><td>sim</td></tr>
+        <tr><td>Imprimir a <span class="field">Folha de contagem</span></td><td>sim</td><td>sim</td></tr>
+        <tr><td>Preencher <span class="field">Contado</span>, linha a linha ou pela folha</td><td>sim</td><td>sim</td></tr>
+        <tr><td>Criar linha para livro que estava na prateleira e não na lista</td><td>sim</td><td>sim</td></tr>
+        <tr><td>Limpar a própria contagem antes de aplicada</td><td>sim</td><td>sim</td></tr>
+        <tr><td><span class="field">Aplicar</span>, <span class="field">Aplicar tudo</span>, resolver um conflito</td><td>—</td><td>sim</td></tr>
+        <tr><td>Mudar <span class="field">Quantidade em mãos</span> na ficha do livro</td><td>—</td><td>sim</td></tr>
+        <tr><td><span class="field">Definir como 0</span>, <span class="field">Realocar</span>, apagar linha</td><td>—</td><td>sim</td></tr>
+      </table></div>
+
+      <h2 id="pedir">Como o gerente pede uma contagem</h2>
+      <p>O inventário começa pelo gerente: ele escolhe o que se conta e quem conta. Pode ser uma
+      prateleira, um título em todas as prateleiras, ou o depósito inteiro — o Odoo não tem "abrir um
+      inventário"; tem linhas com uma data e um responsável.</p>
+      <ol class="steps">
+        <li>Abra <span class="menupath">Inventário<i>‣</i>Operações<i>‣</i>Inventário físico</span>. Agrupe por
+            <span class="field">Local</span> e abra o grupo da prateleira, ou filtre pelo código dela
+            (<span class="field">EL-000196</span>) ou pelo produto. Marque as linhas que vão ser contadas; para a
+            prateleira inteira, a caixa do cabeçalho.</li>
+        <li>Clique em <span class="field">Solicitar uma contagem</span>. Em <span class="field">Atribuir a</span>,
+            escolha quem vai contar; na data agendada (o campo ainda aparece em inglês, <em>Scheduled at</em>), o dia.
+            Deixe <span class="field">Atribuir a</span> vazio para a contagem ficar aberta a qualquer um da equipe.</li>
+        <li><span class="field">Confirmar</span>. As linhas ganham a data e o nome, e passam a aparecer no
+            filtro <span class="field">Minhas contagens</span> de quem foi escolhido.</li>
+        <li>Se a contagem for de papel, marque as linhas de novo e imprima a
+            <span class="field">Folha de contagem</span> (menu <span class="field">Imprimir</span>). Ela sai com
+            uma coluna em branco para escrever.</li>
+      </ol>
+      <figure class="shot">
+        <img src="img/doc-liber_stock_count-solicitar.png"
+             alt="Inventário físico com as linhas da prateleira EL-000101 marcadas e a janela Solicitar uma contagem aberta: Atribuir a, Agendado">
+        <figcaption>O grupo da prateleira aberto, as duas linhas marcadas, uma pessoa, uma data. A contagem
+        pedida aparece no <span class="field">Minhas contagens</span> dela.</figcaption>
+      </figure>
+      <div class="callout">A janela traz também a opção de mostrar a <strong>quantidade esperada</strong>
+      (<em>Show Expected Quantity</em>) na folha impressa. Desligada, quem conta não vê o número do sistema — e conta de verdade em vez de conferir.
+      É uma escolha para a casa inteira, não para aquela contagem.</div>
+
+      <h2 id="contar">Como o assistente conta</h2>
+      <ol class="steps">
+        <li>Abra <span class="menupath">Inventário<i>‣</i>Operações<i>‣</i>Inventário físico</span>. O filtro
+            <span class="field">Minhas contagens</span> já vem ligado: só o que foi pedido a você. Para ver
+            o que está no prazo, acrescente <span class="field">A ser contado</span>.</li>
+        <li>Vá <strong>prateleira por prateleira</strong>: agrupe por <span class="field">Local</span> ou filtre pelo
+            código. A ordem crescente do código é a ordem do passeio no depósito.</li>
+        <li>Na prateleira, conte cada título e escreva o número na coluna <span class="field">Contado</span>.
+            Zero também é contagem: um título que não está mais lá recebe <strong>0</strong>, não fica em
+            branco.</li>
+        <li>Quando a contagem bate com o esperado, não precisa digitar: marque a linha e use
+            <span class="menupath">Ações<i>‣</i>Definir como a quantidade em mãos</span>, que copia
+            <span class="field">Em mãos</span> para <span class="field">Contado</span>.</li>
+        <li>Achou na prateleira um livro que não está na lista? Clique em <span class="field">Novo</span>, escolha
+            o <span class="field">Local</span> (a prateleira), o <span class="field">Produto</span> e escreva o
+            <span class="field">Contado</span>. A linha nasce com Em mãos zero e a diferença positiva — e também
+            espera o gerente.</li>
+        <li>Clique em salvar. A coluna <span class="field">Diferença</span> aparece, e a linha fica marcada como
+            pendente de aplicação. Errou? <span class="field">Limpar</span> na própria linha apaga a sua contagem
+            e nada mais.</li>
+      </ol>
+      <figure class="shot">
+        <img src="img/doc-liber_stock_count-assistente.png"
+             alt="Inventário físico no perfil do assistente: filtro Minhas contagens, duas linhas contadas com a Diferença, e nenhum botão Aplicar">
+        <figcaption>A tela de quem conta: <span class="field">Contado</span> preenchido, <span class="field">Diferença</span>
+        calculada, e nenhum <span class="field">Aplicar</span> à vista. O estoque ainda não mudou.</figcaption>
+      </figure>
+      <div class="callout warn"><strong>Contagem não é mudança de prateleira.</strong> Se o livro está em outra
+      prateleira, não escreva 0 numa e o total na outra: isso vira uma perda numa e um achado na outra,
+      sem o movimento que explica. Mova-o pela
+      <a href="liber_stock_shelves.html#transferir">transferência interna</a> ou pela
+      <a href="liber_stock_scan.html">bipagem</a>, e conte depois.</div>
+
+      <h2 id="aplicar">Como o gerente aplica</h2>
+      <ol class="steps">
+        <li>No <span class="menupath">Inventário físico</span>, ligue o filtro <span class="field">A ser aplicado</span>:
+            são as linhas que alguém contou e ainda não foram aplicadas, com a
+            <span class="field">Diferença</span> à mostra e quem contou na coluna <span class="field">Usuário</span>.</li>
+        <li>Revise as diferenças grandes antes de clicar. Uma diferença de dezenas num título que acabou de ser
+            separado costuma ser contagem antes da transferência, não livro sumido:
+            <span class="field">Histórico</span> na linha mostra os últimos movimentos daquela prateleira.</li>
+        <li>Para aplicar uma linha, clique em <span class="field">Aplicar</span> nela mesma. Para aplicar várias,
+            marque-as e clique em <span class="field">Aplicar</span> no cabeçalho; para aplicar tudo o que está
+            contado na lista filtrada, <span class="field">Aplicar tudo</span>.</li>
+        <li>Escreva o <span class="field">Motivo do inventário</span> ("Inventário de outubro", "Contagem da
+            prateleira 196") e confirme em <span class="field">Atualizar quantidades</span>. O motivo é o nome do
+            movimento no histórico de cada livro.</li>
+      </ol>
+      <figure class="shot">
+        <img src="img/doc-liber_stock_count-gerente.png"
+             alt="Inventário físico no perfil do gerente, filtro A ser aplicado: linhas com Diferença, botão Aplicar em cada uma e Aplicar tudo no cabeçalho">
+        <figcaption>A mesma lista, vista pelo gerente: <span class="field">Aplicar</span> em cada linha e
+        <span class="field">Aplicar tudo</span> no cabeçalho.</figcaption>
+      </figure>
+      <figure class="shot">
+        <img src="img/doc-liber_stock_count-motivo.png"
+             alt="Janela Inventário físico com o campo Motivo do inventário e a data, e o botão Atualizar quantidades">
+        <figcaption>O motivo vira o nome do movimento. Seis meses depois, é ele que explica por que o
+        número mudou.</figcaption>
+      </figure>
+      <div class="callout"><strong>Conflito.</strong> Se o livro se moveu depois de contado (uma entrega saiu da
+      prateleira entre a contagem e o clique), a linha fica em <span class="field">Conflitos</span> e o
+      <span class="field">Aplicar</span> abre uma caixa com duas saídas: <span class="field">Manter a quantidade
+      contada</span> (o número da pessoa vale, e o movimento de depois é somado por cima) ou
+      <span class="field">Manter diferença</span> (vale a diferença que ela encontrou, aplicada ao saldo de agora).
+      Na dúvida, peça uma recontagem.</div>
+
+      <h2 id="por-que">Por que só o gerente aplica</h2>
+      <p>No Odoo de fábrica, quem conta também aplica: o grupo "Inventário: Usuário" vê os botões
+      <span class="field">Aplicar</span> e <span class="field">Aplicar tudo</span>. O Liber fecha isso em dois
+      lugares, porque um botão escondido não fecha nada: a tela deixa de oferecer os botões ao assistente, e o
+      sistema recusa o ajuste por qualquer porta — a linha, o cabeçalho, a ficha do produto, uma chamada
+      de fora — quando quem pede não é administrador do Inventário. A contagem recusada não se perde:
+      fica na coluna <span class="field">Contado</span>, esperando.</p>
+      <div class="callout">Se aparecer <em>"Só um administrador do Inventário aplica um ajuste de estoque e muda a
+      quantidade em mãos. A sua contagem está guardada na coluna Contado: peça ao gerente do depósito que a
+      revise e aplique."</em>, está tudo certo: você contou, e o resto é do gerente.</div>
+
+      <h2 id="quem-pode">Quem pode o quê</h2>
+      <div class="tablewrap"><table>
+        <tr><th>Perfil</th><th>Conta</th><th>Pede contagem</th><th>Aplica</th><th>Em mãos na ficha</th></tr>
+        <tr><td>Logística, Assistente</td><td>sim</td><td>—</td><td>—</td><td>lê</td></tr>
+        <tr><td>Logística, Gerente e Direção</td><td>sim</td><td>sim</td><td>sim</td><td>edita</td></tr>
+        <tr><td>Comercial, Gerente</td><td>sim</td><td>—</td><td>—</td><td>lê</td></tr>
+        <tr><td>Demais usuários internos</td><td>—</td><td>—</td><td>—</td><td>lê, onde já liam estoque</td></tr>
+      </table></div>
+
+      <h2 id="problemas">Quando algo não sai como esperado</h2>
+      <div class="tablewrap"><table>
+        <tr><th>O que aparece</th><th>Por quê</th><th>O que fazer</th></tr>
+        <tr>
+          <td>"Só um administrador do Inventário aplica um ajuste de estoque…"</td>
+          <td>Você não é gerente da Logística. A contagem ficou gravada.</td>
+          <td>Avise o gerente: a linha está no filtro <span class="field">A ser aplicado</span> dele.</td>
+        </tr>
+        <tr>
+          <td>A lista abre vazia para mim</td>
+          <td>O filtro <span class="field">Minhas contagens</span> vem ligado, e ninguém lhe pediu contagem.</td>
+          <td>Tire o filtro para ver tudo, ou peça ao gerente que atribua a contagem a você.</td>
+        </tr>
+        <tr>
+          <td>Não vejo o botão <span class="field">Aplicar</span> nem <span class="field">Aplicar tudo</span></td>
+          <td>São do gerente. A tela não os mostra a quem conta.</td>
+          <td>Nada a fazer: contar é o seu trabalho; o resto é dele.</td>
+        </tr>
+        <tr>
+          <td>"Quantidades já definidas"</td>
+          <td>Você usou <span class="field">Definir como a quantidade em mãos</span> numa linha que já tinha
+              contagem.</td>
+          <td><span class="field">Cancelar</span> mantém a contagem que existia; <span class="field">Continuar</span>
+              substitui pela quantidade em mãos.</td>
+        </tr>
+        <tr>
+          <td>A linha está em <span class="field">Conflitos</span></td>
+          <td>Houve movimento na prateleira depois da contagem.</td>
+          <td>O gerente decide na caixa de conflito, ou pede recontagem.</td>
+        </tr>
+        <tr>
+          <td>Marquei um produto como estocável e deu erro de acesso</td>
+          <td>Tornar estocável um produto que já teve movimentos zera o estoque dele — é um ajuste de
+              inventário, e passa pela mesma trava.</td>
+          <td>Peça ao gerente da Logística.</td>
+        </tr>
+      </table></div>
+
+      <h2 id="nao-fazer">O que não fazer</h2>
+      <ul>
+        <li><strong>Não use a contagem para mover livro de prateleira.</strong> Zero numa e o total na outra
+            são duas perdas disfarçadas. Mover é transferência interna ou bipagem.</li>
+        <li><strong>Não deixe em branco o que não encontrou.</strong> Em branco é "não contei"; 0 é "contei e não
+            há". A diferença aparece no acerto de consignação e no financeiro.</li>
+        <li><strong>Não conte prateleira com separação em andamento.</strong> O livro que está na caixa e ainda
+            não saiu no sistema vira conflito. Conte antes da separação ou depois da validação.</li>
+        <li><strong>Não ajuste pela ficha do livro.</strong> O campo <span class="field">Quantidade em mãos</span>
+            da ficha grava o ajuste na raiz do armazém (<span class="field">EL-VG/Stock</span>), não na prateleira:
+            a prateleira continua com o número antigo e a raiz ganha o novo. Ajuste é no Inventário físico, na
+            linha da prateleira.</li>
+        <li><strong>Não aplique sem motivo.</strong> "Inventário físico" é o que o Odoo escreve sozinho; "Inventário
+            de outubro, prateleiras 100–199" é o que alguém vai agradecer em março.</li>
+      </ul>
+
+      <div class="callout">Dúvida sobre acesso ou empresa: fale com a administração do sistema.
+      Todo ajuste aplicado fica no histórico do livro, com data, prateleira, motivo e quem aplicou.</div>
+
+      <nav class="pager" id="pager"></nav>
+    </article>
+  </div>
+</div>
+<script src="docs.js"></script>
+</body>
+</html>

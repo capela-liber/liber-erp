@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<script>
+/* Servido por /liber_site/static/docs/, este arquivo vem com uma semana de
+   cache e o docs.js sem versão -- e o índice monta a lista a partir dele. Foi
+   assim que a emissão de NF-e e o manual da Amazon ficaram invisíveis: o
+   catálogo em cache era anterior aos dois. A rota /liber/docs/ serve o mesmo
+   arquivo sem cache e com ?v=<mtime> nos assets. Quem chegar pelo caminho
+   antigo (favorito, link velho, resultado de busca) vai para lá antes de a
+   página montar qualquer coisa. */
+(function () {
+  var antigo = "/liber_site/static/docs/";
+  if (location.pathname.indexOf(antigo) === 0) {
+    location.replace("/liber/docs/" + location.pathname.slice(antigo.length) +
+                     location.search + location.hash);
+  }
+})();
+</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bipagem entre prateleiras — Manuais do Liber</title>
+<link rel="icon" type="image/png" href="../logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;600;700&display=swap">
+<link rel="stylesheet" href="docs.css">
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="../index.html"><img src="../logo.png" alt="">liber<span>.</span></a>
+    <span class="doc-tag">Manuais</span>
+    <nav><a href="index.html">Índice</a><a href="../index.html">Site</a></nav>
+  </div>
+</header>
+<div class="wrap">
+  <div class="layout">
+    <aside class="sidebar" id="sidebar"></aside>
+    <article class="doc">
+      <div class="breadcrumb"><a href="index.html">Manuais</a><span class="sep">›</span>Logística<span class="sep">›</span>Bipagem entre prateleiras</div>
+      <h1>Bipagem entre prateleiras</h1>
+      <p class="lead">Mover livros de uma prateleira para outra com o leitor na mão, na ordem em que o corpo
+      faz: de onde, o quê, para onde. Três bipes e a transferência interna nasce validada — sem
+      autocompletar, sem digitar quantidade.</p>
+
+      <h2 id="onde">Onde fica?</h2>
+      <p>Em <span class="menupath">Inventário<i>‣</i>Operações<i>‣</i>Bipagem</span>. É uma tela com um campo só, sempre
+      em foco: o que entra nele decide o passo. Funciona com leitor de mão (USB ou Bluetooth, no modo
+      teclado, que digita o código e dá Enter) e com a câmera do celular.</p>
+      <figure class="shot">
+        <img src="img/doc-liber_stock_scan-tela.png"
+             alt="A tela Bipagem vazia: campo em foco e os três passos Origem, Livros, Destino">
+        <figcaption>Um campo e três passos. O passo aceso é o que o próximo bipe preenche.</figcaption>
+      </figure>
+
+      <h2 id="como">Como movo livros?</h2>
+      <ol class="steps">
+        <li><strong>Bipe a prateleira de origem</strong> — a etiqueta da prateleira de onde os livros saem
+            (<span class="field">EL-000196</span>). Bipar outra prateleira antes de qualquer livro troca a origem.</li>
+        <li><strong>Bipe os livros, um a um</strong> — pelo ISBN da contracapa. O mesmo livro de novo soma um
+            na mesma linha; entre parênteses, quantos há dele naquela prateleira. Livro que não está na
+            prateleira de origem é recusado na hora, com a lista de onde ele está.</li>
+        <li><strong>Bipe a prateleira de destino</strong> — e pronto: a transferência interna é criada, reservada
+            e validada no mesmo bipe. A tela diz o número dela e volta ao passo 1.</li>
+      </ol>
+      <figure class="shot">
+        <img src="img/doc-liber_stock_scan-livros.png"
+             alt="Bipagem com a origem EL-000196 aberta, dois exemplares de Coletivos na linha, e a recusa de um livro que está em EL-000043">
+        <figcaption>Origem aberta, dois bipes do mesmo título, e a recusa em vermelho: o livro bipado por
+        engano está na EL-000043 e na raiz, não aqui.</figcaption>
+      </figure>
+      <p>Dois botões para errar sem medo: <span class="field">Desfazer o último</span> tira o último bipe, e
+      <span class="field">Recomeçar</span> limpa tudo sem gravar nada. Nada é gravado antes do bipe do destino.</p>
+
+      <h2 id="camera">E pela câmera do celular?</h2>
+      <p>Clique em <span class="field">Ler com a câmera</span>, aponte para a etiqueta ou para o ISBN; cada leitura
+      é um bipe, e a mesma leitura repetida em sequência conta uma vez só. A câmera só abre em endereço
+      seguro (https), que é como o sistema é servido fora da casa.</p>
+
+      <h2 id="etiquetas">De onde vêm as etiquetas das prateleiras?</h2>
+      <p>Toda prateleira tem o próprio código como código de barras (<span class="field">EL-000196</span>), dado
+      na instalação e a cada prateleira nova. Para imprimir, em
+      <span class="menupath">Inventário<i>‣</i>Configuração<i>‣</i>Locais</span> marque as prateleiras e use
+      <span class="menupath">Imprimir<i>‣</i>Etiquetas de local</span>. A etiqueta antiga, com o nome completo
+      (<span class="field">EL-VG/Stock/EL-000196</span>), também é aceita.</p>
+
+      <h2 id="regras">O que a bipagem não deixa fazer</h2>
+      <div class="tablewrap"><table>
+        <tr><th>O que aparece</th><th>Por quê</th><th>O que fazer</th></tr>
+        <tr>
+          <td>"… não é prateleira do armazém"</td>
+          <td>O código é da raiz, de um local de vista ou da prateleira de consignação de um cliente.</td>
+          <td>Bipe uma prateleira do armazém. Livro para a prateleira do cliente vai pelo Pedido C.</td>
+        </tr>
+        <tr>
+          <td>"… não está em EL-000196. Está em: …"</td>
+          <td>O livro não está na prateleira de origem aberta.</td>
+          <td>Ou o livro, ou a origem está errada. A mensagem diz onde ele está.</td>
+        </tr>
+        <tr>
+          <td>"… só há N em …"</td>
+          <td>Você bipou mais exemplares do que a prateleira tem.</td>
+          <td>Confira a contagem na prateleira; se faltar no sistema, é inventário, não transferência.</td>
+        </tr>
+        <tr>
+          <td>"Código desconhecido"</td>
+          <td>Nem prateleira, nem livro cadastrado com esse ISBN.</td>
+          <td>Confira a etiqueta. Livro sem ISBN no cadastro precisa do Editorial.</td>
+        </tr>
+      </table></div>
+      <p>A transferência que a bipagem cria passa pelas mesmas regras da transferência interna comum —
+      veja <a href="liber_stock_shelves.html">Prateleiras e transferências internas</a>. A origem é sempre uma
+      prateleira exata, nunca a raiz, então a armadilha da raiz não existe aqui.</p>
+
+      <div class="callout">Dúvida sobre acesso ou empresa: fale com a administração do sistema.
+      Toda transferência bipada fica no histórico do livro, com "Bipagem" como documento de origem.</div>
+
+      <nav class="pager" id="pager"></nav>
+    </article>
+  </div>
+</div>
+<script src="docs.js"></script>
+</body>
+</html>
