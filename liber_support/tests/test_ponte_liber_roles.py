@@ -52,16 +52,23 @@ class TestPonteLiberRoles(TransactionCase):
                       'a Direção ficou sem o Atendimento e deixou de ser '
                       'superconjunto da casa')
 
-    def test_o_visitante_continua_de_fora(self):
-        """Decisão registrada no NOTES §4: atendimento é conversa de cliente,
-        não vitrine. A conta pública circula.
+    def test_o_visitante_ve_o_atendimento_sem_administrar(self):
+        """O Atendimento é Liber, e a demonstração o mostra (12/10/2026).
+
+        Até então o visitante ficava de fora (NOTES §4). Entra no nível de
+        USUÁRIO, que é o que o guarda do visitante exige para toda tela com
+        manual; administrar equipes, selos e SLA continua fora do alcance da
+        conta pública. A escrita é barrada pela allowlist do liber_roles.
         """
         visitante = self._perfil('visitante')
         if not visitante:
             self.skipTest('sem conta de visitante nesta base')
+        self.assertIn(self.suporte, visitante.all_implied_ids,
+                      'a demonstração não mostra o Atendimento')
         self.assertNotIn(
-            self.suporte, visitante.all_implied_ids,
-            'o Atendimento entrou na conta pública de demonstração')
+            self.env.ref('liber_support.group_support_manager'),
+            visitante.all_implied_ids,
+            'a conta pública não administra o Atendimento')
 
     def test_o_gerente_administra_e_o_atendente_nao(self):
         """A régua da direção (10/08/2026), e ela cai onde os ACLs cortam.

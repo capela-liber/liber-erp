@@ -1,0 +1,11 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_legacy_sale_user,edlab.legacy.sale.user,model_edlab_legacy_sale,liber_copyright_contracts.group_contract_user,1,0,0,0
+access_legacy_sale_manager,edlab.legacy.sale.manager,model_edlab_legacy_sale,liber_copyright_contracts.group_contract_manager,1,1,1,1
+access_legacy_cfop_user,edlab.legacy.cfop.user,model_edlab_legacy_cfop,liber_copyright_contracts.group_contract_user,1,0,0,0
+access_legacy_cfop_config,edlab.legacy.cfop.config,model_edlab_legacy_cfop,liber_copyright_contracts.group_contract_config,1,1,1,1
+access_price_index_user,edlab.price.index.user,model_edlab_price_index,liber_copyright_contracts.group_contract_user,1,0,0,0
+access_price_index_config,edlab.price.index.config,model_edlab_price_index,liber_copyright_contracts.group_contract_config,1,1,1,1
+access_price_index_value_user,edlab.price.index.value.user,model_edlab_price_index_value,liber_copyright_contracts.group_contract_user,1,0,0,0
+access_price_index_value_config,edlab.price.index.value.config,model_edlab_price_index_value,liber_copyright_contracts.group_contract_config,1,1,1,1
+access_legacy_import_manager,edlab.legacy.import.manager,model_edlab_legacy_import,liber_copyright_contracts.group_contract_manager,1,1,1,1
+access_legacy_link_product_manager,edlab.legacy.link.product.manager,model_edlab_legacy_link_product,liber_copyright_contracts.group_contract_manager,1,1,1,1

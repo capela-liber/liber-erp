@@ -579,7 +579,7 @@
             (3, ref('liber_soc_agreements.group_soc_manager')),
             (3, ref('liber_budget.group_budget_manager')),
         ]"/>
-        <field name="comment">Conta de demonstração pública: abre em leitura toda tela que tem manual publicado — consignação, direitos autorais e seus royalties, fiscal, catálogo, orçamento, marketplaces, estoque endereçado (prateleiras, bipagem, contagem) e os arquivos na nuvem — mais Vendas e eCommerce, que são a vitrine. O que fica fora é configuração, que é de administrador. Escreve só no chatter; a trava de escrita é no ORM, não no menu.</field>
+        <field name="comment">Conta de demonstração pública: abre em leitura toda tela que tem manual publicado — consignação, direitos autorais e seus royalties, fiscal, catálogo, orçamento, marketplaces, estoque endereçado (prateleiras, bipagem, contagem), atendimento e os arquivos na nuvem — mais Vendas e eCommerce, que são a vitrine. O que fica fora é configuração, que é de administrador. Escreve só no chatter; a trava de escrita é no ORM, não no menu.</field>
     </record>
 
 </odoo>

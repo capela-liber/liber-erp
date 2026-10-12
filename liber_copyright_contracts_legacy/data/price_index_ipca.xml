@@ -1,0 +1,1671 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <!-- IPCA monthly variation (%), IBGE, as published by the Central Bank
+         of Brazil (SGS series 433). Fetched on 2026-10-06; the index form
+         has a button that refreshes it from the same source. -->
+    <record id="price_index_ipca" model="edlab.price.index">
+        <field name="name">IPCA</field>
+        <field name="code">IPCA</field>
+        <field name="bcb_series">433</field>
+    </record>
+    <record id="ipca_1999_01" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">1999-01-01</field>
+        <field name="variation">0.7</field>
+    </record>
+    <record id="ipca_1999_02" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">1999-02-01</field>
+        <field name="variation">1.05</field>
+    </record>
+    <record id="ipca_1999_03" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">1999-03-01</field>
+        <field name="variation">1.1</field>
+    </record>
+    <record id="ipca_1999_04" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">1999-04-01</field>
+        <field name="variation">0.56</field>
+    </record>
+    <record id="ipca_1999_05" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">1999-05-01</field>
+        <field name="variation">0.3</field>
+    </record>
+    <record id="ipca_1999_06" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">1999-06-01</field>
+        <field name="variation">0.19</field>
+    </record>
+    <record id="ipca_1999_07" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">1999-07-01</field>
+        <field name="variation">1.09</field>
+    </record>
+    <record id="ipca_1999_08" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">1999-08-01</field>
+        <field name="variation">0.56</field>
+    </record>
+    <record id="ipca_1999_09" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">1999-09-01</field>
+        <field name="variation">0.31</field>
+    </record>
+    <record id="ipca_1999_10" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">1999-10-01</field>
+        <field name="variation">1.19</field>
+    </record>
+    <record id="ipca_1999_11" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">1999-11-01</field>
+        <field name="variation">0.95</field>
+    </record>
+    <record id="ipca_1999_12" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">1999-12-01</field>
+        <field name="variation">0.6</field>
+    </record>
+    <record id="ipca_2000_01" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2000-01-01</field>
+        <field name="variation">0.62</field>
+    </record>
+    <record id="ipca_2000_02" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2000-02-01</field>
+        <field name="variation">0.13</field>
+    </record>
+    <record id="ipca_2000_03" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2000-03-01</field>
+        <field name="variation">0.22</field>
+    </record>
+    <record id="ipca_2000_04" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2000-04-01</field>
+        <field name="variation">0.42</field>
+    </record>
+    <record id="ipca_2000_05" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2000-05-01</field>
+        <field name="variation">0.01</field>
+    </record>
+    <record id="ipca_2000_06" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2000-06-01</field>
+        <field name="variation">0.23</field>
+    </record>
+    <record id="ipca_2000_07" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2000-07-01</field>
+        <field name="variation">1.61</field>
+    </record>
+    <record id="ipca_2000_08" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2000-08-01</field>
+        <field name="variation">1.31</field>
+    </record>
+    <record id="ipca_2000_09" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2000-09-01</field>
+        <field name="variation">0.23</field>
+    </record>
+    <record id="ipca_2000_10" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2000-10-01</field>
+        <field name="variation">0.14</field>
+    </record>
+    <record id="ipca_2000_11" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2000-11-01</field>
+        <field name="variation">0.32</field>
+    </record>
+    <record id="ipca_2000_12" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2000-12-01</field>
+        <field name="variation">0.59</field>
+    </record>
+    <record id="ipca_2001_01" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2001-01-01</field>
+        <field name="variation">0.57</field>
+    </record>
+    <record id="ipca_2001_02" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2001-02-01</field>
+        <field name="variation">0.46</field>
+    </record>
+    <record id="ipca_2001_03" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2001-03-01</field>
+        <field name="variation">0.38</field>
+    </record>
+    <record id="ipca_2001_04" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2001-04-01</field>
+        <field name="variation">0.58</field>
+    </record>
+    <record id="ipca_2001_05" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2001-05-01</field>
+        <field name="variation">0.41</field>
+    </record>
+    <record id="ipca_2001_06" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2001-06-01</field>
+        <field name="variation">0.52</field>
+    </record>
+    <record id="ipca_2001_07" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2001-07-01</field>
+        <field name="variation">1.33</field>
+    </record>
+    <record id="ipca_2001_08" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2001-08-01</field>
+        <field name="variation">0.7</field>
+    </record>
+    <record id="ipca_2001_09" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2001-09-01</field>
+        <field name="variation">0.28</field>
+    </record>
+    <record id="ipca_2001_10" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2001-10-01</field>
+        <field name="variation">0.83</field>
+    </record>
+    <record id="ipca_2001_11" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2001-11-01</field>
+        <field name="variation">0.71</field>
+    </record>
+    <record id="ipca_2001_12" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2001-12-01</field>
+        <field name="variation">0.65</field>
+    </record>
+    <record id="ipca_2002_01" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2002-01-01</field>
+        <field name="variation">0.52</field>
+    </record>
+    <record id="ipca_2002_02" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2002-02-01</field>
+        <field name="variation">0.36</field>
+    </record>
+    <record id="ipca_2002_03" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2002-03-01</field>
+        <field name="variation">0.6</field>
+    </record>
+    <record id="ipca_2002_04" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2002-04-01</field>
+        <field name="variation">0.8</field>
+    </record>
+    <record id="ipca_2002_05" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2002-05-01</field>
+        <field name="variation">0.21</field>
+    </record>
+    <record id="ipca_2002_06" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2002-06-01</field>
+        <field name="variation">0.42</field>
+    </record>
+    <record id="ipca_2002_07" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2002-07-01</field>
+        <field name="variation">1.19</field>
+    </record>
+    <record id="ipca_2002_08" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2002-08-01</field>
+        <field name="variation">0.65</field>
+    </record>
+    <record id="ipca_2002_09" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2002-09-01</field>
+        <field name="variation">0.72</field>
+    </record>
+    <record id="ipca_2002_10" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2002-10-01</field>
+        <field name="variation">1.31</field>
+    </record>
+    <record id="ipca_2002_11" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2002-11-01</field>
+        <field name="variation">3.02</field>
+    </record>
+    <record id="ipca_2002_12" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2002-12-01</field>
+        <field name="variation">2.1</field>
+    </record>
+    <record id="ipca_2003_01" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2003-01-01</field>
+        <field name="variation">2.25</field>
+    </record>
+    <record id="ipca_2003_02" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2003-02-01</field>
+        <field name="variation">1.57</field>
+    </record>
+    <record id="ipca_2003_03" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2003-03-01</field>
+        <field name="variation">1.23</field>
+    </record>
+    <record id="ipca_2003_04" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2003-04-01</field>
+        <field name="variation">0.97</field>
+    </record>
+    <record id="ipca_2003_05" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2003-05-01</field>
+        <field name="variation">0.61</field>
+    </record>
+    <record id="ipca_2003_06" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2003-06-01</field>
+        <field name="variation">-0.15</field>
+    </record>
+    <record id="ipca_2003_07" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2003-07-01</field>
+        <field name="variation">0.2</field>
+    </record>
+    <record id="ipca_2003_08" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2003-08-01</field>
+        <field name="variation">0.34</field>
+    </record>
+    <record id="ipca_2003_09" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2003-09-01</field>
+        <field name="variation">0.78</field>
+    </record>
+    <record id="ipca_2003_10" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2003-10-01</field>
+        <field name="variation">0.29</field>
+    </record>
+    <record id="ipca_2003_11" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2003-11-01</field>
+        <field name="variation">0.34</field>
+    </record>
+    <record id="ipca_2003_12" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2003-12-01</field>
+        <field name="variation">0.52</field>
+    </record>
+    <record id="ipca_2004_01" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2004-01-01</field>
+        <field name="variation">0.76</field>
+    </record>
+    <record id="ipca_2004_02" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2004-02-01</field>
+        <field name="variation">0.61</field>
+    </record>
+    <record id="ipca_2004_03" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2004-03-01</field>
+        <field name="variation">0.47</field>
+    </record>
+    <record id="ipca_2004_04" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2004-04-01</field>
+        <field name="variation">0.37</field>
+    </record>
+    <record id="ipca_2004_05" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2004-05-01</field>
+        <field name="variation">0.51</field>
+    </record>
+    <record id="ipca_2004_06" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2004-06-01</field>
+        <field name="variation">0.71</field>
+    </record>
+    <record id="ipca_2004_07" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2004-07-01</field>
+        <field name="variation">0.91</field>
+    </record>
+    <record id="ipca_2004_08" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2004-08-01</field>
+        <field name="variation">0.69</field>
+    </record>
+    <record id="ipca_2004_09" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2004-09-01</field>
+        <field name="variation">0.33</field>
+    </record>
+    <record id="ipca_2004_10" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2004-10-01</field>
+        <field name="variation">0.44</field>
+    </record>
+    <record id="ipca_2004_11" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2004-11-01</field>
+        <field name="variation">0.69</field>
+    </record>
+    <record id="ipca_2004_12" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2004-12-01</field>
+        <field name="variation">0.86</field>
+    </record>
+    <record id="ipca_2005_01" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2005-01-01</field>
+        <field name="variation">0.58</field>
+    </record>
+    <record id="ipca_2005_02" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2005-02-01</field>
+        <field name="variation">0.59</field>
+    </record>
+    <record id="ipca_2005_03" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2005-03-01</field>
+        <field name="variation">0.61</field>
+    </record>
+    <record id="ipca_2005_04" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2005-04-01</field>
+        <field name="variation">0.87</field>
+    </record>
+    <record id="ipca_2005_05" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2005-05-01</field>
+        <field name="variation">0.49</field>
+    </record>
+    <record id="ipca_2005_06" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2005-06-01</field>
+        <field name="variation">-0.02</field>
+    </record>
+    <record id="ipca_2005_07" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2005-07-01</field>
+        <field name="variation">0.25</field>
+    </record>
+    <record id="ipca_2005_08" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2005-08-01</field>
+        <field name="variation">0.17</field>
+    </record>
+    <record id="ipca_2005_09" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2005-09-01</field>
+        <field name="variation">0.35</field>
+    </record>
+    <record id="ipca_2005_10" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2005-10-01</field>
+        <field name="variation">0.75</field>
+    </record>
+    <record id="ipca_2005_11" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2005-11-01</field>
+        <field name="variation">0.55</field>
+    </record>
+    <record id="ipca_2005_12" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2005-12-01</field>
+        <field name="variation">0.36</field>
+    </record>
+    <record id="ipca_2006_01" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2006-01-01</field>
+        <field name="variation">0.59</field>
+    </record>
+    <record id="ipca_2006_02" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2006-02-01</field>
+        <field name="variation">0.41</field>
+    </record>
+    <record id="ipca_2006_03" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2006-03-01</field>
+        <field name="variation">0.43</field>
+    </record>
+    <record id="ipca_2006_04" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2006-04-01</field>
+        <field name="variation">0.21</field>
+    </record>
+    <record id="ipca_2006_05" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2006-05-01</field>
+        <field name="variation">0.1</field>
+    </record>
+    <record id="ipca_2006_06" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2006-06-01</field>
+        <field name="variation">-0.21</field>
+    </record>
+    <record id="ipca_2006_07" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2006-07-01</field>
+        <field name="variation">0.19</field>
+    </record>
+    <record id="ipca_2006_08" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2006-08-01</field>
+        <field name="variation">0.05</field>
+    </record>
+    <record id="ipca_2006_09" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2006-09-01</field>
+        <field name="variation">0.21</field>
+    </record>
+    <record id="ipca_2006_10" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2006-10-01</field>
+        <field name="variation">0.33</field>
+    </record>
+    <record id="ipca_2006_11" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2006-11-01</field>
+        <field name="variation">0.31</field>
+    </record>
+    <record id="ipca_2006_12" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2006-12-01</field>
+        <field name="variation">0.48</field>
+    </record>
+    <record id="ipca_2007_01" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2007-01-01</field>
+        <field name="variation">0.44</field>
+    </record>
+    <record id="ipca_2007_02" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2007-02-01</field>
+        <field name="variation">0.44</field>
+    </record>
+    <record id="ipca_2007_03" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2007-03-01</field>
+        <field name="variation">0.37</field>
+    </record>
+    <record id="ipca_2007_04" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2007-04-01</field>
+        <field name="variation">0.25</field>
+    </record>
+    <record id="ipca_2007_05" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2007-05-01</field>
+        <field name="variation">0.28</field>
+    </record>
+    <record id="ipca_2007_06" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2007-06-01</field>
+        <field name="variation">0.28</field>
+    </record>
+    <record id="ipca_2007_07" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2007-07-01</field>
+        <field name="variation">0.24</field>
+    </record>
+    <record id="ipca_2007_08" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2007-08-01</field>
+        <field name="variation">0.47</field>
+    </record>
+    <record id="ipca_2007_09" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2007-09-01</field>
+        <field name="variation">0.18</field>
+    </record>
+    <record id="ipca_2007_10" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2007-10-01</field>
+        <field name="variation">0.3</field>
+    </record>
+    <record id="ipca_2007_11" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2007-11-01</field>
+        <field name="variation">0.38</field>
+    </record>
+    <record id="ipca_2007_12" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2007-12-01</field>
+        <field name="variation">0.74</field>
+    </record>
+    <record id="ipca_2008_01" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2008-01-01</field>
+        <field name="variation">0.54</field>
+    </record>
+    <record id="ipca_2008_02" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2008-02-01</field>
+        <field name="variation">0.49</field>
+    </record>
+    <record id="ipca_2008_03" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2008-03-01</field>
+        <field name="variation">0.48</field>
+    </record>
+    <record id="ipca_2008_04" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2008-04-01</field>
+        <field name="variation">0.55</field>
+    </record>
+    <record id="ipca_2008_05" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2008-05-01</field>
+        <field name="variation">0.79</field>
+    </record>
+    <record id="ipca_2008_06" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2008-06-01</field>
+        <field name="variation">0.74</field>
+    </record>
+    <record id="ipca_2008_07" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2008-07-01</field>
+        <field name="variation">0.53</field>
+    </record>
+    <record id="ipca_2008_08" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2008-08-01</field>
+        <field name="variation">0.28</field>
+    </record>
+    <record id="ipca_2008_09" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2008-09-01</field>
+        <field name="variation">0.26</field>
+    </record>
+    <record id="ipca_2008_10" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2008-10-01</field>
+        <field name="variation">0.45</field>
+    </record>
+    <record id="ipca_2008_11" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2008-11-01</field>
+        <field name="variation">0.36</field>
+    </record>
+    <record id="ipca_2008_12" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2008-12-01</field>
+        <field name="variation">0.28</field>
+    </record>
+    <record id="ipca_2009_01" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2009-01-01</field>
+        <field name="variation">0.48</field>
+    </record>
+    <record id="ipca_2009_02" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2009-02-01</field>
+        <field name="variation">0.55</field>
+    </record>
+    <record id="ipca_2009_03" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2009-03-01</field>
+        <field name="variation">0.2</field>
+    </record>
+    <record id="ipca_2009_04" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2009-04-01</field>
+        <field name="variation">0.48</field>
+    </record>
+    <record id="ipca_2009_05" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2009-05-01</field>
+        <field name="variation">0.47</field>
+    </record>
+    <record id="ipca_2009_06" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2009-06-01</field>
+        <field name="variation">0.36</field>
+    </record>
+    <record id="ipca_2009_07" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2009-07-01</field>
+        <field name="variation">0.24</field>
+    </record>
+    <record id="ipca_2009_08" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2009-08-01</field>
+        <field name="variation">0.15</field>
+    </record>
+    <record id="ipca_2009_09" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2009-09-01</field>
+        <field name="variation">0.24</field>
+    </record>
+    <record id="ipca_2009_10" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2009-10-01</field>
+        <field name="variation">0.28</field>
+    </record>
+    <record id="ipca_2009_11" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2009-11-01</field>
+        <field name="variation">0.41</field>
+    </record>
+    <record id="ipca_2009_12" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2009-12-01</field>
+        <field name="variation">0.37</field>
+    </record>
+    <record id="ipca_2010_01" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2010-01-01</field>
+        <field name="variation">0.75</field>
+    </record>
+    <record id="ipca_2010_02" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2010-02-01</field>
+        <field name="variation">0.78</field>
+    </record>
+    <record id="ipca_2010_03" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2010-03-01</field>
+        <field name="variation">0.52</field>
+    </record>
+    <record id="ipca_2010_04" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2010-04-01</field>
+        <field name="variation">0.57</field>
+    </record>
+    <record id="ipca_2010_05" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2010-05-01</field>
+        <field name="variation">0.43</field>
+    </record>
+    <record id="ipca_2010_06" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2010-06-01</field>
+        <field name="variation">0.0</field>
+    </record>
+    <record id="ipca_2010_07" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2010-07-01</field>
+        <field name="variation">0.01</field>
+    </record>
+    <record id="ipca_2010_08" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2010-08-01</field>
+        <field name="variation">0.04</field>
+    </record>
+    <record id="ipca_2010_09" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2010-09-01</field>
+        <field name="variation">0.45</field>
+    </record>
+    <record id="ipca_2010_10" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2010-10-01</field>
+        <field name="variation">0.75</field>
+    </record>
+    <record id="ipca_2010_11" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2010-11-01</field>
+        <field name="variation">0.83</field>
+    </record>
+    <record id="ipca_2010_12" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2010-12-01</field>
+        <field name="variation">0.63</field>
+    </record>
+    <record id="ipca_2011_01" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2011-01-01</field>
+        <field name="variation">0.83</field>
+    </record>
+    <record id="ipca_2011_02" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2011-02-01</field>
+        <field name="variation">0.8</field>
+    </record>
+    <record id="ipca_2011_03" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2011-03-01</field>
+        <field name="variation">0.79</field>
+    </record>
+    <record id="ipca_2011_04" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2011-04-01</field>
+        <field name="variation">0.77</field>
+    </record>
+    <record id="ipca_2011_05" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2011-05-01</field>
+        <field name="variation">0.47</field>
+    </record>
+    <record id="ipca_2011_06" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2011-06-01</field>
+        <field name="variation">0.15</field>
+    </record>
+    <record id="ipca_2011_07" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2011-07-01</field>
+        <field name="variation">0.16</field>
+    </record>
+    <record id="ipca_2011_08" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2011-08-01</field>
+        <field name="variation">0.37</field>
+    </record>
+    <record id="ipca_2011_09" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2011-09-01</field>
+        <field name="variation">0.53</field>
+    </record>
+    <record id="ipca_2011_10" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2011-10-01</field>
+        <field name="variation">0.43</field>
+    </record>
+    <record id="ipca_2011_11" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2011-11-01</field>
+        <field name="variation">0.52</field>
+    </record>
+    <record id="ipca_2011_12" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2011-12-01</field>
+        <field name="variation">0.5</field>
+    </record>
+    <record id="ipca_2012_01" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2012-01-01</field>
+        <field name="variation">0.56</field>
+    </record>
+    <record id="ipca_2012_02" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2012-02-01</field>
+        <field name="variation">0.45</field>
+    </record>
+    <record id="ipca_2012_03" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2012-03-01</field>
+        <field name="variation">0.21</field>
+    </record>
+    <record id="ipca_2012_04" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2012-04-01</field>
+        <field name="variation">0.64</field>
+    </record>
+    <record id="ipca_2012_05" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2012-05-01</field>
+        <field name="variation">0.36</field>
+    </record>
+    <record id="ipca_2012_06" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2012-06-01</field>
+        <field name="variation">0.08</field>
+    </record>
+    <record id="ipca_2012_07" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2012-07-01</field>
+        <field name="variation">0.43</field>
+    </record>
+    <record id="ipca_2012_08" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2012-08-01</field>
+        <field name="variation">0.41</field>
+    </record>
+    <record id="ipca_2012_09" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2012-09-01</field>
+        <field name="variation">0.57</field>
+    </record>
+    <record id="ipca_2012_10" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2012-10-01</field>
+        <field name="variation">0.59</field>
+    </record>
+    <record id="ipca_2012_11" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2012-11-01</field>
+        <field name="variation">0.6</field>
+    </record>
+    <record id="ipca_2012_12" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2012-12-01</field>
+        <field name="variation">0.79</field>
+    </record>
+    <record id="ipca_2013_01" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2013-01-01</field>
+        <field name="variation">0.86</field>
+    </record>
+    <record id="ipca_2013_02" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2013-02-01</field>
+        <field name="variation">0.6</field>
+    </record>
+    <record id="ipca_2013_03" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2013-03-01</field>
+        <field name="variation">0.47</field>
+    </record>
+    <record id="ipca_2013_04" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2013-04-01</field>
+        <field name="variation">0.55</field>
+    </record>
+    <record id="ipca_2013_05" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2013-05-01</field>
+        <field name="variation">0.37</field>
+    </record>
+    <record id="ipca_2013_06" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2013-06-01</field>
+        <field name="variation">0.26</field>
+    </record>
+    <record id="ipca_2013_07" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2013-07-01</field>
+        <field name="variation">0.03</field>
+    </record>
+    <record id="ipca_2013_08" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2013-08-01</field>
+        <field name="variation">0.24</field>
+    </record>
+    <record id="ipca_2013_09" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2013-09-01</field>
+        <field name="variation">0.35</field>
+    </record>
+    <record id="ipca_2013_10" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2013-10-01</field>
+        <field name="variation">0.57</field>
+    </record>
+    <record id="ipca_2013_11" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2013-11-01</field>
+        <field name="variation">0.54</field>
+    </record>
+    <record id="ipca_2013_12" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2013-12-01</field>
+        <field name="variation">0.92</field>
+    </record>
+    <record id="ipca_2014_01" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2014-01-01</field>
+        <field name="variation">0.55</field>
+    </record>
+    <record id="ipca_2014_02" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2014-02-01</field>
+        <field name="variation">0.69</field>
+    </record>
+    <record id="ipca_2014_03" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2014-03-01</field>
+        <field name="variation">0.92</field>
+    </record>
+    <record id="ipca_2014_04" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2014-04-01</field>
+        <field name="variation">0.67</field>
+    </record>
+    <record id="ipca_2014_05" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2014-05-01</field>
+        <field name="variation">0.46</field>
+    </record>
+    <record id="ipca_2014_06" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2014-06-01</field>
+        <field name="variation">0.4</field>
+    </record>
+    <record id="ipca_2014_07" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2014-07-01</field>
+        <field name="variation">0.01</field>
+    </record>
+    <record id="ipca_2014_08" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2014-08-01</field>
+        <field name="variation">0.25</field>
+    </record>
+    <record id="ipca_2014_09" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2014-09-01</field>
+        <field name="variation">0.57</field>
+    </record>
+    <record id="ipca_2014_10" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2014-10-01</field>
+        <field name="variation">0.42</field>
+    </record>
+    <record id="ipca_2014_11" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2014-11-01</field>
+        <field name="variation">0.51</field>
+    </record>
+    <record id="ipca_2014_12" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2014-12-01</field>
+        <field name="variation">0.78</field>
+    </record>
+    <record id="ipca_2015_01" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2015-01-01</field>
+        <field name="variation">1.24</field>
+    </record>
+    <record id="ipca_2015_02" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2015-02-01</field>
+        <field name="variation">1.22</field>
+    </record>
+    <record id="ipca_2015_03" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2015-03-01</field>
+        <field name="variation">1.32</field>
+    </record>
+    <record id="ipca_2015_04" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2015-04-01</field>
+        <field name="variation">0.71</field>
+    </record>
+    <record id="ipca_2015_05" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2015-05-01</field>
+        <field name="variation">0.74</field>
+    </record>
+    <record id="ipca_2015_06" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2015-06-01</field>
+        <field name="variation">0.79</field>
+    </record>
+    <record id="ipca_2015_07" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2015-07-01</field>
+        <field name="variation">0.62</field>
+    </record>
+    <record id="ipca_2015_08" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2015-08-01</field>
+        <field name="variation">0.22</field>
+    </record>
+    <record id="ipca_2015_09" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2015-09-01</field>
+        <field name="variation">0.54</field>
+    </record>
+    <record id="ipca_2015_10" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2015-10-01</field>
+        <field name="variation">0.82</field>
+    </record>
+    <record id="ipca_2015_11" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2015-11-01</field>
+        <field name="variation">1.01</field>
+    </record>
+    <record id="ipca_2015_12" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2015-12-01</field>
+        <field name="variation">0.96</field>
+    </record>
+    <record id="ipca_2016_01" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2016-01-01</field>
+        <field name="variation">1.27</field>
+    </record>
+    <record id="ipca_2016_02" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2016-02-01</field>
+        <field name="variation">0.9</field>
+    </record>
+    <record id="ipca_2016_03" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2016-03-01</field>
+        <field name="variation">0.43</field>
+    </record>
+    <record id="ipca_2016_04" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2016-04-01</field>
+        <field name="variation">0.61</field>
+    </record>
+    <record id="ipca_2016_05" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2016-05-01</field>
+        <field name="variation">0.78</field>
+    </record>
+    <record id="ipca_2016_06" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2016-06-01</field>
+        <field name="variation">0.35</field>
+    </record>
+    <record id="ipca_2016_07" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2016-07-01</field>
+        <field name="variation">0.52</field>
+    </record>
+    <record id="ipca_2016_08" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2016-08-01</field>
+        <field name="variation">0.44</field>
+    </record>
+    <record id="ipca_2016_09" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2016-09-01</field>
+        <field name="variation">0.08</field>
+    </record>
+    <record id="ipca_2016_10" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2016-10-01</field>
+        <field name="variation">0.26</field>
+    </record>
+    <record id="ipca_2016_11" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2016-11-01</field>
+        <field name="variation">0.18</field>
+    </record>
+    <record id="ipca_2016_12" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2016-12-01</field>
+        <field name="variation">0.3</field>
+    </record>
+    <record id="ipca_2017_01" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2017-01-01</field>
+        <field name="variation">0.38</field>
+    </record>
+    <record id="ipca_2017_02" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2017-02-01</field>
+        <field name="variation">0.33</field>
+    </record>
+    <record id="ipca_2017_03" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2017-03-01</field>
+        <field name="variation">0.25</field>
+    </record>
+    <record id="ipca_2017_04" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2017-04-01</field>
+        <field name="variation">0.14</field>
+    </record>
+    <record id="ipca_2017_05" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2017-05-01</field>
+        <field name="variation">0.31</field>
+    </record>
+    <record id="ipca_2017_06" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2017-06-01</field>
+        <field name="variation">-0.23</field>
+    </record>
+    <record id="ipca_2017_07" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2017-07-01</field>
+        <field name="variation">0.24</field>
+    </record>
+    <record id="ipca_2017_08" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2017-08-01</field>
+        <field name="variation">0.19</field>
+    </record>
+    <record id="ipca_2017_09" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2017-09-01</field>
+        <field name="variation">0.16</field>
+    </record>
+    <record id="ipca_2017_10" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2017-10-01</field>
+        <field name="variation">0.42</field>
+    </record>
+    <record id="ipca_2017_11" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2017-11-01</field>
+        <field name="variation">0.28</field>
+    </record>
+    <record id="ipca_2017_12" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2017-12-01</field>
+        <field name="variation">0.44</field>
+    </record>
+    <record id="ipca_2018_01" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2018-01-01</field>
+        <field name="variation">0.29</field>
+    </record>
+    <record id="ipca_2018_02" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2018-02-01</field>
+        <field name="variation">0.32</field>
+    </record>
+    <record id="ipca_2018_03" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2018-03-01</field>
+        <field name="variation">0.09</field>
+    </record>
+    <record id="ipca_2018_04" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2018-04-01</field>
+        <field name="variation">0.22</field>
+    </record>
+    <record id="ipca_2018_05" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2018-05-01</field>
+        <field name="variation">0.4</field>
+    </record>
+    <record id="ipca_2018_06" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2018-06-01</field>
+        <field name="variation">1.26</field>
+    </record>
+    <record id="ipca_2018_07" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2018-07-01</field>
+        <field name="variation">0.33</field>
+    </record>
+    <record id="ipca_2018_08" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2018-08-01</field>
+        <field name="variation">-0.09</field>
+    </record>
+    <record id="ipca_2018_09" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2018-09-01</field>
+        <field name="variation">0.48</field>
+    </record>
+    <record id="ipca_2018_10" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2018-10-01</field>
+        <field name="variation">0.45</field>
+    </record>
+    <record id="ipca_2018_11" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2018-11-01</field>
+        <field name="variation">-0.21</field>
+    </record>
+    <record id="ipca_2018_12" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2018-12-01</field>
+        <field name="variation">0.15</field>
+    </record>
+    <record id="ipca_2019_01" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2019-01-01</field>
+        <field name="variation">0.32</field>
+    </record>
+    <record id="ipca_2019_02" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2019-02-01</field>
+        <field name="variation">0.43</field>
+    </record>
+    <record id="ipca_2019_03" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2019-03-01</field>
+        <field name="variation">0.75</field>
+    </record>
+    <record id="ipca_2019_04" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2019-04-01</field>
+        <field name="variation">0.57</field>
+    </record>
+    <record id="ipca_2019_05" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2019-05-01</field>
+        <field name="variation">0.13</field>
+    </record>
+    <record id="ipca_2019_06" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2019-06-01</field>
+        <field name="variation">0.01</field>
+    </record>
+    <record id="ipca_2019_07" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2019-07-01</field>
+        <field name="variation">0.19</field>
+    </record>
+    <record id="ipca_2019_08" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2019-08-01</field>
+        <field name="variation">0.11</field>
+    </record>
+    <record id="ipca_2019_09" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2019-09-01</field>
+        <field name="variation">-0.04</field>
+    </record>
+    <record id="ipca_2019_10" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2019-10-01</field>
+        <field name="variation">0.1</field>
+    </record>
+    <record id="ipca_2019_11" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2019-11-01</field>
+        <field name="variation">0.51</field>
+    </record>
+    <record id="ipca_2019_12" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2019-12-01</field>
+        <field name="variation">1.15</field>
+    </record>
+    <record id="ipca_2020_01" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2020-01-01</field>
+        <field name="variation">0.21</field>
+    </record>
+    <record id="ipca_2020_02" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2020-02-01</field>
+        <field name="variation">0.25</field>
+    </record>
+    <record id="ipca_2020_03" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2020-03-01</field>
+        <field name="variation">0.07</field>
+    </record>
+    <record id="ipca_2020_04" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2020-04-01</field>
+        <field name="variation">-0.31</field>
+    </record>
+    <record id="ipca_2020_05" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2020-05-01</field>
+        <field name="variation">-0.38</field>
+    </record>
+    <record id="ipca_2020_06" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2020-06-01</field>
+        <field name="variation">0.26</field>
+    </record>
+    <record id="ipca_2020_07" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2020-07-01</field>
+        <field name="variation">0.36</field>
+    </record>
+    <record id="ipca_2020_08" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2020-08-01</field>
+        <field name="variation">0.24</field>
+    </record>
+    <record id="ipca_2020_09" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2020-09-01</field>
+        <field name="variation">0.64</field>
+    </record>
+    <record id="ipca_2020_10" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2020-10-01</field>
+        <field name="variation">0.86</field>
+    </record>
+    <record id="ipca_2020_11" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2020-11-01</field>
+        <field name="variation">0.89</field>
+    </record>
+    <record id="ipca_2020_12" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2020-12-01</field>
+        <field name="variation">1.35</field>
+    </record>
+    <record id="ipca_2021_01" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2021-01-01</field>
+        <field name="variation">0.25</field>
+    </record>
+    <record id="ipca_2021_02" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2021-02-01</field>
+        <field name="variation">0.86</field>
+    </record>
+    <record id="ipca_2021_03" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2021-03-01</field>
+        <field name="variation">0.93</field>
+    </record>
+    <record id="ipca_2021_04" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2021-04-01</field>
+        <field name="variation">0.31</field>
+    </record>
+    <record id="ipca_2021_05" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2021-05-01</field>
+        <field name="variation">0.83</field>
+    </record>
+    <record id="ipca_2021_06" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2021-06-01</field>
+        <field name="variation">0.53</field>
+    </record>
+    <record id="ipca_2021_07" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2021-07-01</field>
+        <field name="variation">0.96</field>
+    </record>
+    <record id="ipca_2021_08" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2021-08-01</field>
+        <field name="variation">0.87</field>
+    </record>
+    <record id="ipca_2021_09" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2021-09-01</field>
+        <field name="variation">1.16</field>
+    </record>
+    <record id="ipca_2021_10" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2021-10-01</field>
+        <field name="variation">1.25</field>
+    </record>
+    <record id="ipca_2021_11" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2021-11-01</field>
+        <field name="variation">0.95</field>
+    </record>
+    <record id="ipca_2021_12" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2021-12-01</field>
+        <field name="variation">0.73</field>
+    </record>
+    <record id="ipca_2022_01" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2022-01-01</field>
+        <field name="variation">0.54</field>
+    </record>
+    <record id="ipca_2022_02" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2022-02-01</field>
+        <field name="variation">1.01</field>
+    </record>
+    <record id="ipca_2022_03" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2022-03-01</field>
+        <field name="variation">1.62</field>
+    </record>
+    <record id="ipca_2022_04" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2022-04-01</field>
+        <field name="variation">1.06</field>
+    </record>
+    <record id="ipca_2022_05" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2022-05-01</field>
+        <field name="variation">0.47</field>
+    </record>
+    <record id="ipca_2022_06" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2022-06-01</field>
+        <field name="variation">0.67</field>
+    </record>
+    <record id="ipca_2022_07" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2022-07-01</field>
+        <field name="variation">-0.68</field>
+    </record>
+    <record id="ipca_2022_08" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2022-08-01</field>
+        <field name="variation">-0.36</field>
+    </record>
+    <record id="ipca_2022_09" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2022-09-01</field>
+        <field name="variation">-0.29</field>
+    </record>
+    <record id="ipca_2022_10" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2022-10-01</field>
+        <field name="variation">0.59</field>
+    </record>
+    <record id="ipca_2022_11" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2022-11-01</field>
+        <field name="variation">0.41</field>
+    </record>
+    <record id="ipca_2022_12" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2022-12-01</field>
+        <field name="variation">0.62</field>
+    </record>
+    <record id="ipca_2023_01" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2023-01-01</field>
+        <field name="variation">0.53</field>
+    </record>
+    <record id="ipca_2023_02" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2023-02-01</field>
+        <field name="variation">0.84</field>
+    </record>
+    <record id="ipca_2023_03" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2023-03-01</field>
+        <field name="variation">0.71</field>
+    </record>
+    <record id="ipca_2023_04" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2023-04-01</field>
+        <field name="variation">0.61</field>
+    </record>
+    <record id="ipca_2023_05" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2023-05-01</field>
+        <field name="variation">0.23</field>
+    </record>
+    <record id="ipca_2023_06" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2023-06-01</field>
+        <field name="variation">-0.08</field>
+    </record>
+    <record id="ipca_2023_07" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2023-07-01</field>
+        <field name="variation">0.12</field>
+    </record>
+    <record id="ipca_2023_08" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2023-08-01</field>
+        <field name="variation">0.23</field>
+    </record>
+    <record id="ipca_2023_09" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2023-09-01</field>
+        <field name="variation">0.26</field>
+    </record>
+    <record id="ipca_2023_10" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2023-10-01</field>
+        <field name="variation">0.24</field>
+    </record>
+    <record id="ipca_2023_11" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2023-11-01</field>
+        <field name="variation">0.28</field>
+    </record>
+    <record id="ipca_2023_12" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2023-12-01</field>
+        <field name="variation">0.56</field>
+    </record>
+    <record id="ipca_2024_01" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2024-01-01</field>
+        <field name="variation">0.42</field>
+    </record>
+    <record id="ipca_2024_02" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2024-02-01</field>
+        <field name="variation">0.83</field>
+    </record>
+    <record id="ipca_2024_03" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2024-03-01</field>
+        <field name="variation">0.16</field>
+    </record>
+    <record id="ipca_2024_04" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2024-04-01</field>
+        <field name="variation">0.38</field>
+    </record>
+    <record id="ipca_2024_05" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2024-05-01</field>
+        <field name="variation">0.46</field>
+    </record>
+    <record id="ipca_2024_06" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2024-06-01</field>
+        <field name="variation">0.21</field>
+    </record>
+    <record id="ipca_2024_07" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2024-07-01</field>
+        <field name="variation">0.38</field>
+    </record>
+    <record id="ipca_2024_08" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2024-08-01</field>
+        <field name="variation">-0.02</field>
+    </record>
+    <record id="ipca_2024_09" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2024-09-01</field>
+        <field name="variation">0.44</field>
+    </record>
+    <record id="ipca_2024_10" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2024-10-01</field>
+        <field name="variation">0.56</field>
+    </record>
+    <record id="ipca_2024_11" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2024-11-01</field>
+        <field name="variation">0.39</field>
+    </record>
+    <record id="ipca_2024_12" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2024-12-01</field>
+        <field name="variation">0.52</field>
+    </record>
+    <record id="ipca_2025_01" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2025-01-01</field>
+        <field name="variation">0.16</field>
+    </record>
+    <record id="ipca_2025_02" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2025-02-01</field>
+        <field name="variation">1.31</field>
+    </record>
+    <record id="ipca_2025_03" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2025-03-01</field>
+        <field name="variation">0.56</field>
+    </record>
+    <record id="ipca_2025_04" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2025-04-01</field>
+        <field name="variation">0.43</field>
+    </record>
+    <record id="ipca_2025_05" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2025-05-01</field>
+        <field name="variation">0.26</field>
+    </record>
+    <record id="ipca_2025_06" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2025-06-01</field>
+        <field name="variation">0.24</field>
+    </record>
+    <record id="ipca_2025_07" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2025-07-01</field>
+        <field name="variation">0.26</field>
+    </record>
+    <record id="ipca_2025_08" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2025-08-01</field>
+        <field name="variation">-0.11</field>
+    </record>
+    <record id="ipca_2025_09" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2025-09-01</field>
+        <field name="variation">0.48</field>
+    </record>
+    <record id="ipca_2025_10" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2025-10-01</field>
+        <field name="variation">0.09</field>
+    </record>
+    <record id="ipca_2025_11" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2025-11-01</field>
+        <field name="variation">0.18</field>
+    </record>
+    <record id="ipca_2025_12" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2025-12-01</field>
+        <field name="variation">0.33</field>
+    </record>
+    <record id="ipca_2026_01" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2026-01-01</field>
+        <field name="variation">0.33</field>
+    </record>
+    <record id="ipca_2026_02" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2026-02-01</field>
+        <field name="variation">0.7</field>
+    </record>
+    <record id="ipca_2026_03" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2026-03-01</field>
+        <field name="variation">0.88</field>
+    </record>
+    <record id="ipca_2026_04" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2026-04-01</field>
+        <field name="variation">0.67</field>
+    </record>
+    <record id="ipca_2026_05" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2026-05-01</field>
+        <field name="variation">0.58</field>
+    </record>
+    <record id="ipca_2026_06" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2026-06-01</field>
+        <field name="variation">0.16</field>
+    </record>
+    <record id="ipca_2026_07" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2026-07-01</field>
+        <field name="variation">0.07</field>
+    </record>
+    <record id="ipca_2026_08" model="edlab.price.index.value">
+        <field name="index_id" ref="price_index_ipca"/>
+        <field name="date">2026-08-01</field>
+        <field name="variation">-0.32</field>
+    </record>
+</odoo>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_edlab_legacy_import_form" model="ir.ui.view">
+        <field name="name">edlab.legacy.import.form</field>
+        <field name="model">edlab.legacy.import</field>
+        <field name="arch" type="xml">
+            <form string="Import Legacy Sales">
+                <group>
+                    <field name="company_id" groups="base.group_multi_company"/>
+                    <field name="current_count" string="Rows loaded today"/>
+                    <field name="mode" widget="radio"/>
+                    <field name="file" filename="filename" invisible="mode != 'upload'" required="mode == 'upload'"/>
+                    <field name="filename" invisible="1"/>
+                    <field name="path" invisible="mode != 'path'" required="mode == 'path'"
+                           placeholder="/mnt/extra-addons/_DA/BASE_UNIFICADA_DIREITOS_AUTORAIS.csv"/>
+                    <field name="replace"/>
+                </group>
+                <p class="text-muted">
+                    The file is the unified base of the royalties department (CSV or the XLSX with the BASE_UNIFICADA sheet). Rows are linked to the products by ISBN and classified by CFOP as they land. The full base (450.000 rows) takes several minutes: start it and leave the tab open.
+                </p>
+                <footer>
+                    <button name="action_import" type="object" string="Import" class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_edlab_legacy_import" model="ir.actions.act_window">
+        <field name="name">Import Legacy Sales</field>
+        <field name="res_model">edlab.legacy.import</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+</odoo>

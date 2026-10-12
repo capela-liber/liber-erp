@@ -28,9 +28,12 @@ registra só o que o código fez **diferente** do desenho, e por quê.
    worktree `worktree-capela-support`. Entrar no repositório público
    `liber-erp` é decisão separada, ainda não tomada.
 
-4. **O visitante do `liber_roles` fica de fora por omissão.** Nenhum
-   `ir.model.access` menciona os grupos dele, então o ORM já barra. Não há
-   ponte — e é isso mesmo: atendimento é conversa de cliente, não vitrine.
+4. **O visitante do `liber_roles` vê o Atendimento** (desde 12/10/2026,
+   decisão do dono: "ele é Liber também"). Até então ficava de fora, por ser
+   conversa de cliente; na vitrine os chamados são de demonstração. O
+   visitante recebe o grupo de USUÁRIO pela ponte deste módulo
+   (models/res_groups.py), e a escrita segue
+   travada pela allowlist do visitante, como em todo o resto.
 
 ## O que o protótipo não resolve (herdado do desenho)
 

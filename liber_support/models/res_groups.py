@@ -32,9 +32,10 @@ ACLs deste módulo já cortavam:
   não sobre nada fora do dela. Sem esta linha, dar o atendimento ao Comercial
   deixaria aquele teste vermelho -- apontando para cá, corretamente.
 
-Quem NÃO recebe: **o visitante**, e isso é decisão registrada no NOTES §4 deste
-módulo -- atendimento é conversa de cliente, não vitrine, e a conta pública
-circula.
+- **Visitante → `group_support_user`** (desde 12/10/2026, decisão do dono:
+  "ele é Liber também"). Até então ficava de fora, por ser conversa de cliente;
+  na vitrine os chamados são de demonstração, e a escrita do visitante segue
+  travada pela allowlist do `liber_roles`, como em todo o resto. NOTES §4.
 
 As concessões saem todas da MESMA chamada de propósito: assim aparecem e somem
 juntas, e o teste de superconjunto do `liber_roles` nunca vê um estado pela
@@ -65,6 +66,7 @@ class ResGroups(models.Model):
             'liber_roles.group_comercial_assistente': 'group_support_user',
             'liber_roles.group_comercial_gerente': 'group_support_manager',
             'liber_roles.group_direcao': 'group_support_manager',
+            'liber_roles.group_visitante': 'group_support_user',
         }
         for xmlid_perfil, nivel in CONCESSOES.items():
             perfil = self.env.ref(xmlid_perfil, raise_if_not_found=False)

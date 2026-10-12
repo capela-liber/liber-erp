@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     'name': 'Liber Support',
-    'version': '19.0.0.3.0',
+    'version': '19.0.0.3.1',
     'summary': 'Commercial support desk: email in, kanban triage, basic SLA, '
                'order link',
     'description': """

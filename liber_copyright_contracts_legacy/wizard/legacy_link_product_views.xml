@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_edlab_legacy_link_product_form" model="ir.ui.view">
+        <field name="name">edlab.legacy.link.product.form</field>
+        <field name="model">edlab.legacy.link.product</field>
+        <field name="arch" type="xml">
+            <form string="Link product">
+                <group>
+                    <field name="sale_count" string="Selected rows"/>
+                    <field name="sale_ids" invisible="1"/>
+                    <field name="product_id"/>
+                    <field name="same_title"/>
+                </group>
+                <footer>
+                    <button name="action_link" type="object" string="Link" class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_edlab_legacy_link_product" model="ir.actions.act_window">
+        <field name="name">Link product</field>
+        <field name="res_model">edlab.legacy.link.product</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="binding_model_id" ref="model_edlab_legacy_sale"/>
+        <field name="binding_view_types">list</field>
+    </record>
+</odoo>

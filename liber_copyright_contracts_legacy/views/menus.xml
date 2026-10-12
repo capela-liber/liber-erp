@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Legacy sales live under Configuration, in a section of their own:
+         a dataset consulted now and then, not a daily screen (09/10/2026). -->
+    <menuitem id="menu_edlab_legacy_section"
+              name="Legacy Sales"
+              parent="liber_copyright_contracts.menu_copyright_contracts_settings"
+              sequence="30"/>
+    <menuitem id="menu_edlab_legacy_sales"
+              name="Legacy Sales"
+              parent="menu_edlab_legacy_section"
+              action="action_edlab_legacy_sale"
+              sequence="1"/>
+    <menuitem id="menu_edlab_legacy_cfop"
+              name="Legacy CFOP"
+              parent="menu_edlab_legacy_section"
+              action="action_edlab_legacy_cfop"
+              sequence="2"/>
+    <menuitem id="menu_edlab_price_index"
+              name="Price Indexes"
+              parent="menu_edlab_legacy_section"
+              action="action_edlab_price_index"
+              sequence="3"/>
+    <menuitem id="menu_edlab_legacy_import"
+              name="Import Legacy Sales"
+              parent="menu_edlab_legacy_section"
+              action="action_edlab_legacy_import"
+              groups="liber_copyright_contracts.group_contract_manager"
+              sequence="4"/>
+    <menuitem id="menu_edlab_legacy_reclassify"
+              name="Reclassify Legacy Sales"
+              parent="menu_edlab_legacy_section"
+              action="action_edlab_legacy_sale_reclassify"
+              groups="liber_copyright_contracts.group_contract_manager"
+              sequence="5"/>
+</odoo>

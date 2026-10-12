@@ -101,12 +101,6 @@ class TestVisitante(TransactionCase):
     #: mudar. Menu de Configuração não entra nesta lista porque o teste já o
     #: dispensa por construção: configurar é de administrador.
     EXCECOES = {
-        'liber_support': (
-            'Atendimento é conversa de cliente, não vitrine, e a conta '
-            'pública circula. Decisão registrada no NOTES do módulo.'),
-        'liber_transport': (
-            'A tela mora dentro do Inventário, que a demo esconde de '
-            'propósito — a demo mostra o Liber, não o Odoo cru.'),
         'liber_sales_dashboard': (
             'O menu é trancado por sales_team.group_sale_manager, que o '
             'visitante remove com (3, ...). Destrancar é decisão do módulo, '

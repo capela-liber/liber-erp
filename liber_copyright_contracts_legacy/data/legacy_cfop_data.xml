@@ -1,0 +1,406 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <!-- Effect of each CFOP on royalties. Seeded from the codes found in the
+         unified legacy base plus their usual neighbours; the department
+         maintains it under Copyright > Configuration > Legacy CFOP. -->
+    <record id="cfop_5101" model="edlab.legacy.cfop">
+        <field name="code">5101</field>
+        <field name="name">Venda de produção do estabelecimento</field>
+        <field name="effect">sale</field>
+    </record>
+    <record id="cfop_5102" model="edlab.legacy.cfop">
+        <field name="code">5102</field>
+        <field name="name">Venda de mercadoria adquirida de terceiros</field>
+        <field name="effect">sale</field>
+    </record>
+    <record id="cfop_5103" model="edlab.legacy.cfop">
+        <field name="code">5103</field>
+        <field name="name">Venda de produção do estabelecimento, entrega futura (efetivada)</field>
+        <field name="effect">sale</field>
+    </record>
+    <record id="cfop_5104" model="edlab.legacy.cfop">
+        <field name="code">5104</field>
+        <field name="name">Venda de mercadoria adquirida, entrega futura (efetivada)</field>
+        <field name="effect">sale</field>
+    </record>
+    <record id="cfop_5113" model="edlab.legacy.cfop">
+        <field name="code">5113</field>
+        <field name="name">Venda de produção remetida anteriormente em consignação (acerto)</field>
+        <field name="effect">sale</field>
+    </record>
+    <record id="cfop_5114" model="edlab.legacy.cfop">
+        <field name="code">5114</field>
+        <field name="name">Venda de mercadoria adquirida remetida anteriormente em consignação (acerto)</field>
+        <field name="effect">sale</field>
+    </record>
+    <record id="cfop_5115" model="edlab.legacy.cfop">
+        <field name="code">5115</field>
+        <field name="name">Venda de mercadoria recebida em consignação</field>
+        <field name="effect">sale</field>
+    </record>
+    <record id="cfop_5116" model="edlab.legacy.cfop">
+        <field name="code">5116</field>
+        <field name="name">Venda de produção originada de encomenda para entrega futura</field>
+        <field name="effect">sale</field>
+    </record>
+    <record id="cfop_5117" model="edlab.legacy.cfop">
+        <field name="code">5117</field>
+        <field name="name">Venda de mercadoria adquirida originada de encomenda para entrega futura</field>
+        <field name="effect">sale</field>
+    </record>
+    <record id="cfop_6101" model="edlab.legacy.cfop">
+        <field name="code">6101</field>
+        <field name="name">Venda de produção do estabelecimento (fora do estado)</field>
+        <field name="effect">sale</field>
+    </record>
+    <record id="cfop_6102" model="edlab.legacy.cfop">
+        <field name="code">6102</field>
+        <field name="name">Venda de mercadoria adquirida de terceiros (fora do estado)</field>
+        <field name="effect">sale</field>
+    </record>
+    <record id="cfop_6103" model="edlab.legacy.cfop">
+        <field name="code">6103</field>
+        <field name="name">Venda de produção, entrega futura (fora do estado)</field>
+        <field name="effect">sale</field>
+    </record>
+    <record id="cfop_6104" model="edlab.legacy.cfop">
+        <field name="code">6104</field>
+        <field name="name">Venda de mercadoria adquirida, entrega futura (fora do estado)</field>
+        <field name="effect">sale</field>
+    </record>
+    <record id="cfop_6107" model="edlab.legacy.cfop">
+        <field name="code">6107</field>
+        <field name="name">Venda de produção a não contribuinte (fora do estado)</field>
+        <field name="effect">sale</field>
+    </record>
+    <record id="cfop_6108" model="edlab.legacy.cfop">
+        <field name="code">6108</field>
+        <field name="name">Venda de mercadoria adquirida a não contribuinte (fora do estado)</field>
+        <field name="effect">sale</field>
+    </record>
+    <record id="cfop_6113" model="edlab.legacy.cfop">
+        <field name="code">6113</field>
+        <field name="name">Venda de produção remetida anteriormente em consignação (acerto, fora do estado)</field>
+        <field name="effect">sale</field>
+    </record>
+    <record id="cfop_6114" model="edlab.legacy.cfop">
+        <field name="code">6114</field>
+        <field name="name">Venda de mercadoria adquirida remetida anteriormente em consignação (acerto, fora do estado)</field>
+        <field name="effect">sale</field>
+    </record>
+    <record id="cfop_6115" model="edlab.legacy.cfop">
+        <field name="code">6115</field>
+        <field name="name">Venda de mercadoria recebida em consignação (fora do estado)</field>
+        <field name="effect">sale</field>
+    </record>
+    <record id="cfop_6116" model="edlab.legacy.cfop">
+        <field name="code">6116</field>
+        <field name="name">Venda de produção de encomenda para entrega futura (fora do estado)</field>
+        <field name="effect">sale</field>
+    </record>
+    <record id="cfop_6117" model="edlab.legacy.cfop">
+        <field name="code">6117</field>
+        <field name="name">Venda de mercadoria adquirida de encomenda para entrega futura (fora do estado)</field>
+        <field name="effect">sale</field>
+    </record>
+    <record id="cfop_7101" model="edlab.legacy.cfop">
+        <field name="code">7101</field>
+        <field name="name">Venda de produção do estabelecimento (exterior)</field>
+        <field name="effect">sale</field>
+    </record>
+    <record id="cfop_7102" model="edlab.legacy.cfop">
+        <field name="code">7102</field>
+        <field name="name">Venda de mercadoria adquirida (exterior)</field>
+        <field name="effect">sale</field>
+    </record>
+    <record id="cfop_1201" model="edlab.legacy.cfop">
+        <field name="code">1201</field>
+        <field name="name">Devolução de venda de produção do estabelecimento</field>
+        <field name="effect">return</field>
+    </record>
+    <record id="cfop_1202" model="edlab.legacy.cfop">
+        <field name="code">1202</field>
+        <field name="name">Devolução de venda de mercadoria adquirida</field>
+        <field name="effect">return</field>
+    </record>
+    <record id="cfop_1203" model="edlab.legacy.cfop">
+        <field name="code">1203</field>
+        <field name="name">Devolução de venda de produção, entrega futura</field>
+        <field name="effect">return</field>
+    </record>
+    <record id="cfop_1204" model="edlab.legacy.cfop">
+        <field name="code">1204</field>
+        <field name="name">Devolução de venda de mercadoria adquirida, entrega futura</field>
+        <field name="effect">return</field>
+    </record>
+    <record id="cfop_2201" model="edlab.legacy.cfop">
+        <field name="code">2201</field>
+        <field name="name">Devolução de venda de produção (fora do estado)</field>
+        <field name="effect">return</field>
+    </record>
+    <record id="cfop_2202" model="edlab.legacy.cfop">
+        <field name="code">2202</field>
+        <field name="name">Devolução de venda de mercadoria adquirida (fora do estado)</field>
+        <field name="effect">return</field>
+    </record>
+    <record id="cfop_2203" model="edlab.legacy.cfop">
+        <field name="code">2203</field>
+        <field name="name">Devolução de venda de produção, entrega futura (fora do estado)</field>
+        <field name="effect">return</field>
+    </record>
+    <record id="cfop_2204" model="edlab.legacy.cfop">
+        <field name="code">2204</field>
+        <field name="name">Devolução de venda de mercadoria adquirida, entrega futura (fora do estado)</field>
+        <field name="effect">return</field>
+    </record>
+    <record id="cfop_3201" model="edlab.legacy.cfop">
+        <field name="code">3201</field>
+        <field name="name">Devolução de venda de produção (exterior)</field>
+        <field name="effect">return</field>
+    </record>
+    <record id="cfop_3202" model="edlab.legacy.cfop">
+        <field name="code">3202</field>
+        <field name="name">Devolução de venda de mercadoria adquirida (exterior)</field>
+        <field name="effect">return</field>
+    </record>
+    <record id="cfop_5910" model="edlab.legacy.cfop">
+        <field name="code">5910</field>
+        <field name="name">Remessa em bonificação, doação ou brinde</field>
+        <field name="effect">courtesy</field>
+    </record>
+    <record id="cfop_5911" model="edlab.legacy.cfop">
+        <field name="code">5911</field>
+        <field name="name">Remessa de amostra grátis</field>
+        <field name="effect">courtesy</field>
+    </record>
+    <record id="cfop_6910" model="edlab.legacy.cfop">
+        <field name="code">6910</field>
+        <field name="name">Remessa em bonificação, doação ou brinde (fora do estado)</field>
+        <field name="effect">courtesy</field>
+    </record>
+    <record id="cfop_6911" model="edlab.legacy.cfop">
+        <field name="code">6911</field>
+        <field name="name">Remessa de amostra grátis (fora do estado)</field>
+        <field name="effect">courtesy</field>
+    </record>
+    <record id="cfop_1912" model="edlab.legacy.cfop">
+        <field name="code">1912</field>
+        <field name="name">Entrada para demonstração</field>
+        <field name="effect">neutral</field>
+    </record>
+    <record id="cfop_1913" model="edlab.legacy.cfop">
+        <field name="code">1913</field>
+        <field name="name">Retorno de demonstração (entrada)</field>
+        <field name="effect">neutral</field>
+    </record>
+    <record id="cfop_1917" model="edlab.legacy.cfop">
+        <field name="code">1917</field>
+        <field name="name">Entrada de mercadoria recebida em consignação</field>
+        <field name="effect">neutral</field>
+    </record>
+    <record id="cfop_1918" model="edlab.legacy.cfop">
+        <field name="code">1918</field>
+        <field name="name">Devolução de mercadoria remetida em consignação</field>
+        <field name="effect">neutral</field>
+    </record>
+    <record id="cfop_1919" model="edlab.legacy.cfop">
+        <field name="code">1919</field>
+        <field name="name">Devolução simbólica de mercadoria vendida em consignação</field>
+        <field name="effect">neutral</field>
+    </record>
+    <record id="cfop_1949" model="edlab.legacy.cfop">
+        <field name="code">1949</field>
+        <field name="name">Outra entrada não especificada</field>
+        <field name="effect">neutral</field>
+    </record>
+    <record id="cfop_2917" model="edlab.legacy.cfop">
+        <field name="code">2917</field>
+        <field name="name">Entrada de mercadoria recebida em consignação (fora do estado)</field>
+        <field name="effect">neutral</field>
+    </record>
+    <record id="cfop_2918" model="edlab.legacy.cfop">
+        <field name="code">2918</field>
+        <field name="name">Devolução de mercadoria remetida em consignação (fora do estado)</field>
+        <field name="effect">neutral</field>
+    </record>
+    <record id="cfop_2919" model="edlab.legacy.cfop">
+        <field name="code">2919</field>
+        <field name="name">Devolução simbólica de consignação (fora do estado)</field>
+        <field name="effect">neutral</field>
+    </record>
+    <record id="cfop_2949" model="edlab.legacy.cfop">
+        <field name="code">2949</field>
+        <field name="name">Outra entrada não especificada (fora do estado)</field>
+        <field name="effect">neutral</field>
+    </record>
+    <record id="cfop_5151" model="edlab.legacy.cfop">
+        <field name="code">5151</field>
+        <field name="name">Transferência de produção do estabelecimento</field>
+        <field name="effect">neutral</field>
+    </record>
+    <record id="cfop_5152" model="edlab.legacy.cfop">
+        <field name="code">5152</field>
+        <field name="name">Transferência de mercadoria adquirida</field>
+        <field name="effect">neutral</field>
+    </record>
+    <record id="cfop_5901" model="edlab.legacy.cfop">
+        <field name="code">5901</field>
+        <field name="name">Remessa para industrialização por encomenda</field>
+        <field name="effect">neutral</field>
+    </record>
+    <record id="cfop_5902" model="edlab.legacy.cfop">
+        <field name="code">5902</field>
+        <field name="name">Retorno de industrialização por encomenda</field>
+        <field name="effect">neutral</field>
+    </record>
+    <record id="cfop_5904" model="edlab.legacy.cfop">
+        <field name="code">5904</field>
+        <field name="name">Remessa para venda fora do estabelecimento</field>
+        <field name="effect">neutral</field>
+    </record>
+    <record id="cfop_5905" model="edlab.legacy.cfop">
+        <field name="code">5905</field>
+        <field name="name">Remessa para depósito fechado ou armazém geral</field>
+        <field name="effect">neutral</field>
+    </record>
+    <record id="cfop_5906" model="edlab.legacy.cfop">
+        <field name="code">5906</field>
+        <field name="name">Retorno de depósito fechado ou armazém geral</field>
+        <field name="effect">neutral</field>
+    </record>
+    <record id="cfop_5912" model="edlab.legacy.cfop">
+        <field name="code">5912</field>
+        <field name="name">Remessa para demonstração</field>
+        <field name="effect">neutral</field>
+    </record>
+    <record id="cfop_5913" model="edlab.legacy.cfop">
+        <field name="code">5913</field>
+        <field name="name">Retorno de demonstração</field>
+        <field name="effect">neutral</field>
+    </record>
+    <record id="cfop_5914" model="edlab.legacy.cfop">
+        <field name="code">5914</field>
+        <field name="name">Remessa para venda fora do estabelecimento (feira, evento)</field>
+        <field name="effect">neutral</field>
+    </record>
+    <record id="cfop_5915" model="edlab.legacy.cfop">
+        <field name="code">5915</field>
+        <field name="name">Remessa para conserto ou reparo</field>
+        <field name="effect">neutral</field>
+    </record>
+    <record id="cfop_5916" model="edlab.legacy.cfop">
+        <field name="code">5916</field>
+        <field name="name">Retorno de conserto ou reparo</field>
+        <field name="effect">neutral</field>
+    </record>
+    <record id="cfop_5917" model="edlab.legacy.cfop">
+        <field name="code">5917</field>
+        <field name="name">Remessa de mercadoria em consignação mercantil ou industrial</field>
+        <field name="effect">neutral</field>
+    </record>
+    <record id="cfop_5918" model="edlab.legacy.cfop">
+        <field name="code">5918</field>
+        <field name="name">Devolução de mercadoria recebida em consignação</field>
+        <field name="effect">neutral</field>
+    </record>
+    <record id="cfop_5919" model="edlab.legacy.cfop">
+        <field name="code">5919</field>
+        <field name="name">Devolução simbólica de mercadoria vendida ou utilizada em consignação</field>
+        <field name="effect">neutral</field>
+    </record>
+    <record id="cfop_5920" model="edlab.legacy.cfop">
+        <field name="code">5920</field>
+        <field name="name">Remessa de vasilhame ou sacaria</field>
+        <field name="effect">neutral</field>
+    </record>
+    <record id="cfop_5921" model="edlab.legacy.cfop">
+        <field name="code">5921</field>
+        <field name="name">Devolução de vasilhame ou sacaria</field>
+        <field name="effect">neutral</field>
+    </record>
+    <record id="cfop_5949" model="edlab.legacy.cfop">
+        <field name="code">5949</field>
+        <field name="name">Outra saída não especificada</field>
+        <field name="effect">neutral</field>
+    </record>
+    <record id="cfop_6151" model="edlab.legacy.cfop">
+        <field name="code">6151</field>
+        <field name="name">Transferência de produção (fora do estado)</field>
+        <field name="effect">neutral</field>
+    </record>
+    <record id="cfop_6152" model="edlab.legacy.cfop">
+        <field name="code">6152</field>
+        <field name="name">Transferência de mercadoria adquirida (fora do estado)</field>
+        <field name="effect">neutral</field>
+    </record>
+    <record id="cfop_6901" model="edlab.legacy.cfop">
+        <field name="code">6901</field>
+        <field name="name">Remessa para industrialização por encomenda (fora do estado)</field>
+        <field name="effect">neutral</field>
+    </record>
+    <record id="cfop_6902" model="edlab.legacy.cfop">
+        <field name="code">6902</field>
+        <field name="name">Retorno de industrialização por encomenda (fora do estado)</field>
+        <field name="effect">neutral</field>
+    </record>
+    <record id="cfop_6904" model="edlab.legacy.cfop">
+        <field name="code">6904</field>
+        <field name="name">Remessa para venda fora do estabelecimento (fora do estado)</field>
+        <field name="effect">neutral</field>
+    </record>
+    <record id="cfop_6905" model="edlab.legacy.cfop">
+        <field name="code">6905</field>
+        <field name="name">Remessa para depósito fechado ou armazém geral (fora do estado)</field>
+        <field name="effect">neutral</field>
+    </record>
+    <record id="cfop_6906" model="edlab.legacy.cfop">
+        <field name="code">6906</field>
+        <field name="name">Retorno de depósito fechado (fora do estado)</field>
+        <field name="effect">neutral</field>
+    </record>
+    <record id="cfop_6912" model="edlab.legacy.cfop">
+        <field name="code">6912</field>
+        <field name="name">Remessa para demonstração (fora do estado)</field>
+        <field name="effect">neutral</field>
+    </record>
+    <record id="cfop_6913" model="edlab.legacy.cfop">
+        <field name="code">6913</field>
+        <field name="name">Retorno de demonstração (fora do estado)</field>
+        <field name="effect">neutral</field>
+    </record>
+    <record id="cfop_6914" model="edlab.legacy.cfop">
+        <field name="code">6914</field>
+        <field name="name">Remessa para venda fora do estabelecimento (fora do estado)</field>
+        <field name="effect">neutral</field>
+    </record>
+    <record id="cfop_6915" model="edlab.legacy.cfop">
+        <field name="code">6915</field>
+        <field name="name">Remessa para conserto ou reparo (fora do estado)</field>
+        <field name="effect">neutral</field>
+    </record>
+    <record id="cfop_6916" model="edlab.legacy.cfop">
+        <field name="code">6916</field>
+        <field name="name">Retorno de conserto ou reparo (fora do estado)</field>
+        <field name="effect">neutral</field>
+    </record>
+    <record id="cfop_6917" model="edlab.legacy.cfop">
+        <field name="code">6917</field>
+        <field name="name">Remessa de mercadoria em consignação (fora do estado)</field>
+        <field name="effect">neutral</field>
+    </record>
+    <record id="cfop_6918" model="edlab.legacy.cfop">
+        <field name="code">6918</field>
+        <field name="name">Devolução de mercadoria recebida em consignação (fora do estado)</field>
+        <field name="effect">neutral</field>
+    </record>
+    <record id="cfop_6919" model="edlab.legacy.cfop">
+        <field name="code">6919</field>
+        <field name="name">Devolução simbólica de consignação (fora do estado)</field>
+        <field name="effect">neutral</field>
+    </record>
+    <record id="cfop_6949" model="edlab.legacy.cfop">
+        <field name="code">6949</field>
+        <field name="name">Outra saída não especificada (fora do estado)</field>
+        <field name="effect">neutral</field>
+    </record>
+</odoo>

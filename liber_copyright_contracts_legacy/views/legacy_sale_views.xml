@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_edlab_legacy_sale_tree" model="ir.ui.view">
+        <field name="name">edlab.legacy.sale.list</field>
+        <field name="model">edlab.legacy.sale</field>
+        <field name="arch" type="xml">
+            <list string="Legacy Sales" default_order="date desc, nf" create="false" multi_edit="1">
+                <header>
+                    <button name="%(action_edlab_legacy_link_product)d" type="action"
+                            string="Link product" groups="liber_copyright_contracts.group_contract_manager"/>
+                </header>
+                <field readonly="1" name="date"/>
+                <field readonly="1" name="source" optional="show"/>
+                <field readonly="1" name="nf"/>
+                <field readonly="1" name="partner_name" optional="show"/>
+                <!-- The one column the royalties department edits here, in bulk:
+                     select the rows of a customer or an invoice, set the channel. -->
+                <field name="team_id" optional="show" options="{'no_create': True}"/>
+                <field readonly="1" name="isbn" optional="show"/>
+                <field readonly="1" name="title"/>
+                <field readonly="1" name="product_id" optional="show"/>
+                <field readonly="1" name="quantity" sum="Copies"/>
+                <field readonly="1" name="list_price" optional="hide"/>
+                <field readonly="1" name="amount_gross" optional="hide" sum="Gross"/>
+                <field readonly="1" name="amount_net_estimated" optional="show" sum="Net"/>
+                <field name="discount_percent" optional="hide"/>
+                <field name="special_sale" optional="hide"/>
+                <field readonly="1" name="cfop"/>
+                <field readonly="1" name="effect" widget="badge"
+                       decoration-success="effect == 'sale'" decoration-danger="effect == 'return'"
+                       decoration-info="effect == 'courtesy'" decoration-muted="effect == 'neutral'"/>
+                <field name="counts" widget="boolean_toggle" readonly="1"/>
+                <field readonly="1" name="excluded" optional="hide"/>
+                <field readonly="1" name="exclusion_reason" optional="hide"/>
+                <field readonly="1" name="royalty_base" optional="hide" sum="Royalty base"/>
+                <field readonly="1" name="nature" optional="hide"/>
+                <field readonly="1" name="nf_status" optional="hide"/>
+                <field readonly="1" name="flags" optional="hide"/>
+                <field readonly="1" name="company_id" optional="hide" groups="base.group_multi_company"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_edlab_legacy_sale_form" model="ir.ui.view">
+        <field name="name">edlab.legacy.sale.form</field>
+        <field name="model">edlab.legacy.sale</field>
+        <field name="arch" type="xml">
+            <form string="Legacy Sale" create="false">
+                <sheet>
+                    <widget name="web_ribbon" title="Counts" bg_color="text-bg-success" invisible="not counts"/>
+                    <widget name="web_ribbon" title="Does not count" bg_color="text-bg-secondary" invisible="counts"/>
+                    <div class="oe_title">
+                        <h1><field name="title" readonly="1"/></h1>
+                        <field name="title_original" readonly="1"/>
+                    </div>
+                    <group>
+                        <group string="Invoice">
+                            <field name="source" readonly="1"/>
+                            <field name="nf" readonly="1"/>
+                            <field name="date" readonly="1"/>
+                            <field name="partner_name" readonly="1"/>
+                            <field name="partner_vat" readonly="1"/>
+                            <field name="team_id" options="{'no_create': True}"/>
+                            <field name="special_sale" readonly="1"/>
+                            <field name="nf_status" readonly="1"/>
+                            <field name="company_id" groups="base.group_multi_company" readonly="1"/>
+                        </group>
+                        <group string="Work">
+                            <field name="isbn" readonly="1"/>
+                            <field name="internal_code" readonly="1"/>
+                            <field name="author_name" readonly="1"/>
+                            <field name="imprint" readonly="1"/>
+                            <field name="product_id"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group string="Amounts">
+                            <field name="quantity" readonly="1"/>
+                            <field name="quantity_origin" readonly="1"/>
+                            <field name="list_price" readonly="1"/>
+                            <field name="amount_gross" readonly="1"/>
+                            <field name="discount" readonly="1"/>
+                            <field name="discount_percent" readonly="1"/>
+                            <field name="amount_net" readonly="1"/>
+                            <field name="amount_net_estimated" readonly="1"/>
+                            <field name="note_total" readonly="1"/>
+                        </group>
+                        <group string="Effect on royalties">
+                            <field name="cfop" readonly="1"/>
+                            <field name="cfop_description" readonly="1"/>
+                            <field name="nature" readonly="1"/>
+                            <field name="cfop_id" readonly="1"/>
+                            <field name="effect"/>
+                            <field name="effect_manual"/>
+                            <field name="flags" readonly="1"/>
+                            <field name="excluded"/>
+                            <field name="exclusion_reason" invisible="not exclusion_reason"/>
+                            <field name="force_include"/>
+                            <field name="force_exclude"/>
+                            <field name="counts"/>
+                            <field name="signed_quantity"/>
+                            <field name="royalty_base"/>
+                            <field name="royalty_base_gross"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_edlab_legacy_sale_search" model="ir.ui.view">
+        <field name="name">edlab.legacy.sale.search</field>
+        <field name="model">edlab.legacy.sale</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="title" filter_domain="['|', ('title', 'ilike', self), ('title_original', 'ilike', self)]"/>
+                <field name="isbn"/>
+                <field name="nf"/>
+                <field name="partner_name"/>
+                <field name="author_name"/>
+                <field name="product_id"/>
+                <field name="cfop"/>
+                <field name="team_id"/>
+                <filter name="counts" string="Counts for royalties" domain="[('counts', '=', True)]"/>
+                <filter name="sales" string="Sales" domain="[('effect', '=', 'sale')]"/>
+                <filter name="returns" string="Returns" domain="[('effect', '=', 'return')]"/>
+                <filter name="courtesy" string="Courtesies" domain="[('effect', '=', 'courtesy')]"/>
+                <filter name="neutral" string="No effect" domain="[('effect', '=', 'neutral')]"/>
+                <separator/>
+                <filter name="excluded" string="Excluded by a flag" domain="[('excluded', '=', True)]"/>
+                <filter name="no_product" string="Without product" domain="[('product_id', '=', False)]"/>
+                <filter name="no_cfop" string="Without CFOP" domain="[('cfop', '=', False)]"/>
+                <filter name="forced" string="Forced by hand"
+                        domain="['|', '|', ('force_include', '=', True), ('force_exclude', '=', True), ('effect_manual', '!=', False)]"/>
+                <separator/>
+                <filter name="special" string="Special sales" domain="[('special_sale', '=', True)]"/>
+                <filter name="no_channel" string="Without channel" domain="[('team_id', '=', False)]"/>
+                <separator/>
+                <filter name="date" string="Date" date="date"/>
+                <group name="groupby">
+                    <filter name="group_year" string="Year" context="{'group_by': 'year'}"/>
+                    <filter name="group_source" string="Source" context="{'group_by': 'source'}"/>
+                    <filter name="group_effect" string="Effect" context="{'group_by': 'effect'}"/>
+                    <filter name="group_cfop" string="CFOP" context="{'group_by': 'cfop'}"/>
+                    <filter name="group_product" string="Product" context="{'group_by': 'product_id'}"/>
+                    <filter name="group_partner" string="Customer" context="{'group_by': 'partner_name'}"/>
+                    <filter name="group_team" string="Sales Channel" context="{'group_by': 'team_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="view_edlab_legacy_sale_pivot" model="ir.ui.view">
+        <field name="name">edlab.legacy.sale.pivot</field>
+        <field name="model">edlab.legacy.sale</field>
+        <field name="arch" type="xml">
+            <pivot string="Legacy Sales" sample="1">
+                <field name="year" type="row"/>
+                <field name="effect" type="col"/>
+                <field name="quantity" type="measure"/>
+                <field name="royalty_base" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="view_edlab_legacy_sale_graph" model="ir.ui.view">
+        <field name="name">edlab.legacy.sale.graph</field>
+        <field name="model">edlab.legacy.sale</field>
+        <field name="arch" type="xml">
+            <graph string="Legacy Sales" type="bar" stacked="1" sample="1">
+                <field name="year"/>
+                <field name="effect"/>
+                <field name="royalty_base" type="measure"/>
+            </graph>
+        </field>
+    </record>
+
+    <record id="action_edlab_legacy_sale" model="ir.actions.act_window">
+        <field name="name">Legacy Sales</field>
+        <field name="res_model">edlab.legacy.sale</field>
+        <field name="view_mode">list,pivot,graph,form</field>
+        <field name="search_view_id" ref="view_edlab_legacy_sale_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">No legacy sales yet</p>
+            <p>Import the unified base (Copyright > Configuration > Import Legacy Sales). Each row is one invoice line sold before this system, with its CFOP.</p>
+        </field>
+    </record>
+
+    <record id="action_edlab_legacy_sale_reclassify" model="ir.actions.server">
+        <field name="name">Reclassify legacy sales</field>
+        <field name="model_id" ref="model_edlab_legacy_sale"/>
+        <field name="state">code</field>
+        <field name="code">action = model.action_reclassify_all()</field>
+        <field name="group_ids" eval="[(4, ref('liber_copyright_contracts.group_contract_manager'))]"/>
+    </record>
+</odoo>

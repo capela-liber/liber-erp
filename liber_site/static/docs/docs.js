@@ -16,6 +16,7 @@ var DOCS = [
     { slug: "liber_copyright_contracts_analytics", title: "Cálculo de royalties", desc: "Faixas de exemplares, base de cálculo e adiantamentos." },
     { slug: "liber_copyright_contracts_taxes", title: "IRRF sobre direitos", desc: "Retenção pela tabela progressiva e o redutor da Lei 15.270/2025." },
     { slug: "liber_copyright_contracts_cloud", title: "Documentos do contrato", desc: "O contrato ligado aos seus PDFs no Dropbox, Google Drive ou GitHub." },
+    { slug: "liber_copyright_contracts_legacy", title: "Vendas anteriores ao sistema", desc: "Anos de vendas dos sistemas antigos entram nas faixas e nos royalties, corrigidos pelo IPCA." },
     { slug: "liber_copyright_contracts_intercompany", title: "Cessão de uso entre empresas", desc: "A empresa que vende reembolsa a que detém os contratos, com fatura e espelho." },
     { slug: "liber_copyright_contracts_payments", title: "Pagamento de royalties", desc: "Direitos em aberto viram fatura de fornecedor por beneficiário." },
     { slug: "liber_copyright_contracts_reports", title: "Prestação de contas", desc: "O extrato do autor em PDF, pronto para enviar." },

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_edlab_legacy_cfop_tree" model="ir.ui.view">
+        <field name="name">edlab.legacy.cfop.list</field>
+        <field name="model">edlab.legacy.cfop</field>
+        <field name="arch" type="xml">
+            <list string="Legacy CFOP" editable="bottom">
+                <field name="code"/>
+                <field name="name"/>
+                <field name="effect"/>
+                <field name="active" widget="boolean_toggle"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_edlab_legacy_cfop_search" model="ir.ui.view">
+        <field name="name">edlab.legacy.cfop.search</field>
+        <field name="model">edlab.legacy.cfop</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="code"/>
+                <field name="name"/>
+                <filter name="sale" string="Sales" domain="[('effect', '=', 'sale')]"/>
+                <filter name="return" string="Returns" domain="[('effect', '=', 'return')]"/>
+                <filter name="courtesy" string="Courtesies" domain="[('effect', '=', 'courtesy')]"/>
+                <filter name="neutral" string="No effect" domain="[('effect', '=', 'neutral')]"/>
+                <group name="groupby">
+                    <filter name="group_effect" string="Effect" context="{'group_by': 'effect'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_edlab_legacy_cfop" model="ir.actions.act_window">
+        <field name="name">Legacy CFOP</field>
+        <field name="res_model">edlab.legacy.cfop</field>
+        <field name="view_mode">list</field>
+        <field name="context">{'search_default_group_effect': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">What each CFOP means for royalties</p>
+            <p>A sale accrues, a return deducts, a donation pays nothing and a consignment shipment has no effect until it is settled. After changing a code, run "Reclassify" on the legacy sales.</p>
+        </field>
+    </record>
+</odoo>

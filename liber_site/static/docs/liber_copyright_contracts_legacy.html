@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<script>
+/* Servido por /liber_site/static/docs/, este arquivo vem com uma semana de
+   cache e o docs.js sem versão -- e o índice monta a lista a partir dele. A
+   rota /liber/docs/ serve o mesmo arquivo sem cache e com ?v=<mtime> nos
+   assets. Quem chegar pelo caminho antigo vai para lá antes de a página
+   montar qualquer coisa. */
+(function () {
+  var antigo = "/liber_site/static/docs/";
+  if (location.pathname.indexOf(antigo) === 0) {
+    location.replace("/liber/docs/" + location.pathname.slice(antigo.length) +
+                     location.search + location.hash);
+  }
+})();
+</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vendas anteriores ao sistema — Manual</title>
+<link rel="icon" type="image/png" href="../logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;600;700&display=swap">
+<link rel="stylesheet" href="docs.css">
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="../index.html"><img src="../logo.png" alt="">liber<span>.</span></a>
+    <span class="doc-tag">Manuais</span>
+    <nav><a href="index.html">Índice</a><a href="../index.html">Site</a></nav>
+  </div>
+</header>
+<div class="wrap">
+  <div class="layout">
+    <aside class="sidebar" id="sidebar"></aside>
+    <article class="doc">
+      <div class="breadcrumb"><a href="index.html">Manuais</a><span class="sep">›</span>Direitos autorais<span class="sep">›</span>Vendas legadas</div>
+      <h1>Vendas legadas</h1>
+      <p class="lead">Traga para dentro dos contratos as vendas feitas antes do sistema — vinte anos de notas fiscais, linha a linha — classificadas pelo <abbr class="sigla" title="Código Fiscal de Operações e Prestações: o código de quatro dígitos que diz o que uma nota fiscal fez (vendeu, remeteu, devolveu, doou).">CFOP</abbr> e, se o contrato quiser, corrigidas pela inflação.</p>
+
+      <h2 id="visao-geral">Visão geral</h2>
+      <p>Uma editora que chega ao Odoo raramente começa do zero: anos de vendas moram nos sistemas que ela usou antes, e os contratos de direito autoral alcançam esse passado — a faixa que um contrato paga depende de todos os exemplares vendidos, e não só dos que o Odoo faturou. Exportada dos sistemas antigos numa só planilha, uma linha por item de nota fiscal, cada uma com o seu <abbr class="sigla" title="Código Fiscal de Operações e Prestações: o código de quatro dígitos que diz o que uma nota fiscal fez (vendeu, remeteu, devolveu, doou).">CFOP</abbr>. Este módulo faz três coisas com ela:</p>
+      <ul>
+        <li><strong>Importa</strong> a base inteira (CSV ou XLSX) para <span class="menupath">Direitos Autorais<i>‣</i>Configurações<i>‣</i>Vendas legadas<i>‣</i>Vendas legadas</span>, ligando cada linha ao livro pelo ISBN e guardando as marcas de qualidade da unificação.</li>
+        <li><strong>Classifica pelo <abbr class="sigla" title="Código Fiscal de Operações e Prestações: o código de quatro dígitos que diz o que uma nota fiscal fez (vendeu, remeteu, devolveu, doou).">CFOP</abbr></strong>: só o que foi venda gera royalties; devolução abate; remessa em consignação, amostra e transferência não têm efeito; doação é cortesia e não paga nada.</li>
+        <li><strong>Apura no contrato</strong>: com a opção ligada, o contrato grava um lançamento por mês de vendas legadas na mesma conta analítica dos royalties faturados, corrigido por um índice (IPCA, por exemplo) se for o caso. Os exemplares legados também entram na quantidade acumulada que escolhe a faixa de royalty.</li>
+      </ul>
+      <div class="callout note"><span class="title">Por que o CFOP manda</span>
+        <p>Na consignação, a mesma caixa de livros aparece duas vezes na base: na <strong>remessa</strong> (CFOP 5917/6917), quando sai para a livraria, e no <strong>acerto</strong> (CFOP 5113/6113), quando a livraria diz o que vendeu. Só a segunda é venda. Somar as duas pagaria o autor em dobro pelo mesmo livro; ignorar o CFOP e somar "tudo que saiu" é exatamente o erro que a planilha permite e o módulo impede.</p>
+      </div>
+
+      <h2 id="importar">Importar a base</h2>
+      <ol class="steps">
+        <li>Acesse <span class="menupath">Direitos Autorais<i>‣</i>Configurações<i>‣</i>Vendas legadas<i>‣</i>Importar vendas legadas</span>.</li>
+        <li>Escolha <span class="field">Subir o arquivo</span> e selecione o CSV ou o XLSX da base unificada (a aba BASE_UNIFICADA). Se o arquivo for grande demais para o navegador, use <span class="field">Arquivo já no servidor</span> e informe o caminho dele na máquina do Odoo.</li>
+        <li>Deixe <span class="field">Substituir a base atual</span> ligado: a base é uma fotografia, e reimportar uma unificação corrigida é como ela entra. Desligue só para acrescentar um export complementar.</li>
+        <li>Clique em <strong>Importar</strong>. A base completa, com cerca de 450 mil linhas, leva alguns minutos; deixe a aba aberta.</li>
+      </ol>
+      <p>Ao entrar, cada linha é ligada ao produto cujo código de barras, ISBN ou referência interna seja igual ao ISBN da linha. As linhas que a unificação deixou sem ISBN (só título) ficam sem produto e não contam até alguém vinculá-las — veja <a href="#vincular">Vincular um título à mão</a>.</p>
+      <div class="callout note"><span class="title">Nota</span>
+        <p>O cabeçalho do arquivo precisa ser o da base unificada (fonte, nf, data_emissao, isbn_ean, quantidade, cfop, natureza_operacao, flags…). Uma coluna renomeada é recusada na hora, em vez de entrar em branco num campo de dinheiro.</p>
+      </div>
+
+      <h2 id="classificacao">Como uma linha passa a contar</h2>
+      <p>Uma linha <strong>conta para royalties</strong> quando as três condições valem ao mesmo tempo:</p>
+      <ol>
+        <li>O <strong>efeito</strong> dela é venda ou devolução. O efeito vem da tabela de <abbr class="sigla" title="Código Fiscal de Operações e Prestações: o código de quatro dígitos que diz o que uma nota fiscal fez (vendeu, remeteu, devolveu, doou).">CFOP</abbr>; quando a linha não tem CFOP (acontece em sistemas antigos), vem da natureza da operação ("VENDA - acerto de consignação", "DOAÇÃO / BRINDE"…); e o campo <span class="field">Efeito (manual)</span> sobrepõe os dois, só naquela linha.</li>
+        <li>Ela tem <strong>produto</strong> vinculado.</li>
+        <li>Nenhuma <strong>marca de qualidade</strong> a excluiu — ou alguém marcou <span class="field">Forçar inclusão</span>.</li>
+      </ol>
+      <p>As marcas que excluem por padrão: nota cancelada ou não emitida, quantidade não confiável (um período em que o sistema antigo gravou quantidades erradas), valor que pode ser o total da nota, possível duplicata exata, quantidade zero ou negativa e linha corrompida. Cada linha mostra o motivo em <span class="field">Motivo da exclusão</span>; <span class="field">Forçar exclusão</span> tira qualquer linha da conta, diga o CFOP o que disser.</p>
+      <div class="tablewrap"><table>
+        <tr><th>Efeito</th><th>CFOPs típicos</th><th>No royalty</th></tr>
+        <tr><td>Venda</td><td>5101, 6101, 5102, 6102, 5113, 6113 (acerto de consignação)</td><td>Gera, pela base líquida (ou bruta, se a linha de royalty for "sobre preço de capa")</td></tr>
+        <tr><td>Devolução de venda</td><td>1201, 1202, 2201, 2202</td><td>Abate: quantidade e valor entram negativos</td></tr>
+        <tr><td>Cortesia / doação</td><td>5910, 6910, 5911</td><td>Nada — e fica visível como cortesia no painel</td></tr>
+        <tr><td>Sem efeito</td><td>5917, 6917 (remessa), 5912 (demonstração), 5905 (depósito), 5914 (feira), 5949, 1918, 1919…</td><td>Nada</td></tr>
+      </table></div>
+      <p>A tabela mora em <span class="menupath">Direitos Autorais<i>‣</i>Configurações<i>‣</i>Vendas legadas<i>‣</i>CFOP legado</span> e é editável. Depois de mudar um código, rode <span class="menupath">Configurações<i>‣</i>Vendas legadas<i>‣</i>Reclassificar vendas legadas</span>: a classificação inteira é refeita, e os vínculos de produto feitos à mão são preservados.</p>
+
+      <h2 id="vincular">Vincular um título à mão</h2>
+      <ol class="steps">
+        <li>Em <span class="menupath">Direitos Autorais<i>‣</i>Configurações<i>‣</i>Vendas legadas<i>‣</i>Vendas legadas</span>, use o filtro <strong>Sem produto</strong> e agrupe por título.</li>
+        <li>Selecione as linhas de um título e clique em <strong>Vincular produto</strong> no cabeçalho da lista.</li>
+        <li>Escolha o livro. Com <span class="field">Também as outras linhas com estes títulos</span> ligado, todas as linhas sem produto com o mesmo título original (ou código interno) recebem o mesmo vínculo.</li>
+      </ol>
+      <p>O que não casa pelo ISBN fica sem produto, à vista: linhas sem ISBN na origem (títulos antigos, de antes do código de barras) e ISBNs que ainda não existem no catálogo. É a fila do botão de ligar ao produto.</p>
+
+      <h2 id="canal">Canal de venda e vendas especiais</h2>
+      <p>A base legada não diz por que canal cada nota saiu. Sem isso, o legado não sabe o que foi <strong>venda especial</strong> — e num contrato sobre o preço de capa a venda especial paga sobre o <strong>líquido</strong>, não sobre o bruto. O canal é marcado à mão pelo departamento de direitos autorais, na própria lista de vendas legadas.</p>
+      <ol class="steps">
+        <li>Abra <span class="menupath">Direitos Autorais<i>‣</i>Configurações<i>‣</i>Vendas legadas<i>‣</i>Vendas legadas</span> e filtre o que vai marcar: um <span class="field">Cliente</span>, um <span class="field">Nº da nota</span>, ou agrupe por <strong>Cliente</strong> para ver o tamanho de cada um. O filtro <strong>Sem canal</strong> mostra o que ainda falta.</li>
+        <li>Selecione as linhas (a caixa do cabeçalho seleciona a página; <strong>Selecionar todos</strong> pega o filtro inteiro).</li>
+        <li>Clique na coluna <span class="field">Canal de venda</span> de uma das linhas selecionadas, escolha o canal e confirme: o Odoo pergunta se aplica a todas as selecionadas. Na lista, o canal é a única coluna que se edita — as outras ficam travadas para nada mudar por engano.</li>
+        <li>Abra o contrato e clique em <strong>Apurar vendas legadas</strong>. Os meses afetados são recalculados; nada se duplica.</li>
+      </ol>
+      <p>A regra é a mesma das faturas: a venda é especial quando o canal está entre os <strong>canais de vendas especiais</strong> da empresa do contrato (<span class="menupath">Configurações<i>‣</i>Direitos Autorais</span>) <em>e</em> o desconto chega ao <strong>desconto mínimo</strong> dali. A base guarda o desconto em reais; a coluna <span class="field">Desconto (%)</span> o mostra em percentual, calculado como 1 − líquido ÷ bruto. A coluna <span class="field">Venda especial</span> e o filtro <strong>Vendas especiais</strong> respondem pela configuração da empresa em que você está.</p>
+      <div class="callout note"><span class="title">Só o contrato sobre preço de capa muda</span>
+        <p>Contrato que já paga sobre o líquido não se altera ao marcar canal: a venda especial só troca a base de bruto para líquido. Marcar um canal comum (não especial) não muda nada no cálculo — serve para organizar a base.</p>
+      </div>
+
+      <h2 id="indices">Índices de correção</h2>
+      <p>Um real de 2005 não é um real de hoje. O módulo vem com o <strong>IPCA</strong> mensal do IBGE desde janeiro de 1999, como publicado pelo Banco Central, e qualquer outro índice pode ser cadastrado em <span class="menupath">Direitos Autorais<i>‣</i>Configurações<i>‣</i>Vendas legadas<i>‣</i>Índices de correção</span>.</p>
+      <ul>
+        <li><strong>Atualizar do BCB</strong> busca a série inteira na API aberta do Banco Central (o campo <span class="field">Série do BCB</span> diz qual: 433 é o IPCA, 188 o INPC, 189 o IGP-M) e acrescenta os meses novos, revisando os que o IBGE tenha corrigido.</li>
+        <li>Também dá para digitar as variações mensais na própria tela.</li>
+      </ul>
+      <div class="callout example"><span class="title">A convenção da correção</span>
+        <p>Um valor datado num mês já está no dinheiro daquele mês. Para trazê-lo ao mês de referência, multiplica-se por (1 + variação) de cada mês <em>depois</em> dele, até o de referência <em>inclusive</em>. Março de 2005 corrigido para junho de 2005 usa abril, maio e junho. O mesmo mês dá fator 1, e o módulo nunca deflaciona: referência anterior à venda também dá 1.</p>
+        <p>Se faltar um mês no meio do caminho, a apuração para e diz qual: nada de correção parcial em silêncio.</p>
+      </div>
+
+      <h2 id="contrato">Ligar no contrato</h2>
+      <ol class="steps">
+        <li>Abra o contrato e vá à aba <strong>Vendas legadas</strong>.</li>
+        <li>Ligue <span class="field">Vendas legadas</span>. Os totais ao lado mostram, na hora, quantos exemplares e quanto de base líquida a base legada tem para as obras daquele contrato.</li>
+        <li>Escolha o <span class="field">Índice de correção</span> (vazio = valores nominais, no dinheiro da época) e, se quiser, o <span class="field">Mês de referência</span> (vazio = o último mês publicado no índice).</li>
+        <li>Se um período já foi acertado num contrato anterior, limite a janela com <span class="field">Legado a partir de</span> e <span class="field">Legado até</span>.</li>
+        <li>Clique em <strong>Apurar vendas legadas</strong> no cabeçalho — ou simplesmente em <strong>Preencher linhas de royalty</strong>, que apura o legado antes das faturas, no mesmo clique.</li>
+      </ol>
+      <p>O resultado é <strong>um lançamento por mês</strong> de vendas legadas na conta analítica de cada linha de royalty, datado no último dia do mês, com a quantidade, o percentual da faixa e, quando há índice, o fator aplicado no próprio nome ("Vendas legadas 03/2005 (7,00%) × 3,41 IPCA"). O botão inteligente <strong>Vendas legadas</strong> abre as linhas da base que alimentaram a conta.</p>
+      <ul>
+        <li><strong>A faixa segue o acumulado.</strong> Os meses são percorridos em ordem; cada um recebe o percentual da faixa em que o total de exemplares está ao fim dele. E o total legado abre o contador das faturas: um autor cujo livro vendeu três mil exemplares antes do Odoo não volta ao exemplar número um na primeira fatura daqui.</li>
+        <li><strong>Reapurar é seguro.</strong> Rodar de novo não duplica nada: o mês já lançado é atualizado se a base mudou (uma linha forçada, uma reimportação) e removido se deixou de existir.</li>
+        <li><strong>Remover lançamentos legados</strong> apaga só a parte legada da conta; os royalties das faturas ficam.</li>
+        <li>Os lançamentos legados entram no <a href="liber_copyright_contracts_reports.html">extrato do autor</a> e são quitados pela data do último pagamento como qualquer outro royalty.</li>
+      </ul>
+      <div class="callout note"><span class="title">Contrato cancelado, contrato antigo</span>
+        <p>Um contrato cancelado não apura legado nenhum. Já a data de assinatura <em>não</em> limita o legado: vendas de 2005 entram num contrato assinado em 2026, porque o contrato novo é o que registra a mesma obra. Use a janela de datas quando isso não for o desejado.</p>
+      </div>
+
+      <h2 id="extrato">O quadro anual na prestação de contas</h2>
+      <p>Os direitos legados já entram no total da <a href="liber_copyright_contracts_reports.html">prestação de contas</a> do autor, como qualquer outro royalty. O que o autor não via era <em>quanto daquele total é correção</em>. Por isso o extrato ganha, logo abaixo do quadro de direitos autorais, o quadro <strong>"vendas anteriores ao sistema: correção monetária por ano"</strong>, com uma linha por obra e ano:</p>
+      <div class="tablewrap"><table>
+        <tr><th>Coluna</th><th>O que mostra</th></tr>
+        <tr><td>Livros vendidos</td><td>Exemplares do ano, devoluções já abatidas.</td></tr>
+        <tr><td>Valor da época</td><td>O que as vendas do ano somaram no dinheiro daquele ano (base líquida, ou bruta se a linha de royalty for sobre preço de capa).</td></tr>
+        <tr><td>Índice</td><td>O índice e o mês de referência do contrato ("IPCA 08/2026"); um traço quando o contrato apura pelo valor nominal.</td></tr>
+        <tr><td>Fator</td><td>Valor corrigido dividido pelo valor da época: a correção média do ano. Um ano antigo de IPCA alto mostra 4,5; um ano recente, 1,4; sem índice, 1,0000.</td></tr>
+        <tr><td>Valor corrigido</td><td>A base sobre a qual o percentual foi de fato aplicado.</td></tr>
+        <tr><td>%</td><td>A faixa do ano; "7,00 a 10,00%" quando o acumulado trocou de faixa no meio do ano.</td></tr>
+        <tr><td>Direito autoral</td><td>O royalty do ano, já incluído no total do extrato.</td></tr>
+      </table></div>
+      <p>O quadro respeita a mesma janela do extrato: só os anos ainda em aberto depois do último pagamento aparecem. Ele some sozinho quando o autor não tem direito legado nenhum.</p>
+
+      <h2 id="faq">Perguntas frequentes</h2>
+      <p><strong>A base inteira soma milhões. É isso que se paga?</strong> Não. Esse é o valor nominal de tudo que foi venda, de todas as obras, em todo o período. Cada contrato apura só as suas obras, na sua janela, pela sua faixa — e a maior parte desse período já foi acertada com os autores na época.</p>
+      <p><strong>Por que o painel mostra "sem efeito" com quase tanto valor quanto "venda"?</strong> Porque cada livro consignado passa duas vezes pela base: na remessa e no acerto. O "sem efeito" é, em grande parte, a remessa.</p>
+      <p><strong>Mudei um CFOP na tabela e nada aconteceu.</strong> Rode <span class="menupath">Configurações<i>‣</i>Vendas legadas<i>‣</i>Reclassificar vendas legadas</span>, e depois <strong>Apurar vendas legadas</strong> nos contratos ligados.</p>
+      <p><strong>A apuração parou dizendo que falta um mês no índice.</strong> Abra o índice e clique em <strong>Atualizar do BCB</strong>; se o mês for mais recente que a última publicação do IBGE, escolha um <span class="field">Mês de referência</span> anterior.</p>
+
+      <div class="seealso">
+        <span class="title">Veja também</span>
+        <ul>
+          <li><a href="liber_copyright_contracts_analytics.html">Cálculo de royalties</a> — o motor em que os lançamentos legados se somam aos das faturas.</li>
+          <li><a href="liber_copyright_contracts_reports.html">Prestação de contas</a> — o extrato do autor, legado incluído.</li>
+          <li><a href="liber_copyright_contracts.html">Contratos de direitos autorais</a> — o módulo base da suíte.</li>
+        </ul>
+      </div>
+
+      <nav class="pager" id="pager"></nav>
+    </article>
+  </div>
+</div>
+<script src="docs.js"></script>
+</body>
+</html>

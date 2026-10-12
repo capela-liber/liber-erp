@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_edlab_price_index_form" model="ir.ui.view">
+        <field name="name">edlab.price.index.form</field>
+        <field name="model">edlab.price.index</field>
+        <field name="arch" type="xml">
+            <form string="Price Index">
+                <header>
+                    <button name="action_fetch_bcb" type="object" string="Refresh from BCB"
+                            class="btn-primary"
+                            help="Pulls the monthly series from the Central Bank of Brazil's open API (SGS)."/>
+                </header>
+                <sheet>
+                    <widget name="web_ribbon" title="Archived" bg_color="text-bg-danger" invisible="active"/>
+                    <div class="oe_title">
+                        <h1><field name="name" placeholder="e.g. IPCA"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="code"/>
+                            <field name="bcb_series"/>
+                            <field name="active" invisible="1"/>
+                        </group>
+                        <group>
+                            <field name="first_date"/>
+                            <field name="last_date"/>
+                            <field name="value_count"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Monthly values" name="values">
+                            <field name="value_ids">
+                                <list editable="top">
+                                    <field name="date"/>
+                                    <field name="variation"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_edlab_price_index_tree" model="ir.ui.view">
+        <field name="name">edlab.price.index.list</field>
+        <field name="model">edlab.price.index</field>
+        <field name="arch" type="xml">
+            <list string="Price Indexes">
+                <field name="code"/>
+                <field name="name"/>
+                <field name="bcb_series" optional="show"/>
+                <field name="first_date"/>
+                <field name="last_date"/>
+                <field name="value_count"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="action_edlab_price_index" model="ir.actions.act_window">
+        <field name="name">Price Indexes</field>
+        <field name="res_model">edlab.price.index</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">No price index yet</p>
+            <p>An index (IPCA, INPC, IGP-M...) brings the legacy sales of a contract to the money of a reference month. Type the monthly variations or refresh them from the Central Bank.</p>
+        </field>
+    </record>
+</odoo>

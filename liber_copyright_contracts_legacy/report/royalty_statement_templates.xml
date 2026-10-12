@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Yearly view of the legacy correction, between the royalties table
+         and the advances. Fixed labels in pt-BR, like the rest of the
+         statement (it is a Brazilian accountability document). -->
+    <template id="report_royalty_statement_legacy"
+              inherit_id="liber_copyright_contracts_reports.report_royalty_statement">
+        <xpath expr="//t[@t-if=&quot;st['advances']&quot;]" position="before">
+            <t t-if="st.get('legacy_years')">
+                <div style="margin-top: 24px;">
+                    <div style="font-variant: small-caps; color: #555; border-bottom: 1px solid #ccc; padding-bottom: 2px; margin-bottom: 8px;">vendas anteriores ao sistema: correção monetária por ano</div>
+                    <table class="table table-sm o_main_table royalty-table">
+                        <thead>
+                            <tr>
+                                <th>Obra</th>
+                                <th>Ano</th>
+                                <th class="text-end">Livros vendidos</th>
+                                <th class="text-end">Valor da época</th>
+                                <th>Índice</th>
+                                <th class="text-end">Fator</th>
+                                <th class="text-end">Valor corrigido</th>
+                                <th class="text-end">%</th>
+                                <th class="text-end">Direito autoral</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr t-foreach="st['legacy_years']" t-as="ly">
+                                <td><span t-esc="ly['work']"/></td>
+                                <td><span t-esc="ly['year']"/></td>
+                                <td class="text-end"><span t-esc="ly['qty']"/></td>
+                                <td class="text-end">
+                                    <span t-esc="ly['nominal']" t-options='{"widget": "monetary", "display_currency": st["currency"]}'/>
+                                </td>
+                                <td><span t-esc="ly['index_label']"/></td>
+                                <td class="text-end"><span t-esc="ly['factor_label']"/></td>
+                                <td class="text-end">
+                                    <span t-esc="ly['corrected']" t-options='{"widget": "monetary", "display_currency": st["currency"]}'/>
+                                </td>
+                                <td class="text-end"><span t-esc="ly['percentage_label']"/></td>
+                                <td class="text-end">
+                                    <span t-esc="ly['amount']" t-options='{"widget": "monetary", "display_currency": st["currency"]}'/>
+                                </td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr style="font-weight: bold; border-top: 2px solid #000;">
+                                <td colspan="2" class="text-end">Total</td>
+                                <td class="text-end"><span t-esc="st['legacy_years_total']['qty']"/></td>
+                                <td class="text-end">
+                                    <span t-esc="st['legacy_years_total']['nominal']" t-options='{"widget": "monetary", "display_currency": st["currency"]}'/>
+                                </td>
+                                <td></td>
+                                <td></td>
+                                <td class="text-end">
+                                    <span t-esc="st['legacy_years_total']['corrected']" t-options='{"widget": "monetary", "display_currency": st["currency"]}'/>
+                                </td>
+                                <td></td>
+                                <td class="text-end">
+                                    <span t-esc="st['legacy_years_total']['amount']" t-options='{"widget": "monetary", "display_currency": st["currency"]}'/>
+                                </td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                    <p style="color: #555; font-size: 0.9em;"><em>O valor da época é o que as vendas somaram no dinheiro daquele ano. O fator é a correção acumulada pelo índice indicado, do mês de cada venda até o mês de referência; o valor corrigido é a base sobre a qual o percentual foi aplicado. Estes direitos já estão incluídos no quadro acima.</em></p>
+                </div>
+            </t>
+        </xpath>
+    </template>
+</odoo>

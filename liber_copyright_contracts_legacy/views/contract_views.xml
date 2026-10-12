@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_edlab_contract_form_legacy" model="ir.ui.view">
+        <field name="name">edlab.contract.form.legacy</field>
+        <field name="model">edlab.contract</field>
+        <field name="inherit_id" ref="liber_copyright_contracts.view_edlab_contract_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header" position="inside">
+                <button name="action_book_legacy" type="object" string="Book Legacy Sales"
+                        invisible="not legacy_enabled"
+                        groups="liber_copyright_contracts.group_contract_manager"
+                        help="Book (or refresh) one analytic entry per month of legacy sales of the contracted works."/>
+                <button name="action_unbook_legacy" type="object" string="Remove Legacy Entries"
+                        invisible="not legacy_enabled or not legacy_accrued"
+                        groups="liber_copyright_contracts.group_contract_manager"
+                        confirm="Remove every legacy analytic entry of this contract? The invoiced royalties stay."/>
+            </xpath>
+            <!-- Into the family's button box (analytics owns it): a second
+                 oe_button_box never renders, as the tour screenshot showed. -->
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button name="action_view_legacy_sales" type="object" class="oe_stat_button"
+                        icon="fa-history" invisible="not legacy_sale_count">
+                    <field name="legacy_sale_count" widget="statinfo" string="Legacy Sales"/>
+                </button>
+            </xpath>
+            <xpath expr="//notebook/page[@name='royalties']" position="after">
+                <page string="Legacy Sales" name="legacy_sales">
+                    <group>
+                        <group string="Option">
+                            <field name="legacy_enabled"/>
+                            <field name="legacy_index_id" invisible="not legacy_enabled"/>
+                            <field name="legacy_reference_date" invisible="not legacy_enabled or not legacy_index_id"/>
+                            <field name="legacy_date_from" invisible="not legacy_enabled"/>
+                            <field name="legacy_date_to" invisible="not legacy_enabled"/>
+                        </group>
+                        <group string="Totals" invisible="not legacy_enabled">
+                            <field name="legacy_qty"/>
+                            <field name="legacy_base"/>
+                            <field name="legacy_accrued"/>
+                        </group>
+                    </group>
+                    <p class="text-muted" invisible="legacy_enabled">
+                        Switch on to accrue royalties on the sales of the contracted works made before this system. Only sales and returns count, by CFOP; consignment shipments, samples and donations do not.
+                    </p>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_edlab_contract_tree_legacy" model="ir.ui.view">
+        <field name="name">edlab.contract.list.legacy</field>
+        <field name="model">edlab.contract</field>
+        <field name="inherit_id" ref="liber_copyright_contracts.view_edlab_contract_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//list" position="inside">
+                <field name="legacy_enabled" optional="hide"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>
