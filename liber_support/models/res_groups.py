@@ -74,3 +74,38 @@ class ResGroups(models.Model):
                                  raise_if_not_found=False)
             if perfil and grupo:
                 perfil.write({'implied_ids': [(4, grupo.id)]})
+        self._liber_support_visitante_le_tudo()
+
+    @api.model
+    def _liber_support_visitante_le_tudo(self):
+        """A demonstração lê TODOS os chamados, não só os da equipe dele.
+
+        No nível de usuário, a regra "own teams" mostra só os chamados das
+        equipes de que a pessoa é membro -- e o visitante não é membro de
+        nenhuma, então a lista abria vazia (12/10/2026). Uma regra só de
+        LEITURA, só para o visitante: as regras de grupo se somam com OU, e
+        as operações de escrita seguem barradas pela allowlist do liber_roles.
+        Mora aqui, e não em XML, porque citar o grupo do liber_roles num
+        arquivo de dados seria dependência de módulo.
+        """
+        visitante = self.env.ref('liber_roles.group_visitante',
+                                 raise_if_not_found=False)
+        if not visitante:
+            return
+        Regra = self.env['ir.rule'].sudo().with_context(active_test=False)
+        modelo = self.env['ir.model']._get('liber.support.ticket')
+        valores = {
+            'name': 'Support ticket: the demo visitor reads all',
+            'model_id': modelo.id,
+            'domain_force': '[(1, "=", 1)]',
+            'groups': [(6, 0, visitante.ids)],
+            'perm_read': True, 'perm_write': False,
+            'perm_create': False, 'perm_unlink': False,
+            'active': True,
+        }
+        regra = Regra.search([('name', '=', valores['name']),
+                              ('model_id', '=', modelo.id)], limit=1)
+        if regra:
+            regra.write(valores)
+        else:
+            Regra.create(valores)

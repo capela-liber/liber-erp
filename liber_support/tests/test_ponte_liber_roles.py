@@ -70,6 +70,28 @@ class TestPonteLiberRoles(TransactionCase):
             visitante.all_implied_ids,
             'a conta pública não administra o Atendimento')
 
+    def test_a_demonstracao_le_chamado_de_equipe_alheia(self):
+        """O visitante não é membro de equipe nenhuma, e mesmo assim lê.
+
+        Sem a regra só de leitura, a regra "own teams" do nível de usuário
+        deixava a lista de chamados vazia na vitrine (12/10/2026).
+        """
+        visitante = self._perfil('visitante')
+        if not visitante:
+            self.skipTest('sem conta de visitante nesta base')
+        LOGIN = 'demo_ponte'
+        demo = self.env['res.users'].with_context(no_reset_password=True).create({
+            'name': 'Demo da ponte', 'login': LOGIN, 'password': LOGIN,
+            'group_ids': [(6, 0, visitante.ids)]})
+        equipe = self.env['liber.support.team'].create({'name': 'Equipe alheia'})
+        chamado = self.env['liber.support.ticket'].create({
+            'name': 'Chamado da equipe alheia', 'team_id': equipe.id})
+        self.env.invalidate_all()
+        vistos = self.env['liber.support.ticket'].with_user(demo).search(
+            [('id', '=', chamado.id)])
+        self.assertEqual(vistos, chamado,
+                         'a demonstração não lê chamado de equipe de que não é membro')
+
     def test_o_gerente_administra_e_o_atendente_nao(self):
         """A régua da direção (10/08/2026), e ela cai onde os ACLs cortam.
 
