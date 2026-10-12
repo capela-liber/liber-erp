@@ -101,10 +101,6 @@ class TestVisitante(TransactionCase):
     #: mudar. Menu de Configuração não entra nesta lista porque o teste já o
     #: dispensa por construção: configurar é de administrador.
     EXCECOES = {
-        'liber_sales_dashboard': (
-            'O menu é trancado por sales_team.group_sale_manager, que o '
-            'visitante remove com (3, ...). Destrancar é decisão do módulo, '
-            'não do visitante.'),
         'liber_roles': (
             'O painel de acesso exigiria base.group_system.'),
     }

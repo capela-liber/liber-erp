@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- A demonstração vê Vendas e Produto: ver models/liber_roles_bridge.py.
+         Roda na instalação e em todo -u; sem o liber_roles, não faz nada. -->
+    <function model="res.groups" name="_liber_sales_dashboard_ligar_no_visitante"/>
+</odoo>

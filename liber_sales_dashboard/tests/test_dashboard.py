@@ -363,3 +363,29 @@ class TestSalesDashboard(TransactionCase):
             fim = pizza["offset"]["y"] + pizza["height"]
             self.assertLessEqual(fim, inicio_proxima_secao,
                                  "a pizza cobre o título de 'Principais cotações'")
+
+    def test_o_mapa_de_vendas_volta_ao_painel(self):
+        """A reescrita de setembro tirou o card do mapa (12/10/2026).
+
+        O mapa vem na forma do core -- agrupado por país -- porque é essa a
+        forma que o liber_geo_brasil reconhece e troca pelas 27 UFs. Mesmo
+        recorte das pizzas (pedido confirmado) e os mesmos filtros, e numa
+        seção própria depois das "Principais ...", sem cobrir nada.
+        """
+        planilha = self.planilha["sheets"][0]
+        mapas = [f for f in planilha["figures"] if f["data"]["type"] == "odoo_geo"]
+        self.assertEqual(len(mapas), 1, "o painel tem um mapa, e só um")
+        mapa = mapas[0]["data"]
+        self.assertEqual(mapa["metaData"]["groupBy"], ["country_id"])
+        self.assertEqual(mapa["metaData"]["resModel"], "sale.report")
+        pizza = next(iter(self._pizzas().values()))["data"]
+        self.assertEqual(mapa["searchParams"]["domain"], pizza["searchParams"]["domain"])
+        self.assertEqual(set(mapa["fieldMatching"]),
+                         {f["id"] for f in self.planilha["globalFilters"]})
+        altura = lambda linha: planilha["rows"].get(str(linha), {}).get("size", 23)
+        titulo = sum(altura(i) for i in range(113))  # depois do título da linha 113
+        self.assertGreaterEqual(mapas[0]["offset"]["y"], titulo,
+                                "o mapa cobre o título da própria seção")
+        fim_do_painel = sum(altura(i) for i in range(planilha["rowNumber"]))
+        self.assertLessEqual(mapas[0]["offset"]["y"] + mapas[0]["height"], fim_do_painel,
+                             "o mapa passa do fim do painel e sai cortado")

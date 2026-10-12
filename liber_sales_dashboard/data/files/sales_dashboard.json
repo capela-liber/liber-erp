@@ -5,7 +5,7 @@
    "id": "vendas-folha-principal",
    "name": "Vendas",
    "colNumber": 10,
-   "rowNumber": 125,
+   "rowNumber": 137,
    "rows": {
     "51": {
      "size": 40
@@ -14,6 +14,9 @@
      "size": 40
     },
     "97": {
+     "size": 40
+    },
+    "112": {
      "size": 40
     }
    },
@@ -145,7 +148,8 @@
     "I93": "=ODOO.LIST(2,7,\"amount_untaxed\")",
     "I94": "=ODOO.LIST(2,8,\"amount_untaxed\")",
     "I95": "=ODOO.LIST(2,9,\"amount_untaxed\")",
-    "I96": "=ODOO.LIST(2,10,\"amount_untaxed\")"
+    "I96": "=ODOO.LIST(2,10,\"amount_untaxed\")",
+    "A113": "Vendido por UF (pedidos)"
    },
    "styles": {
     "A52": 1,
@@ -153,7 +157,8 @@
     "A85": 1,
     "F85": 1,
     "A98": 1,
-    "F98": 1
+    "F98": 1,
+    "A113": 1
    },
    "formats": {},
    "borders": {},
@@ -697,6 +702,77 @@
       },
       "dataSets": [],
       "chartId": "c2a70000-0000-4000-8000-000000000015",
+      "fieldMatching": {
+       "f2a70000-0000-4000-8000-000000000001": {
+        "chain": "order_date",
+        "type": "date",
+        "offset": 0
+       },
+       "f2a70000-0000-4000-8000-000000000002": {
+        "chain": "partner_id",
+        "type": "many2one"
+       },
+       "f2a70000-0000-4000-8000-000000000003": {
+        "chain": "team_id",
+        "type": "many2one"
+       }
+      }
+     }
+    },
+    {
+     "id": "c2a70000-0000-4000-8000-000000000030",
+     "col": 0,
+     "row": 0,
+     "offset": {
+      "x": 0,
+      "y": 2677
+     },
+     "width": 1000,
+     "height": 460,
+     "tag": "chart",
+     "data": {
+      "type": "odoo_geo",
+      "title": {
+       "text": "Vendido por país",
+       "fontSize": 16,
+       "bold": true,
+       "color": "#434343"
+      },
+      "background": "#FFFFFF",
+      "legendPosition": "left",
+      "metaData": {
+       "groupBy": [
+        "country_id"
+       ],
+       "measure": "price_subtotal",
+       "order": null,
+       "resModel": "sale.report",
+       "mode": "bar"
+      },
+      "searchParams": {
+       "context": {
+        "group_by": []
+       },
+       "domain": [
+        [
+         "state",
+         "in",
+         [
+          "sale",
+          "done"
+         ]
+        ]
+       ],
+       "groupBy": [
+        "country_id"
+       ],
+       "orderBy": []
+      },
+      "actionXmlId": "sale.action_order_report_all",
+      "dataSets": [
+       {}
+      ],
+      "colorScale": "blues",
       "fieldMatching": {
        "f2a70000-0000-4000-8000-000000000001": {
         "chain": "order_date",
@@ -1475,6 +1551,7 @@
   "c2a70000-0000-4000-8000-000000000011": "sale.menu_reporting_sales",
   "c2a70000-0000-4000-8000-000000000012": "liber_sales_dashboard.menu_notas_de_venda",
   "c2a70000-0000-4000-8000-000000000014": "sale.menu_reporting_sales",
-  "c2a70000-0000-4000-8000-000000000015": "sale.menu_reporting_sales"
+  "c2a70000-0000-4000-8000-000000000015": "sale.menu_reporting_sales",
+  "c2a70000-0000-4000-8000-000000000030": "sale.menu_reporting_sales"
  }
 }

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     'name': 'Liber Sales Dashboard',
-    'version': '19.0.1.2.0',
+    'version': '19.0.1.3.0',
     'summary': 'The Sales dashboard reads two clocks: the order and the fiscal note',
     'description': """
 A publishing house sells twice: once when the order is taken (the commercial
@@ -52,6 +52,7 @@ one to put the content back.
         'views/nfe_xml_menus.xml',
         'views/nfe_xml_search.xml',
         'data/dashboard.xml',
+        'data/liber_roles_bridge.xml',
     ],
     'assets': {
         # The same bundle where the core loads o-spreadsheet: the card patch
