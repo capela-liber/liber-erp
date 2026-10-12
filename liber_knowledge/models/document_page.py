@@ -158,8 +158,8 @@ class DocumentPage(models.Model):
     # -- o app na home: nome, ícone e lugar --------------------------------
     APP_NAME = "Manual"
     APP_ICON = "liber_knowledge,static/description/icon.png"
-    # O Manual mora ao lado do Treinamento (capela_training), quando ele existe.
-    APP_VIZINHO = "capela_training.menu_training_root"
+    # O Manual mora ao lado do Treinamento (liber_training), quando ele existe.
+    APP_VIZINHO = "liber_training.menu_training_root"
 
     @api.model
     def _liber_app_name(self):
@@ -179,10 +179,10 @@ class DocumentPage(models.Model):
         if menu.web_icon != self.APP_ICON:
             valores["web_icon"] = self.APP_ICON
         vizinho = self.env.ref(self.APP_VIZINHO, raise_if_not_found=False)
-        # na mesma sequência, a home desempata pelo id: o Manual (id maior,
-        # instalado depois) cai logo depois do vizinho
-        if vizinho and menu.sequence != vizinho.sequence:
-            valores["sequence"] = vizinho.sequence
+        # Uma depois do vizinho, e não a mesma: desempatar pelo id punha o
+        # Manual ANTES quando o menu dele era o mais antigo (a vitrine).
+        if vizinho and menu.sequence != vizinho.sequence + 1:
+            valores["sequence"] = vizinho.sequence + 1
         if valores:
             menu.write(valores)
 

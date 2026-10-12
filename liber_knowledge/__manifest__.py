@@ -19,7 +19,7 @@ groups or users). This module adds the house rules:
   Knowledge > Configuration > Update Liber manuals. A page edited here is
   never overwritten.
 """,
-    'version': '19.0.1.3.0',
+    'version': '19.0.1.3.1',
     'category': 'Knowledge',
     'author': 'EdLab Press',
     'website': 'https://liber.edlab.press',

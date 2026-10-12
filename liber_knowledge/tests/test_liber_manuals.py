@@ -326,7 +326,7 @@ class TestAcesso(TransactionCase):
         menu = self.env.ref('document_knowledge.menu_document_root')
         self.env['document.page']._liber_app_name()
         self.assertEqual(menu.web_icon, 'liber_knowledge,static/description/icon.png')
-        vizinho = self.env.ref('capela_training.menu_training_root', raise_if_not_found=False)
+        vizinho = self.env.ref('liber_training.menu_training_root', raise_if_not_found=False)
         if vizinho:
             raizes = self.env['ir.ui.menu'].search([('parent_id', '=', False)], order='sequence, id')
             ids = raizes.ids
