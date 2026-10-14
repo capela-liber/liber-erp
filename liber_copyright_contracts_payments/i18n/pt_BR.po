@@ -428,3 +428,133 @@ msgstr ""
 msgid "days to pay"
 msgstr "dias para pagar"
 
+#. module: liber_copyright_contracts_payments
+#: model:edlab.contract.month,name:liber_copyright_contracts_payments.month_01
+msgid "Jan"
+msgstr "jan"
+
+#. module: liber_copyright_contracts_payments
+#: model:edlab.contract.month,name:liber_copyright_contracts_payments.month_02
+msgid "Feb"
+msgstr "fev"
+
+#. module: liber_copyright_contracts_payments
+#: model:edlab.contract.month,name:liber_copyright_contracts_payments.month_03
+msgid "Mar"
+msgstr "mar"
+
+#. module: liber_copyright_contracts_payments
+#: model:edlab.contract.month,name:liber_copyright_contracts_payments.month_04
+msgid "Apr"
+msgstr "abr"
+
+#. module: liber_copyright_contracts_payments
+#: model:edlab.contract.month,name:liber_copyright_contracts_payments.month_05
+msgid "May"
+msgstr "mai"
+
+#. module: liber_copyright_contracts_payments
+#: model:edlab.contract.month,name:liber_copyright_contracts_payments.month_06
+msgid "Jun"
+msgstr "jun"
+
+#. module: liber_copyright_contracts_payments
+#: model:edlab.contract.month,name:liber_copyright_contracts_payments.month_07
+msgid "Jul"
+msgstr "jul"
+
+#. module: liber_copyright_contracts_payments
+#: model:edlab.contract.month,name:liber_copyright_contracts_payments.month_08
+msgid "Aug"
+msgstr "ago"
+
+#. module: liber_copyright_contracts_payments
+#: model:edlab.contract.month,name:liber_copyright_contracts_payments.month_09
+msgid "Sep"
+msgstr "set"
+
+#. module: liber_copyright_contracts_payments
+#: model:edlab.contract.month,name:liber_copyright_contracts_payments.month_10
+msgid "Oct"
+msgstr "out"
+
+#. module: liber_copyright_contracts_payments
+#: model:edlab.contract.month,name:liber_copyright_contracts_payments.month_11
+msgid "Nov"
+msgstr "nov"
+
+#. module: liber_copyright_contracts_payments
+#: model:edlab.contract.month,name:liber_copyright_contracts_payments.month_12
+msgid "Dec"
+msgstr "dez"
+
+#. module: liber_copyright_contracts_payments
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_payments.view_edlab_contract_form_settlement
+msgid "Settlement"
+msgstr "Acerto"
+
+#. module: liber_copyright_contracts_payments
+#: model:ir.model.fields,field_description:liber_copyright_contracts_payments.field_edlab_contract__settlement_month_ids
+msgid "Closing Months"
+msgstr "Meses de fechamento"
+
+#. module: liber_copyright_contracts_payments
+#: model:ir.model.fields,field_description:liber_copyright_contracts_payments.field_edlab_contract__settlement_periodicity
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_payments.view_edlab_contract_search_settlement
+msgid "Settlement Periodicity"
+msgstr "Periodicidade de acerto"
+
+#. module: liber_copyright_contracts_payments
+#: model:ir.model.fields,field_description:liber_copyright_contracts_payments.field_edlab_contract__next_closing_date
+msgid "Next Closing"
+msgstr "Próximo fechamento"
+
+#. module: liber_copyright_contracts_payments
+#: model:ir.model.fields.selection,name:liber_copyright_contracts_payments.selection__edlab_contract__settlement_periodicity__monthly
+msgid "Monthly"
+msgstr "Mensal"
+
+#. module: liber_copyright_contracts_payments
+#: model:ir.model.fields.selection,name:liber_copyright_contracts_payments.selection__edlab_contract__settlement_periodicity__quarterly
+msgid "Quarterly"
+msgstr "Trimestral"
+
+#. module: liber_copyright_contracts_payments
+#: model:ir.model.fields.selection,name:liber_copyright_contracts_payments.selection__edlab_contract__settlement_periodicity__semiannual
+msgid "Semiannual"
+msgstr "Semestral"
+
+#. module: liber_copyright_contracts_payments
+#: model:ir.model.fields.selection,name:liber_copyright_contracts_payments.selection__edlab_contract__settlement_periodicity__annual
+msgid "Annual"
+msgstr "Anual"
+
+#. module: liber_copyright_contracts_payments
+#: model:ir.model.fields.selection,name:liber_copyright_contracts_payments.selection__edlab_contract__settlement_periodicity__custom
+msgid "Custom"
+msgstr "Personalizada"
+
+#. module: liber_copyright_contracts_payments
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_payments.view_edlab_contract_search_settlement
+msgid "Closes This Month"
+msgstr "Fecham neste mês"
+
+#. module: liber_copyright_contracts_payments
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_payments.view_edlab_contract_search_settlement
+msgid "Closes Next Month"
+msgstr "Fecham no próximo mês"
+
+#. module: liber_copyright_contracts_payments
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_payments.view_edlab_contract_search_settlement
+msgid "No Closing Months"
+msgstr "Sem meses de fechamento"
+
+#. module: liber_copyright_contracts_payments
+#: model:ir.model,name:liber_copyright_contracts_payments.model_edlab_contract_month
+msgid "Month"
+msgstr "Mês"
+
+#. module: liber_copyright_contracts_payments
+#: model:ir.model.fields,help:liber_copyright_contracts_payments.field_edlab_contract__settlement_month_ids
+msgid "Months in which a royalty period of this contract CLOSES. June and December = semiannual; only December = annual."
+msgstr "Meses em que um período de royalties deste contrato FECHA. Junho e dezembro = semestral; só dezembro = anual."

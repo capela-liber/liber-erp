@@ -9,3 +9,5 @@ access_edlab_contract_reassign_user,edlab.contract.reassign.user,model_edlab_con
 access_edlab_contract_reassign_manager,edlab.contract.reassign.manager,model_edlab_contract_reassign,group_contract_manager,1,1,1,1
 access_edlab_contract_tag_user,edlab.contract.tag.user,model_edlab_contract_tag,group_contract_user,1,1,1,0
 access_edlab_contract_tag_manager,edlab.contract.tag.manager,model_edlab_contract_tag,group_contract_manager,1,1,1,1
+access_edlab_contract_tag_wizard_user,edlab.contract.tag.wizard.user,model_edlab_contract_tag_wizard,group_contract_user,1,1,1,1
+access_edlab_contract_tag_wizard_manager,edlab.contract.tag.wizard.manager,model_edlab_contract_tag_wizard,group_contract_manager,1,1,1,1

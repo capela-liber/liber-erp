@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="rule_author_mission_multi_company" model="ir.rule">
+        <field name="name">Author Mission: multi-company</field>
+        <field name="model_id" ref="model_edlab_author_mission"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <!-- Authors are another department. The contracts groups reach ONLY the
+         royalties tickets (whatever the team), through this rule; they never
+         get the support groups, so the commercial app stays out of their
+         menus. The commercial side keeps its own rules (own teams; manager
+         sees all) and its action leaves the royalties tickets out. -->
+    <record id="rule_support_ticket_contracts" model="ir.rule">
+        <field name="name">Support ticket: contracts people see the authors' tickets</field>
+        <field name="model_id" ref="liber_support.model_liber_support_ticket"/>
+        <field name="groups" eval="[(4, ref('liber_copyright_contracts.group_contract_user'))]"/>
+        <field name="domain_force">[('kind', '=', 'royalties')]</field>
+    </record>
+
+    <record id="action_contract_new_mission" model="ir.actions.server">
+        <field name="name">New author mission</field>
+        <field name="model_id" ref="liber_copyright_contracts.model_edlab_contract"/>
+        <field name="binding_model_id" ref="liber_copyright_contracts.model_edlab_contract"/>
+        <field name="binding_view_types">list</field>
+        <field name="state">code</field>
+        <field name="code">action = records.action_new_mission()</field>
+        <field name="group_ids" eval="[(4, ref('liber_copyright_contracts.group_contract_manager'))]"/>
+    </record>
+</odoo>

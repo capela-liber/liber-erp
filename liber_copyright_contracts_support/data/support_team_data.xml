@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Nothing to seed: the record behind the authors' mailbox is created
+         per company on first use (res.company._edlab_authors_team), with
+         the alias from Settings > Copyright > Author support. -->
+</odoo>

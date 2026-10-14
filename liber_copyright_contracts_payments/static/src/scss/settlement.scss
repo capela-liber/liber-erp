@@ -1,0 +1,6 @@
+// Os doze meses numa fileira só, e não numa coluna de doze linhas.
+.o_edlab_month_row > div {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem 1rem;
+}

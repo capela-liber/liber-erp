@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- The author's folder: every ticket of the author on the Beneficiary
+         tab, plus a button to open a spontaneous one. -->
+    <record id="view_partner_form_author_support" model="ir.ui.view">
+        <field name="name">res.partner.form.author.support</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="liber_copyright_contracts_reports.view_partner_form_edlab_author"/>
+        <field name="arch" type="xml">
+            <div name="button_box" position="inside">
+                <button name="action_view_author_tickets" type="object" class="oe_stat_button"
+                        icon="fa-life-ring" groups="liber_copyright_contracts.group_contract_user"
+                        invisible="not is_edlab_author and edlab_support_ticket_count == 0">
+                    <field name="edlab_support_ticket_count" widget="statinfo" string="Tickets"/>
+                </button>
+            </div>
+            <xpath expr="//page[@name='edlab_beneficiary']/field[@name='bank_ids']" position="after">
+                <div groups="liber_copyright_contracts.group_contract_user">
+                    <separator string="Support tickets"/>
+                    <button name="action_new_author_ticket" type="object" string="New ticket"
+                            class="btn btn-secondary mb-2" icon="fa-plus"/>
+                    <field name="edlab_support_ticket_ids" readonly="1" nolabel="1">
+                        <list default_order="create_date desc">
+                            <field name="create_date" string="Opened" widget="date"/>
+                            <field name="number"/>
+                            <field name="name"/>
+                            <field name="edlab_mission_id"/>
+                            <field name="edlab_contract_ids" widget="many2many_tags"/>
+                            <field name="stage_id" widget="badge"/>
+                            <field name="user_id"/>
+                        </list>
+                    </field>
+                </div>
+            </xpath>
+        </field>
+    </record>
+</odoo>

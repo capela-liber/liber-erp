@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="menu_author_missions"
+              name="Missions"
+              parent="liber_copyright_contracts.menu_copyright_contracts_root"
+              action="action_author_mission"
+              groups="liber_copyright_contracts.group_contract_user"
+              sequence="35"/>
+    <menuitem id="menu_author_tickets"
+              name="Tickets"
+              parent="liber_copyright_contracts.menu_copyright_contracts_root"
+              action="action_author_ticket"
+              groups="liber_copyright_contracts.group_contract_user"
+              sequence="36"/>
+</odoo>

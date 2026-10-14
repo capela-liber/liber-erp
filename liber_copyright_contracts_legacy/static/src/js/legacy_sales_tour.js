@@ -32,6 +32,19 @@ registry.category("web_tour.tours").add("legacy_sales_tour", {
             content: "The totals read",
         },
         {
+            // With more layers on the contract (support, documents) the
+            // box folds its last buttons into "More" at the tour's width;
+            // unfold it when it is there, do nothing when it is not.
+            trigger: ".o-form-buttonbox",
+            content: "Unfold the button box if it is folded",
+            run: () => {
+                const more = document.querySelector(".o-form-buttonbox .o_button_more");
+                if (more) {
+                    more.click();
+                }
+            },
+        },
+        {
             trigger: "button[name='action_view_legacy_sales']",
             content: "Jump to the legacy rows of the contracted works",
             run: "click",

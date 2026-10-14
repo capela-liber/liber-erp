@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     'name': 'Copyright Contracts - Cloud Documents',
-    'version': '19.0.1.2.1',
+    'version': '19.0.1.2.2',
     'summary': "Link each contract to its documents in Dropbox, Google "
                "Drive or GitHub",
     'description': """
@@ -15,9 +15,8 @@ and, in it, the mapped folders that hold contracts; the document picker of
 a contract only offers files from those folders.
 
 One document is the main one, and its file name fills the contract's
-Location. "Link documents by name" matches the Locations already typed (the
-PDF names) against the mirrored files. Opening a document goes through the
-folder's read ACL, exactly like opening it from Cloud Files.
+Location. Opening a document goes through the folder's read ACL, exactly
+like opening it from Cloud Files.
 """,
     'author': 'EdLab Press',
     'category': 'Sales/Contracts',

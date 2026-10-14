@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_author_mission_form" model="ir.ui.view">
+        <field name="name">edlab.author.mission.form</field>
+        <field name="model">edlab.author.mission</field>
+        <field name="arch" type="xml">
+            <form string="Author Mission">
+                <header>
+                    <button name="action_send" type="object" string="Send"
+                            class="btn-primary" invisible="queue_state != 'idle'"
+                            groups="liber_copyright_contracts.group_contract_manager"
+                            confirm="One ticket per author, one e-mail each, sent in the background. Authors who already have a ticket on this mission are skipped. Continue?"/>
+                    <button name="action_print" type="object" string="Print"
+                            invisible="print_queue_state != 'idle' or kind != 'statement'"
+                            groups="liber_copyright_contracts.group_contract_manager"
+                            confirm="One PDF batch with the statements of every author with a postal address, rendered in the background and posted on this mission's log. Authors already printed are skipped. Continue?"/>
+                    <field name="queue_state" invisible="1"/>
+                    <field name="print_queue_state" invisible="1"/>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_authors" type="object" class="oe_stat_button" icon="fa-users">
+                            <field name="partner_count" widget="statinfo" string="Authors"/>
+                        </button>
+                        <button name="action_view_tickets" type="object" class="oe_stat_button" icon="fa-life-ring"
+                                invisible="not ticket_count">
+                            <field name="ticket_count" widget="statinfo" string="Tickets"/>
+                        </button>
+                    </div>
+                    <div class="alert alert-info" role="alert" invisible="queue_state == 'idle'">
+                        <strong>Sending in the background:</strong>
+                        <field name="ticket_count" readonly="1" nolabel="1" class="d-inline mx-1"/> ticket(s) open,
+                        <field name="pending_count" readonly="1" nolabel="1" class="d-inline mx-1"/> author(s) to go. Reload the page to follow.
+                    </div>
+                    <div class="alert alert-info" role="alert" invisible="print_queue_state == 'idle'">
+                        <strong>Printing in the background:</strong>
+                        <field name="print_pending_count" readonly="1" nolabel="1" class="d-inline mx-1"/> statement(s) to render. The PDF batch lands on the log; reload the page to see it.
+                    </div>
+                    <div class="alert alert-danger" role="alert" invisible="not missing_address_count">
+                        <field name="missing_address_count" invisible="1"/>
+                        <strong>Without postal address, not printed:</strong>
+                        <field name="missing_address_partner_ids" widget="many2many_tags" readonly="1" nolabel="1" class="d-inline"/>
+                        <span>Fill in street and city on the contact and print again: only they will be printed.</span>
+                    </div>
+                    <div class="alert alert-danger" role="alert" invisible="not last_error">
+                        <strong>Last failure:</strong> <field name="last_error" readonly="1" nolabel="1" class="d-inline"/>
+                    </div>
+                    <div class="alert alert-warning" role="alert" invisible="not missing_email_count">
+                        <field name="missing_email_count" invisible="1"/>
+                        <strong>Without e-mail, not sent:</strong>
+                        <field name="missing_email_partner_ids" widget="many2many_tags" readonly="1" nolabel="1" class="d-inline"/>
+                        <span>Fill in their e-mail on the contact and send again: only they will be reached.</span>
+                    </div>
+                    <div class="oe_title">
+                        <h1><field name="name" placeholder="e.g. Statements of the 1st half of 2026"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="kind"/>
+                            <field name="template_id"/>
+                            <field name="date_to" invisible="kind != 'statement'" required="kind == 'statement'"/>
+                        </group>
+                        <group>
+                            <field name="team_id" invisible="1"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                            <field name="sent_on"/>
+                            <field name="sender_id" invisible="not sender_id"/>
+                            <field name="queued_on" invisible="not queued_on"/>
+                            <field name="print_count" invisible="not print_count"/>
+                            <field name="answered_count" string="Answered" invisible="not ticket_count"/>
+                            <field name="closed_count" string="Closed" invisible="not ticket_count"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Contracts" name="contracts">
+                            <field name="contract_ids" readonly="state != 'draft'">
+                                <list>
+                                    <field name="name"/>
+                                    <field name="partner_ids" widget="many2many_tags" string="Beneficiaries"/>
+                                    <field name="product_ids" widget="many2many_tags" string="Works"/>
+                                    <field name="state" widget="badge"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Tickets" name="tickets" invisible="not ticket_count">
+                            <field name="ticket_ids" readonly="1">
+                                <list>
+                                    <field name="number"/>
+                                    <field name="partner_id"/>
+                                    <field name="stage_id" widget="badge"/>
+                                    <field name="edlab_author_answered"/>
+                                    <field name="user_id"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Note" name="note">
+                            <field name="note" placeholder="Why this mission..."/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_author_mission_list" model="ir.ui.view">
+        <field name="name">edlab.author.mission.list</field>
+        <field name="model">edlab.author.mission</field>
+        <field name="arch" type="xml">
+            <list string="Author Missions">
+                <field name="name"/>
+                <field name="kind"/>
+                <field name="sent_on"/>
+                <field name="partner_count" string="Authors"/>
+                <field name="ticket_count" string="Tickets"/>
+                <field name="answered_count" string="Answered"/>
+                <field name="closed_count" string="Closed"/>
+                <field name="state" widget="badge" decoration-info="state == 'sent'" decoration-success="state == 'done'"/>
+                <field name="company_id" groups="base.group_multi_company" optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_author_mission_search" model="ir.ui.view">
+        <field name="name">edlab.author.mission.search</field>
+        <field name="model">edlab.author.mission</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="contract_ids"/>
+                <filter name="draft" string="Draft" domain="[('state', '=', 'draft')]"/>
+                <filter name="sent" string="Sent" domain="[('state', '=', 'sent')]"/>
+                <filter name="done" string="Done" domain="[('state', '=', 'done')]"/>
+                <group name="groupby">
+                    <filter name="group_kind" string="Kind" context="{'group_by': 'kind'}"/>
+                    <filter name="group_state" string="Status" context="{'group_by': 'state'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_author_mission" model="ir.actions.act_window">
+        <field name="name">Author Missions</field>
+        <field name="res_model">edlab.author.mission</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">No mission yet</p>
+            <p>A mission writes to the authors of a set of contracts and opens one support ticket per author, so every reply lands where someone answers it. Start one from here, or select contracts in the list and use Action &gt; New author mission.</p>
+        </field>
+    </record>
+</odoo>

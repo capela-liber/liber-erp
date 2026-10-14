@@ -1,0 +1,960 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* liber_copyright_contracts_support
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0-20260630\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-10-14 20:31+0000\n"
+"PO-Revision-Date: 2026-10-14 20:31+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#. module: liber_copyright_contracts_support
+#. odoo-python
+#: code:addons/liber_copyright_contracts_support/models/mission.py:0
+msgid " %s author(s) without address were skipped; see the log."
+msgstr " %s autor(es) sem endereço foram pulados; veja o histórico."
+
+#. module: liber_copyright_contracts_support
+#. odoo-python
+#: code:addons/liber_copyright_contracts_support/models/mission.py:0
+msgid " %s author(s) without e-mail were skipped; see the log."
+msgstr " %s autor(es) sem e-mail foram pulados; veja o histórico."
+
+#. module: liber_copyright_contracts_support
+#. odoo-python
+#: code:addons/liber_copyright_contracts_support/models/mission.py:0
+msgid ""
+"%s. Fill in street and city on the contact and print again; only they will "
+"be printed."
+msgstr "%s. Preencha rua e cidade no contato e imprima de novo; só eles serão impressos."
+
+#. module: liber_copyright_contracts_support
+#. odoo-python
+#: code:addons/liber_copyright_contracts_support/models/mission.py:0
+msgid "%s. Fill in their e-mail and send again; only they will be reached."
+msgstr "%s. Preencha o e-mail e envie de novo; só eles serão alcançados."
+
+#. module: liber_copyright_contracts_support
+#: model:mail.template,body_html:liber_copyright_contracts_support.mail_template_mission_statement
+msgid ""
+"<div style=\"margin: 0px; padding: 0px; font-size: 13px;\">\n"
+"    <p>Dear <t t-out=\"object.partner_id.name\"/>,</p>\n"
+"    <p>Please find attached your royalty statement for <t t-out=\"ctx.get('edlab_period_label', '')\"/>, covering: <t t-out=\"ctx.get('edlab_works', '')\"/>.</p>\n"
+"    <p>Amount payable: <strong><t t-out=\"ctx.get('edlab_net_label', '')\"/></strong>.</p>\n"
+"    <p>If anything looks wrong, just reply to this e-mail: your answer reaches the person handling your statement.</p>\n"
+"    <p>Kind regards,<br/><t t-out=\"object.company_id.name\"/></p>\n"
+"</div>\n"
+"            "
+msgstr "<div style=\"margin: 0px; padding: 0px; font-size: 13px;\">\n    <p>Prezado(a) <t t-out=\"object.partner_id.name\"/>,</p>\n    <p>Segue anexa a sua prestação de contas de direitos autorais do período <t t-out=\"ctx.get('edlab_period_label', '')\"/>, referente a: <t t-out=\"ctx.get('edlab_works', '')\"/>.</p>\n    <p>Valor a receber: <strong><t t-out=\"ctx.get('edlab_net_label', '')\"/></strong>.</p>\n    <p>Se algo parecer errado, basta responder a este e-mail: a sua resposta chega a quem cuida da sua prestação de contas.</p>\n    <p>Atenciosamente,<br/><t t-out=\"object.company_id.name\"/></p>\n</div>\n            "
+
+#. module: liber_copyright_contracts_support
+#: model:mail.template,body_html:liber_copyright_contracts_support.mail_template_mission_registration
+msgid ""
+"<div style=\"margin: 0px; padding: 0px; font-size: 13px;\">\n"
+"    <p>Dear <t t-out=\"object.partner_id.name\"/>,</p>\n"
+"    <p>To keep your royalty payments and statements in order, please reply to this e-mail with your current address, e-mail, bank details (or Pix key) and identification documents.</p>\n"
+"    <p>Works under contract: <t t-out=\"ctx.get('edlab_works', '')\"/>.</p>\n"
+"    <p>Kind regards,<br/><t t-out=\"object.company_id.name\"/></p>\n"
+"</div>\n"
+"            "
+msgstr "<div style=\"margin: 0px; padding: 0px; font-size: 13px;\">\n    <p>Prezado(a) <t t-out=\"object.partner_id.name\"/>,</p>\n    <p>Para manter em dia os seus pagamentos e prestações de contas de direitos autorais, responda a este e-mail com o seu endereço atual, e-mail, dados bancários (ou chave Pix) e documentos de identificação.</p>\n    <p>Obras sob contrato: <t t-out=\"ctx.get('edlab_works', '')\"/>.</p>\n    <p>Atenciosamente,<br/><t t-out=\"object.company_id.name\"/></p>\n</div>\n            "
+
+#. module: liber_copyright_contracts_support
+#: model:mail.template,body_html:liber_copyright_contracts_support.mail_template_mission_settlement
+msgid ""
+"<div style=\"margin: 0px; padding: 0px; font-size: 13px;\">\n"
+"    <p>Dear <t t-out=\"object.partner_id.name\"/>,</p>\n"
+"    <p>We are settling the royalties of <t t-out=\"ctx.get('edlab_works', '')\"/> (contract(s) <t t-out=\"ctx.get('edlab_contracts', '')\"/>).</p>\n"
+"    <p>Please confirm your bank details and reply to this e-mail with any question: your answer reaches the person handling your settlement.</p>\n"
+"    <p>Kind regards,<br/><t t-out=\"object.company_id.name\"/></p>\n"
+"</div>\n"
+"            "
+msgstr "<div style=\"margin: 0px; padding: 0px; font-size: 13px;\">\n    <p>Prezado(a) <t t-out=\"object.partner_id.name\"/>,</p>\n    <p>Estamos fazendo o acerto dos direitos autorais de <t t-out=\"ctx.get('edlab_works', '')\"/> (contrato(s) <t t-out=\"ctx.get('edlab_contracts', '')\"/>).</p>\n    <p>Confirme os seus dados bancários e responda a este e-mail com qualquer dúvida: a sua resposta chega a quem cuida do seu acerto.</p>\n    <p>Atenciosamente,<br/><t t-out=\"object.company_id.name\"/></p>\n</div>\n            "
+
+#. module: liber_copyright_contracts_support
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_support.view_support_ticket_form_contracts
+msgid "<span class=\"o_stat_text\">Beneficiary</span>"
+msgstr "<span class=\"o_stat_text\">Favorecido</span>"
+
+#. module: liber_copyright_contracts_support
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_support.view_author_mission_form
+msgid ""
+"<span>Fill in street and city on the contact and print again: only they will"
+" be printed.</span>"
+msgstr "<span>Preencha rua e cidade no contato e imprima de novo: só eles serão impressos.</span>"
+
+#. module: liber_copyright_contracts_support
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_support.view_author_mission_form
+msgid ""
+"<span>Fill in their e-mail on the contact and send again: only they will be "
+"reached.</span>"
+msgstr "<span>Preencha o e-mail no contato e envie de novo: só eles serão alcançados.</span>"
+
+#. module: liber_copyright_contracts_support
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_support.view_author_mission_form
+msgid "<strong>Last failure:</strong>"
+msgstr "<strong>Última falha:</strong>"
+
+#. module: liber_copyright_contracts_support
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_support.view_author_mission_form
+msgid "<strong>Printing in the background:</strong>"
+msgstr "<strong>Imprimindo em segundo plano:</strong>"
+
+#. module: liber_copyright_contracts_support
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_support.view_author_mission_form
+msgid "<strong>Sending in the background:</strong>"
+msgstr "<strong>Enviando em segundo plano:</strong>"
+
+#. module: liber_copyright_contracts_support
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_support.view_author_mission_form
+msgid "<strong>Without e-mail, not sent:</strong>"
+msgstr "<strong>Sem e-mail, não enviados:</strong>"
+
+#. module: liber_copyright_contracts_support
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_support.view_author_mission_form
+msgid "<strong>Without postal address, not printed:</strong>"
+msgstr "<strong>Sem endereço postal, não impressos:</strong>"
+
+#. module: liber_copyright_contracts_support
+#: model_terms:ir.actions.act_window,help:liber_copyright_contracts_support.action_author_ticket
+msgid ""
+"A mission opens one ticket per author; an author who writes to the authors' "
+"alias opens one too; and the author's card has a \"New ticket\" button for a"
+" call or a letter."
+msgstr "Uma missão abre um chamado por autor; o autor que escreve para o alias de autores também abre um; e a ficha do autor tem o botão \"Novo chamado\" para a ligação ou a carta."
+
+#. module: liber_copyright_contracts_support
+#: model_terms:ir.actions.act_window,help:liber_copyright_contracts_support.action_author_mission
+msgid ""
+"A mission writes to the authors of a set of contracts and opens one support "
+"ticket per author, so every reply lands where someone answers it. Start one "
+"from here, or select contracts in the list and use Action &gt; New author "
+"mission."
+msgstr "Uma missão escreve aos autores de um conjunto de contratos e abre um chamado por autor, para toda resposta cair onde alguém atende. Comece por aqui, ou selecione contratos na lista e use Ação &gt; Nova missão de autores."
+
+#. module: liber_copyright_contracts_support
+#: model:ir.model.fields,field_description:liber_copyright_contracts_support.field_edlab_author_mission__message_needaction
+msgid "Action Needed"
+msgstr ""
+
+#. module: liber_copyright_contracts_support
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_support.view_author_mission_form
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_support.view_author_mission_list
+msgid "Answered"
+msgstr "Respondidos"
+
+#. module: liber_copyright_contracts_support
+#: model:ir.model.fields,field_description:liber_copyright_contracts_support.field_edlab_author_mission__answered_count
+msgid "Answered Count"
+msgstr "Respondidos"
+
+#. module: liber_copyright_contracts_support
+#: model:ir.model.fields,field_description:liber_copyright_contracts_support.field_edlab_author_mission__message_attachment_count
+msgid "Attachment Count"
+msgstr ""
+
+#. module: liber_copyright_contracts_support
+#: model:ir.model,name:liber_copyright_contracts_support.model_edlab_author_mission
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_support.view_author_mission_form
+msgid "Author Mission"
+msgstr "Missão de autores"
+
+#. module: liber_copyright_contracts_support
+#: model:ir.actions.act_window,name:liber_copyright_contracts_support.action_author_mission
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_support.view_author_mission_list
+msgid "Author Missions"
+msgstr "Missões de autores"
+
+#. module: liber_copyright_contracts_support
+#: model:ir.actions.act_window,name:liber_copyright_contracts_support.action_author_ticket
+msgid "Author Tickets"
+msgstr "Chamados de autores"
+
+#. module: liber_copyright_contracts_support
+#: model:ir.model.fields,field_description:liber_copyright_contracts_support.field_liber_support_ticket__edlab_author_answered
+msgid "Author answered"
+msgstr "Autor respondeu"
+
+#. module: liber_copyright_contracts_support
+#: model:mail.template,name:liber_copyright_contracts_support.mail_template_mission_registration
+msgid "Author mission: registration update"
+msgstr "Missão de autores: atualização de cadastro"
+
+#. module: liber_copyright_contracts_support
+#: model:mail.template,name:liber_copyright_contracts_support.mail_template_mission_settlement
+msgid "Author mission: royalty settlement"
+msgstr "Missão de autores: acerto de direitos"
+
+#. module: liber_copyright_contracts_support
+#: model:mail.template,name:liber_copyright_contracts_support.mail_template_mission_statement
+msgid "Author mission: royalty statement"
+msgstr "Missão de autores: prestação de contas"
+
+#. module: liber_copyright_contracts_support
+#: model:ir.actions.server,name:liber_copyright_contracts_support.cron_author_mission_queue_ir_actions_server
+msgid "Author missions: send the queue"
+msgstr "Missões de autores: processar a fila"
+
+#. module: liber_copyright_contracts_support
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_support.res_config_settings_view_form_author_support
+msgid "Author support"
+msgstr "Atendimento a autores"
+
+#. module: liber_copyright_contracts_support
+#. odoo-python
+#: code:addons/liber_copyright_contracts_support/models/mission.py:0
+#: model:ir.model.fields,field_description:liber_copyright_contracts_support.field_edlab_author_mission__partner_ids
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_support.view_author_mission_form
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_support.view_author_mission_list
+msgid "Authors"
+msgstr "Autores"
+
+#. module: liber_copyright_contracts_support
+#: model:ir.model.fields,field_description:liber_copyright_contracts_support.field_edlab_author_mission__team_id
+#: model:ir.model.fields,field_description:liber_copyright_contracts_support.field_res_company__contract_support_team_id
+msgid "Authors mailbox (team)"
+msgstr "Caixa dos autores (equipe)"
+
+#. module: liber_copyright_contracts_support
+#: model:ir.model.fields,help:liber_copyright_contracts_support.field_edlab_author_mission__missing_address_partner_ids
+msgid "Authors not printed yet whose contact has no street or city."
+msgstr "Autores ainda não impressos cujo contato não tem rua ou cidade."
+
+#. module: liber_copyright_contracts_support
+#: model:ir.model.fields,help:liber_copyright_contracts_support.field_edlab_author_mission__missing_email_partner_ids
+msgid ""
+"Authors of the mission with no e-mail and no ticket yet. The mission skips "
+"them and logs their names; once their e-mail is filled in, sending again "
+"reaches them and nobody else."
+msgstr "Autores da missão sem e-mail e ainda sem chamado. A missão os pula e registra os nomes; preenchido o e-mail, enviar de novo alcança só eles."
+
+#. module: liber_copyright_contracts_support
+#: model:ir.model.fields,help:liber_copyright_contracts_support.field_edlab_author_mission__print_pending_count
+msgid "Authors with an address still to print."
+msgstr "Autores com endereço ainda por imprimir."
+
+#. module: liber_copyright_contracts_support
+#: model:ir.model.fields,help:liber_copyright_contracts_support.field_edlab_author_mission__pending_count
+msgid "Authors with e-mail still waiting for their ticket."
+msgstr "Autores com e-mail ainda sem o seu chamado."
+
+#. module: liber_copyright_contracts_support
+#: model:ir.model.fields,field_description:liber_copyright_contracts_support.field_res_company__contract_authors_alias
+#: model:ir.model.fields,field_description:liber_copyright_contracts_support.field_res_config_settings__contract_authors_alias
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_support.res_config_settings_view_form_author_support
+msgid "Authors' mailbox"
+msgstr "Caixa de e-mail dos autores"
+
+#. module: liber_copyright_contracts_support
+#: model:liber.support.team,name:liber_copyright_contracts_support.support_team_authors
+msgid "Autores"
+msgstr ""
+
+#. module: liber_copyright_contracts_support
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_support.view_author_mission_form
+msgid "Beneficiaries"
+msgstr "Favorecidos"
+
+#. module: liber_copyright_contracts_support
+#. odoo-python
+#: code:addons/liber_copyright_contracts_support/models/mission.py:0
+msgid "Choose the contracts first."
+msgstr "Escolha os contratos primeiro."
+
+#. module: liber_copyright_contracts_support
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_support.view_author_mission_form
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_support.view_author_mission_list
+msgid "Closed"
+msgstr "Fechados"
+
+#. module: liber_copyright_contracts_support
+#: model:ir.model.fields,field_description:liber_copyright_contracts_support.field_edlab_author_mission__closed_count
+msgid "Closed Count"
+msgstr "Fechados"
+
+#. module: liber_copyright_contracts_support
+#: model:ir.model,name:liber_copyright_contracts_support.model_res_company
+msgid "Companies"
+msgstr ""
+
+#. module: liber_copyright_contracts_support
+#: model:ir.model.fields,field_description:liber_copyright_contracts_support.field_edlab_author_mission__company_id
+msgid "Company"
+msgstr "Empresa"
+
+#. module: liber_copyright_contracts_support
+#: model:ir.model,name:liber_copyright_contracts_support.model_res_config_settings
+msgid "Config Settings"
+msgstr ""
+
+#. module: liber_copyright_contracts_support
+#: model:ir.model,name:liber_copyright_contracts_support.model_res_partner
+msgid "Contact"
+msgstr ""
+
+#. module: liber_copyright_contracts_support
+#: model:ir.model.fields,field_description:liber_copyright_contracts_support.field_res_config_settings__contract_authors_alias_domain
+msgid "Contract Authors Alias Domain"
+msgstr "Domínio da caixa dos autores"
+
+#. module: liber_copyright_contracts_support
+#: model:ir.model.fields,field_description:liber_copyright_contracts_support.field_edlab_author_mission__contract_ids
+#: model:ir.model.fields,field_description:liber_copyright_contracts_support.field_liber_support_ticket__edlab_contract_ids
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_support.view_author_mission_form
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_support.view_support_ticket_form_contracts
+msgid "Contracts"
+msgstr "Contratos"
+
+#. module: liber_copyright_contracts_support
+#: model:ir.model,name:liber_copyright_contracts_support.model_edlab_contract
+msgid "Copyright Contract"
+msgstr "Contrato de direitos autorais"
+
+#. module: liber_copyright_contracts_support
+#. odoo-python
+#: code:addons/liber_copyright_contracts_support/models/mission.py:0
+msgid "Could not print: %s"
+msgstr "Não foi possível imprimir: %s"
+
+#. module: liber_copyright_contracts_support
+#. odoo-python
+#: code:addons/liber_copyright_contracts_support/models/mission.py:0
+msgid "Could not send to %(author)s: %(error)s"
+msgstr "Não foi possível enviar a %(author)s: %(error)s"
+
+#. module: liber_copyright_contracts_support
+#: model:ir.model,website_form_label:liber_copyright_contracts_support.model_res_partner
+msgid "Create a Customer"
+msgstr ""
+
+#. module: liber_copyright_contracts_support
+#: model:ir.model.fields,field_description:liber_copyright_contracts_support.field_edlab_author_mission__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: liber_copyright_contracts_support
+#: model:ir.model.fields,field_description:liber_copyright_contracts_support.field_edlab_author_mission__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: liber_copyright_contracts_support
+#: model:ir.model.fields,field_description:liber_copyright_contracts_support.field_edlab_author_mission__display_name
+#: model:ir.model.fields,field_description:liber_copyright_contracts_support.field_edlab_contract__display_name
+#: model:ir.model.fields,field_description:liber_copyright_contracts_support.field_liber_support_ticket__display_name
+#: model:ir.model.fields,field_description:liber_copyright_contracts_support.field_res_company__display_name
+#: model:ir.model.fields,field_description:liber_copyright_contracts_support.field_res_config_settings__display_name
+#: model:ir.model.fields,field_description:liber_copyright_contracts_support.field_res_partner__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: liber_copyright_contracts_support
+#: model:ir.model.fields.selection,name:liber_copyright_contracts_support.selection__edlab_author_mission__state__done
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_support.view_author_mission_search
+msgid "Done"
+msgstr "Concluída"
+
+#. module: liber_copyright_contracts_support
+#: model:ir.model.fields.selection,name:liber_copyright_contracts_support.selection__edlab_author_mission__state__draft
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_support.view_author_mission_search
+msgid "Draft"
+msgstr "Rascunho"
+
+#. module: liber_copyright_contracts_support
+#: model:ir.model.fields,field_description:liber_copyright_contracts_support.field_edlab_author_mission__template_id
+msgid "E-mail template"
+msgstr "Modelo de e-mail"
+
+#. module: liber_copyright_contracts_support
+#: model:ir.model.fields,field_description:liber_copyright_contracts_support.field_liber_support_ticket__edlab_contract_count
+msgid "Edlab Contract Count"
+msgstr ""
+
+#. module: liber_copyright_contracts_support
+#: model:ir.model.fields,field_description:liber_copyright_contracts_support.field_edlab_contract__edlab_support_ticket_count
+#: model:ir.model.fields,field_description:liber_copyright_contracts_support.field_res_partner__edlab_support_ticket_count
+#: model:ir.model.fields,field_description:liber_copyright_contracts_support.field_res_users__edlab_support_ticket_count
+msgid "Edlab Support Ticket Count"
+msgstr "Chamados"
+
+#. module: liber_copyright_contracts_support
+#. odoo-python
+#: code:addons/liber_copyright_contracts_support/models/mission.py:0
+msgid "Every author of this mission already has a ticket."
+msgstr "Todo autor desta missão já tem chamado."
+
+#. module: liber_copyright_contracts_support
+#. odoo-python
+#: code:addons/liber_copyright_contracts_support/models/mission.py:0
+msgid "Every author with an address is already printed on this mission."
+msgstr "Todo autor com endereço já foi impresso nesta missão."
+
+#. module: liber_copyright_contracts_support
+#: model:ir.model.fields,field_description:liber_copyright_contracts_support.field_edlab_author_mission__message_follower_ids
+msgid "Followers"
+msgstr ""
+
+#. module: liber_copyright_contracts_support
+#: model:ir.model.fields,field_description:liber_copyright_contracts_support.field_edlab_author_mission__message_partner_ids
+msgid "Followers (Partners)"
+msgstr ""
+
+#. module: liber_copyright_contracts_support
+#: model:ir.model.fields,help:liber_copyright_contracts_support.field_edlab_author_mission__date_to
+msgid ""
+"For a statement mission: the end of the period covered by the PDF attached "
+"to each author."
+msgstr "Para missão de prestação de contas: a data final do período coberto pelo PDF anexado a cada autor."
+
+#. module: liber_copyright_contracts_support
+#: model:ir.model.fields,field_description:liber_copyright_contracts_support.field_edlab_author_mission__has_message
+msgid "Has Message"
+msgstr ""
+
+#. module: liber_copyright_contracts_support
+#: model:ir.model.fields,field_description:liber_copyright_contracts_support.field_edlab_author_mission__id
+#: model:ir.model.fields,field_description:liber_copyright_contracts_support.field_edlab_contract__id
+#: model:ir.model.fields,field_description:liber_copyright_contracts_support.field_liber_support_ticket__id
+#: model:ir.model.fields,field_description:liber_copyright_contracts_support.field_res_company__id
+#: model:ir.model.fields,field_description:liber_copyright_contracts_support.field_res_config_settings__id
+#: model:ir.model.fields,field_description:liber_copyright_contracts_support.field_res_partner__id
+msgid "ID"
+msgstr ""
+
+#. module: liber_copyright_contracts_support
+#: model:ir.model.fields.selection,name:liber_copyright_contracts_support.selection__edlab_author_mission__print_queue_state__idle
+#: model:ir.model.fields.selection,name:liber_copyright_contracts_support.selection__edlab_author_mission__queue_state__idle
+msgid "Idle"
+msgstr "Parado"
+
+#. module: liber_copyright_contracts_support
+#: model:ir.model.fields,help:liber_copyright_contracts_support.field_edlab_author_mission__message_needaction
+msgid "If checked, new messages require your attention."
+msgstr ""
+
+#. module: liber_copyright_contracts_support
+#: model:ir.model.fields,help:liber_copyright_contracts_support.field_edlab_author_mission__message_has_error
+#: model:ir.model.fields,help:liber_copyright_contracts_support.field_edlab_author_mission__message_has_sms_error
+msgid "If checked, some messages have a delivery error."
+msgstr ""
+
+#. module: liber_copyright_contracts_support
+#: model:ir.model.fields,field_description:liber_copyright_contracts_support.field_edlab_author_mission__message_is_follower
+msgid "Is Follower"
+msgstr ""
+
+#. module: liber_copyright_contracts_support
+#: model:ir.model.fields,field_description:liber_copyright_contracts_support.field_edlab_author_mission__kind
+#: model:ir.model.fields,field_description:liber_copyright_contracts_support.field_liber_support_ticket__kind
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_support.view_author_mission_search
+msgid "Kind"
+msgstr "Tipo"
+
+#. module: liber_copyright_contracts_support
+#: model:ir.model.fields,field_description:liber_copyright_contracts_support.field_edlab_author_mission__last_error
+msgid "Last Error"
+msgstr "Última falha"
+
+#. module: liber_copyright_contracts_support
+#: model:ir.model.fields,field_description:liber_copyright_contracts_support.field_edlab_author_mission__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: liber_copyright_contracts_support
+#: model:ir.model.fields,field_description:liber_copyright_contracts_support.field_edlab_author_mission__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: liber_copyright_contracts_support
+#: model:ir.model.fields,help:liber_copyright_contracts_support.field_res_company__contract_authors_alias
+#: model:ir.model.fields,help:liber_copyright_contracts_support.field_res_config_settings__contract_authors_alias
+msgid ""
+"Local part of the e-mail the authors write to and reply to (the domain is "
+"the company's alias domain): autores@... . Missions send from it; replies "
+"land on the author's ticket."
+msgstr "Parte local do e-mail para o qual os autores escrevem e respondem (o domínio é o domínio de alias da empresa): autores@... . As missões enviam por ele; as respostas caem no chamado do autor."
+
+#. module: liber_copyright_contracts_support
+#: model:ir.model.fields,field_description:liber_copyright_contracts_support.field_edlab_author_mission__message_has_error
+msgid "Message Delivery error"
+msgstr ""
+
+#. module: liber_copyright_contracts_support
+#: model:ir.model.fields,field_description:liber_copyright_contracts_support.field_edlab_author_mission__message_ids
+msgid "Messages"
+msgstr ""
+
+#. module: liber_copyright_contracts_support
+#: model:ir.model.fields,field_description:liber_copyright_contracts_support.field_edlab_author_mission__missing_address_count
+msgid "Missing Address Count"
+msgstr ""
+
+#. module: liber_copyright_contracts_support
+#: model:ir.model.fields,field_description:liber_copyright_contracts_support.field_edlab_author_mission__missing_email_count
+msgid "Missing Email Count"
+msgstr ""
+
+#. module: liber_copyright_contracts_support
+#: model:ir.model.fields,field_description:liber_copyright_contracts_support.field_liber_support_ticket__edlab_mission_id
+msgid "Mission"
+msgstr "Missão"
+
+#. module: liber_copyright_contracts_support
+#: model:ir.ui.menu,name:liber_copyright_contracts_support.menu_author_missions
+msgid "Missions"
+msgstr "Missões"
+
+#. module: liber_copyright_contracts_support
+#: model:ir.model.fields,field_description:liber_copyright_contracts_support.field_edlab_author_mission__name
+msgid "Name"
+msgstr "Nome"
+
+#. module: liber_copyright_contracts_support
+#: model:ir.actions.server,name:liber_copyright_contracts_support.action_contract_new_mission
+msgid "New author mission"
+msgstr "Nova missão de autores"
+
+#. module: liber_copyright_contracts_support
+#. odoo-python
+#: code:addons/liber_copyright_contracts_support/models/contract.py:0
+msgid "New mission"
+msgstr "Nova missão"
+
+#. module: liber_copyright_contracts_support
+#. odoo-python
+#: code:addons/liber_copyright_contracts_support/models/res_partner.py:0
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_support.view_partner_form_author_support
+msgid "New ticket"
+msgstr "Novo chamado"
+
+#. module: liber_copyright_contracts_support
+#: model_terms:ir.actions.act_window,help:liber_copyright_contracts_support.action_author_ticket
+msgid "No author ticket yet"
+msgstr "Nenhum chamado de autor ainda"
+
+#. module: liber_copyright_contracts_support
+#: model_terms:ir.actions.act_window,help:liber_copyright_contracts_support.action_author_mission
+msgid "No mission yet"
+msgstr "Nenhuma missão ainda"
+
+#. module: liber_copyright_contracts_support
+#. odoo-python
+#: code:addons/liber_copyright_contracts_support/models/mission.py:0
+msgid "Not printed, no postal address:"
+msgstr "Não impresso, sem endereço postal:"
+
+#. module: liber_copyright_contracts_support
+#. odoo-python
+#: code:addons/liber_copyright_contracts_support/models/mission.py:0
+msgid "Not sent, no e-mail on file:"
+msgstr "Não enviado, sem e-mail cadastrado:"
+
+#. module: liber_copyright_contracts_support
+#: model:ir.model.fields,field_description:liber_copyright_contracts_support.field_edlab_author_mission__note
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_support.view_author_mission_form
+msgid "Note"
+msgstr "Observação"
+
+#. module: liber_copyright_contracts_support
+#: model:ir.model.fields,field_description:liber_copyright_contracts_support.field_edlab_author_mission__message_needaction_counter
+msgid "Number of Actions"
+msgstr ""
+
+#. module: liber_copyright_contracts_support
+#: model:ir.model.fields,field_description:liber_copyright_contracts_support.field_edlab_author_mission__message_has_error_counter
+msgid "Number of errors"
+msgstr ""
+
+#. module: liber_copyright_contracts_support
+#: model:ir.model.fields,help:liber_copyright_contracts_support.field_edlab_author_mission__message_needaction_counter
+msgid "Number of messages requiring action"
+msgstr ""
+
+#. module: liber_copyright_contracts_support
+#: model:ir.model.fields,help:liber_copyright_contracts_support.field_edlab_author_mission__message_has_error_counter
+msgid "Number of messages with delivery error"
+msgstr ""
+
+#. module: liber_copyright_contracts_support
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_support.view_author_mission_form
+msgid ""
+"One PDF batch with the statements of every author with a postal address, "
+"rendered in the background and posted on this mission's log. Authors already"
+" printed are skipped. Continue?"
+msgstr "Um lote em PDF com as prestações de contas de todo autor com endereço postal, gerado em segundo plano e anexado ao histórico desta missão. Autores já impressos são pulados. Continuar?"
+
+#. module: liber_copyright_contracts_support
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_support.view_author_mission_form
+msgid ""
+"One ticket per author, one e-mail each, sent in the background. Authors who "
+"already have a ticket on this mission are skipped. Continue?"
+msgstr "Um chamado por autor, um e-mail para cada, enviados em segundo plano. Autores que já têm chamado nesta missão são pulados. Continuar?"
+
+#. module: liber_copyright_contracts_support
+#. odoo-python
+#: code:addons/liber_copyright_contracts_support/models/mission.py:0
+msgid "Only a statement mission prints statements."
+msgstr "Só missão de prestação de contas imprime prestações."
+
+#. module: liber_copyright_contracts_support
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_support.view_partner_form_author_support
+msgid "Opened"
+msgstr "Aberto em"
+
+#. module: liber_copyright_contracts_support
+#: model:ir.model.fields.selection,name:liber_copyright_contracts_support.selection__edlab_author_mission__kind__other
+msgid "Other"
+msgstr "Outro"
+
+#. module: liber_copyright_contracts_support
+#: model:ir.model.fields,field_description:liber_copyright_contracts_support.field_edlab_author_mission__partner_count
+msgid "Partner Count"
+msgstr "Autores"
+
+#. module: liber_copyright_contracts_support
+#: model:ir.model.fields,field_description:liber_copyright_contracts_support.field_edlab_author_mission__pending_count
+msgid "Pending Count"
+msgstr ""
+
+#. module: liber_copyright_contracts_support
+#: model:mail.template,subject:liber_copyright_contracts_support.mail_template_mission_registration
+msgid "Please update your registration — {{ object.company_id.name }}"
+msgstr "Atualize o seu cadastro — {{ object.company_id.name }}"
+
+#. module: liber_copyright_contracts_support
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_support.view_author_mission_form
+msgid "Print"
+msgstr "Imprimir"
+
+#. module: liber_copyright_contracts_support
+#: model:ir.model.fields,field_description:liber_copyright_contracts_support.field_edlab_author_mission__print_pending_count
+msgid "Print Pending Count"
+msgstr ""
+
+#. module: liber_copyright_contracts_support
+#: model:ir.model.fields,field_description:liber_copyright_contracts_support.field_edlab_author_mission__print_queue_state
+msgid "Print Queue State"
+msgstr "Fila de impressão"
+
+#. module: liber_copyright_contracts_support
+#. odoo-python
+#: code:addons/liber_copyright_contracts_support/models/mission.py:0
+msgid "Print batch %(n)s - %(mission)s.pdf"
+msgstr "Lote de impressão %(n)s - %(mission)s.pdf"
+
+#. module: liber_copyright_contracts_support
+#. odoo-python
+#: code:addons/liber_copyright_contracts_support/models/mission.py:0
+msgid ""
+"Print batch %(n)s: %(count)s statement(s) for the envelopes (%(names)s)."
+msgstr "Lote de impressão %(n)s: %(count)s prestação(ões) de contas para os envelopes (%(names)s)."
+
+#. module: liber_copyright_contracts_support
+#: model:ir.model.fields,field_description:liber_copyright_contracts_support.field_edlab_author_mission__printed_partner_ids
+msgid "Printed"
+msgstr "Impressos"
+
+#. module: liber_copyright_contracts_support
+#: model:ir.model.fields,field_description:liber_copyright_contracts_support.field_edlab_author_mission__print_count
+msgid "Printed authors"
+msgstr "Autores impressos"
+
+#. module: liber_copyright_contracts_support
+#: model:ir.model.fields.selection,name:liber_copyright_contracts_support.selection__edlab_author_mission__print_queue_state__running
+msgid "Printing"
+msgstr "Imprimindo"
+
+#. module: liber_copyright_contracts_support
+#. odoo-python
+#: code:addons/liber_copyright_contracts_support/models/mission.py:0
+msgid ""
+"Printing %s statement(s) in the background: the PDF batch will be posted on "
+"this mission's log."
+msgstr "Imprimindo %s prestação(ões) de contas em segundo plano: o lote em PDF será anexado ao histórico desta missão."
+
+#. module: liber_copyright_contracts_support
+#: model:ir.model.fields,field_description:liber_copyright_contracts_support.field_edlab_author_mission__queue_state
+msgid "Queue State"
+msgstr "Fila de envio"
+
+#. module: liber_copyright_contracts_support
+#: model:ir.model.fields.selection,name:liber_copyright_contracts_support.selection__edlab_author_mission__print_queue_state__queued
+#: model:ir.model.fields.selection,name:liber_copyright_contracts_support.selection__edlab_author_mission__queue_state__queued
+msgid "Queued"
+msgstr "Na fila"
+
+#. module: liber_copyright_contracts_support
+#: model:ir.model.fields,field_description:liber_copyright_contracts_support.field_edlab_author_mission__queued_on
+msgid "Queued On"
+msgstr "Enfileirada em"
+
+#. module: liber_copyright_contracts_support
+#. odoo-python
+#: code:addons/liber_copyright_contracts_support/models/mission.py:0
+msgid ""
+"Queued: %s author(s) will get their ticket and e-mail in the background."
+msgstr "Na fila: %s autor(es) receberão chamado e e-mail em segundo plano."
+
+#. module: liber_copyright_contracts_support
+#: model:ir.model.fields,field_description:liber_copyright_contracts_support.field_edlab_author_mission__rating_ids
+msgid "Ratings"
+msgstr ""
+
+#. module: liber_copyright_contracts_support
+#: model:ir.model.fields.selection,name:liber_copyright_contracts_support.selection__edlab_author_mission__kind__registration
+msgid "Registration update"
+msgstr "Atualização de cadastro"
+
+#. module: liber_copyright_contracts_support
+#: model:ir.model.fields.selection,name:liber_copyright_contracts_support.selection__liber_support_ticket__kind__royalties
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_support.view_support_ticket_search_contracts
+msgid "Royalties"
+msgstr "Direitos autorais"
+
+#. module: liber_copyright_contracts_support
+#: model:ir.model.fields.selection,name:liber_copyright_contracts_support.selection__edlab_author_mission__kind__settlement
+msgid "Royalty settlement"
+msgstr "Acerto de direitos"
+
+#. module: liber_copyright_contracts_support
+#: model:mail.template,subject:liber_copyright_contracts_support.mail_template_mission_settlement
+msgid "Royalty settlement — {{ ctx.get('edlab_contracts', '') }}"
+msgstr "Acerto de direitos autorais — {{ ctx.get('edlab_contracts', '') }}"
+
+#. module: liber_copyright_contracts_support
+#: model:ir.model.fields.selection,name:liber_copyright_contracts_support.selection__edlab_author_mission__kind__statement
+msgid "Royalty statement"
+msgstr "Prestação de contas"
+
+#. module: liber_copyright_contracts_support
+#. odoo-python
+#: code:addons/liber_copyright_contracts_support/models/mission.py:0
+msgid ""
+"Royalty statement (%(period)s) sent to %(author)s on mission %(mission)s."
+msgstr "Prestação de contas (%(period)s) enviada a %(author)s na missão %(mission)s."
+
+#. module: liber_copyright_contracts_support
+#: model:mail.template,subject:liber_copyright_contracts_support.mail_template_mission_statement
+msgid "Royalty statement — {{ ctx.get('edlab_period_label', '') }}"
+msgstr "Prestação de contas de direitos autorais — {{ ctx.get('edlab_period_label', '') }}"
+
+#. module: liber_copyright_contracts_support
+#: model:ir.model.fields,field_description:liber_copyright_contracts_support.field_edlab_author_mission__message_has_sms_error
+msgid "SMS Delivery error"
+msgstr ""
+
+#. module: liber_copyright_contracts_support
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_support.view_author_mission_form
+msgid "Send"
+msgstr "Enviar"
+
+#. module: liber_copyright_contracts_support
+#: model:ir.model.fields.selection,name:liber_copyright_contracts_support.selection__edlab_author_mission__queue_state__running
+msgid "Sending"
+msgstr "Enviando"
+
+#. module: liber_copyright_contracts_support
+#. odoo-python
+#: code:addons/liber_copyright_contracts_support/models/mission.py:0
+msgid ""
+"Sending finished: %(tickets)s ticket(s) on this mission, %(left)s author(s) "
+"left pending."
+msgstr "Envio concluído: %(tickets)s chamado(s) nesta missão, %(left)s autor(es) ficaram pendentes."
+
+#. module: liber_copyright_contracts_support
+#: model:ir.model.fields,help:liber_copyright_contracts_support.field_edlab_author_mission__queue_state
+msgid ""
+"Sending happens in the background: the button queues the mission and a job "
+"opens the tickets one author at a time."
+msgstr "O envio acontece em segundo plano: o botão põe a missão na fila e um job abre os chamados um autor por vez."
+
+#. module: liber_copyright_contracts_support
+#. odoo-python
+#: code:addons/liber_copyright_contracts_support/models/mission.py:0
+msgid ""
+"Sending in the background to %s author(s). Reload to follow the ticket "
+"count."
+msgstr "Enviando em segundo plano para %s autor(es). Recarregue para acompanhar a contagem de chamados."
+
+#. module: liber_copyright_contracts_support
+#: model:ir.model.fields.selection,name:liber_copyright_contracts_support.selection__edlab_author_mission__state__sent
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_support.view_author_mission_search
+msgid "Sent"
+msgstr "Enviada"
+
+#. module: liber_copyright_contracts_support
+#: model:ir.model.fields,field_description:liber_copyright_contracts_support.field_edlab_author_mission__sent_on
+msgid "Sent On"
+msgstr "Enviada em"
+
+#. module: liber_copyright_contracts_support
+#: model:ir.model.fields,field_description:liber_copyright_contracts_support.field_edlab_author_mission__state
+msgid "State"
+msgstr "Situação"
+
+#. module: liber_copyright_contracts_support
+#: model:ir.model.fields,field_description:liber_copyright_contracts_support.field_edlab_author_mission__date_to
+msgid "Statement period end"
+msgstr "Data final da prestação"
+
+#. module: liber_copyright_contracts_support
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_support.view_author_mission_search
+msgid "Status"
+msgstr "Situação"
+
+#. module: liber_copyright_contracts_support
+#: model:ir.model,name:liber_copyright_contracts_support.model_liber_support_ticket
+msgid "Support Ticket"
+msgstr "Chamado"
+
+#. module: liber_copyright_contracts_support
+#: model:ir.model.fields,field_description:liber_copyright_contracts_support.field_edlab_contract__edlab_support_ticket_ids
+#: model:ir.model.fields,field_description:liber_copyright_contracts_support.field_res_partner__edlab_support_ticket_ids
+#: model:ir.model.fields,field_description:liber_copyright_contracts_support.field_res_users__edlab_support_ticket_ids
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_support.view_partner_form_author_support
+msgid "Support tickets"
+msgstr "Chamados"
+
+#. module: liber_copyright_contracts_support
+#: model:ir.model.fields,help:liber_copyright_contracts_support.field_liber_support_ticket__edlab_author_answered
+msgid "The author wrote back after the ticket's first message."
+msgstr "O autor respondeu depois da primeira mensagem do chamado."
+
+#. module: liber_copyright_contracts_support
+#: model:ir.model.fields,help:liber_copyright_contracts_support.field_liber_support_ticket__edlab_contract_ids
+msgid "The contracts this conversation is about."
+msgstr "Os contratos de que esta conversa trata."
+
+#. module: liber_copyright_contracts_support
+#: model:ir.model.fields,help:liber_copyright_contracts_support.field_edlab_author_mission__partner_ids
+msgid ""
+"The distinct beneficiaries of the selected contracts: one ticket and one "
+"e-mail each, whatever the number of contracts."
+msgstr "Os favorecidos distintos dos contratos selecionados: um chamado e um e-mail para cada, seja qual for o número de contratos."
+
+#. module: liber_copyright_contracts_support
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_support.res_config_settings_view_form_author_support
+msgid ""
+"The e-mail the authors write to and reply to. Missions send from it, and "
+"every reply lands on the author's ticket. The mailbox must be forwarded to "
+"Odoo, like the commercial one."
+msgstr "O e-mail para o qual os autores escrevem e respondem. As missões enviam por ele, e toda resposta cai no chamado do autor. A caixa precisa estar encaminhada para o Odoo, como a comercial."
+
+#. module: liber_copyright_contracts_support
+#: model:ir.model.fields,help:liber_copyright_contracts_support.field_edlab_author_mission__last_error
+msgid "The last author the job could not send to, and why."
+msgstr "O último autor a quem o job não conseguiu enviar, e por quê."
+
+#. module: liber_copyright_contracts_support
+#: model:ir.model.fields,help:liber_copyright_contracts_support.field_liber_support_ticket__edlab_mission_id
+msgid "The mission that opened this ticket, when it was not spontaneous."
+msgstr "A missão que abriu este chamado, quando ele não foi avulso."
+
+#. module: liber_copyright_contracts_support
+#: model:ir.model.fields,help:liber_copyright_contracts_support.field_res_company__contract_support_team_id
+msgid ""
+"The support engine's record behind the authors' mailbox. Created and kept in"
+" step automatically."
+msgstr "O registro do motor de atendimento por trás da caixa dos autores. Criado e mantido em dia automaticamente."
+
+#. module: liber_copyright_contracts_support
+#: model:ir.model.fields,help:liber_copyright_contracts_support.field_edlab_author_mission__team_id
+msgid ""
+"The support engine's record behind the authors' mailbox; filled in when the "
+"mission is sent."
+msgstr "O registro do motor de atendimento por trás da caixa dos autores; preenchido quando a missão é enviada."
+
+#. module: liber_copyright_contracts_support
+#: model:ir.model.fields,field_description:liber_copyright_contracts_support.field_edlab_author_mission__ticket_count
+msgid "Ticket Count"
+msgstr "Chamados"
+
+#. module: liber_copyright_contracts_support
+#: model:ir.model.fields,field_description:liber_copyright_contracts_support.field_edlab_author_mission__ticket_ids
+#: model:ir.ui.menu,name:liber_copyright_contracts_support.menu_author_tickets
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_support.view_author_mission_form
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_support.view_author_mission_list
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_support.view_edlab_contract_form_support
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_support.view_partner_form_author_support
+msgid "Tickets"
+msgstr "Chamados"
+
+#. module: liber_copyright_contracts_support
+#: model:ir.model.fields,field_description:liber_copyright_contracts_support.field_edlab_author_mission__website_message_ids
+msgid "Website Messages"
+msgstr ""
+
+#. module: liber_copyright_contracts_support
+#: model:ir.model.fields,help:liber_copyright_contracts_support.field_edlab_author_mission__website_message_ids
+msgid "Website communication history"
+msgstr ""
+
+#. module: liber_copyright_contracts_support
+#: model:ir.model.fields,help:liber_copyright_contracts_support.field_edlab_author_mission__note
+msgid "Why this mission, for whoever reads it in a year."
+msgstr "Por que esta missão, para quem ler daqui a um ano."
+
+#. module: liber_copyright_contracts_support
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_support.view_author_mission_form
+msgid "Why this mission..."
+msgstr "Por que esta missão..."
+
+#. module: liber_copyright_contracts_support
+#: model:ir.model.fields,field_description:liber_copyright_contracts_support.field_edlab_author_mission__missing_address_partner_ids
+msgid "Without address"
+msgstr "Sem endereço"
+
+#. module: liber_copyright_contracts_support
+#: model:ir.model.fields,field_description:liber_copyright_contracts_support.field_edlab_author_mission__missing_email_partner_ids
+msgid "Without e-mail"
+msgstr "Sem e-mail"
+
+#. module: liber_copyright_contracts_support
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_support.view_author_mission_form
+msgid "Works"
+msgstr "Obras"
+
+#. module: liber_copyright_contracts_support
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_support.view_author_mission_form
+msgid "author(s) to go. Reload the page to follow."
+msgstr "autor(es) a enviar. Recarregue a página para acompanhar."
+
+#. module: liber_copyright_contracts_support
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_support.view_author_mission_form
+msgid "e.g. Statements of the 1st half of 2026"
+msgstr "ex.: Prestações de contas do 1º semestre de 2026"
+
+#. module: liber_copyright_contracts_support
+#. odoo-python
+#: code:addons/liber_copyright_contracts_support/models/mission.py:0
+msgid "id"
+msgstr ""
+
+#. module: liber_copyright_contracts_support
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_support.view_author_mission_form
+msgid ""
+"statement(s) to render. The PDF batch lands on the log; reload the page to "
+"see it."
+msgstr "prestação(ões) a gerar. O lote em PDF cai no histórico; recarregue a página para vê-lo."
+
+#. module: liber_copyright_contracts_support
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_support.view_author_mission_form
+msgid "ticket(s) open,"
+msgstr "chamado(s) aberto(s),"
+
+
+#. module: liber_copyright_contracts_support
+#: model:ir.model.fields,field_description:liber_copyright_contracts_support.field_edlab_author_mission__sender_id
+msgid "Sent by"
+msgstr "Enviada por"
+
+#. module: liber_copyright_contracts_support
+#: model:ir.model.fields,field_description:liber_copyright_contracts_support.field_edlab_author_mission__sender_id
+msgid "Who pressed Send: the tickets are assigned to them and the e-mails go out in their name, even though the job runs later."
+msgstr "Quem apertou Enviar: os chamados ficam com essa pessoa e os e-mails saem em nome dela, mesmo com o job rodando depois."

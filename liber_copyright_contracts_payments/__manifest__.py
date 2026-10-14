@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     'name': 'Copyright Contracts - Payments',
-    'version': '19.0.1.3.0',
+    'version': '19.0.1.4.0',
     'summary': 'Generate vendor bills to pay authors from open royalties',
     'description': """
 Payments layer for copyright contracts.
@@ -24,12 +24,20 @@ the analytics layer settle the corresponding period.
         # a cerca que o CSV acima prometia e nunca teve (11/08/2026)
         'security/contract_bills_rule.xml',
         'data/payment_product.xml',
+        'data/settlement_months.xml',
         'views/res_company_views.xml',
         'views/res_config_settings_views.xml',
         'views/contract_views.xml',
         'views/account_move_views.xml',
         'views/bills_menu.xml',
+        'views/settlement_views.xml',
     ],
+    'assets': {
+        'web.assets_backend': [
+            'liber_copyright_contracts_payments/static/src/scss/settlement.scss',
+            'liber_copyright_contracts_payments/static/src/js/settlement_tour.js',
+        ],
+    },
     'installable': True,
     'application': False,
     'license': 'AGPL-3',

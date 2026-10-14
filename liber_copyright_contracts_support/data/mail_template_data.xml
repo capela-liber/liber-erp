@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!-- Mission templates, on the TICKET: the e-mail goes out from the
+             ticket, so the reply comes back to it. Context the mission
+             hands in: edlab_works, edlab_contracts, edlab_period_label,
+             edlab_net_label. -->
+        <record id="mail_template_mission_statement" model="mail.template">
+            <field name="name">Author mission: royalty statement</field>
+            <field name="model_id" ref="liber_support.model_liber_support_ticket"/>
+            <field name="lang">{{ object.partner_id.lang }}</field>
+            <field name="subject">Royalty statement — {{ ctx.get('edlab_period_label', '') }}</field>
+            <field name="body_html" type="html">
+<div style="margin: 0px; padding: 0px; font-size: 13px;">
+    <p>Dear <t t-out="object.partner_id.name"/>,</p>
+    <p>Please find attached your royalty statement for <t t-out="ctx.get('edlab_period_label', '')"/>, covering: <t t-out="ctx.get('edlab_works', '')"/>.</p>
+    <p>Amount payable: <strong><t t-out="ctx.get('edlab_net_label', '')"/></strong>.</p>
+    <p>If anything looks wrong, just reply to this e-mail: your answer reaches the person handling your statement.</p>
+    <p>Kind regards,<br/><t t-out="object.company_id.name"/></p>
+</div>
+            </field>
+        </record>
+        <record id="mail_template_mission_settlement" model="mail.template">
+            <field name="name">Author mission: royalty settlement</field>
+            <field name="model_id" ref="liber_support.model_liber_support_ticket"/>
+            <field name="lang">{{ object.partner_id.lang }}</field>
+            <field name="subject">Royalty settlement — {{ ctx.get('edlab_contracts', '') }}</field>
+            <field name="body_html" type="html">
+<div style="margin: 0px; padding: 0px; font-size: 13px;">
+    <p>Dear <t t-out="object.partner_id.name"/>,</p>
+    <p>We are settling the royalties of <t t-out="ctx.get('edlab_works', '')"/> (contract(s) <t t-out="ctx.get('edlab_contracts', '')"/>).</p>
+    <p>Please confirm your bank details and reply to this e-mail with any question: your answer reaches the person handling your settlement.</p>
+    <p>Kind regards,<br/><t t-out="object.company_id.name"/></p>
+</div>
+            </field>
+        </record>
+        <record id="mail_template_mission_registration" model="mail.template">
+            <field name="name">Author mission: registration update</field>
+            <field name="model_id" ref="liber_support.model_liber_support_ticket"/>
+            <field name="lang">{{ object.partner_id.lang }}</field>
+            <field name="subject">Please update your registration — {{ object.company_id.name }}</field>
+            <field name="body_html" type="html">
+<div style="margin: 0px; padding: 0px; font-size: 13px;">
+    <p>Dear <t t-out="object.partner_id.name"/>,</p>
+    <p>To keep your royalty payments and statements in order, please reply to this e-mail with your current address, e-mail, bank details (or Pix key) and identification documents.</p>
+    <p>Works under contract: <t t-out="ctx.get('edlab_works', '')"/>.</p>
+    <p>Kind regards,<br/><t t-out="object.company_id.name"/></p>
+</div>
+            </field>
+        </record>
+    </data>
+</odoo>

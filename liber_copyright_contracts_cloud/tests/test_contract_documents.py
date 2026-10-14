@@ -92,40 +92,14 @@ class TestContractDocuments(ContractCloudCase):
         self.assertEqual(_normal("contrato v1.2"), "contrato v1.2")
         self.assertEqual(_normal(False), "")
 
-    def test_link_by_name(self):
-        self.contract.location = "pereira_vieira_sermoes_contrato"
-        other = self.contract.copy({"location": "NAO_EXISTE.pdf"})
-        empty = self.contract.copy({"location": False})
-        res = (self.contract | other | empty).action_link_documents_by_name()
-        self.assertIn("1 file(s) linked", res["params"]["message"])
-        self.assertIn("1 name(s) without a matching file", res["params"]["message"])
-        self.assertEqual(self.contract.document_ids.file_id, self.pdf_main)
-        self.assertTrue(self.contract.document_ids.is_main)
-        self.assertFalse(other.document_ids)
-        # Idempotent.
-        res = self.contract.action_link_documents_by_name()
-        self.assertIn("1 already linked", res["params"]["message"])
-
-    def test_link_by_name_splits_a_multi_file_location(self):
-        location = ("PEREIRA_VIEIRA_SERMOES_CONTRATO.pdf; "
-                    "PEREIRA_VIEIRA_SERMOES_ADITIVO.pdf; SUMIU.pdf")
-        self.contract.location = location
-        res = self.contract.action_link_documents_by_name()
-        self.assertIn("2 file(s) linked", res["params"]["message"])
-        self.assertIn("1 name(s) without", res["params"]["message"])
-        docs = self.contract.document_ids
-        self.assertEqual(docs.file_id, self.pdf_main | self.pdf_amend)
-        self.assertEqual(self.contract.main_document_id.file_id, self.pdf_main)
-        # The Location keeps the whole list: the main file is already in it.
-        self.assertEqual(self.contract.location, location)
-
     def test_location_check_lists_what_is_not_linked(self):
         self.contract.location = ("PEREIRA_VIEIRA_SERMOES_CONTRATO.pdf; "
                                   "PEREIRA_VIEIRA_SERMOES_ADITIVO.pdf; SUMIU.pdf")
         self.assertEqual(self.contract.location_missing,
                          "PEREIRA_VIEIRA_SERMOES_CONTRATO.pdf; "
                          "PEREIRA_VIEIRA_SERMOES_ADITIVO.pdf; SUMIU.pdf")
-        self.contract.action_link_documents_by_name()
+        self._link(self.pdf_main)
+        self._link(self.pdf_amend)
         self.assertEqual(self.contract.location_missing, "SUMIU.pdf")
         Contract = self.env["edlab.contract"]
         self.assertIn(self.contract, Contract.search([("location_missing", "!=", False)]))
@@ -136,25 +110,6 @@ class TestContractDocuments(ContractCloudCase):
         self.assertIn(self.contract, Contract.search([("location_missing", "=", False)]))
         with self.assertRaises(UserError):
             Contract.search([("location_missing", "ilike", "x")])
-
-    def test_link_by_name_never_guesses_between_homonyms(self):
-        self.env["liber.cloud.file"].create({
-            "folder_id": self.folder.id, "name": "PEREIRA_VIEIRA_SERMOES_CONTRATO.PDF",
-            "path": "/contratos/antigos/PEREIRA_VIEIRA_SERMOES_CONTRATO.PDF"})
-        self.contract.location = "PEREIRA_VIEIRA_SERMOES_CONTRATO.pdf"
-        res = self.contract.action_link_documents_by_name()
-        self.assertIn("1 with several files", res["params"]["message"])
-        self.assertFalse(self.contract.document_ids)
-
-    def test_link_by_name_ignores_other_folders(self):
-        self.contract.location = "capa.pdf"
-        self.contract.action_link_documents_by_name()
-        self.assertFalse(self.contract.document_ids)
-
-    def test_link_by_name_without_settings_explains(self):
-        self.company.contract_cloud_folder_ids = False
-        with self.assertRaises(UserError):
-            self.contract.action_link_documents_by_name()
 
     def test_open_goes_through_the_folder_gate(self):
         doc = self._link(self.pdf_main)

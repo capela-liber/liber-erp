@@ -6,3 +6,4 @@ from . import account_move
 from . import royalty_line
 from . import contract
 from . import res_config_settings
+from . import settlement_month

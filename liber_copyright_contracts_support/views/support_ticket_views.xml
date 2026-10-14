@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_support_ticket_form_contracts" model="ir.ui.view">
+        <field name="name">liber.support.ticket.form.contracts</field>
+        <field name="model">liber.support.ticket</field>
+        <field name="inherit_id" ref="liber_support.view_support_ticket_form"/>
+        <field name="arch" type="xml">
+            <!-- Royalties tickets hide the desk's vocabulary: the team (the
+                 record behind the authors' mailbox), the consignment order
+                 and the transport fields mean nothing to this department. -->
+            <field name="team_id" position="attributes">
+                <attribute name="invisible">kind == 'royalties'</attribute>
+            </field>
+            <field name="sale_order_id" position="attributes">
+                <attribute name="invisible">kind == 'royalties'</attribute>
+            </field>
+            <field name="channel" position="attributes">
+                <attribute name="invisible">kind == 'royalties'</attribute>
+            </field>
+            <field name="external_ref" position="attributes">
+                <attribute name="invisible">kind == 'royalties'</attribute>
+            </field>
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button name="action_view_edlab_author" type="object" class="oe_stat_button"
+                        icon="fa-user" invisible="kind != 'royalties' or not partner_id"
+                        groups="liber_copyright_contracts.group_contract_user">
+                    <div class="o_stat_info"><span class="o_stat_text">Beneficiary</span></div>
+                </button>
+                <button name="action_view_edlab_contracts" type="object" class="oe_stat_button"
+                        icon="fa-file-text-o" invisible="kind != 'royalties'"
+                        groups="liber_copyright_contracts.group_contract_user">
+                    <field name="edlab_contract_count" widget="statinfo" string="Contracts"/>
+                </button>
+            </xpath>
+            <field name="sale_order_id" position="after">
+                <field name="edlab_mission_id" invisible="not edlab_mission_id and kind != 'royalties'"
+                       groups="liber_copyright_contracts.group_contract_user"/>
+                <field name="edlab_contract_ids" widget="many2many_tags"
+                       invisible="not edlab_contract_ids and kind != 'royalties'"
+                       groups="liber_copyright_contracts.group_contract_user"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="view_support_ticket_search_contracts" model="ir.ui.view">
+        <field name="name">liber.support.ticket.search.contracts</field>
+        <field name="model">liber.support.ticket</field>
+        <field name="inherit_id" ref="liber_support.view_support_ticket_search"/>
+        <field name="arch" type="xml">
+            <xpath expr="//search" position="inside">
+                <field name="edlab_mission_id"/>
+                <field name="edlab_contract_ids"/>
+                <filter name="royalties" string="Royalties" domain="[('kind', '=', 'royalties')]"/>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- The authors' tickets, inside Copyright: same engine, another
+         department. The commercial action leaves them out. -->
+    <record id="action_author_ticket" model="ir.actions.act_window">
+        <field name="name">Author Tickets</field>
+        <field name="res_model">liber.support.ticket</field>
+        <field name="view_mode">kanban,list,form,activity</field>
+        <field name="domain">[('kind', '=', 'royalties')]</field>
+        <field name="context">{'default_kind': 'royalties', 'search_default_group_by_stage': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">No author ticket yet</p>
+            <p>A mission opens one ticket per author; an author who writes to the authors' alias opens one too; and the author's card has a "New ticket" button for a call or a letter.</p>
+        </field>
+    </record>
+
+    <record id="liber_support.action_support_ticket" model="ir.actions.act_window">
+        <field name="domain">[('kind', '!=', 'royalties')]</field>
+    </record>
+</odoo>

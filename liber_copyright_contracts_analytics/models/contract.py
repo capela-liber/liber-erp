@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from odoo import _, api, fields, models
+from odoo.exceptions import AccessError
 
 
 class EdlabContract(models.Model):
@@ -217,3 +218,63 @@ class EdlabContract(models.Model):
         for domain in domains.values():
             invoices |= Move.search(domain)
         return royalty_lines._book_royalties_from_invoices(invoices)
+
+    # ------------------------------------------------------------------
+    # Zerar o analítico (gerentes)
+    # ------------------------------------------------------------------
+    def _edlab_resettable_analytic_domain(self):
+        """Analytic entries the SYSTEM generated on these contracts' accounts:
+        accruals from invoices, the advance, the payment cutoff, legacy sales
+        and anything else this family books. What it keeps are the entries
+        born from a journal item (a paid royalty bill, a manual entry): those
+        mirror the books and are not ours to erase."""
+        accounts = self.royalty_line_ids.analytic_account_id
+        return [("account_id", "in", accounts.ids), ("move_line_id", "=", False)]
+
+    def action_reset_analytics(self):
+        """Erase the generated analytic entries of the contract(s).
+
+        Made for the clean-up phase, when a royalty line was booked wrong
+        (wrong tier, wrong beneficiary, wrong edition) and the fastest fix is
+        to wipe the account and run "Fill Royalty Lines" again, which is
+        idempotent and rebuilds accruals, advance and cutoff.
+
+        The guard lives here and not only on the button: the button is
+        hidden from assistants, but a hidden button does not stop an RPC.
+        """
+        if not self.env.su and not self.env.user.has_group(
+                "liber_copyright_contracts.group_contract_manager"):
+            raise AccessError(_(
+                "Only Copyright Contract managers can reset a contract's "
+                "analytic entries."))
+        AnalyticLine = self.env["account.analytic.line"].sudo()
+        total = 0
+        for contract in self:
+            lines = AnalyticLine.search(contract._edlab_resettable_analytic_domain())
+            if not lines:
+                continue
+            count, amount = len(lines), sum(lines.mapped("amount"))
+            lines.unlink()
+            total += count
+            contract.message_post(body=_(
+                "Analytic reset: %(count)s generated entr(ies) erased, "
+                "balance %(amount).2f. Entries from journal items were kept. "
+                "Run \"Fill Royalty Lines\" to rebuild.",
+                count=count, amount=amount))
+        if not total:
+            message = _("Nothing to reset: no generated analytic entry on "
+                        "this contract.")
+        else:
+            message = _("%s analytic entr(ies) erased. Run \"Fill Royalty "
+                        "Lines\" to rebuild them.", total)
+        return {
+            "type": "ir.actions.client",
+            "tag": "display_notification",
+            "params": {
+                "title": _("Reset Analytics"),
+                "message": message,
+                "type": "success" if total else "warning",
+                "sticky": False,
+                "next": {"type": "ir.actions.act_window_close"},
+            },
+        }

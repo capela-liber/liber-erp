@@ -52,16 +52,19 @@
       <p>Os números vêm do <a href="liber_copyright_contracts_analytics.html">Cálculo de royalties</a> e casam com as faturas do <a href="liber_copyright_contracts_payments.html">Pagamento de royalties</a>: <strong>o total do extrato é, por construção, o mesmo saldo em aberto que a fatura do autor paga</strong>. Com o módulo de <a href="liber_copyright_contracts_taxes.html">IRRF sobre direitos</a> instalado, a dedução de <abbr class="sigla" title="Imposto de Renda Retido na Fonte: a parte do imposto que a editora retém e recolhe pelo autor.">IRRF</abbr> do extrato segue a tabela progressiva (ou o modo do favorecido).</p>
 
       <h2 id="configuracao">Configuração</h2>
-      <p>O módulo não tem parâmetros próprios — mas o extrato só fica completo se o cadastro do autor estiver:</p>
+      <p>O módulo não tem parâmetros próprios — mas o extrato só fica completo se o cadastro do favorecido estiver em dia. Desde 14/10/2026 o contato tem duas abas: <strong>Favorecido</strong>, com os dados da pessoa, e <strong>Contratos de direitos autorais</strong>, com os contratos, as linhas de royalty e os valores.</p>
       <ol class="steps">
-        <li>Abra o autor em <span class="menupath">Direitos Autorais<i>‣</i>Favorecidos</span>.</li>
-        <li>Na aba <strong>Favorecido</strong>, seção <strong>Identificação</strong>, preencha <span class="field">Data de nascimento</span>, <span class="field">Nacionalidade</span>, <span class="field">RG</span> e <span class="field"><abbr class="sigla" title="Programa de Integração Social: a contribuição federal (e o cadastro do trabalhador de mesmo nome).">PIS</abbr></span>. O CPF, o endereço e o e-mail vêm do cadastro geral do contato.</li>
-        <li>Na seção <strong>Royalties</strong>, o campo <span class="field"><abbr class="sigla" title="Imposto de Renda Retido na Fonte: a parte do imposto que a editora retém e recolhe pelo autor.">IRRF</abbr> (%)</span> guarda o percentual fixo usado quando a retenção é manual (com o módulo de IRRF instalado, aparece antes dele o <span class="field">Modo de IRRF</span>).</li>
-        <li>Em <strong>Contas bancárias</strong>, cadastre <span class="field">Banco</span>, <span class="field">Agência</span> e o número da conta — a primeira conta da lista é a impressa no extrato.</li>
+        <li>Abra o favorecido em <span class="menupath">Direitos Autorais<i>‣</i>Favorecidos</span>.</li>
+        <li>Na aba <strong>Favorecido</strong>, seção <strong>Identificação</strong>: para pessoa física, <span class="field">CPF</span>, <span class="field">RG</span>, <span class="field"><abbr class="sigla" title="Programa de Integração Social: a contribuição federal (e o cadastro do trabalhador de mesmo nome).">PIS</abbr></span>, <span class="field">Data de nascimento</span>, <span class="field">Local de nascimento</span> e <span class="field">Nacionalidade</span>; para pessoa jurídica, <span class="field">Nome fantasia</span>, <span class="field">CNPJ</span>, <span class="field">Inscrição Municipal</span> e <span class="field">Colaborador</span> (a pessoa na empresa que cuida do contrato); a razão social é o nome do contato e a sede é o endereço. A seção muda sozinha conforme o contato é Pessoa ou Empresa.</li>
+        <li>Na seção <strong>Dados pessoais</strong> (só para o gerente de contratos): <span class="field">Estado civil</span>, <span class="field">Escolaridade</span> e <span class="field">Autodeclaração de raça/cor</span>, nas categorias do IBGE, com a opção "Prefere não declarar". São dados sensíveis pela LGPD: pedidos por programas públicos de fomento e declarados pela própria pessoa, nunca preenchidos por ela.</li>
+        <li>Na seção <strong>Regional</strong>, confira o <span class="field">Idioma</span> e a <span class="field">Moeda do favorecido</span>; ao lado, o <strong>Endereço</strong> com CEP, que é o que vai no envelope.</li>
+        <li>Em <strong>Pagamento</strong>, cadastre as contas: <span class="field">Banco</span>, <span class="field">Agência</span>, <span class="field">Número</span>, <span class="field">Tipo de conta</span> (corrente ou poupança) e, se houver, a <span class="field">Chave Pix</span> com o seu <span class="field">Tipo</span> (CPF, CNPJ, e-mail, telefone ou aleatória). Marque <span class="field">Pagar por Pix</span> quando for a preferência do favorecido. A chave é conferida ao salvar: CPF com 11 dígitos, CNPJ com 14, e-mail com "@", telefone com DDD.</li>
+        <li>Na aba <strong>Contratos de direitos autorais</strong>, seção <strong>Royalties</strong>, o campo <span class="field"><abbr class="sigla" title="Imposto de Renda Retido na Fonte: a parte do imposto que a editora retém e recolhe pelo autor.">IRRF</abbr> (%)</span> segue como antes (ver o manual de IRRF).</li>
         <li>Para o envio por e-mail, confira que o contato tem <strong>e-mail</strong> cadastrado.</li>
       </ol>
-      <p>A mesma aba mostra, somente para consulta: as <strong>Linhas de royalty</strong> do autor em todos os contratos (com a <span class="field">Data do Último Pagamento</span> e o saldo de cada uma), os <span class="field">Direitos autorais em aberto</span> somados e a <span class="field">Última prestação enviada</span>.</p>
-      <figure class="shot"><img src="img/doc-liber_copyright_contracts_reports-author.png" alt="Aba Favorecido do contato: identificação, IRRF, contas bancárias e as linhas de royalty com saldo"><figcaption>A página do autor: tudo o que o extrato usa, num lugar só.</figcaption></figure>
+      <p>A aba <strong>Contratos de direitos autorais</strong> mostra, somente para consulta: as <strong>Linhas de royalty</strong> do favorecido em todos os contratos (com a <span class="field">Data do Último Pagamento</span> e o saldo de cada uma), os <span class="field">Direitos autorais em aberto</span> somados e a <span class="field">Última prestação enviada</span>.</p>
+      <figure class="shot"><img src="img/doc-liber_copyright_contracts_reports-author.png" alt="Aba Favorecido do contato: identificação, dados pessoais, regional, endereço e contas bancárias com Pix"><figcaption>A aba Favorecido: tudo o que o extrato e o envelope usam, num lugar só.</figcaption></figure>
+
 
       <h2 id="emitir">Emitir a prestação de contas</h2>
       <ol class="steps">
@@ -78,6 +81,24 @@
       </ul>
       <div class="callout warn"><span class="title">Atenção</span>
         <p>O envio exige e-mail cadastrado: se algum dos selecionados não tiver, o assistente para com a mensagem "<em>Defina primeiro um endereço de e-mail para: …</em>" e nada é enviado até você completar o cadastro.</p>
+      </div>
+
+      <h2 id="envelope">O envelope com janela</h2>
+      <p>A prestação de contas vai pelo correio num envelope ofício de 115 × 230 mm com janela, com a folha A4 dobrada em três. O endereço do favorecido é impresso num bloco posicionado para cair na janela, e os dados do favorecido e do pagamento vêm logo abaixo, no alto da primeira página — é o que o departamento confere antes de fechar o envelope.</p>
+      <ol class="steps">
+        <li>O módulo já vem com as medidas do envelope da casa (janela a 15 mm do pé, 42 mm de altura, 38 mm da esquerda): na folha, o endereço fica entre 57 e 85 mm do alto, a partir de 40 mm da esquerda, a faixa que a janela mostra em qualquer posição do maço dentro do envelope. Para outro envelope, meça a distância do alto e da esquerda da folha até a janela, e o tamanho dela, com a folha dobrada em três e o painel de cima virado para a janela.</li>
+        <li>Em <span class="menupath">Configurações<i>‣</i>Direitos Autorais</span>, bloco <strong>Envelope</strong>, digite as quatro medidas da <span class="field">Janela na folha</span> e a <span class="field">Altura do timbre</span> — a margem onde o cabeçalho da empresa é desenhado; o bloco de endereço só pode começar abaixo dela.</li>
+        <li>Abra um favorecido e, em <strong>Imprimir</strong>, escolha <strong>Prova de envelope</strong>: sai uma folha com o quadro tracejado da janela, o endereço dentro e as duas linhas de dobra. Dobre, ponha no envelope e ajuste os milímetros até o endereço aparecer inteiro.</li>
+      </ol>
+      <div class="callout note"><span class="title">Nota</span>
+        <p>A prestação de contas usa um formato de papel próprio, cuja margem superior é a altura do timbre. Se a janela ficar coberta pelo timbre, a impressão para com uma mensagem dizendo para reduzir a altura; a janela também precisa caber no painel de cima da dobra (99 mm).</p>
+      </div>
+
+      <h2 id="idioma-moeda">Idioma e moeda do favorecido</h2>
+      <p>Desde 14/10/2026 cada prestação de contas sai <strong>na língua do favorecido</strong>: o <span class="field">Idioma</span> do contato decide. Um autor brasileiro lê "Prestação de contas de direitos autorais"; uma editora estrangeira que recebe o mesmo documento lê "Royalty statement", com rótulos, datas e período em inglês. Quem imprime não precisa trocar de idioma; o documento se vira sozinho, inclusive no envio por e-mail.</p>
+      <p>A <span class="field">Moeda do favorecido</span>, na aba Favorecido, faz o mesmo com os valores: quando é diferente da moeda da empresa <em>e</em> há taxa de câmbio cadastrada (<span class="menupath">Contabilidade<i>‣</i>Configurações<i>‣</i>Moedas</span>), todos os valores do extrato são convertidos pela taxa vigente na data final do período, e uma linha ao pé diz a taxa usada. Sem taxa cadastrada, o extrato fica na moeda da empresa e avisa — nunca converte um por um em silêncio.</p>
+      <div class="callout note"><span class="title">Nota</span>
+        <p>Os royalties continuam calculados na moeda da empresa; a conversão é só de apresentação, para o favorecido saber quanto receberá na moeda dele. O IRRF segue o modo do favorecido (ver o manual de IRRF): uma editora estrangeira normalmente é "Isento".</p>
       </div>
 
       <h2 id="conteudo">O que o PDF traz</h2>

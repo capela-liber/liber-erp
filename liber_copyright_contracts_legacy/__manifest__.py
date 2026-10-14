@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     'name': 'Copyright Contracts - Legacy Sales',
-    'version': '19.0.1.5.0',
+    'version': '19.0.1.6.0',
     'summary': 'Royalties on the sales made before Odoo, classified by '
                'CFOP and corrected by a price index',
     'description': """

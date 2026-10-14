@@ -784,3 +784,38 @@ msgid ""
 msgstr ""
 "Somente gerentes de Contratos de Direitos Autorais podem mudar o status de "
 "um contrato (validar, cancelar, renovar)."
+
+#. module: liber_copyright_contracts
+#: model:ir.actions.act_window,name:liber_copyright_contracts.action_edlab_contract_tag_wizard
+msgid "Tag Contracts"
+msgstr "Marcar contratos"
+
+#. module: liber_copyright_contracts
+#: model:ir.model.fields.selection,name:liber_copyright_contracts.selection__edlab_contract_tag_wizard__mode__add
+msgid "Add"
+msgstr "Adicionar"
+
+#. module: liber_copyright_contracts
+#: model:ir.model.fields.selection,name:liber_copyright_contracts.selection__edlab_contract_tag_wizard__mode__remove
+msgid "Remove"
+msgstr "Remover"
+
+#. module: liber_copyright_contracts
+#: model:ir.model.fields.selection,name:liber_copyright_contracts.selection__edlab_contract_tag_wizard__mode__replace
+msgid "Replace"
+msgstr "Substituir"
+
+#. module: liber_copyright_contracts
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts.view_edlab_contract_tag_wizard_form
+msgid "Apply"
+msgstr "Aplicar"
+
+#. module: liber_copyright_contracts
+#: model:ir.model.fields,field_description:liber_copyright_contracts.field_edlab_contract_tag_wizard__mode
+msgid "Mode"
+msgstr "Modo"
+
+#. module: liber_copyright_contracts
+#: model:ir.model.fields,help:liber_copyright_contracts.field_edlab_contract_tag_wizard__mode
+msgid "Add keeps the tags the contracts already have; Remove takes only these off; Replace leaves exactly these."
+msgstr "Adicionar mantém os marcadores que os contratos já têm; Remover tira só estes; Substituir deixa exatamente estes."

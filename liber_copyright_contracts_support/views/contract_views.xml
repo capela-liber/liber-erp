@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_edlab_contract_form_support" model="ir.ui.view">
+        <field name="name">edlab.contract.form.support</field>
+        <field name="model">edlab.contract</field>
+        <field name="inherit_id" ref="liber_copyright_contracts.view_edlab_contract_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button name="action_view_support_tickets" type="object" class="oe_stat_button"
+                        icon="fa-life-ring"
+                        groups="liber_copyright_contracts.group_contract_user">
+                    <field name="edlab_support_ticket_count" widget="statinfo" string="Tickets"/>
+                </button>
+            </xpath>
+        </field>
+    </record>
+</odoo>

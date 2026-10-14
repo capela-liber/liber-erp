@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="res_config_settings_view_form_envelope" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.copyright.envelope</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="liber_copyright_contracts.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//app[@name='liber_copyright_contracts']" position="inside">
+                <block title="Envelope" name="copyright_envelope_block">
+                    <setting string="Window on the sheet"
+                             help="Where the envelope window falls on the A4 sheet folded in three, in millimetres from the sheet's top-left corner. Print an envelope proof (Beneficiaries > Print) to calibrate.">
+                        <div class="content-group">
+                            <div class="row mt8">
+                                <label for="edlab_envelope_window_top" class="col-lg-4 o_light_label"/>
+                                <field name="edlab_envelope_window_top" class="col-lg-3"/>
+                            </div>
+                            <div class="row">
+                                <label for="edlab_envelope_window_left" class="col-lg-4 o_light_label"/>
+                                <field name="edlab_envelope_window_left" class="col-lg-3"/>
+                            </div>
+                            <div class="row">
+                                <label for="edlab_envelope_window_width" class="col-lg-4 o_light_label"/>
+                                <field name="edlab_envelope_window_width" class="col-lg-3"/>
+                            </div>
+                            <div class="row">
+                                <label for="edlab_envelope_window_height" class="col-lg-4 o_light_label"/>
+                                <field name="edlab_envelope_window_height" class="col-lg-3"/>
+                            </div>
+                        </div>
+                    </setting>
+                    <setting string="Letterhead height"
+                             help="Top margin of the statement: the letterhead is drawn in it and the body starts below. Must stay above the window.">
+                        <div class="content-group">
+                            <div class="mt8">
+                                <field name="edlab_statement_header_height" class="o_light_label"/>
+                                <span class="ms-2">mm</span>
+                            </div>
+                        </div>
+                    </setting>
+                </block>
+            </xpath>
+        </field>
+    </record>
+</odoo>

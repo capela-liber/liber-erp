@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <record id="month_01" model="edlab.contract.month"><field name="number">1</field><field name="name">Jan</field></record>
+    <record id="month_02" model="edlab.contract.month"><field name="number">2</field><field name="name">Feb</field></record>
+    <record id="month_03" model="edlab.contract.month"><field name="number">3</field><field name="name">Mar</field></record>
+    <record id="month_04" model="edlab.contract.month"><field name="number">4</field><field name="name">Apr</field></record>
+    <record id="month_05" model="edlab.contract.month"><field name="number">5</field><field name="name">May</field></record>
+    <record id="month_06" model="edlab.contract.month"><field name="number">6</field><field name="name">Jun</field></record>
+    <record id="month_07" model="edlab.contract.month"><field name="number">7</field><field name="name">Jul</field></record>
+    <record id="month_08" model="edlab.contract.month"><field name="number">8</field><field name="name">Aug</field></record>
+    <record id="month_09" model="edlab.contract.month"><field name="number">9</field><field name="name">Sep</field></record>
+    <record id="month_10" model="edlab.contract.month"><field name="number">10</field><field name="name">Oct</field></record>
+    <record id="month_11" model="edlab.contract.month"><field name="number">11</field><field name="name">Nov</field></record>
+    <record id="month_12" model="edlab.contract.month"><field name="number">12</field><field name="name">Dec</field></record>
+</odoo>

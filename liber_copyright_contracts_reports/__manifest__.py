@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     'name': 'Copyright Contracts - Author Reports',
-    'version': '19.0.1.0.0',
+    'version': '19.0.1.4.0',
     'summary': 'Royalty statements sent to authors (PDF report + email)',
     'description': """
 Author-facing reporting layer for copyright contracts.
@@ -24,12 +24,19 @@ on the author's chatter and noted on each contract involved.
     'data': [
         'security/ir.model.access.csv',
         'data/mail_template_data.xml',
+        'data/report_paperformat.xml',
         'report/royalty_statement_templates.xml',
         'report/royalty_statement_reports.xml',
         'wizard/statement_wizard_views.xml',
         'views/partner_views.xml',
+        'views/res_config_settings_views.xml',
         'views/authors_menu.xml',
     ],
+    'assets': {
+        'web.assets_backend': [
+            'liber_copyright_contracts_reports/static/src/js/beneficiary_tab_tour.js',
+        ],
+    },
     'demo': [
         'demo/books_demo.xml',
         'demo/books_invoices_demo.xml',

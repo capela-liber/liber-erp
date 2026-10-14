@@ -827,3 +827,39 @@ msgstr ""
 #: model:account.analytic.plan,name:liber_copyright_contracts_analytics.analytic_plan_copyright
 msgid "Copyright Contracts"
 msgstr "Direitos Autorais"
+
+#. module: liber_copyright_contracts_analytics
+#. odoo-python
+#: code:addons/liber_copyright_contracts_analytics/models/contract.py:0
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_analytics.view_edlab_contract_form_analytics
+msgid "Reset Analytics"
+msgstr "Zerar analítico"
+
+#. module: liber_copyright_contracts_analytics
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_analytics.view_edlab_contract_form_analytics
+msgid "Erase every analytic entry the system generated on this contract (royalties from invoices, advance, payment cutoff, legacy sales)? Entries from journal items stay. Run Fill Royalty Lines afterwards to rebuild."
+msgstr "Apagar todos os lançamentos analíticos que o sistema gerou neste contrato (royalties das faturas, adiantamento, corte de pagamento, vendas legadas)? Os que vêm de lançamentos contábeis ficam. Depois, rode Preencher Linhas de Royalties para refazer."
+
+#. module: liber_copyright_contracts_analytics
+#. odoo-python
+#: code:addons/liber_copyright_contracts_analytics/models/contract.py:0
+msgid "Only Copyright Contract managers can reset a contract's analytic entries."
+msgstr "Só gerentes de Contratos de Direitos Autorais podem zerar o analítico de um contrato."
+
+#. module: liber_copyright_contracts_analytics
+#. odoo-python
+#: code:addons/liber_copyright_contracts_analytics/models/contract.py:0
+msgid "Analytic reset: %(count)s generated entr(ies) erased, balance %(amount).2f. Entries from journal items were kept. Run \"Fill Royalty Lines\" to rebuild."
+msgstr "Analítico zerado: %(count)s lançamento(s) gerado(s) apagado(s), saldo %(amount).2f. Os que vêm de lançamentos contábeis ficaram. Rode \"Preencher Linhas de Royalties\" para refazer."
+
+#. module: liber_copyright_contracts_analytics
+#. odoo-python
+#: code:addons/liber_copyright_contracts_analytics/models/contract.py:0
+msgid "Nothing to reset: no generated analytic entry on this contract."
+msgstr "Nada a zerar: este contrato não tem lançamento analítico gerado."
+
+#. module: liber_copyright_contracts_analytics
+#. odoo-python
+#: code:addons/liber_copyright_contracts_analytics/models/contract.py:0
+msgid "%s analytic entr(ies) erased. Run \"Fill Royalty Lines\" to rebuild them."
+msgstr "%s lançamento(s) analítico(s) apagado(s). Rode \"Preencher Linhas de Royalties\" para refazê-los."

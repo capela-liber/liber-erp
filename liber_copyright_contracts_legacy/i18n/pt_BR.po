@@ -1,5 +1,4 @@
 # Translation of Odoo Server.
-# Portuguese (Brazil) for liber_copyright_contracts_legacy.
 # This file contains the translation of the following modules:
 # 	* liber_copyright_contracts_legacy
 #
@@ -7,11 +6,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0-20260630\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-09 21:16+0000\n"
-"PO-Revision-Date: 2026-10-06 14:53+0000\n"
+"POT-Creation-Date: 2026-10-14 18:53+0000\n"
+"PO-Revision-Date: 2026-10-14 18:53+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
-"Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
@@ -55,18 +53,19 @@ msgstr ""
 #. module: liber_copyright_contracts_legacy
 #: model:ir.model.fields,help:liber_copyright_contracts_legacy.field_edlab_legacy_sale__discount_percent
 msgid ""
-"1 - net / gross: the discount the special-sale minimum is compared with. The "
-"base keeps the discount in money, not in %."
+"1 - net / gross: the discount the special-sale minimum is compared with. The"
+" base keeps the discount in money, not in %."
 msgstr "1 - líquido / bruto: o desconto que se compara com o mínimo da venda especial. A base guarda o desconto em dinheiro, não em %."
 
 #. module: liber_copyright_contracts_legacy
 #: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_legacy.report_royalty_statement_legacy
 msgid ""
-"<em>O valor da época é o que as vendas somaram no dinheiro daquele ano. O "
-"fator é a correção acumulada pelo índice indicado, do mês de cada venda até "
-"o mês de referência; o valor corrigido é a base sobre a qual o percentual "
-"foi aplicado. Estes direitos já estão incluídos no quadro acima.</em>"
-msgstr ""
+"<em>The amount at the time is what the sales added up to in that year's "
+"money. The factor is the correction accumulated by the index shown, from the"
+" month of each sale to the reference month; the corrected amount is the base"
+" the percentage was applied to. These royalties are already included in the "
+"table above.</em>"
+msgstr "<em>O valor da época é o que as vendas somaram no dinheiro daquele ano. O fator é a correção acumulada pelo índice indicado, do mês de cada venda até o mês de referência; o valor corrigido é a base sobre a qual o percentual foi aplicado. Estes direitos já estão incluídos no quadro acima.</em>"
 
 #. module: liber_copyright_contracts_legacy
 #. odoo-python
@@ -91,30 +90,22 @@ msgid ""
 "A sale accrues, a return deducts, a donation pays nothing and a consignment "
 "shipment has no effect until it is settled. After changing a code, run "
 "\"Reclassify\" on the legacy sales."
-msgstr ""
-"Venda gera royalties, devolução abate, doação não paga nada e remessa em "
-"consignação não tem efeito até o acerto. Depois de mudar um código, rode "
-"\"Reclassificar\" nas vendas legadas."
+msgstr "Venda gera royalties, devolução abate, doação não paga nada e remessa em consignação não tem efeito até o acerto. Depois de mudar um código, rode \"Reclassificar\" nas vendas legadas."
 
 #. module: liber_copyright_contracts_legacy
 #: model:ir.model.fields,help:liber_copyright_contracts_legacy.field_edlab_legacy_import__path
 msgid ""
 "Absolute path of the .csv or .xlsx on the Odoo server, for files too large "
 "to upload through the browser."
-msgstr ""
-"Caminho absoluto do .csv ou .xlsx no servidor do Odoo, para arquivos grandes "
-"demais para subir pelo navegador."
+msgstr "Caminho absoluto do .csv ou .xlsx no servidor do Odoo, para arquivos grandes demais para subir pelo navegador."
 
 #. module: liber_copyright_contracts_legacy
 #: model:ir.model.fields,help:liber_copyright_contracts_legacy.field_edlab_contract__legacy_enabled
 msgid ""
 "Accrue royalties on the sales of the contracted works made before this "
-"system (the imported legacy base), and count those copies in the "
-"cumulative quantity that selects the royalty tier."
-msgstr ""
-"Apurar royalties sobre as vendas das obras contratadas feitas antes deste "
-"sistema (a base legada importada) e contar esses exemplares na quantidade "
-"acumulada que escolhe a faixa de royalty."
+"system (the imported legacy base), and count those copies in the cumulative "
+"quantity that selects the royalty tier."
+msgstr "Apurar royalties sobre as vendas das obras contratadas feitas antes deste sistema (a base legada importada) e contar esses exemplares na quantidade acumulada que escolhe a faixa de royalty."
 
 #. module: liber_copyright_contracts_legacy
 #: model:ir.model.fields,field_description:liber_copyright_contracts_legacy.field_edlab_legacy_cfop__active
@@ -128,6 +119,11 @@ msgid "Also the other rows with these titles"
 msgstr "Também as outras linhas com estes títulos"
 
 #. module: liber_copyright_contracts_legacy
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_legacy.report_royalty_statement_legacy
+msgid "Amount at the time"
+msgstr "Valor da época"
+
+#. module: liber_copyright_contracts_legacy
 #: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_legacy.view_edlab_legacy_sale_form
 msgid "Amounts"
 msgstr "Valores"
@@ -135,23 +131,15 @@ msgstr "Valores"
 #. module: liber_copyright_contracts_legacy
 #: model_terms:ir.actions.act_window,help:liber_copyright_contracts_legacy.action_edlab_price_index
 msgid ""
-"An index (IPCA, INPC, IGP-M...) brings the legacy sales of a contract to the "
-"money of a reference month. Type the monthly variations or refresh them from "
-"the Central Bank."
-msgstr ""
-"Um índice (IPCA, INPC, IGP-M...) traz as vendas legadas de um contrato para "
-"o dinheiro de um mês de referência. Digite as variações mensais ou atualize-"
-"as do Banco Central."
+"An index (IPCA, INPC, IGP-M...) brings the legacy sales of a contract to the"
+" money of a reference month. Type the monthly variations or refresh them "
+"from the Central Bank."
+msgstr "Um índice (IPCA, INPC, IGP-M...) traz as vendas legadas de um contrato para o dinheiro de um mês de referência. Digite as variações mensais ou atualize-as do Banco Central."
 
 #. module: liber_copyright_contracts_legacy
 #: model:ir.model,name:liber_copyright_contracts_legacy.model_account_analytic_line
 msgid "Analytic Line"
 msgstr "Linha analítica"
-
-#. module: liber_copyright_contracts_legacy
-#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_legacy.report_royalty_statement_legacy
-msgid "Ano"
-msgstr ""
 
 #. module: liber_copyright_contracts_legacy
 #: model:ir.model.fields,help:liber_copyright_contracts_legacy.field_edlab_price_index_value__date
@@ -178,9 +166,7 @@ msgstr "Série do BCB"
 msgid ""
 "Book (or refresh) one analytic entry per month of legacy sales of the "
 "contracted works."
-msgstr ""
-"Apura (ou atualiza) um lançamento analítico por mês de vendas legadas das "
-"obras contratadas."
+msgstr "Apura (ou atualiza) um lançamento analítico por mês de vendas legadas das obras contratadas."
 
 #. module: liber_copyright_contracts_legacy
 #: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_legacy.view_edlab_contract_form_legacy
@@ -217,8 +203,8 @@ msgstr "Cancelar"
 #. module: liber_copyright_contracts_legacy
 #: model:ir.model.fields,help:liber_copyright_contracts_legacy.field_edlab_legacy_sale__team_id
 msgid ""
-"Channel of the sale, set by the royalties department. A sale from one of the "
-"company's special sales channels, with a discount at or above the minimum, "
+"Channel of the sale, set by the royalties department. A sale from one of the"
+" company's special sales channels, with a discount at or above the minimum, "
 "is a special sale: contracts on the cover price pay it on the net amount -- "
 "the same rule as the invoices."
 msgstr "Canal da venda, marcado à mão pelo departamento de direitos autorais. A venda de um dos canais especiais da empresa, com desconto igual ou acima do mínimo, é venda especial: os contratos sobre o preço de capa pagam sobre o valor líquido -- a mesma regra das faturas."
@@ -240,9 +226,7 @@ msgstr "Código"
 msgid ""
 "Code of the series in the Central Bank of Brazil's SGS (433 = IPCA, 188 = "
 "INPC, 189 = IGP-M). Used by 'Refresh from BCB'."
-msgstr ""
-"Código da série no SGS do Banco Central (433 = IPCA, 188 = INPC, 189 = IGP-"
-"M). Usado por 'Atualizar do BCB'."
+msgstr "Código da série no SGS do Banco Central (433 = IPCA, 188 = INPC, 189 = IGP-M). Usado por 'Atualizar do BCB'."
 
 #. module: liber_copyright_contracts_legacy
 #: model:ir.model.fields,field_description:liber_copyright_contracts_legacy.field_edlab_legacy_import__company_id
@@ -261,18 +245,26 @@ msgid "Copies"
 msgstr "Exemplares"
 
 #. module: liber_copyright_contracts_legacy
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_legacy.report_royalty_statement_legacy
+msgid "Copies sold"
+msgstr "Livros vendidos"
+
+#. module: liber_copyright_contracts_legacy
 #: model:ir.model.fields,help:liber_copyright_contracts_legacy.field_edlab_contract__legacy_qty
 msgid ""
 "Copies sold (returns deducted) in the legacy base, for the contracted works "
 "and within the legacy window."
-msgstr ""
-"Exemplares vendidos (devoluções abatidas) na base legada, das obras "
-"contratadas e dentro da janela legada."
+msgstr "Exemplares vendidos (devoluções abatidas) na base legada, das obras contratadas e dentro da janela legada."
 
 #. module: liber_copyright_contracts_legacy
 #: model:ir.model,name:liber_copyright_contracts_legacy.model_edlab_contract
 msgid "Copyright Contract"
 msgstr "Contrato de direitos autorais"
+
+#. module: liber_copyright_contracts_legacy
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_legacy.report_royalty_statement_legacy
+msgid "Corrected amount"
+msgstr "Valor corrigido"
 
 #. module: liber_copyright_contracts_legacy
 #: model:ir.model.fields,field_description:liber_copyright_contracts_legacy.field_account_analytic_line__edlab_legacy_factor
@@ -284,9 +276,7 @@ msgstr "Fator de correção"
 msgid ""
 "Corrects each month of legacy sales to the reference month before applying "
 "the percentage. Empty = nominal values, in the money of the time."
-msgstr ""
-"Corrige cada mês de vendas legadas para o mês de referência antes de aplicar "
-"o percentual. Vazio = valores nominais, no dinheiro da época."
+msgstr "Corrige cada mês de vendas legadas para o mês de referência antes de aplicar o percentual. Vazio = valores nominais, no dinheiro da época."
 
 #. module: liber_copyright_contracts_legacy
 #. odoo-python
@@ -381,9 +371,7 @@ msgstr "Data"
 msgid ""
 "Delete this company's legacy rows before loading. Off, the file is appended "
 "(use it only for a complementary export)."
-msgstr ""
-"Apaga as linhas legadas desta empresa antes de carregar. Desligado, o "
-"arquivo é acrescentado (use só para um export complementar)."
+msgstr "Apaga as linhas legadas desta empresa antes de carregar. Desligado, o arquivo é acrescentado (use só para um export complementar)."
 
 #. module: liber_copyright_contracts_legacy
 #: model:edlab.legacy.cfop,name:liber_copyright_contracts_legacy.cfop_5918
@@ -478,11 +466,6 @@ msgid "Devolução simbólica de mercadoria vendida ou utilizada em consignaçã
 msgstr ""
 
 #. module: liber_copyright_contracts_legacy
-#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_legacy.report_royalty_statement_legacy
-msgid "Direito autoral"
-msgstr ""
-
-#. module: liber_copyright_contracts_legacy
 #: model:ir.model.fields,field_description:liber_copyright_contracts_legacy.field_edlab_legacy_sale__discount
 msgid "Discount"
 msgstr "Desconto"
@@ -564,14 +547,12 @@ msgstr "Motivo da exclusão"
 msgid ""
 "Extend the link to every row without a product that has the same original "
 "title (or internal code) as a selected row."
-msgstr ""
-"Estende o vínculo a toda linha sem produto que tenha o mesmo título original "
-"(ou código interno) de uma linha selecionada."
+msgstr "Estende o vínculo a toda linha sem produto que tenha o mesmo título original (ou código interno) de uma linha selecionada."
 
 #. module: liber_copyright_contracts_legacy
 #: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_legacy.report_royalty_statement_legacy
-msgid "Fator"
-msgstr ""
+msgid "Factor"
+msgstr "Fator"
 
 #. module: liber_copyright_contracts_legacy
 #: model:ir.model.fields.selection,name:liber_copyright_contracts_legacy.selection__edlab_legacy_import__mode__path
@@ -619,9 +600,7 @@ msgstr "Forçadas à mão"
 msgid ""
 "From the CFOP table; from the operation wording when the row has no CFOP; "
 "from 'Effect (manual)' when set."
-msgstr ""
-"Da tabela de CFOP; da natureza da operação quando a linha não tem CFOP; de "
-"'Efeito (manual)' quando preenchido."
+msgstr "Da tabela de CFOP; da natureza da operação quando a linha não tem CFOP; de 'Efeito (manual)' quando preenchido."
 
 #. module: liber_copyright_contracts_legacy
 #: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_legacy.view_edlab_legacy_sale_tree
@@ -672,9 +651,7 @@ msgstr "Ignora vendas legadas depois desta data. Vazio = a base inteira."
 msgid ""
 "Ignore legacy sales before this date (e.g. a period already settled under a "
 "previous contract). Empty = from the beginning."
-msgstr ""
-"Ignora vendas legadas antes desta data (ex.: período já acertado num "
-"contrato anterior). Vazio = desde o início."
+msgstr "Ignora vendas legadas antes desta data (ex.: período já acertado num contrato anterior). Vazio = desde o início."
 
 #. module: liber_copyright_contracts_legacy
 #: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_legacy.view_edlab_legacy_import_form
@@ -698,13 +675,11 @@ msgstr "Importar a base de vendas legadas"
 msgid ""
 "Import the unified base (Copyright &gt; Configuration &gt; Import Legacy "
 "Sales). Each row is one invoice line sold before this system, with its CFOP."
-msgstr ""
-"Importe a base unificada (Direitos Autorais &gt; Configurações &gt; Importar "
-"vendas legadas). Cada linha é um item de nota vendido antes deste sistema, "
-"com o seu CFOP."
+msgstr "Importe a base unificada (Direitos Autorais &gt; Configurações &gt; Importar vendas legadas). Cada linha é um item de nota vendido antes deste sistema, com o seu CFOP."
 
 #. module: liber_copyright_contracts_legacy
 #: model:ir.model.fields,field_description:liber_copyright_contracts_legacy.field_edlab_price_index_value__index_id
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_legacy.report_royalty_statement_legacy
 msgid "Index"
 msgstr "Índice"
 
@@ -884,14 +859,7 @@ msgstr "Vincular produto"
 msgid ""
 "Linked by ISBN at import (barcode, ISBN or internal reference of the "
 "product); set by hand on the rows the ISBN did not reach."
-msgstr ""
-"Vinculado pelo ISBN na importação (código de barras, ISBN ou referência "
-"interna do produto); definido à mão nas linhas que o ISBN não alcançou."
-
-#. module: liber_copyright_contracts_legacy
-#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_legacy.report_royalty_statement_legacy
-msgid "Livros vendidos"
-msgstr ""
+msgstr "Vinculado pelo ISBN na importação (código de barras, ISBN ou referência interna do produto); definido à mão nas linhas que o ISBN não alcançou."
 
 #. module: liber_copyright_contracts_legacy
 #: model:ir.model.fields,field_description:liber_copyright_contracts_legacy.field_edlab_legacy_import__mode
@@ -908,18 +876,14 @@ msgstr "Mês"
 msgid ""
 "Month of the legacy sales this entry accrues, as YYYY-MM. With the royalty "
 "line, the key that makes the booking idempotent."
-msgstr ""
-"Mês das vendas legadas que este lançamento apura, como AAAA-MM. Com a linha "
-"de royalty, é a chave que torna a apuração idempotente."
+msgstr "Mês das vendas legadas que este lançamento apura, como AAAA-MM. Com a linha de royalty, é a chave que torna a apuração idempotente."
 
 #. module: liber_copyright_contracts_legacy
 #: model:ir.model.fields,help:liber_copyright_contracts_legacy.field_edlab_contract__legacy_reference_date
 msgid ""
 "Month the legacy amounts are corrected TO. Empty = the last month published "
 "in the index."
-msgstr ""
-"Mês PARA o qual os valores legados são corrigidos. Vazio = o último mês "
-"publicado no índice."
+msgstr "Mês PARA o qual os valores legados são corrigidos. Vazio = o último mês publicado no índice."
 
 #. module: liber_copyright_contracts_legacy
 #: model:ir.model.fields,field_description:liber_copyright_contracts_legacy.field_edlab_price_index__value_ids
@@ -958,9 +922,7 @@ msgstr "Valor líquido com o sinal do efeito (devoluções negativas)."
 msgid ""
 "Net amount; where the source only had the invoice total (Galba), the total "
 "prorated over the lines by gross amount."
-msgstr ""
-"Valor líquido; onde a origem só tinha o total da nota (Galba), o total "
-"rateado entre as linhas pelo valor bruto."
+msgstr "Valor líquido; onde a origem só tinha o total da nota (Galba), o total rateado entre as linhas pelo valor bruto."
 
 #. module: liber_copyright_contracts_legacy
 #: model:ir.model.fields,help:liber_copyright_contracts_legacy.field_edlab_legacy_sale__force_exclude
@@ -996,20 +958,13 @@ msgstr "Nenhum índice ainda"
 msgid ""
 "No royalty line has an analytic account yet. Create the analytic accounts "
 "first."
-msgstr ""
-"Nenhuma linha de royalty tem conta analítica ainda. Crie as contas "
-"analíticas primeiro."
+msgstr "Nenhuma linha de royalty tem conta analítica ainda. Crie as contas analíticas primeiro."
 
 #. module: liber_copyright_contracts_legacy
 #. odoo-python
 #: code:addons/liber_copyright_contracts_legacy/models/contract.py:0
 msgid "Nothing to change: the legacy accruals already mirror the base."
 msgstr "Nada a mudar: a apuração legada já espelha a base."
-
-#. module: liber_copyright_contracts_legacy
-#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_legacy.report_royalty_statement_legacy
-msgid "Obra"
-msgstr ""
 
 #. module: liber_copyright_contracts_legacy
 #: model:ir.model.fields,field_description:liber_copyright_contracts_legacy.field_edlab_legacy_sale__nature
@@ -1241,9 +1196,7 @@ msgstr "Remover lançamentos legados"
 msgid ""
 "Remove every legacy analytic entry of this contract? The invoiced royalties "
 "stay."
-msgstr ""
-"Remover todos os lançamentos analíticos legados deste contrato? Os royalties "
-"das faturas ficam."
+msgstr "Remover todos os lançamentos analíticos legados deste contrato? Os royalties das faturas ficam."
 
 #. module: liber_copyright_contracts_legacy
 #: model:ir.model.fields,field_description:liber_copyright_contracts_legacy.field_edlab_legacy_import__replace
@@ -1323,9 +1276,12 @@ msgstr "Linhas carregadas hoje"
 msgid ""
 "Royalties already booked on the analytic accounts from the legacy base "
 "(corrected, when an index is set)."
-msgstr ""
-"Royalties já apurados nas contas analíticas a partir da base legada "
-"(corrigidos, quando há índice)."
+msgstr "Royalties já apurados nas contas analíticas a partir da base legada (corrigidos, quando há índice)."
+
+#. module: liber_copyright_contracts_legacy
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_legacy.report_royalty_statement_legacy
+msgid "Royalty"
+msgstr "Direito autoral"
 
 #. module: liber_copyright_contracts_legacy
 #: model:ir.model,name:liber_copyright_contracts_legacy.model_edlab_contract_royalty_line
@@ -1369,9 +1325,7 @@ msgstr "Linhas"
 msgid ""
 "Sale or return, linked to a product, not excluded: this is what the "
 "contracts accrue on."
-msgstr ""
-"Venda ou devolução, com produto vinculado, não excluída: é sobre isto que os "
-"contratos apuram."
+msgstr "Venda ou devolução, com produto vinculado, não excluída: é sobre isto que os contratos apuram."
 
 #. module: liber_copyright_contracts_legacy
 #: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_legacy.view_edlab_legacy_cfop_search
@@ -1417,9 +1371,7 @@ msgstr "Caminho no servidor"
 msgid ""
 "Set on the entries that accrue royalties from the legacy sales base (before "
 "Odoo), one per month of sales."
-msgstr ""
-"Marcado nos lançamentos que apuram royalties da base de vendas legadas "
-"(antes do Odoo), um por mês de vendas."
+msgstr "Marcado nos lançamentos que apuram royalties da base de vendas legadas (antes do Odoo), um por mês de vendas."
 
 #. module: liber_copyright_contracts_legacy
 #. odoo-python
@@ -1465,8 +1417,7 @@ msgstr "Vendas especiais"
 msgid ""
 "Sum of the month's sales in the money of the time, before the price-index "
 "correction."
-msgstr ""
-"Soma das vendas do mês no dinheiro da época, antes da correção pelo índice."
+msgstr "Soma das vendas do mês no dinheiro da época, antes da correção pelo índice."
 
 #. module: liber_copyright_contracts_legacy
 #. odoo-python
@@ -1478,12 +1429,9 @@ msgstr "Ligue 'Vendas legadas' primeiro."
 #: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_legacy.view_edlab_contract_form_legacy
 msgid ""
 "Switch on to accrue royalties on the sales of the contracted works made "
-"before this system. Only sales and returns count, by CFOP; "
-"consignment shipments, samples and donations do not."
-msgstr ""
-"Ligue para apurar royalties sobre as vendas das obras contratadas feitas "
-"antes deste sistema. Só vendas e devoluções contam, pelo CFOP; "
-"remessas em consignação, amostras e doações não."
+"before this system. Only sales and returns count, by CFOP; consignment "
+"shipments, samples and donations do not."
+msgstr "Ligue para apurar royalties sobre as vendas das obras contratadas feitas antes deste sistema. Só vendas e devoluções contam, pelo CFOP; remessas em consignação, amostras e doações não."
 
 #. module: liber_copyright_contracts_legacy
 #: model:ir.model.fields,help:liber_copyright_contracts_legacy.field_edlab_legacy_sale__source
@@ -1501,8 +1449,7 @@ msgstr "Tirada da apuração por uma marca de qualidade da unificação."
 msgid ""
 "The file does not look like the unified base: column(s) %s missing from the "
 "header."
-msgstr ""
-"O arquivo não parece a base unificada: coluna(s) %s faltando no cabeçalho."
+msgstr "O arquivo não parece a base unificada: coluna(s) %s faltando no cabeçalho."
 
 #. module: liber_copyright_contracts_legacy
 #: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_legacy.view_edlab_legacy_import_form
@@ -1511,11 +1458,7 @@ msgid ""
 "with the BASE_UNIFICADA sheet). Rows are linked to the products by ISBN and "
 "classified by CFOP as they land. The full base (450.000 rows) takes several "
 "minutes: start it and leave the tab open."
-msgstr ""
-"O arquivo é a base unificada do departamento de direitos autorais (CSV ou o "
-"XLSX com a aba BASE_UNIFICADA). As linhas são vinculadas aos produtos pelo "
-"ISBN e classificadas pelo CFOP ao entrar. A base inteira (450.000 linhas) "
-"leva vários minutos: inicie e deixe a aba aberta."
+msgstr "O arquivo é a base unificada do departamento de direitos autorais (CSV ou o XLSX com a aba BASE_UNIFICADA). As linhas são vinculadas aos produtos pelo ISBN e classificadas pelo CFOP ao entrar. A base inteira (450.000 linhas) leva vários minutos: inicie e deixe a aba aberta."
 
 #. module: liber_copyright_contracts_legacy
 #. odoo-python
@@ -1524,10 +1467,7 @@ msgid ""
 "The index %(index)s has no value for %(month)s, so %(start)s cannot be "
 "corrected to %(to)s. Add the month (or refresh the index from the Central "
 "Bank) and try again."
-msgstr ""
-"O índice %(index)s não tem valor para %(month)s, então %(start)s não pode "
-"ser corrigido para %(to)s. Inclua o mês (ou atualize o índice do Banco "
-"Central) e tente de novo."
+msgstr "O índice %(index)s não tem valor para %(month)s, então %(start)s não pode ser corrigido para %(to)s. Inclua o mês (ou atualize o índice do Banco Central) e tente de novo."
 
 #. module: liber_copyright_contracts_legacy
 #. odoo-python
@@ -1535,9 +1475,7 @@ msgstr ""
 msgid ""
 "The index %s has no monthly values yet. Refresh it from the Central Bank or "
 "type the months in."
-msgstr ""
-"O índice %s ainda não tem valores mensais. Atualize-o do Banco Central ou "
-"digite os meses."
+msgstr "O índice %s ainda não tem valores mensais. Atualize-o do Banco Central ou digite os meses."
 
 #. module: liber_copyright_contracts_legacy
 #: model:ir.model.constraint,message:liber_copyright_contracts_legacy.constraint_edlab_legacy_cfop_code_uniq
@@ -1562,15 +1500,14 @@ msgstr "Título original"
 #. module: liber_copyright_contracts_legacy
 #: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_legacy.report_royalty_statement_legacy
 msgid "Total"
-msgstr ""
+msgstr "Total"
 
 #. module: liber_copyright_contracts_legacy
 #: model:ir.model.fields,help:liber_copyright_contracts_legacy.field_edlab_legacy_sale__note_total
 msgid ""
 "Total of the WHOLE invoice, repeated on each of its lines. Never sum it by "
 "line."
-msgstr ""
-"Total da nota INTEIRA, repetido em cada linha dela. Nunca some por linha."
+msgstr "Total da nota INTEIRA, repetido em cada linha dela. Nunca some por linha."
 
 #. module: liber_copyright_contracts_legacy
 #: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_legacy.view_edlab_contract_form_legacy
@@ -1613,16 +1550,6 @@ msgstr "Busca não suportada em venda especial."
 #: model:ir.model.fields.selection,name:liber_copyright_contracts_legacy.selection__edlab_legacy_import__mode__upload
 msgid "Upload the file"
 msgstr "Subir o arquivo"
-
-#. module: liber_copyright_contracts_legacy
-#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_legacy.report_royalty_statement_legacy
-msgid "Valor corrigido"
-msgstr ""
-
-#. module: liber_copyright_contracts_legacy
-#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_legacy.report_royalty_statement_legacy
-msgid "Valor da época"
-msgstr ""
 
 #. module: liber_copyright_contracts_legacy
 #: model:ir.model.fields,field_description:liber_copyright_contracts_legacy.field_edlab_price_index__value_count
@@ -1676,8 +1603,8 @@ msgstr ""
 #. module: liber_copyright_contracts_legacy
 #: model:edlab.legacy.cfop,name:liber_copyright_contracts_legacy.cfop_6114
 msgid ""
-"Venda de mercadoria adquirida remetida anteriormente em consignação (acerto, "
-"fora do estado)"
+"Venda de mercadoria adquirida remetida anteriormente em consignação (acerto,"
+" fora do estado)"
 msgstr ""
 
 #. module: liber_copyright_contracts_legacy
@@ -1773,12 +1700,14 @@ msgid "Without product"
 msgstr "Sem produto"
 
 #. module: liber_copyright_contracts_legacy
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_legacy.report_royalty_statement_legacy
 #: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_legacy.view_edlab_legacy_sale_form
 msgid "Work"
 msgstr "Obra"
 
 #. module: liber_copyright_contracts_legacy
 #: model:ir.model.fields,field_description:liber_copyright_contracts_legacy.field_edlab_legacy_sale__year
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_legacy.report_royalty_statement_legacy
 #: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_legacy.view_edlab_legacy_sale_search
 msgid "Year"
 msgstr "Ano"
@@ -1790,10 +1719,5 @@ msgstr "ex.: IPCA"
 
 #. module: liber_copyright_contracts_legacy
 #: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_legacy.report_royalty_statement_legacy
-msgid "vendas anteriores ao sistema: correção monetária por ano"
-msgstr ""
-
-#. module: liber_copyright_contracts_legacy
-#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_legacy.report_royalty_statement_legacy
-msgid "Índice"
-msgstr ""
+msgid "sales before the system: monetary correction by year"
+msgstr "vendas anteriores ao sistema: correção monetária por ano"

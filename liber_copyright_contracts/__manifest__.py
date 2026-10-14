@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     'name': 'Copyright Contracts',
-    'version': '19.0.1.2.0',
+    'version': '19.0.1.3.0',
     'summary': 'Copyright contract management (beneficiaries, works and tiered royalties)',
     'description': """
 Copyright contract management for a publishing house.
@@ -65,6 +65,7 @@ de uma porta HTTP livre.
         'data/ir_cron.xml',
         'views/contract_views.xml',
         'views/contract_reassign_views.xml',
+        'views/contract_tag_wizard_views.xml',
         'views/partner_views.xml',
         'views/product_views.xml',
         'views/contract_menus.xml',

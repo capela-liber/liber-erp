@@ -64,8 +64,17 @@ class RoyaltyStatementReport(models.AbstractModel):
             "doc_model": "res.partner",
             "docs": partners,
             "colors": self._statement_colors(),
+            # Each statement is computed in ITS beneficiary's language: the
+            # Python labels (period, "variable"...) follow it, and the
+            # template is rendered with t-lang on the same value.
+            # ``no_window``: the e-mailed version keeps the beneficiary's
+            # data (the author needs it for taxes) but drops the address
+            # block, which only exists for the envelope window.
             "statements": {
-                partner.id: partner._edlab_royalty_statement(date_to=date_to)
+                partner.id: dict(partner.with_context(
+                    lang=partner.lang or self.env.lang or "pt_BR",
+                )._edlab_royalty_statement(date_to=date_to),
+                    no_window=bool(data.get("no_window")))
                 for partner in partners
             },
         }

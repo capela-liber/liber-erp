@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<script>
+/* Servido por /liber_site/static/docs/, este arquivo vem com uma semana de
+   cache e o docs.js sem versão -- e o índice monta a lista a partir dele. Foi
+   assim que a emissão de NF-e e o manual da Amazon ficaram invisíveis: o
+   catálogo em cache era anterior aos dois. A rota /liber/docs/ serve o mesmo
+   arquivo sem cache e com ?v=<mtime> nos assets. Quem chegar pelo caminho
+   antigo (favorito, link velho, resultado de busca) vai para lá antes de a
+   página montar qualquer coisa. */
+(function () {
+  var antigo = "/liber_site/static/docs/";
+  if (location.pathname.indexOf(antigo) === 0) {
+    location.replace("/liber/docs/" + location.pathname.slice(antigo.length) +
+                     location.search + location.hash);
+  }
+})();
+</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Atendimento a autores — Manuais do Liber</title>
+<link rel="icon" type="image/png" href="../logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;600;700&display=swap">
+<link rel="stylesheet" href="docs.css">
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="../index.html"><img src="../logo.png" alt="">liber<span>.</span></a>
+    <span class="doc-tag">Manuais</span>
+    <nav><a href="index.html">Índice</a><a href="../index.html">Site</a></nav>
+  </div>
+</header>
+<div class="wrap">
+  <div class="layout">
+    <aside class="sidebar" id="sidebar"></aside>
+    <article class="doc">
+      <div class="breadcrumb"><a href="index.html">Manuais</a><span class="sep">›</span>Direitos autorais<span class="sep">›</span>Atendimento a autores</div>
+      <h1>Atendimento a autores</h1>
+      <p class="lead">Escreva aos autores de um conjunto de contratos numa <strong>missão</strong> — prestação de contas, acerto, atualização de cadastro — e acompanhe cada resposta como um chamado. A ficha do autor é a pasta dele: tudo o que se falou, em qualquer missão e sobre qualquer contrato, num lugar só.</p>
+
+      <h2 id="visao-geral">Visão geral</h2>
+      <p>O departamento de direitos autorais fala com os autores por assunto: uma prestação de contas a enviar, um acerto a combinar, um cadastro a atualizar. Este módulo põe isso em cima do <a href="liber_support.html">Atendimento</a>:</p>
+      <ul>
+        <li>Uma <strong>missão</strong> é um conjunto de contratos, um modelo de e-mail e, quando couber, o PDF da prestação de contas de cada autor.</li>
+        <li>Enviar a missão abre <strong>um chamado por autor</strong> dos contratos selecionados — o autor que está em cinco contratos recebe um e-mail só, listando as cinco obras — e o e-mail sai de dentro do chamado. A resposta do autor cai no chamado, não numa caixa que ninguém lê.</li>
+        <li>O autor que escreve por conta própria para a caixa dos autores vira chamado na mesma ficha.</li>
+        <li>Autores são <strong>outro departamento</strong>: os chamados deles aparecem em <span class="menupath">Direitos Autorais<i>‣</i>Chamados</span>, um quadro por estágio onde também se abre um chamado novo, e <em>não</em> aparecem no app Atendimento, que é do comercial. Quem é de contratos vê só os chamados de autores; quem é do balcão comercial vê só os das livrarias.</li>
+      </ul>
+      <div class="callout note"><span class="title">Por que um chamado por missão e autor</span>
+        <p>Cada assunto tem começo e fim. Um chamado eterno por autor acumularia anos de conversas sobre contratos diferentes; aqui cada missão fecha o seu chamado, e a ficha do autor soma todos eles em ordem de tempo.</p>
+      </div>
+
+      <h2 id="configuracao">Configuração</h2>
+      <p>Há uma coisa só a configurar: a <strong>caixa de e-mail dos autores</strong>.</p>
+      <ol class="steps">
+        <li>Em <span class="menupath">Configurações<i>‣</i>Direitos Autorais</span>, bloco <strong>Atendimento a autores</strong>, informe a parte local do e-mail — <code>autores</code> — e o domínio da empresa aparece ao lado. Salve.</li>
+        <li>Encaminhe a caixa de verdade (<code>autores@hedra.com.br</code>) para o Odoo, como já é feito com a caixa comercial: é por aí que as respostas dos autores voltam.</li>
+      </ol>
+      <p>Por baixo, o motor de e-mail do Liber precisa de um registro para dono do endereço; o módulo o cria e mantém sozinho, por empresa, e ele não aparece nas telas de direitos autorais. Quem cria missões precisa ser gerente de contratos; quem trabalha os chamados de autores precisa só do grupo de usuário de contratos. A configuração é por empresa: a caixa é a da empresa dona dos contratos.</p>
+
+      <h2 id="missao">Uma missão, passo a passo</h2>
+      <ol class="steps">
+        <li>Em <span class="menupath">Direitos Autorais<i>‣</i>Contratos</span>, filtre e selecione os contratos (os que vencem este ano, os de uma obra, os de um selo). No menu <strong>Ação</strong>, escolha <strong>Nova missão de autores</strong>. Ou vá direto a <span class="menupath">Direitos Autorais<i>‣</i>Missões</span> e escolha os contratos na própria missão.</li>
+        <li>Dê um <span class="field">Nome</span> ("Prestações de contas do 1º semestre de 2026") e o <span class="field">Tipo</span>: <strong>Prestação de contas</strong> anexa o PDF de cada autor até a <span class="field">Data final da prestação</span>; <strong>Acerto de direitos</strong> e <strong>Atualização de cadastro</strong> só escrevem; <strong>Outro</strong> usa o modelo que você escolher.</li>
+        <li>O <span class="field">Modelo de e-mail</span> muda sozinho com o tipo; edite-o em <span class="menupath">Configurações<i>‣</i>Técnico<i>‣</i>Modelos de e-mail</span> se o texto da casa for outro. O modelo recebe o nome do autor, as obras e os contratos da missão dele e, na prestação, o período e o valor.</li>
+        <li>O botão <strong>Autores</strong> mostra quem vai receber: os favorecidos distintos dos contratos.</li>
+      </ol>
+      <h3 id="enviar">Enviar</h3>
+      <p>O botão <strong>Enviar</strong> põe a missão na fila e devolve a tela na hora; um job abre os chamados em segundo plano, um autor por vez, gravando a cada um. A missão mostra o andamento ("Enviando em segundo plano: 12 chamados abertos, 57 autores a enviar"); recarregue a página para acompanhar. Cada chamado nasce em "Aguardando o cliente", <strong>com o responsável sendo quem apertou Enviar</strong>, e o e-mail sai em nome dessa pessoa. Na prestação de contas, o PDF anexado é a versão <em>sem o bloco de endereço</em> — mas com todos os dados pessoais do autor, que ele usa para os impostos.</p>
+      <ul>
+        <li>Autor sem e-mail <strong>não trava</strong> o envio: o nome dele aparece num aviso amarelo no alto da missão e no histórico lateral, e os outros recebem. Preencha o e-mail no contato e clique em Enviar de novo: só os que ganharam e-mail são alcançados, porque quem já tem chamado é pulado.</li>
+        <li>Se o envio a um autor falhar, a missão registra o motivo em <strong>Última falha</strong> e segue com os demais; Enviar de novo tenta só os que ficaram.</li>
+      </ul>
+      <h3 id="imprimir">Imprimir</h3>
+      <p>Para a prestação de contas que vai pelo correio, o botão <strong>Imprimir</strong> gera, também em segundo plano, <strong>um único PDF</strong> com as prestações de todos os autores <em>que têm endereço postal</em>, na versão do envelope com janela, e o anexa ao histórico da missão como "Lote de impressão 1". A missão lembra quem foi impresso.</p>
+      <ul>
+        <li>Autor sem rua ou cidade no contato <strong>não é impresso</strong>: o nome aparece num aviso vermelho no alto e numa nota vermelha no histórico. Preencha o endereço e clique em Imprimir de novo: sai o "Lote de impressão 2" só com os novos.</li>
+        <li>Imprimir só existe em missão de prestação de contas.</li>
+      </ul>
+      <p>A missão mostra quantos chamados abriu, quantos autores <strong>responderam</strong>, quantos estão <strong>fechados</strong> e quantos foram <strong>impressos</strong>; quando todos os chamados fecham, ela fica <strong>Concluída</strong>. Na prestação de contas, a missão ainda carimba a "última prestação enviada" do autor e anota o envio no histórico de cada contrato, como o assistente de envio já fazia.</p>
+
+      <h2 id="pasta">A pasta do autor</h2>
+      <ul>
+        <li>Na ficha do contato, aba <strong>Favorecido</strong>, o quadro <strong>Chamados</strong> lista todos os chamados do autor, de qualquer missão e contrato, do mais novo ao mais antigo, com a missão e os contratos de cada um. O botão <strong>Novo chamado</strong> abre um chamado avulso já na equipe de autores, com os contratos do autor preenchidos — para a ligação, a carta, a visita.</li>
+        <li>No contrato, o botão inteligente <strong>Chamados</strong> mostra só os chamados que citam aquele contrato.</li>
+        <li>No chamado, os botões <strong>Favorecido</strong> e <strong>Contratos</strong> levam à ficha do autor e aos contratos da conversa; um chamado novo aberto sobre um autor já nasce com os contratos dele preenchidos.</li>
+        <li>Em <span class="menupath">Direitos Autorais<i>‣</i>Chamados</span>, o quadro inteiro dos autores, por estágio, com o botão <strong>Novo</strong> para abrir um chamado avulso ali mesmo. No chamado, os campos <span class="field">Missão</span> e <span class="field">Contratos</span> dizem de onde ele veio e do que trata.</li>
+      </ul>
+      <p>Os documentos do contrato continuam no contrato (ver <a href="liber_copyright_contracts_cloud.html">Documentos do contrato</a>); o PDF de cada prestação de contas enviada fica anexado ao chamado.</p>
+
+      <h2 id="faq">Perguntas frequentes</h2>
+      <p><strong>O autor respondeu e a resposta não apareceu no chamado.</strong> A resposta volta pelo e-mail do Odoo; a caixa dos autores precisa estar encaminhada e a busca de e-mails ativa, como no atendimento comercial. Confira em <span class="menupath">Configurações<i>‣</i>Técnico<i>‣</i>Servidores de e-mail de entrada</span>.</p>
+      <p><strong>Enviei a missão e um autor ficou de fora.</strong> Ou ele não tinha e-mail — o aviso no alto da missão e o histórico dizem quem — ou não é favorecido de nenhum contrato escolhido: veja em <strong>Autores</strong>, e lembre que um autor sem linha de royalty no contrato não é favorecido.</p>
+      <p><strong>Posso reenviar a mesma missão?</strong> Pode: só alcança quem ainda não tem chamado nela. Para escrever de novo a quem já tem, escreva no próprio chamado.</p>
+
+      <div class="seealso">
+        <span class="title">Veja também</span>
+        <ul>
+          <li><a href="liber_support.html">Atendimento</a> — o motor de chamados e estágios que este módulo usa, do lado comercial.</li>
+          <li><a href="liber_copyright_contracts_reports.html">Prestação de contas</a> — o PDF que a missão anexa.</li>
+          <li><a href="liber_copyright_contracts.html">Contratos de direitos autorais</a> — o módulo base da suíte.</li>
+        </ul>
+      </div>
+
+      <nav class="pager" id="pager"></nav>
+    </article>
+  </div>
+</div>
+<script src="docs.js"></script>
+</body>
+</html>

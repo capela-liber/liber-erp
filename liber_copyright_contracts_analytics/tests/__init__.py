@@ -2,4 +2,6 @@
 from . import test_analytics
 from . import test_contract_buttons
 from . import test_plan_column
+from . import test_reset_analytics
 from . import test_tour_links
+from . import test_tour_reset

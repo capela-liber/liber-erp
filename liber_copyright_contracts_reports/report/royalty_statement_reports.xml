@@ -11,6 +11,22 @@
         <field name="binding_model_id" ref="base.model_res_partner"/>
         <field name="binding_type">report</field>
         <field name="group_ids" eval="[(4, ref('liber_copyright_contracts.group_contract_user'))]"/>
+        <field name="paperformat_id" ref="paperformat_royalty_statement"/>
+    </record>
+
+    <!-- Envelope proof: the window frame, the address and the fold lines,
+         on the same paper format. Print, fold, slide into the envelope. -->
+    <record id="action_report_envelope_proof" model="ir.actions.report">
+        <field name="name">Envelope Proof</field>
+        <field name="model">res.partner</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">liber_copyright_contracts_reports.report_envelope_proof</field>
+        <field name="report_file">liber_copyright_contracts_reports.report_envelope_proof</field>
+        <field name="print_report_name">'Prova de envelope - %s' % (object.name)</field>
+        <field name="binding_model_id" ref="base.model_res_partner"/>
+        <field name="binding_type">report</field>
+        <field name="group_ids" eval="[(4, ref('liber_copyright_contracts.group_contract_user'))]"/>
+        <field name="paperformat_id" ref="paperformat_royalty_statement"/>
     </record>
 
 </odoo>

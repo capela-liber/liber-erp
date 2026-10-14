@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_edlab_contract_tag_wizard_form" model="ir.ui.view">
+        <field name="name">edlab.contract.tag.wizard.form</field>
+        <field name="model">edlab.contract.tag.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Tag Contracts">
+                <group>
+                    <field name="mode" widget="radio" options="{'horizontal': true}"/>
+                    <field name="tag_ids" widget="many2many_tags"
+                           options="{'color_field': 'color'}"/>
+                    <field name="contract_ids" widget="many2many_tags" readonly="1"/>
+                </group>
+                <footer>
+                    <button name="action_apply" type="object" string="Apply" class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_edlab_contract_tag_wizard" model="ir.actions.act_window">
+        <field name="name">Tag Contracts</field>
+        <field name="res_model">edlab.contract.tag.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="binding_model_id" ref="model_edlab_contract"/>
+        <field name="binding_view_types">list</field>
+    </record>
+
+</odoo>

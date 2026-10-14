@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Meses de fechamento: uma fileira de 1 a 12 clicável, logo abaixo das
+         datas. O mês marca o FECHAMENTO do período, não o pagamento. -->
+    <record id="view_edlab_contract_form_settlement" model="ir.ui.view">
+        <field name="name">edlab.contract.form.settlement</field>
+        <field name="model">edlab.contract</field>
+        <field name="inherit_id" ref="liber_copyright_contracts.view_edlab_contract_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//sheet/group[1]" position="after">
+                <group name="settlement" string="Settlement">
+                    <field name="settlement_month_ids" widget="many2many_checkboxes"
+                           class="o_edlab_month_row" colspan="2"/>
+                    <field name="settlement_periodicity"/>
+                    <field name="next_closing_date"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_edlab_contract_tree_settlement" model="ir.ui.view">
+        <field name="name">edlab.contract.tree.settlement</field>
+        <field name="model">edlab.contract</field>
+        <field name="inherit_id" ref="liber_copyright_contracts.view_edlab_contract_tree"/>
+        <field name="arch" type="xml">
+            <list position="inside">
+                <field name="settlement_periodicity" optional="show"/>
+                <field name="next_closing_date" optional="show"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_edlab_contract_search_settlement" model="ir.ui.view">
+        <field name="name">edlab.contract.search.settlement</field>
+        <field name="model">edlab.contract</field>
+        <field name="inherit_id" ref="liber_copyright_contracts.view_edlab_contract_search"/>
+        <field name="arch" type="xml">
+            <xpath expr="//filter[@name='expiring_soon']" position="after">
+                <separator/>
+                <filter name="closes_this_month" string="Closes This Month"
+                        domain="[('settlement_month_ids.number', '=', context_today().month)]"/>
+                <filter name="closes_next_month" string="Closes Next Month"
+                        domain="[('settlement_month_ids.number', '=', (context_today() + relativedelta(months=1)).month)]"/>
+                <filter name="no_closing_months" string="No Closing Months"
+                        domain="[('settlement_month_ids', '=', False)]"/>
+            </xpath>
+            <xpath expr="//filter[@name='group_state']" position="after">
+                <filter name="group_settlement_periodicity" string="Settlement Periodicity"
+                        context="{'group_by': 'settlement_periodicity'}"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

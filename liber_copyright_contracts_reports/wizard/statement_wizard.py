@@ -61,32 +61,12 @@ class EdlabRoyaltyStatementWizard(models.TransientModel):
         # v17+: the first argument of _render_qweb_pdf is the REPORT (xmlid /
         # record / id), and the records come in res_ids. Passing the ids first
         # made Odoo try to look them up as a report reference.
-        report_ref = "liber_copyright_contracts_reports.action_report_royalty_statement"
-        report = self.env.ref(report_ref)
         template = self.env.ref(
             "liber_copyright_contracts_reports.mail_template_royalty_statement"
         )
         date_to = self.date_to
         for partner in self.partner_ids:
-            statement = partner._edlab_royalty_statement(date_to=date_to)
-            pdf_content, _dummy = report.sudo()._render_qweb_pdf(
-                report_ref,
-                res_ids=partner.ids,
-                data={"date_to": fields.Date.to_string(date_to)},
-            )
-            attachment = self.env["ir.attachment"].create(
-                {
-                    "name": _("Royalty statement - %s - %s.pdf")
-                    % (partner.name, fields.Date.to_string(date_to)),
-                    "type": "binary",
-                    "datas": base64.b64encode(pdf_content),
-                    "res_model": "res.partner",
-                    "res_id": partner.id,
-                    "mimetype": "application/pdf",
-                }
-            )
-            # The template reads the period and the net amount from the
-            # rendering context (inline templates expose it as `ctx`).
+            statement, attachment = partner._edlab_statement_attachment(date_to)
             contextual_template = template.with_context(
                 edlab_period_label=statement["period_label"],
                 edlab_net_label=formatLang(

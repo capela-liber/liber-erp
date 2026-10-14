@@ -5,13 +5,4 @@
         <field name="model_id" ref="model_edlab_contract_document"/>
         <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
     </record>
-    <record id="action_link_documents_by_name" model="ir.actions.server">
-        <field name="name">Link documents by name</field>
-        <field name="model_id" ref="liber_copyright_contracts.model_edlab_contract"/>
-        <field name="binding_model_id" ref="liber_copyright_contracts.model_edlab_contract"/>
-        <field name="binding_view_types">list,form</field>
-        <field name="state">code</field>
-        <field name="code">action = records.action_link_documents_by_name()</field>
-        <field name="group_ids" eval="[(4, ref('liber_copyright_contracts.group_contract_manager'))]"/>
-    </record>
 </odoo>

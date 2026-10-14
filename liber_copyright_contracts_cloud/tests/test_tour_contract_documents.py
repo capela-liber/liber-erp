@@ -26,8 +26,8 @@ class TestContractDocumentsTour(HttpCase):
                 self.reader_group.id])],
         })
         self.assertTrue(user)
-        self.contract.location = "PEREIRA_VIEIRA_SERMOES_CONTRATO.pdf"
-        self.contract.action_link_documents_by_name()
+        self.env["edlab.contract.document"].create({
+            "contract_id": self.contract.id, "file_id": self.pdf_main.id})
         self.env["edlab.contract.document"].create({
             "contract_id": self.contract.id, "file_id": self.pdf_amend.id,
             "note": "Aditivo"})

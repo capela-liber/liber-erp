@@ -4,23 +4,23 @@
          and the advances. Fixed labels in pt-BR, like the rest of the
          statement (it is a Brazilian accountability document). -->
     <template id="report_royalty_statement_legacy"
-              inherit_id="liber_copyright_contracts_reports.report_royalty_statement">
+              inherit_id="liber_copyright_contracts_reports.report_royalty_statement_document">
         <xpath expr="//t[@t-if=&quot;st['advances']&quot;]" position="before">
             <t t-if="st.get('legacy_years')">
                 <div style="margin-top: 24px;">
-                    <div style="font-variant: small-caps; color: #555; border-bottom: 1px solid #ccc; padding-bottom: 2px; margin-bottom: 8px;">vendas anteriores ao sistema: correção monetária por ano</div>
+                    <div style="font-variant: small-caps; color: #555; border-bottom: 1px solid #ccc; padding-bottom: 2px; margin-bottom: 8px;">sales before the system: monetary correction by year</div>
                     <table class="table table-sm o_main_table royalty-table">
                         <thead>
                             <tr>
-                                <th>Obra</th>
-                                <th>Ano</th>
-                                <th class="text-end">Livros vendidos</th>
-                                <th class="text-end">Valor da época</th>
-                                <th>Índice</th>
-                                <th class="text-end">Fator</th>
-                                <th class="text-end">Valor corrigido</th>
+                                <th>Work</th>
+                                <th>Year</th>
+                                <th class="text-end">Copies sold</th>
+                                <th class="text-end">Amount at the time</th>
+                                <th>Index</th>
+                                <th class="text-end">Factor</th>
+                                <th class="text-end">Corrected amount</th>
                                 <th class="text-end">%</th>
-                                <th class="text-end">Direito autoral</th>
+                                <th class="text-end">Royalty</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -61,7 +61,7 @@
                             </tr>
                         </tfoot>
                     </table>
-                    <p style="color: #555; font-size: 0.9em;"><em>O valor da época é o que as vendas somaram no dinheiro daquele ano. O fator é a correção acumulada pelo índice indicado, do mês de cada venda até o mês de referência; o valor corrigido é a base sobre a qual o percentual foi aplicado. Estes direitos já estão incluídos no quadro acima.</em></p>
+                    <p style="color: #555; font-size: 0.9em;"><em>The amount at the time is what the sales added up to in that year's money. The factor is the correction accumulated by the index shown, from the month of each sale to the reference month; the corrected amount is the base the percentage was applied to. These royalties are already included in the table above.</em></p>
                 </div>
             </t>
         </xpath>

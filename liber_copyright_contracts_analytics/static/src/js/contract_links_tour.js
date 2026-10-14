@@ -44,3 +44,24 @@ registry.category("web_tour.tours").add("contract_beneficiaries_link_tour", {
         },
     ],
 });
+
+// Zerar analítico, como gerente: o botão aparece, a confirmação abre, e o
+// clique termina numa notificação (e não num Access Error).
+registry.category("web_tour.tours").add("contract_reset_analytics_tour", {
+    steps: () => [
+        {
+            trigger: "button[name='action_reset_analytics']",
+            content: "Reset the contract's analytic entries",
+            run: "click",
+        },
+        {
+            trigger: ".modal-footer button.btn-primary",
+            content: "Confirm the reset",
+            run: "click",
+        },
+        {
+            trigger: ".o_notification:contains('1')",
+            content: "The notification says how many entries were erased",
+        },
+    ],
+});

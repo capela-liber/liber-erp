@@ -245,7 +245,7 @@ class TestLegacyStatement(LegacyCase):
         html = self.env["ir.actions.report"]._render_qweb_html(
             "liber_copyright_contracts_reports.report_royalty_statement",
             self.author.ids)[0].decode()
-        self.assertIn("correção monetária por ano", html)
+        self.assertIn("monetary correction by year", html)
         self.assertIn("IPCA 12/2006", html)
         self.assertIn("2006", html)
 
@@ -256,4 +256,4 @@ class TestLegacyStatement(LegacyCase):
         html = self.env["ir.actions.report"]._render_qweb_html(
             "liber_copyright_contracts_reports.report_royalty_statement",
             self.author.ids)[0].decode()
-        self.assertNotIn("correção monetária por ano", html)
+        self.assertNotIn("monetary correction by year", html)

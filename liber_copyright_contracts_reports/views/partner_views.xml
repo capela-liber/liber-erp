@@ -1,27 +1,93 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
-    <!-- Fold the beneficiary data into the single "Beneficiary" tab
-         (renaming the base "Copyright Contracts" tab) instead of a 2nd tab. -->
+    <!-- Two tabs on the contact (14/10/2026): "Beneficiary" holds the person
+         (identification, sensitive personal data, payment, regional)
+         and the base "Copyright Contracts" tab keeps the contracts, the
+         royalty lines and the royalty figures. The royalties department
+         asked for the personal data on a tab of its own, because it is what
+         they check before a statement goes to the post. -->
     <record id="view_partner_form_edlab_author" model="ir.ui.view">
         <field name="name">res.partner.form.edlab.beneficiary</field>
         <field name="model">res.partner</field>
         <field name="inherit_id" ref="liber_copyright_contracts.view_partner_form_copyright_contracts"/>
         <field name="arch" type="xml">
 
-            <xpath expr="//page[@name='copyright_contracts']" position="attributes">
-                <attribute name="string">Beneficiary</attribute>
+            <xpath expr="//page[@name='copyright_contracts']" position="before">
+                <page string="Beneficiary" name="edlab_beneficiary"
+                      groups="liber_copyright_contracts.group_contract_user"
+                      invisible="not is_edlab_author and edlab_contract_count == 0">
+                    <field name="is_edlab_author" invisible="1"/>
+                    <group>
+                        <!-- Natural person -->
+                        <group string="Identification" name="edlab_identification_person"
+                               invisible="is_company">
+                            <field name="vat" string="CPF" readonly="1"/>
+                            <field name="edlab_rg"/>
+                            <field name="edlab_pis"/>
+                            <field name="edlab_birthdate"/>
+                            <field name="edlab_birth_place"/>
+                            <field name="edlab_nationality"/>
+                        </group>
+                        <!-- Company -->
+                        <!-- Company: the legal name is the form header and the
+                             head office ("sede") is the Address group below,
+                             both read-only repeats; what is typed here is the
+                             trade name, the municipal registration and the
+                             collaborator who handles the contract. -->
+                        <group string="Identification" name="edlab_identification_company"
+                               invisible="not is_company">
+                            <field name="edlab_trade_name"/>
+                            <field name="vat" string="CNPJ" readonly="1"/>
+                            <field name="edlab_municipal_registration"/>
+                            <field name="edlab_legal_representative_id"/>
+                        </group>
+                        <group string="Personal Data" name="edlab_personal_data"
+                               invisible="is_company"
+                               groups="liber_copyright_contracts.group_contract_manager">
+                            <field name="edlab_marital_status"/>
+                            <field name="edlab_education"/>
+                            <field name="edlab_race"/>
+                        </group>
+                    </group>
+                    <group>
+                        <!-- CPF/CNPJ, language and address are edited in the
+                             contact header; here they are read-only repeats,
+                             so the tab shows what the post and the statement
+                             will use without a second place to type it. -->
+                        <group string="Regional" name="edlab_regional">
+                            <field name="lang" readonly="1"/>
+                            <field name="edlab_beneficiary_currency_id"/>
+                        </group>
+                        <group string="Address" name="edlab_address">
+                            <field name="street" readonly="1"/>
+                            <field name="street2" readonly="1"/>
+                            <field name="city" readonly="1"/>
+                            <field name="state_id" readonly="1"/>
+                            <field name="zip" readonly="1"/>
+                            <field name="country_id" readonly="1"/>
+                        </group>
+                    </group>
+                    <separator string="Payment"/>
+                    <field name="bank_ids">
+                        <list editable="bottom">
+                            <field name="sequence" widget="handle"/>
+                            <field name="bank_id"/>
+                            <field name="edlab_agency"/>
+                            <field name="acc_number"/>
+                            <field name="edlab_account_kind"/>
+                            <field name="edlab_pix_key_type"/>
+                            <field name="edlab_pix_key"/>
+                            <field name="edlab_prefer_pix"/>
+                            <field name="acc_holder_name" optional="hide"/>
+                        </list>
+                    </field>
+                </page>
             </xpath>
 
             <xpath expr="//page[@name='copyright_contracts']/field[@name='edlab_contract_ids']"
                    position="before">
                 <group>
-                    <group string="Identification">
-                        <field name="edlab_birthdate"/>
-                        <field name="edlab_nationality"/>
-                        <field name="edlab_rg"/>
-                        <field name="edlab_pis"/>
-                    </group>
                     <group string="Royalties">
                         <field name="edlab_irrf_percentage"/>
                         <field name="edlab_currency_id" invisible="1"/>
@@ -29,14 +95,6 @@
                         <field name="edlab_last_statement_date"/>
                     </group>
                 </group>
-                <separator string="Bank Accounts"/>
-                <field name="bank_ids">
-                    <list editable="bottom">
-                        <field name="bank_id"/>
-                        <field name="edlab_agency"/>
-                        <field name="acc_number"/>
-                    </list>
-                </field>
                 <separator string="Royalty Lines"/>
                 <field name="edlab_royalty_line_ids" readonly="1">
                     <list>

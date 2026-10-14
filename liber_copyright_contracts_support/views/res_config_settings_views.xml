@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="res_config_settings_view_form_author_support" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.copyright.support</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="liber_copyright_contracts.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//app[@name='liber_copyright_contracts']" position="inside">
+                <block title="Author support" name="copyright_support_block">
+                    <setting string="Authors' mailbox"
+                             help="The e-mail the authors write to and reply to. Missions send from it, and every reply lands on the author's ticket. The mailbox must be forwarded to Odoo, like the commercial one.">
+                        <div class="content-group">
+                            <div class="mt8 d-flex align-items-center">
+                                <field name="contract_authors_alias" class="o_light_label" style="max-width: 12rem;"/>
+                                <field name="contract_authors_alias_domain" class="ms-1 text-muted" readonly="1" nolabel="1"/>
+                            </div>
+                        </div>
+                    </setting>
+                </block>
+            </xpath>
+        </field>
+    </record>
+</odoo>

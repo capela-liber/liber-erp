@@ -1,7 +1,39 @@
 # -*- coding: utf-8 -*-
+import re
+
+import babel.core
 import babel.dates
 
 from odoo import _, api, fields, models
+
+
+def edlab_book_type(product):
+    """pbook, ebook or abook, as the statement declares in front of each work.
+
+    The edition's ONIX product form (Metabooks) decides: AA is audio, E* is
+    digital, B* is print. Half of the catalogue has no form yet, so the
+    product name speaks next ("(audiolivro)", "e-book", "epub"). When neither
+    says anything, nothing is declared -- a wrong label on a royalty
+    statement is worse than none.
+    """
+    if not product:
+        return ""
+    form = (product.metabooks_product_form or "") if "metabooks_product_form" in product._fields else ""
+    name = product.name or ""
+    if form == "AA" or re.search(r"audiolivro|audiobook", name, re.I):
+        return "abook"
+    if form.startswith("E") or re.search(r"e-?book|epub", name, re.I):
+        return "ebook"
+    if form.startswith("B"):
+        return "pbook"
+    return ""
+
+
+def edlab_work_label(product):
+    """The work as the statement prints it: "pbook \N{EM DASH} Title"."""
+    kind = edlab_book_type(product)
+    title = product.display_name or ""
+    return "%s \N{EM DASH} %s" % (kind, title) if kind else title
 
 
 class ResPartner(models.Model):
@@ -25,6 +57,65 @@ class ResPartner(models.Model):
     edlab_rg = fields.Char(string="RG")
     edlab_pis = fields.Char(string="PIS")
     edlab_nationality = fields.Char(string="Nationality")
+    edlab_birth_place = fields.Char(
+        string="Place of Birth",
+        help="City, state and country, as on the identity document.")
+    # Sensitive personal data (LGPD): asked by funding programmes and public
+    # calls that pay royalties, kept behind the contracts manager group. The
+    # beneficiary declares them; nobody infers them.
+    MARITAL_STATUS = [
+        ("single", "Single"),
+        ("married", "Married"),
+        ("stable_union", "Stable union"),
+        ("divorced", "Divorced"),
+        ("separated", "Separated"),
+        ("widowed", "Widowed"),
+    ]
+    edlab_marital_status = fields.Selection(
+        MARITAL_STATUS, string="Marital Status",
+        groups="liber_copyright_contracts.group_contract_manager")
+    EDUCATION = [
+        ("none", "No schooling"),
+        ("elementary", "Elementary"),
+        ("secondary", "Secondary"),
+        ("higher", "Higher education"),
+        ("postgraduate", "Postgraduate"),
+    ]
+    edlab_education = fields.Selection(
+        EDUCATION, string="Education",
+        groups="liber_copyright_contracts.group_contract_manager")
+    # The five IBGE categories plus the right not to answer.
+    RACE = [
+        ("white", "White (branca)"),
+        ("black", "Black (preta)"),
+        ("brown", "Brown (parda)"),
+        ("yellow", "Yellow (amarela)"),
+        ("indigenous", "Indigenous"),
+        ("not_declared", "Prefers not to declare"),
+    ]
+    edlab_race = fields.Selection(
+        RACE, string="Self-declared Race/Color",
+        groups="liber_copyright_contracts.group_contract_manager",
+        help="Self-declaration, in the IBGE categories. Asked by public "
+        "funding programmes; never filled in on the person's behalf.")
+    # Companies: what the statement prints instead of CPF/RG.
+    edlab_municipal_registration = fields.Char(
+        string="Municipal Registration",
+        help="Inscrição Municipal, for companies.")
+    edlab_trade_name = fields.Char(
+        string="Trade Name",
+        help="Nome fantasia, when it differs from the legal name.")
+    edlab_legal_representative_id = fields.Many2one(
+        "res.partner", string="Collaborator",
+        domain="[('is_company', '=', False)]",
+        help="The person at the company who handles the contract and signs "
+        "for it (nome do colaborador).")
+    edlab_beneficiary_currency_id = fields.Many2one(
+        "res.currency", string="Beneficiary Currency",
+        default=lambda self: self.env.company.currency_id,
+        help="Currency the beneficiary is paid in. Royalties are computed in "
+        "the company currency; a foreign beneficiary's statement will "
+        "convert to this one.")
     edlab_irrf_percentage = fields.Float(
         string="IRRF (%)",
         digits=(5, 2),
@@ -78,12 +169,14 @@ class ResPartner(models.Model):
     # Statement data (used by the QWeb report and the sending wizard)
     # ------------------------------------------------------------------
     def _edlab_statement_date_label(self, value):
-        """'15 de setembro de 2025' — pt-BR regardless of the user/partner
-        language: the statement is a Brazilian document with fixed pt-BR
-        labels, so its dates must match even on databases without pt_BR."""
-        return babel.dates.format_date(
-            value, format="d 'de' MMMM 'de' y", locale="pt_BR"
-        )
+        """'15 de setembro de 2025' in pt-BR, 'September 15, 2025' in
+        English: the long date of the language the statement is rendered
+        in (the beneficiary's, see the report parser)."""
+        lang = (self.env.context.get("lang") or "pt_BR").replace("-", "_")
+        try:
+            return babel.dates.format_date(value, format="long", locale=lang)
+        except (babel.core.UnknownLocaleError, ValueError):
+            return babel.dates.format_date(value, format="long", locale="pt_BR")
 
     def _edlab_open_payment_bills(self):
         """The author's open royalty payment bills (one row per bill).
@@ -175,7 +268,7 @@ class ResPartner(models.Model):
                     {
                         "customer": move.partner_id.display_name,
                         "invoice": move.name,
-                        "work": line.product_id.display_name,
+                        "work": edlab_work_label(line.product_id),
                         "qty": int(qty) if qty == int(qty) else qty,
                         "discount_label": ("%.2f" % line.discount).replace(".", ",")
                         + "%",
@@ -252,7 +345,7 @@ class ResPartner(models.Model):
             rows.append(
                 {
                     "line": line,
-                    "work": line.product_id.display_name,
+                    "work": edlab_work_label(line.product_id),
                     "contract": line.contract_id.name,
                     "qty": int(qty) if qty == int(qty) else qty,
                     "base": currency.round(base),
@@ -314,7 +407,7 @@ class ResPartner(models.Model):
         )
         advances = [
             {
-                "work": line.product_id.display_name,
+                "work": edlab_work_label(line.product_id),
                 "contract": line.contract_id.name,
                 "recoupable": currency.round(line.recoupable_advance),
                 "non_recoupable": currency.round(line.non_recoupable_advance),

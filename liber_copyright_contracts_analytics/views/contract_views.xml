@@ -7,6 +7,17 @@
         <field name="inherit_id" ref="liber_copyright_contracts.view_edlab_contract_form"/>
         <field name="arch" type="xml">
 
+            <!-- Zerar o analítico: gerente só (a trava de verdade está no
+                 action_reset_analytics). Para a fase de faxina, quando é mais
+                 rápido apagar e preencher de novo do que corrigir à mão. -->
+            <xpath expr="//header" position="inside">
+                <button name="action_reset_analytics" type="object"
+                        string="Reset Analytics"
+                        groups="liber_copyright_contracts.group_contract_manager"
+                        invisible="edlab_analytic_count == 0"
+                        confirm="Erase every analytic entry the system generated on this contract (royalties from invoices, advance, payment cutoff, legacy sales)? Entries from journal items stay. Run Fill Royalty Lines afterwards to rebuild."/>
+            </xpath>
+
             <!-- Smart-button box (analytics owns it; other layers extend it) -->
             <xpath expr="//sheet/div[hasclass('oe_title')]" position="before">
                 <div class="oe_button_box" name="button_box"

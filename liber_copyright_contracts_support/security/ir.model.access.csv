@@ -1,0 +1,8 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_author_mission_user,edlab.author.mission.user,model_edlab_author_mission,liber_copyright_contracts.group_contract_user,1,0,0,0
+access_author_mission_manager,edlab.author.mission.manager,model_edlab_author_mission,liber_copyright_contracts.group_contract_manager,1,1,1,1
+access_support_ticket_contract_user,liber.support.ticket.contract.user,liber_support.model_liber_support_ticket,liber_copyright_contracts.group_contract_user,1,1,1,0
+access_support_ticket_contract_manager,liber.support.ticket.contract.manager,liber_support.model_liber_support_ticket,liber_copyright_contracts.group_contract_manager,1,1,1,1
+access_support_team_contract_user,liber.support.team.contract.user,liber_support.model_liber_support_team,liber_copyright_contracts.group_contract_user,1,0,0,0
+access_support_stage_contract_user,liber.support.stage.contract.user,liber_support.model_liber_support_stage,liber_copyright_contracts.group_contract_user,1,0,0,0
+access_support_tag_contract_user,liber.support.tag.contract.user,liber_support.model_liber_support_tag,liber_copyright_contracts.group_contract_user,1,0,0,0
