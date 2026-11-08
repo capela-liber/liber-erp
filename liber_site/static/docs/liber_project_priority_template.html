@@ -38,12 +38,12 @@
   <div class="layout">
     <aside class="sidebar" id="sidebar"></aside>
     <article class="doc">
-      <div class="breadcrumb"><a href="index.html">Manuais</a><span class="sep">›</span>Gestão<span class="sep">›</span>Subtarefas pela estrela</div>
+      <div class="breadcrumb"><a href="index.html">Manuais</a><span class="sep">›</span>Marketing<span class="sep">›</span>Subtarefas pela estrela</div>
       <h1>Subtarefas pela estrela</h1>
-      <p class="lead">Marcar a estrela num card monta a pauta dele: cada card-modelo do projeto com a mesma estrela vira uma subtarefa, já com responsável e coluna. Trocar a estrela troca a pauta, sem apagar o trabalho feito.</p>
+      <p class="lead">Um módulo para as operações de <strong>marketing</strong>. A estrela que o editor dá ao card é a expectativa sobre o lançamento, e ela monta a pauta de divulgação: cada card-modelo do projeto com a mesma estrela vira uma subtarefa, já com responsável e coluna. Trocar a estrela troca a pauta, sem apagar o trabalho feito.</p>
 
       <h2 id="visao-geral">Visão geral</h2>
-      <p>Um lançamento pequeno pede um post nas redes; um lançamento médio pede evento em livraria e release para a imprensa; um grande pede tudo isso e a feira. Em vez de lembrar a lista toda vez, o projeto guarda os <strong>cards-modelo</strong>, cada um marcado com a estrela da campanha a que pertence. A estrela que se dá ao card é o tamanho da campanha:</p>
+      <p>A estrela de um card é a aposta da editoria naquele título: quanto maior a expectativa, mais ações de marketing o lançamento pede. Um lançamento pequeno pede um post nas redes; um médio pede evento em livraria e release para a imprensa; um grande pede tudo isso e a feira. Em vez de lembrar a lista toda vez, o projeto guarda os <strong>cards-modelo</strong>, cada um marcado com a estrela da campanha a que pertence. O editor marca a estrela no card do livro, e o plano de divulgação aparece embaixo, pronto para o marketing distribuir. A estrela que se dá ao card é o tamanho da campanha:</p>
       <ul>
         <li><strong>★ Média</strong> — entram os modelos ★.</li>
         <li><strong>★★ Alta</strong> — entram os modelos ★★.</li>
@@ -61,6 +61,31 @@
       <p>O campo <strong>Projeto</strong> do card-modelo diz onde a subtarefa nasce, e a <strong>coluna</strong> é a desse projeto. Para a arte nascer no quadro do Design, abra o modelo e troque o Projeto para o Design, escolhendo a coluna de lá. O modelo continua na lista da Editoria — é a estrela da Editoria que o dispara; o formulário dele mostra isso em <em>Estrela no projeto</em>. Na lista, a coluna <em>Nasce no projeto</em> mostra o destino de cada um.</p>
       <figure class="shot"><img src="img/doc-liber_project_priority_template-modelos.png" alt="Lista Modelos de tarefa do projeto com as colunas Estrelas, Título, Responsáveis e Coluna"><figcaption>Cada linha é uma subtarefa em potencial. Aqui, um card ★★ recebe <em>Evento em livraria</em> e <em>Release para a imprensa</em>; um card ★, só o <em>Post nas redes</em>. A <em>Arte das peças</em>, ★★★, nasce no board do Design.</figcaption></figure>
       <div class="callout"><span class="title">Nota</span><p>Um card comum também vira modelo pelo menu de ações, em <strong>Converter em modelo</strong>. Se ele já tinha estrela, as subtarefas que a estrela lhe deu e que ninguém mexeu saem na conversão: o modelo leva só o que é dele.</p></div>
+
+      <h2 id="exemplo">Exemplo: a Editoria e dois boards de marketing</h2>
+      <p>O jeito mais claro de montar a pauta é separar o <em>onde se decide</em> do <em>onde se trabalha</em>. A estrela se dá no card do livro, no board da <strong>Editoria</strong>; o trabalho de divulgação acontece em boards do marketing, um por tipo de coisa. Dois bastam para começar:</p>
+      <ul>
+        <li><strong>Marketing: Eventos</strong>, com as colunas <em>A planejar ‣ Confirmado ‣ Realizado</em>. Cada card é um evento: lançamento em livraria, mesa em feira.</li>
+        <li><strong>Marketing: Redes sociais</strong>, com as colunas <em>Pauta ‣ Em arte ‣ Publicado</em>. Cada card é uma peça: post, carrossel, reels, release.</li>
+      </ul>
+      <p>Crie os dois boards vazios, em <span class="menupath">Projeto<i>‣</i>Novo</span>, só com as colunas. Depois, na Editoria, ligue <strong>Subtarefas por prioridade</strong> e monte a lista de <strong>Modelos de tarefa</strong> assim — cada linha com a estrela da campanha, o responsável do marketing e o <em>Nasce no projeto</em> apontando para o board certo:</p>
+      <table>
+        <thead><tr><th>Estrela</th><th>Card-modelo</th><th>Nasce no projeto</th><th>Coluna</th></tr></thead>
+        <tbody>
+          <tr><td>★</td><td>Post de lançamento</td><td>Marketing: Redes sociais</td><td>Pauta</td></tr>
+          <tr><td>★★</td><td>Lançamento em livraria</td><td>Marketing: Eventos</td><td>A planejar</td></tr>
+          <tr><td>★★</td><td>Carrossel de trechos</td><td>Marketing: Redes sociais</td><td>Pauta</td></tr>
+          <tr><td>★★★</td><td>Feira literária</td><td>Marketing: Eventos</td><td>A planejar</td></tr>
+          <tr><td>★★★</td><td>Reels com o autor</td><td>Marketing: Redes sociais</td><td>Pauta</td></tr>
+          <tr><td>★★★</td><td>Release para a imprensa</td><td>Marketing: Redes sociais</td><td>Pauta</td></tr>
+        </tbody>
+      </table>
+      <figure class="shot"><img src="img/doc-liber_project_priority_template-exemplo-modelos.png" alt="Lista Modelos de tarefa da Editoria: Hedra com seis cards-modelo, as estrelas de cada um e a coluna Nasce no projeto apontando para Marketing: Eventos ou Marketing: Redes sociais"><figcaption>A lista é da Editoria, mas nenhum modelo nasce nela: cada um aponta para o board de marketing onde o trabalho acontece.</figcaption></figure>
+      <p>Repare que a estrela maior <em>não herda</em> os modelos da menor: um livro ★★★ recebe só os três modelos ★★★. Se a feira também deve ter o post de lançamento, ponha um modelo de post em cada estrela — é o que a lista diz que é o que o card recebe. A descrição de cada modelo é o briefing: o que a peça precisa ter, o que o evento precisa fechar.</p>
+      <p>Daí em diante o editor só dá a estrela. Um livro com ★★ aparece em <em>A planejar</em> do board de Eventos como <em>Lançamento em livraria</em>, e em <em>Pauta</em> do board de Redes como <em>Carrossel de trechos</em> — cada card com o nome do livro logo abaixo do título, e já com o responsável do marketing.</p>
+      <figure class="shot"><img src="img/doc-liber_project_priority_template-exemplo-eventos.png" alt="Quadro Marketing: Eventos com os cards Lançamento em livraria e Feira literária vindos de livros diferentes da Editoria, o nome do livro sob cada título"><figcaption>O board de Eventos visto pelo marketing: cada card veio de um livro da Editoria, e o nome do livro está sob o título. Agrupar por <em>Tarefa-mãe</em> separa uma coluna por livro.</figcaption></figure>
+      <figure class="shot"><img src="img/doc-liber_project_priority_template-exemplo-card.png" alt="Card de um livro com duas estrelas na Editoria, a aba Subtarefas mostrando Lançamento em livraria e Carrossel de trechos em projetos diferentes"><figcaption>O mesmo visto pelo editor: no card do livro, a aba Subtarefas lista a pauta inteira, cada peça com o seu responsável no marketing.</figcaption></figure>
+      <div class="callout"><span class="title">Dica</span><p>Os boards de marketing podem ter os seus próprios <a href="liber_project_stage_jobs.html">jobs por coluna</a>: a coluna <em>Confirmado</em> do board de Eventos pode agendar, por exemplo, a atividade "Pedir estoque à loja" para quem move o card.</p></div>
 
       <h2 id="estrela">Dar e trocar a estrela</h2>
       <p>Marque a estrela no card, no quadro ou no formulário. As subtarefas aparecem na aba <strong>Subtarefas</strong>, e o chatter registra numa nota o que entrou.</p>
@@ -86,7 +111,8 @@
       <h2 id="limites">O que fica de fora</h2>
       <ul>
         <li>Só o card de primeiro nível dispara: subtarefa com estrela não gera subtarefas.</li>
-        <li>O prazo não é calculado: a subtarefa nasce com o prazo que o modelo tiver (normalmente nenhum).</li>
+        <li>O prazo não é calculado: a subtarefa nasce com o prazo que o modelo tiver (normalmente nenhum). A estrela mede expectativa, não calendário.</li>
+        <li>A produção editorial, que anda por colunas e datas, tem o seu próprio módulo: <a href="liber_project_stage_jobs.html">Jobs por coluna</a>. Os dois convivem no mesmo projeto, e um não mexe no que é do outro.</li>
       </ul>
 
       <nav class="pager" id="pager"></nav>

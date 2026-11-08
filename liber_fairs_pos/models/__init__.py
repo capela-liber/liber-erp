@@ -10,3 +10,6 @@ from . import event_fair
 from . import event_fair_day
 from . import res_groups
 from . import account_move
+from . import res_company
+from . import res_config_settings
+from . import pos_payment_method

@@ -1,0 +1,225 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* liber_project_stage_jobs
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0-20260630\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-11-08 17:16+0000\n"
+"PO-Revision-Date: 2026-11-08 17:16+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: liber_project_stage_jobs
+#. odoo-python
+#: code:addons/liber_project_stage_jobs/models/project_task.py:0
+msgid "%(name)s (%(who)s, %(date)s)"
+msgstr "%(name)s (%(who)s, %(date)s)"
+
+#. module: liber_project_stage_jobs
+#. odoo-python
+#: code:addons/liber_project_stage_jobs/models/project_task_type_job.py:0
+msgid "%(name)s: the days of a job cannot be negative."
+msgstr "%(name)s: os dias de um job não podem ser negativos."
+
+#. module: liber_project_stage_jobs
+#: model:ir.model,name:liber_project_stage_jobs.model_mail_activity
+msgid "Activity"
+msgstr ""
+
+#. module: liber_project_stage_jobs
+#: model:ir.model.fields,field_description:liber_project_stage_jobs.field_project_task_type_job__activity_type_id
+msgid "Activity Type"
+msgstr "Tipo de atividade"
+
+#. module: liber_project_stage_jobs
+#: model:ir.model.fields,field_description:liber_project_stage_jobs.field_project_task_type_job__user_id
+msgid "Assignee"
+msgstr "Responsável"
+
+#. module: liber_project_stage_jobs
+#: model:ir.model.fields,field_description:liber_project_stage_jobs.field_project_task_type_job__stage_id
+msgid "Column"
+msgstr "Coluna"
+
+#. module: liber_project_stage_jobs
+#: model:ir.model,name:liber_project_stage_jobs.model_project_task_type_job
+msgid "Column Job"
+msgstr "Job da coluna"
+
+#. module: liber_project_stage_jobs
+#: model:ir.model.fields,field_description:liber_project_stage_jobs.field_mail_activity__stage_job_id
+msgid "Column job"
+msgstr "Job da coluna"
+
+#. module: liber_project_stage_jobs
+#: model:ir.model.fields,field_description:liber_project_stage_jobs.field_project_task_type_job__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: liber_project_stage_jobs
+#: model:ir.model.fields,field_description:liber_project_stage_jobs.field_project_task_type_job__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: liber_project_stage_jobs
+#: model:ir.model.fields,field_description:liber_project_stage_jobs.field_project_task_type_job__days
+msgid "Days"
+msgstr "Dias"
+
+#. module: liber_project_stage_jobs
+#: model:ir.model.fields,field_description:liber_project_stage_jobs.field_mail_activity__display_name
+#: model:ir.model.fields,field_description:liber_project_stage_jobs.field_project_task__display_name
+#: model:ir.model.fields,field_description:liber_project_stage_jobs.field_project_task_type__display_name
+#: model:ir.model.fields,field_description:liber_project_stage_jobs.field_project_task_type_job__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: liber_project_stage_jobs
+#: model:ir.model.fields,help:liber_project_stage_jobs.field_project_task_type_job__note
+msgid "Goes into the activity's note: how to do the job."
+msgstr "Vai para a nota da atividade: como fazer o job."
+
+#. module: liber_project_stage_jobs
+#: model_terms:ir.ui.view,arch_db:liber_project_stage_jobs.task_type_edit_jobs
+msgid "How to do this job: the script that goes into the activity's note."
+msgstr "Como fazer este job: o roteiro que vai para a nota da atividade."
+
+#. module: liber_project_stage_jobs
+#: model:ir.model.fields,field_description:liber_project_stage_jobs.field_mail_activity__id
+#: model:ir.model.fields,field_description:liber_project_stage_jobs.field_project_task__id
+#: model:ir.model.fields,field_description:liber_project_stage_jobs.field_project_task_type__id
+#: model:ir.model.fields,field_description:liber_project_stage_jobs.field_project_task_type_job__id
+msgid "ID"
+msgstr ""
+
+#. module: liber_project_stage_jobs
+#: model:ir.model.fields,field_description:liber_project_stage_jobs.field_project_task_type_job__name
+#: model_terms:ir.ui.view,arch_db:liber_project_stage_jobs.task_type_edit_jobs
+msgid "Job"
+msgstr "Job"
+
+#. module: liber_project_stage_jobs
+#: model:ir.model.fields,field_description:liber_project_stage_jobs.field_project_task_type__job_count
+msgid "Job Count"
+msgstr "Número de jobs"
+
+#. module: liber_project_stage_jobs
+#: model:ir.model.fields,field_description:liber_project_stage_jobs.field_project_task_type__job_ids
+#: model_terms:ir.ui.view,arch_db:liber_project_stage_jobs.task_type_edit_jobs
+msgid "Jobs"
+msgstr "Jobs"
+
+#. module: liber_project_stage_jobs
+#. odoo-python
+#: code:addons/liber_project_stage_jobs/models/project_task.py:0
+msgid "Jobs of column %(column)s scheduled as activities: %(names)s."
+msgstr "Jobs da coluna %(column)s agendados como atividades: %(names)s."
+
+#. module: liber_project_stage_jobs
+#: model:ir.model.fields,field_description:liber_project_stage_jobs.field_project_task_type_job__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: liber_project_stage_jobs
+#: model:ir.model.fields,field_description:liber_project_stage_jobs.field_project_task_type_job__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: liber_project_stage_jobs
+#: model:ir.model.fields,help:liber_project_stage_jobs.field_project_task_type__production_days
+msgid ""
+"Number of days counted back from the task's deadline to the start of "
+"production: the jobs of this column are due that start plus their days."
+msgstr "Número de dias que se conta para trás do Prazo final da tarefa até o início da produção: os jobs desta coluna vencem nesse início mais os seus dias."
+
+#. module: liber_project_stage_jobs
+#: model:ir.model.fields,field_description:liber_project_stage_jobs.field_project_task_type__production_days
+msgid "Production Period (days)"
+msgstr "Período de produção (dias)"
+
+#. module: liber_project_stage_jobs
+#: model:ir.model.fields,help:liber_project_stage_jobs.field_mail_activity__stage_job_pristine
+msgid ""
+"Scheduled by the column and not edited since: a new deadline on the task "
+"moves it."
+msgstr "Agendada pela coluna e não editada desde então: um novo Prazo final na tarefa a move."
+
+#. module: liber_project_stage_jobs
+#: model:ir.model.fields,field_description:liber_project_stage_jobs.field_project_task_type_job__note
+msgid "Script"
+msgstr "Roteiro"
+
+#. module: liber_project_stage_jobs
+#: model:ir.model.fields,field_description:liber_project_stage_jobs.field_project_task_type_job__sequence
+msgid "Sequence"
+msgstr ""
+
+#. module: liber_project_stage_jobs
+#: model:ir.model,name:liber_project_stage_jobs.model_project_task
+msgid "Task"
+msgstr ""
+
+#. module: liber_project_stage_jobs
+#: model:ir.model,name:liber_project_stage_jobs.model_project_task_type
+msgid "Task Stage"
+msgstr ""
+
+#. module: liber_project_stage_jobs
+#: model:ir.model.fields,help:liber_project_stage_jobs.field_project_task_type_job__days
+msgid ""
+"The job is due this many days after production starts (the task's deadline "
+"minus the project's production time)."
+msgstr "O job vence este número de dias depois do início da produção (o Prazo final da tarefa menos o período de produção da coluna)."
+
+#. module: liber_project_stage_jobs
+#: model:ir.model.fields,help:liber_project_stage_jobs.field_mail_activity__stage_job_id
+msgid "The job of the column this activity was scheduled from."
+msgstr "O job da coluna que agendou esta atividade."
+
+#. module: liber_project_stage_jobs
+#. odoo-python
+#: code:addons/liber_project_stage_jobs/models/project_task.py:0
+msgid ""
+"The task has no deadline, so the jobs count from today. Set the deadline and"
+" the untouched activities move to their dates."
+msgstr "A tarefa não tem Prazo final, então os jobs contam de hoje. Defina o Prazo final e as atividades intocadas vão para as suas datas."
+
+#. module: liber_project_stage_jobs
+#: model:ir.model.fields,field_description:liber_project_stage_jobs.field_mail_activity__stage_job_pristine
+msgid "Untouched since scheduled"
+msgstr "Intocada desde o agendamento"
+
+#. module: liber_project_stage_jobs
+#: model:ir.model.fields,help:liber_project_stage_jobs.field_project_task__display_name
+msgid ""
+"Use these keywords in the title to set new tasks:\n"
+"\n"
+"            #tags Set tags on the task\n"
+"            @user Assign the task to a user\n"
+"            ! Set the task a medium priority\n"
+"            !! Set the task a high priority\n"
+"            !!! Set the task a urgent priority\n"
+"\n"
+"            Make sure to use the right format and order e.g. Improve the configuration screen #feature #v16 @Mitchell !"
+msgstr ""
+
+#. module: liber_project_stage_jobs
+#: model_terms:ir.ui.view,arch_db:liber_project_stage_jobs.task_type_edit_jobs
+msgid ""
+"When a task enters this column, each job below is scheduled as an activity of the\n"
+"                            task, due at the start of production plus its days. Production starts the production\n"
+"                            period before the task's deadline."
+msgstr "Quando uma tarefa entra nesta coluna, cada job abaixo é agendado como atividade dela, com vencimento no início da produção mais os seus dias. A produção começa o período de produção antes do Prazo final da tarefa."
+
+#. module: liber_project_stage_jobs
+#: model:ir.model.fields,help:liber_project_stage_jobs.field_project_task_type_job__user_id
+msgid ""
+"Who does the job. Empty: the task's own assignee (or whoever moved the "
+"card)."
+msgstr "Quem faz o job. Vazio: o responsável da própria tarefa (ou quem moveu o card)."

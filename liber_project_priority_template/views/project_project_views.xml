@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--
+      Definições do projeto, em Gerenciamento de tarefas, ao lado das Tarefas
+      recorrentes: a opção e o link para os modelos DESTE projeto. A estrela
+      mora no próprio card-modelo; não há escolha de modelo aqui.
+    -->
+    <record id="edit_project_priority_template" model="ir.ui.view">
+        <field name="name">project.project.form — subtarefas por prioridade</field>
+        <field name="model">project.project</field>
+        <field name="inherit_id" ref="project.edit_project"/>
+        <field name="arch" type="xml">
+            <setting id="project_milestone_setting" position="after">
+                <setting class="col-lg-12" id="priority_templates_setting"
+                         help="Starring a task creates its sub-tasks from a template"
+                         invisible="is_template">
+                    <field name="allow_priority_templates"/>
+                    <div class="content-group mt-2" invisible="not allow_priority_templates">
+                        <div class="text-muted mb-2">
+                            Each template card carries its own star. When a task gets that star, every
+                            template card of this project with the same star becomes one of its sub-tasks,
+                            bringing along the sub-tasks it holds.
+                        </div>
+                        <button name="action_open_priority_templates" type="object" icon="oi-arrow-right"
+                                string="Task Templates" class="btn-link"/>
+                    </div>
+                </setting>
+            </setting>
+        </field>
+    </record>
+</odoo>

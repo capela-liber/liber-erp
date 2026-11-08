@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="res_config_settings_view_form_fair_registers" model="ir.ui.view">
+        <field name="name">res.config.settings.form.fair.registers</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="liber_fairs.res_config_settings_view_form_fairs"/>
+        <field name="arch" type="xml">
+            <xpath expr="//block[@name='fairs_setting_container']" position="after">
+                <block title="Fair registers" name="fair_registers_setting_container">
+                    <setting string="Cash account" help="Where the money in the drawer of every fair register is kept. Each register gets a cash drawer of its own, all on this account.">
+                        <field name="fair_cash_account_id" domain="[('account_type', '=', 'asset_cash'), ('company_ids', 'parent_of', company_id)]"/>
+                        <div>
+                            <button name="action_fair_drawers" type="object" string="Cash drawers" icon="oi-arrow-right" class="btn-link"/>
+                        </div>
+                    </setting>
+                    <setting string="Cash surplus and shortage" help="Where the difference found when the drawer is counted goes. Without both, the register refuses to open.">
+                        <div class="row">
+                            <label for="fair_cash_surplus_account_id" string="Surplus" class="col-lg-3 o_light_label"/>
+                            <field name="fair_cash_surplus_account_id" domain="[('account_type', 'in', ('income', 'income_other')), ('company_ids', 'parent_of', company_id)]"/>
+                        </div>
+                        <div class="row">
+                            <label for="fair_cash_shortage_account_id" string="Shortage" class="col-lg-3 o_light_label"/>
+                            <field name="fair_cash_shortage_account_id" domain="[('account_type', 'in', ('expense', 'expense_other', 'expense_direct_cost')), ('company_ids', 'parent_of', company_id)]"/>
+                        </div>
+                    </setting>
+                    <setting string="Other payment methods" help="Card machine, PIX: what every fair register takes besides cash.">
+                        <field name="fair_payment_method_ids" widget="many2many_tags" domain="[('is_cash_count', '=', False), ('company_id', 'in', (company_id, False))]"/>
+                    </setting>
+                </block>
+            </xpath>
+        </field>
+    </record>
+</odoo>

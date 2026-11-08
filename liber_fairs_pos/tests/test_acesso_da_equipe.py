@@ -12,6 +12,7 @@ Três regras, e as três vieram do dono:
 from datetime import date
 
 from odoo.tests import TransactionCase, tagged
+from .common import configurar_caixas_de_feira
 
 
 @tagged('post_install', '-at_install', 'liber_fairs_pos')
@@ -20,7 +21,7 @@ class TestAcessoDaEquipe(TransactionCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.company = cls.env.company
+        cls.company = configurar_caixas_de_feira(cls.env, cls.env.company)
         cls.armazem = cls.env['stock.warehouse'].search(
             [('company_id', '=', cls.company.id)], limit=1)
         cls.livro = cls.env['product.product'].create({

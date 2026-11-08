@@ -10,7 +10,7 @@ botão abre essa quantidade.
 Caixa é plural porque feira grande é plural: uma Bienal tem duas ou três
 frentes de pagamento, e uma fila só é uma fila que não anda.
 """
-from odoo import _, api, fields, models
+from odoo import Command, _, api, fields, models
 from odoo.exceptions import UserError
 
 
@@ -343,6 +343,12 @@ class EventFair(models.Model):
             arquivados.sudo().write({'active': True})
             todos.pos_picking_type_ids.filtered(
                 lambda t: not t.active).sudo().write({'active': True})
+            # A gaveta foi devolvida no retorno: o caixa reaberto pega outra.
+            for caixa in arquivados.filtered(
+                    lambda c: not c.payment_method_ids.filtered(
+                        'is_cash_count')):
+                caixa.sudo().payment_method_ids = [Command.link(
+                    self.company_id._fair_free_drawer().id)]
         for operador in todos.cashier_ids.filtered(
                 lambda c: not c.pos_config_id):
             caixa = self._criar_caixa(operador)
@@ -386,16 +392,18 @@ class EventFair(models.Model):
             raise UserError(_(
                 "%s has no warehouse, and the register needs one to hang "
                 "the operation on.", company.display_name))
-        # O PDV cria diário de caixa e formas de pagamento ao nascer, e para
-        # isso a empresa precisa de contabilidade. Falhar aqui, com o nome do
-        # que falta, é melhor do que o erro do núcleo três telas adiante.
-        if not self.env['account.journal'].search(
-                [('type', 'in', ('bank', 'cash')),
-                 ('company_id', '=', company.id)], limit=1):
+        # As formas de pagamento NÃO ficam por conta do PDV: deixado a si, ele
+        # dá Dinheiro só ao primeiro caixa da empresa, e esse sem conta de
+        # sobra e falta, que é o erro do núcleo na hora de abrir (ver
+        # `res_company.py`). Falhar aqui, com o nome do que falta, é melhor
+        # do que aquele erro três telas adiante.
+        faltando = company._fair_register_missing()
+        if faltando:
             raise UserError(_(
-                "%s has no bank or cash journal: the register cannot take "
-                "money in a company that has no place to put it.",
-                company.display_name))
+                "%(empresa)s is not set up for fair registers yet. Fill in "
+                "%(campos)s under Inventory > Configuration > Settings > "
+                "Fair registers.",
+                empresa=company.display_name, campos=', '.join(faltando)))
         # A série é POR CAIXA, e isso não é capricho. Dois caixas com o mesmo
         # `sequence_code` compartilham o prefixo do nome da transferência, e o
         # segundo colide no `stock_picking_name_uniq` do primeiro -- doença
@@ -429,11 +437,16 @@ class EventFair(models.Model):
             'default_location_dest_id': self.env.ref(
                 'stock.stock_location_customers').id,
         })
+        # A gaveta é EMPRESTADA: um diário por caixa encheria a Contabilidade
+        # de diários mortos. Ver `res_company._fair_free_drawer`.
+        dinheiro = company._fair_free_drawer()
         vals = {
             'name': rotulo,
             'company_id': company.id,
             'picking_type_id': tipo.id,
             'fair_id': self.id,
+            'payment_method_ids': [Command.set(
+                (dinheiro | company.fair_payment_method_ids).ids)],
         }
         vals.update(self._desconto_do_caixa(operador))
         config = self.env['pos.config'].sudo().with_company(company).create(
@@ -722,8 +735,16 @@ class EventFair(models.Model):
             # para dentro da gravação, e a trava do PDV -- que recusa
             # arquivar a operação enquanto um caixa a usa -- passa a enxergar
             # como ativo o caixa que acabou de ser arquivado.
-            self.env['pos.config'].sudo().browse(caixas).write(
-                {'active': False})
+            configs = self.env['pos.config'].sudo().browse(caixas)
+            # DEVOLVE a gaveta antes de arquivar: é ela que a próxima feira
+            # vai usar. A venda que passou por ela não se perde -- o
+            # pagamento guarda a forma, não o caixa.
+            for config in configs:
+                gavetas = config.payment_method_ids.filtered('fair_drawer')
+                if gavetas:
+                    config.payment_method_ids = [
+                        Command.unlink(g.id) for g in gavetas]
+            configs.write({'active': False})
             self.env['stock.picking.type'].sudo().browse(tipos).write(
                 {'active': False})
         return res

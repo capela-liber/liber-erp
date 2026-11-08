@@ -537,3 +537,149 @@ msgstr "Contas a gerar"
 #: model_terms:ir.ui.view,arch_db:liber_fairs_pos.view_event_fair_form_pos
 msgid "Somebody had their numbers filled in after the event closed. This creates only the bills that are missing."
 msgstr "Alguém teve os números preenchidos depois de o evento fechar. Isto cria só as contas que faltam."
+
+#. module: liber_fairs_pos
+#. odoo-python
+#: code:addons/liber_fairs_pos/models/event_fair.py:0
+msgid ""
+"%(empresa)s is not set up for fair registers yet. Fill in %(campos)s under "
+"Inventory > Configuration > Settings > Fair registers."
+msgstr "%(empresa)s ainda não está configurada para caixas de feira. Preencha %(campos)s em Inventário > Configuração > Definições > Caixas de feira."
+
+#. module: liber_fairs_pos
+#: model:ir.model.fields,help:liber_fairs_pos.field_res_company__fair_payment_method_ids
+#: model:ir.model.fields,help:liber_fairs_pos.field_res_config_settings__fair_payment_method_ids
+#: model_terms:ir.ui.view,arch_db:liber_fairs_pos.res_config_settings_view_form_fair_registers
+msgid "Card machine, PIX: what every fair register takes besides cash."
+msgstr "Maquininha, PIX: o que todo caixa de feira recebe além do dinheiro."
+
+#. module: liber_fairs_pos
+#. odoo-python
+#: code:addons/liber_fairs_pos/models/event_fair.py:0
+msgid "Cash"
+msgstr "Dinheiro"
+
+#. module: liber_fairs_pos
+#: model:ir.model.fields,field_description:liber_fairs_pos.field_res_config_settings__fair_cash_shortage_account_id
+msgid "Cash Difference Expense"
+msgstr "Conta de falta de caixa"
+
+#. module: liber_fairs_pos
+#: model:ir.model.fields,field_description:liber_fairs_pos.field_res_config_settings__fair_cash_surplus_account_id
+msgid "Cash Difference Income"
+msgstr "Conta de sobra de caixa"
+
+#. module: liber_fairs_pos
+#. odoo-python
+#: code:addons/liber_fairs_pos/models/res_company.py:0
+#: model_terms:ir.ui.view,arch_db:liber_fairs_pos.res_config_settings_view_form_fair_registers
+msgid "Cash account"
+msgstr "Conta do dinheiro"
+
+#. module: liber_fairs_pos
+#. odoo-python
+#: code:addons/liber_fairs_pos/models/res_company.py:0
+msgid ""
+"Cash is not chosen here: each fair register gets a cash drawer of its own. "
+"Pick only card, PIX and the like."
+msgstr "Dinheiro não se escolhe aqui: cada caixa de feira ganha a sua gaveta. Escolha só cartão, PIX e afins."
+
+#. module: liber_fairs_pos
+#. odoo-python
+#: code:addons/liber_fairs_pos/models/res_company.py:0
+msgid "Cash shortage account"
+msgstr "Conta de falta de caixa"
+
+#. module: liber_fairs_pos
+#. odoo-python
+#: code:addons/liber_fairs_pos/models/res_company.py:0
+msgid "Cash surplus account"
+msgstr "Conta de sobra de caixa"
+
+#. module: liber_fairs_pos
+#: model_terms:ir.ui.view,arch_db:liber_fairs_pos.res_config_settings_view_form_fair_registers
+msgid "Cash surplus and shortage"
+msgstr "Sobra e falta de caixa"
+
+#. module: liber_fairs_pos
+#: model_terms:ir.ui.view,arch_db:liber_fairs_pos.res_config_settings_view_form_fair_registers
+msgid "Fair registers"
+msgstr "Caixas de feira"
+
+#. module: liber_fairs_pos
+#: model:ir.model.fields,field_description:liber_fairs_pos.field_res_company__fair_cash_account_id
+#: model:ir.model.fields,field_description:liber_fairs_pos.field_res_config_settings__fair_cash_account_id
+msgid "Fair registers cash account"
+msgstr "Conta do dinheiro dos caixas de feira"
+
+#. module: liber_fairs_pos
+#: model:ir.model.fields,field_description:liber_fairs_pos.field_res_company__fair_payment_method_ids
+#: model:ir.model.fields,field_description:liber_fairs_pos.field_res_config_settings__fair_payment_method_ids
+msgid "Fair registers other payment methods"
+msgstr "Outras formas de pagamento dos caixas de feira"
+
+#. module: liber_fairs_pos
+#: model_terms:ir.ui.view,arch_db:liber_fairs_pos.res_config_settings_view_form_fair_registers
+msgid "Other payment methods"
+msgstr "Outras formas de pagamento"
+
+#. module: liber_fairs_pos
+#: model_terms:ir.ui.view,arch_db:liber_fairs_pos.res_config_settings_view_form_fair_registers
+msgid "Shortage"
+msgstr "Falta"
+
+#. module: liber_fairs_pos
+#: model_terms:ir.ui.view,arch_db:liber_fairs_pos.res_config_settings_view_form_fair_registers
+msgid "Surplus"
+msgstr "Sobra"
+
+#. module: liber_fairs_pos
+#: model_terms:ir.ui.view,arch_db:liber_fairs_pos.res_config_settings_view_form_fair_registers
+msgid ""
+"Where the difference found when the drawer is counted goes. Without both, "
+"the register refuses to open."
+msgstr "Para onde vai a diferença encontrada na contagem da gaveta. Sem as duas, o caixa não abre."
+
+#. module: liber_fairs_pos
+#: model_terms:ir.ui.view,arch_db:liber_fairs_pos.res_config_settings_view_form_fair_registers
+msgid ""
+"Where the money in the drawer of every fair register is kept. Each register "
+"gets a cash drawer of its own, all on this account."
+msgstr "Onde fica o dinheiro da gaveta de cada caixa de feira. Cada caixa ganha a sua gaveta, todas nesta conta."
+
+#. module: liber_fairs_pos
+#: model:ir.model.fields,help:liber_fairs_pos.field_res_company__fair_cash_account_id
+#: model:ir.model.fields,help:liber_fairs_pos.field_res_config_settings__fair_cash_account_id
+msgid ""
+"Where the money in the drawer of every fair register is kept. Without it, "
+"each register would create an account of its own in the chart."
+msgstr "Onde fica o dinheiro da gaveta de cada caixa de feira. Sem ela, cada caixa criaria uma conta própria no plano."
+
+#. module: liber_fairs_pos
+#: model:ir.model.fields,help:liber_fairs_pos.field_pos_payment_method__fair_drawer
+msgid ""
+"Cash drawer lent to one fair register at a time. It comes back when the fair"
+" returns, and the next register takes it."
+msgstr "Gaveta de dinheiro emprestada a um caixa de feira por vez. Volta quando a feira retorna, e o próximo caixa a pega."
+
+#. module: liber_fairs_pos
+#. odoo-python
+#: code:addons/liber_fairs_pos/models/res_company.py:0
+msgid "Fair cash %s"
+msgstr "Dinheiro de feira %s"
+
+#. module: liber_fairs_pos
+#: model:ir.model.fields,field_description:liber_fairs_pos.field_pos_payment_method__fair_drawer
+msgid "Fair cash drawer"
+msgstr "Gaveta de feira"
+
+#. module: liber_fairs_pos
+#: model_terms:ir.ui.view,arch_db:liber_fairs_pos.res_config_settings_view_form_fair_registers
+msgid "Cash drawers"
+msgstr "Gavetas de dinheiro"
+
+#. module: liber_fairs_pos
+#. odoo-python
+#: code:addons/liber_fairs_pos/models/res_config_settings.py:0
+msgid "Fair cash drawers"
+msgstr "Gavetas de dinheiro das feiras"

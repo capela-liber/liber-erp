@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<script>
+/* Servido por /liber_site/static/docs/, este arquivo vem com uma semana de
+   cache e o docs.js sem versão -- e o índice monta a lista a partir dele. Foi
+   assim que a emissão de NF-e e o manual da Amazon ficaram invisíveis: o
+   catálogo em cache era anterior aos dois. A rota /liber/docs/ serve o mesmo
+   arquivo sem cache e com ?v=<mtime> nos assets. Quem chegar pelo caminho
+   antigo (favorito, link velho, resultado de busca) vai para lá antes de a
+   página montar qualquer coisa. */
+(function () {
+  var antigo = "/liber_site/static/docs/";
+  if (location.pathname.indexOf(antigo) === 0) {
+    location.replace("/liber/docs/" + location.pathname.slice(antigo.length) +
+                     location.search + location.hash);
+  }
+})();
+</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Jobs por coluna — Manuais do Liber</title>
+<link rel="icon" type="image/png" href="../logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;600;700&display=swap">
+<link rel="stylesheet" href="docs.css">
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="../index.html"><img src="../logo.png" alt="">liber<span>.</span></a>
+    <span class="doc-tag">Manuais</span>
+    <nav><a href="index.html">Índice</a><a href="../index.html">Site</a></nav>
+  </div>
+</header>
+<div class="wrap">
+  <div class="layout">
+    <aside class="sidebar" id="sidebar"></aside>
+    <article class="doc">
+      <div class="breadcrumb"><a href="index.html">Manuais</a><span class="sep">›</span>Editorial<span class="sep">›</span>Jobs por coluna</div>
+      <h1>Jobs por coluna</h1>
+      <p class="lead">Um módulo para a <strong>produção editorial</strong>. O card do livro entra numa coluna — Produção, Prelo — e os jobs daquela coluna viram <strong>atividades</strong> dele: cada uma com responsável, roteiro e uma data contada do Prazo final. Nada é removido depois: as atividades são trabalho em curso.</p>
+
+      <h2 id="visao-geral">Visão geral</h2>
+      <p>O irmão deste módulo, <a href="liber_project_priority_template.html">Subtarefas pela estrela</a>, serve ao marketing: a estrela diz quanto se espera do lançamento, e a pauta de divulgação vem dela como subtarefas. A produção não anda por expectativa, anda por <strong>colunas e prazos</strong>, e não precisa de cards novos: precisa que o card do livro ganhe as <strong>atividades</strong> certas, para as pessoas certas, nas datas certas. Todo livro que entra em Produção precisa de capa, revisão de provas e checagem de fechamento, cada coisa com o seu responsável e o seu roteiro — e cada coisa com uma data, porque o que manda é o dia em que o livro tem de estar pronto.</p>
+      <p>Os jobs moram na própria <strong>coluna</strong>. Cada job diz quem faz, em quantos <strong>dias</strong> vence e o que está escrito no <strong>roteiro</strong> (<em>como checar o fechamento de um livro</em>, por exemplo). Quando um card entra na coluna, cada job dela vira <strong>uma</strong> atividade no chatter do card, com o roteiro na nota — e o relógio do card no quadro passa a mostrar a mais próxima.</p>
+
+      <h2 id="coluna">Os jobs da coluna</h2>
+      <p>No quadro do projeto, passe o mouse no título da coluna, clique na <strong>engrenagem</strong> e em <strong>Editar</strong>. O formulário da coluna ganhou a aba <strong>Jobs</strong>. Cada linha é um job:</p>
+      <ul>
+        <li><strong>Job</strong> — o nome, que vira o título da atividade.</li>
+        <li><strong>Tipo de atividade</strong> — A fazer, Ligação, Reunião… (A fazer por omissão).</li>
+        <li><strong>Responsável</strong> — quem recebe a atividade. Vazio, é o responsável do card (ou quem o moveu, se o card não tiver responsável).</li>
+        <li><strong>Dias</strong> — quantos dias depois do início da produção o job vence. Zero é o próprio dia do início; um número igual ao Período de produção é o Prazo final do livro.</li>
+        <li><strong>Roteiro</strong> — abra a linha para escrever o texto que vai na nota da atividade.</li>
+      </ul>
+      <p>Acima da aba, o <strong>Período de produção</strong> da coluna: o número de dias que se conta para trás do Prazo final até o início da produção (60 por omissão). Cada coluna tem o seu; não há nada global no projeto nem nas Definições. Pode haver jobs em mais de uma coluna: Produção tem os seus, Prelo tem os seus, cada uma com o seu período. Arraste pela alça para reordenar.</p>
+      <figure class="shot"><img src="img/doc-liber_project_stage_jobs-coluna.png" alt="Formulário da coluna Produção com o Período de produção em 60 dias e a aba Jobs: Capa em 20 dias para Viviani, Revisão de provas em 35 para Suzana e Checagem de fechamento em 55"><figcaption>A coluna Produção da Editoria: Hedra, com o período de 60 dias e três jobs. A <em>Checagem de fechamento</em> não tem responsável fixo: vai para quem é responsável pelo card.</figcaption></figure>
+      <div class="callout"><span class="title">Nota</span><p>Uma coluna pode ser compartilhada por mais de um projeto. Os jobs e o período são da coluna, e valem em todos os projetos em que ela aparece.</p></div>
+
+
+      <h2 id="data">A data de cada job</h2>
+      <p>A conta parte do <strong>Prazo final</strong> do card e do <strong>Período de produção</strong> da coluna:</p>
+      <ul>
+        <li>o <strong>início da produção</strong> é o Prazo final menos o Período de produção;</li>
+        <li>cada job vence no início da produção <strong>mais os seus dias</strong>.</li>
+      </ul>
+      <p>Um livro com Prazo final em 30/03 entra numa coluna com período de 60 dias: a produção começa em 29/01. A capa, em 20 dias, vence em 18/02 (−60 + 20); a revisão de provas, em 35 dias, vence em 05/03; a ficha ao gráfico, em 60 dias, vence no próprio 30/03. Os dias de cada job contam todos do início, não um depois do outro — por isso a ordem da lista não muda nenhuma data. Se Prelo tiver um período de 10 dias, os jobs de Prelo contam de 20/03.</p>
+      <div class="callout"><span class="title">Sem Prazo final</span><p>Card sem Prazo final agenda os jobs contando de <em>hoje</em>, e a nota no chatter avisa. Quando o Prazo final for posto — ou mudar —, as atividades <em>intocadas</em> vão para as datas certas. Conta como mexida a atividade cuja data, responsável, nota ou tipo alguém alterou; essa fica como está. Se a revisora adiantou a revisão, a mudança do prazo do livro não desfaz isso.</p></div>
+
+      <h2 id="entrar">Entrar na coluna</h2>
+      <p>Arraste o card para a coluna, no quadro, ou clique nela na barra do formulário. As atividades aparecem no chatter, com as datas, e uma nota registra o que foi agendado e para quem.</p>
+      <figure class="shot"><img src="img/doc-liber_project_stage_jobs-card.png" alt="Card na coluna Produção, com três atividades planejadas no chatter — Capa, Revisão de provas e Checagem de fechamento, cada uma com responsável e data — e a nota que as registra"><figcaption>O livro entrou em Produção: três atividades, cada uma com a sua data e o roteiro na nota.</figcaption></figure>
+      <p>As regras são poucas:</p>
+      <ul>
+        <li><strong>Sair da coluna não remove nada.</strong> Depois da produção o card segue mudando de coluna, e as atividades continuam até alguém marcá-las como feitas. A coluna seguinte, se tiver jobs, acrescenta os seus.</li>
+        <li><strong>Voltar à coluna não duplica.</strong> Job que ainda tem a sua atividade aberta no card não é agendado de novo. Atividade concluída virou histórico no chatter; se o card voltar à coluna, aquele job é agendado outra vez.</li>
+        <li><strong>Só o card de primeiro nível dispara.</strong> Subtarefa que muda de coluna não ganha jobs, e modelo de tarefa nunca.</li>
+        <li>Coluna sem jobs não faz nada e não deixa nota.</li>
+      </ul>
+
+      <h2 id="estrela">Com a estrela no mesmo projeto</h2>
+      <p>Os dois módulos convivem no mesmo projeto e no mesmo card: a estrela traz a pauta de marketing como subtarefas, a coluna traz os jobs de produção como atividades. Um não mexe no que é do outro.</p>
+
+      <h2 id="limites">O que fica de fora</h2>
+      <ul>
+        <li>Apagar um job da coluna não apaga as atividades que ele já agendou; elas só deixam de seguir o Prazo final.</li>
+        <li>Acrescentar um job a uma coluna não alcança os cards que já estão nela: vale para os próximos que entrarem.</li>
+        <li>Os dias são corridos, não úteis.</li>
+      </ul>
+
+      <nav class="pager" id="pager"></nav>
+    </article>
+  </div>
+</div>
+<script src="docs.js"></script>
+</body>
+</html>

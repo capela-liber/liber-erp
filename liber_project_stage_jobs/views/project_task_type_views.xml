@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--
+      A coluna guarda os seus jobs: engrenagem do kanban → Editar → aba Jobs.
+      Cada linha é a atividade que o card ganha ao entrar nesta coluna.
+    -->
+    <record id="task_type_edit_jobs" model="ir.ui.view">
+        <field name="name">project.task.type.form — jobs da coluna</field>
+        <field name="model">project.task.type</field>
+        <field name="inherit_id" ref="project.task_type_edit"/>
+        <field name="arch" type="xml">
+            <field name="sequence" position="after">
+                <field name="production_days" invisible="user_id"/>
+            </field>
+            <xpath expr="//sheet" position="inside">
+                <notebook invisible="user_id">
+                    <page string="Jobs" name="jobs">
+                        <div class="text-muted mb-2">
+                            When a task enters this column, each job below is scheduled as an activity of the
+                            task, due at the start of production plus its days. Production starts the production
+                            period before the task's deadline.
+                        </div>
+                        <field name="job_ids" context="{'default_stage_id': id}">
+                            <list>
+                                <field name="sequence" widget="handle"/>
+                                <field name="name"/>
+                                <field name="activity_type_id" options="{'no_create': True}"/>
+                                <field name="user_id" widget="many2one_avatar_user"/>
+                                <field name="days"/>
+                            </list>
+                            <form string="Job">
+                                <sheet>
+                                    <group>
+                                        <group>
+                                            <field name="name"/>
+                                            <field name="activity_type_id" options="{'no_create': True}"/>
+                                        </group>
+                                        <group>
+                                            <field name="user_id" widget="many2one_avatar_user"/>
+                                            <field name="days"/>
+                                        </group>
+                                    </group>
+                                    <label for="note"/>
+                                    <field name="note" placeholder="How to do this job: the script that goes into the activity's note."/>
+                                </sheet>
+                            </form>
+                        </field>
+                    </page>
+                </notebook>
+            </xpath>
+        </field>
+    </record>
+</odoo>

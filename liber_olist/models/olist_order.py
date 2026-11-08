@@ -10,6 +10,7 @@ from markupsafe import Markup
 
 from odoo import _, api, fields, models, modules, tools
 from odoo.exceptions import UserError
+from odoo.tools import float_compare
 
 from . import olist_client
 
@@ -1060,6 +1061,59 @@ class OlistOrder(models.Model):
             'order_line': [(0, 0, l._sale_line_vals()) for l in self.line_ids],
         }
 
+    def _percentual_de_desconto(self):
+        """O desconto do Olist como porcentagem, a mesma em todas as linhas.
+
+        O Olist dá o desconto no PEDIDO e não diz de qual livro ele saiu. A
+        mesma porcentagem em todas as linhas é o rateio pelo peso de cada uma
+        no bruto -- o mesmo do Relatório (`valor_desconto` da linha) --, e o
+        total do pedido fecha com o líquido do Olist.
+
+        Até 29/10/2026 o pedido nascia sem desconto nenhum: o Painel mostrava
+        a venda do site pelo bruto (S67320: 286,06 onde a nota diz 230,66 de
+        mercadoria), enquanto a fatura, que nasce do XML, já vinha certa.
+        """
+        self.ensure_one()
+        bruto = sum((l.quantidade or 0.0) * (l.valor_unitario or 0.0)
+                    for l in self.line_ids)
+        desconto = self.valor_desconto or 0.0
+        if not bruto or desconto <= 0.0:
+            return 0.0
+        return min(desconto / bruto * 100.0, 100.0)
+
+    def _acertar_desconto_no_pedido(self):
+        """Escreve o desconto do Olist nos pedidos de venda já importados.
+
+        Devolve as linhas que mudaram. Mexe só no `discount`: o preço segue
+        bruto (é por ele que a fatura acha a linha do pedido) e a fatura não
+        se toca -- ela nasceu do XML e já dizia o desconto.
+
+        Toda linha recebe a porcentagem do Olist, inclusive ZERO: o pedido
+        importado também pegava o desconto da lista de preços do parceiro
+        (`_compute_discount` do núcleo), e o Painel mostrava a menos uma venda
+        que o Olist fez sem desconto.
+        """
+        mudadas = self.env['sale.order.line']
+        for pedido in self.filtered(
+                lambda p: p.sale_order_id and not p.e_bonificacao):
+            percentual = round(pedido._percentual_de_desconto(), 2)
+            venda = pedido.sale_order_id
+            linhas = venda.order_line.filtered(
+                lambda l: not l.display_type and float_compare(
+                    l.discount, percentual, precision_digits=2))
+            if not linhas:
+                continue
+            # Pedido trancado recusa `discount` (campo protegido do núcleo):
+            # destranca só para o acerto e devolve como estava.
+            trancado = venda.locked
+            if trancado:
+                venda.locked = False
+            linhas.write({'discount': percentual})
+            if trancado:
+                venda.locked = True
+            mudadas |= linhas
+        return mudadas
+
     # As situações do Olist que PROVAM que o pacote saiu da casa: o comprador
     # recebeu, ou a entrega viajou e falhou. "Enviado" NÃO entra, e é o furo
     # que o dono apontou (18/08/2026): o Olist marca Enviado quando a ETIQUETA
@@ -1850,5 +1904,8 @@ class OlistOrderLine(models.Model):
             'product_id': self.product_id.id,
             'product_uom_qty': self.quantidade,
             'price_unit': self.valor_unitario,
+            # Explícito mesmo quando é zero: sem ele, o núcleo põe o desconto
+            # da lista de preços do parceiro, que o Olist não deu.
+            'discount': self.order_id._percentual_de_desconto(),
             'name': self.descricao or self.product_id.display_name,
         }

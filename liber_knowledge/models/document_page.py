@@ -119,6 +119,11 @@ class DocumentPage(models.Model):
                         "liber_manual_slug": item["slug"],
                     })
                     stats["created"] += 1
+                elif pagina.parent_id != categoria:
+                    # O manual mudou de área no site (a estrela saiu de Gestão
+                    # para Marketing, 08/11/2026): a árvore acompanha.
+                    pagina.parent_id = categoria
+                    stats["updated"] += 1
                 if pagina.liber_sequence != (posicao + 1) * 10:
                     pagina.liber_sequence = (posicao + 1) * 10
                 paginas[item["slug"]] = (pagina, item)

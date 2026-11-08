@@ -1,0 +1,215 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* liber_project_priority_template
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0-20260630\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-10-01 11:00+0000\n"
+"PO-Revision-Date: 2026-10-01 01:08+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: liber_project_priority_template
+#. odoo-python
+#: code:addons/liber_project_priority_template/models/project_task.py:0
+msgid ""
+"%(stars)s: no template of this project has %(stars)s, so no sub-tasks were "
+"created. Mark the star on a template card (Project settings → Task "
+"Templates)."
+msgstr ""
+"%(stars)s: nenhum modelo deste projeto tem %(stars)s; nenhuma subtarefa foi "
+"criada. Marque a estrela num card-modelo (Definições do projeto → Modelos de "
+"tarefa)."
+
+#. module: liber_project_priority_template
+#: model_terms:ir.ui.view,arch_db:liber_project_priority_template.view_task_template_list
+msgid "Born in project"
+msgstr "Nasce no projeto"
+
+#. module: liber_project_priority_template
+#: model_terms:ir.ui.view,arch_db:liber_project_priority_template.view_task_template_list
+msgid "Column"
+msgstr "Coluna"
+
+#. module: liber_project_priority_template
+#: model:ir.model,website_form_label:liber_project_priority_template.model_project_task
+msgid "Create a Task"
+msgstr "Criar uma tarefa"
+
+#. module: liber_project_priority_template
+#: model_terms:ir.actions.act_window,help:liber_project_priority_template.action_task_templates
+msgid "Create a task template"
+msgstr "Criar um modelo de tarefa"
+
+#. module: liber_project_priority_template
+#: model:ir.model.fields,help:liber_project_priority_template.field_project_task__priority_template_pristine
+msgid ""
+"Created by the star and not touched since: changing the star may remove it."
+msgstr ""
+"Criada pela estrela e não mexida desde então: trocar a estrela pode removê-"
+"la."
+
+#. module: liber_project_priority_template
+#: model:ir.model.fields,field_description:liber_project_priority_template.field_project_task__priority_template_source_id
+msgid "Created from template"
+msgstr "Criada a partir do modelo"
+
+#. module: liber_project_priority_template
+#: model:ir.model.fields,field_description:liber_project_priority_template.field_project_project__display_name
+#: model:ir.model.fields,field_description:liber_project_priority_template.field_project_task__display_name
+msgid "Display Name"
+msgstr "Exibir nome"
+
+#. module: liber_project_priority_template
+#: model_terms:ir.ui.view,arch_db:liber_project_priority_template.edit_project_priority_template
+msgid ""
+"Each template card carries its own star. When a task gets that star, every\n"
+"                            template card of this project with the same star "
+"becomes one of its sub-tasks,\n"
+"                            bringing along the sub-tasks it holds."
+msgstr ""
+"Cada card-modelo leva a sua estrela. Quando uma tarefa ganha essa estrela,\n"
+"                            cada card-modelo deste projeto com a mesma "
+"estrela vira uma subtarefa dela,\n"
+"                            trazendo junto as subtarefas que ele tem."
+
+#. module: liber_project_priority_template
+#: model_terms:ir.actions.act_window,help:liber_project_priority_template.action_task_templates
+msgid ""
+"Each template card is one sub-task to be. When a task of this project gets a "
+"star,\n"
+"               every template card with the same star is copied into it as a "
+"sub-task,\n"
+"               with its assignees and column, and with the sub-tasks it "
+"holds."
+msgstr ""
+"Cada card-modelo é uma subtarefa em potencial. Quando uma tarefa deste "
+"projeto ganha estrela,\n"
+"               cada card-modelo com a mesma estrela é copiado para dentro "
+"dela como subtarefa,\n"
+"               com os seus responsáveis, a sua coluna e as subtarefas que "
+"ele tem."
+
+#. module: liber_project_priority_template
+#: model:ir.model.fields,field_description:liber_project_priority_template.field_project_project__id
+#: model:ir.model.fields,field_description:liber_project_priority_template.field_project_task__id
+msgid "ID"
+msgstr ""
+
+#. module: liber_project_priority_template
+#. odoo-python
+#: code:addons/liber_project_priority_template/models/project_task.py:0
+msgid "Kept, because they were already worked on: %(names)s."
+msgstr "Mantidas, porque já foram mexidas: %(names)s."
+
+#. module: liber_project_priority_template
+#: model_terms:ir.ui.view,arch_db:liber_project_priority_template.view_task_search_form_base_parent
+msgid "Mother task"
+msgstr "Tarefa-mãe"
+
+#. module: liber_project_priority_template
+#: model:ir.model.fields,help:liber_project_priority_template.field_project_task__priority_template_project_id
+msgid ""
+"On a template card: the project whose star creates this card as a sub-task. "
+"The card's own Project is where the sub-task is born."
+msgstr ""
+"No card-modelo: o projeto cuja estrela cria este card como subtarefa. O "
+"Projeto do próprio card é onde a subtarefa nasce."
+
+#. module: liber_project_priority_template
+#: model:ir.model,name:liber_project_priority_template.model_project_project
+msgid "Project"
+msgstr "Projeto"
+
+#. module: liber_project_priority_template
+#. odoo-python
+#: code:addons/liber_project_priority_template/models/project_task.py:0
+msgid "Removed, untouched since the previous star: %(names)s."
+msgstr "Removidas, intocadas desde a estrela anterior: %(names)s."
+
+#. module: liber_project_priority_template
+#: model:ir.model.fields,field_description:liber_project_priority_template.field_project_task__priority_template_project_id
+msgid "Starred in project"
+msgstr "Estrela no projeto"
+
+#. module: liber_project_priority_template
+#: model_terms:ir.ui.view,arch_db:liber_project_priority_template.edit_project_priority_template
+msgid "Starring a task creates its sub-tasks from a template"
+msgstr "A estrela na tarefa cria as subtarefas a partir de um modelo"
+
+#. module: liber_project_priority_template
+#: model_terms:ir.ui.view,arch_db:liber_project_priority_template.view_task_template_list
+msgid "Stars"
+msgstr "Estrelas"
+
+#. module: liber_project_priority_template
+#: model:ir.model.fields,field_description:liber_project_priority_template.field_project_project__allow_priority_templates
+msgid "Sub-tasks by Priority"
+msgstr "Subtarefas por prioridade"
+
+#. module: liber_project_priority_template
+#. odoo-python
+#: code:addons/liber_project_priority_template/models/project_task.py:0
+msgid "Sub-tasks created from the templates: %(names)s."
+msgstr "Subtarefas criadas a partir dos modelos: %(names)s."
+
+#. module: liber_project_priority_template
+#: model:ir.model,name:liber_project_priority_template.model_project_task
+msgid "Task"
+msgstr "Tarefa"
+
+#. module: liber_project_priority_template
+#: model:ir.actions.act_window,name:liber_project_priority_template.action_task_templates
+#: model_terms:ir.ui.view,arch_db:liber_project_priority_template.edit_project_priority_template
+#: model_terms:ir.ui.view,arch_db:liber_project_priority_template.view_task_template_list
+msgid "Task Templates"
+msgstr "Modelos de tarefa"
+
+#. module: liber_project_priority_template
+#. odoo-python
+#: code:addons/liber_project_priority_template/models/project_project.py:0
+msgid "Task Templates: %(project)s"
+msgstr "Modelos de tarefa: %(project)s"
+
+#. module: liber_project_priority_template
+#: model:ir.model.fields,help:liber_project_priority_template.field_project_task__priority_template_source_id
+msgid "The template card this sub-task was created from by the task's star."
+msgstr "O card-modelo de onde a estrela da tarefa criou esta subtarefa."
+
+#. module: liber_project_priority_template
+#: model:ir.model.fields,field_description:liber_project_priority_template.field_project_task__priority_template_pristine
+msgid "Untouched since the star"
+msgstr "Intocada desde a estrela"
+
+#. module: liber_project_priority_template
+#: model:ir.model.fields,help:liber_project_priority_template.field_project_task__display_name
+msgid ""
+"Use these keywords in the title to set new tasks:\n"
+"\n"
+"            #tags Set tags on the task\n"
+"            @user Assign the task to a user\n"
+"            ! Set the task a medium priority\n"
+"            !! Set the task a high priority\n"
+"            !!! Set the task a urgent priority\n"
+"\n"
+"            Make sure to use the right format and order e.g. Improve the "
+"configuration screen #feature #v16 @Mitchell !"
+msgstr ""
+"Use essas palavras-chave no título para definir novas tarefas:\n"
+"\n"
+"30h Alocar 30 horas para a tarefa\n"
+"#marcador Definir marcadores na tarefa\n"
+" @usuario Atribuir a tarefa a um usuário\n"
+"! Definir a tarefa como prioridade média\n"
+"!! Definir a tarefa como prioridade alta\n"
+"!!! Definir a tarefa como prioridade urgente\n"
+"\n"
+"Certifique-se de usar o formato e a ordem corretos. Ex.: Melhorar a tela de "
+"configuração 5h #recurso #v16 @Mitchell !"

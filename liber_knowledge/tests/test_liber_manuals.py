@@ -166,6 +166,24 @@ class TestSincronizacao(TransactionCase):
         self.assertEqual(len(b.history_ids), 2)
         self.assertEqual(b.history_head.summary, 'Atualizado do site')
 
+    def test_manual_que_mudou_de_area_no_site_muda_de_galho(self):
+        # 08/11/2026: a estrela saiu de Gestão para a área nova Marketing e
+        # ficou presa no galho velho, com a área nova vazia.
+        self.Page._liber_sync_manuals(self.docs)
+        b = self._pagina('liber_b')
+        self.assertEqual(b.parent_id.name, 'Consignação')
+        self._escrever('docs.js', DOCS_JS.replace(
+            '    { slug: "liber_b", title: "Manual \\"B\\"", desc: "O segundo." },\n', ''
+        ).replace(
+            '    { slug: "glossario", title: "Glossário", desc: "Siglas." },',
+            '    { slug: "glossario", title: "Glossário", desc: "Siglas." },\n'
+            '    { slug: "liber_b", title: "Manual \\"B\\"", desc: "O segundo." },'))
+        stats = self.Page._liber_sync_manuals(self.docs)
+        self.assertEqual(stats['updated'], 1)
+        self.assertEqual(b.parent_id.name, 'Referência')
+        self.assertGreater(b.liber_sequence, self._pagina('glossario').liber_sequence)
+        self.assertEqual(len(b.history_ids), 1, "mudar de galho não é nova versão do texto")
+
     def test_pagina_editada_no_wiki_nao_e_sobrescrita(self):
         self.Page._liber_sync_manuals(self.docs)
         b = self._pagina('liber_b')

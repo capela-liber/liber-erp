@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<script>
+/* Servido por /liber_site/static/docs/, este arquivo vem com uma semana de
+   cache e o docs.js sem versão -- e o índice monta a lista a partir dele. A
+   rota /liber/docs/ serve o mesmo arquivo sem cache e com ?v=<mtime> nos
+   assets. Quem chegar pelo caminho antigo vai para lá antes de a página
+   montar qualquer coisa. */
+(function () {
+  var antigo = "/liber_site/static/docs/";
+  if (location.pathname.indexOf(antigo) === 0) {
+    location.replace("/liber/docs/" + location.pathname.slice(antigo.length) +
+                     location.search + location.hash);
+  }
+})();
+</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Licenciamento de direitos — Manuais do Liber</title>
+<link rel="icon" type="image/png" href="../logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;600;700&display=swap">
+<link rel="stylesheet" href="docs.css">
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="../index.html"><img src="../logo.png" alt="">liber<span>.</span></a>
+    <span class="doc-tag">Manuais</span>
+    <nav><a href="index.html">Índice</a><a href="../index.html">Site</a></nav>
+  </div>
+</header>
+<div class="wrap">
+  <div class="layout">
+    <aside class="sidebar" id="sidebar"></aside>
+    <article class="doc">
+      <div class="breadcrumb"><a href="index.html">Manuais</a><span class="sep">›</span>Direitos autorais<span class="sep">›</span>Licenciamento de direitos</div>
+      <h1>Licenciamento de direitos</h1>
+      <p class="lead">Vendeu a alguém o direito de reproduzir uma obra? Fature a licença direto do contrato — e, quando ela for paga, a parte do autor entra na conta dele como um royalty.</p>
+
+      <h2 id="visao-geral">Visão geral</h2>
+      <p>Às vezes a editora não vende exemplares, vende o <strong>direito de reprodução</strong>: um poema de Patativa do Assaré numa antologia escolar, um trecho numa prova, uma ilustração numa revista. A licença é cobrada do licenciado com uma <strong>fatura de cliente</strong>, e uma parte dela pertence ao autor — numa porcentagem que <strong>varia por contrato</strong>.</p>
+      <ul>
+        <li>Cada linha do contrato (favorecido × obra) ganha o campo <span class="field">Licenciamento (%)</span>: a parte do favorecido em toda licença daquela obra.</li>
+        <li>O botão <strong>Licenciamentos</strong> do contrato lista as faturas de licença; o <strong>Novo</strong> dali cria a fatura já pronta.</li>
+        <li>Quando a fatura é <strong>paga</strong>, a parte do autor é lançada na hora na conta analítica dele e segue o ciclo de sempre: <a href="liber_copyright_contracts_payments.html">fatura do autor</a>, <a href="liber_copyright_contracts_taxes.html">IRRF</a> e <a href="liber_copyright_contracts_reports.html">prestação de contas</a>, numa seção própria.</li>
+      </ul>
+
+      <h2 id="configuracao">Configuração</h2>
+      <p>Funciona de fábrica: o módulo traz o serviço <strong>"Licenciamento de direitos"</strong>, usado nas faturas quando nenhum outro produto é escolhido.</p>
+      <ol class="steps">
+        <li>Acesse <span class="menupath">Configurações<i>‣</i>Direitos Autorais</span>, seção <strong>Licenciamento</strong>.</li>
+        <li><span class="field">Produto de licenciamento</span> — o produto das linhas da fatura. Vazio usa o padrão do módulo.</li>
+        <li><span class="field">Conta de receita</span> — a conta contábil dessas linhas. Vazio usa a conta de receita do próprio produto.</li>
+        <li><span class="field">Diário de vendas</span> — o diário das faturas de licença. Vazio usa o primeiro diário de vendas da empresa.</li>
+        <li>Salve. As opções são por empresa.</li>
+      </ol>
+      <p>Depois, em cada contrato, aba <strong>Royalties</strong>, preencha a <span class="field">Licenciamento (%)</span> da linha de cada favorecido — por exemplo, <strong>40%</strong>. Ela não tem nada a ver com as faixas de exemplares: vale só para licenças.</p>
+
+      <h2 id="emitir">Emitir uma licença</h2>
+      <ol class="steps">
+        <li>Abra o contrato e clique em <strong>Licenciamentos</strong> (o botão aparece mesmo quando ainda não há nenhuma).</li>
+        <li>Clique em <strong>Novo</strong>. A fatura já vem na <strong>empresa dona do contrato</strong>, com o contrato no cabeçalho e uma linha por obra, com o <strong>produto</strong>, a <strong>conta de receita</strong> e o <strong>analítico do favorecido</strong> preenchidos.</li>
+        <li>Escolha o <strong>cliente</strong> (o licenciado), digite o <strong>valor</strong> e, se quiser, descreva o uso na linha.</li>
+        <li><strong>Confirme</strong> a fatura e registre o recebimento como em qualquer fatura de cliente.</li>
+      </ol>
+      <div class="callout note"><span class="title">Nota</span>
+        <p><strong>Obra com mais de um favorecido</strong> (herdeiros, coautores): a linha leva o analítico de todos, e cada um recebe a <em>sua</em> porcentagem sobre o <strong>valor inteiro</strong>. Dois herdeiros a 20% numa licença de R$ 1.000 recebem R$ 200 cada. <strong>Contrato com várias obras</strong>: a fatura vem com uma linha por obra; apague as que não fazem parte da licença.</p>
+      </div>
+
+      <h2 id="parte-do-autor">Quando a parte do autor entra</h2>
+      <ul>
+        <li><strong>Só fatura paga conta</strong> — a mesma regra das vendas. Postada e não paga não gera nada.</li>
+        <li>Ao ser paga, a parte do autor (<em>valor da linha × Licenciamento %</em>) é lançada <strong>na hora</strong> na conta analítica do favorecido. O <strong>Preencher linhas de royalty</strong> do contrato também a lança, se faltar, e nunca em dobro.</li>
+        <li>Só vale <strong>dentro da vigência</strong> do contrato: licença faturada antes da assinatura, depois do vencimento ou num contrato cancelado não gera nada para o autor.</li>
+        <li>O <strong>valor cheio</strong> da licença não vai para a conta do autor: aquela conta guarda o que a editora deve a ele, não a receita da editora.</li>
+      </ul>
+      <div class="callout warn"><span class="title">Atenção</span>
+        <p>Se a fatura <strong>deixar de estar paga</strong> (pagamento desfeito, nota de crédito), a parte do autor sai da conta — a não ser que já tenha sido paga a ele (data até a <span class="field">Data do Último Pagamento</span>). Aí é histórico e fica: acerte com o autor na próxima prestação.</p>
+      </div>
+
+      <h2 id="prestacao">Na prestação de contas</h2>
+      <p>A licença é um royalty como outro qualquer: entra nos <strong>royalties em aberto</strong>, recupera o <strong>adiantamento</strong>, vai para a fatura do autor e sofre <abbr class="sigla" title="Imposto de Renda Retido na Fonte: a parte do imposto que a editora retém e recolhe pelo autor.">IRRF</abbr>. No PDF da prestação de contas ela aparece numa seção própria, <strong>licenciamento</strong>: data, obra, contrato, licenciado (com a descrição da linha), valor da licença, porcentagem e a parte do autor. O resumo ganha a linha <em>dos quais, licenciamento</em>; a tabela de royalties fica só com as vendas de exemplares.</p>
+
+      <h2 id="quem-pode">Quem pode</h2>
+      <ul>
+        <li>Emitir a fatura exige o direito de <strong>Faturamento</strong>, como qualquer fatura de cliente.</li>
+        <li>Quem tem só o app de <strong>Direitos Autorais</strong> vê as licenças pelo botão do contrato, somente leitura — sem passar a ver as outras faturas da empresa.</li>
+      </ul>
+
+      <h2 id="faq">Perguntas frequentes</h2>
+      <p><strong>Faturei a licença com o produto do livro. Vai contar em dobro?</strong> Não. Uma fatura de licença (com o contrato no cabeçalho) fica fora da apuração de vendas: conta só a porcentagem de licenciamento.</p>
+      <p><strong>Mudei a porcentagem depois de a licença ser paga. Recalcula?</strong> Não. A parte do autor é fixada quando a fatura é paga, como um royalty de venda. Para refazer, use <strong>Zerar analítico</strong> no contrato e depois <strong>Preencher linhas de royalty</strong>.</p>
+      <p><strong>A licença aparece na cobrança entre empresas?</strong> Não. A licença é sempre faturada pela empresa dona do contrato; não há outra empresa a reembolsar.</p>
+
+      <div class="seealso">
+        <span class="title">Veja também</span>
+        <ul>
+          <li><a href="liber_copyright_contracts.html">Contratos de direitos autorais</a> — onde mora a porcentagem de cada favorecido.</li>
+          <li><a href="liber_copyright_contracts_payments.html">Pagamento de royalties</a> — a fatura que paga a parte do autor.</li>
+          <li><a href="liber_copyright_contracts_reports.html">Prestação de contas</a> — o extrato com a seção de licenciamento.</li>
+        </ul>
+      </div>
+
+      <nav class="pager" id="pager"></nav>
+    </article>
+  </div>
+</div>
+<script src="docs.js"></script>
+</body>
+</html>

@@ -23,6 +23,20 @@ contratante (dona do contrato); EL = a editora irmã que também vende a obra.
 6. **EL**: recebe o pagamento da fatura (**só venda paga acrua royalty**).
 7. **HE**: vende a obra também, pelas suas próprias faturas pagas.
 
+## Licenciamento (quando a HE vende o direito de reprodução)
+
+7a. **HE**: no contrato, botão **Licensing** › **Novo** → fatura de cliente na
+    empresa do contrato, já com o produto/conta de licenciamento (Definições ›
+    Copyright › Licensing) e o analítico do favorecido na linha. Escolhe o
+    licenciado, digita o valor e posta.
+7b. **HE**: recebe o pagamento → **na hora**, a parte do autor (valor ×
+    *Licensing %* da linha do contrato) vira um lançamento analítico negativo
+    na conta do favorecido, como um royalty. O valor cheio da licença **não**
+    vai para a conta do autor (é receita da HE, não dívida). Daí em diante é
+    royalty comum: abate adiantamento, entra na bill do autor (evento 14), sofre
+    IRRF e aparece na prestação de contas em seção própria "licensing". Não há
+    perna intercompany: a licença é sempre da empresa dona do contrato.
+
 ## Booking (o coração)
 
 8. **HE**: roda **Fill Royalty Lines** no contrato → cada venda paga

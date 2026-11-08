@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--
+      "Tarefa-mãe" na busca das tarefas: buscar e agrupar.
+
+      A subtarefa que foi para outro board (a arte, levada ao Design) mostra o
+      nome da mãe no card do kanban, mas a busca não sabia filtrar nem agrupar
+      por ela. Pedido em 01/10/2026, no lugar de pôr o nome da mãe entre
+      colchetes no título: o colchete envelhece quando a mãe é renomeada, e só
+      valeria para as subtarefas geradas pela estrela.
+
+      Herda a busca BASE, como a "Subtarefas" do edlab_stack (o sentido
+      contrário): a do projeto, a de Minhas Tarefas e a de todas as tarefas
+      ganham as duas opções juntas.
+    -->
+    <record id="view_task_search_form_base_parent" model="ir.ui.view">
+        <field name="name">project.task.search — tarefa-mãe</field>
+        <field name="model">project.task</field>
+        <field name="inherit_id" ref="project.view_task_search_form_base"/>
+        <field name="arch" type="xml">
+            <field name="stage_id" position="after">
+                <field name="parent_id" string="Mother task"
+                       filter_domain="[('parent_id.name', 'ilike', self)]"/>
+            </field>
+            <filter name="stage" position="after">
+                <filter string="Mother task" name="groupby_parent" context="{'group_by': 'parent_id'}"/>
+            </filter>
+        </field>
+    </record>
+</odoo>

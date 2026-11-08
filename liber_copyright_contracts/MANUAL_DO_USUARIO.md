@@ -24,9 +24,10 @@ prestação de contas para cada autor.
 10. [Pagamento dos autores](#10-pagamento-dos-autores)
 11. [Retenção de IRRF](#11-retenção-de-irrf)
 12. [Prestação de contas ao autor](#12-prestação-de-contas-ao-autor)
-13. [Automações (tarefas agendadas)](#13-automações-tarefas-agendadas)
-14. [Fluxo completo — passo a passo](#14-fluxo-completo--passo-a-passo)
-15. [Glossário](#15-glossário)
+13. [Licenciamento de direitos](#13-licenciamento-de-direitos)
+14. [Automações (tarefas agendadas)](#14-automações-tarefas-agendadas)
+15. [Fluxo completo — passo a passo](#15-fluxo-completo--passo-a-passo)
+16. [Glossário](#16-glossário)
 
 ---
 
@@ -43,6 +44,7 @@ precisa: cada camada adiciona funcionalidades sobre a anterior. Instalar a
 | **Payments** (`liber_copyright_contracts_payments`) | Gera contas a pagar (vendor bills) para pagar os autores a partir dos royalties em aberto. | Analytics, account |
 | **Author Reports** (`liber_copyright_contracts_reports`) | Página do autor no contato e a *Prestação de contas* (PDF + e-mail). | Payments |
 | **Taxes / IRRF** (`liber_copyright_contracts_taxes`) | Retenção do IRRF sobre o pagamento aos autores e acúmulo do imposto numa conta ao governo. | Author Reports |
+| **Licensing** (`liber_copyright_contracts_licensing`) | Licenciamento de direitos: fatura de cliente pelo contrato, parte do autor (% por linha) lançada como royalty e seção própria na prestação de contas. Ver [seção 13](#13-licenciamento-de-direitos). | Author Reports |
 
 **Ordem de dependência:** `liber_copyright_contracts` → `analytics` → `payments` →
 `reports` → `taxes`.
@@ -146,6 +148,12 @@ Em **Configurações › Empresas** (ou nas preferências), aba/ seção *Copyri
 
 Além disso, mantenha a **tabela do IRRF** em
 **Copyright › Settings › IRRF Tables** (ver [seção 11](#11-retenção-de-irrf)).
+
+### 4.5 Licensing — licenciamento de direitos
+
+Em **Configurações › Copyright › Licensing**: **Licensing product**, **Income
+account** e **Sales journal** das faturas de licenciamento (todos opcionais, com
+padrão). Ver [seção 13](#13-licenciamento-de-direitos).
 
 ---
 
@@ -430,7 +438,93 @@ No formulário do autor, botão **Prestação de contas** (abre um assistente):
 
 ---
 
-## 13. Automações (tarefas agendadas)
+## 13. Licenciamento de direitos
+
+> Disponível com o módulo **Copyright Contracts - Licensing**
+> (`liber_copyright_contracts_licensing`).
+
+Às vezes a editora vende a um terceiro o direito de **reproduzir** uma obra que
+ela detém. Exemplo: uma editora didática quer publicar um poema de Patativa do
+Assaré numa antologia escolar. A editora cobra o licenciado com uma **fatura de
+cliente**, e uma parte desse valor pertence ao autor, numa porcentagem que
+**varia por contrato**.
+
+### Configurar (uma vez por empresa)
+
+Em **Configurações › Copyright › Licensing**:
+
+- **Licensing product** — produto das linhas da fatura de licenciamento. Vazio =
+  o serviço **"Rights licensing"** que o módulo instala.
+- **Income account** — conta de receita dessas linhas. Vazio = a conta de
+  receita do próprio produto.
+- **Sales journal** — diário das faturas de licenciamento. Vazio = o primeiro
+  diário de vendas da empresa.
+
+### A porcentagem do autor
+
+Na aba **Royalties** do contrato, cada linha **beneficiário × obra** tem o campo
+**Licensing (%)**: a parte do favorecido em todo licenciamento daquela obra. Ex.:
+**40%**. É independente das faixas de tiragem (que valem para as vendas de
+exemplares). **0** = os licenciamentos não pagam nada a esse favorecido.
+
+### Emitir o licenciamento
+
+1. No contrato, clique no botão **Licensing** (fica sempre visível, mesmo com
+   zero licenciamentos). Ele lista as faturas de licenciamento do contrato.
+2. Clique em **Novo**. A fatura já vem:
+   - na **empresa dona do contrato** (pelo diário de licenciamento);
+   - com o contrato no campo **Licensed Contract**;
+   - com uma linha por **obra**, já com o **produto**, a **conta de receita** e
+     o **analítico do favorecido** (coluna *Licensed Work* mostra a obra).
+3. Escolha o **cliente (licenciado)**, digite o **valor** e confirme.
+
+> Contrato com **mais de uma obra**: a fatura vem com uma linha por obra; apague
+> as que não fazem parte desta licença. Obra com **mais de um favorecido** (ex.:
+> herdeiros): a linha leva o analítico de todos a 100%, e **cada um recebe a sua
+> porcentagem sobre o valor inteiro** da linha (dois herdeiros a 20% numa licença
+> de R$ 1.000 recebem R$ 200 cada). A porcentagem do analítico na fatura não
+> divide o valor.
+
+### Quando a parte do autor entra
+
+- Só quando a fatura de licenciamento está **paga** — a mesma regra das vendas.
+  Postada e não paga não conta.
+- Ao ser paga, a parte do autor (**valor da linha × Licensing %**) é lançada
+  **na hora** na conta analítica do favorecido, como dívida (negativa), sem
+  esperar o *Fill Royalty Lines*. O *Fill* também a lança, se faltar, e não
+  duplica.
+- O lançamento só vale **dentro da vigência** do contrato (data da fatura entre
+  a assinatura e o vencimento; contrato cancelado não acrua).
+- Se a fatura **deixar de estar paga** (pagamento desfeito, nota de crédito), a
+  parte do autor sai da conta — **exceto** se já tiver sido paga ao autor (data
+  anterior ou igual à *Last Payment Date*): aí é histórico e fica.
+- O valor cheio da licença **não** vai para a conta analítica do autor: aquela
+  conta registra o que a editora deve ao autor, não a receita da editora. Outros
+  planos analíticos na mesma linha (um projeto, por exemplo) recebem o lançamento
+  normal.
+
+### Depois: o ciclo de sempre
+
+A parte do licenciamento é um royalty como outro qualquer:
+
+- entra no **Open Royalties** do contrato e do autor;
+- **recupera o adiantamento** recuperável, se houver;
+- vai para a **fatura do autor** em *Generate Royalty Bills* e sofre **IRRF**;
+- aparece na **Prestação de contas** numa seção própria, **licensing**: data,
+  obra, contrato, licenciado (com a descrição da linha), valor da licença, % e a
+  parte do autor. O **resumo** do PDF ganha a linha *of which licensing*; a
+  tabela *royalties* fica só com as vendas de exemplares.
+
+### Quem pode
+
+- Emitir a fatura exige o direito de **Faturamento** (como qualquer fatura de
+  cliente).
+- Quem tem só o **app de Contratos** vê as faturas de licenciamento pelo botão
+  do contrato (somente leitura), sem passar a ver as demais faturas da empresa.
+
+---
+
+## 14. Automações (tarefas agendadas)
 
 O conjunto instala rotinas (**cron**) que rodam diariamente:
 
@@ -442,7 +536,7 @@ O conjunto instala rotinas (**cron**) que rodam diariamente:
 
 ---
 
-## 14. Fluxo completo — passo a passo
+## 15. Fluxo completo — passo a passo
 
 1. **Configurar** as camadas instaladas (plano analítico, contas, produto de
    pagamento, diário, tabela IRRF, contato do governo, percentuais).
@@ -461,12 +555,14 @@ O conjunto instala rotinas (**cron**) que rodam diariamente:
 8. Ao postar as contas, o **IRRF** é retido e acumulado na conta ao governo;
    recolher no vencimento configurado.
 9. Emitir a **Prestação de contas** (Print/Send) para cada autor no período.
+    - Licenciou uma obra? Botão **Licensing** › **Novo** no contrato, licenciado
+      e valor, confirmar; ao ser paga, a parte do autor entra sozinha (seção 13).
 10. Deixar as **rotinas diárias** cuidarem de vencimentos, renovações e
     reclassificação de contas.
 
 ---
 
-## 15. Glossário
+## 16. Glossário
 
 | Termo | Significado |
 |-------|-------------|
@@ -481,6 +577,8 @@ O conjunto instala rotinas (**cron**) que rodam diariamente:
 | **Conta a pagar (bill)** | Vendor bill que paga o autor pelos royalties em aberto. |
 | **IRRF** | Imposto de renda retido na fonte sobre o pagamento ao autor. |
 | **Prestação de contas** | Relatório (PDF/e-mail) consolidando royalties, IRRF e líquido do período por autor. |
+| **Licenciamento** | Venda a terceiro do direito de reproduzir uma obra; faturado ao licenciado, com a parte do autor (Licensing %) lançada como royalty. |
+| **Licensing (%)** | Parte do favorecido em cada licenciamento da obra, por linha de royalty; independente das faixas de tiragem. |
 | **User / Administrator** | Grupos de acesso; só o Administrator edita a data do último pagamento manualmente. |
 
 ---

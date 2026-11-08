@@ -15,13 +15,14 @@ está vendendo) e o encerramento tem de fechar dinheiro de verdade.
 from datetime import date
 
 from odoo.tests import HttpCase, tagged
+from .common import configurar_caixas_de_feira
 
 
 @tagged('post_install', '-at_install', 'liber_fairs_pos_tour')
 class TestTourCaixa(HttpCase):
 
     def test_um_caixa_nasce_e_fecha_na_tela(self):
-        company = self.env.company
+        company = configurar_caixas_de_feira(self.env, self.env.company)
         armazem = self.env['stock.warehouse'].search(
             [('company_id', '=', company.id)], limit=1)
         livro = self.env['product.product'].create({

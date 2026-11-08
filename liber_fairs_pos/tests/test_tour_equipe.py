@@ -23,6 +23,7 @@ tudo e não prova nada sobre perfil.
 from datetime import date, timedelta
 
 from odoo.tests import HttpCase, tagged
+from .common import configurar_caixas_de_feira
 
 
 @tagged('post_install', '-at_install', 'liber_fairs_pos_tour')
@@ -30,7 +31,7 @@ class TestTourEquipe(HttpCase):
 
     def _palco(self):
         """Uma feira com carga esperando conferência e duas pessoas na equipe."""
-        company = self.env.company
+        company = configurar_caixas_de_feira(self.env, self.env.company)
         hoje = date.today()
         livros = self.env['product.product'].create([{
             'name': 'Livro dos Dois Perfis %02d' % i,

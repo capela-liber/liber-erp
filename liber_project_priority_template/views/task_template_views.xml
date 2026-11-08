@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Lista própria, sem agrupar: a padrão das tarefas agrupa por estágio e
+         escondia modelos num grupo fechado. A coluna aparece como campo, porque
+         é nela que a subtarefa vai nascer. -->
+    <record id="view_task_template_list" model="ir.ui.view">
+        <field name="name">project.task.list — modelos</field>
+        <field name="model">project.task</field>
+        <field name="priority">99</field>
+        <field name="arch" type="xml">
+            <list string="Task Templates">
+                <field name="sequence" widget="handle"/>
+                <field name="priority" widget="priority" string="Stars"/>
+                <field name="name"/>
+                <field name="user_ids" widget="many2many_avatar_user"/>
+                <field name="project_id" string="Born in project"/>
+                <field name="stage_id" string="Column"/>
+                <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color'}" optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- No formulário do modelo: de quem é a estrela, ao lado de onde a
+         subtarefa nasce. Mudar o Projeto do modelo manda a subtarefa para
+         outro board; o modelo continua na lista do projeto da estrela. -->
+    <record id="view_task_form_priority_template_project" model="ir.ui.view">
+        <field name="name">project.task.form — estrela no projeto</field>
+        <field name="model">project.task</field>
+        <field name="inherit_id" ref="project.view_task_form2"/>
+        <field name="arch" type="xml">
+            <xpath expr="//sheet/group/group/field[@name='project_id']" position="before">
+                <field name="priority_template_project_id" readonly="1"
+                       invisible="not is_template or not priority_template_project_id"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="action_task_templates" model="ir.actions.act_window">
+        <field name="name">Task Templates</field>
+        <field name="res_model">project.task</field>
+        <field name="view_mode">list,form</field>
+        <!-- O projeto vem do active_id, que o endereço guarda
+             (/odoo/project/35/action-...). Filtro posto só pelo botão se perdia
+             ao recarregar a página, e a lista mostrava os modelos de todos os
+             projetos. -->
+        <field name="domain">[('is_template', '=', True), ('parent_id', '=', False), ('priority_template_project_id', '=', active_id)]</field>
+        <field name="context">{'default_is_template': True, 'default_project_id': active_id, 'default_priority_template_project_id': active_id}</field>
+        <field name="view_ids" eval="[Command.clear(),
+            Command.create({'view_mode': 'list', 'view_id': ref('view_task_template_list')}),
+            Command.create({'view_mode': 'form', 'view_id': ref('project.view_task_form2')})]"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Create a task template</p>
+            <p>Each template card is one sub-task to be. When a task of this project gets a star,
+               every template card with the same star is copied into it as a sub-task,
+               with its assignees and column, and with the sub-tasks it holds.</p>
+        </field>
+    </record>
+
+</odoo>
