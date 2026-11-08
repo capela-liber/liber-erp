@@ -11,7 +11,7 @@ veja `SUPPORT.md` para onde perguntar.
 
 ## Ver funcionando
 
-A vitrine em **[liber.edlab.press](https://liber.edlab.press)** roda estes 54 módulos
+A vitrine em **[liber.edlab.press](https://liber.edlab.press)** roda estes 57 módulos
 com dados de demonstração. O menu **Demo** explica como entrar com a conta de
 demonstração, que vê tudo e **não grava nada**. Lá dentro:
 
@@ -55,6 +55,7 @@ uma issue por frente e uma "visão geral" por período.
 | `liber_copyright_contracts_cloud` | O contrato aponta para os seus documentos no Dropbox, Drive ou GitHub |
 | `liber_copyright_contracts_legacy` | Vendas anteriores ao sistema entram nas faixas e nos royalties, corrigidas por índice de preço |
 | `liber_copyright_contracts_support` | Missões escrevem aos autores de um conjunto de contratos, e cada resposta vira chamado |
+| `liber_copyright_contracts_licensing` | A licença de reprodução faturada pelo contrato, com a parte do autor lançada como royalty |
 
 ### Feiras
 
@@ -105,6 +106,16 @@ e volta incompleto — e o que não volta ganha nome.
 | `liber_account_group_panel` | Plano de contas filtrado por grupo de contas |
 | `liber_intercompany_mirror` | Ver e abrir o documento espelho criado na empresa irmã |
 | `liber_base_import_br` | Planilhas com `59,90` e `05/03/2026` importam como estão escritas |
+
+### Projeto
+
+O card do livro gera trabalho sozinho, de dois jeitos: a estrela do lançamento
+monta a pauta de marketing, e a coluna da produção agenda os jobs como atividades.
+
+| Módulo | O que faz |
+|---|---|
+| `liber_project_priority_template` | A estrela do card cria as subtarefas dos cards-modelo, inclusive noutro board |
+| `liber_project_stage_jobs` | Cada coluna guarda jobs e período de produção; o card que entra ganha as atividades com prazo |
 
 ### Estoque endereçado
 
