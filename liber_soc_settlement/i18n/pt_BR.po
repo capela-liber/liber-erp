@@ -2727,3 +2727,57 @@ msgstr "A caminho"
 #: model_terms:ir.ui.view,arch_db:liber_soc_settlement.view_shortfall_search
 msgid "Nature"
 msgstr "Natureza"
+
+#. module: liber_soc_settlement
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.res_config_settings_view_form_soc
+msgid "<span class=\"col-lg-3 o_form_label\">Subject</span>"
+msgstr "<span class=\"col-lg-3 o_form_label\">Assunto</span>"
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,help:liber_soc_settlement.field_res_company__consignment_map_email_text
+#: model:ir.model.fields,help:liber_soc_settlement.field_res_config_settings__consignment_map_email_text
+msgid ""
+"Body of the monthly map e-mail sent by the scheduled dispatch, replacing the"
+" built-in opening text. The signature and the automatic-message notice are "
+"still added. Leave empty to use the built-in default."
+msgstr "Corpo do e-mail do mapa mensal enviado pelo disparo automático, no lugar do texto de abertura padrão. A assinatura e o aviso de mensagem automática continuam sendo acrescentados. Deixe vazio para usar o padrão."
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_res_company__consignment_map_email_subject
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_res_config_settings__consignment_map_email_subject
+msgid "Monthly Map E-mail Subject"
+msgstr "Assunto do E-mail do Mapa Mensal"
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_res_company__consignment_map_email_text
+#: model:ir.model.fields,field_description:liber_soc_settlement.field_res_config_settings__consignment_map_email_text
+msgid "Monthly Map E-mail Text"
+msgstr "Texto do E-mail do Mapa Mensal"
+
+#. module: liber_soc_settlement
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.res_config_settings_view_form_soc
+msgid "Monthly map e-mail text"
+msgstr "Texto do e-mail do mapa mensal"
+
+#. module: liber_soc_settlement
+#: model:ir.model.fields,help:liber_soc_settlement.field_res_company__consignment_map_email_subject
+#: model:ir.model.fields,help:liber_soc_settlement.field_res_config_settings__consignment_map_email_subject
+msgid ""
+"Subject of the monthly map e-mail sent by the scheduled dispatch. The "
+"operation number (CO) is always appended. Leave empty to use the built-in "
+"default."
+msgstr "Assunto do e-mail do mapa mensal enviado pelo disparo automático. O número da operação (CO) é sempre acrescentado no fim. Deixe vazio para usar o padrão."
+
+#. module: liber_soc_settlement
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.res_config_settings_view_form_soc
+msgid "Restore default text"
+msgstr "Restaurar o texto padrão"
+
+#. module: liber_soc_settlement
+#: model_terms:ir.ui.view,arch_db:liber_soc_settlement.res_config_settings_view_form_soc
+msgid ""
+"Subject and text of the e-mail the monthly dispatch sends. The operation "
+"number is appended to the subject; the signature and the automatic-message "
+"notice are added below the text. Used on the shelf map; an operation that "
+"already has a settlement, return or replenishment keeps the built-in text."
+msgstr "Assunto e texto do e-mail que o disparo mensal envia. O número da operação entra no fim do assunto; a assinatura e o aviso de mensagem automática vão abaixo do texto. Vale para o mapa da prateleira; a operação que já tem acerto, devolução ou reposição mantém o texto padrão."

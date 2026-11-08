@@ -18,6 +18,16 @@ class ResConfigSettings(models.TransientModel):
     fair_cash_shortage_account_id = fields.Many2one(
         related='company_id.default_cash_difference_expense_account_id',
         readonly=False)
+    # Transitória e a receber do PDV são campos do núcleo, como sobra e
+    # falta: ver `res_company.py`.
+    fair_transit_account_id = fields.Many2one(
+        related='company_id.account_journal_suspense_account_id',
+        readonly=False)
+    fair_pos_receivable_account_id = fields.Many2one(
+        related='company_id.account_default_pos_receivable_account_id',
+        readonly=False)
+    fair_income_account_id = fields.Many2one(
+        related='company_id.fair_income_account_id', readonly=False)
     fair_payment_method_ids = fields.Many2many(
         related='company_id.fair_payment_method_ids', readonly=False)
 

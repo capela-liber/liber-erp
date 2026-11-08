@@ -25,6 +25,23 @@ Sobra e falta moram nos campos do próprio núcleo
 (`default_cash_difference_*`), e não em campos nossos: são eles que o Odoo
 usa para preencher QUALQUER diário de dinheiro novo da empresa, de feira ou
 não.
+
+O FECHAMENTO pede mais três contas, e o primeiro caixa da n-1 no staging
+(03/11/2026, EV/2026/00004) tropeçou nas três, uma depois da outra:
+
+  - a RECEITA da venda, que o PDV busca no produto, na categoria e, por
+    último, no diário de vendas do PDV ("Ponto de Venda", POSS) -- que o
+    núcleo cria sem conta;
+  - a TRANSITÓRIA do diário da gaveta, sem a qual o dinheiro contado não
+    vira linha de extrato. O núcleo a copia da empresa
+    (`account_journal_suspense_account_id`), que no plano migrado é vazia;
+  - a conta A RECEBER do PDV (`account_default_pos_receivable_account_id`),
+    onde o pagamento espera o fechamento. Vazia nas seis empresas: "Conta
+    necessária ausente na linha contábil".
+
+As duas últimas também são campos do núcleo, pelo mesmo motivo de sobra e
+falta. A receita é campo nosso, porque o núcleo não tem um: ela se escreve no
+diário de vendas dos caixas de feira quando ele está vazio.
 """
 from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
@@ -39,6 +56,12 @@ class ResCompany(models.Model):
         help="Where the money in the drawer of every fair register is "
              "kept. Without it, each register would create an account of "
              "its own in the chart.")
+    fair_income_account_id = fields.Many2one(
+        'account.account', string='Fair registers sales account',
+        domain="[('account_type', 'in', ('income', 'income_other'))]",
+        help="Revenue of a counter sale whose product and category have no "
+             "revenue account. It goes on the registers' sales journal, "
+             "which the point of sale creates without one.")
     fair_payment_method_ids = fields.Many2many(
         'pos.payment.method', 'res_company_fair_pos_payment_method_rel',
         'company_id', 'payment_method_id',
@@ -65,6 +88,12 @@ class ResCompany(models.Model):
             faltando.append(_('Cash surplus account'))
         if not self.default_cash_difference_expense_account_id:
             faltando.append(_('Cash shortage account'))
+        if not self.account_journal_suspense_account_id:
+            faltando.append(_('Transit account'))
+        if not self.account_default_pos_receivable_account_id:
+            faltando.append(_('Register receivable account'))
+        if not self.fair_income_account_id:
+            faltando.append(_('Sales account'))
         return faltando
 
     def _fair_free_drawer(self):
@@ -88,6 +117,8 @@ class ResCompany(models.Model):
                 self.default_cash_difference_income_account_id.id,
             'loss_account_id':
                 self.default_cash_difference_expense_account_id.id,
+            'suspense_account_id':
+                self.account_journal_suspense_account_id.id,
             'show_on_dashboard': False,
         })
         return Metodo.create({
@@ -113,7 +144,9 @@ class ResCompany(models.Model):
                 company._fair_free_drawer()
 
     def _fair_fill_cash_journals(self):
-        """Completa sobra e falta nos caixas de feira que já existiam.
+        """Completa as contas vazias dos caixas de feira que já existiam.
+
+        Sobra, falta e transitória nas gavetas; receita no diário de vendas.
 
         O diário copia as contas no dia em que nasce: configurar a empresa
         depois não alcança o caixa já criado. Só se preenche o que está
@@ -130,6 +163,15 @@ class ResCompany(models.Model):
                        | gavetas).journal_id
             lucro = company.default_cash_difference_income_account_id
             perda = company.default_cash_difference_expense_account_id
+            transito = company.account_journal_suspense_account_id
+            receita = company.fair_income_account_id
+            if transito:
+                diarios.filtered(lambda d: not d.suspense_account_id).write(
+                    {'suspense_account_id': transito.id})
+            if receita:
+                caixas.journal_id.filtered(
+                    lambda d: not d.default_account_id).write(
+                        {'default_account_id': receita.id})
             if lucro:
                 diarios.filtered(lambda d: not d.profit_account_id).write(
                     {'profit_account_id': lucro.id})

@@ -1,0 +1,69 @@
+<!-- GERADO por scripts/gen_module_descriptions.py a partir de
+     liber_site/static/docs/liber_copyright_contracts_licensing.html -- não edite aqui.
+     O Odoo mostra este arquivo em Apps > Module Info. -->
+<div class="oe_container liber_manual" style="max-width:900px;margin:0 auto;padding:8px 4px 24px;color:#251d2b;background:transparent;font:15px/1.7 Inter,'Segoe UI',system-ui,sans-serif;"><h1 style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:32px;line-height:1.2;letter-spacing:-.015em;margin:0 0 10px;color:#251d2b;">Licenciamento de direitos</h1>
+      <p class="lead" style="font-size:17.5px;color:#5d5266;margin:0 0 26px;max-width:62ch;">Vendeu a alguém o direito de reproduzir uma obra? Fature a licença direto do contrato — e, quando ela for paga, a parte do autor entra na conta dele como um royalty.</p>
+
+      <h2 id="visao-geral" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">Visão geral</h2>
+      <p style="margin:0 0 12px;">Às vezes a editora não vende exemplares, vende o <strong style="color:#251d2b;">direito de reprodução</strong>: um poema de Patativa do Assaré numa antologia escolar, um trecho numa prova, uma ilustração numa revista. A licença é cobrada do licenciado com uma <strong style="color:#251d2b;">fatura de cliente</strong>, e uma parte dela pertence ao autor — numa porcentagem que <strong style="color:#251d2b;">varia por contrato</strong>.</p>
+      <ul style="margin:0 0 14px 22px;padding:0;">
+        <li style="margin:0 0 7px;">Cada linha do contrato (favorecido × obra) ganha o campo <span class="field" style="font-weight:600;color:#251d2b;">Licenciamento (%)</span>: a parte do favorecido em toda licença daquela obra.</li>
+        <li style="margin:0 0 7px;">O botão <strong style="color:#251d2b;">Licenciamentos</strong> do contrato lista as faturas de licença; o <strong style="color:#251d2b;">Novo</strong> dali cria a fatura já pronta.</li>
+        <li style="margin:0 0 7px;">Quando a fatura é <strong style="color:#251d2b;">paga</strong>, a parte do autor é lançada na hora na conta analítica dele e segue o ciclo de sempre: <a href="/liber_site/static/docs/liber_copyright_contracts_payments.html" target="_blank" rel="noopener" style="color:#6e2f91;">fatura do autor</a>, <a href="/liber_site/static/docs/liber_copyright_contracts_taxes.html" target="_blank" rel="noopener" style="color:#6e2f91;">IRRF</a> e <a href="/liber_site/static/docs/liber_copyright_contracts_reports.html" target="_blank" rel="noopener" style="color:#6e2f91;">prestação de contas</a>, numa seção própria.</li>
+      </ul>
+
+      <h2 id="configuracao" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">Configuração</h2>
+      <p style="margin:0 0 12px;">Funciona de fábrica: o módulo traz o serviço <strong style="color:#251d2b;">"Licenciamento de direitos"</strong>, usado nas faturas quando nenhum outro produto é escolhido.</p>
+      <ol class="steps" style="margin:0 0 16px 22px;padding:0;">
+        <li style="margin:0 0 7px;">Acesse <span class="menupath" style="display:inline-block;background:#f1eaf6;border:1px solid #e5dbee;border-radius:6px;padding:1px 8px;font-size:13.5px;color:#251d2b;white-space:nowrap;">Configurações<i style="font-style:normal;color:#6e2f91;margin:0 4px;font-weight:700;">‣</i>Direitos Autorais</span>, seção <strong style="color:#251d2b;">Licenciamento</strong>.</li>
+        <li style="margin:0 0 7px;"><span class="field" style="font-weight:600;color:#251d2b;">Produto de licenciamento</span> — o produto das linhas da fatura. Vazio usa o padrão do módulo.</li>
+        <li style="margin:0 0 7px;"><span class="field" style="font-weight:600;color:#251d2b;">Conta de receita</span> — a conta contábil dessas linhas. Vazio usa a conta de receita do próprio produto.</li>
+        <li style="margin:0 0 7px;"><span class="field" style="font-weight:600;color:#251d2b;">Diário de vendas</span> — o diário das faturas de licença. Vazio usa o primeiro diário de vendas da empresa.</li>
+        <li style="margin:0 0 7px;">Salve. As opções são por empresa.</li>
+      </ol>
+      <p style="margin:0 0 12px;">Depois, em cada contrato, aba <strong style="color:#251d2b;">Royalties</strong>, preencha a <span class="field" style="font-weight:600;color:#251d2b;">Licenciamento (%)</span> da linha de cada favorecido — por exemplo, <strong style="color:#251d2b;">40%</strong>. Ela não tem nada a ver com as faixas de exemplares: vale só para licenças.</p>
+
+      <h2 id="emitir" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">Emitir uma licença</h2>
+      <ol class="steps" style="margin:0 0 16px 22px;padding:0;">
+        <li style="margin:0 0 7px;">Abra o contrato e clique em <strong style="color:#251d2b;">Licenciamentos</strong> (o botão aparece mesmo quando ainda não há nenhuma).</li>
+        <li style="margin:0 0 7px;">Clique em <strong style="color:#251d2b;">Novo</strong>. A fatura já vem na <strong style="color:#251d2b;">empresa dona do contrato</strong>, com o contrato no cabeçalho e uma linha por obra, com o <strong style="color:#251d2b;">produto</strong>, a <strong style="color:#251d2b;">conta de receita</strong> e o <strong style="color:#251d2b;">analítico do favorecido</strong> preenchidos.</li>
+        <li style="margin:0 0 7px;">Escolha o <strong style="color:#251d2b;">cliente</strong> (o licenciado), digite o <strong style="color:#251d2b;">valor</strong> e, se quiser, descreva o uso na linha.</li>
+        <li style="margin:0 0 7px;"><strong style="color:#251d2b;">Confirme</strong> a fatura e registre o recebimento como em qualquer fatura de cliente.</li>
+      </ol>
+      <div class="callout note" style="border:1px solid #e5dbee;border-left:4px solid #6e2f91;border-radius:10px;background:#f1eaf6;padding:14px 18px;margin:0 0 16px;"><span class="title" style="font-weight:700;font-size:12px;letter-spacing:.08em;text-transform:uppercase;display:block;margin:0 0 4px;color:#6e2f91;">Nota</span>
+        <p style="margin:0 0 12px;"><strong style="color:#251d2b;">Obra com mais de um favorecido</strong> (herdeiros, coautores): a linha leva o analítico de todos, e cada um recebe a <em>sua</em> porcentagem sobre o <strong style="color:#251d2b;">valor inteiro</strong>. Dois herdeiros a 20% numa licença de R$ 1.000 recebem R$ 200 cada. <strong style="color:#251d2b;">Contrato com várias obras</strong>: a fatura vem com uma linha por obra; apague as que não fazem parte da licença.</p>
+      </div>
+
+      <h2 id="parte-do-autor" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">Quando a parte do autor entra</h2>
+      <ul style="margin:0 0 14px 22px;padding:0;">
+        <li style="margin:0 0 7px;"><strong style="color:#251d2b;">Só fatura paga conta</strong> — a mesma regra das vendas. Postada e não paga não gera nada.</li>
+        <li style="margin:0 0 7px;">Ao ser paga, a parte do autor (<em>valor da linha × Licenciamento %</em>) é lançada <strong style="color:#251d2b;">na hora</strong> na conta analítica do favorecido. O <strong style="color:#251d2b;">Preencher linhas de royalty</strong> do contrato também a lança, se faltar, e nunca em dobro.</li>
+        <li style="margin:0 0 7px;">Só vale <strong style="color:#251d2b;">dentro da vigência</strong> do contrato: licença faturada antes da assinatura, depois do vencimento ou num contrato cancelado não gera nada para o autor.</li>
+        <li style="margin:0 0 7px;">O <strong style="color:#251d2b;">valor cheio</strong> da licença não vai para a conta do autor: aquela conta guarda o que a editora deve a ele, não a receita da editora.</li>
+      </ul>
+      <div class="callout warn" style="border:1px solid #e5dbee;border-left:4px solid #6e2f91;border-radius:10px;padding:14px 18px;margin:0 0 16px;border-left-color:#b3831a;background:#faf3e3;border-color:#eddfba;"><span class="title" style="font-weight:700;font-size:12px;letter-spacing:.08em;text-transform:uppercase;display:block;margin:0 0 4px;color:#7a5a12;">Atenção</span>
+        <p style="margin:0 0 12px;">Se a fatura <strong style="color:#251d2b;">deixar de estar paga</strong> (pagamento desfeito, nota de crédito), a parte do autor sai da conta — a não ser que já tenha sido paga a ele (data até a <span class="field" style="font-weight:600;color:#251d2b;">Data do Último Pagamento</span>). Aí é histórico e fica: acerte com o autor na próxima prestação.</p>
+      </div>
+
+      <h2 id="prestacao" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">Na prestação de contas</h2>
+      <p style="margin:0 0 12px;">A licença é um royalty como outro qualquer: entra nos <strong style="color:#251d2b;">royalties em aberto</strong>, recupera o <strong style="color:#251d2b;">adiantamento</strong>, vai para a fatura do autor e sofre <abbr class="sigla" title="Imposto de Renda Retido na Fonte: a parte do imposto que a editora retém e recolhe pelo autor." style="text-decoration:none;border-bottom:1px dotted #8a4bad;cursor:help;">IRRF</abbr>. No PDF da prestação de contas ela aparece numa seção própria, <strong style="color:#251d2b;">licenciamento</strong>: data, obra, contrato, licenciado (com a descrição da linha), valor da licença, porcentagem e a parte do autor. O resumo ganha a linha <em>dos quais, licenciamento</em>; a tabela de royalties fica só com as vendas de exemplares.</p>
+
+      <h2 id="quem-pode" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">Quem pode</h2>
+      <ul style="margin:0 0 14px 22px;padding:0;">
+        <li style="margin:0 0 7px;">Emitir a fatura exige o direito de <strong style="color:#251d2b;">Faturamento</strong>, como qualquer fatura de cliente.</li>
+        <li style="margin:0 0 7px;">Quem tem só o app de <strong style="color:#251d2b;">Direitos Autorais</strong> vê as licenças pelo botão do contrato, somente leitura — sem passar a ver as outras faturas da empresa.</li>
+      </ul>
+
+      <h2 id="faq" style="font-family:'Space Grotesk','Segoe UI',system-ui,sans-serif;font-size:24px;line-height:1.2;margin:40px 0 12px;padding-top:18px;border-top:1px solid #e5dbee;color:#251d2b;">Perguntas frequentes</h2>
+      <p style="margin:0 0 12px;"><strong style="color:#251d2b;">Faturei a licença com o produto do livro. Vai contar em dobro?</strong> Não. Uma fatura de licença (com o contrato no cabeçalho) fica fora da apuração de vendas: conta só a porcentagem de licenciamento.</p>
+      <p style="margin:0 0 12px;"><strong style="color:#251d2b;">Mudei a porcentagem depois de a licença ser paga. Recalcula?</strong> Não. A parte do autor é fixada quando a fatura é paga, como um royalty de venda. Para refazer, use <strong style="color:#251d2b;">Zerar analítico</strong> no contrato e depois <strong style="color:#251d2b;">Preencher linhas de royalty</strong>.</p>
+      <p style="margin:0 0 12px;"><strong style="color:#251d2b;">A licença aparece na cobrança entre empresas?</strong> Não. A licença é sempre faturada pela empresa dona do contrato; não há outra empresa a reembolsar.</p>
+
+      <div class="seealso" style="border:1px solid #e5dbee;border-radius:12px;background:#f1eaf6;padding:16px 20px;margin:32px 0 0;">
+        <span class="title" style="font-weight:700;font-size:12px;letter-spacing:.08em;text-transform:uppercase;display:block;margin:0 0 4px;color:#5d5266;">Veja também</span>
+        <ul style="margin:0 0 14px 22px;padding:0;">
+          <li style="margin:0 0 7px;"><a href="/liber_site/static/docs/liber_copyright_contracts.html" target="_blank" rel="noopener" style="color:#6e2f91;">Contratos de direitos autorais</a> — onde mora a porcentagem de cada favorecido.</li>
+          <li style="margin:0 0 7px;"><a href="/liber_site/static/docs/liber_copyright_contracts_payments.html" target="_blank" rel="noopener" style="color:#6e2f91;">Pagamento de royalties</a> — a fatura que paga a parte do autor.</li>
+          <li style="margin:0 0 7px;"><a href="/liber_site/static/docs/liber_copyright_contracts_reports.html" target="_blank" rel="noopener" style="color:#6e2f91;">Prestação de contas</a> — o extrato com a seção de licenciamento.</li>
+        </ul>
+      </div><p style="margin:28px 0 0;padding-top:14px;border-top:1px solid #e5dbee;font-size:13px;color:#5d5266;">Manual completo, com busca e as demais páginas: <a href="/liber_site/static/docs/liber_copyright_contracts_licensing.html" target="_blank" rel="noopener" style="color:#6e2f91;">Licenciamento de direitos</a>.</p></div>

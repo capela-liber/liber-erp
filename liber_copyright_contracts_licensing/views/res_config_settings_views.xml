@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="res_config_settings_view_form_licensing" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.copyright.licensing</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="liber_copyright_contracts.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//block[@name='copyright_contracts_block']" position="after">
+                <block title="Licensing" name="copyright_licensing_block">
+                    <setting string="Licensing product"
+                             help="Product of the lines of rights-licensing invoices (Contract > Licensing > New). Leave empty to use the &quot;Rights licensing&quot; service shipped with the module.">
+                        <field name="contract_license_product_id"
+                               placeholder="Rights licensing (module default)"/>
+                    </setting>
+                    <setting string="Income account"
+                             help="Income account of those lines. Leave empty to use the product's own income account.">
+                        <field name="contract_license_account_id"/>
+                    </setting>
+                    <setting string="Sales journal"
+                             help="Journal of the licensing invoices. Leave empty to use the company's first sales journal.">
+                        <field name="contract_license_journal_id"/>
+                    </setting>
+                </block>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

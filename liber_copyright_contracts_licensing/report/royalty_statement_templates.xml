@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Licences in their own section, right after the royalties table.
+         The summary keeps the grand total (it already includes them) and
+         gains an "of which licensing" line; the royalties table's footer
+         adds up only its own rows. -->
+    <template id="report_royalty_statement_licensing"
+              inherit_id="liber_copyright_contracts_reports.report_royalty_statement_document">
+
+        <xpath expr="//t[@t-if=&quot;st['rows']&quot;]//tfoot//span[@t-esc=&quot;st['accrued']&quot;]" position="attributes">
+            <attribute name="t-esc">st.get('royalties_total', st['accrued'])</attribute>
+        </xpath>
+
+        <xpath expr="//tr[@t-if=&quot;st['advance_recouped']&quot;]" position="before">
+            <tr t-if="st.get('licensing')">
+                <td style="padding-left: 16px;">of which licensing</td>
+                <td class="text-end"><span t-esc="st['licensing_total']" t-options='{"widget": "monetary", "display_currency": st["currency"]}'/></td>
+            </tr>
+        </xpath>
+
+        <xpath expr="//t[@t-if=&quot;st['advances']&quot;]" position="before">
+            <t t-if="st.get('licensing')">
+                <div style="margin-top: 24px;">
+                    <div style="font-variant: small-caps; color: #555; border-bottom: 1px solid #ccc; padding-bottom: 2px; margin-bottom: 8px;">licensing</div>
+                    <table class="table table-sm o_main_table royalty-table">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Work</th>
+                                <th>Contract</th>
+                                <th>Licensee</th>
+                                <th class="text-end">Licence amount</th>
+                                <th class="text-end">%</th>
+                                <th class="text-end">Author's share</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr t-foreach="st['licensing']" t-as="lic">
+                                <td><span t-esc="lic['date_label']"/></td>
+                                <td><span t-esc="lic['work']"/></td>
+                                <td><span t-esc="lic['contract']"/></td>
+                                <td>
+                                    <span t-esc="lic['licensee']"/>
+                                    <div t-if="lic['description']" style="color: #555; font-size: 0.9em;"><span t-esc="lic['description']"/></div>
+                                </td>
+                                <td class="text-end"><span t-esc="lic['base']" t-options='{"widget": "monetary", "display_currency": st["currency"]}'/></td>
+                                <td class="text-end"><span t-esc="lic['percentage_label']"/></td>
+                                <td class="text-end"><span t-esc="lic['amount']" t-options='{"widget": "monetary", "display_currency": st["currency"]}'/></td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr style="font-weight: bold; border-top: 2px solid #000;">
+                                <td colspan="6" class="text-end">Total</td>
+                                <td class="text-end"><span t-esc="st['licensing_total']" t-options='{"widget": "monetary", "display_currency": st["currency"]}'/></td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </t>
+        </xpath>
+    </template>
+</odoo>

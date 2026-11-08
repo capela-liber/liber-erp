@@ -36,6 +36,12 @@ class TestDinheiroDoCaixa(TestCaixaDaFeira):
         self.assertEqual(
             diario.loss_account_id,
             self.company.default_cash_difference_expense_account_id)
+        self.assertEqual(
+            diario.suspense_account_id,
+            self.company.account_journal_suspense_account_id,
+            "Sem transitória o dinheiro contado não vira extrato")
+        self.assertEqual(config.journal_id.default_account_id,
+                         self.company.fair_income_account_id)
         # É aqui que o caixa da n-1 parava.
         config._check_before_creating_new_session()
 
@@ -203,3 +209,64 @@ class TestDinheiroDoCaixa(TestCaixaDaFeira):
         self.company.fair_cash_account_id = False
         self.env['res.config.settings'].create({}).execute()
         self.assertFalse(self._gavetas())
+
+    def test_without_the_receivable_the_register_is_not_created(self):
+        """O tropeço do staging (03/11): o fechamento sem conta a receber."""
+        fair = self._feira_na_praca()
+        self._operadores(fair, 'Marta')
+        self.company.account_default_pos_receivable_account_id = False
+        with self.assertRaisesRegex(UserError, 'Register receivable account'):
+            fair.action_open_pos()
+
+    def test_the_register_born_with_holes_closes_after_saving(self):
+        """EV/2026/00004: gaveta sem transitória, vendas sem receita.
+
+        O caixa nasceu antes da configuração completa: o diário da gaveta
+        sem transitória, o diário de vendas sem conta, e o livro sem receita
+        na categoria. Salvar as Definições preenche o vazio, e a volta da
+        feira fecha a sessão com a venda em dinheiro.
+        """
+        fair = self._feira_na_praca(10)
+        self._operadores(fair, 'Marta')
+        fair.action_open_pos()
+        config = fair.pos_config_id
+        gaveta = self._dinheiro(config).journal_id
+        gaveta.suspense_account_id = False
+        config.journal_id.default_account_id = False
+        self.livro.property_account_income_id = False
+        self.livro.categ_id.property_account_income_categ_id = False
+        # O último recurso do produto no 19; na n-1 ele também é vazio.
+        self.company.income_account_id = False
+
+        self.env['res.config.settings'].create({}).execute()
+
+        self.assertEqual(gaveta.suspense_account_id,
+                         self.company.account_journal_suspense_account_id)
+        self.assertEqual(config.journal_id.default_account_id,
+                         self.company.fair_income_account_id)
+        sessao, _pedido = self._venda(fair, 2)
+        dia = fair.day_ids[0]
+        dia.action_fill()
+        dia.line_ids.qty_counted = dia.line_ids.qty_expected
+        dia.action_close()
+        sessao.cash_register_balance_end_real = \
+            sessao.cash_register_balance_end
+        fair.action_return()
+        self.assertEqual(sessao.state, 'closed')
+        receita = sessao.move_id.line_ids.filtered(
+            lambda l: l.account_id == self.company.fair_income_account_id)
+        self.assertAlmostEqual(sum(receita.mapped('credit')), 80.0)
+
+    def test_saving_does_not_replace_a_chosen_transit_account(self):
+        """Só o vazio se preenche: transitória escolhida à mão fica."""
+        fair = self._feira_na_praca()
+        self._operadores(fair, 'Marta')
+        fair.action_open_pos()
+        gaveta = self._dinheiro(fair.pos_config_id).journal_id
+        escolhida = self.env['account.account'].create({
+            'code': 'FEIRA19', 'name': 'Transitória escolhida',
+            'account_type': 'asset_current',
+            'company_ids': [(6, 0, [self.company.id])]})
+        gaveta.suspense_account_id = escolhida
+        self.env['res.config.settings'].create({}).execute()
+        self.assertEqual(gaveta.suspense_account_id, escolhida)

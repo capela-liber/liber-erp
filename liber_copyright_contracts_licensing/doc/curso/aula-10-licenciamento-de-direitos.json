@@ -1,0 +1,74 @@
+{
+ "curso": "Curso Royalties II: apuração, pagamento e prestação de contas",
+ "aula": 10,
+ "titulo": "Licenciamento de direitos: a licença pelo contrato, a parte do autor como royalty",
+ "abertura": "Esta aula mostra a venda do direito de reprodução: a porcentagem do autor na linha do contrato, a fatura que nasce pronta no botão Licenciamentos, e o que acontece quando ela é paga.",
+ "fecho": "A licença é faturada pelo contrato; paga, a parte do autor entra na conta dele como royalty e aparece na prestação de contas em seção própria. Fim do curso.",
+ "youtube": "",
+ "quiz": [
+  {
+   "pergunta": "Onde fica a porcentagem do autor sobre os licenciamentos?",
+   "opcoes": [
+    "Nas faixas de exemplares",
+    "Na linha favorecido × obra do contrato, no campo Licenciamento (%)",
+    "Nas Definições da empresa",
+    "No produto de licenciamento"
+   ],
+   "comentarios": [
+    "As faixas valem para as vendas de exemplares.",
+    "Varia por contrato e por favorecido.",
+    "As Definições guardam produto, conta e diário, não a porcentagem.",
+    "O produto é o mesmo para todas as licenças."
+   ],
+   "correta": 1
+  },
+  {
+   "pergunta": "A fatura de licenciamento foi postada mas ainda não paga. O autor já tem algo a receber?",
+   "opcoes": [
+    "Sim, desde a postagem",
+    "Só depois de rodar Preencher linhas de royalty",
+    "Não: só fatura paga gera a parte do autor",
+    "Só no fim do mês"
+   ],
+   "comentarios": [
+    "Postar não é receber.",
+    "O Preencher também só lança o que está pago.",
+    "A mesma regra das vendas; paga, entra na hora.",
+    "Não há fechamento mensal aqui."
+   ],
+   "correta": 2
+  },
+  {
+   "pergunta": "Licença de R$ 1.000 de uma obra com dois herdeiros a 20% cada. Quanto cada um recebe?",
+   "opcoes": [
+    "R$ 100 cada",
+    "R$ 200 cada",
+    "R$ 400 para o primeiro",
+    "R$ 200 divididos entre os dois"
+   ],
+   "comentarios": [
+    "Seria dividir a linha entre eles.",
+    "Cada um leva a sua porcentagem sobre o valor inteiro.",
+    "Não há prioridade entre favorecidos.",
+    "A porcentagem não é dividida."
+   ],
+   "correta": 1
+  },
+  {
+   "pergunta": "Na prestação de contas, onde aparece a licença?",
+   "opcoes": [
+    "Somada à linha da obra, com os exemplares",
+    "Não aparece: vai direto para a fatura",
+    "Numa seção própria, licenciamento, com licenciado, valor e porcentagem",
+    "Só no resumo"
+   ],
+   "comentarios": [
+    "Licença não vende exemplares; misturar entortaria a base.",
+    "Ela está no total e na fatura, e também no extrato.",
+    "E o resumo ganha a linha dos quais, licenciamento.",
+    "O resumo mostra o total; o detalhe vem na seção."
+   ],
+   "correta": 2
+  }
+ ]
+}

@@ -23,6 +23,20 @@
                             <field name="fair_cash_shortage_account_id" domain="[('account_type', 'in', ('expense', 'expense_other', 'expense_direct_cost')), ('company_ids', 'parent_of', company_id)]"/>
                         </div>
                     </setting>
+                    <setting string="Closing the register" help="What closing the register needs. Transit: where the counted cash waits to become a statement line. Receivable: where each payment waits for the closing. Sales: revenue of a book with no revenue account of its own. Without the three, the register does not close.">
+                        <div class="row">
+                            <label for="fair_transit_account_id" string="Transit" class="col-lg-3 o_light_label"/>
+                            <field name="fair_transit_account_id" domain="[('account_type', 'in', ('asset_current', 'liability_current')), ('company_ids', 'parent_of', company_id)]"/>
+                        </div>
+                        <div class="row">
+                            <label for="fair_pos_receivable_account_id" string="Receivable" class="col-lg-3 o_light_label"/>
+                            <field name="fair_pos_receivable_account_id" domain="[('account_type', '=', 'asset_receivable'), ('company_ids', 'parent_of', company_id)]"/>
+                        </div>
+                        <div class="row">
+                            <label for="fair_income_account_id" string="Sales" class="col-lg-3 o_light_label"/>
+                            <field name="fair_income_account_id" domain="[('account_type', 'in', ('income', 'income_other')), ('company_ids', 'parent_of', company_id)]"/>
+                        </div>
+                    </setting>
                     <setting string="Other payment methods" help="Card machine, PIX: what every fair register takes besides cash.">
                         <field name="fair_payment_method_ids" widget="many2many_tags" domain="[('is_cash_count', '=', False), ('company_id', 'in', (company_id, False))]"/>
                     </setting>

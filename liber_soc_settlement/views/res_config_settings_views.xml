@@ -80,6 +80,19 @@
                                 </div>
                             </div>
                         </setting>
+                        <setting id="soc_map_email_text_setting"
+                                 string="Monthly map e-mail text"
+                                 invisible="not map_schedule_enabled"
+                                 help="Subject and text of the e-mail the monthly dispatch sends. The operation number is appended to the subject; the signature and the automatic-message notice are added below the text. Used on the shelf map; an operation that already has a settlement, return or replenishment keeps the built-in text.">
+                            <div class="content-group">
+                                <div class="row">
+                                    <span class="col-lg-3 o_form_label">Subject</span>
+                                    <field name="consignment_map_email_subject" class="col-lg-9" placeholder="Mapa de Consignação"/>
+                                </div>
+                                <field name="consignment_map_email_text" widget="html" class="mt-2"/>
+                                <button name="action_restore_map_email_default" type="object" string="Restore default text" class="btn-link ps-0" icon="fa-undo"/>
+                            </div>
+                        </setting>
                     </block>
                     <block title="Settlement Movement" name="soc_settlement_movement">
                         <setting id="soc_settlement_operation_type_setting"

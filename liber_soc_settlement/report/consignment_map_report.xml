@@ -226,7 +226,10 @@
     <record id="mail_template_consignment_map" model="mail.template">
         <field name="name">Consignment Map</field>
         <field name="model_id" ref="model_consignment_settlement"/>
-        <field name="subject">Mapa de Consignação - {{ object.name }}</field>
+        <!-- No disparo mensal, assunto e texto podem vir das Configurações
+             (res.company.consignment_map_email_*); o número da CO entra
+             sempre, porque é por ele que o cliente e a casa acham a conversa. -->
+        <field name="subject">{{ (ctx.get('mapa_automatico') and object.company_id.consignment_map_email_subject or 'Mapa de Consignação') + ' - ' + (object.name or '') }}</field>
         <!-- O remetente é uma PESSOA: o nome de quem foi escolhido nas
              Configurações, sobre o endereço da casa. O porquê de não ir o
              endereço pessoal está em `_map_email_from` — o provedor reescreve
@@ -247,6 +250,13 @@
         <field name="body_html" type="html">
             <div style="font-size: 13px;">
                 <t t-set="tem_operacao" t-value="object.return_move_id or object.sale_order_id or object.replenishment_order_id"/>
+                <!-- O texto editado é o do mapa da PRATELEIRA: CO com operação
+                     segue com o texto que fala dela. is_html_empty: o editor
+                     "vazio" grava <p><br></p>, que é verdadeiro e mandaria um
+                     e-mail sem texto. -->
+                <t t-set="texto_editado" t-value="ctx.get('mapa_automatico') and not tem_operacao and not is_html_empty(object.company_id.consignment_map_email_text) and object.company_id.consignment_map_email_text"/>
+                <t t-if="texto_editado"><t t-out="texto_editado"/></t>
+                <t t-else="">
                 <p>Prezados,</p>
                 <p t-if="tem_operacao">Segue em anexo o <strong>Mapa de Consignação</strong>
                    <t t-out="object.name or ''"/>, com o resumo desta operação —
@@ -260,6 +270,7 @@
                    querendo <strong>devolver</strong> o que não girou ou
                    <strong>repor</strong> o que vendeu, basta
                    <strong>responder este e-mail</strong>.</p>
+                </t>
                 <!-- Assina quem manda: no disparo automático, o Líder de
                      Equipe do Canal de Vendas desta CO; em qualquer clique
                      humano (botão, lote, compositor, wizard RUN), quem está

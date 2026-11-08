@@ -451,6 +451,9 @@ class EventFair(models.Model):
         vals.update(self._desconto_do_caixa(operador))
         config = self.env['pos.config'].sudo().with_company(company).create(
             vals)
+        # O diário de vendas do PDV nasce sem conta de receita, e é nele que
+        # o fechamento cai quando o livro não tem receita própria.
+        company._fair_fill_cash_journals()
         self.message_post(body=_(
             "%(feira)s — cash register %(caixa)s opened. It sells from the "
             "table, not from the warehouse.",

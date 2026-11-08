@@ -683,3 +683,71 @@ msgstr "Gavetas de dinheiro"
 #: code:addons/liber_fairs_pos/models/res_config_settings.py:0
 msgid "Fair cash drawers"
 msgstr "Gavetas de dinheiro das feiras"
+
+#. module: liber_fairs_pos
+#: model_terms:ir.ui.view,arch_db:liber_fairs_pos.res_config_settings_view_form_fair_registers
+msgid "Closing the register"
+msgstr "Fechamento do caixa"
+
+#. module: liber_fairs_pos
+#: model_terms:ir.ui.view,arch_db:liber_fairs_pos.res_config_settings_view_form_fair_registers
+msgid ""
+"What closing the register needs. Transit: where the counted cash waits to "
+"become a statement line. Receivable: where each payment waits for the "
+"closing. Sales: revenue of a book with no revenue account of its own. "
+"Without the three, the register does not close."
+msgstr ""
+"O que o fechamento do caixa pede. Transitória: onde o dinheiro contado "
+"espera virar linha de extrato. A receber: onde cada pagamento espera o "
+"fechamento. Vendas: receita do livro que não tem conta de receita própria. "
+"Sem as três, o caixa não fecha."
+
+#. module: liber_fairs_pos
+#: model_terms:ir.ui.view,arch_db:liber_fairs_pos.res_config_settings_view_form_fair_registers
+msgid "Transit"
+msgstr "Transitória"
+
+#. module: liber_fairs_pos
+#: model_terms:ir.ui.view,arch_db:liber_fairs_pos.res_config_settings_view_form_fair_registers
+msgid "Receivable"
+msgstr "A receber"
+
+#. module: liber_fairs_pos
+#: model_terms:ir.ui.view,arch_db:liber_fairs_pos.res_config_settings_view_form_fair_registers
+msgid "Sales"
+msgstr "Vendas"
+
+#. module: liber_fairs_pos
+#. odoo-python
+#: code:addons/liber_fairs_pos/models/res_company.py:0
+msgid "Transit account"
+msgstr "Conta transitória"
+
+#. module: liber_fairs_pos
+#. odoo-python
+#: code:addons/liber_fairs_pos/models/res_company.py:0
+msgid "Register receivable account"
+msgstr "Conta a receber do PDV"
+
+#. module: liber_fairs_pos
+#. odoo-python
+#: code:addons/liber_fairs_pos/models/res_company.py:0
+msgid "Sales account"
+msgstr "Conta de receita das vendas"
+
+#. module: liber_fairs_pos
+#: model:ir.model.fields,field_description:liber_fairs_pos.field_res_company__fair_income_account_id
+#: model:ir.model.fields,field_description:liber_fairs_pos.field_res_config_settings__fair_income_account_id
+msgid "Fair registers sales account"
+msgstr "Conta de receita dos caixas de feira"
+
+#. module: liber_fairs_pos
+#: model:ir.model.fields,help:liber_fairs_pos.field_res_company__fair_income_account_id
+#: model:ir.model.fields,help:liber_fairs_pos.field_res_config_settings__fair_income_account_id
+msgid ""
+"Revenue of a counter sale whose product and category have no revenue "
+"account. It goes on the registers' sales journal, which the point of sale "
+"creates without one."
+msgstr ""
+"Receita da venda de balcão cujo produto e categoria não têm conta de "
+"receita. Ela vai no diário de vendas dos caixas, que o PDV cria sem conta."

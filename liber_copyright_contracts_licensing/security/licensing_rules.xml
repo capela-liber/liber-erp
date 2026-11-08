@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- The payments module fences contract users (no Invoicing rights) to
+         the moves born from a contract: `edlab_contract_id`, the royalty
+         bills. A licensing invoice is born from a contract too, through
+         another field, and the Licensing button on the contract would open
+         an empty list for exactly the people who follow the contract. Rules
+         of the same group add up by OR, so this widens the fence by the
+         licences and nothing else; users with Invoicing rights already see
+         every move through the core rule. Read only, like the ACL. -->
+    <record id="rule_account_move_license_contract_user" model="ir.rule">
+        <field name="name">Licensing invoices: contract users read contract licences</field>
+        <field name="model_id" ref="account.model_account_move"/>
+        <field name="groups" eval="[(4, ref('liber_copyright_contracts.group_contract_user'))]"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="False"/>
+        <field name="perm_create" eval="False"/>
+        <field name="perm_unlink" eval="False"/>
+        <field name="domain_force">[('edlab_license_contract_id', '!=', False)]</field>
+    </record>
+
+    <record id="rule_account_move_line_license_contract_user" model="ir.rule">
+        <field name="name">Licensing invoices: contract users read contract licence lines</field>
+        <field name="model_id" ref="account.model_account_move_line"/>
+        <field name="groups" eval="[(4, ref('liber_copyright_contracts.group_contract_user'))]"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="False"/>
+        <field name="perm_create" eval="False"/>
+        <field name="perm_unlink" eval="False"/>
+        <field name="domain_force">[('move_id.edlab_license_contract_id', '!=', False)]</field>
+    </record>
+
+</odoo>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <!-- Same reasoning as the payments module's "Royalties" product: a
+             licensing invoice needs a product, and a feature that only works
+             after someone finds the setting is dead on arrival. The company
+             setting still overrides it. -->
+        <record id="product_rights_licensing" model="product.template">
+            <field name="name">Rights licensing</field>
+            <field name="type">service</field>
+            <field name="sale_ok" eval="True"/>
+            <field name="purchase_ok" eval="False"/>
+            <field name="list_price">0.0</field>
+            <field name="description_sale">Licence to reproduce a work under copyright.</field>
+        </record>
+
+    </data>
+</odoo>

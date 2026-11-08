@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_edlab_contract_form_licensing" model="ir.ui.view">
+        <field name="name">edlab.contract.form.licensing</field>
+        <field name="model">edlab.contract</field>
+        <field name="inherit_id" ref="liber_copyright_contracts.view_edlab_contract_form"/>
+        <field name="arch" type="xml">
+            <!-- Always visible, even at zero: this button is also the way to
+                 the FIRST licence (the list's New button). -->
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button name="action_view_license_invoices" type="object"
+                        class="oe_stat_button" icon="fa-handshake-o">
+                    <field name="edlab_license_count" widget="statinfo"
+                           string="Licensing"/>
+                </button>
+            </xpath>
+            <xpath expr="//field[@name='royalty_line_ids']/list/field[@name='product_id']" position="after">
+                <field name="license_percentage" optional="show"/>
+            </xpath>
+            <xpath expr="//field[@name='royalty_line_ids']/form//field[@name='product_id']" position="after">
+                <field name="license_percentage"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

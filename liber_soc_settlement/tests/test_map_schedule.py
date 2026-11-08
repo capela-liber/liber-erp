@@ -280,6 +280,120 @@ class TestMapSchedule(TransactionCase):
         co = self._cos(agr)
         self.assertNotIn('mensagem automática', self._mails(co).body_html)
 
+    # -- o texto editado nas Configurações ----------------------------------
+    def _mapas_da_co(self, co, assunto):
+        """O `_mails` com o assunto EDITADO: o dele filtra pelo padrão. O
+        número da CO não serve de filtro -- a notificação de dono também o
+        leva no assunto."""
+        return self.env['mail.mail'].sudo().search([
+            ('model', '=', 'consignment.settlement'), ('res_id', '=', co.id),
+            ('subject', 'like', assunto)])
+
+    def test_o_disparo_usa_o_texto_e_o_assunto_editados(self):
+        self.company.consignment_map_email_subject = 'Sua prateleira do mês'
+        self.company.consignment_map_email_text = (
+            '<p>Olá, livreiro! Confira a prateleira deste mês.</p>')
+        agr = self._agreement('Livraria do Texto Novo')
+        co = agr._send_monthly_map(automatico=True)
+        mail = self._mapas_da_co(co, 'Sua prateleira do mês')
+        self.assertEqual(mail.subject, 'Sua prateleira do mês - %s' % co.name,
+                         'o número da CO tem de continuar no assunto')
+        self.assertIn('Confira a prateleira deste mês', mail.body_html)
+        self.assertNotIn('posição atual da mercadoria', mail.body_html,
+                         'o texto padrão saiu junto com o editado')
+        # Assinatura e aviso não são do texto: continuam saindo sozinhos.
+        self.assertIn('Atenciosamente', mail.body_html)
+        self.assertIn('mensagem automática', mail.body_html)
+
+    def test_editor_vazio_volta_ao_texto_padrao(self):
+        """O editor "esvaziado" grava <p><br></p>, que é verdadeiro: sem o
+        is_html_empty o cliente receberia um e-mail sem texto."""
+        self.company.consignment_map_email_subject = False
+        self.company.consignment_map_email_text = '<p><br></p>'
+        agr = self._agreement('Livraria do Editor Vazio')
+        co = agr._send_monthly_map(automatico=True)
+        mail = self._mails(co)
+        self.assertEqual(mail.subject, 'Mapa de Consignação - %s' % co.name)
+        self.assertIn('posição atual da mercadoria', mail.body_html)
+
+    def test_o_clique_humano_ignora_o_texto_do_disparo(self):
+        """O texto editado é o do disparo MENSAL: quem clica no botão do
+        contrato manda o mapa com o texto de sempre."""
+        self.company.consignment_map_email_subject = 'Sua prateleira do mês'
+        self.company.consignment_map_email_text = '<p>Texto só do disparo.</p>'
+        agr = self._agreement('Livraria do Botão')
+        agr.action_send_consignment_map()
+        co = self._cos(agr)
+        mail = self._mails(co)
+        self.assertEqual(mail.subject, 'Mapa de Consignação - %s' % co.name)
+        self.assertNotIn('Texto só do disparo', mail.body_html)
+        self.assertIn('posição atual da mercadoria', mail.body_html)
+
+    def test_o_texto_padrao_vem_preenchido_e_volta_pelo_botao(self):
+        """O campo nasce com o padrão para se editar a partir dele, e o botão
+        das Configurações o devolve depois de editado."""
+        from ..models.res_company import MAP_EMAIL_SUBJECT_DEFAULT
+        self.company.write({
+            'consignment_map_email_subject': 'Outro assunto',
+            'consignment_map_email_text': '<p>Outro texto.</p>'})
+        config = self.env['res.config.settings'].create({})
+        config.action_restore_map_email_default()
+        self.assertEqual(self.company.consignment_map_email_subject,
+                         MAP_EMAIL_SUBJECT_DEFAULT)
+        self.assertIn('posição atual da mercadoria',
+                      self.company.consignment_map_email_text)
+        # E o padrão, enviado, é o mapa da prateleira de sempre.
+        agr = self._agreement('Livraria do Padrão')
+        co = agr._send_monthly_map(automatico=True)
+        mail = self._mails(co)
+        self.assertEqual(mail.subject, 'Mapa de Consignação - %s' % co.name)
+        self.assertIn('posição atual da mercadoria', mail.body_html)
+        self.assertEqual(mail.body_html.count('Prezados'), 1,
+                         'o padrão do campo saiu junto com o do template')
+
+    def test_a_migracao_nao_apaga_o_texto_editado(self):
+        """O texto salvo é dado: a migração só preenche o que está vazio."""
+        import importlib.util
+        import os
+        caminho = os.path.join(os.path.dirname(__file__), '..', 'migrations',
+                               '19.0.2.27.0', 'post-migrate.py')
+        spec = importlib.util.spec_from_file_location('mig_27', caminho)
+        mig = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(mig)
+        self.company.write({
+            'consignment_map_email_subject': 'Assunto da casa',
+            'consignment_map_email_text': '<p>Texto da casa.</p>'})
+        self.env.flush_all()
+        mig.migrate(self.env.cr, '19.0.2.26.0')
+        self.env.invalidate_all()
+        self.assertEqual(self.company.consignment_map_email_subject,
+                         'Assunto da casa')
+        self.assertIn('Texto da casa', self.company.consignment_map_email_text)
+        # E o vazio, ela preenche.
+        self.company.consignment_map_email_text = '<p><br></p>'
+        self.env.flush_all()
+        mig.migrate(self.env.cr, '19.0.2.26.0')
+        self.env.invalidate_all()
+        self.assertIn('posição atual da mercadoria',
+                      self.company.consignment_map_email_text)
+
+    def test_co_com_operacao_ignora_o_texto_da_prateleira(self):
+        """O texto editável fala da prateleira. Se o disparo reaproveita uma
+        CO que já tem acerto, o e-mail fala da operação, como antes."""
+        self.company.consignment_map_email_text = '<p>Texto da prateleira.</p>'
+        agr = self._agreement('Livraria com Acerto no Disparo')
+        co = agr._settlement_for_map()
+        co.sale_order_id = self.env['sale.order'].create(
+            {'partner_id': agr.partner_id.id})
+        agr._map_template().with_context(mapa_automatico=True).send_mail(
+            co.id, force_send=False)
+        corpo = self.env['mail.mail'].sudo().search([
+            ('model', '=', 'consignment.settlement'), ('res_id', '=', co.id),
+            ('body_html', 'like', 'Atenciosamente')], order='id desc', limit=1
+        ).body_html
+        self.assertIn('resumo desta operação', corpo)
+        self.assertNotIn('Texto da prateleira', corpo)
+
     # -- quem fica de fora --------------------------------------------------
     def test_so_contrato_valido(self):
         """Rascunho, suspenso, encerrado e vencido não recebem."""

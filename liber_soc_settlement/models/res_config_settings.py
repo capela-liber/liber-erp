@@ -2,6 +2,8 @@
 from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
 
+from .res_company import MAP_EMAIL_SUBJECT_DEFAULT, MAP_EMAIL_TEXT_DEFAULT
+
 
 class ResConfigSettings(models.TransientModel):
     _inherit = 'res.config.settings'
@@ -108,6 +110,21 @@ class ResConfigSettings(models.TransientModel):
              "that has not been mailed yet in the current month is picked up by "
              "the next nightly run -- so a batch cut short finishes the day "
              "after, and turning the switch on mid-month sends right away.")
+
+    consignment_map_email_subject = fields.Char(
+        related='company_id.consignment_map_email_subject', readonly=False)
+    consignment_map_email_text = fields.Html(
+        related='company_id.consignment_map_email_text', readonly=False)
+
+    def action_restore_map_email_default(self):
+        """Volta assunto e texto do e-mail do mapa mensal ao padrão. Só age
+        no clique: o texto editado nunca é trocado sem alguém pedir."""
+        self.ensure_one()
+        self.company_id.write({
+            'consignment_map_email_subject': MAP_EMAIL_SUBJECT_DEFAULT,
+            'consignment_map_email_text': MAP_EMAIL_TEXT_DEFAULT,
+        })
+        return {'type': 'ir.actions.client', 'tag': 'reload'}
 
     @api.constrains('map_schedule_day')
     def _check_map_schedule_day(self):

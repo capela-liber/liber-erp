@@ -1,0 +1,331 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* liber_copyright_contracts_licensing
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0-20260619\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-11-06 15:04+0000\n"
+"PO-Revision-Date: 2026-11-06 15:04+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: pt_BR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: liber_copyright_contracts_licensing
+#. odoo-python
+#: code:addons/liber_copyright_contracts_licensing/models/account_move.py:0
+msgid ""
+"A licensing invoice belongs to the company that holds the rights: contract "
+"%(contract)s is %(company)s's, the invoice is %(move_company)s's."
+msgstr "A fatura de licenciamento é da empresa detentora dos direitos: o contrato %(contract)s é da %(company)s, a fatura é da %(move_company)s."
+
+#. module: liber_copyright_contracts_licensing
+#: model:ir.model,name:liber_copyright_contracts_licensing.model_account_analytic_line
+msgid "Analytic Line"
+msgstr ""
+
+#. module: liber_copyright_contracts_licensing
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_licensing.report_royalty_statement_licensing
+msgid "Author's share"
+msgstr "Parte do autor"
+
+#. module: liber_copyright_contracts_licensing
+#: model:ir.model.fields,help:liber_copyright_contracts_licensing.field_edlab_contract_royalty_line__license_percentage
+msgid ""
+"Beneficiary's share of every rights-licensing invoice of this work, on the "
+"invoiced amount. Independent of the per-copy tiers. 0 = licences pay this "
+"beneficiary nothing."
+msgstr "Parte do favorecido em toda fatura de licenciamento desta obra, sobre o valor faturado. Independente das faixas de exemplares. 0 = os licenciamentos não pagam nada a este favorecido."
+
+#. module: liber_copyright_contracts_licensing
+#: model:ir.model,name:liber_copyright_contracts_licensing.model_res_company
+msgid "Companies"
+msgstr ""
+
+#. module: liber_copyright_contracts_licensing
+#: model:ir.model,name:liber_copyright_contracts_licensing.model_res_config_settings
+msgid "Config Settings"
+msgstr ""
+
+#. module: liber_copyright_contracts_licensing
+#: model:ir.model,name:liber_copyright_contracts_licensing.model_res_partner
+msgid "Contact"
+msgstr ""
+
+#. module: liber_copyright_contracts_licensing
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_licensing.report_royalty_statement_licensing
+msgid "Contract"
+msgstr "Contrato"
+
+#. module: liber_copyright_contracts_licensing
+#: model:ir.model,name:liber_copyright_contracts_licensing.model_edlab_contract
+msgid "Copyright Contract"
+msgstr ""
+
+#. module: liber_copyright_contracts_licensing
+#: model:ir.model.fields,help:liber_copyright_contracts_licensing.field_account_bank_statement_line__edlab_license_contract_id
+#: model:ir.model.fields,help:liber_copyright_contracts_licensing.field_account_move__edlab_license_contract_id
+msgid ""
+"Copyright contract whose rights this customer invoice licenses. When the "
+"invoice is paid, each beneficiary named on its lines (by analytic account) "
+"is owed their licensing percentage of the line."
+msgstr "Contrato de direitos autorais cujos direitos esta fatura licencia. Quando a fatura é paga, cada favorecido presente nas linhas (pela conta analítica) passa a ter a receber a sua porcentagem de licenciamento da linha."
+
+#. module: liber_copyright_contracts_licensing
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_licensing.report_royalty_statement_licensing
+msgid "Date"
+msgstr "Data"
+
+#. module: liber_copyright_contracts_licensing
+#: model:ir.model.fields,field_description:liber_copyright_contracts_licensing.field_account_analytic_line__display_name
+#: model:ir.model.fields,field_description:liber_copyright_contracts_licensing.field_account_move__display_name
+#: model:ir.model.fields,field_description:liber_copyright_contracts_licensing.field_account_move_line__display_name
+#: model:ir.model.fields,field_description:liber_copyright_contracts_licensing.field_edlab_contract__display_name
+#: model:ir.model.fields,field_description:liber_copyright_contracts_licensing.field_edlab_contract_royalty_line__display_name
+#: model:ir.model.fields,field_description:liber_copyright_contracts_licensing.field_res_company__display_name
+#: model:ir.model.fields,field_description:liber_copyright_contracts_licensing.field_res_config_settings__display_name
+#: model:ir.model.fields,field_description:liber_copyright_contracts_licensing.field_res_partner__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: liber_copyright_contracts_licensing
+#: model:ir.model.fields,field_description:liber_copyright_contracts_licensing.field_account_analytic_line__id
+#: model:ir.model.fields,field_description:liber_copyright_contracts_licensing.field_account_move__id
+#: model:ir.model.fields,field_description:liber_copyright_contracts_licensing.field_account_move_line__id
+#: model:ir.model.fields,field_description:liber_copyright_contracts_licensing.field_edlab_contract__id
+#: model:ir.model.fields,field_description:liber_copyright_contracts_licensing.field_edlab_contract_royalty_line__id
+#: model:ir.model.fields,field_description:liber_copyright_contracts_licensing.field_res_company__id
+#: model:ir.model.fields,field_description:liber_copyright_contracts_licensing.field_res_config_settings__id
+#: model:ir.model.fields,field_description:liber_copyright_contracts_licensing.field_res_partner__id
+msgid "ID"
+msgstr ""
+
+#. module: liber_copyright_contracts_licensing
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_licensing.res_config_settings_view_form_licensing
+msgid "Income account"
+msgstr "Conta de receita"
+
+#. module: liber_copyright_contracts_licensing
+#: model:ir.model.fields,help:liber_copyright_contracts_licensing.field_res_company__contract_license_account_id
+#: model:ir.model.fields,help:liber_copyright_contracts_licensing.field_res_config_settings__contract_license_account_id
+msgid ""
+"Income account of the licensing invoice lines. Leave empty to use the "
+"product's own income account."
+msgstr "Conta de receita das linhas das faturas de licenciamento. Vazio usa a conta de receita do próprio produto."
+
+#. module: liber_copyright_contracts_licensing
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_licensing.res_config_settings_view_form_licensing
+msgid ""
+"Income account of those lines. Leave empty to use the product's own income "
+"account."
+msgstr "Conta de receita dessas linhas. Vazio usa a conta de receita do próprio produto."
+
+#. module: liber_copyright_contracts_licensing
+#: model:ir.model,name:liber_copyright_contracts_licensing.model_account_move
+msgid "Journal Entry"
+msgstr ""
+
+#. module: liber_copyright_contracts_licensing
+#: model:ir.model,name:liber_copyright_contracts_licensing.model_account_move_line
+msgid "Journal Item"
+msgstr ""
+
+#. module: liber_copyright_contracts_licensing
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_licensing.res_config_settings_view_form_licensing
+msgid ""
+"Journal of the licensing invoices. Leave empty to use the company's first "
+"sales journal."
+msgstr "Diário das faturas de licenciamento. Vazio usa o primeiro diário de vendas da empresa."
+
+#. module: liber_copyright_contracts_licensing
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_licensing.report_royalty_statement_licensing
+msgid "Licence amount"
+msgstr "Valor da licença"
+
+#. module: liber_copyright_contracts_licensing
+#: model:product.template,description_sale:liber_copyright_contracts_licensing.product_rights_licensing
+msgid "Licence to reproduce a work under copyright."
+msgstr "Licença de reprodução de obra protegida por direitos autorais."
+
+#. module: liber_copyright_contracts_licensing
+#: model:ir.model.fields,field_description:liber_copyright_contracts_licensing.field_account_bank_statement_line__edlab_license_contract_id
+#: model:ir.model.fields,field_description:liber_copyright_contracts_licensing.field_account_move__edlab_license_contract_id
+msgid "Licensed Contract"
+msgstr "Contrato licenciado"
+
+#. module: liber_copyright_contracts_licensing
+#: model:ir.model.fields,field_description:liber_copyright_contracts_licensing.field_account_move_line__edlab_license_work_id
+msgid "Licensed Work"
+msgstr "Obra licenciada"
+
+#. module: liber_copyright_contracts_licensing
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_licensing.report_royalty_statement_licensing
+msgid "Licensee"
+msgstr "Licenciado"
+
+#. module: liber_copyright_contracts_licensing
+#: model:ir.model.fields,field_description:liber_copyright_contracts_licensing.field_edlab_contract__edlab_license_count
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_licensing.res_config_settings_view_form_licensing
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_licensing.view_edlab_contract_form_licensing
+msgid "Licensing"
+msgstr "Licenciamentos"
+
+#. module: liber_copyright_contracts_licensing
+#. odoo-python
+#: code:addons/liber_copyright_contracts_licensing/models/royalty_line.py:0
+msgid "Licensing %(pct).2f%% - %(licensee)s"
+msgstr "Licenciamento %(pct).2f%% - %(licensee)s"
+
+#. module: liber_copyright_contracts_licensing
+#: model:ir.model.fields,field_description:liber_copyright_contracts_licensing.field_edlab_contract_royalty_line__license_percentage
+msgid "Licensing (%)"
+msgstr "Licenciamento (%)"
+
+#. module: liber_copyright_contracts_licensing
+#. odoo-python
+#: code:addons/liber_copyright_contracts_licensing/models/contract.py:0
+msgid "Licensing - %s"
+msgstr "Licenciamentos - %s"
+
+#. module: liber_copyright_contracts_licensing
+#: model:ir.model.fields,field_description:liber_copyright_contracts_licensing.field_res_company__contract_license_account_id
+#: model:ir.model.fields,field_description:liber_copyright_contracts_licensing.field_res_config_settings__contract_license_account_id
+msgid "Licensing Income Account"
+msgstr "Conta de receita do licenciamento"
+
+#. module: liber_copyright_contracts_licensing
+#: model:ir.model.fields,field_description:liber_copyright_contracts_licensing.field_edlab_contract__edlab_license_invoice_ids
+msgid "Licensing Invoices"
+msgstr "Faturas de licenciamento"
+
+#. module: liber_copyright_contracts_licensing
+#: model:ir.model.fields,field_description:liber_copyright_contracts_licensing.field_res_company__contract_license_journal_id
+#: model:ir.model.fields,field_description:liber_copyright_contracts_licensing.field_res_config_settings__contract_license_journal_id
+msgid "Licensing Journal"
+msgstr "Diário do licenciamento"
+
+#. module: liber_copyright_contracts_licensing
+#: model:ir.model.fields,field_description:liber_copyright_contracts_licensing.field_account_analytic_line__edlab_license_royalty_line_id
+msgid "Licensing Of"
+msgstr "Licenciamento de"
+
+#. module: liber_copyright_contracts_licensing
+#: model:ir.model.fields,field_description:liber_copyright_contracts_licensing.field_res_company__contract_license_product_id
+#: model:ir.model.fields,field_description:liber_copyright_contracts_licensing.field_res_config_settings__contract_license_product_id
+msgid "Licensing Product"
+msgstr "Produto de licenciamento"
+
+#. module: liber_copyright_contracts_licensing
+#. odoo-python
+#: code:addons/liber_copyright_contracts_licensing/models/contract.py:0
+msgid "Licensing of %(work)s (contract %(contract)s)"
+msgstr "Licenciamento de %(work)s (contrato %(contract)s)"
+
+#. module: liber_copyright_contracts_licensing
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_licensing.res_config_settings_view_form_licensing
+msgid "Licensing product"
+msgstr "Produto de licenciamento"
+
+#. module: liber_copyright_contracts_licensing
+#. odoo-python
+#: code:addons/liber_copyright_contracts_licensing/models/royalty_line.py:0
+msgid "Licensing: %(created)s entr(ies) added, %(removed)s removed."
+msgstr "Licenciamento: %(created)s lançamento(s) incluído(s), %(removed)s removido(s)."
+
+#. module: liber_copyright_contracts_licensing
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_licensing.res_config_settings_view_form_licensing
+msgid ""
+"Product of the lines of rights-licensing invoices (Contract > Licensing > "
+"New). Leave empty to use the \"Rights licensing\" service shipped with the "
+"module."
+msgstr "Produto das linhas das faturas de licenciamento (Contrato > Licenciamentos > Novo). Vazio usa o serviço \"Licenciamento de direitos\" que vem com o módulo."
+
+#. module: liber_copyright_contracts_licensing
+#: model:ir.model.fields,help:liber_copyright_contracts_licensing.field_res_company__contract_license_product_id
+#: model:ir.model.fields,help:liber_copyright_contracts_licensing.field_res_config_settings__contract_license_product_id
+msgid ""
+"Product placed on the lines of rights-licensing invoices. Leave empty to use"
+" the \"Rights licensing\" service shipped with the module."
+msgstr "Produto lançado nas linhas das faturas de licenciamento. Vazio usa o serviço \"Licenciamento de direitos\" que vem com o módulo."
+
+#. module: liber_copyright_contracts_licensing
+#: model:product.template,name:liber_copyright_contracts_licensing.product_rights_licensing
+msgid "Rights licensing"
+msgstr "Licenciamento de direitos"
+
+#. module: liber_copyright_contracts_licensing
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_licensing.res_config_settings_view_form_licensing
+msgid "Rights licensing (module default)"
+msgstr "Licenciamento de direitos (padrão do módulo)"
+
+#. module: liber_copyright_contracts_licensing
+#: model:ir.model,name:liber_copyright_contracts_licensing.model_edlab_contract_royalty_line
+msgid "Royalty Line (beneficiary x work)"
+msgstr ""
+
+#. module: liber_copyright_contracts_licensing
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_licensing.res_config_settings_view_form_licensing
+msgid "Sales journal"
+msgstr "Diário de vendas"
+
+#. module: liber_copyright_contracts_licensing
+#: model:ir.model.fields,help:liber_copyright_contracts_licensing.field_res_company__contract_license_journal_id
+#: model:ir.model.fields,help:liber_copyright_contracts_licensing.field_res_config_settings__contract_license_journal_id
+msgid ""
+"Sales journal of the licensing invoices. Leave empty to use the company's "
+"first sales journal."
+msgstr "Diário de vendas das faturas de licenciamento. Vazio usa o primeiro diário de vendas da empresa."
+
+#. module: liber_copyright_contracts_licensing
+#: model:ir.model.fields,help:liber_copyright_contracts_licensing.field_account_analytic_line__edlab_license_royalty_line_id
+msgid ""
+"Set on the accrual that books a beneficiary's share of a paid rights-"
+"licensing invoice. The entry is an accrual like any royalty (it also carries"
+" the source invoice line); this marker is what lets the statement show it in"
+" its own section."
+msgstr "Marca o lançamento que registra a parte do favorecido numa fatura de licenciamento paga. É um acúmulo como qualquer royalty (também leva a linha de fatura de origem); esta marca é o que deixa a prestação de contas mostrá-lo em seção própria."
+
+#. module: liber_copyright_contracts_licensing
+#. odoo-python
+#: code:addons/liber_copyright_contracts_licensing/models/royalty_line.py:0
+msgid "The licensing percentage must be between 0 and 100."
+msgstr "A porcentagem de licenciamento deve estar entre 0 e 100."
+
+#. module: liber_copyright_contracts_licensing
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_licensing.report_royalty_statement_licensing
+msgid "Total"
+msgstr "Total"
+
+#. module: liber_copyright_contracts_licensing
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_licensing.report_royalty_statement_licensing
+msgid "Work"
+msgstr "Obra"
+
+#. module: liber_copyright_contracts_licensing
+#: model:ir.model.fields,help:liber_copyright_contracts_licensing.field_account_move_line__edlab_license_work_id
+msgid ""
+"Work of the contract this licensing line licenses. Its beneficiaries' "
+"analytic accounts go on the line. Empty on a single-work contract means that"
+" work."
+msgstr "Obra do contrato que esta linha licencia. As contas analíticas dos favorecidos dela vão para a linha. Vazio, num contrato de uma obra só, quer dizer essa obra."
+
+#. module: liber_copyright_contracts_licensing
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_licensing.report_royalty_statement_licensing
+msgid "licensing"
+msgstr "licenciamento"
+
+#. module: liber_copyright_contracts_licensing
+#: model_terms:ir.ui.view,arch_db:liber_copyright_contracts_licensing.report_royalty_statement_licensing
+msgid "of which licensing"
+msgstr "dos quais, licenciamento"
+
+#. module: liber_copyright_contracts_licensing
+#. odoo-python
+#: code:addons/liber_copyright_contracts_licensing/models/res_partner.py:0
+msgid "variable"
+msgstr "variável"

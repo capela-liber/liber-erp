@@ -2,6 +2,20 @@
 from odoo import _, fields, models
 
 
+# O texto padrão do e-mail do mapa mensal, o mesmo do `t-else` do template
+# `mail_template_consignment_map` (variante da prateleira). Mora aqui para nascer
+# no campo e ser editado a partir dele; o do template é a rede do campo vazio.
+# Sem o número da CO no corpo: ele já vai no assunto.
+MAP_EMAIL_SUBJECT_DEFAULT = 'Mapa de Consignação'
+MAP_EMAIL_TEXT_DEFAULT = (
+    '<p>Prezados,</p>'
+    '<p>Segue em anexo o <strong>Mapa de Consignação</strong>, com a posição '
+    'atual da mercadoria que temos em consignação na sua loja.</p>'
+    '<p>Confira com a sua prateleira. Encontrando diferença, ou querendo '
+    '<strong>devolver</strong> o que não girou ou <strong>repor</strong> o '
+    'que vendeu, basta <strong>responder este e-mail</strong>.</p>')
+
+
 class ResCompany(models.Model):
     _inherit = 'res.company'
 
@@ -48,6 +62,21 @@ class ResCompany(models.Model):
         help="Standard text printed at the top of the consignment map (CO) that "
              "is printed or e-mailed to the customer. Editable in the Consignment "
              "settings.")
+    # O texto do E-MAIL do disparo mensal (o de cima é o do PDF). Vale só no
+    # automático e só no mapa da prateleira (CO sem operação): o clique humano
+    # -- botão, lote, compositor -- e a CO com acerto seguem com o texto do
+    # template. Nasce preenchido com o padrão, para se editar a partir dele.
+    consignment_map_email_subject = fields.Char(
+        string='Monthly Map E-mail Subject', default=MAP_EMAIL_SUBJECT_DEFAULT,
+        help="Subject of the monthly map e-mail sent by the scheduled dispatch. "
+             "The operation number (CO) is always appended. Leave empty to use "
+             "the built-in default.")
+    consignment_map_email_text = fields.Html(
+        string='Monthly Map E-mail Text', default=MAP_EMAIL_TEXT_DEFAULT,
+        help="Body of the monthly map e-mail sent by the scheduled dispatch, "
+             "replacing the built-in opening text. The signature and the "
+             "automatic-message notice are still added. Leave empty to use the "
+             "built-in default.")
     return_escalation_manager_id = fields.Many2one(
         'res.users', string='Return Escalation Manager',
         help="Who gets notified when a consignment return (CR) blows past its "
